@@ -1,0 +1,549 @@
+---
+data:
+  _extendedDependsOn:
+  - icon: ':x:'
+    path: internal/internal-seed.hpp
+    title: internal/internal-seed.hpp
+  - icon: ':x:'
+    path: matrix/gauss-elimination.hpp
+    title: matrix/gauss-elimination.hpp
+  - icon: ':x:'
+    path: matrix/inverse-matrix.hpp
+    title: matrix/inverse-matrix.hpp
+  - icon: ':x:'
+    path: matrix/linear-equation.hpp
+    title: matrix/linear-equation.hpp
+  - icon: ':x:'
+    path: matrix/matrix.hpp
+    title: "\u884C\u5217\u30E9\u30A4\u30D6\u30E9\u30EA"
+  - icon: ':x:'
+    path: misc/rng.hpp
+    title: misc/rng.hpp
+  - icon: ':x:'
+    path: modint/montgomery-modint.hpp
+    title: modint/montgomery-modint.hpp
+  - icon: ':x:'
+    path: modint/simd-montgomery.hpp
+    title: modint/simd-montgomery.hpp
+  - icon: ':x:'
+    path: modulo/gauss-elimination-fast.hpp
+    title: modulo/gauss-elimination-fast.hpp
+  - icon: ':question:'
+    path: template/bitop.hpp
+    title: template/bitop.hpp
+  - icon: ':question:'
+    path: template/debug.hpp
+    title: template/debug.hpp
+  - icon: ':question:'
+    path: template/inout.hpp
+    title: template/inout.hpp
+  - icon: ':question:'
+    path: template/macro.hpp
+    title: template/macro.hpp
+  - icon: ':question:'
+    path: template/template.hpp
+    title: template/template.hpp
+  - icon: ':question:'
+    path: template/util.hpp
+    title: template/util.hpp
+  _extendedRequiredBy: []
+  _extendedVerifiedWith: []
+  _isVerificationFailed: true
+  _pathExtension: cpp
+  _verificationStatusIcon: ':x:'
+  attributes:
+    '*NOT_SPECIAL_COMMENTS*': ''
+    PROBLEM: https://judge.yosupo.jp/problem/aplusb
+    links:
+    - https://judge.yosupo.jp/problem/aplusb
+  bundledCode: "#line 1 \"verify/verify-unit-test/gauss-elimination.test.cpp\"\n#define\
+    \ PROBLEM \"https://judge.yosupo.jp/problem/aplusb\"\n//\n#line 2 \"template/template.hpp\"\
+    \nusing namespace std;\n\n// intrinstic\n#include <immintrin.h>\n\n#include <algorithm>\n\
+    #include <array>\n#include <bitset>\n#include <cassert>\n#include <cctype>\n#include\
+    \ <cfenv>\n#include <cfloat>\n#include <chrono>\n#include <cinttypes>\n#include\
+    \ <climits>\n#include <cmath>\n#include <complex>\n#include <cstdarg>\n#include\
+    \ <cstddef>\n#include <cstdint>\n#include <cstdio>\n#include <cstdlib>\n#include\
+    \ <cstring>\n#include <deque>\n#include <fstream>\n#include <functional>\n#include\
+    \ <initializer_list>\n#include <iomanip>\n#include <ios>\n#include <iostream>\n\
+    #include <istream>\n#include <iterator>\n#include <limits>\n#include <list>\n\
+    #include <map>\n#include <memory>\n#include <new>\n#include <numeric>\n#include\
+    \ <ostream>\n#include <queue>\n#include <random>\n#include <set>\n#include <sstream>\n\
+    #include <stack>\n#include <streambuf>\n#include <string>\n#include <tuple>\n\
+    #include <type_traits>\n#include <typeinfo>\n#include <unordered_map>\n#include\
+    \ <unordered_set>\n#include <utility>\n#include <vector>\n\n// utility\n#line\
+    \ 1 \"template/util.hpp\"\nnamespace Nyaan {\nusing ll = long long;\nusing i64\
+    \ = long long;\nusing u64 = unsigned long long;\nusing i128 = __int128_t;\nusing\
+    \ u128 = __uint128_t;\n\ntemplate <typename T>\nusing V = vector<T>;\ntemplate\
+    \ <typename T>\nusing VV = vector<vector<T>>;\nusing vi = vector<int>;\nusing\
+    \ vl = vector<long long>;\nusing vd = V<double>;\nusing vs = V<string>;\nusing\
+    \ vvi = vector<vector<int>>;\nusing vvl = vector<vector<long long>>;\ntemplate\
+    \ <typename T>\nusing minpq = priority_queue<T, vector<T>, greater<T>>;\n\ntemplate\
+    \ <typename T, typename U>\nstruct P : pair<T, U> {\n  template <typename... Args>\n\
+    \  P(Args... args) : pair<T, U>(args...) {}\n\n  using pair<T, U>::first;\n  using\
+    \ pair<T, U>::second;\n\n  P &operator+=(const P &r) {\n    first += r.first;\n\
+    \    second += r.second;\n    return *this;\n  }\n  P &operator-=(const P &r)\
+    \ {\n    first -= r.first;\n    second -= r.second;\n    return *this;\n  }\n\
+    \  P &operator*=(const P &r) {\n    first *= r.first;\n    second *= r.second;\n\
+    \    return *this;\n  }\n  template <typename S>\n  P &operator*=(const S &r)\
+    \ {\n    first *= r, second *= r;\n    return *this;\n  }\n  P operator+(const\
+    \ P &r) const { return P(*this) += r; }\n  P operator-(const P &r) const { return\
+    \ P(*this) -= r; }\n  P operator*(const P &r) const { return P(*this) *= r; }\n\
+    \  template <typename S>\n  P operator*(const S &r) const {\n    return P(*this)\
+    \ *= r;\n  }\n  P operator-() const { return P{-first, -second}; }\n};\n\nusing\
+    \ pl = P<ll, ll>;\nusing pi = P<int, int>;\nusing vp = V<pl>;\n\nconstexpr int\
+    \ inf = 1001001001;\nconstexpr long long infLL = 4004004004004004004LL;\n\ntemplate\
+    \ <typename T>\nint sz(const T &t) {\n  return t.size();\n}\n\ntemplate <typename\
+    \ T, typename U>\ninline bool amin(T &x, U y) {\n  return (y < x) ? (x = y, true)\
+    \ : false;\n}\ntemplate <typename T, typename U>\ninline bool amax(T &x, U y)\
+    \ {\n  return (x < y) ? (x = y, true) : false;\n}\n\ntemplate <typename T>\ninline\
+    \ T Max(const vector<T> &v) {\n  return *max_element(begin(v), end(v));\n}\ntemplate\
+    \ <typename T>\ninline T Min(const vector<T> &v) {\n  return *min_element(begin(v),\
+    \ end(v));\n}\ntemplate <typename T>\ninline long long Sum(const vector<T> &v)\
+    \ {\n  return accumulate(begin(v), end(v), 0LL);\n}\n\ntemplate <typename T>\n\
+    int lb(const vector<T> &v, const T &a) {\n  return lower_bound(begin(v), end(v),\
+    \ a) - begin(v);\n}\ntemplate <typename T>\nint ub(const vector<T> &v, const T\
+    \ &a) {\n  return upper_bound(begin(v), end(v), a) - begin(v);\n}\n\nconstexpr\
+    \ long long TEN(int n) {\n  long long ret = 1, x = 10;\n  for (; n; x *= x, n\
+    \ >>= 1) ret *= (n & 1 ? x : 1);\n  return ret;\n}\n\ntemplate <typename T, typename\
+    \ U>\npair<T, U> mkp(const T &t, const U &u) {\n  return make_pair(t, u);\n}\n\
+    \ntemplate <typename T>\nvector<T> mkrui(const vector<T> &v, bool rev = false)\
+    \ {\n  vector<T> ret(v.size() + 1);\n  if (rev) {\n    for (int i = int(v.size())\
+    \ - 1; i >= 0; i--) ret[i] = v[i] + ret[i + 1];\n  } else {\n    for (int i =\
+    \ 0; i < int(v.size()); i++) ret[i + 1] = ret[i] + v[i];\n  }\n  return ret;\n\
+    };\n\ntemplate <typename T>\nvector<T> mkuni(const vector<T> &v) {\n  vector<T>\
+    \ ret(v);\n  sort(ret.begin(), ret.end());\n  ret.erase(unique(ret.begin(), ret.end()),\
+    \ ret.end());\n  return ret;\n}\n\ntemplate <typename F>\nvector<int> mkord(int\
+    \ N, F f) {\n  vector<int> ord(N);\n  iota(begin(ord), end(ord), 0);\n  sort(begin(ord),\
+    \ end(ord), f);\n  return ord;\n}\n\ntemplate <typename T>\nvector<int> mkinv(vector<T>\
+    \ &v) {\n  int max_val = *max_element(begin(v), end(v));\n  vector<int> inv(max_val\
+    \ + 1, -1);\n  for (int i = 0; i < (int)v.size(); i++) inv[v[i]] = i;\n  return\
+    \ inv;\n}\n\nvector<int> mkiota(int n) {\n  vector<int> ret(n);\n  iota(begin(ret),\
+    \ end(ret), 0);\n  return ret;\n}\n\ntemplate <typename T>\nT mkrev(const T &v)\
+    \ {\n  T w{v};\n  reverse(begin(w), end(w));\n  return w;\n}\n\ntemplate <typename\
+    \ T>\nbool nxp(T &v) {\n  return next_permutation(begin(v), end(v));\n}\n\n//\
+    \ \u8FD4\u308A\u5024\u306E\u578B\u306F\u5165\u529B\u306E T \u306B\u4F9D\u5B58\n\
+    // i \u8981\u7D20\u76EE : [0, a[i])\ntemplate <typename T>\nvector<vector<T>>\
+    \ product(const vector<T> &a) {\n  vector<vector<T>> ret;\n  vector<T> v;\n  auto\
+    \ dfs = [&](auto rc, int i) -> void {\n    if (i == (int)a.size()) {\n      ret.push_back(v);\n\
+    \      return;\n    }\n    for (int j = 0; j < a[i]; j++) v.push_back(j), rc(rc,\
+    \ i + 1), v.pop_back();\n  };\n  dfs(dfs, 0);\n  return ret;\n}\n\n// F : function(void(T&)),\
+    \ mod \u3092\u53D6\u308B\u64CD\u4F5C\n// T : \u6574\u6570\u578B\u306E\u3068\u304D\
+    \u306F\u30AA\u30FC\u30D0\u30FC\u30D5\u30ED\u30FC\u306B\u6CE8\u610F\u3059\u308B\
+    \ntemplate <typename T>\nT Power(T a, long long n, const T &I, const function<void(T\
+    \ &)> &f) {\n  T res = I;\n  for (; n; f(a = a * a), n >>= 1) {\n    if (n & 1)\
+    \ f(res = res * a);\n  }\n  return res;\n}\n// T : \u6574\u6570\u578B\u306E\u3068\
+    \u304D\u306F\u30AA\u30FC\u30D0\u30FC\u30D5\u30ED\u30FC\u306B\u6CE8\u610F\u3059\
+    \u308B\ntemplate <typename T>\nT Power(T a, long long n, const T &I = T{1}) {\n\
+    \  return Power(a, n, I, function<void(T &)>{[](T &) -> void {}});\n}\n\ntemplate\
+    \ <typename T>\nT Rev(const T &v) {\n  T res = v;\n  reverse(begin(res), end(res));\n\
+    \  return res;\n}\n\ntemplate <typename T>\nvector<T> Transpose(const vector<T>\
+    \ &v) {\n  using U = typename T::value_type;\n  if(v.empty()) return {};\n  int\
+    \ H = v.size(), W = v[0].size();\n  vector res(W, T(H, U{}));\n  for (int i =\
+    \ 0; i < H; i++) {\n    for (int j = 0; j < W; j++) {\n      res[j][i] = v[i][j];\n\
+    \    }\n  }\n  return res;\n}\n\ntemplate <typename T>\nvector<T> Rotate(const\
+    \ vector<T> &v, int clockwise = true) {\n  using U = typename T::value_type;\n\
+    \  int H = v.size(), W = v[0].size();\n  vector res(W, T(H, U{}));\n  for (int\
+    \ i = 0; i < H; i++) {\n    for (int j = 0; j < W; j++) {\n      if (clockwise)\
+    \ {\n        res[W - 1 - j][i] = v[i][j];\n      } else {\n        res[j][H -\
+    \ 1 - i] = v[i][j];\n      }\n    }\n  }\n  return res;\n}\n\n}  // namespace\
+    \ Nyaan\n#line 58 \"template/template.hpp\"\n\n// bit operation\n#line 1 \"template/bitop.hpp\"\
+    \nnamespace Nyaan {\n__attribute__((target(\"popcnt\"))) inline int popcnt(const\
+    \ u64 &a) {\n  return __builtin_popcountll(a);\n}\ninline int lsb(const u64 &a)\
+    \ { return a ? __builtin_ctzll(a) : 64; }\ninline int ctz(const u64 &a) { return\
+    \ a ? __builtin_ctzll(a) : 64; }\ninline int msb(const u64 &a) { return a ? 63\
+    \ - __builtin_clzll(a) : -1; }\ntemplate <typename T>\ninline int gbit(const T\
+    \ &a, int i) {\n  return (a >> i) & 1;\n}\ntemplate <typename T>\ninline void\
+    \ sbit(T &a, int i, bool b) {\n  if (gbit(a, i) != b) a ^= T(1) << i;\n}\nconstexpr\
+    \ long long PW(int n) { return 1LL << n; }\nconstexpr long long MSK(int n) { return\
+    \ (1LL << n) - 1; }\n}  // namespace Nyaan\n#line 61 \"template/template.hpp\"\
+    \n\n// inout\n#line 1 \"template/inout.hpp\"\nnamespace Nyaan {\n\ntemplate <typename\
+    \ T, typename U>\nostream &operator<<(ostream &os, const pair<T, U> &p) {\n  os\
+    \ << p.first << \" \" << p.second;\n  return os;\n}\ntemplate <typename T, typename\
+    \ U>\nistream &operator>>(istream &is, pair<T, U> &p) {\n  is >> p.first >> p.second;\n\
+    \  return is;\n}\n\ntemplate <typename T>\nostream &operator<<(ostream &os, const\
+    \ vector<T> &v) {\n  int s = (int)v.size();\n  for (int i = 0; i < s; i++) os\
+    \ << (i ? \" \" : \"\") << v[i];\n  return os;\n}\ntemplate <typename T>\nistream\
+    \ &operator>>(istream &is, vector<T> &v) {\n  for (auto &x : v) is >> x;\n  return\
+    \ is;\n}\n\nistream &operator>>(istream &is, __int128_t &x) {\n  string S;\n \
+    \ is >> S;\n  x = 0;\n  int flag = 0;\n  for (auto &c : S) {\n    if (c == '-')\
+    \ {\n      flag = true;\n      continue;\n    }\n    x *= 10;\n    x += c - '0';\n\
+    \  }\n  if (flag) x = -x;\n  return is;\n}\n\nistream &operator>>(istream &is,\
+    \ __uint128_t &x) {\n  string S;\n  is >> S;\n  x = 0;\n  for (auto &c : S) {\n\
+    \    x *= 10;\n    x += c - '0';\n  }\n  return is;\n}\n\nostream &operator<<(ostream\
+    \ &os, __int128_t x) {\n  if (x == 0) return os << 0;\n  if (x < 0) os << '-',\
+    \ x = -x;\n  string S;\n  while (x) S.push_back('0' + x % 10), x /= 10;\n  reverse(begin(S),\
+    \ end(S));\n  return os << S;\n}\nostream &operator<<(ostream &os, __uint128_t\
+    \ x) {\n  if (x == 0) return os << 0;\n  string S;\n  while (x) S.push_back('0'\
+    \ + x % 10), x /= 10;\n  reverse(begin(S), end(S));\n  return os << S;\n}\n\n\
+    void in() {}\ntemplate <typename T, class... U>\nvoid in(T &t, U &...u) {\n  cin\
+    \ >> t;\n  in(u...);\n}\n\nvoid out() { cout << \"\\n\"; }\ntemplate <typename\
+    \ T, class... U, char sep = ' '>\nvoid out(const T &t, const U &...u) {\n  cout\
+    \ << t;\n  if (sizeof...(u)) cout << sep;\n  out(u...);\n}\n\nstruct IoSetupNya\
+    \ {\n  IoSetupNya() {\n    cin.tie(nullptr);\n    ios::sync_with_stdio(false);\n\
+    \    cout << fixed << setprecision(15);\n    cerr << fixed << setprecision(7);\n\
+    \  }\n} iosetupnya;\n\n}  // namespace Nyaan\n#line 64 \"template/template.hpp\"\
+    \n\n// debug\n#line 1 \"template/debug.hpp\"\nnamespace DebugImpl {\n\ntemplate\
+    \ <typename U, typename = void>\nstruct is_specialize : false_type {};\ntemplate\
+    \ <typename U>\nstruct is_specialize<\n    U, typename conditional<false, typename\
+    \ U::iterator, void>::type>\n    : true_type {};\ntemplate <typename U>\nstruct\
+    \ is_specialize<\n    U, typename conditional<false, decltype(U::first), void>::type>\n\
+    \    : true_type {};\ntemplate <typename U>\nstruct is_specialize<U, enable_if_t<is_integral<U>::value,\
+    \ void>> : true_type {\n};\n\nvoid dump(const char& t) { cerr << t; }\n\nvoid\
+    \ dump(const string& t) { cerr << t; }\n\nvoid dump(const bool& t) { cerr << (t\
+    \ ? \"true\" : \"false\"); }\n\nvoid dump(__int128_t t) {\n  if (t == 0) cerr\
+    \ << 0;\n  if (t < 0) cerr << '-', t = -t;\n  string S;\n  while (t) S.push_back('0'\
+    \ + t % 10), t /= 10;\n  reverse(begin(S), end(S));\n  cerr << S;\n}\n\nvoid dump(__uint128_t\
+    \ t) {\n  if (t == 0) cerr << 0;\n  string S;\n  while (t) S.push_back('0' + t\
+    \ % 10), t /= 10;\n  reverse(begin(S), end(S));\n  cerr << S;\n}\n\ntemplate <typename\
+    \ U,\n          enable_if_t<!is_specialize<U>::value, nullptr_t> = nullptr>\n\
+    void dump(const U& t) {\n  cerr << t;\n}\n\ntemplate <typename T>\nvoid dump(const\
+    \ T& t, enable_if_t<is_integral<T>::value>* = nullptr) {\n  string res;\n  if\
+    \ (t == Nyaan::inf) res = \"inf\";\n  if constexpr (is_signed<T>::value) {\n \
+    \   if (t == -Nyaan::inf) res = \"-inf\";\n  }\n  if constexpr (sizeof(T) == 8)\
+    \ {\n    if (t == Nyaan::infLL) res = \"inf\";\n    if constexpr (is_signed<T>::value)\
+    \ {\n      if (t == -Nyaan::infLL) res = \"-inf\";\n    }\n  }\n  if (res.empty())\
+    \ res = to_string(t);\n  cerr << res;\n}\n\ntemplate <typename T, typename U>\n\
+    void dump(const pair<T, U>&);\ntemplate <typename T>\nvoid dump(const pair<T*,\
+    \ int>&);\n\ntemplate <typename T>\nvoid dump(const T& t,\n          enable_if_t<!is_void<typename\
+    \ T::iterator>::value>* = nullptr) {\n  cerr << \"[ \";\n  for (auto it = t.begin();\
+    \ it != t.end();) {\n    dump(*it);\n    cerr << (++it == t.end() ? \"\" : \"\
+    , \");\n  }\n  cerr << \" ]\";\n}\n\ntemplate <typename T, typename U>\nvoid dump(const\
+    \ pair<T, U>& t) {\n  cerr << \"( \";\n  dump(t.first);\n  cerr << \", \";\n \
+    \ dump(t.second);\n  cerr << \" )\";\n}\n\ntemplate <typename T>\nvoid dump(const\
+    \ pair<T*, int>& t) {\n  cerr << \"[ \";\n  for (int i = 0; i < t.second; i++)\
+    \ {\n    dump(t.first[i]);\n    cerr << (i == t.second - 1 ? \"\" : \", \");\n\
+    \  }\n  cerr << \" ]\";\n}\n\nvoid trace() { cerr << endl; }\ntemplate <typename\
+    \ Head, typename... Tail>\nvoid trace(Head&& head, Tail&&... tail) {\n  cerr <<\
+    \ \" \";\n  dump(head);\n  if (sizeof...(tail) != 0) cerr << \",\";\n  trace(std::forward<Tail>(tail)...);\n\
+    }\n\n}  // namespace DebugImpl\n\n#ifdef NyaanDebug\n#define trc(...)        \
+    \                    \\\n  do {                                      \\\n    cerr\
+    \ << \"## \" << #__VA_ARGS__ << \" = \"; \\\n    DebugImpl::trace(__VA_ARGS__);\
+    \          \\\n  } while (0)\n#else\n#define trc(...) (void(0))\n#endif\n\n#ifdef\
+    \ NyaanLocal\n#define trc2(...)                           \\\n  do {         \
+    \                             \\\n    cerr << \"## \" << #__VA_ARGS__ << \" =\
+    \ \"; \\\n    DebugImpl::trace(__VA_ARGS__);          \\\n  } while (0)\n#else\n\
+    #define trc2(...) (void(0))\n#endif\n#line 67 \"template/template.hpp\"\n\n//\
+    \ macro\n#line 1 \"template/macro.hpp\"\n#define each(x, v) for (auto&& x : v)\n\
+    #define each2(x, y, v) for (auto&& [x, y] : v)\n#define all(v) (v).begin(), (v).end()\n\
+    #define rep(i, N) for (long long i = 0; i < (long long)(N); i++)\n#define repr(i,\
+    \ N) for (long long i = (long long)(N)-1; i >= 0; i--)\n#define rep1(i, N) for\
+    \ (long long i = 1; i <= (long long)(N); i++)\n#define repr1(i, N) for (long long\
+    \ i = (N); (long long)(i) > 0; i--)\n#define reg(i, a, b) for (long long i = (a);\
+    \ i < (b); i++)\n#define regr(i, a, b) for (long long i = (b)-1; i >= (a); i--)\n\
+    #define fi first\n#define se second\n#define ini(...)   \\\n  int __VA_ARGS__;\
+    \ \\\n  in(__VA_ARGS__)\n#define inl(...)         \\\n  long long __VA_ARGS__;\
+    \ \\\n  in(__VA_ARGS__)\n#define ins(...)      \\\n  string __VA_ARGS__; \\\n\
+    \  in(__VA_ARGS__)\n#define in2(s, t)                           \\\n  for (int\
+    \ i = 0; i < (int)s.size(); i++) { \\\n    in(s[i], t[i]);                   \
+    \      \\\n  }\n#define in3(s, t, u)                        \\\n  for (int i =\
+    \ 0; i < (int)s.size(); i++) { \\\n    in(s[i], t[i], u[i]);                 \
+    \  \\\n  }\n#define in4(s, t, u, v)                     \\\n  for (int i = 0;\
+    \ i < (int)s.size(); i++) { \\\n    in(s[i], t[i], u[i], v[i]);             \\\
+    \n  }\n#define die(...)             \\\n  do {                       \\\n    Nyaan::out(__VA_ARGS__);\
+    \ \\\n    return;                  \\\n  } while (0)\n#line 70 \"template/template.hpp\"\
+    \n\nnamespace Nyaan {\nvoid solve();\n}\nint main() { Nyaan::solve(); }\n#line\
+    \ 4 \"verify/verify-unit-test/gauss-elimination.test.cpp\"\n//\n#line 2 \"matrix/matrix.hpp\"\
+    \n\n#line 2 \"matrix/inverse-matrix.hpp\"\n\n#line 2 \"matrix/gauss-elimination.hpp\"\
+    \n\n#line 5 \"matrix/gauss-elimination.hpp\"\nusing namespace std;\n\n// {rank,\
+    \ det(\u975E\u6B63\u65B9\u884C\u5217\u306E\u5834\u5408\u306F\u672A\u5B9A\u7FA9\
+    )} \u3092\u8FD4\u3059\n// \u578B\u304C double \u3084 Rational \u3067\u3082\u52D5\
+    \u304F\u306F\u305A\uFF1F(\u672A\u691C\u8A3C)\n//\n// pivot \u5019\u88DC : [0,\
+    \ pivot_end)\ntemplate <typename T>\nstd::pair<int, T> GaussElimination(vector<vector<T>>\
+    \ &a, int pivot_end = -1,\n                                   bool diagonalize\
+    \ = false) {\n  if (a.empty()) return {0, 1};\n  int H = a.size(), W = a[0].size(),\
+    \ rank = 0;\n  if (pivot_end == -1) pivot_end = W;\n  T det = 1;\n  for (int j\
+    \ = 0; j < pivot_end; j++) {\n    int idx = -1;\n    for (int i = rank; i < H;\
+    \ i++) {\n      if (a[i][j] != T(0)) {\n        idx = i;\n        break;\n   \
+    \   }\n    }\n    if (idx == -1) {\n      det = 0;\n      continue;\n    }\n \
+    \   if (rank != idx) det = -det, swap(a[rank], a[idx]);\n    det *= a[rank][j];\n\
+    \    if (diagonalize && a[rank][j] != T(1)) {\n      T coeff = T(1) / a[rank][j];\n\
+    \      for (int k = j; k < W; k++) a[rank][k] *= coeff;\n    }\n    int is = diagonalize\
+    \ ? 0 : rank + 1;\n    for (int i = is; i < H; i++) {\n      if (i == rank) continue;\n\
+    \      if (a[i][j] != T(0)) {\n        T coeff = a[i][j] / a[rank][j];\n     \
+    \   for (int k = j; k < W; k++) a[i][k] -= a[rank][k] * coeff;\n      }\n    }\n\
+    \    rank++;\n  }\n  return make_pair(rank, det);\n}\n#line 4 \"matrix/inverse-matrix.hpp\"\
+    \n\ntemplate <typename mint>\nvector<vector<mint>> inverse_matrix(const vector<vector<mint>>&\
+    \ a) {\n  int N = a.size();\n  assert(N > 0);\n  assert(N == (int)a[0].size());\n\
+    \n  vector<vector<mint>> m(N, vector<mint>(2 * N));\n  for (int i = 0; i < N;\
+    \ i++) {\n    copy(begin(a[i]), end(a[i]), begin(m[i]));\n    m[i][N + i] = 1;\n\
+    \  }\n\n  auto [rank, det] = GaussElimination(m, N, true);\n  if (rank != N) return\
+    \ {};\n\n  vector<vector<mint>> b(N);\n  for (int i = 0; i < N; i++) {\n    copy(begin(m[i])\
+    \ + N, end(m[i]), back_inserter(b[i]));\n  }\n  return b;\n}\n#line 4 \"matrix/matrix.hpp\"\
+    \n\ntemplate <class T>\nstruct Matrix {\n  vector<vector<T> > A;\n\n  Matrix()\
+    \ = default;\n  Matrix(int n, int m) : A(n, vector<T>(m, T())) {}\n  Matrix(int\
+    \ n) : A(n, vector<T>(n, T())){};\n\n  int H() const { return A.size(); }\n\n\
+    \  int W() const { return A[0].size(); }\n\n  int size() const { return A.size();\
+    \ }\n\n  inline const vector<T> &operator[](int k) const { return A[k]; }\n\n\
+    \  inline vector<T> &operator[](int k) { return A[k]; }\n\n  static Matrix I(int\
+    \ n) {\n    Matrix mat(n);\n    for (int i = 0; i < n; i++) mat[i][i] = 1;\n \
+    \   return (mat);\n  }\n\n  Matrix &operator+=(const Matrix &B) {\n    int n =\
+    \ H(), m = W();\n    assert(n == B.H() && m == B.W());\n    for (int i = 0; i\
+    \ < n; i++)\n      for (int j = 0; j < m; j++) (*this)[i][j] += B[i][j];\n   \
+    \ return (*this);\n  }\n\n  Matrix &operator-=(const Matrix &B) {\n    int n =\
+    \ H(), m = W();\n    assert(n == B.H() && m == B.W());\n    for (int i = 0; i\
+    \ < n; i++)\n      for (int j = 0; j < m; j++) (*this)[i][j] -= B[i][j];\n   \
+    \ return (*this);\n  }\n\n  Matrix &operator*=(const Matrix &B) {\n    int n =\
+    \ H(), m = B.W(), p = W();\n    assert(p == B.H());\n    vector<vector<T> > C(n,\
+    \ vector<T>(m, T{}));\n    for (int i = 0; i < n; i++)\n      for (int k = 0;\
+    \ k < p; k++)\n        for (int j = 0; j < m; j++) C[i][j] += (*this)[i][k] *\
+    \ B[k][j];\n    A.swap(C);\n    return (*this);\n  }\n\n  Matrix &operator^=(long\
+    \ long k) {\n    Matrix B = Matrix::I(H());\n    while (k > 0) {\n      if (k\
+    \ & 1) B *= *this;\n      *this *= *this;\n      k >>= 1LL;\n    }\n    A.swap(B.A);\n\
+    \    return (*this);\n  }\n\n  Matrix operator+(const Matrix &B) const { return\
+    \ (Matrix(*this) += B); }\n\n  Matrix operator-(const Matrix &B) const { return\
+    \ (Matrix(*this) -= B); }\n\n  Matrix operator*(const Matrix &B) const { return\
+    \ (Matrix(*this) *= B); }\n\n  Matrix operator^(const long long k) const { return\
+    \ (Matrix(*this) ^= k); }\n\n  bool operator==(const Matrix &B) const {\n    assert(H()\
+    \ == B.H() && W() == B.W());\n    for (int i = 0; i < H(); i++)\n      for (int\
+    \ j = 0; j < W(); j++)\n        if (A[i][j] != B[i][j]) return false;\n    return\
+    \ true;\n  }\n\n  bool operator!=(const Matrix &B) const {\n    assert(H() ==\
+    \ B.H() && W() == B.W());\n    for (int i = 0; i < H(); i++)\n      for (int j\
+    \ = 0; j < W(); j++)\n        if (A[i][j] != B[i][j]) return true;\n    return\
+    \ false;\n  }\n\n  Matrix inverse() const {\n    assert(H() == W());\n    Matrix\
+    \ B(H());\n    B.A = inverse_matrix(A);\n    return B;\n  }\n\n  friend ostream\
+    \ &operator<<(ostream &os, const Matrix &p) {\n    int n = p.H(), m = p.W();\n\
+    \    for (int i = 0; i < n; i++) {\n      os << (i ? \"   \" : \"\") << \"[\"\
+    ;\n      for (int j = 0; j < m; j++) {\n        os << p[i][j] << (j + 1 == m ?\
+    \ \"]\\n\" : \",\");\n      }\n    }\n    return (os);\n  }\n\n  T determinant()\
+    \ const {\n    Matrix B(*this);\n    assert(H() == W());\n    T ret = 1;\n   \
+    \ for (int i = 0; i < H(); i++) {\n      int idx = -1;\n      for (int j = i;\
+    \ j < W(); j++) {\n        if (B[j][i] != 0) {\n          idx = j;\n         \
+    \ break;\n        }\n      }\n      if (idx == -1) return 0;\n      if (i != idx)\
+    \ {\n        ret *= T(-1);\n        swap(B[i], B[idx]);\n      }\n      ret *=\
+    \ B[i][i];\n      T inv = T(1) / B[i][i];\n      for (int j = 0; j < W(); j++)\
+    \ {\n        B[i][j] *= inv;\n      }\n      for (int j = i + 1; j < H(); j++)\
+    \ {\n        T a = B[j][i];\n        if (a == 0) continue;\n        for (int k\
+    \ = i; k < W(); k++) {\n          B[j][k] -= B[i][k] * a;\n        }\n      }\n\
+    \    }\n    return ret;\n  }\n};\n\n/**\n * @brief \u884C\u5217\u30E9\u30A4\u30D6\
+    \u30E9\u30EA\n */\n#line 7 \"verify/verify-unit-test/gauss-elimination.test.cpp\"\
+    \n//\nnamespace Normal {\n#line 2 \"matrix/linear-equation.hpp\"\n\n#line 4 \"\
+    matrix/linear-equation.hpp\"\n\n// \u89E3\u304C\u5B58\u5728\u3059\u308B\u5834\u5408\
+    \u306F, \u89E3\u304C v + C_1 w_1 + ... + C_k w_k \u3068\u8868\u305B\u308B\u3068\
+    \u3057\u3066\n// (v, w_1, ..., w_k) \u3092\u8FD4\u3059\n// \u89E3\u304C\u5B58\u5728\
+    \u3057\u306A\u3044\u5834\u5408\u306F\u7A7A\u306E\u30D9\u30AF\u30C8\u30EB\u3092\
+    \u8FD4\u3059\n//\n// double \u3084 Rational \u3067\u3082\u52D5\u304F\u306F\u305A\
+    \uFF1F(\u672A\u691C\u8A3C)\ntemplate <typename T>\nvector<vector<T>> LinearEquation(vector<vector<T>>\
+    \ a, vector<T> b) {\n  int H = a.size(), W = a[0].size();\n  for (int i = 0; i\
+    \ < H; i++) a[i].push_back(b[i]);\n  auto p = GaussElimination(a, W, true);\n\
+    \  int rank = p.first;\n  for (int i = rank; i < H; ++i) {\n    if (a[i][W] !=\
+    \ 0) return vector<vector<T>>{};\n  }\n  vector<vector<T>> res(1, vector<T>(W));\n\
+    \  vector<int> pivot(W, -1);\n  for (int i = 0, j = 0; i < rank; ++i) {\n    while\
+    \ (a[i][j] == 0) ++j;\n    res[0][j] = a[i][W], pivot[j] = i;\n  }\n  for (int\
+    \ j = 0; j < W; ++j) {\n    if (pivot[j] == -1) {\n      vector<T> x(W);\n   \
+    \   x[j] = 1;\n      for (int k = 0; k < j; ++k) {\n        if (pivot[k] != -1)\
+    \ x[k] = -a[pivot[k]][j];\n      }\n      res.push_back(x);\n    }\n  }\n  return\
+    \ res;\n}\n#line 10 \"verify/verify-unit-test/gauss-elimination.test.cpp\"\n}\
+    \  // namespace Normal\nnamespace Fast {\n#line 2 \"modulo/gauss-elimination-fast.hpp\"\
+    \n\n#line 2 \"modint/simd-montgomery.hpp\"\n\n#line 4 \"modint/simd-montgomery.hpp\"\
+    \n\n__attribute__((target(\"sse4.2\"))) inline __m128i my128_mullo_epu32(\n  \
+    \  const __m128i &a, const __m128i &b) {\n  return _mm_mullo_epi32(a, b);\n}\n\
+    \n__attribute__((target(\"sse4.2\"))) inline __m128i my128_mulhi_epu32(\n    const\
+    \ __m128i &a, const __m128i &b) {\n  __m128i a13 = _mm_shuffle_epi32(a, 0xF5);\n\
+    \  __m128i b13 = _mm_shuffle_epi32(b, 0xF5);\n  __m128i prod02 = _mm_mul_epu32(a,\
+    \ b);\n  __m128i prod13 = _mm_mul_epu32(a13, b13);\n  __m128i prod = _mm_unpackhi_epi64(_mm_unpacklo_epi32(prod02,\
+    \ prod13),\n                                    _mm_unpackhi_epi32(prod02, prod13));\n\
+    \  return prod;\n}\n\n__attribute__((target(\"sse4.2\"))) inline __m128i montgomery_mul_128(\n\
+    \    const __m128i &a, const __m128i &b, const __m128i &r, const __m128i &m1)\
+    \ {\n  return _mm_sub_epi32(\n      _mm_add_epi32(my128_mulhi_epu32(a, b), m1),\n\
+    \      my128_mulhi_epu32(my128_mullo_epu32(my128_mullo_epu32(a, b), r), m1));\n\
+    }\n\n__attribute__((target(\"sse4.2\"))) inline __m128i montgomery_add_128(\n\
+    \    const __m128i &a, const __m128i &b, const __m128i &m2, const __m128i &m0)\
+    \ {\n  __m128i ret = _mm_sub_epi32(_mm_add_epi32(a, b), m2);\n  return _mm_add_epi32(_mm_and_si128(_mm_cmpgt_epi32(m0,\
+    \ ret), m2), ret);\n}\n\n__attribute__((target(\"sse4.2\"))) inline __m128i montgomery_sub_128(\n\
+    \    const __m128i &a, const __m128i &b, const __m128i &m2, const __m128i &m0)\
+    \ {\n  __m128i ret = _mm_sub_epi32(a, b);\n  return _mm_add_epi32(_mm_and_si128(_mm_cmpgt_epi32(m0,\
+    \ ret), m2), ret);\n}\n\n__attribute__((target(\"avx2\"))) inline __m256i my256_mullo_epu32(\n\
+    \    const __m256i &a, const __m256i &b) {\n  return _mm256_mullo_epi32(a, b);\n\
+    }\n\n__attribute__((target(\"avx2\"))) inline __m256i my256_mulhi_epu32(\n   \
+    \ const __m256i &a, const __m256i &b) {\n  __m256i a13 = _mm256_shuffle_epi32(a,\
+    \ 0xF5);\n  __m256i b13 = _mm256_shuffle_epi32(b, 0xF5);\n  __m256i prod02 = _mm256_mul_epu32(a,\
+    \ b);\n  __m256i prod13 = _mm256_mul_epu32(a13, b13);\n  __m256i prod = _mm256_unpackhi_epi64(_mm256_unpacklo_epi32(prod02,\
+    \ prod13),\n                                       _mm256_unpackhi_epi32(prod02,\
+    \ prod13));\n  return prod;\n}\n\n__attribute__((target(\"avx2\"))) inline __m256i\
+    \ montgomery_mul_256(\n    const __m256i &a, const __m256i &b, const __m256i &r,\
+    \ const __m256i &m1) {\n  return _mm256_sub_epi32(\n      _mm256_add_epi32(my256_mulhi_epu32(a,\
+    \ b), m1),\n      my256_mulhi_epu32(my256_mullo_epu32(my256_mullo_epu32(a, b),\
+    \ r), m1));\n}\n\n__attribute__((target(\"avx2\"))) inline __m256i montgomery_add_256(\n\
+    \    const __m256i &a, const __m256i &b, const __m256i &m2, const __m256i &m0)\
+    \ {\n  __m256i ret = _mm256_sub_epi32(_mm256_add_epi32(a, b), m2);\n  return _mm256_add_epi32(_mm256_and_si256(_mm256_cmpgt_epi32(m0,\
+    \ ret), m2),\n                          ret);\n}\n\n__attribute__((target(\"avx2\"\
+    ))) inline __m256i montgomery_sub_256(\n    const __m256i &a, const __m256i &b,\
+    \ const __m256i &m2, const __m256i &m0) {\n  __m256i ret = _mm256_sub_epi32(a,\
+    \ b);\n  return _mm256_add_epi32(_mm256_and_si256(_mm256_cmpgt_epi32(m0, ret),\
+    \ m2),\n                          ret);\n}\n#line 4 \"modulo/gauss-elimination-fast.hpp\"\
+    \n\n\nnamespace Gauss {\n  \nconstexpr int MAT_SIZE = 4096;\nuint32_t a_buf_[MAT_SIZE][MAT_SIZE]\
+    \ __attribute__((aligned(64)));\n\n// return value: (rank, (-1) ^ (number of swap\
+    \ time))\ntemplate <typename mint>\n__attribute__((target(\"avx2\"))) pair<int,\
+    \ mint> GaussianElimination(\n    const vector<vector<mint>> &m, int LinearEquation\
+    \ = false) {\n  mint(&a)[MAT_SIZE][MAT_SIZE] = *reinterpret_cast<mint(*)[MAT_SIZE][MAT_SIZE]>(a_buf_);\n\
+    \  int H = m.size(), W = m[0].size(), rank = 0;\n  mint det = 1;\n  for (int i\
+    \ = 0; i < H; i++)\n    for (int j = 0; j < W; j++) a[i][j].a = m[i][j].a;\n\n\
+    \  __m256i r = _mm256_set1_epi32(mint::r);\n  __m256i m0 = _mm256_set1_epi32(0);\n\
+    \  __m256i m1 = _mm256_set1_epi32(mint::get_mod());\n  __m256i m2 = _mm256_set1_epi32(mint::get_mod()\
+    \ << 1);\n\n  for (int j = 0; j < (LinearEquation ? (W - 1) : W); j++) {\n   \
+    \ // find basis\n    if (rank == H) break;\n    int idx = -1;\n    for (int i\
+    \ = rank; i < H; i++) {\n      if (a[i][j].get() != 0) {\n        idx = i;\n \
+    \       break;\n      }\n    }\n    if (idx == -1) {\n      det = 0;\n      continue;\n\
+    \    }\n\n    // swap\n    if (rank != idx) {\n      det = -det;\n      for (int\
+    \ l = j; l < W; l++) swap(a[rank][l], a[idx][l]);\n    }\n    det *= a[rank][j];\n\
+    \n    // normalize\n    if (LinearEquation) {\n      if (a[rank][j].get() != 1)\
+    \ {\n        mint coeff = a[rank][j].inverse();\n        __m256i COEFF = _mm256_set1_epi32(coeff.a);\n\
+    \        for (int i = j / 8 * 8; i < W; i += 8) {\n          __m256i R = _mm256_load_si256((__m256i\
+    \ *)(a[rank] + i));\n          __m256i RmulC = montgomery_mul_256(R, COEFF, r,\
+    \ m1);\n          _mm256_store_si256((__m256i *)(a[rank] + i), RmulC);\n     \
+    \   }\n      }\n    }\n\n    // elimination\n    for (int k = (LinearEquation\
+    \ ? 0 : rank + 1); k < H; k++) {\n      if (k == rank) continue;\n      if (a[k][j].get()\
+    \ != 0) {\n        mint coeff = a[k][j] / a[rank][j];\n        __m256i COEFF =\
+    \ _mm256_set1_epi32(coeff.a);\n        for (int i = j / 8 * 8; i < W; i += 8)\
+    \ {\n          __m256i R = _mm256_load_si256((__m256i *)(a[rank] + i));\n    \
+    \      __m256i K = _mm256_load_si256((__m256i *)(a[k] + i));\n          __m256i\
+    \ RmulC = montgomery_mul_256(R, COEFF, r, m1);\n          __m256i KmnsR = montgomery_sub_256(K,\
+    \ RmulC, m2, m0);\n          _mm256_store_si256((__m256i *)(a[k] + i), KmnsR);\n\
+    \        }\n      }\n    }\n    rank++;\n  }\n  return {rank, det};\n}\n\n// calculate\
+    \ determinant\ntemplate <typename mint>\nmint determinant(const vector<vector<mint>>\
+    \ &mat) {\n  return GaussianElimination(mat).second;\n}\n\n// return V<V<mint>>\n\
+    // 0 column ... one of solutions\n// 1 ~ (W - rank) column ... bases\n// if not\
+    \ exist, return empty vector\ntemplate <typename mint>\nvector<vector<mint>> LinearEquation(vector<vector<mint>>\
+    \ A, vector<mint> B) {\n  int H = A.size(), W = A[0].size();\n  for (int i = 0;\
+    \ i < H; i++) A[i].push_back(B[i]);\n\n  auto p = GaussianElimination(A, true);\n\
+    \n  mint(&a)[MAT_SIZE][MAT_SIZE] = *reinterpret_cast<mint(*)[MAT_SIZE][MAT_SIZE]>(a_buf_);\n\
+    \  int rank = p.first;\n\n  // check if solutions exist\n  for (int i = rank;\
+    \ i < H; ++i)\n    if (a[i][W] != 0) return vector<vector<mint>>{};\n\n  vector<vector<mint>>\
+    \ res(1, vector<mint>(W));\n  vector<int> pivot(W, -1);\n  for (int i = 0, j =\
+    \ 0; i < rank; ++i) {\n    while (a[i][j] == 0) ++j;\n    res[0][j] = a[i][W],\
+    \ pivot[j] = i;\n  }\n  for (int j = 0; j < W; ++j) {\n    if (pivot[j] == -1)\
+    \ {\n      vector<mint> x(W);\n      x[j] = 1;\n      for (int k = 0; k < j; ++k)\n\
+    \        if (pivot[k] != -1) x[k] = -a[pivot[k]][j];\n      res.push_back(x);\n\
+    \    }\n  }\n  return res;\n}\n\n}  // namespace Gauss\n\nusing Gauss::determinant;\n\
+    using Gauss::LinearEquation;\n#line 13 \"verify/verify-unit-test/gauss-elimination.test.cpp\"\
+    \n}  // namespace Fast\n\n#line 2 \"misc/rng.hpp\"\n\n#line 2 \"internal/internal-seed.hpp\"\
+    \n\n#line 4 \"internal/internal-seed.hpp\"\nusing namespace std;\n\nnamespace\
+    \ internal {\nunsigned long long non_deterministic_seed() {\n  unsigned long long\
+    \ m =\n      chrono::duration_cast<chrono::nanoseconds>(\n          chrono::high_resolution_clock::now().time_since_epoch())\n\
+    \          .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >>\
+    \ 31, m ^= m << 35;\n  return m;\n}\nunsigned long long deterministic_seed() {\
+    \ return 88172645463325252UL; }\n\n// 64 bit \u306E seed \u5024\u3092\u751F\u6210\
+    \ (\u624B\u5143\u3067\u306F seed \u56FA\u5B9A)\n// \u9023\u7D9A\u3067\u547C\u3073\
+    \u51FA\u3059\u3068\u540C\u3058\u5024\u304C\u4F55\u5EA6\u3082\u8FD4\u3063\u3066\
+    \u304F\u308B\u306E\u3067\u6CE8\u610F\n// #define RANDOMIZED_SEED \u3059\u308B\u3068\
+    \u30B7\u30FC\u30C9\u304C\u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long\
+    \ long seed() {\n#if defined(NyaanLocal) && !defined(RANDOMIZED_SEED)\n  return\
+    \ deterministic_seed();\n#else\n  return non_deterministic_seed();\n#endif\n}\n\
+    \n}  // namespace internal\n#line 4 \"misc/rng.hpp\"\n\nnamespace my_rand {\n\
+    using i64 = long long;\nusing u64 = unsigned long long;\n\n// [0, 2^64 - 1)\n\
+    u64 rng() {\n  static u64 _x = internal::seed();\n  return _x ^= _x << 7, _x ^=\
+    \ _x >> 9;\n}\n\n// [l, r]\ni64 rng(i64 l, i64 r) {\n  assert(l <= r);\n  return\
+    \ l + rng() % u64(r - l + 1);\n}\n\n// [l, r)\ni64 randint(i64 l, i64 r) {\n \
+    \ assert(l < r);\n  return l + rng() % u64(r - l);\n}\n\n// choose n numbers from\
+    \ [l, r) without overlapping\nvector<i64> randset(i64 l, i64 r, i64 n) {\n  assert(l\
+    \ <= r && n <= r - l);\n  unordered_set<i64> s;\n  for (i64 i = n; i; --i) {\n\
+    \    i64 m = randint(l, r + 1 - i);\n    if (s.find(m) != s.end()) m = r - i;\n\
+    \    s.insert(m);\n  }\n  vector<i64> ret;\n  for (auto& x : s) ret.push_back(x);\n\
+    \  sort(begin(ret), end(ret));\n  return ret;\n}\n\n// [0.0, 1.0)\ndouble rnd()\
+    \ { return rng() * 5.42101086242752217004e-20; }\n// [l, r)\ndouble rnd(double\
+    \ l, double r) {\n  assert(l < r);\n  return l + rnd() * (r - l);\n}\n\ntemplate\
+    \ <typename T>\nvoid randshf(vector<T>& v) {\n  int n = v.size();\n  for (int\
+    \ i = 1; i < n; i++) swap(v[i], v[randint(0, i + 1)]);\n}\n\n}  // namespace my_rand\n\
+    \nusing my_rand::randint;\nusing my_rand::randset;\nusing my_rand::randshf;\n\
+    using my_rand::rnd;\nusing my_rand::rng;\n#line 2 \"modint/montgomery-modint.hpp\"\
+    \n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n\
+    \  using i32 = int32_t;\n  using u32 = uint32_t;\n  using u64 = uint64_t;\n\n\
+    \  static constexpr u32 get_r() {\n    u32 ret = mod;\n    for (i32 i = 0; i <\
+    \ 4; ++i) ret *= 2 - mod * ret;\n    return ret;\n  }\n\n  static constexpr u32\
+    \ r = get_r();\n  static constexpr u32 n2 = -u64(mod) % mod;\n  static_assert(mod\
+    \ < (1 << 30), \"invalid, mod >= 2 ^ 30\");\n  static_assert((mod & 1) == 1, \"\
+    invalid, mod % 2 == 0\");\n  static_assert(r * mod == 1, \"this code has bugs.\"\
+    );\n\n  u32 a;\n\n  constexpr LazyMontgomeryModInt() : a(0) {}\n  constexpr LazyMontgomeryModInt(const\
+    \ int64_t &b)\n      : a(reduce(u64(b % mod + mod) * n2)){};\n\n  static constexpr\
+    \ u32 reduce(const u64 &b) {\n    return (b + u64(u32(b) * u32(-r)) * mod) >>\
+    \ 32;\n  }\n\n  constexpr mint &operator+=(const mint &b) {\n    if (i32(a +=\
+    \ b.a - 2 * mod) < 0) a += 2 * mod;\n    return *this;\n  }\n\n  constexpr mint\
+    \ &operator-=(const mint &b) {\n    if (i32(a -= b.a) < 0) a += 2 * mod;\n   \
+    \ return *this;\n  }\n\n  constexpr mint &operator*=(const mint &b) {\n    a =\
+    \ reduce(u64(a) * b.a);\n    return *this;\n  }\n\n  constexpr mint &operator/=(const\
+    \ mint &b) {\n    *this *= b.inverse();\n    return *this;\n  }\n\n  constexpr\
+    \ mint operator+(const mint &b) const { return mint(*this) += b; }\n  constexpr\
+    \ mint operator-(const mint &b) const { return mint(*this) -= b; }\n  constexpr\
+    \ mint operator*(const mint &b) const { return mint(*this) *= b; }\n  constexpr\
+    \ mint operator/(const mint &b) const { return mint(*this) /= b; }\n  constexpr\
+    \ bool operator==(const mint &b) const {\n    return (a >= mod ? a - mod : a)\
+    \ == (b.a >= mod ? b.a - mod : b.a);\n  }\n  constexpr bool operator!=(const mint\
+    \ &b) const {\n    return (a >= mod ? a - mod : a) != (b.a >= mod ? b.a - mod\
+    \ : b.a);\n  }\n  constexpr mint operator-() const { return mint() - mint(*this);\
+    \ }\n  constexpr mint operator+() const { return mint(*this); }\n\n  constexpr\
+    \ mint pow(u64 n) const {\n    mint ret(1), mul(*this);\n    while (n > 0) {\n\
+    \      if (n & 1) ret *= mul;\n      mul *= mul;\n      n >>= 1;\n    }\n    return\
+    \ ret;\n  }\n\n  constexpr mint inverse() const {\n    int x = get(), y = mod,\
+    \ u = 1, v = 0, t = 0, tmp = 0;\n    while (y > 0) {\n      t = x / y;\n     \
+    \ x -= t * y, u -= t * v;\n      tmp = x, x = y, y = tmp;\n      tmp = u, u =\
+    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend ostream &operator<<(ostream\
+    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend istream &operator>>(istream\
+    \ &is, mint &b) {\n    int64_t t;\n    is >> t;\n    b = LazyMontgomeryModInt<mod>(t);\n\
+    \    return (is);\n  }\n\n  constexpr u32 get() const {\n    u32 ret = reduce(a);\n\
+    \    return ret >= mod ? ret - mod : ret;\n  }\n\n  static constexpr u32 get_mod()\
+    \ { return mod; }\n};\n#line 17 \"verify/verify-unit-test/gauss-elimination.test.cpp\"\
+    \n\nusing namespace Nyaan;\n\nusing mint = LazyMontgomeryModInt<998244353>;\n\n\
+    void test(int n, int m, bool sparse) {\n  Matrix<mint> a(n, m);\n  each(v, a.A)\
+    \ {\n    each(x, v) {\n      if (sparse) {\n        if (randint(0, m) == 0) x\
+    \ = rng();\n      } else {\n        x = rng();\n      }\n    }\n  }\n  // trc(n,\
+    \ m, sparse);\n  // trc(a);\n\n  if (n == m) {\n    mint det1, det2, det3;\n \
+    \   {\n      auto b = a;\n      det1 = b.determinant();\n    }\n    {\n      auto\
+    \ b = a;\n      det2 = GaussElimination<mint>(b.A).second;\n    }\n    {\n   \
+    \   auto b = a;\n      det3 = Fast::determinant(b.A);\n    }\n    // trc(det1,\
+    \ det2, det3);\n    assert(det1 == det2 and det2 == det3);\n  }\n  vector<mint>\
+    \ c(n);\n  if (rng() & 1) each(x, c) x = rng();\n\n  vector<vector<mint>> sol1,\
+    \ sol2;\n  {\n    auto b = a;\n    sol1 = Normal::LinearEquation<mint>(b.A, c);\n\
+    \    // trc(sol1);\n  }\n  {\n    auto b = a;\n    sol2 = Fast::LinearEquation<mint>(b.A,\
+    \ c);\n    // trc(sol2);\n  }\n  assert(sol1 == sol2);\n}\n\nvoid Nyaan::solve()\
+    \ {\n  rep(i, TEN(5)) test(randint(1, 17), randint(1, 17), rng() % 2 == 1);\n\n\
+    \  int a, b;\n  cin >> a >> b;\n  cout << a + b << endl;\n}\n"
+  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/aplusb\"\n//\n#include\
+    \ \"../../template/template.hpp\"\n//\n#include \"../../matrix/matrix.hpp\"\n\
+    #include \"../../matrix/gauss-elimination.hpp\"\n//\nnamespace Normal {\n#include\
+    \ \"../../matrix/linear-equation.hpp\"\n}  // namespace Normal\nnamespace Fast\
+    \ {\n#include \"../../modulo/gauss-elimination-fast.hpp\"\n}  // namespace Fast\n\
+    \n#include \"../../misc/rng.hpp\"\n#include \"../../modint/montgomery-modint.hpp\"\
+    \n\nusing namespace Nyaan;\n\nusing mint = LazyMontgomeryModInt<998244353>;\n\n\
+    void test(int n, int m, bool sparse) {\n  Matrix<mint> a(n, m);\n  each(v, a.A)\
+    \ {\n    each(x, v) {\n      if (sparse) {\n        if (randint(0, m) == 0) x\
+    \ = rng();\n      } else {\n        x = rng();\n      }\n    }\n  }\n  // trc(n,\
+    \ m, sparse);\n  // trc(a);\n\n  if (n == m) {\n    mint det1, det2, det3;\n \
+    \   {\n      auto b = a;\n      det1 = b.determinant();\n    }\n    {\n      auto\
+    \ b = a;\n      det2 = GaussElimination<mint>(b.A).second;\n    }\n    {\n   \
+    \   auto b = a;\n      det3 = Fast::determinant(b.A);\n    }\n    // trc(det1,\
+    \ det2, det3);\n    assert(det1 == det2 and det2 == det3);\n  }\n  vector<mint>\
+    \ c(n);\n  if (rng() & 1) each(x, c) x = rng();\n\n  vector<vector<mint>> sol1,\
+    \ sol2;\n  {\n    auto b = a;\n    sol1 = Normal::LinearEquation<mint>(b.A, c);\n\
+    \    // trc(sol1);\n  }\n  {\n    auto b = a;\n    sol2 = Fast::LinearEquation<mint>(b.A,\
+    \ c);\n    // trc(sol2);\n  }\n  assert(sol1 == sol2);\n}\n\nvoid Nyaan::solve()\
+    \ {\n  rep(i, TEN(5)) test(randint(1, 17), randint(1, 17), rng() % 2 == 1);\n\n\
+    \  int a, b;\n  cin >> a >> b;\n  cout << a + b << endl;\n}"
+  dependsOn:
+  - template/template.hpp
+  - template/util.hpp
+  - template/bitop.hpp
+  - template/inout.hpp
+  - template/debug.hpp
+  - template/macro.hpp
+  - matrix/matrix.hpp
+  - matrix/inverse-matrix.hpp
+  - matrix/gauss-elimination.hpp
+  - matrix/linear-equation.hpp
+  - modulo/gauss-elimination-fast.hpp
+  - modint/simd-montgomery.hpp
+  - misc/rng.hpp
+  - internal/internal-seed.hpp
+  - modint/montgomery-modint.hpp
+  isVerificationFile: true
+  path: verify/verify-unit-test/gauss-elimination.test.cpp
+  requiredBy: []
+  timestamp: '2026-05-19 18:11:32+09:00'
+  verificationStatus: TEST_WRONG_ANSWER
+  verifiedWith: []
+documentation_of: verify/verify-unit-test/gauss-elimination.test.cpp
+layout: document
+redirect_from:
+- /verify/verify/verify-unit-test/gauss-elimination.test.cpp
+- /verify/verify/verify-unit-test/gauss-elimination.test.cpp.html
+title: verify/verify-unit-test/gauss-elimination.test.cpp
+---

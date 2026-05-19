@@ -1,0 +1,82 @@
+---
+data:
+  _extendedDependsOn: []
+  _extendedRequiredBy:
+  - icon: ':x:'
+    path: math/enumerate-quotient.hpp
+    title: "\u5546\u306E\u5217\u6319"
+  - icon: ':x:'
+    path: multiplicative-function/count-square-free.hpp
+    title: "\u7121\u5E73\u65B9\u6570\u306E\u6570\u3048\u4E0A\u3052"
+  - icon: ':x:'
+    path: multiplicative-function/enumerate-sum-of-multiplicative-function.hpp
+    title: "\u4E57\u6CD5\u7684\u95A2\u6570\u306Eprefix sum \u306E\u5217\u6319"
+  _extendedVerifiedWith:
+  - icon: ':x:'
+    path: verify/verify-unit-test/enumerate-convex.test.cpp
+    title: verify/verify-unit-test/enumerate-convex.test.cpp
+  - icon: ':x:'
+    path: verify/verify-unit-test/enumerate-quotient.test.cpp
+    title: verify/verify-unit-test/enumerate-quotient.test.cpp
+  - icon: ':x:'
+    path: verify/verify-unit-test/math.test.cpp
+    title: verify/verify-unit-test/math.test.cpp
+  - icon: ':x:'
+    path: verify/verify-yosupo-math/yosupo-count-squarefrees.test.cpp
+    title: verify/verify-yosupo-math/yosupo-count-squarefrees.test.cpp
+  - icon: ':x:'
+    path: verify/verify-yosupo-math/yosupo-counting-primes-4.test.cpp
+    title: verify/verify-yosupo-math/yosupo-counting-primes-4.test.cpp
+  - icon: ':x:'
+    path: verify/verify-yosupo-math/yosupo-enumerate-quotient.test.cpp
+    title: verify/verify-yosupo-math/yosupo-enumerate-quotient.test.cpp
+  - icon: ':x:'
+    path: verify/verify-yosupo-math/yosupo-sum-of-totient-3.test.cpp
+    title: verify/verify-yosupo-math/yosupo-sum-of-totient-3.test.cpp
+  - icon: ':x:'
+    path: verify/verify-yuki/yuki-2262.test.cpp
+    title: verify/verify-yuki/yuki-2262.test.cpp
+  - icon: ':x:'
+    path: verify/verify-yuki/yuki-2266.test.cpp
+    title: verify/verify-yuki/yuki-2266.test.cpp
+  _isVerificationFailed: true
+  _pathExtension: hpp
+  _verificationStatusIcon: ':x:'
+  attributes:
+    links: []
+  bundledCode: "#line 2 \"math/isqrt.hpp\"\n\n#include <cmath>\nusing namespace std;\n\
+    \n// floor(sqrt(n)) \u3092\u8FD4\u3059 (\u305F\u3060\u3057 n \u304C\u8CA0\u306E\
+    \u5834\u5408\u306F 0 \u3092\u8FD4\u3059)\nlong long isqrt(long long n) {\n  if\
+    \ (n <= 0) return 0;\n  long long x = sqrt(n);\n  while ((x + 1) * (x + 1) <=\
+    \ n) x++;\n  while (x * x > n) x--;\n  return x;\n}\n"
+  code: "#pragma once\n\n#include <cmath>\nusing namespace std;\n\n// floor(sqrt(n))\
+    \ \u3092\u8FD4\u3059 (\u305F\u3060\u3057 n \u304C\u8CA0\u306E\u5834\u5408\u306F\
+    \ 0 \u3092\u8FD4\u3059)\nlong long isqrt(long long n) {\n  if (n <= 0) return\
+    \ 0;\n  long long x = sqrt(n);\n  while ((x + 1) * (x + 1) <= n) x++;\n  while\
+    \ (x * x > n) x--;\n  return x;\n}\n"
+  dependsOn: []
+  isVerificationFile: false
+  path: math/isqrt.hpp
+  requiredBy:
+  - multiplicative-function/enumerate-sum-of-multiplicative-function.hpp
+  - multiplicative-function/count-square-free.hpp
+  - math/enumerate-quotient.hpp
+  timestamp: '2026-05-19 18:11:32+09:00'
+  verificationStatus: LIBRARY_ALL_WA
+  verifiedWith:
+  - verify/verify-unit-test/enumerate-convex.test.cpp
+  - verify/verify-unit-test/math.test.cpp
+  - verify/verify-unit-test/enumerate-quotient.test.cpp
+  - verify/verify-yosupo-math/yosupo-count-squarefrees.test.cpp
+  - verify/verify-yosupo-math/yosupo-enumerate-quotient.test.cpp
+  - verify/verify-yosupo-math/yosupo-counting-primes-4.test.cpp
+  - verify/verify-yosupo-math/yosupo-sum-of-totient-3.test.cpp
+  - verify/verify-yuki/yuki-2262.test.cpp
+  - verify/verify-yuki/yuki-2266.test.cpp
+documentation_of: math/isqrt.hpp
+layout: document
+redirect_from:
+- /library/math/isqrt.hpp
+- /library/math/isqrt.hpp.html
+title: math/isqrt.hpp
+---
