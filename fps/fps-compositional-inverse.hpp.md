@@ -1,39 +1,39 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: fps/formal-power-series.hpp
     title: "\u591A\u9805\u5F0F/\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\
       \u30E9\u30EA"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: fps/pow-enumerate.hpp
     title: "pow \u5217\u6319"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: modulo/binomial.hpp
     title: modulo/binomial.hpp
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/composition.test.cpp
     title: verify/verify-unit-test/composition.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-compositional-inverse-large.test.cpp
     title: verify/verify-yosupo-fps/yosupo-compositional-inverse-large.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-compositional-inverse.test.cpp
     title: verify/verify-yosupo-fps/yosupo-compositional-inverse.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1939-2.test.cpp
     title: verify/verify-yuki/yuki-1939-2.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1939.test.cpp
     title: verify/verify-yuki/yuki-1939.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-2661.test.cpp
     title: verify/verify-yuki/yuki-2661.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     document_title: "\u9006\u95A2\u6570"
     links: []
@@ -249,8 +249,8 @@ data:
   isVerificationFile: false
   path: fps/fps-compositional-inverse.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2024-03-28 20:36:39+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-fps/yosupo-compositional-inverse.test.cpp
   - verify/verify-yosupo-fps/yosupo-compositional-inverse-large.test.cpp

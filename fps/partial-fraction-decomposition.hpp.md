@@ -1,27 +1,27 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: fps/formal-power-series.hpp
     title: "\u591A\u9805\u5F0F/\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\
       \u30E9\u30EA"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: fps/taylor-shift.hpp
     title: "\u5E73\u884C\u79FB\u52D5"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: modulo/binomial.hpp
     title: modulo/binomial.hpp
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/partial-fraction-decomposition.test.cpp
     title: verify/verify-unit-test/partial-fraction-decomposition.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1510.test.cpp
     title: verify/verify-yuki/yuki-1510.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     document_title: "\u90E8\u5206\u5206\u6570\u5206\u89E3(\u5206\u6BCD\u304C1\u6B21\
       \u5F0F\u306E\u7A4D\u3067\u8868\u305B\u308B\u5834\u5408)"
@@ -217,8 +217,8 @@ data:
   isVerificationFile: false
   path: fps/partial-fraction-decomposition.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2023-08-31 20:44:07+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-unit-test/partial-fraction-decomposition.test.cpp
   - verify/verify-yuki/yuki-1510.test.cpp

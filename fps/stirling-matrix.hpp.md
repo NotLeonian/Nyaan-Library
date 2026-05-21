@@ -1,33 +1,33 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: fps/composite-exp.hpp
     title: "$f(exp(cx))$ \u306E\u8A08\u7B97"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: fps/formal-power-series.hpp
     title: "\u591A\u9805\u5F0F/\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\
       \u30E9\u30EA"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: fps/multipoint-evaluation.hpp
     title: Multipoint Evaluation
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: fps/pascal-matrix.hpp
     title: fps/pascal-matrix.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: fps/polynomial-interpolation.hpp
     title: fps/polynomial-interpolation.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: modulo/binomial.hpp
     title: modulo/binomial.hpp
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/stirling-matrix.test.cpp
     title: verify/verify-unit-test/stirling-matrix.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"fps/stirling-matrix.hpp\"\n\n#line 2 \"modulo/binomial.hpp\"\
@@ -299,8 +299,8 @@ data:
   isVerificationFile: false
   path: fps/stirling-matrix.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2023-12-22 19:57:12+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-unit-test/stirling-matrix.test.cpp
 documentation_of: fps/stirling-matrix.hpp

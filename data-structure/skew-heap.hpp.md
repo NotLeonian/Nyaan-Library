@@ -2,16 +2,16 @@
 data:
   _extendedDependsOn: []
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: graph/minimum-cost-arborescence.hpp
     title: graph/minimum-cost-arborescence.hpp
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-graph/yosupo-directed-mst.test.cpp
     title: verify/verify-yosupo-graph/yosupo-directed-mst.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/data-structure/skew-heap.md
     document_title: Skew Heap
@@ -56,8 +56,8 @@ data:
   path: data-structure/skew-heap.hpp
   requiredBy:
   - graph/minimum-cost-arborescence.hpp
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2021-02-04 22:39:44+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-graph/yosupo-directed-mst.test.cpp
 documentation_of: data-structure/skew-heap.hpp

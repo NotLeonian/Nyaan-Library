@@ -6,12 +6,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-dsl/aoj-dsl-5-b-2dseg.test.cpp
     title: verify/verify-aoj-dsl/aoj-dsl-5-b-2dseg.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-other/aoj-1068.test.cpp
     title: verify/verify-aoj-other/aoj-1068.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/data-structure-2d/2d-segment-tree.md
     document_title: "\u4E8C\u6B21\u5143\u30BB\u30B0\u30E1\u30F3\u30C8\u6728"
@@ -79,8 +79,8 @@ data:
   isVerificationFile: false
   path: data-structure-2d/2d-segment-tree.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_SOME_WA
+  timestamp: '2023-09-08 22:52:34+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-aoj-dsl/aoj-dsl-5-b-2dseg.test.cpp
   - verify/verify-aoj-other/aoj-1068.test.cpp

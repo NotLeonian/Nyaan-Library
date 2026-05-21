@@ -3,12 +3,12 @@ data:
   _extendedDependsOn: []
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/modint-2-61m1.test.cpp
     title: verify/verify-unit-test/modint-2-61m1.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"modint/modint-2-61m1.hpp\"\n\n#include <cassert>\n#include\
@@ -65,8 +65,8 @@ data:
   isVerificationFile: false
   path: modint/modint-2-61m1.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2024-08-10 13:03:16+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-unit-test/modint-2-61m1.test.cpp
 documentation_of: modint/modint-2-61m1.hpp

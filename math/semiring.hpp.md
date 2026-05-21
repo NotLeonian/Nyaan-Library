@@ -3,18 +3,18 @@ data:
   _extendedDependsOn: []
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/semiring.test.cpp
     title: verify/verify-unit-test/semiring.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1340-semiring.test.cpp
     title: verify/verify-yuki/yuki-1340-semiring.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1460.test.cpp
     title: verify/verify-yuki/yuki-1460.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/math/semiring.md
     document_title: "\u534A\u74B0\u30E9\u30A4\u30D6\u30E9\u30EA"
@@ -90,8 +90,8 @@ data:
   isVerificationFile: false
   path: math/semiring.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2021-01-01 23:05:31+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-unit-test/semiring.test.cpp
   - verify/verify-yuki/yuki-1460.test.cpp

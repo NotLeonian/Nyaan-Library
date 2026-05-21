@@ -114,7 +114,7 @@ data:
   isVerificationFile: false
   path: math-fast/vectorize-modint.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
+  timestamp: '2023-08-12 16:25:29+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: math-fast/vectorize-modint.hpp

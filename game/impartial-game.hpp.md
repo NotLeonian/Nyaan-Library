@@ -3,18 +3,18 @@ data:
   _extendedDependsOn: []
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-0002.test.cpp
     title: verify/verify-yuki/yuki-0002.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-0102.test.cpp
     title: verify/verify-yuki/yuki-0102.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-0361.test.cpp
     title: verify/verify-yuki/yuki-0361.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     document_title: "\u4E0D\u504F\u30B2\u30FC\u30E0"
     links: []
@@ -119,8 +119,8 @@ data:
   isVerificationFile: false
   path: game/impartial-game.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2023-08-10 13:25:59+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yuki/yuki-0102.test.cpp
   - verify/verify-yuki/yuki-0361.test.cpp

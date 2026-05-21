@@ -1,24 +1,24 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: fps/formal-power-series.hpp
     title: "\u591A\u9805\u5F0F/\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\
       \u30E9\u30EA"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: modulo/binomial.hpp
     title: modulo/binomial.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: ntt/multivariate-multiplication.hpp
     title: Multivariate Multiplication
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1783.test.cpp
     title: verify/verify-yuki/yuki-1783.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     document_title: "\u591A\u5909\u6570\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\
       \u30D6\u30E9\u30EA"
@@ -315,8 +315,8 @@ data:
   isVerificationFile: false
   path: fps/multivariate-fps.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2024-05-03 23:21:26+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yuki/yuki-1783.test.cpp
 documentation_of: fps/multivariate-fps.hpp

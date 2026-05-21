@@ -4,22 +4,22 @@ data:
   - icon: ':heavy_check_mark:'
     path: data-structure/union-find-with-potential.hpp
     title: data-structure/union-find-with-potential.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/bitop.hpp
     title: template/bitop.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/debug.hpp
     title: template/debug.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/inout.hpp
     title: template/inout.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/macro.hpp
     title: template/macro.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template.hpp
     title: template/template.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/util.hpp
     title: template/util.hpp
   _extendedRequiredBy: []
@@ -254,7 +254,7 @@ data:
   isVerificationFile: true
   path: verify/verify-aoj-dsl/aoj-dsl-1-b.test.cpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
+  timestamp: '2024-05-03 23:21:26+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-aoj-dsl/aoj-dsl-1-b.test.cpp

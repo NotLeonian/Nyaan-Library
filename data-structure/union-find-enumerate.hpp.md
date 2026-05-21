@@ -2,19 +2,19 @@
 data:
   _extendedDependsOn: []
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: data-structure/parallel-union-find.hpp
     title: data-structure/parallel-union-find.hpp
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/parallel-union-find.test.cpp
     title: verify/verify-unit-test/parallel-union-find.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-range-parallel-unionfind.test.cpp
     title: verify/verify-yosupo-ds/yosupo-range-parallel-unionfind.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"data-structure/union-find-enumerate.hpp\"\n\n#include <vector>\n\
@@ -51,8 +51,8 @@ data:
   path: data-structure/union-find-enumerate.hpp
   requiredBy:
   - data-structure/parallel-union-find.hpp
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2024-04-28 09:13:11+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-unit-test/parallel-union-find.test.cpp
   - verify/verify-yosupo-ds/yosupo-range-parallel-unionfind.test.cpp

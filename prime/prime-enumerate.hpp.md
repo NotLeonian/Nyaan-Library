@@ -2,80 +2,80 @@
 data:
   _extendedDependsOn: []
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: multiplicative-function/count-square-free.hpp
     title: "\u7121\u5E73\u65B9\u6570\u306E\u6570\u3048\u4E0A\u3052"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: multiplicative-function/divisor-multiple-transform.hpp
     title: "\u500D\u6570\u5909\u63DB\u30FB\u7D04\u6570\u5909\u63DB"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: multiplicative-function/enamurate-multiplicative-function.hpp
     title: "\u4E57\u6CD5\u7684\u95A2\u6570\u306E\u5217\u6319"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: multiplicative-function/gcd-convolution.hpp
     title: "GCD\u7573\u307F\u8FBC\u307F"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: multiplicative-function/mf-famous-series.hpp
     title: "\u6709\u540D\u306A\u4E57\u6CD5\u7684\u95A2\u6570"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: multiplicative-function/prime-counting-o2d3.hpp
     title: "\u7D20\u6570\u30AB\u30A6\u30F3\u30C8( $\\mathrm{O}(N^{\\frac{2}{3}})$\
       \ )"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: multiplicative-function/sum-of-multiplicative-function.hpp
     title: "\u4E57\u6CD5\u7684\u95A2\u6570\u306Eprefix sum"
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/garner-bigint.test.cpp
     title: verify/verify-unit-test/garner-bigint.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/mf.test.cpp
     title: verify/verify-unit-test/mf.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/multiplicative-function.test.cpp
     title: verify/verify-unit-test/multiplicative-function.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/primitive-root.test.cpp
     title: verify/verify-unit-test/primitive-root.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/sum-of-mf.test.cpp
     title: verify/verify-unit-test/sum-of-mf.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-count-squarefrees.test.cpp
     title: verify/verify-yosupo-math/yosupo-count-squarefrees.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-counting-primes-2.test.cpp
     title: verify/verify-yosupo-math/yosupo-counting-primes-2.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-gcd-convolution.test.cpp
     title: verify/verify-yosupo-math/yosupo-gcd-convolution.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-lcm-convolution.test.cpp
     title: verify/verify-yosupo-math/yosupo-lcm-convolution.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-prime-table.test.cpp
     title: verify/verify-yosupo-math/yosupo-prime-table.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-sum-of-totient-2.test.cpp
     title: verify/verify-yosupo-math/yosupo-sum-of-totient-2.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-0125.test.cpp
     title: verify/verify-yuki/yuki-0125.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-0886.test.cpp
     title: verify/verify-yuki/yuki-0886.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-0890.test.cpp
     title: verify/verify-yuki/yuki-0890.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-0896.test.cpp
     title: verify/verify-yuki/yuki-0896.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1781.test.cpp
     title: verify/verify-yuki/yuki-1781.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"prime/prime-enumerate.hpp\"\n\n// Prime Sieve {2, 3, 5,\
@@ -106,8 +106,8 @@ data:
   - multiplicative-function/enamurate-multiplicative-function.hpp
   - multiplicative-function/count-square-free.hpp
   - multiplicative-function/prime-counting-o2d3.hpp
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2020-12-05 08:35:39+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-unit-test/primitive-root.test.cpp
   - verify/verify-unit-test/multiplicative-function.test.cpp

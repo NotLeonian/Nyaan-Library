@@ -1,67 +1,67 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: fps/formal-power-series.hpp
     title: "\u591A\u9805\u5F0F/\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\
       \u30E9\u30EA"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: modulo/binomial.hpp
     title: modulo/binomial.hpp
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: fps/fps-famous-series.hpp
     title: "\u6709\u540D\u306A\u6570\u5217"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: fps/fualhuber.hpp
     title: fps/fualhuber.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: fps/partial-fraction-decomposition.hpp
     title: "\u90E8\u5206\u5206\u6570\u5206\u89E3(\u5206\u6BCD\u304C1\u6B21\u5F0F\u306E\
       \u7A4D\u3067\u8868\u305B\u308B\u5834\u5408)"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: set-function/polynomial-composite-set-power-series.hpp
     title: "\u96C6\u5408\u51AA\u7D1A\u6570\u306E\u5408\u6210"
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/dual-fps.test.cpp
     title: verify/verify-unit-test/dual-fps.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/partial-fraction-decomposition.test.cpp
     title: verify/verify-unit-test/partial-fraction-decomposition.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-stirling-1st-row.test.cpp
     title: verify/verify-yosupo-fps/yosupo-stirling-1st-row.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-stirling-1st.test.cpp
     title: verify/verify-yosupo-fps/yosupo-stirling-1st.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-stirling-2nd-row.test.cpp
     title: verify/verify-yosupo-fps/yosupo-stirling-2nd-row.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-stirling-2nd.test.cpp
     title: verify/verify-yosupo-fps/yosupo-stirling-2nd.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-taylor-shift.test.cpp
     title: verify/verify-yosupo-fps/yosupo-taylor-shift.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-polynomial-composite-set-power-series.test.cpp
     title: verify/verify-yosupo-math/yosupo-polynomial-composite-set-power-series.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1504.test.cpp
     title: verify/verify-yuki/yuki-1504.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1510.test.cpp
     title: verify/verify-yuki/yuki-1510.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1875.test.cpp
     title: verify/verify-yuki/yuki-1875.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-2580.test.cpp
     title: verify/verify-yuki/yuki-2580.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/fps/fps-taylor-shift.md
     document_title: "\u5E73\u884C\u79FB\u52D5"
@@ -194,8 +194,8 @@ data:
   - fps/fps-famous-series.hpp
   - fps/fualhuber.hpp
   - set-function/polynomial-composite-set-power-series.hpp
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2023-08-31 20:44:07+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-fps/yosupo-taylor-shift.test.cpp
   - verify/verify-yosupo-fps/yosupo-stirling-2nd.test.cpp

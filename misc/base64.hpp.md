@@ -3,12 +3,12 @@ data:
   _extendedDependsOn: []
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-0502-base64.test.cpp
     title: verify/verify-yuki/yuki-0502-base64.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     document_title: "Base64 (\u30BD\u30FC\u30B9\u30B3\u30FC\u30C9\u306B\u6570\u5217\
       \u3092\u5727\u7E2E\u3057\u3066\u57CB\u3081\u8FBC\u3080\u7528\u306E\u7B26\u53F7\
@@ -58,8 +58,8 @@ data:
   isVerificationFile: false
   path: misc/base64.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2023-04-11 21:34:35+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yuki/yuki-0502-base64.test.cpp
 documentation_of: misc/base64.hpp

@@ -1,47 +1,47 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: internal/internal-type-traits.hpp
     title: internal/internal-type-traits.hpp
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: data-structure/slope-trick-weighted.hpp
     title: Weighted Slope Trick
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: segment-tree/rbst-sequence.hpp
     title: segment-tree/rbst-sequence.hpp
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/rbst-segment-tree.test.cpp
     title: verify/verify-unit-test/rbst-segment-tree.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/rbst-sequence.test.cpp
     title: verify/verify-unit-test/rbst-sequence.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-associative-array-rbstseg.test.cpp
     title: verify/verify-yosupo-ds/yosupo-associative-array-rbstseg.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-point-set-range-composite-rbstseg.test.cpp
     title: verify/verify-yosupo-ds/yosupo-point-set-range-composite-rbstseg.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-point-set-range-composite-rbstseg2.test.cpp
     title: verify/verify-yosupo-ds/yosupo-point-set-range-composite-rbstseg2.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-procedessor-problem-rbstseg.test.cpp
     title: verify/verify-yosupo-ds/yosupo-procedessor-problem-rbstseg.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-range-affine-range-sum-rbstseg.test.cpp
     title: verify/verify-yosupo-ds/yosupo-range-affine-range-sum-rbstseg.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1467-weighted.test.cpp
     title: verify/verify-yuki/yuki-1467-weighted.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1786.test.cpp
     title: verify/verify-yuki/yuki-1786.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     document_title: RBST-based Dynamic Lazy Segment Tree
     links: []
@@ -665,8 +665,8 @@ data:
   requiredBy:
   - segment-tree/rbst-sequence.hpp
   - data-structure/slope-trick-weighted.hpp
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2024-09-14 20:40:02+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-unit-test/rbst-segment-tree.test.cpp
   - verify/verify-unit-test/rbst-sequence.test.cpp

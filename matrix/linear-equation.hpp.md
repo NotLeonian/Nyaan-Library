@@ -1,38 +1,38 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: matrix/gauss-elimination.hpp
     title: matrix/gauss-elimination.hpp
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: fps/find-p-recursive.hpp
     title: "P-recursive\u306E\u9AD8\u901F\u8A08\u7B97"
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-other/aoj-2171-bigrational.test.cpp
     title: verify/verify-aoj-other/aoj-2171-bigrational.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-other/aoj-2171.test.cpp
     title: verify/verify-aoj-other/aoj-2171.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/gauss-elimination.test.cpp
     title: verify/verify-unit-test/gauss-elimination.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/p-recursive.test.cpp
     title: verify/verify-unit-test/p-recursive.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-factorial-p-recursive.test.cpp
     title: verify/verify-yosupo-fps/yosupo-factorial-p-recursive.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-linear-equation-2.test.cpp
     title: verify/verify-yosupo-math/yosupo-linear-equation-2.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1533.test.cpp
     title: verify/verify-yuki/yuki-1533.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"matrix/linear-equation.hpp\"\n\n#line 2 \"matrix/gauss-elimination.hpp\"\
@@ -92,8 +92,8 @@ data:
   path: matrix/linear-equation.hpp
   requiredBy:
   - fps/find-p-recursive.hpp
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2024-05-03 21:06:15+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-fps/yosupo-factorial-p-recursive.test.cpp
   - verify/verify-unit-test/gauss-elimination.test.cpp

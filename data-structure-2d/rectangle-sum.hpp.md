@@ -1,17 +1,17 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: segment-tree/persistent-segment-tree.hpp
     title: "\u6C38\u7D9A\u30BB\u30B0\u30E1\u30F3\u30C8\u6728"
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-rectangle-sum.test.cpp
     title: verify/verify-yosupo-ds/yosupo-rectangle-sum.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     document_title: "\u77E9\u5F62\u548C(\u6C38\u7D9A\u30BB\u30B0\u30E1\u30F3\u30C8\
       \u6728)"
@@ -111,8 +111,8 @@ data:
   isVerificationFile: false
   path: data-structure-2d/rectangle-sum.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2021-11-27 22:15:37+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ds/yosupo-rectangle-sum.test.cpp
 documentation_of: data-structure-2d/rectangle-sum.hpp

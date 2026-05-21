@@ -1,23 +1,23 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: prime/prime-enumerate.hpp
     title: prime/prime-enumerate.hpp
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/sum-of-mf.test.cpp
     title: verify/verify-unit-test/sum-of-mf.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-sum-of-totient-2.test.cpp
     title: verify/verify-yosupo-math/yosupo-sum-of-totient-2.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1781.test.cpp
     title: verify/verify-yuki/yuki-1781.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/multiplicative-function/sum-of-multiplicative-function.md
     document_title: "\u4E57\u6CD5\u7684\u95A2\u6570\u306Eprefix sum"
@@ -152,8 +152,8 @@ data:
   isVerificationFile: false
   path: multiplicative-function/sum-of-multiplicative-function.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2024-09-22 00:16:26+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-unit-test/sum-of-mf.test.cpp
   - verify/verify-yosupo-math/yosupo-sum-of-totient-2.test.cpp

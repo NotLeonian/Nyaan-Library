@@ -1,29 +1,29 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: internal/internal-hash.hpp
     title: "\u30CF\u30C3\u30B7\u30E5\u69CB\u9020\u4F53"
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: tree/tree-hash.hpp
     title: tree/tree-hash.hpp
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-other/aoj-1613.test.cpp
     title: verify/verify-aoj-other/aoj-1613.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-other/aoj-2821.test.cpp
     title: verify/verify-aoj-other/aoj-2821.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-graph/yosupo-tree-hash.test.cpp
     title: verify/verify-yosupo-graph/yosupo-tree-hash.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1789.test.cpp
     title: verify/verify-yuki/yuki-1789.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     document_title: "\u6839\u4ED8\u304D\u6728\u306E\u30CF\u30C3\u30B7\u30E5"
     links: []
@@ -108,8 +108,8 @@ data:
   path: tree/rooted-tree-hash.hpp
   requiredBy:
   - tree/tree-hash.hpp
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2024-05-04 15:53:37+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-graph/yosupo-tree-hash.test.cpp
   - verify/verify-yuki/yuki-1789.test.cpp

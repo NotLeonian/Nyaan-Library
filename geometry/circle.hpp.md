@@ -1,7 +1,7 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: geometry/geometry-base.hpp
     title: geometry/geometry-base.hpp
   _extendedRequiredBy: []
@@ -77,7 +77,7 @@ data:
   isVerificationFile: false
   path: geometry/circle.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
+  timestamp: '2023-12-29 22:15:29+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: geometry/circle.hpp

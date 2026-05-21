@@ -3,12 +3,12 @@ data:
   _extendedDependsOn: []
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-graph/yosupo-lowest-common-ancestor-doubling.test.cpp
     title: verify/verify-yosupo-graph/yosupo-lowest-common-ancestor-doubling.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/misc/doubling.md
     document_title: "Binary Lifting(\u30C0\u30D6\u30EA\u30F3\u30B0)"
@@ -80,8 +80,8 @@ data:
   isVerificationFile: false
   path: misc/doubling.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2024-09-14 20:40:02+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-graph/yosupo-lowest-common-ancestor-doubling.test.cpp
 documentation_of: misc/doubling.hpp

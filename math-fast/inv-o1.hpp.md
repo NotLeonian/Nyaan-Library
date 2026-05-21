@@ -3,12 +3,12 @@ data:
   _extendedDependsOn: []
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/fast-inv-o1.test.cpp
     title: verify/verify-unit-test/fast-inv-o1.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"math-fast/inv-o1.hpp\"\n\n#include <cmath>\nusing namespace\
@@ -55,8 +55,8 @@ data:
   isVerificationFile: false
   path: math-fast/inv-o1.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2023-12-22 19:57:12+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-unit-test/fast-inv-o1.test.cpp
 documentation_of: math-fast/inv-o1.hpp

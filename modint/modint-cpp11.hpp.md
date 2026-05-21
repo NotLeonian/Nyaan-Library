@@ -72,7 +72,7 @@ data:
   isVerificationFile: false
   path: modint/modint-cpp11.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
+  timestamp: '2021-03-04 10:35:44+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: modint/modint-cpp11.hpp

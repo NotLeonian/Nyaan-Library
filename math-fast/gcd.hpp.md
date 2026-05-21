@@ -5,58 +5,58 @@ data:
   - icon: ':warning:'
     path: math/bigint-all.hpp
     title: math/bigint-all.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/bigint-gcd.hpp
     title: math/bigint-gcd.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/bigint-rational.hpp
     title: math/bigint-rational.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/rational-binomial.hpp
     title: math/rational-binomial.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/rational-fps.hpp
     title: math/rational-fps.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/rational.hpp
     title: math/rational.hpp
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-other/aoj-2171-bigrational.test.cpp
     title: verify/verify-aoj-other/aoj-2171-bigrational.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/bigint-gcd.test.cpp
     title: verify/verify-unit-test/bigint-gcd.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/bigrational.test.cpp
     title: verify/verify-unit-test/bigrational.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/internal-math.test.cpp
     title: verify/verify-unit-test/internal-math.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/math-fast-2.test.cpp
     title: verify/verify-unit-test/math-fast-2.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/math-fast.test.cpp
     title: verify/verify-unit-test/math-fast.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/rational-number.test.cpp
     title: verify/verify-unit-test/rational-number.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-stern-brocot-tree-2.test.cpp
     title: verify/verify-yosupo-math/yosupo-stern-brocot-tree-2.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-2262.test.cpp
     title: verify/verify-yuki/yuki-2262.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-2266.test.cpp
     title: verify/verify-yuki/yuki-2266.test.cpp
-  - icon: ':x:'
-    path: verify/verify-yuki/yuki-3024.test.cpp
-    title: verify/verify-yuki/yuki-3024.test.cpp
-  _isVerificationFailed: true
+  - icon: ':heavy_check_mark:'
+    path: verify/verify-yuki/yuki-8024.test.cpp
+    title: verify/verify-yuki/yuki-8024.test.cpp
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     document_title: binary GCD
     links: []
@@ -104,8 +104,8 @@ data:
   - math/rational-fps.hpp
   - math/rational.hpp
   - math/bigint-all.hpp
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2023-04-11 20:58:11+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-unit-test/math-fast.test.cpp
   - verify/verify-unit-test/bigrational.test.cpp
@@ -114,8 +114,8 @@ data:
   - verify/verify-unit-test/bigint-gcd.test.cpp
   - verify/verify-unit-test/rational-number.test.cpp
   - verify/verify-yosupo-math/yosupo-stern-brocot-tree-2.test.cpp
-  - verify/verify-yuki/yuki-3024.test.cpp
   - verify/verify-yuki/yuki-2262.test.cpp
+  - verify/verify-yuki/yuki-8024.test.cpp
   - verify/verify-yuki/yuki-2266.test.cpp
   - verify/verify-aoj-other/aoj-2171-bigrational.test.cpp
 documentation_of: math-fast/gcd.hpp

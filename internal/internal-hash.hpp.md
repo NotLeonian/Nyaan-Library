@@ -2,61 +2,61 @@
 data:
   _extendedDependsOn: []
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: data-structure/parallel-union-find.hpp
     title: data-structure/parallel-union-find.hpp
   - icon: ':heavy_check_mark:'
     path: string/rolling-hash-2d.hpp
     title: "\u4E8C\u6B21\u5143Rolling Hash"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: string/rolling-hash-on-segment-tree.hpp
     title: string/rolling-hash-on-segment-tree.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: string/rolling-hash.hpp
     title: Rolling Hash
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: tree/rooted-tree-hash.hpp
     title: "\u6839\u4ED8\u304D\u6728\u306E\u30CF\u30C3\u30B7\u30E5"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: tree/tree-hash.hpp
     title: tree/tree-hash.hpp
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-alds/verify-aoj-alds-14-c.test.cpp
     title: verify/verify-aoj-alds/verify-aoj-alds-14-c.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-other/aoj-1613.test.cpp
     title: verify/verify-aoj-other/aoj-1613.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-other/aoj-2821.test.cpp
     title: verify/verify-aoj-other/aoj-2821.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/inner-hash.test.cpp
     title: verify/verify-unit-test/inner-hash.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/parallel-union-find.test.cpp
     title: verify/verify-unit-test/parallel-union-find.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/string-search.test.cpp
     title: verify/verify-unit-test/string-search.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-range-parallel-unionfind.test.cpp
     title: verify/verify-yosupo-ds/yosupo-range-parallel-unionfind.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-graph/yosupo-tree-hash.test.cpp
     title: verify/verify-yosupo-graph/yosupo-tree-hash.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-string/yosupo-enumerate-palindromes-roriha.test.cpp
     title: verify/verify-yosupo-string/yosupo-enumerate-palindromes-roriha.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-string/yosupo-zalgo-rollinghash.test.cpp
     title: verify/verify-yosupo-string/yosupo-zalgo-rollinghash.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1789.test.cpp
     title: verify/verify-yuki/yuki-1789.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/internal/internal-hash.md
     document_title: "\u30CF\u30C3\u30B7\u30E5\u69CB\u9020\u4F53"
@@ -168,8 +168,8 @@ data:
   - string/rolling-hash-2d.hpp
   - tree/tree-hash.hpp
   - tree/rooted-tree-hash.hpp
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_SOME_WA
+  timestamp: '2023-08-10 13:25:59+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-string/yosupo-enumerate-palindromes-roriha.test.cpp
   - verify/verify-yosupo-string/yosupo-zalgo-rollinghash.test.cpp

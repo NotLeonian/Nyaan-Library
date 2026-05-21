@@ -2,101 +2,101 @@
 data:
   _extendedDependsOn: []
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: graph/biconnected-components.hpp
     title: "\u4E8C\u91CD\u9802\u70B9\u9023\u7D50\u5206\u89E3"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: graph/cycle-detection.hpp
     title: "\u9589\u8DEF\u306E\u691C\u51FA"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: graph/functional-graph.hpp
     title: graph/functional-graph.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: graph/graph-utility.hpp
     title: "\u30B0\u30E9\u30D5\u30E6\u30FC\u30C6\u30A3\u30EA\u30C6\u30A3"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: graph/kruskal.hpp
     title: graph/kruskal.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: graph/lowlink.hpp
     title: graph/lowlink.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: graph/minimum-cost-arborescence.hpp
     title: graph/minimum-cost-arborescence.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: graph/namori.hpp
     title: "Functional Graph(\u306A\u3082\u308A\u30B0\u30E9\u30D5)\u306E\u5206\u89E3"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: graph/strongly-connected-components.hpp
     title: graph/strongly-connected-components.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: graph/topological-sort.hpp
     title: graph/topological-sort.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: graph/two-edge-connected-components.hpp
     title: graph/two-edge-connected-components.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/grundy-number.hpp
     title: Grundy Number
   - icon: ':heavy_check_mark:'
     path: shortest-path/bellman-ford.hpp
     title: shortest-path/bellman-ford.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: shortest-path/bfs01.hpp
     title: shortest-path/bfs01.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: shortest-path/dijkstra-radix-heap.hpp
     title: "\u30C0\u30A4\u30AF\u30B9\u30C8\u30E9\u6CD5(Radix Heap)"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: shortest-path/dijkstra-with-restore.hpp
     title: "\u30C0\u30A4\u30AF\u30B9\u30C8\u30E9\u6CD5(\u5FA9\u5143\u4ED8\u304D)"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: shortest-path/dijkstra.hpp
     title: "\u30C0\u30A4\u30AF\u30B9\u30C8\u30E9\u6CD5"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: shortest-path/dual-of-shortest-path.hpp
     title: "\u725B\u30B2\u30FC(\u6700\u77ED\u8DEF\u554F\u984C\u306E\u53CC\u5BFE)"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: shortest-path/restore-shortest-path.hpp
     title: shortest-path/restore-shortest-path.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: shortest-path/warshall-floyd.hpp
     title: shortest-path/warshall-floyd.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: tree/auxiliary-tree.hpp
     title: Auxiliary Tree
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: tree/block-cut-tree.hpp
     title: Block Cut Tree
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: tree/cartesian-tree.hpp
     title: Cartesian Tree
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: tree/convert-tree.hpp
     title: "\u6839\u4ED8\u304D\u6728\u30FB\u9006\u8FBA\u304B\u3089\u306A\u308B\u6728\
       \u3078\u306E\u5909\u63DB"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: tree/dsu-on-tree.hpp
     title: DSU on Tree(Guni)
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: tree/dynamic-diameter.hpp
     title: tree/dynamic-diameter.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: tree/euler-tour.hpp
     title: "\u30AA\u30A4\u30E9\u30FC\u30C4\u30A2\u30FC"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: tree/heavy-light-decomposition.hpp
     title: "Heavy Light Decomposition(\u91CD\u8EFD\u5206\u89E3)"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: tree/rerooting.hpp
     title: "Rerooting(\u5168\u65B9\u4F4D\u6728DP)"
   - icon: ':warning:'
     path: tree/static-top-tree-edge-based.hpp
     title: tree/static-top-tree-edge-based.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: tree/static-top-tree-vertex-based.hpp
     title: Static Top Tree
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: tree/tree-query.hpp
     title: "\u6728\u306B\u5BFE\u3059\u308B\u4E00\u822C\u7684\u306A\u30AF\u30A8\u30EA"
   _extendedVerifiedWith:
@@ -115,189 +115,189 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-grl/aoj-grl-1-c.test.cpp
     title: verify/verify-aoj-grl/aoj-grl-1-c.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-grl/aoj-grl-2-a.test.cpp
     title: verify/verify-aoj-grl/aoj-grl-2-a.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-grl/aoj-grl-3-a.test.cpp
     title: verify/verify-aoj-grl/aoj-grl-3-a.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-grl/aoj-grl-3-b.test.cpp
     title: verify/verify-aoj-grl/aoj-grl-3-b.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-grl/aoj-grl-3-c.test.cpp
     title: verify/verify-aoj-grl/aoj-grl-3-c.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-grl/aoj-grl-4-a.test.cpp
     title: verify/verify-aoj-grl/aoj-grl-4-a.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-grl/aoj-grl-4-b.test.cpp
     title: verify/verify-aoj-grl/aoj-grl-4-b.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-grl/aoj-grl-5-a-rerooting.test.cpp
     title: verify/verify-aoj-grl/aoj-grl-5-a-rerooting.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-grl/aoj-grl-5-a.test.cpp
     title: verify/verify-aoj-grl/aoj-grl-5-a.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-grl/aoj-grl-5-b.test.cpp
     title: verify/verify-aoj-grl/aoj-grl-5-b.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-grl/aoj-grl-5-c.test.cpp
     title: verify/verify-aoj-grl/aoj-grl-5-c.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-grl/aoj-grl-5-d.test.cpp
     title: verify/verify-aoj-grl/aoj-grl-5-d.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-grl/aoj-grl-5-e.test.cpp
     title: verify/verify-aoj-grl/aoj-grl-5-e.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-other/aoj-0304.test.cpp
     title: verify/verify-aoj-other/aoj-0304.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-other/aoj-2171-bigrational.test.cpp
     title: verify/verify-aoj-other/aoj-2171-bigrational.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-other/aoj-2171.test.cpp
     title: verify/verify-aoj-other/aoj-2171.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-other/aoj-2821.test.cpp
     title: verify/verify-aoj-other/aoj-2821.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-other/aoj-2891-2.test.cpp
     title: verify/verify-aoj-other/aoj-2891-2.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-other/aoj-2891.test.cpp
     title: verify/verify-aoj-other/aoj-2891.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-other/aoj-2945-01bfs.test.cpp
     title: verify/verify-aoj-other/aoj-2945-01bfs.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-other/aoj-2995-hashmap.test.cpp
     title: verify/verify-aoj-other/aoj-2995-hashmap.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-other/aoj-2995.test.cpp
     title: verify/verify-aoj-other/aoj-2995.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-other/aoj-3022.test.cpp
     title: verify/verify-aoj-other/aoj-3022.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-other/aoj-3506.test.cpp
     title: verify/verify-aoj-other/aoj-3506.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/dijkstra.test.cpp
     title: verify/verify-unit-test/dijkstra.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/dynamic-diameter.test.cpp
     title: verify/verify-unit-test/dynamic-diameter.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/rerooting.test.cpp
     title: verify/verify-unit-test/rerooting.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/semiring.test.cpp
     title: verify/verify-unit-test/semiring.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/tree-path.test.cpp
     title: verify/verify-unit-test/tree-path.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-vertex-add-path-sum-euler-tour.test.cpp
     title: verify/verify-yosupo-ds/yosupo-vertex-add-path-sum-euler-tour.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-vertex-add-path-sum.test.cpp
     title: verify/verify-yosupo-ds/yosupo-vertex-add-path-sum.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-vertex-add-subtree-sum-dst-on-tree.test.cpp
     title: verify/verify-yosupo-ds/yosupo-vertex-add-subtree-sum-dst-on-tree.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-vertex-add-subtree-sum-euler-tree.test.cpp
     title: verify/verify-yosupo-ds/yosupo-vertex-add-subtree-sum-euler-tree.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-vertex-add-subtree-sum.test.cpp
     title: verify/verify-yosupo-ds/yosupo-vertex-add-subtree-sum.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-vertex-set-path-composite.test.cpp
     title: verify/verify-yosupo-ds/yosupo-vertex-set-path-composite.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-graph/yosupo-cartesian.test.cpp
     title: verify/verify-yosupo-graph/yosupo-cartesian.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-graph/yosupo-chromatic-number.test.cpp
     title: verify/verify-yosupo-graph/yosupo-chromatic-number.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-graph/yosupo-cycle-detection.test.cpp
     title: verify/verify-yosupo-graph/yosupo-cycle-detection.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-graph/yosupo-diameter.test.cpp
     title: verify/verify-yosupo-graph/yosupo-diameter.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-graph/yosupo-directed-mst.test.cpp
     title: verify/verify-yosupo-graph/yosupo-directed-mst.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-graph/yosupo-frequency-table-of-tree-distance.test.cpp
     title: verify/verify-yosupo-graph/yosupo-frequency-table-of-tree-distance.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-graph/yosupo-jump-on-tree.test.cpp
     title: verify/verify-yosupo-graph/yosupo-jump-on-tree.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-graph/yosupo-lowest-common-ancestor-euler-tour.test.cpp
     title: verify/verify-yosupo-graph/yosupo-lowest-common-ancestor-euler-tour.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-graph/yosupo-lowest-common-ancestor-tree-util.test.cpp
     title: verify/verify-yosupo-graph/yosupo-lowest-common-ancestor-tree-util.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-graph/yosupo-lowest-common-ancestor.test.cpp
     title: verify/verify-yosupo-graph/yosupo-lowest-common-ancestor.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-graph/yosupo-point-set-tree-path-composite-sum-fixed-root.test.cpp
     title: verify/verify-yosupo-graph/yosupo-point-set-tree-path-composite-sum-fixed-root.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-graph/yosupo-shortest-path-2.test.cpp
     title: verify/verify-yosupo-graph/yosupo-shortest-path-2.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-graph/yosupo-shortest-path-dijkstra-abstruct.test.cpp
     title: verify/verify-yosupo-graph/yosupo-shortest-path-dijkstra-abstruct.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-graph/yosupo-shortest-path.test.cpp
     title: verify/verify-yosupo-graph/yosupo-shortest-path.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-graph/yosupo-strongly-connected-components.test.cpp
     title: verify/verify-yosupo-graph/yosupo-strongly-connected-components.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-graph/yosupo-tree-path-composite-sum.test.cpp
     title: verify/verify-yosupo-graph/yosupo-tree-path-composite-sum.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-graph/yosupo-two-edge-cc.test.cpp
     title: verify/verify-yosupo-graph/yosupo-two-edge-cc.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-0103.test.cpp
     title: verify/verify-yuki/yuki-0103.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1254-2.test.cpp
     title: verify/verify-yuki/yuki-1254-2.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1254.test.cpp
     title: verify/verify-yuki/yuki-1254.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1320.test.cpp
     title: verify/verify-yuki/yuki-1320.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1326.test.cpp
     title: verify/verify-yuki/yuki-1326.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1777.test.cpp
     title: verify/verify-yuki/yuki-1777.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1778.test.cpp
     title: verify/verify-yuki/yuki-1778.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1789.test.cpp
     title: verify/verify-yuki/yuki-1789.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-2588.test.cpp
     title: verify/verify-yuki/yuki-2588.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/graph/graph-template.md
     document_title: "\u30B0\u30E9\u30D5\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8"
@@ -399,8 +399,8 @@ data:
   - shortest-path/dual-of-shortest-path.hpp
   - shortest-path/warshall-floyd.hpp
   - shortest-path/bfs01.hpp
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_SOME_WA
+  timestamp: '2024-05-03 23:21:26+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-unit-test/dijkstra.test.cpp
   - verify/verify-unit-test/dynamic-diameter.test.cpp

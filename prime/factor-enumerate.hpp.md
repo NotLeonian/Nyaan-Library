@@ -2,19 +2,19 @@
 data:
   _extendedDependsOn: []
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: prime/osak.hpp
     title: prime/osak.hpp
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/factorize.test.cpp
     title: verify/verify-unit-test/factorize.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/osak.test.cpp
     title: verify/verify-unit-test/osak.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"prime/factor-enumerate.hpp\"\n\nvector<int> factor_enumerate(int\
@@ -36,8 +36,8 @@ data:
   path: prime/factor-enumerate.hpp
   requiredBy:
   - prime/osak.hpp
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2020-12-05 08:35:39+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-unit-test/osak.test.cpp
   - verify/verify-unit-test/factorize.test.cpp

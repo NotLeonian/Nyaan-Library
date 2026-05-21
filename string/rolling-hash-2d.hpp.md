@@ -1,7 +1,7 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: internal/internal-hash.hpp
     title: "\u30CF\u30C3\u30B7\u30E5\u69CB\u9020\u4F53"
   _extendedRequiredBy: []
@@ -122,7 +122,7 @@ data:
   isVerificationFile: false
   path: string/rolling-hash-2d.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
+  timestamp: '2023-08-10 13:25:59+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-aoj-alds/verify-aoj-alds-14-c.test.cpp

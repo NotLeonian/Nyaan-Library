@@ -1,86 +1,86 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: internal/internal-math.hpp
     title: internal/internal-math.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: internal/internal-type-traits.hpp
     title: internal/internal-type-traits.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: modint/arbitrary-montgomery-modint.hpp
     title: modint/arbitrary-montgomery-modint.hpp
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/primitive-root-ll.hpp
     title: math/primitive-root-ll.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/two-square.hpp
     title: math/two-square.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: modulo/mod-kth-root.hpp
     title: kth root(Tonelli-Shanks algorithm)
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: ntt/multivariate-circular-convolution.hpp
     title: "\u591A\u5909\u6570\u5DE1\u56DE\u7573\u307F\u8FBC\u307F"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: ntt/ntt-64bit.hpp
     title: ntt/ntt-64bit.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: prime/fast-factorize.hpp
     title: "\u9AD8\u901F\u7D20\u56E0\u6570\u5206\u89E3(Miller Rabin/Pollard's Rho)"
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/enumerate-convex.test.cpp
     title: verify/verify-unit-test/enumerate-convex.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/factorize.test.cpp
     title: verify/verify-unit-test/factorize.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/garner-bigint.test.cpp
     title: verify/verify-unit-test/garner-bigint.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/ntt-64bit.test.cpp
     title: verify/verify-unit-test/ntt-64bit.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/osak.test.cpp
     title: verify/verify-unit-test/osak.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/primality-test.test.cpp
     title: verify/verify-unit-test/primality-test.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/primitive-root.test.cpp
     title: verify/verify-unit-test/primitive-root.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-factorization.test.cpp
     title: verify/verify-yosupo-math/yosupo-factorization.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-kth-root-mod.test.cpp
     title: verify/verify-yosupo-math/yosupo-kth-root-mod.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-primality-test-u64.test.cpp
     title: verify/verify-yosupo-math/yosupo-primality-test-u64.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-primality-test.test.cpp
     title: verify/verify-yosupo-math/yosupo-primality-test.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-primitive-root.test.cpp
     title: verify/verify-yosupo-math/yosupo-primitive-root.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-two-square-sum.test.cpp
     title: verify/verify-yosupo-math/yosupo-two-square-sum.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ntt/yosupo-multivariate-circular-convolution.test.cpp
     title: verify/verify-yosupo-ntt/yosupo-multivariate-circular-convolution.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-0002.test.cpp
     title: verify/verify-yuki/yuki-0002.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-0103.test.cpp
     title: verify/verify-yuki/yuki-0103.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     document_title: Miller-Rabin primality test
     links: []
@@ -240,8 +240,8 @@ data:
   - math/two-square.hpp
   - math/primitive-root-ll.hpp
   - modulo/mod-kth-root.hpp
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2024-03-04 16:48:10+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ntt/yosupo-multivariate-circular-convolution.test.cpp
   - verify/verify-unit-test/ntt-64bit.test.cpp

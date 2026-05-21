@@ -1,55 +1,55 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: data-structure/rollback-union-find.hpp
     title: "Rollback\u3064\u304DUnion Find"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: graph/offline-dynamic-connectivity.hpp
     title: graph/offline-dynamic-connectivity.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: hashmap/hashmap-base.hpp
     title: "Hash Map(base)\u3000(\u30CF\u30C3\u30B7\u30E5\u30DE\u30C3\u30D7\u30FB\u57FA\
       \u5E95\u30AF\u30E9\u30B9)"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: hashmap/hashmap.hpp
     title: "\u30CF\u30C3\u30B7\u30E5\u30DE\u30C3\u30D7(\u9023\u60F3\u914D\u5217)"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: lct/link-cut-base.hpp
     title: Link/Cut Tree(base)
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: lct/link-cut-tree-subtree.hpp
     title: "\u90E8\u5206\u6728\u30AF\u30A8\u30EALink/Cut Tree"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: lct/reversible-bbst-base.hpp
     title: "\u53CD\u8EE2\u53EF\u80FD\u5E73\u8861\u4E8C\u5206\u6728(\u57FA\u5E95\u30AF\
       \u30E9\u30B9)"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: lct/splay-base.hpp
     title: Splay Tree(base)
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/bitop.hpp
     title: template/bitop.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/debug.hpp
     title: template/debug.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/inout.hpp
     title: template/inout.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/macro.hpp
     title: template/macro.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template.hpp
     title: template/template.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/util.hpp
     title: template/util.hpp
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/dynamic_graph_vertex_add_component_sum
@@ -433,21 +433,21 @@ data:
     \ push(q), push(t);\n        if (pos(q) == pos(t))\n          rot(q), rot(t);\n\
     \        else\n          rot(t), rot(t);\n      }\n    }\n  }\n\n  Ptr get_left(Ptr\
     \ t) {\n    while (t->l) push(t), t = t->l;\n    return t;\n  }\n\n  Ptr get_right(Ptr\
-    \ t) {\n    while (t->r) push(t), t = t->r;\n    return t;\n  }\n\n  pair<Ptr,\
-    \ Ptr> split(Ptr t, int k) {\n    if (!t) return {nullptr, nullptr};\n    if (k\
-    \ == 0) return {nullptr, t};\n    if (k == count(t)) return {t, nullptr};\n  \
-    \  push(t);\n    if (k <= count(t->l)) {\n      auto x = split(t->l, k);\n   \
-    \   t->l = x.second;\n      t->p = nullptr;\n      if (x.second) x.second->p =\
-    \ t;\n      return {x.first, update(t)};\n    } else {\n      auto x = split(t->r,\
-    \ k - count(t->l) - 1);\n      t->r = x.first;\n      t->p = nullptr;\n      if\
-    \ (x.first) x.first->p = t;\n      return {update(t), x.second};\n    }\n  }\n\
-    \n  Ptr merge(Ptr l, Ptr r) {\n    if (!l && !r) return nullptr;\n    if (!l)\
-    \ return splay(r), r;\n    if (!r) return splay(l), l;\n    splay(l), splay(r);\n\
-    \    l = get_right(l);\n    splay(l);\n    l->r = r;\n    r->p = l;\n    update(l);\n\
-    \    return l;\n  }\n\n  using Key = decltype(Node::key);\n  Ptr build(const vector<Key>\
-    \ &v) { return build(0, v.size(), v); }\n  Ptr build(int l, int r, const vector<Key>\
-    \ &v) {\n    if (l == r) return nullptr;\n    if (l + 1 == r) return my_new(v[l]);\n\
-    \    return merge(build(l, (l + r) >> 1, v), build((l + r) >> 1, r, v));\n  }\n\
+    \ t) {\n    while (t->r) push(t), t = t->r;\n    return t;\n  }\n\n  Ptr kth(Ptr\
+    \ t, int k) {\n    while (true) {\n      push(t);\n      int lsz = count(t->l);\n\
+    \      if (k < lsz) {\n        t = t->l;\n      } else if (k == lsz) {\n     \
+    \   splay(t);\n        return t;\n      } else {\n        k -= lsz + 1;\n    \
+    \    t = t->r;\n      }\n    }\n  }\n\n  pair<Ptr, Ptr> split(Ptr t, int k) {\n\
+    \    if (!t) return {nullptr, nullptr};\n    if (k == 0) return {nullptr, t};\n\
+    \    if (k == count(t)) return {t, nullptr};\n\n    Ptr r = kth(t, k);\n    Ptr\
+    \ l = r->l;\n    r->l = nullptr;\n    if (l) l->p = nullptr;\n    update(r);\n\
+    \    return {l, r};\n  }\n\n  Ptr merge(Ptr l, Ptr r) {\n    if (!l && !r) return\
+    \ nullptr;\n    if (!l) return r;\n    if (!r) return l;\n\n    l = kth(l, count(l)\
+    \ - 1);\n    l->r = r;\n    r->p = l;\n    update(l);\n    return l;\n  }\n\n\
+    \  using Key = decltype(Node::key);\n  Ptr build(const vector<Key> &v) { return\
+    \ build(0, v.size(), v); }\n  Ptr build(int l, int r, const vector<Key> &v) {\n\
+    \    if (l == r) return nullptr;\n    if (l + 1 == r) return my_new(v[l]);\n \
+    \   return merge(build(l, (l + r) >> 1, v), build((l + r) >> 1, r, v));\n  }\n\
     \n  template <typename... Args>\n  void insert(Ptr &t, int k, const Args &...args)\
     \ {\n    splay(t);\n    auto x = split(t, k);\n    t = merge(merge(x.first, my_new(args...)),\
     \ x.second);\n  }\n\n  void erase(Ptr &t, int k) {\n    splay(t);\n    auto x\
@@ -562,8 +562,8 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-ds/yosupo-offline-dynamic-connectivity.test.cpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: TEST_WRONG_ANSWER
+  timestamp: '2026-05-22 00:23:08+09:00'
+  verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-ds/yosupo-offline-dynamic-connectivity.test.cpp
 layout: document

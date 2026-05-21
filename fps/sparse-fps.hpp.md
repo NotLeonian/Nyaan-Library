@@ -1,33 +1,33 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: fps/formal-power-series.hpp
     title: "\u591A\u9805\u5F0F/\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\
       \u30E9\u30EA"
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/fps-sparse.test.cpp
     title: verify/verify-unit-test/fps-sparse.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-sparse-exp.test.cpp
     title: verify/verify-yosupo-fps/yosupo-sparse-exp.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-sparse-inv.test.cpp
     title: verify/verify-yosupo-fps/yosupo-sparse-inv.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-sparse-log.test.cpp
     title: verify/verify-yosupo-fps/yosupo-sparse-log.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-sparse-pow.test.cpp
     title: verify/verify-yosupo-fps/yosupo-sparse-pow.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1939-sparse-pow.test.cpp
     title: verify/verify-yuki/yuki-1939-sparse-pow.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     document_title: "sparse \u306A\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570\u306E\u6F14\
       \u7B97"
@@ -221,8 +221,8 @@ data:
   isVerificationFile: false
   path: fps/sparse-fps.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2023-08-31 20:44:07+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-fps/yosupo-sparse-log.test.cpp
   - verify/verify-yosupo-fps/yosupo-sparse-exp.test.cpp

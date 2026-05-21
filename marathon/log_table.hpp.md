@@ -2,22 +2,22 @@
 data:
   _extendedDependsOn: []
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: marathon/sa-manager.hpp
     title: Multipoint Simulated Annealing
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: marathon/simulated-annealing.hpp
     title: Simulated Annealing
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/sa-manager.test.cpp
     title: verify/verify-unit-test/sa-manager.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/simulated-annealing.test.cpp
     title: verify/verify-unit-test/simulated-annealing.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"marathon/log_table.hpp\"\n\nstruct log_table {\n  static\
@@ -38,8 +38,8 @@ data:
   requiredBy:
   - marathon/sa-manager.hpp
   - marathon/simulated-annealing.hpp
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2023-08-10 13:25:59+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-unit-test/sa-manager.test.cpp
   - verify/verify-unit-test/simulated-annealing.test.cpp

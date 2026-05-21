@@ -1,10 +1,10 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: internal/internal-seed.hpp
     title: internal/internal-seed.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: misc/rng.hpp
     title: misc/rng.hpp
   _extendedRequiredBy: []
@@ -88,7 +88,7 @@ data:
   isVerificationFile: false
   path: marathon/multi-armed-bandit.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
+  timestamp: '2024-04-28 09:13:11+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: marathon/multi-armed-bandit.hpp

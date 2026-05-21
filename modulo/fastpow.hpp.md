@@ -32,7 +32,7 @@ data:
   isVerificationFile: false
   path: modulo/fastpow.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
+  timestamp: '2022-08-22 19:46:43+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: modulo/fastpow.hpp

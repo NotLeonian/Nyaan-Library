@@ -2,13 +2,13 @@
 data:
   _extendedDependsOn: []
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: data-structure-2d/rectangle-add-rectangle-sum.hpp
     title: data-structure-2d/rectangle-add-rectangle-sum.hpp
   - icon: ':heavy_check_mark:'
     path: data-structure/range-sum-range-add-bit.hpp
     title: data-structure/range-sum-range-add-bit.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: dp/inversion-counting.hpp
     title: dp/inversion-counting.hpp
   _extendedVerifiedWith:
@@ -21,36 +21,36 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-dsl/aoj-dsl-2-g-bit.test.cpp
     title: verify/verify-aoj-dsl/aoj-dsl-2-g-bit.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-point-add-range-sum.test.cpp
     title: verify/verify-yosupo-ds/yosupo-point-add-range-sum.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-abstruct-range-tree.test.cpp
     title: verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-abstruct-range-tree.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-static-range-inversion-query-2.test.cpp
     title: verify/verify-yosupo-ds/yosupo-static-range-inversion-query-2.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-static-range-inversions-query.test.cpp
     title: verify/verify-yosupo-ds/yosupo-static-range-inversions-query.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-static-rectangle-add-rectangle-sum.test.cpp
     title: verify/verify-yosupo-ds/yosupo-static-rectangle-add-rectangle-sum.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-vertex-add-path-sum-euler-tour.test.cpp
     title: verify/verify-yosupo-ds/yosupo-vertex-add-path-sum-euler-tour.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-vertex-add-subtree-sum-dst-on-tree.test.cpp
     title: verify/verify-yosupo-ds/yosupo-vertex-add-subtree-sum-dst-on-tree.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-vertex-add-subtree-sum-euler-tree.test.cpp
     title: verify/verify-yosupo-ds/yosupo-vertex-add-subtree-sum-euler-tree.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1115.test.cpp
     title: verify/verify-yuki/yuki-1115.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/data-structure/binary-indexed-tree.md
     document_title: Binary Indexed Tree(Fenwick Tree)
@@ -102,8 +102,8 @@ data:
   - dp/inversion-counting.hpp
   - data-structure-2d/rectangle-add-rectangle-sum.hpp
   - data-structure/range-sum-range-add-bit.hpp
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_SOME_WA
+  timestamp: '2021-12-20 22:10:59+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-abstruct-range-tree.test.cpp
   - verify/verify-yosupo-ds/yosupo-static-rectangle-add-rectangle-sum.test.cpp

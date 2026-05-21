@@ -1,23 +1,23 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: internal/internal-hash.hpp
     title: "\u30CF\u30C3\u30B7\u30E5\u69CB\u9020\u4F53"
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/string-search.test.cpp
     title: verify/verify-unit-test/string-search.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-string/yosupo-enumerate-palindromes-roriha.test.cpp
     title: verify/verify-yosupo-string/yosupo-enumerate-palindromes-roriha.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-string/yosupo-zalgo-rollinghash.test.cpp
     title: verify/verify-yosupo-string/yosupo-zalgo-rollinghash.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/string/rolling-hash.md
     document_title: Rolling Hash
@@ -140,8 +140,8 @@ data:
   isVerificationFile: false
   path: string/rolling-hash.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2023-08-10 13:25:59+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-string/yosupo-enumerate-palindromes-roriha.test.cpp
   - verify/verify-yosupo-string/yosupo-zalgo-rollinghash.test.cpp

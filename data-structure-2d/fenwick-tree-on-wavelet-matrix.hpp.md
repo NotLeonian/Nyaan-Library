@@ -3,12 +3,12 @@ data:
   _extendedDependsOn: []
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-wm.test.cpp
     title: verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-wm.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 1 \"data-structure-2d/fenwick-tree-on-wavelet-matrix.hpp\"\n\
@@ -116,8 +116,8 @@ data:
   isVerificationFile: false
   path: data-structure-2d/fenwick-tree-on-wavelet-matrix.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2022-08-22 19:46:43+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-wm.test.cpp
 documentation_of: data-structure-2d/fenwick-tree-on-wavelet-matrix.hpp

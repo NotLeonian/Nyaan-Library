@@ -2,26 +2,26 @@
 data:
   _extendedDependsOn: []
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: dp/concave-min-plus-convolution.hpp
     title: dp/concave-min-plus-convolution.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: dp/monge-d-edge-shortest-path-enumerate.hpp
     title: "monge \u30B0\u30E9\u30D5\u4E0A\u306E d-\u8FBA\u6700\u77ED\u8DEF\u306E\
       \ d=1,...,N \u306B\u304A\u3051\u308B\u5217\u6319"
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-concave-min-plus-convolution-1.test.cpp
     title: verify/verify-yosupo-math/yosupo-concave-min-plus-convolution-1.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-concave-min-plus-convolution-2.test.cpp
     title: verify/verify-yosupo-math/yosupo-concave-min-plus-convolution-2.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-0952.test.cpp
     title: verify/verify-yuki/yuki-0952.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     document_title: monotone minima
     links: []
@@ -71,8 +71,8 @@ data:
   requiredBy:
   - dp/monge-d-edge-shortest-path-enumerate.hpp
   - dp/concave-min-plus-convolution.hpp
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2023-09-02 22:21:41+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-math/yosupo-concave-min-plus-convolution-2.test.cpp
   - verify/verify-yosupo-math/yosupo-concave-min-plus-convolution-1.test.cpp

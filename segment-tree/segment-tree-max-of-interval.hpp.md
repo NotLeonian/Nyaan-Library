@@ -3,15 +3,15 @@ data:
   _extendedDependsOn: []
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-2281.test.cpp
     title: verify/verify-yuki/yuki-2281.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-2333.test.cpp
     title: verify/verify-yuki/yuki-2333.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"segment-tree/segment-tree-max-of-interval.hpp\"\n\n#include\
@@ -75,8 +75,8 @@ data:
   isVerificationFile: false
   path: segment-tree/segment-tree-max-of-interval.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2023-05-29 20:16:02+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yuki/yuki-2281.test.cpp
   - verify/verify-yuki/yuki-2333.test.cpp

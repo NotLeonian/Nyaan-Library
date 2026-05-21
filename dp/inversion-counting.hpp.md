@@ -1,17 +1,17 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: data-structure/binary-indexed-tree.hpp
     title: Binary Indexed Tree(Fenwick Tree)
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1115.test.cpp
     title: verify/verify-yuki/yuki-1115.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"dp/inversion-counting.hpp\"\n\n#line 2 \"data-structure/binary-indexed-tree.hpp\"\
@@ -71,8 +71,8 @@ data:
   isVerificationFile: false
   path: dp/inversion-counting.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2022-08-22 19:46:43+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yuki/yuki-1115.test.cpp
 documentation_of: dp/inversion-counting.hpp

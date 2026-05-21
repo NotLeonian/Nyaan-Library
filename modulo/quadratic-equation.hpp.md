@@ -1,10 +1,10 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: modint/arbitrary-montgomery-modint.hpp
     title: modint/arbitrary-montgomery-modint.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: modulo/mod-sqrt.hpp
     title: mod sqrt(Tonelli-Shanks algorithm)
   _extendedRequiredBy: []
@@ -87,7 +87,7 @@ data:
   isVerificationFile: false
   path: modulo/quadratic-equation.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
+  timestamp: '2023-05-29 20:16:02+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: modulo/quadratic-equation.hpp

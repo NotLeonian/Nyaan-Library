@@ -1,47 +1,47 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: hashmap/hashmap-unerasable.hpp
     title: hashmap/hashmap-unerasable.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: internal/internal-hash-function.hpp
     title: "\u30CF\u30C3\u30B7\u30E5\u95A2\u6570"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: internal/internal-hash.hpp
     title: "\u30CF\u30C3\u30B7\u30E5\u69CB\u9020\u4F53"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: internal/internal-seed.hpp
     title: internal/internal-seed.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: internal/internal-type-traits.hpp
     title: internal/internal-type-traits.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/bitop.hpp
     title: template/bitop.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/debug.hpp
     title: template/debug.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/inout.hpp
     title: template/inout.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/macro.hpp
     title: template/macro.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template.hpp
     title: template/template.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/util.hpp
     title: template/util.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: tree/rooted-tree-hash.hpp
     title: "\u6839\u4ED8\u304D\u6728\u306E\u30CF\u30C3\u30B7\u30E5"
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/rooted_tree_isomorphism_classification
@@ -431,8 +431,8 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-graph/yosupo-tree-hash.test.cpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: TEST_WRONG_ANSWER
+  timestamp: '2024-05-04 15:53:37+09:00'
+  verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-graph/yosupo-tree-hash.test.cpp
 layout: document

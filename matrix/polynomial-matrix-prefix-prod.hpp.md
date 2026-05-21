@@ -1,45 +1,45 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: fps/formal-power-series.hpp
     title: "\u591A\u9805\u5F0F/\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\
       \u30E9\u30EA"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: fps/sample-point-shift.hpp
     title: fps/sample-point-shift.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: matrix/gauss-elimination.hpp
     title: matrix/gauss-elimination.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: matrix/inverse-matrix.hpp
     title: matrix/inverse-matrix.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: matrix/matrix.hpp
     title: "\u884C\u5217\u30E9\u30A4\u30D6\u30E9\u30EA"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: modulo/binomial.hpp
     title: modulo/binomial.hpp
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: fps/find-p-recursive.hpp
     title: "P-recursive\u306E\u9AD8\u901F\u8A08\u7B97"
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/p-recursive.test.cpp
     title: verify/verify-unit-test/p-recursive.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/polynomial-matrix-prod.test.cpp
     title: verify/verify-unit-test/polynomial-matrix-prod.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-factorial-p-recursive.test.cpp
     title: verify/verify-yosupo-fps/yosupo-factorial-p-recursive.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1533.test.cpp
     title: verify/verify-yuki/yuki-1533.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     document_title: "\u591A\u9805\u5F0F\u884C\u5217\u306Eprefix product"
     links: []
@@ -300,8 +300,8 @@ data:
   path: matrix/polynomial-matrix-prefix-prod.hpp
   requiredBy:
   - fps/find-p-recursive.hpp
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2024-05-03 21:06:15+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-fps/yosupo-factorial-p-recursive.test.cpp
   - verify/verify-unit-test/p-recursive.test.cpp

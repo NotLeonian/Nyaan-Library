@@ -1,57 +1,57 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: internal/internal-type-traits.hpp
     title: internal/internal-type-traits.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: lct/link-cut-base.hpp
     title: Link/Cut Tree(base)
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: lct/link-cut-tree.hpp
     title: Link/Cut Tree
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: lct/reversible-bbst-base.hpp
     title: "\u53CD\u8EE2\u53EF\u80FD\u5E73\u8861\u4E8C\u5206\u6728(\u57FA\u5E95\u30AF\
       \u30E9\u30B9)"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: lct/splay-base.hpp
     title: Splay Tree(base)
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: lct/splay-reversible.hpp
     title: "\u53CD\u8EE2\u53EF\u80FDSplay Tree"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/affine-transformation.hpp
     title: "\u30A2\u30D5\u30A3\u30F3\u5909\u63DB"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: misc/fastio.hpp
     title: misc/fastio.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: modint/montgomery-modint.hpp
     title: modint/montgomery-modint.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/bitop.hpp
     title: template/bitop.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/debug.hpp
     title: template/debug.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/inout.hpp
     title: template/inout.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/macro.hpp
     title: template/macro.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template.hpp
     title: template/template.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/util.hpp
     title: template/util.hpp
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/dynamic_tree_vertex_set_path_composite
@@ -244,31 +244,31 @@ data:
     \ \\\n    return;                  \\\n  } while (0)\n#line 70 \"template/template.hpp\"\
     \n\nnamespace Nyaan {\nvoid solve();\n}\nint main() { Nyaan::solve(); }\n#line\
     \ 5 \"verify/verify-yosupo-ds/yosupo-dynamic-tree-vertex-set-path-composite.test.cpp\"\
-    \n//\nusing namespace Nyaan;\n\n#line 2 \"modint/montgomery-modint.hpp\"\n\ntemplate\
-    \ <uint32_t mod>\nstruct LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n\
-    \  using i32 = int32_t;\n  using u32 = uint32_t;\n  using u64 = uint64_t;\n\n\
-    \  static constexpr u32 get_r() {\n    u32 ret = mod;\n    for (i32 i = 0; i <\
-    \ 4; ++i) ret *= 2 - mod * ret;\n    return ret;\n  }\n\n  static constexpr u32\
-    \ r = get_r();\n  static constexpr u32 n2 = -u64(mod) % mod;\n  static_assert(mod\
-    \ < (1 << 30), \"invalid, mod >= 2 ^ 30\");\n  static_assert((mod & 1) == 1, \"\
-    invalid, mod % 2 == 0\");\n  static_assert(r * mod == 1, \"this code has bugs.\"\
-    );\n\n  u32 a;\n\n  constexpr LazyMontgomeryModInt() : a(0) {}\n  constexpr LazyMontgomeryModInt(const\
-    \ int64_t &b)\n      : a(reduce(u64(b % mod + mod) * n2)){};\n\n  static constexpr\
-    \ u32 reduce(const u64 &b) {\n    return (b + u64(u32(b) * u32(-r)) * mod) >>\
-    \ 32;\n  }\n\n  constexpr mint &operator+=(const mint &b) {\n    if (i32(a +=\
-    \ b.a - 2 * mod) < 0) a += 2 * mod;\n    return *this;\n  }\n\n  constexpr mint\
-    \ &operator-=(const mint &b) {\n    if (i32(a -= b.a) < 0) a += 2 * mod;\n   \
-    \ return *this;\n  }\n\n  constexpr mint &operator*=(const mint &b) {\n    a =\
-    \ reduce(u64(a) * b.a);\n    return *this;\n  }\n\n  constexpr mint &operator/=(const\
-    \ mint &b) {\n    *this *= b.inverse();\n    return *this;\n  }\n\n  constexpr\
-    \ mint operator+(const mint &b) const { return mint(*this) += b; }\n  constexpr\
-    \ mint operator-(const mint &b) const { return mint(*this) -= b; }\n  constexpr\
-    \ mint operator*(const mint &b) const { return mint(*this) *= b; }\n  constexpr\
-    \ mint operator/(const mint &b) const { return mint(*this) /= b; }\n  constexpr\
-    \ bool operator==(const mint &b) const {\n    return (a >= mod ? a - mod : a)\
-    \ == (b.a >= mod ? b.a - mod : b.a);\n  }\n  constexpr bool operator!=(const mint\
-    \ &b) const {\n    return (a >= mod ? a - mod : a) != (b.a >= mod ? b.a - mod\
-    \ : b.a);\n  }\n  constexpr mint operator-() const { return mint() - mint(*this);\
+    \n//\nusing namespace Nyaan;\n\n#line 2 \"modint/montgomery-modint.hpp\"\n\n#line\
+    \ 4 \"modint/montgomery-modint.hpp\"\n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt\
+    \ {\n  using mint = LazyMontgomeryModInt;\n  using i32 = int32_t;\n  using u32\
+    \ = uint32_t;\n  using u64 = uint64_t;\n\n  static constexpr u32 get_r() {\n \
+    \   u32 ret = mod;\n    for (i32 i = 0; i < 4; ++i) ret *= 2 - mod * ret;\n  \
+    \  return ret;\n  }\n\n  static constexpr u32 r = get_r();\n  static constexpr\
+    \ u32 n2 = -u64(mod) % mod;\n  static_assert(mod < (1 << 30), \"invalid, mod >=\
+    \ 2 ^ 30\");\n  static_assert((mod & 1) == 1, \"invalid, mod % 2 == 0\");\n  static_assert(r\
+    \ * mod == 1, \"this code has bugs.\");\n\n  u32 a;\n\n  constexpr LazyMontgomeryModInt()\
+    \ : a(0) {}\n  constexpr LazyMontgomeryModInt(const int64_t &b)\n      : a(reduce(u64(b\
+    \ % mod + mod) * n2)){};\n\n  static constexpr u32 reduce(const u64 &b) {\n  \
+    \  return (b + u64(u32(b) * u32(-r)) * mod) >> 32;\n  }\n\n  constexpr mint &operator+=(const\
+    \ mint &b) {\n    if (i32(a += b.a - 2 * mod) < 0) a += 2 * mod;\n    return *this;\n\
+    \  }\n\n  constexpr mint &operator-=(const mint &b) {\n    if (i32(a -= b.a) <\
+    \ 0) a += 2 * mod;\n    return *this;\n  }\n\n  constexpr mint &operator*=(const\
+    \ mint &b) {\n    a = reduce(u64(a) * b.a);\n    return *this;\n  }\n\n  constexpr\
+    \ mint &operator/=(const mint &b) {\n    *this *= b.inverse();\n    return *this;\n\
+    \  }\n\n  constexpr mint operator+(const mint &b) const { return mint(*this) +=\
+    \ b; }\n  constexpr mint operator-(const mint &b) const { return mint(*this) -=\
+    \ b; }\n  constexpr mint operator*(const mint &b) const { return mint(*this) *=\
+    \ b; }\n  constexpr mint operator/(const mint &b) const { return mint(*this) /=\
+    \ b; }\n  constexpr bool operator==(const mint &b) const {\n    return (a >= mod\
+    \ ? a - mod : a) == (b.a >= mod ? b.a - mod : b.a);\n  }\n  constexpr bool operator!=(const\
+    \ mint &b) const {\n    return (a >= mod ? a - mod : a) != (b.a >= mod ? b.a -\
+    \ mod : b.a);\n  }\n  constexpr mint operator-() const { return mint() - mint(*this);\
     \ }\n  constexpr mint operator+() const { return mint(*this); }\n\n  constexpr\
     \ mint pow(u64 n) const {\n    mint ret(1), mul(*this);\n    while (n > 0) {\n\
     \      if (n & 1) ret *= mul;\n      mul *= mul;\n      n >>= 1;\n    }\n    return\
@@ -396,21 +396,21 @@ data:
     \ push(q), push(t);\n        if (pos(q) == pos(t))\n          rot(q), rot(t);\n\
     \        else\n          rot(t), rot(t);\n      }\n    }\n  }\n\n  Ptr get_left(Ptr\
     \ t) {\n    while (t->l) push(t), t = t->l;\n    return t;\n  }\n\n  Ptr get_right(Ptr\
-    \ t) {\n    while (t->r) push(t), t = t->r;\n    return t;\n  }\n\n  pair<Ptr,\
-    \ Ptr> split(Ptr t, int k) {\n    if (!t) return {nullptr, nullptr};\n    if (k\
-    \ == 0) return {nullptr, t};\n    if (k == count(t)) return {t, nullptr};\n  \
-    \  push(t);\n    if (k <= count(t->l)) {\n      auto x = split(t->l, k);\n   \
-    \   t->l = x.second;\n      t->p = nullptr;\n      if (x.second) x.second->p =\
-    \ t;\n      return {x.first, update(t)};\n    } else {\n      auto x = split(t->r,\
-    \ k - count(t->l) - 1);\n      t->r = x.first;\n      t->p = nullptr;\n      if\
-    \ (x.first) x.first->p = t;\n      return {update(t), x.second};\n    }\n  }\n\
-    \n  Ptr merge(Ptr l, Ptr r) {\n    if (!l && !r) return nullptr;\n    if (!l)\
-    \ return splay(r), r;\n    if (!r) return splay(l), l;\n    splay(l), splay(r);\n\
-    \    l = get_right(l);\n    splay(l);\n    l->r = r;\n    r->p = l;\n    update(l);\n\
-    \    return l;\n  }\n\n  using Key = decltype(Node::key);\n  Ptr build(const vector<Key>\
-    \ &v) { return build(0, v.size(), v); }\n  Ptr build(int l, int r, const vector<Key>\
-    \ &v) {\n    if (l == r) return nullptr;\n    if (l + 1 == r) return my_new(v[l]);\n\
-    \    return merge(build(l, (l + r) >> 1, v), build((l + r) >> 1, r, v));\n  }\n\
+    \ t) {\n    while (t->r) push(t), t = t->r;\n    return t;\n  }\n\n  Ptr kth(Ptr\
+    \ t, int k) {\n    while (true) {\n      push(t);\n      int lsz = count(t->l);\n\
+    \      if (k < lsz) {\n        t = t->l;\n      } else if (k == lsz) {\n     \
+    \   splay(t);\n        return t;\n      } else {\n        k -= lsz + 1;\n    \
+    \    t = t->r;\n      }\n    }\n  }\n\n  pair<Ptr, Ptr> split(Ptr t, int k) {\n\
+    \    if (!t) return {nullptr, nullptr};\n    if (k == 0) return {nullptr, t};\n\
+    \    if (k == count(t)) return {t, nullptr};\n\n    Ptr r = kth(t, k);\n    Ptr\
+    \ l = r->l;\n    r->l = nullptr;\n    if (l) l->p = nullptr;\n    update(r);\n\
+    \    return {l, r};\n  }\n\n  Ptr merge(Ptr l, Ptr r) {\n    if (!l && !r) return\
+    \ nullptr;\n    if (!l) return r;\n    if (!r) return l;\n\n    l = kth(l, count(l)\
+    \ - 1);\n    l->r = r;\n    r->p = l;\n    update(l);\n    return l;\n  }\n\n\
+    \  using Key = decltype(Node::key);\n  Ptr build(const vector<Key> &v) { return\
+    \ build(0, v.size(), v); }\n  Ptr build(int l, int r, const vector<Key> &v) {\n\
+    \    if (l == r) return nullptr;\n    if (l + 1 == r) return my_new(v[l]);\n \
+    \   return merge(build(l, (l + r) >> 1, v), build((l + r) >> 1, r, v));\n  }\n\
     \n  template <typename... Args>\n  void insert(Ptr &t, int k, const Args &...args)\
     \ {\n    splay(t);\n    auto x = split(t, k);\n    t = merge(merge(x.first, my_new(args...)),\
     \ x.second);\n  }\n\n  void erase(Ptr &t, int k) {\n    splay(t);\n    auto x\
@@ -512,8 +512,8 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-ds/yosupo-dynamic-tree-vertex-set-path-composite.test.cpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: TEST_WRONG_ANSWER
+  timestamp: '2026-05-22 00:23:08+09:00'
+  verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-ds/yosupo-dynamic-tree-vertex-set-path-composite.test.cpp
 layout: document

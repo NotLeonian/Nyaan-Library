@@ -1,32 +1,32 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/garner.hpp
     title: Garner's algorithm
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/nimber-to-field.hpp
     title: "Nimber <-> \u591A\u9805\u5F0F\u74B0"
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/karatsuba.test.cpp
     title: verify/verify-unit-test/karatsuba.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/nimber-to-field.test.cpp
     title: verify/verify-unit-test/nimber-to-field.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/nimber.test.cpp
     title: verify/verify-unit-test/nimber.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-nim-product.test.cpp
     title: verify/verify-yosupo-math/yosupo-nim-product.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1775.test.cpp
     title: verify/verify-yuki/yuki-1775.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/math/nimber.md
     document_title: Nim Product
@@ -217,8 +217,8 @@ data:
   path: math/nimber.hpp
   requiredBy:
   - math/nimber-to-field.hpp
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2021-12-23 23:20:46+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-unit-test/karatsuba.test.cpp
   - verify/verify-unit-test/nimber.test.cpp

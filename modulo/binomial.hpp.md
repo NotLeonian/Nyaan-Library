@@ -2,322 +2,322 @@
 data:
   _extendedDependsOn: []
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: fps/find-p-recursive.hpp
     title: "P-recursive\u306E\u9AD8\u901F\u8A08\u7B97"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: fps/fps-composition-old.hpp
     title: "\u95A2\u6570\u306E\u5408\u6210( $\\mathrm{O}\\left((N \\log N)^{\\frac{3}{2}}\\\
       right)$ )"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: fps/fps-compositional-inverse.hpp
     title: "\u9006\u95A2\u6570"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: fps/fps-famous-series.hpp
     title: "\u6709\u540D\u306A\u6570\u5217"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: fps/fps-utility.hpp
     title: fps/fps-utility.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: fps/fualhuber.hpp
     title: fps/fualhuber.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: fps/lagrange-interpolation-point.hpp
     title: fps/lagrange-interpolation-point.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: fps/multivariate-fps.hpp
     title: "\u591A\u5909\u6570\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\
       \u30E9\u30EA"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: fps/online-fps.hpp
     title: fps/online-fps.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: fps/partial-fraction-decomposition.hpp
     title: "\u90E8\u5206\u5206\u6570\u5206\u89E3(\u5206\u6BCD\u304C1\u6B21\u5F0F\u306E\
       \u7A4D\u3067\u8868\u305B\u308B\u5834\u5408)"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: fps/pascal-matrix.hpp
     title: fps/pascal-matrix.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: fps/sample-point-shift.hpp
     title: fps/sample-point-shift.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: fps/stirling-matrix.hpp
     title: fps/stirling-matrix.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: fps/sum-of-exponential-times-poly.hpp
     title: $\sum_{i}a^i f(i)$
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: fps/taylor-shift.hpp
     title: "\u5E73\u884C\u79FB\u52D5"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: matrix/polynomial-matrix-prefix-prod.hpp
     title: "\u591A\u9805\u5F0F\u884C\u5217\u306Eprefix product"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: modulo/factorial.hpp
     title: "\u968E\u4E57 $\\mod p$"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: modulo/multipoint-binomial-sum.hpp
     title: "\u4E8C\u9805\u4FC2\u6570\u306Eprefix sum\u306E\u591A\u70B9\u8A55\u4FA1"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: set-function/polynomial-composite-set-power-series.hpp
     title: "\u96C6\u5408\u51AA\u7D1A\u6570\u306E\u5408\u6210"
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/bigrational.test.cpp
     title: verify/verify-unit-test/bigrational.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/binomial-table.test.cpp
     title: verify/verify-unit-test/binomial-table.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/composite-exp.test.cpp
     title: verify/verify-unit-test/composite-exp.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/composition.test.cpp
     title: verify/verify-unit-test/composition.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/dual-fps.test.cpp
     title: verify/verify-unit-test/dual-fps.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/fft2d.test.cpp
     title: verify/verify-unit-test/fft2d.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/fps-sparse.test.cpp
     title: verify/verify-unit-test/fps-sparse.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/multipoint-binomial-sum.test.cpp
     title: verify/verify-unit-test/multipoint-binomial-sum.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/p-recursive.test.cpp
     title: verify/verify-unit-test/p-recursive.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/partial-fraction-decomposition.test.cpp
     title: verify/verify-unit-test/partial-fraction-decomposition.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/polynomial-matrix-prod.test.cpp
     title: verify/verify-unit-test/polynomial-matrix-prod.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/rational-number.test.cpp
     title: verify/verify-unit-test/rational-number.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/rerooting.test.cpp
     title: verify/verify-unit-test/rerooting.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/stirling-matrix.test.cpp
     title: verify/verify-unit-test/stirling-matrix.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-vertex-set-path-composite.test.cpp
     title: verify/verify-yosupo-ds/yosupo-vertex-set-path-composite.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-composition.test.cpp
     title: verify/verify-yosupo-fps/yosupo-composition.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-compositional-inverse-large.test.cpp
     title: verify/verify-yosupo-fps/yosupo-compositional-inverse-large.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-compositional-inverse-newton.test.cpp
     title: verify/verify-yosupo-fps/yosupo-compositional-inverse-newton.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-compositional-inverse.test.cpp
     title: verify/verify-yosupo-fps/yosupo-compositional-inverse.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-division-of-polynomials.test.cpp
     title: verify/verify-yosupo-fps/yosupo-division-of-polynomials.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-exp-newton-method-2.test.cpp
     title: verify/verify-yosupo-fps/yosupo-exp-newton-method-2.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-exp-newton-method.test.cpp
     title: verify/verify-yosupo-fps/yosupo-exp-newton-method.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-exp-ofps.test.cpp
     title: verify/verify-yosupo-fps/yosupo-exp-ofps.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-exp-relaxed-convolution.test.cpp
     title: verify/verify-yosupo-fps/yosupo-exp-relaxed-convolution.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-factorial-p-recursive.test.cpp
     title: verify/verify-yosupo-fps/yosupo-factorial-p-recursive.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-factorial.test.cpp
     title: verify/verify-yosupo-fps/yosupo-factorial.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-inv-newton-method.test.cpp
     title: verify/verify-yosupo-fps/yosupo-inv-newton-method.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-inv-ofps.test.cpp
     title: verify/verify-yosupo-fps/yosupo-inv-ofps.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-inv-relaxed-convolution.test.cpp
     title: verify/verify-yosupo-fps/yosupo-inv-relaxed-convolution.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-multieval-fast.test.cpp
     title: verify/verify-yosupo-fps/yosupo-multieval-fast.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-polynomial-root-finding.test.cpp
     title: verify/verify-yosupo-fps/yosupo-polynomial-root-finding.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-product-of-polynomial-sequence.test.cpp
     title: verify/verify-yosupo-fps/yosupo-product-of-polynomial-sequence.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-sample-point-shift.test.cpp
     title: verify/verify-yosupo-fps/yosupo-sample-point-shift.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-sparse-exp.test.cpp
     title: verify/verify-yosupo-fps/yosupo-sparse-exp.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-sparse-inv.test.cpp
     title: verify/verify-yosupo-fps/yosupo-sparse-inv.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-sparse-log.test.cpp
     title: verify/verify-yosupo-fps/yosupo-sparse-log.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-sparse-pow.test.cpp
     title: verify/verify-yosupo-fps/yosupo-sparse-pow.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-stirling-1st-row.test.cpp
     title: verify/verify-yosupo-fps/yosupo-stirling-1st-row.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-stirling-1st.test.cpp
     title: verify/verify-yosupo-fps/yosupo-stirling-1st.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-stirling-2nd-row.test.cpp
     title: verify/verify-yosupo-fps/yosupo-stirling-2nd-row.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-stirling-2nd.test.cpp
     title: verify/verify-yosupo-fps/yosupo-stirling-2nd.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-sum-of-exp-poly-limit.test.cpp
     title: verify/verify-yosupo-fps/yosupo-sum-of-exp-poly-limit.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-sum-of-exp-poly.test.cpp
     title: verify/verify-yosupo-fps/yosupo-sum-of-exp-poly.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-taylor-shift.test.cpp
     title: verify/verify-yosupo-fps/yosupo-taylor-shift.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-graph/yosupo-exp-of-set-power-series.test.cpp
     title: verify/verify-yosupo-graph/yosupo-exp-of-set-power-series.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-graph/yosupo-log-of-set-power-series.test.cpp
     title: verify/verify-yosupo-graph/yosupo-log-of-set-power-series.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-graph/yosupo-tree-path-composite-sum.test.cpp
     title: verify/verify-yosupo-graph/yosupo-tree-path-composite-sum.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-binomial-coefficient-prime-mod.test.cpp
     title: verify/verify-yosupo-math/yosupo-binomial-coefficient-prime-mod.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-determinant-of-sparse-matrix-bbla.test.cpp
     title: verify/verify-yosupo-math/yosupo-determinant-of-sparse-matrix-bbla.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-polynomial-composite-set-power-series.test.cpp
     title: verify/verify-yosupo-math/yosupo-polynomial-composite-set-power-series.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-pow-of-matrix-2.test.cpp
     title: verify/verify-yosupo-math/yosupo-pow-of-matrix-2.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-pow-of-matrix.test.cpp
     title: verify/verify-yosupo-math/yosupo-pow-of-matrix.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-rank-of-matrix.test.cpp
     title: verify/verify-yosupo-math/yosupo-rank-of-matrix.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-sum-of-totient-2.test.cpp
     title: verify/verify-yosupo-math/yosupo-sum-of-totient-2.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-sum-of-totient-3.test.cpp
     title: verify/verify-yosupo-math/yosupo-sum-of-totient-3.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ntt/yosupo-convolution-large.test.cpp
     title: verify/verify-yosupo-ntt/yosupo-convolution-large.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ntt/yosupo-multipoint-evaluation-chirp-z.test.cpp
     title: verify/verify-yosupo-ntt/yosupo-multipoint-evaluation-chirp-z.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-string/yosupo-number-of-subsequences.test.cpp
     title: verify/verify-yosupo-string/yosupo-number-of-subsequences.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-0117.test.cpp
     title: verify/verify-yuki/yuki-0117.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-0125.test.cpp
     title: verify/verify-yuki/yuki-0125.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-0502.test.cpp
     title: verify/verify-yuki/yuki-0502.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-0720.test.cpp
     title: verify/verify-yuki/yuki-0720.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-0890.test.cpp
     title: verify/verify-yuki/yuki-0890.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-0963-circular.test.cpp
     title: verify/verify-yuki/yuki-0963-circular.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1080.test.cpp
     title: verify/verify-yuki/yuki-1080.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1112-sparse.test.cpp
     title: verify/verify-yuki/yuki-1112-sparse.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1112.test.cpp
     title: verify/verify-yuki/yuki-1112.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1145-frac.test.cpp
     title: verify/verify-yuki/yuki-1145-frac.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1145.test.cpp
     title: verify/verify-yuki/yuki-1145.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1303.test.cpp
     title: verify/verify-yuki/yuki-1303.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1504.test.cpp
     title: verify/verify-yuki/yuki-1504.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1510.test.cpp
     title: verify/verify-yuki/yuki-1510.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1533.test.cpp
     title: verify/verify-yuki/yuki-1533.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1781.test.cpp
     title: verify/verify-yuki/yuki-1781.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1783.test.cpp
     title: verify/verify-yuki/yuki-1783.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1875.test.cpp
     title: verify/verify-yuki/yuki-1875.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1939-2.test.cpp
     title: verify/verify-yuki/yuki-1939-2.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1939-sparse-pow.test.cpp
     title: verify/verify-yuki/yuki-1939-sparse-pow.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1939.test.cpp
     title: verify/verify-yuki/yuki-1939.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-2360.test.cpp
     title: verify/verify-yuki/yuki-2360.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-2580.test.cpp
     title: verify/verify-yuki/yuki-2580.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-2588.test.cpp
     title: verify/verify-yuki/yuki-2588.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-2661.test.cpp
     title: verify/verify-yuki/yuki-2661.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-2883.test.cpp
     title: verify/verify-yuki/yuki-2883.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"modulo/binomial.hpp\"\n\n#include <cassert>\n#include <type_traits>\n\
@@ -409,8 +409,8 @@ data:
   - modulo/factorial.hpp
   - modulo/multipoint-binomial-sum.hpp
   - set-function/polynomial-composite-set-power-series.hpp
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2023-05-22 22:29:25+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-fps/yosupo-sum-of-exp-poly-limit.test.cpp
   - verify/verify-yosupo-fps/yosupo-inv-ofps.test.cpp

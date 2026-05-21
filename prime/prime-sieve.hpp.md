@@ -3,15 +3,15 @@ data:
   _extendedDependsOn: []
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/primality-test.test.cpp
     title: verify/verify-unit-test/primality-test.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-prime-enumerate-sieve.test.cpp
     title: verify/verify-yosupo-math/yosupo-prime-enumerate-sieve.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"prime/prime-sieve.hpp\"\n\n// Prime -> {0, 0, 1, 1, 0, 1,\
@@ -27,8 +27,8 @@ data:
   isVerificationFile: false
   path: prime/prime-sieve.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2020-12-05 08:35:39+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-unit-test/primality-test.test.cpp
   - verify/verify-yosupo-math/yosupo-prime-enumerate-sieve.test.cpp

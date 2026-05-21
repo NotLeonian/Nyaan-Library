@@ -2,22 +2,22 @@
 data:
   _extendedDependsOn: []
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/two-square.hpp
     title: math/two-square.hpp
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/enumerate-convex.test.cpp
     title: verify/verify-unit-test/enumerate-convex.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-gcd-of-gaussian-integer.test.cpp
     title: verify/verify-yosupo-math/yosupo-gcd-of-gaussian-integer.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-two-square-sum.test.cpp
     title: verify/verify-yosupo-math/yosupo-two-square-sum.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"math/gaussian-integer.hpp\"\n\n// x + yi\ntemplate <typename\
@@ -71,8 +71,8 @@ data:
   path: math/gaussian-integer.hpp
   requiredBy:
   - math/two-square.hpp
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2024-09-14 20:40:02+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-unit-test/enumerate-convex.test.cpp
   - verify/verify-yosupo-math/yosupo-two-square-sum.test.cpp

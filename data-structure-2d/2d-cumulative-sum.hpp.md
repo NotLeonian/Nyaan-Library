@@ -43,7 +43,7 @@ data:
   isVerificationFile: false
   path: data-structure-2d/2d-cumulative-sum.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
+  timestamp: '2023-08-10 13:25:59+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-aoj-dsl/aoj-dsl-5-b.test.cpp

@@ -2,16 +2,16 @@
 data:
   _extendedDependsOn: []
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: data-structure/persistent-union-find.hpp
     title: "\u5B8C\u5168\u6C38\u7D9AUnion-Find"
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-persistent-unionfind.test.cpp
     title: verify/verify-yosupo-ds/yosupo-persistent-unionfind.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     document_title: "\u6C38\u7D9A\u914D\u5217"
     links: []
@@ -78,8 +78,8 @@ data:
   path: data-structure/persistent-array.hpp
   requiredBy:
   - data-structure/persistent-union-find.hpp
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2020-12-05 07:59:51+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ds/yosupo-persistent-unionfind.test.cpp
 documentation_of: data-structure/persistent-array.hpp

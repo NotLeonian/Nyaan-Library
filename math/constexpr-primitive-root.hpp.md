@@ -2,47 +2,47 @@
 data:
   _extendedDependsOn: []
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: fps/dual-fps.hpp
     title: "\u5468\u6CE2\u6570\u9818\u57DF\u3067\u306E\u5024\u3092\u4FDD\u6301\u3059\
       \u308BFPS"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: ntt/cooley-tukey-ntt.hpp
     title: Cooley-Tukey FFT Algorithm
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: ntt/multiplicative-convolution-mod-p.hpp
     title: ntt/multiplicative-convolution-mod-p.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: ntt/multivariate-circular-convolution.hpp
     title: "\u591A\u5909\u6570\u5DE1\u56DE\u7573\u307F\u8FBC\u307F"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: ntt/rader-ntt.hpp
     title: Rader's FFT Algorithm
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/dual-fps.test.cpp
     title: verify/verify-unit-test/dual-fps.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/primitive-root.test.cpp
     title: verify/verify-unit-test/primitive-root.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ntt/yosupo-convolution-arbitrarylengthntt.test.cpp
     title: verify/verify-yosupo-ntt/yosupo-convolution-arbitrarylengthntt.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ntt/yosupo-convolution-on-z-pz.test.cpp
     title: verify/verify-yosupo-ntt/yosupo-convolution-on-z-pz.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ntt/yosupo-multivariate-circular-convolution.test.cpp
     title: verify/verify-yosupo-ntt/yosupo-multivariate-circular-convolution.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1504.test.cpp
     title: verify/verify-yuki/yuki-1504.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1783.test.cpp
     title: verify/verify-yuki/yuki-1783.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"math/constexpr-primitive-root.hpp\"\n\nconstexpr unsigned\
@@ -73,8 +73,8 @@ data:
   - ntt/multivariate-circular-convolution.hpp
   - ntt/cooley-tukey-ntt.hpp
   - ntt/rader-ntt.hpp
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2023-08-31 20:44:07+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ntt/yosupo-multivariate-circular-convolution.test.cpp
   - verify/verify-yosupo-ntt/yosupo-convolution-on-z-pz.test.cpp

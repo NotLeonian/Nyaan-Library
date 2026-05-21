@@ -3,24 +3,24 @@ data:
   _extendedDependsOn: []
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-associative-array-dynamic-segtree.test.cpp
     title: verify/verify-yosupo-ds/yosupo-associative-array-dynamic-segtree.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-point-add-range-sum-dynamic-segtree.test.cpp
     title: verify/verify-yosupo-ds/yosupo-point-add-range-sum-dynamic-segtree.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-point-set-range-composite-dynamic-segtree.test.cpp
     title: verify/verify-yosupo-ds/yosupo-point-set-range-composite-dynamic-segtree.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-range-affine-range-sum-dynamic-segtree.test.cpp
     title: verify/verify-yosupo-ds/yosupo-range-affine-range-sum-dynamic-segtree.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-0789.test.cpp
     title: verify/verify-yuki/yuki-0789.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     document_title: Dynamic Segment Tree
     links: []
@@ -135,8 +135,8 @@ data:
   isVerificationFile: false
   path: segment-tree/dynamic-segment-tree.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2022-08-23 00:32:07+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ds/yosupo-point-add-range-sum-dynamic-segtree.test.cpp
   - verify/verify-yosupo-ds/yosupo-point-set-range-composite-dynamic-segtree.test.cpp

@@ -1,74 +1,74 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: graph/graph-template.hpp
     title: "\u30B0\u30E9\u30D5\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8"
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: graph/namori.hpp
     title: "Functional Graph(\u306A\u3082\u308A\u30B0\u30E9\u30D5)\u306E\u5206\u89E3"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: tree/auxiliary-tree.hpp
     title: Auxiliary Tree
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: tree/dynamic-diameter.hpp
     title: tree/dynamic-diameter.hpp
   - icon: ':warning:'
     path: tree/static-top-tree-edge-based.hpp
     title: tree/static-top-tree-edge-based.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: tree/static-top-tree-vertex-based.hpp
     title: Static Top Tree
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-dsl/aoj-dsl-3-d-cartesiantree.test.cpp
     title: verify/verify-aoj-dsl/aoj-dsl-3-d-cartesiantree.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-grl/aoj-grl-5-c.test.cpp
     title: verify/verify-aoj-grl/aoj-grl-5-c.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-grl/aoj-grl-5-d.test.cpp
     title: verify/verify-aoj-grl/aoj-grl-5-d.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-grl/aoj-grl-5-e.test.cpp
     title: verify/verify-aoj-grl/aoj-grl-5-e.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-other/aoj-2891.test.cpp
     title: verify/verify-aoj-other/aoj-2891.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/dynamic-diameter.test.cpp
     title: verify/verify-unit-test/dynamic-diameter.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-vertex-add-path-sum.test.cpp
     title: verify/verify-yosupo-ds/yosupo-vertex-add-path-sum.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-vertex-add-subtree-sum.test.cpp
     title: verify/verify-yosupo-ds/yosupo-vertex-add-subtree-sum.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-vertex-set-path-composite.test.cpp
     title: verify/verify-yosupo-ds/yosupo-vertex-set-path-composite.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-graph/yosupo-lowest-common-ancestor.test.cpp
     title: verify/verify-yosupo-graph/yosupo-lowest-common-ancestor.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-graph/yosupo-point-set-tree-path-composite-sum-fixed-root.test.cpp
     title: verify/verify-yosupo-graph/yosupo-point-set-tree-path-composite-sum-fixed-root.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1254.test.cpp
     title: verify/verify-yuki/yuki-1254.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1326.test.cpp
     title: verify/verify-yuki/yuki-1326.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1778.test.cpp
     title: verify/verify-yuki/yuki-1778.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-2588.test.cpp
     title: verify/verify-yuki/yuki-2588.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/tree/heavy-light-decomposition.md
     document_title: "Heavy Light Decomposition(\u91CD\u8EFD\u5206\u89E3)"
@@ -191,8 +191,8 @@ data:
   - tree/auxiliary-tree.hpp
   - tree/static-top-tree-edge-based.hpp
   - tree/dynamic-diameter.hpp
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_SOME_WA
+  timestamp: '2024-05-03 23:21:26+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-unit-test/dynamic-diameter.test.cpp
   - verify/verify-yosupo-ds/yosupo-vertex-add-path-sum.test.cpp

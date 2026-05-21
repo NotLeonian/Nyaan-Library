@@ -3,12 +3,12 @@ data:
   _extendedDependsOn: []
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-hafnian-of-matrix.test.cpp
     title: verify/verify-yosupo-math/yosupo-hafnian-of-matrix.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"matrix/hafnian.hpp\"\n\ntemplate <typename mint>\nmint Hafnian(vector<vector<mint>>\
@@ -45,8 +45,8 @@ data:
   isVerificationFile: false
   path: matrix/hafnian.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2021-01-23 20:36:26+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-math/yosupo-hafnian-of-matrix.test.cpp
 documentation_of: matrix/hafnian.hpp

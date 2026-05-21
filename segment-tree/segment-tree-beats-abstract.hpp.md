@@ -3,15 +3,15 @@ data:
   _extendedDependsOn: []
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-0879.test.cpp
     title: verify/verify-yuki/yuki-0879.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-0880.test.cpp
     title: verify/verify-yuki/yuki-0880.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/segment-tree/segment-tree-beats-abstract.md
     document_title: "\u62BD\u8C61\u5316Segment Tree Beats!"
@@ -69,8 +69,8 @@ data:
   isVerificationFile: false
   path: segment-tree/segment-tree-beats-abstract.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2021-02-10 23:32:16+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yuki/yuki-0879.test.cpp
   - verify/verify-yuki/yuki-0880.test.cpp

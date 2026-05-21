@@ -1,17 +1,17 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/constexpr-primitive-root.hpp
     title: math/constexpr-primitive-root.hpp
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ntt/yosupo-convolution-on-z-pz.test.cpp
     title: verify/verify-yosupo-ntt/yosupo-convolution-on-z-pz.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"ntt/multiplicative-convolution-mod-p.hpp\"\n\n#include <cassert>\n\
@@ -54,8 +54,8 @@ data:
   isVerificationFile: false
   path: ntt/multiplicative-convolution-mod-p.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2024-05-03 21:06:15+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ntt/yosupo-convolution-on-z-pz.test.cpp
 documentation_of: ntt/multiplicative-convolution-mod-p.hpp

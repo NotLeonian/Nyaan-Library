@@ -1,41 +1,41 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: prime/prime-enumerate.hpp
     title: prime/prime-enumerate.hpp
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: multiplicative-function/gcd-convolution.hpp
     title: "GCD\u7573\u307F\u8FBC\u307F"
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/mf.test.cpp
     title: verify/verify-unit-test/mf.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/multiplicative-function.test.cpp
     title: verify/verify-unit-test/multiplicative-function.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-gcd-convolution.test.cpp
     title: verify/verify-yosupo-math/yosupo-gcd-convolution.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-lcm-convolution.test.cpp
     title: verify/verify-yosupo-math/yosupo-lcm-convolution.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-0125.test.cpp
     title: verify/verify-yuki/yuki-0125.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-0886.test.cpp
     title: verify/verify-yuki/yuki-0886.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-0890.test.cpp
     title: verify/verify-yuki/yuki-0890.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-0896.test.cpp
     title: verify/verify-yuki/yuki-0896.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/multiplicative-function/divisor-multiple-transform.md
     document_title: "\u500D\u6570\u5909\u63DB\u30FB\u7D04\u6570\u5909\u63DB"
@@ -113,8 +113,8 @@ data:
   path: multiplicative-function/divisor-multiple-transform.hpp
   requiredBy:
   - multiplicative-function/gcd-convolution.hpp
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2023-08-30 23:05:07+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-unit-test/multiplicative-function.test.cpp
   - verify/verify-unit-test/mf.test.cpp

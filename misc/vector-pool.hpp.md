@@ -36,7 +36,7 @@ data:
   isVerificationFile: false
   path: misc/vector-pool.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
+  timestamp: '2023-03-24 20:50:25+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: misc/vector-pool.hpp

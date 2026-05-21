@@ -1,17 +1,17 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: modint/vectorize-modint.hpp
     title: vectorize modint
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-matrix-product-vectorize-modint.test.cpp
     title: verify/verify-yosupo-math/yosupo-matrix-product-vectorize-modint.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"math-fast/mat-prod-strassen.hpp\"\n\n#line 2 \"modint/vectorize-modint.hpp\"\
@@ -287,8 +287,8 @@ data:
   isVerificationFile: false
   path: math-fast/mat-prod-strassen.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2023-05-27 23:17:31+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-math/yosupo-matrix-product-vectorize-modint.test.cpp
 documentation_of: math-fast/mat-prod-strassen.hpp

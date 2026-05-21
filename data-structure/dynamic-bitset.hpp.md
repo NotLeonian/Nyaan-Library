@@ -75,7 +75,7 @@ data:
   isVerificationFile: false
   path: data-structure/dynamic-bitset.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
+  timestamp: '2021-07-18 18:42:12+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: data-structure/dynamic-bitset.hpp

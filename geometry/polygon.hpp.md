@@ -1,7 +1,7 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: geometry/geometry-base.hpp
     title: geometry/geometry-base.hpp
   _extendedRequiredBy:
@@ -48,15 +48,15 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-cgl/aoj-cgl-4-c.test.cpp
     title: verify/verify-aoj-cgl/aoj-cgl-4-c.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-other/aoj-0412.test.cpp
     title: verify/verify-aoj-other/aoj-0412.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-other/yosupo-static-convex-hull.test.cpp
     title: verify/verify-yosupo-other/yosupo-static-convex-hull.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"geometry/polygon.hpp\"\n\n#line 2 \"geometry/geometry-base.hpp\"\
@@ -181,8 +181,8 @@ data:
   requiredBy:
   - geometry/segment.hpp
   - geometry/line.hpp
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_SOME_WA
+  timestamp: '2024-05-03 21:06:15+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-other/yosupo-static-convex-hull.test.cpp
   - verify/verify-aoj-cgl/aoj-cgl-2-a.test.cpp

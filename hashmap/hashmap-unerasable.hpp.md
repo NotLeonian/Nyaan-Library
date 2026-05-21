@@ -1,41 +1,41 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: internal/internal-hash-function.hpp
     title: "\u30CF\u30C3\u30B7\u30E5\u95A2\u6570"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: internal/internal-seed.hpp
     title: internal/internal-seed.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: internal/internal-type-traits.hpp
     title: internal/internal-type-traits.hpp
   _extendedRequiredBy:
   - icon: ':warning:'
     path: marathon/top-k.hpp
     title: marathon/top-k.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: string/number-of-subsequences.hpp
     title: string/number-of-subsequences.hpp
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-other/aoj-1377.test.cpp
     title: verify/verify-aoj-other/aoj-1377.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/internal-type-traits.test.cpp
     title: verify/verify-unit-test/internal-type-traits.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-associative-array-unerasable-hashmap.test.cpp
     title: verify/verify-yosupo-ds/yosupo-associative-array-unerasable-hashmap.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-graph/yosupo-tree-hash.test.cpp
     title: verify/verify-yosupo-graph/yosupo-tree-hash.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-string/yosupo-number-of-subsequences.test.cpp
     title: verify/verify-yosupo-string/yosupo-number-of-subsequences.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"hashmap/hashmap-unerasable.hpp\"\n\n#include <cassert>\n\
@@ -196,8 +196,8 @@ data:
   requiredBy:
   - marathon/top-k.hpp
   - string/number-of-subsequences.hpp
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2023-09-05 21:46:27+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-string/yosupo-number-of-subsequences.test.cpp
   - verify/verify-unit-test/internal-type-traits.test.cpp

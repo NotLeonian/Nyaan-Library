@@ -2,22 +2,22 @@
 data:
   _extendedDependsOn: []
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math-fast/mat-prod-strassen.hpp
     title: math-fast/mat-prod-strassen.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math-fast/subset-convolution.hpp
     title: math-fast/subset-convolution.hpp
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-matrix-product-vectorize-modint.test.cpp
     title: verify/verify-yosupo-math/yosupo-matrix-product-vectorize-modint.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-subset-convolution-fast.test.cpp
     title: verify/verify-yosupo-math/yosupo-subset-convolution-fast.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     document_title: vectorize modint
     links: []
@@ -138,8 +138,8 @@ data:
   requiredBy:
   - math-fast/mat-prod-strassen.hpp
   - math-fast/subset-convolution.hpp
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2023-05-27 23:17:31+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-math/yosupo-subset-convolution-fast.test.cpp
   - verify/verify-yosupo-math/yosupo-matrix-product-vectorize-modint.test.cpp

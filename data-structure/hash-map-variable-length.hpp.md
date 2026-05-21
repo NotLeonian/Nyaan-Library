@@ -2,28 +2,28 @@
 data:
   _extendedDependsOn: []
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: data-structure-2d/dynamic-binary-indexed-tree-2d.hpp
     title: "\u52D5\u7684\u4E8C\u6B21\u5143Binary Indexed Tree"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: data-structure/dynamic-binary-indexed-tree.hpp
     title: "\u52D5\u7684Binary Indexed Tree"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: segment-tree/dynamic-li-chao-tree.hpp
     title: segment-tree/dynamic-li-chao-tree.hpp
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-dynamic-li-chao-tree.test.cpp
     title: verify/verify-yosupo-ds/yosupo-dynamic-li-chao-tree.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-hash-map-variable-length.test.cpp
     title: verify/verify-yosupo-ds/yosupo-hash-map-variable-length.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-bit2d.test.cpp
     title: verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-bit2d.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/data-structure/hash-map.md
     document_title: "Hash Map(\u53EF\u5909\u9577\u7248)"
@@ -96,8 +96,8 @@ data:
   - data-structure-2d/dynamic-binary-indexed-tree-2d.hpp
   - segment-tree/dynamic-li-chao-tree.hpp
   - data-structure/dynamic-binary-indexed-tree.hpp
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2020-12-05 07:59:51+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-bit2d.test.cpp
   - verify/verify-yosupo-ds/yosupo-dynamic-li-chao-tree.test.cpp

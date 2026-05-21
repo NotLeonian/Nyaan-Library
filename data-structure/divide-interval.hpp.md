@@ -3,15 +3,15 @@ data:
   _extendedDependsOn: []
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-other/aoj-3506.test.cpp
     title: verify/verify-aoj-other/aoj-3506.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1170-divide-interval.test.cpp
     title: verify/verify-yuki/yuki-1170-divide-interval.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"data-structure/divide-interval.hpp\"\n\n#include <cassert>\n\
@@ -71,8 +71,8 @@ data:
   isVerificationFile: false
   path: data-structure/divide-interval.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2023-05-26 23:34:57+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yuki/yuki-1170-divide-interval.test.cpp
   - verify/verify-aoj-other/aoj-3506.test.cpp

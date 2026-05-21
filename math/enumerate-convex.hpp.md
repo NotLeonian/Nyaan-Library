@@ -1,17 +1,17 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/stern-brocot-tree.hpp
     title: Stern-Brocot Tree
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/enumerate-convex.test.cpp
     title: verify/verify-unit-test/enumerate-convex.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"math/enumerate-convex.hpp\"\n\n#include <functional>\n#include\
@@ -144,8 +144,8 @@ data:
   isVerificationFile: false
   path: math/enumerate-convex.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2024-09-14 23:22:31+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-unit-test/enumerate-convex.test.cpp
 documentation_of: math/enumerate-convex.hpp

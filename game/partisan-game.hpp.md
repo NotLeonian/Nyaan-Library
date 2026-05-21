@@ -1,17 +1,17 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: game/surreal-number.hpp
     title: "\u8D85\u73FE\u5B9F\u6570"
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-other/aoj-1377.test.cpp
     title: verify/verify-aoj-other/aoj-1377.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     document_title: "\u975E\u4E0D\u504F\u30B2\u30FC\u30E0"
     links: []
@@ -81,8 +81,8 @@ data:
   isVerificationFile: false
   path: game/partisan-game.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2023-05-25 17:46:29+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-aoj-other/aoj-1377.test.cpp
 documentation_of: game/partisan-game.hpp

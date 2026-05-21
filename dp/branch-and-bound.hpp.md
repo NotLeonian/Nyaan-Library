@@ -59,7 +59,7 @@ data:
   isVerificationFile: false
   path: dp/branch-and-bound.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
+  timestamp: '2021-11-25 10:30:05+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-aoj-dpl/aoj-dpl-1-h-bandb.test.cpp

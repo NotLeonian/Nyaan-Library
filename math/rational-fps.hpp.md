@@ -1,16 +1,16 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: internal/internal-type-traits.hpp
     title: internal/internal-type-traits.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math-fast/gcd.hpp
     title: binary GCD
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/rational-binomial.hpp
     title: math/rational-binomial.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/rational.hpp
     title: math/rational.hpp
   _extendedRequiredBy:
@@ -18,15 +18,15 @@ data:
     path: math/bigint-all.hpp
     title: math/bigint-all.hpp
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/bigrational.test.cpp
     title: verify/verify-unit-test/bigrational.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/rational-number.test.cpp
     title: verify/verify-unit-test/rational-number.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"math/rational-fps.hpp\"\n\n#line 2 \"math/rational-binomial.hpp\"\
@@ -279,8 +279,8 @@ data:
   path: math/rational-fps.hpp
   requiredBy:
   - math/bigint-all.hpp
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2024-08-10 13:03:16+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-unit-test/bigrational.test.cpp
   - verify/verify-unit-test/rational-number.test.cpp

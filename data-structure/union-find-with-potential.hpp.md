@@ -42,7 +42,7 @@ data:
   isVerificationFile: false
   path: data-structure/union-find-with-potential.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
+  timestamp: '2021-05-08 00:29:38+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-aoj-dsl/aoj-dsl-1-b.test.cpp

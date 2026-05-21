@@ -3,27 +3,27 @@ data:
   _extendedDependsOn: []
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-ntl/aoj-ntl-1-a.test.cpp
     title: verify/verify-aoj-ntl/aoj-ntl-1-a.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-ntl/aoj-ntl-1-b.test.cpp
     title: verify/verify-aoj-ntl/aoj-ntl-1-b.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-ntl/aoj-ntl-1-c.test.cpp
     title: verify/verify-aoj-ntl/aoj-ntl-1-c.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-ntl/aoj-ntl-1-d.test.cpp
     title: verify/verify-aoj-ntl/aoj-ntl-1-d.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-ntl/aoj-ntl-1-e.test.cpp
     title: verify/verify-aoj-ntl/aoj-ntl-1-e.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/primitive-root.test.cpp
     title: verify/verify-unit-test/primitive-root.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"math/elementary-function.hpp\"\n\n// totient function \u03C6\
@@ -114,8 +114,8 @@ data:
   isVerificationFile: false
   path: math/elementary-function.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2024-03-04 16:48:10+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-unit-test/primitive-root.test.cpp
   - verify/verify-aoj-ntl/aoj-ntl-1-e.test.cpp

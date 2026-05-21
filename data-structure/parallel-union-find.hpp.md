@@ -1,26 +1,26 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: data-structure/union-find-enumerate.hpp
     title: data-structure/union-find-enumerate.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: internal/internal-hash.hpp
     title: "\u30CF\u30C3\u30B7\u30E5\u69CB\u9020\u4F53"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: string/rolling-hash-on-segment-tree.hpp
     title: string/rolling-hash-on-segment-tree.hpp
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/parallel-union-find.test.cpp
     title: verify/verify-unit-test/parallel-union-find.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-range-parallel-unionfind.test.cpp
     title: verify/verify-yosupo-ds/yosupo-range-parallel-unionfind.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"data-structure/parallel-union-find.hpp\"\n\n#line 2 \"string/rolling-hash-on-segment-tree.hpp\"\
@@ -209,8 +209,8 @@ data:
   isVerificationFile: false
   path: data-structure/parallel-union-find.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2024-09-14 20:40:02+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-unit-test/parallel-union-find.test.cpp
   - verify/verify-yosupo-ds/yosupo-range-parallel-unionfind.test.cpp

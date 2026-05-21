@@ -1,27 +1,27 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: lct/lazy-reversible-bbst-base.hpp
     title: "\u9045\u5EF6\u4F1D\u642C\u53CD\u8EE2\u53EF\u80FD\u5E73\u8861\u4E8C\u5206\
       \u6728(\u57FA\u5E95\u30AF\u30E9\u30B9)"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: lct/splay-base.hpp
     title: Splay Tree(base)
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: lct/link-cut-tree-lazy.hpp
     title: "\u9045\u5EF6\u4F1D\u642CLink/Cut Tree"
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-dynamic-sequence-range-affine-range-sum-splay.test.cpp
     title: verify/verify-yosupo-ds/yosupo-dynamic-sequence-range-affine-range-sum-splay.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-range-add-range-sum-linkcuttree.test.cpp
     title: verify/verify-yosupo-ds/yosupo-range-add-range-sum-linkcuttree.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     document_title: "\u9045\u5EF6\u4F1D\u642C\u53CD\u8EE2\u53EF\u80FDSplay Tree"
     links: []
@@ -60,21 +60,21 @@ data:
     \ push(q), push(t);\n        if (pos(q) == pos(t))\n          rot(q), rot(t);\n\
     \        else\n          rot(t), rot(t);\n      }\n    }\n  }\n\n  Ptr get_left(Ptr\
     \ t) {\n    while (t->l) push(t), t = t->l;\n    return t;\n  }\n\n  Ptr get_right(Ptr\
-    \ t) {\n    while (t->r) push(t), t = t->r;\n    return t;\n  }\n\n  pair<Ptr,\
-    \ Ptr> split(Ptr t, int k) {\n    if (!t) return {nullptr, nullptr};\n    if (k\
-    \ == 0) return {nullptr, t};\n    if (k == count(t)) return {t, nullptr};\n  \
-    \  push(t);\n    if (k <= count(t->l)) {\n      auto x = split(t->l, k);\n   \
-    \   t->l = x.second;\n      t->p = nullptr;\n      if (x.second) x.second->p =\
-    \ t;\n      return {x.first, update(t)};\n    } else {\n      auto x = split(t->r,\
-    \ k - count(t->l) - 1);\n      t->r = x.first;\n      t->p = nullptr;\n      if\
-    \ (x.first) x.first->p = t;\n      return {update(t), x.second};\n    }\n  }\n\
-    \n  Ptr merge(Ptr l, Ptr r) {\n    if (!l && !r) return nullptr;\n    if (!l)\
-    \ return splay(r), r;\n    if (!r) return splay(l), l;\n    splay(l), splay(r);\n\
-    \    l = get_right(l);\n    splay(l);\n    l->r = r;\n    r->p = l;\n    update(l);\n\
-    \    return l;\n  }\n\n  using Key = decltype(Node::key);\n  Ptr build(const vector<Key>\
-    \ &v) { return build(0, v.size(), v); }\n  Ptr build(int l, int r, const vector<Key>\
-    \ &v) {\n    if (l == r) return nullptr;\n    if (l + 1 == r) return my_new(v[l]);\n\
-    \    return merge(build(l, (l + r) >> 1, v), build((l + r) >> 1, r, v));\n  }\n\
+    \ t) {\n    while (t->r) push(t), t = t->r;\n    return t;\n  }\n\n  Ptr kth(Ptr\
+    \ t, int k) {\n    while (true) {\n      push(t);\n      int lsz = count(t->l);\n\
+    \      if (k < lsz) {\n        t = t->l;\n      } else if (k == lsz) {\n     \
+    \   splay(t);\n        return t;\n      } else {\n        k -= lsz + 1;\n    \
+    \    t = t->r;\n      }\n    }\n  }\n\n  pair<Ptr, Ptr> split(Ptr t, int k) {\n\
+    \    if (!t) return {nullptr, nullptr};\n    if (k == 0) return {nullptr, t};\n\
+    \    if (k == count(t)) return {t, nullptr};\n\n    Ptr r = kth(t, k);\n    Ptr\
+    \ l = r->l;\n    r->l = nullptr;\n    if (l) l->p = nullptr;\n    update(r);\n\
+    \    return {l, r};\n  }\n\n  Ptr merge(Ptr l, Ptr r) {\n    if (!l && !r) return\
+    \ nullptr;\n    if (!l) return r;\n    if (!r) return l;\n\n    l = kth(l, count(l)\
+    \ - 1);\n    l->r = r;\n    r->p = l;\n    update(l);\n    return l;\n  }\n\n\
+    \  using Key = decltype(Node::key);\n  Ptr build(const vector<Key> &v) { return\
+    \ build(0, v.size(), v); }\n  Ptr build(int l, int r, const vector<Key> &v) {\n\
+    \    if (l == r) return nullptr;\n    if (l + 1 == r) return my_new(v[l]);\n \
+    \   return merge(build(l, (l + r) >> 1, v), build((l + r) >> 1, r, v));\n  }\n\
     \n  template <typename... Args>\n  void insert(Ptr &t, int k, const Args &...args)\
     \ {\n    splay(t);\n    auto x = split(t, k);\n    t = merge(merge(x.first, my_new(args...)),\
     \ x.second);\n  }\n\n  void erase(Ptr &t, int k) {\n    splay(t);\n    auto x\
@@ -119,8 +119,8 @@ data:
   path: lct/splay-lazy-reversible.hpp
   requiredBy:
   - lct/link-cut-tree-lazy.hpp
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2026-05-22 00:23:08+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ds/yosupo-dynamic-sequence-range-affine-range-sum-splay.test.cpp
   - verify/verify-yosupo-ds/yosupo-range-add-range-sum-linkcuttree.test.cpp

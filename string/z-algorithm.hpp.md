@@ -2,19 +2,19 @@
 data:
   _extendedDependsOn: []
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: string/run-enumerate.hpp
     title: string/run-enumerate.hpp
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-string/yosupo-run-enumerate.test.cpp
     title: verify/verify-yosupo-string/yosupo-run-enumerate.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-string/yosupo-z-algorithm.test.cpp
     title: verify/verify-yosupo-string/yosupo-z-algorithm.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     document_title: Z algorithm
     links: []
@@ -37,8 +37,8 @@ data:
   path: string/z-algorithm.hpp
   requiredBy:
   - string/run-enumerate.hpp
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2024-09-14 20:40:02+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-string/yosupo-run-enumerate.test.cpp
   - verify/verify-yosupo-string/yosupo-z-algorithm.test.cpp

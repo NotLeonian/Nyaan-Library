@@ -2,46 +2,46 @@
 data:
   _extendedDependsOn: []
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: modint/arbitrary-modint.hpp
     title: "modint (2^{30} \u672A\u6E80\u306E\u4EFB\u610F mod \u7528)"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: modulo/arbitrary-mod-binomial.hpp
     title: "\u4EFB\u610Fmod\u4E8C\u9805\u4FC2\u6570"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: ntt/multivariate-circular-convolution.hpp
     title: "\u591A\u5909\u6570\u5DE1\u56DE\u7573\u307F\u8FBC\u307F"
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/arbitrary-modint.test.cpp
     title: verify/verify-unit-test/arbitrary-modint.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/barrett-reduction.test.cpp
     title: verify/verify-unit-test/barrett-reduction.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/garner-bigint.test.cpp
     title: verify/verify-unit-test/garner-bigint.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-binomial-coefficient-large.test.cpp
     title: verify/verify-yosupo-math/yosupo-binomial-coefficient-large.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-binomial-coefficient-prime-mod.test.cpp
     title: verify/verify-yosupo-math/yosupo-binomial-coefficient-prime-mod.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-binomial-coefficient.test.cpp
     title: verify/verify-yosupo-math/yosupo-binomial-coefficient.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-determinant-arbitrary-mod.test.cpp
     title: verify/verify-yosupo-math/yosupo-determinant-arbitrary-mod.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ntt/yosupo-convolution-arbitraryntt-arbitrarymodint.test.cpp
     title: verify/verify-yosupo-ntt/yosupo-convolution-arbitraryntt-arbitrarymodint.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ntt/yosupo-multivariate-circular-convolution.test.cpp
     title: verify/verify-yosupo-ntt/yosupo-multivariate-circular-convolution.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"modint/barrett-reduction.hpp\"\n\n#include <utility>\nusing\
@@ -77,8 +77,8 @@ data:
   - ntt/multivariate-circular-convolution.hpp
   - modulo/arbitrary-mod-binomial.hpp
   - modint/arbitrary-modint.hpp
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2022-02-08 14:09:38+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ntt/yosupo-multivariate-circular-convolution.test.cpp
   - verify/verify-yosupo-ntt/yosupo-convolution-arbitraryntt-arbitrarymodint.test.cpp

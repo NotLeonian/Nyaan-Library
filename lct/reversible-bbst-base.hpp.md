@@ -2,34 +2,34 @@
 data:
   _extendedDependsOn: []
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: lct/link-cut-tree-subtree.hpp
     title: "\u90E8\u5206\u6728\u30AF\u30A8\u30EALink/Cut Tree"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: lct/link-cut-tree.hpp
     title: Link/Cut Tree
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: lct/splay-reversible.hpp
     title: "\u53CD\u8EE2\u53EF\u80FDSplay Tree"
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-dynamic-tree-vertex-add-path-sum.test.cpp
     title: verify/verify-yosupo-ds/yosupo-dynamic-tree-vertex-add-path-sum.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-dynamic-tree-vertex-add-subtree-sum.test.cpp
     title: verify/verify-yosupo-ds/yosupo-dynamic-tree-vertex-add-subtree-sum.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-dynamic-tree-vertex-set-path-composite.test.cpp
     title: verify/verify-yosupo-ds/yosupo-dynamic-tree-vertex-set-path-composite.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-offline-dynamic-connectivity.test.cpp
     title: verify/verify-yosupo-ds/yosupo-offline-dynamic-connectivity.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-range-reverse-range-sum.test.cpp
     title: verify/verify-yosupo-ds/yosupo-range-reverse-range-sum.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     document_title: "\u53CD\u8EE2\u53EF\u80FD\u5E73\u8861\u4E8C\u5206\u6728(\u57FA\
       \u5E95\u30AF\u30E9\u30B9)"
@@ -77,8 +77,8 @@ data:
   - lct/link-cut-tree-subtree.hpp
   - lct/splay-reversible.hpp
   - lct/link-cut-tree.hpp
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2023-08-10 13:25:59+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ds/yosupo-range-reverse-range-sum.test.cpp
   - verify/verify-yosupo-ds/yosupo-dynamic-tree-vertex-add-subtree-sum.test.cpp

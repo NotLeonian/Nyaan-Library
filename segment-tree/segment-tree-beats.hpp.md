@@ -3,15 +3,15 @@ data:
   _extendedDependsOn: []
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/segment-tree-beats.test.cpp
     title: verify/verify-unit-test/segment-tree-beats.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-segtree-beats.test.cpp
     title: verify/verify-yosupo-ds/yosupo-segtree-beats.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/segment-tree/segment-tree-beats.md
     document_title: Range Chmin Chmax Add Update Range Min Max Sum Segment Tree Beats!
@@ -154,8 +154,8 @@ data:
   isVerificationFile: false
   path: segment-tree/segment-tree-beats.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2021-02-10 23:32:16+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-unit-test/segment-tree-beats.test.cpp
   - verify/verify-yosupo-ds/yosupo-segtree-beats.test.cpp

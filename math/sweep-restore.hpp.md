@@ -2,16 +2,16 @@
 data:
   _extendedDependsOn: []
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/nimber-to-field.hpp
     title: "Nimber <-> \u591A\u9805\u5F0F\u74B0"
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/nimber-to-field.test.cpp
     title: verify/verify-unit-test/nimber-to-field.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     document_title: "\u6383\u304D\u51FA\u3057\u6CD5(\u5FA9\u5143\u4ED8\u304D)"
     links: []
@@ -52,8 +52,8 @@ data:
   path: math/sweep-restore.hpp
   requiredBy:
   - math/nimber-to-field.hpp
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2023-05-26 23:34:57+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-unit-test/nimber-to-field.test.cpp
 documentation_of: math/sweep-restore.hpp

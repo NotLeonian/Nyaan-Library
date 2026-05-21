@@ -1,23 +1,23 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: internal/internal-hash.hpp
     title: "\u30CF\u30C3\u30B7\u30E5\u69CB\u9020\u4F53"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: tree/centroid.hpp
     title: tree/centroid.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: tree/rooted-tree-hash.hpp
     title: "\u6839\u4ED8\u304D\u6728\u306E\u30CF\u30C3\u30B7\u30E5"
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-other/aoj-2821.test.cpp
     title: verify/verify-aoj-other/aoj-2821.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"tree/tree-hash.hpp\"\n\n#line 2 \"tree/centroid.hpp\"\n\n\
@@ -112,8 +112,8 @@ data:
   isVerificationFile: false
   path: tree/tree-hash.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2024-05-04 15:53:37+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-aoj-other/aoj-2821.test.cpp
 documentation_of: tree/tree-hash.hpp

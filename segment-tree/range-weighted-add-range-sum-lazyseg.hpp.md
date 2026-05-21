@@ -67,7 +67,7 @@ data:
   isVerificationFile: false
   path: segment-tree/range-weighted-add-range-sum-lazyseg.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
+  timestamp: '2020-12-05 07:59:51+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: segment-tree/range-weighted-add-range-sum-lazyseg.hpp

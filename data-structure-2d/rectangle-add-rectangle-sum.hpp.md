@@ -1,17 +1,17 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: data-structure/binary-indexed-tree.hpp
     title: Binary Indexed Tree(Fenwick Tree)
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-static-rectangle-add-rectangle-sum.test.cpp
     title: verify/verify-yosupo-ds/yosupo-static-rectangle-add-rectangle-sum.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links:
     - https://hitonanode.github.io/cplib-cpp/data_structure/rectangle_add_rectangle_sum.hpp
@@ -108,8 +108,8 @@ data:
   isVerificationFile: false
   path: data-structure-2d/rectangle-add-rectangle-sum.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2024-05-03 21:06:15+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ds/yosupo-static-rectangle-add-rectangle-sum.test.cpp
 documentation_of: data-structure-2d/rectangle-add-rectangle-sum.hpp

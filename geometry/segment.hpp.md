@@ -1,13 +1,13 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: geometry/geometry-base.hpp
     title: geometry/geometry-base.hpp
   - icon: ':heavy_check_mark:'
     path: geometry/line.hpp
     title: geometry/line.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: geometry/polygon.hpp
     title: geometry/polygon.hpp
   _extendedRequiredBy: []
@@ -160,7 +160,7 @@ data:
   isVerificationFile: false
   path: geometry/segment.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
+  timestamp: '2024-05-03 21:06:15+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-aoj-cgl/aoj-cgl-2-d.test.cpp

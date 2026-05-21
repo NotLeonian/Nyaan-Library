@@ -1,45 +1,45 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: hashmap/hashmap-base.hpp
     title: "Hash Map(base)\u3000(\u30CF\u30C3\u30B7\u30E5\u30DE\u30C3\u30D7\u30FB\u57FA\
       \u5E95\u30AF\u30E9\u30B9)"
   _extendedRequiredBy:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: data-structure/dynamic-union-find.hpp
     title: "\u52D5\u7684Union Find"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: graph/offline-dynamic-connectivity.hpp
     title: graph/offline-dynamic-connectivity.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: modulo/mod-log.hpp
     title: modulo/mod-log.hpp
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-dsl/aoj-dsl-1-a-dynamic.test.cpp
     title: verify/verify-aoj-dsl/aoj-dsl-1-a-dynamic.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-other/aoj-2995-hashmap.test.cpp
     title: verify/verify-aoj-other/aoj-2995-hashmap.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/debug.test.cpp
     title: verify/verify-unit-test/debug.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/hashmap.test.cpp
     title: verify/verify-unit-test/hashmap.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-hashmap.test.cpp
     title: verify/verify-yosupo-ds/yosupo-hashmap.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-offline-dynamic-connectivity.test.cpp
     title: verify/verify-yosupo-ds/yosupo-offline-dynamic-connectivity.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-mod-log.test.cpp
     title: verify/verify-yosupo-math/yosupo-mod-log.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/hashmap/hashmap.md
     document_title: "\u30CF\u30C3\u30B7\u30E5\u30DE\u30C3\u30D7(\u9023\u60F3\u914D\
@@ -192,8 +192,8 @@ data:
   - data-structure/dynamic-union-find.hpp
   - graph/offline-dynamic-connectivity.hpp
   - modulo/mod-log.hpp
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_SOME_WA
+  timestamp: '2023-03-25 00:28:17+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-unit-test/debug.test.cpp
   - verify/verify-unit-test/hashmap.test.cpp

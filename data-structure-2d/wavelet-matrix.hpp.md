@@ -3,12 +3,12 @@ data:
   _extendedDependsOn: []
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/wavelet-matrix.test.cpp
     title: verify/verify-unit-test/wavelet-matrix.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/data-structure-2d/wavelet-matrix.md
     document_title: Wavelet Matrix
@@ -123,8 +123,8 @@ data:
   isVerificationFile: false
   path: data-structure-2d/wavelet-matrix.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2022-04-16 23:19:38+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-unit-test/wavelet-matrix.test.cpp
 documentation_of: data-structure-2d/wavelet-matrix.hpp

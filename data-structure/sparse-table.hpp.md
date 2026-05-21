@@ -2,37 +2,37 @@
 data:
   _extendedDependsOn: []
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: string/string-search.hpp
     title: string/string-search.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: string/suffix-array.hpp
     title: string/suffix-array.hpp
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/sparse-table.test.cpp
     title: verify/verify-unit-test/sparse-table.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/string-search.test.cpp
     title: verify/verify-unit-test/string-search.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-static-rmq.test.cpp
     title: verify/verify-yosupo-ds/yosupo-static-rmq.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-string/yosupo-number-of-substrings.test.cpp
     title: verify/verify-yosupo-string/yosupo-number-of-substrings.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-string/yosupo-suffix-array.test.cpp
     title: verify/verify-yosupo-string/yosupo-suffix-array.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-string/yosupo-zalgo-suffixarray.test.cpp
     title: verify/verify-yosupo-string/yosupo-zalgo-suffixarray.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-2231.test.cpp
     title: verify/verify-yuki/yuki-2231.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     document_title: Sparse Table
     links: []
@@ -66,8 +66,8 @@ data:
   requiredBy:
   - string/string-search.hpp
   - string/suffix-array.hpp
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2023-01-31 00:28:06+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-string/yosupo-number-of-substrings.test.cpp
   - verify/verify-yosupo-string/yosupo-suffix-array.test.cpp

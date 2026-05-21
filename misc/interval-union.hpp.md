@@ -3,12 +3,12 @@ data:
   _extendedDependsOn: []
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/interval-union.test.cpp
     title: verify/verify-unit-test/interval-union.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     document_title: "\u533A\u9593\u306E\u96C6\u5408\u306E\u76F4\u548C"
     links: []
@@ -34,8 +34,8 @@ data:
   isVerificationFile: false
   path: misc/interval-union.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2021-02-14 00:25:36+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-unit-test/interval-union.test.cpp
 documentation_of: misc/interval-union.hpp

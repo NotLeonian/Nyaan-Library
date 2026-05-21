@@ -1,20 +1,20 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: data-structure/hash-map-variable-length.hpp
     title: "Hash Map(\u53EF\u5909\u9577\u7248)"
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: data-structure-2d/dynamic-binary-indexed-tree-2d.hpp
     title: "\u52D5\u7684\u4E8C\u6B21\u5143Binary Indexed Tree"
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-bit2d.test.cpp
     title: verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-bit2d.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/data-structure/dynamic-binary-indexed-tree.md
     document_title: "\u52D5\u7684Binary Indexed Tree"
@@ -82,8 +82,8 @@ data:
   path: data-structure/dynamic-binary-indexed-tree.hpp
   requiredBy:
   - data-structure-2d/dynamic-binary-indexed-tree-2d.hpp
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2021-08-10 23:14:36+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-bit2d.test.cpp
 documentation_of: data-structure/dynamic-binary-indexed-tree.hpp

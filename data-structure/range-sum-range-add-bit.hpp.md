@@ -1,7 +1,7 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: data-structure/binary-indexed-tree.hpp
     title: Binary Indexed Tree(Fenwick Tree)
   _extendedRequiredBy: []
@@ -54,7 +54,7 @@ data:
   isVerificationFile: false
   path: data-structure/range-sum-range-add-bit.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
+  timestamp: '2021-12-20 22:10:59+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-aoj-dsl/aoj-dsl-2-g-bit.test.cpp

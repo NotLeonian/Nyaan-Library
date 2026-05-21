@@ -1,41 +1,41 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/isqrt.hpp
     title: math/isqrt.hpp
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: multiplicative-function/count-square-free.hpp
     title: "\u7121\u5E73\u65B9\u6570\u306E\u6570\u3048\u4E0A\u3052"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: multiplicative-function/enumerate-sum-of-multiplicative-function.hpp
     title: "\u4E57\u6CD5\u7684\u95A2\u6570\u306Eprefix sum \u306E\u5217\u6319"
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/enumerate-quotient.test.cpp
     title: verify/verify-unit-test/enumerate-quotient.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-count-squarefrees.test.cpp
     title: verify/verify-yosupo-math/yosupo-count-squarefrees.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-counting-primes-4.test.cpp
     title: verify/verify-yosupo-math/yosupo-counting-primes-4.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-enumerate-quotient.test.cpp
     title: verify/verify-yosupo-math/yosupo-enumerate-quotient.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-sum-of-totient-3.test.cpp
     title: verify/verify-yosupo-math/yosupo-sum-of-totient-3.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-2262.test.cpp
     title: verify/verify-yuki/yuki-2262.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-2266.test.cpp
     title: verify/verify-yuki/yuki-2266.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     document_title: "\u5546\u306E\u5217\u6319"
     links: []
@@ -83,8 +83,8 @@ data:
   requiredBy:
   - multiplicative-function/enumerate-sum-of-multiplicative-function.hpp
   - multiplicative-function/count-square-free.hpp
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2023-04-10 23:43:04+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-unit-test/enumerate-quotient.test.cpp
   - verify/verify-yosupo-math/yosupo-count-squarefrees.test.cpp

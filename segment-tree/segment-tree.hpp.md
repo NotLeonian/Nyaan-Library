@@ -2,7 +2,7 @@
 data:
   _extendedDependsOn: []
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: data-structure-2d/segment-tree-on-range-tree.hpp
     title: "\u9818\u57DF\u6728(Segment Tree)"
   _extendedVerifiedWith:
@@ -12,45 +12,45 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-dsl/aoj-dsl-2-b-segtree.test.cpp
     title: verify/verify-aoj-dsl/aoj-dsl-2-b-segtree.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-grl/aoj-grl-5-d.test.cpp
     title: verify/verify-aoj-grl/aoj-grl-5-d.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-other/aoj-3086.test.cpp
     title: verify/verify-aoj-other/aoj-3086.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/sparse-table.test.cpp
     title: verify/verify-unit-test/sparse-table.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-dseg2d.test.cpp
     title: verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-dseg2d.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-precedessor-problem-segtree.test.cpp
     title: verify/verify-yosupo-ds/yosupo-precedessor-problem-segtree.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-vertex-add-path-sum.test.cpp
     title: verify/verify-yosupo-ds/yosupo-vertex-add-path-sum.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-vertex-add-subtree-sum.test.cpp
     title: verify/verify-yosupo-ds/yosupo-vertex-add-subtree-sum.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-vertex-set-path-composite.test.cpp
     title: verify/verify-yosupo-ds/yosupo-vertex-set-path-composite.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-0875-binary-search-on-segtree.test.cpp
     title: verify/verify-yuki/yuki-0875-binary-search-on-segtree.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-2281.test.cpp
     title: verify/verify-yuki/yuki-2281.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-2333.test.cpp
     title: verify/verify-yuki/yuki-2333.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-2588.test.cpp
     title: verify/verify-yuki/yuki-2588.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"segment-tree/segment-tree.hpp\"\n\ntemplate <typename T,\
@@ -131,8 +131,8 @@ data:
   path: segment-tree/segment-tree.hpp
   requiredBy:
   - data-structure-2d/segment-tree-on-range-tree.hpp
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_SOME_WA
+  timestamp: '2021-12-30 19:20:16+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-unit-test/sparse-table.test.cpp
   - verify/verify-yosupo-ds/yosupo-vertex-add-path-sum.test.cpp

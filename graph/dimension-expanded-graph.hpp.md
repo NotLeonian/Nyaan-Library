@@ -3,21 +3,21 @@ data:
   _extendedDependsOn: []
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-other/aoj-1130-DG-bfs.test.cpp
     title: verify/verify-aoj-other/aoj-1130-DG-bfs.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-other/aoj-2945-DG-01bfs.test.cpp
     title: verify/verify-aoj-other/aoj-2945-DG-01bfs.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-0697.test.cpp
     title: verify/verify-yuki/yuki-0697.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1283.test.cpp
     title: verify/verify-yuki/yuki-1283.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     document_title: "\u6B21\u5143\u62E1\u5F35\u30B0\u30E9\u30D5"
     links: []
@@ -203,8 +203,8 @@ data:
   isVerificationFile: false
   path: graph/dimension-expanded-graph.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2020-12-05 07:59:51+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yuki/yuki-1283.test.cpp
   - verify/verify-yuki/yuki-0697.test.cpp

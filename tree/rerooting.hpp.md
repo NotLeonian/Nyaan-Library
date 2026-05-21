@@ -1,26 +1,26 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: graph/graph-template.hpp
     title: "\u30B0\u30E9\u30D5\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8"
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-grl/aoj-grl-5-a-rerooting.test.cpp
     title: verify/verify-aoj-grl/aoj-grl-5-a-rerooting.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-grl/aoj-grl-5-b.test.cpp
     title: verify/verify-aoj-grl/aoj-grl-5-b.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/rerooting.test.cpp
     title: verify/verify-unit-test/rerooting.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-graph/yosupo-tree-path-composite-sum.test.cpp
     title: verify/verify-yosupo-graph/yosupo-tree-path-composite-sum.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/tree/rerooting.md
     document_title: "Rerooting(\u5168\u65B9\u4F4D\u6728DP)"
@@ -120,8 +120,8 @@ data:
   isVerificationFile: false
   path: tree/rerooting.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2024-05-03 23:21:26+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-unit-test/rerooting.test.cpp
   - verify/verify-yosupo-graph/yosupo-tree-path-composite-sum.test.cpp

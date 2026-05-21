@@ -36,7 +36,7 @@ data:
   isVerificationFile: false
   path: data-structure/sliding-window-minimum.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
+  timestamp: '2020-12-05 07:59:51+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-aoj-dsl/aoj-dsl-3-d.test.cpp

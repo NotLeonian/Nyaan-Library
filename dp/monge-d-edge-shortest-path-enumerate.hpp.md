@@ -1,17 +1,17 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: dp/monotone-minima.hpp
     title: monotone minima
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-0952.test.cpp
     title: verify/verify-yuki/yuki-0952.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     document_title: "monge \u30B0\u30E9\u30D5\u4E0A\u306E d-\u8FBA\u6700\u77ED\u8DEF\
       \u306E d=1,...,N \u306B\u304A\u3051\u308B\u5217\u6319"
@@ -67,8 +67,8 @@ data:
   isVerificationFile: false
   path: dp/monge-d-edge-shortest-path-enumerate.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2023-09-02 22:21:41+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yuki/yuki-0952.test.cpp
 documentation_of: dp/monge-d-edge-shortest-path-enumerate.hpp

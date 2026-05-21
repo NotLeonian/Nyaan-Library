@@ -2,34 +2,34 @@
 data:
   _extendedDependsOn: []
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/enumerate-convex.hpp
     title: math/enumerate-convex.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/stern-brocot-tree-binary-search.hpp
     title: math/stern-brocot-tree-binary-search.hpp
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/enumerate-convex.test.cpp
     title: verify/verify-unit-test/enumerate-convex.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-rational-approximation.test.cpp
     title: verify/verify-yosupo-math/yosupo-rational-approximation.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-stern-brocot-tree-2.test.cpp
     title: verify/verify-yosupo-math/yosupo-stern-brocot-tree-2.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-stern-brocot-tree.test.cpp
     title: verify/verify-yosupo-math/yosupo-stern-brocot-tree.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-2262.test.cpp
     title: verify/verify-yuki/yuki-2262.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-2266.test.cpp
     title: verify/verify-yuki/yuki-2266.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     document_title: Stern-Brocot Tree
     links: []
@@ -145,8 +145,8 @@ data:
   requiredBy:
   - math/stern-brocot-tree-binary-search.hpp
   - math/enumerate-convex.hpp
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2023-12-18 23:52:12+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-unit-test/enumerate-convex.test.cpp
   - verify/verify-yosupo-math/yosupo-rational-approximation.test.cpp

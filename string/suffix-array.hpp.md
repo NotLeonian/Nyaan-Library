@@ -1,23 +1,23 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: data-structure/sparse-table.hpp
     title: Sparse Table
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-string/yosupo-number-of-substrings.test.cpp
     title: verify/verify-yosupo-string/yosupo-number-of-substrings.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-string/yosupo-suffix-array.test.cpp
     title: verify/verify-yosupo-string/yosupo-suffix-array.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-string/yosupo-zalgo-suffixarray.test.cpp
     title: verify/verify-yosupo-string/yosupo-zalgo-suffixarray.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links:
     - https://atcoder.jp/contests/abc135/submissions/7574225
@@ -184,8 +184,8 @@ data:
   isVerificationFile: false
   path: string/suffix-array.hpp
   requiredBy: []
-  timestamp: '2026-05-19 18:11:32+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2023-01-31 00:28:06+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-string/yosupo-number-of-substrings.test.cpp
   - verify/verify-yosupo-string/yosupo-suffix-array.test.cpp
