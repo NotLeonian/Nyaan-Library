@@ -30,6 +30,14 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install "setuptools<82" "online-judge-verify-helper==5.6.0"
 
+    - name: Check AVX2 support
+      run: |
+        if ! grep -qw avx2 /proc/cpuinfo; then
+          echo "::error::This runner does not expose AVX2. SIMD verification cannot run safely."
+          lscpu || true
+          exit 1
+        fi
+
     - name: Verify
       env:
         YUKICODER_TOKEN: ${{ secrets.YUKICODER_TOKEN }}
