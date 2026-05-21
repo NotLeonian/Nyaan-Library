@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstdint>
+
 template <uint32_t mod>
 struct LazyMontgomeryModInt {
   using mint = LazyMontgomeryModInt;
