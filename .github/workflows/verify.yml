@@ -26,9 +26,8 @@ jobs:
 
     - name: Verify
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         YUKICODER_TOKEN: ${{ secrets.YUKICODER_TOKEN }}
-      run: oj-verify run --timeout inf
+      run: oj-verify run --timeout inf --tle 120
 
     - name: Check timestamp completeness
       run: |
@@ -69,7 +68,18 @@ jobs:
             sys.exit(1)
         PY
 
+    - name: Commit verification timestamps
+      if: success()
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+        git add .verify-helper/timestamps.remote.json
+        git diff --cached --quiet || git commit -m "Refresh verification timestamps"
+        git push
+
     - name: Generate docs
+      if: success()
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GH_PAT: ${{ secrets.GH_PAT }}
