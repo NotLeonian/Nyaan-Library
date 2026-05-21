@@ -42,33 +42,41 @@ struct SplayTreeBase {
     return t;
   }
 
+  Ptr kth(Ptr t, int k) {
+    while (true) {
+      push(t);
+      int lsz = count(t->l);
+      if (k < lsz) {
+        t = t->l;
+      } else if (k == lsz) {
+        splay(t);
+        return t;
+      } else {
+        k -= lsz + 1;
+        t = t->r;
+      }
+    }
+  }
+
   pair<Ptr, Ptr> split(Ptr t, int k) {
     if (!t) return {nullptr, nullptr};
     if (k == 0) return {nullptr, t};
     if (k == count(t)) return {t, nullptr};
-    push(t);
-    if (k <= count(t->l)) {
-      auto x = split(t->l, k);
-      t->l = x.second;
-      t->p = nullptr;
-      if (x.second) x.second->p = t;
-      return {x.first, update(t)};
-    } else {
-      auto x = split(t->r, k - count(t->l) - 1);
-      t->r = x.first;
-      t->p = nullptr;
-      if (x.first) x.first->p = t;
-      return {update(t), x.second};
-    }
+
+    Ptr r = kth(t, k);
+    Ptr l = r->l;
+    r->l = nullptr;
+    if (l) l->p = nullptr;
+    update(r);
+    return {l, r};
   }
 
   Ptr merge(Ptr l, Ptr r) {
     if (!l && !r) return nullptr;
-    if (!l) return splay(r), r;
-    if (!r) return splay(l), l;
-    splay(l), splay(r);
-    l = get_right(l);
-    splay(l);
+    if (!l) return r;
+    if (!r) return l;
+
+    l = kth(l, count(l) - 1);
     l->r = r;
     r->p = l;
     update(l);
