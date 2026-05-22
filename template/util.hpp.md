@@ -526,6 +526,9 @@ data:
     path: verify/verify-unit-test/string-search.test.cpp
     title: verify/verify-unit-test/string-search.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/verify-unit-test/suffix-automaton.test.cpp
+    title: verify/verify-unit-test/suffix-automaton.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/sum-of-mf.test.cpp
     title: verify/verify-unit-test/sum-of-mf.test.cpp
   - icon: ':heavy_check_mark:'
@@ -1825,6 +1828,7 @@ data:
   - verify/verify-unit-test/template.test.cpp
   - verify/verify-unit-test/rational-number.test.cpp
   - verify/verify-unit-test/arbitrary-modint.test.cpp
+  - verify/verify-unit-test/suffix-automaton.test.cpp
   - verify/verify-yosupo-other/yosupo-a-plus-b.test.cpp
   - verify/verify-yosupo-other/yosupo-many-a-plus-b.test.cpp
   - verify/verify-yosupo-other/yosupo-argument-sort.test.cpp

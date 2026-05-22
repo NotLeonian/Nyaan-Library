@@ -1720,6 +1720,9 @@ data:
       path: verify/verify-unit-test/string-search.test.cpp
       title: verify/verify-unit-test/string-search.test.cpp
     - icon: ':heavy_check_mark:'
+      path: verify/verify-unit-test/suffix-automaton.test.cpp
+      title: verify/verify-unit-test/suffix-automaton.test.cpp
+    - icon: ':heavy_check_mark:'
       path: verify/verify-unit-test/sum-of-mf.test.cpp
       title: verify/verify-unit-test/sum-of-mf.test.cpp
     - icon: ':heavy_check_mark:'

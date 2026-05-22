@@ -4,6 +4,9 @@ data:
   _extendedRequiredBy: []
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
+    path: verify/verify-unit-test/suffix-automaton.test.cpp
+    title: verify/verify-unit-test/suffix-automaton.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-string/yosupo-number-of-substrings-suffixautomaton.test.cpp
     title: verify/verify-yosupo-string/yosupo-number-of-substrings-suffixautomaton.test.cpp
   _isVerificationFailed: false
@@ -13,104 +16,111 @@ data:
     _deprecated_at_docs: docs/string/suffix-automaton.md
     document_title: Suffix Automaton
     links: []
-  bundledCode: "#line 2 \"string/suffix-automaton.hpp\"\n\ntemplate <int margin =\
-    \ 'a'>\nstruct SuffixAutomaton {\n  struct state {\n    vector<pair<char, int>>\
-    \ nxt;\n    uint64_t hit;\n    int len, link, origin;\n    char key;\n\n    state()\
-    \ : hit(0), len(0), link(-1), origin(-1), key(0) {}\n    state(int l, char k)\
-    \ : hit(0), len(l), link(-1), origin(-1), key(k) {}\n\n    __attribute__((target(\"\
-    popcnt\"))) int get_idx(char c) const {\n      c -= margin;\n      if (((hit >>\
-    \ c) & 1) == 0) return -1;\n      if (sorted) {\n        return _mm_popcnt_u64(hit\
-    \ & ((1ull << c) - 1));\n      } else {\n        c += margin;\n        for (int\
-    \ i = 0; i < (int)nxt.size(); i++) {\n          if (nxt[i].first == c) return\
-    \ i;\n        }\n      }\n      exit(1);\n    }\n\n    inline int next(char c)\
-    \ const {\n      int f = get_idx(c);\n      return ~f ? nxt[f].second : -1;\n\
-    \    }\n\n    void add(char c, int i) {\n      c -= margin;\n      assert(((hit\
-    \ >> c) & 1) == 0);\n      nxt.emplace_back(c + margin, i);\n      hit |= 1ull\
-    \ << c;\n    }\n  };\n\n  inline int next(int i, char c) { return st[i].next(c);\
-    \ }\n  inline vector<pair<char, int>> &chd(int i) { return st[i].nxt; }\n  inline\
-    \ int link(int i) { return st[i].link; }\n\n  vector<state> st;\n  static bool\
-    \ sorted;\n\n  SuffixAutomaton() : st(1) {}\n  SuffixAutomaton(const string &S)\
-    \ : st(1) { build(S); }\n\n  void build(const string &S) {\n    int last = 0;\n\
-    \    for (int i = 0; i < (int)S.size(); i++) extend(S[i], last);\n    tsort();\n\
-    \  }\n\n  int size() const { return st.size(); }\n\n  int find(const string &s)\
-    \ const {\n    int last = 0;\n    for (auto &c : s)\n      if ((last = next(last,\
-    \ c)) == -1) return -1;\n    return last;\n  }\n\n  state &operator[](int i) {\
-    \ return st[i]; }\n\n private:\n  void extend(char c, int &last) {\n    int cur\
-    \ = st.size();\n    st.emplace_back(st[last].len + 1, c);\n    int p = last;\n\
-    \    for (; p != -1 && st[p].get_idx(c) == -1; p = st[p].link) {\n      st[p].add(c,\
-    \ cur);\n    }\n    if (p == -1) {\n      st[cur].link = 0;\n    } else {\n  \
-    \    int q = st[p].next(c);\n      if (st[p].len + 1 == st[q].len)\n        st[cur].link\
-    \ = q;\n      else {\n        int clone = st.size();\n        {\n          state\
-    \ cl = st[q];\n          cl.len = st[p].len + 1, cl.origin = q;\n          st.push_back(std::move(cl));\n\
-    \        }\n        for (; p != -1; p = st[p].link) {\n          int i = st[p].get_idx(c);\n\
-    \          if (st[p].nxt[i].second != q) break;\n          st[p].nxt[i].second\
-    \ = clone;\n        }\n        st[q].link = st[cur].link = clone;\n      }\n \
-    \   }\n    last = cur;\n  }\n\n  void tsort() {\n    int n = st.size();\n    vector<int>\
+  bundledCode: "#line 2 \"string/suffix-automaton.hpp\"\n\n#include <immintrin.h>\n\
+    \ntemplate <int margin = 'a'>\nstruct SuffixAutomaton {\n  struct state {\n  \
+    \  vector<pair<char, int>> nxt;\n    uint64_t hit;\n    int len, link, origin;\n\
+    \    char key;\n\n    state() : hit(0), len(0), link(-1), origin(-1), key(0) {}\n\
+    \    state(int l, char k) : hit(0), len(l), link(-1), origin(-1), key(k) {}\n\n\
+    \    void add(char c, int i) {\n      int x = int(c) - margin;\n      assert(0\
+    \ <= x && x < 64);\n      assert(((hit >> x) & 1) == 0);\n      nxt.emplace_back(c,\
+    \ i);\n      hit |= 1ULL << x;\n    }\n  };\n\n  vector<state> st;\n  bool sorted;\n\
+    \n  SuffixAutomaton() { clear(); }\n  explicit SuffixAutomaton(const string &S)\
+    \ { build(S); }\n\n  void clear() {\n    st.assign(1, state());\n    sorted =\
+    \ false;\n  }\n\n  void build(const string &S) {\n    clear();\n    int last =\
+    \ 0;\n    for (int i = 0; i < (int)S.size(); i++) extend(S[i], last);\n    tsort();\n\
+    \  }\n\n  int size() const { return (int)st.size(); }\n\n  __attribute__((target(\"\
+    popcnt\"))) int get_idx(int i, char c) const {\n    const state &s = st[i];\n\
+    \    int x = int(c) - margin;\n    assert(0 <= x && x < 64);\n    if (((s.hit\
+    \ >> x) & 1) == 0) return -1;\n    if (sorted)\n      return _mm_popcnt_u64(s.hit\
+    \ & ((1ULL << x) - 1));\n    else {\n      for (int j = 0; j < (int)s.nxt.size();\
+    \ j++)\n        if (s.nxt[j].first == c) return j;\n    }\n    assert(false);\n\
+    \    return -1;\n  }\n\n  int next(int i, char c) const {\n    int j = get_idx(i,\
+    \ c);\n    return j >= 0 ? st[i].nxt[j].second : -1;\n  }\n\n  vector<pair<char,\
+    \ int>> &chd(int i) { return st[i].nxt; }\n  const vector<pair<char, int>> &chd(int\
+    \ i) const { return st[i].nxt; }\n\n  int link(int i) const { return st[i].link;\
+    \ }\n\n  int find(const string &s) const {\n    int last = 0;\n    for (char c\
+    \ : s) {\n      last = next(last, c);\n      if (last == -1) return -1;\n    }\n\
+    \    return last;\n  }\n\n  state &operator[](int i) { return st[i]; }\n  const\
+    \ state &operator[](int i) const { return st[i]; }\n\n private:\n  void extend(char\
+    \ c, int &last) {\n    int cur = (int)st.size();\n    st.emplace_back(st[last].len\
+    \ + 1, c);\n    int p = last;\n    for (; p != -1 && get_idx(p, c) == -1; p =\
+    \ st[p].link) {\n      st[p].add(c, cur);\n    }\n    if (p == -1) {\n      st[cur].link\
+    \ = 0;\n    } else {\n      int q = next(p, c);\n      if (st[p].len + 1 == st[q].len)\n\
+    \        st[cur].link = q;\n      else {\n        int clone = (int)st.size();\n\
+    \        {\n          state cl = st[q];\n          cl.len = st[p].len + 1, cl.origin\
+    \ = q;\n          st.push_back(std::move(cl));\n        }\n        for (; p !=\
+    \ -1; p = st[p].link) {\n          int i = get_idx(p, c);\n          if (i ==\
+    \ -1 || st[p].nxt[i].second != q) break;\n          st[p].nxt[i].second = clone;\n\
+    \        }\n        st[q].link = st[cur].link = clone;\n      }\n    }\n    last\
+    \ = cur;\n  }\n\n  void tsort() {\n    int n = (int)st.size();\n    vector<int>\
     \ topo;\n    {\n      topo.reserve(n);\n      vector<vector<int>> base(n + 1);\n\
     \      for (int i = 0; i < n; i++) base[st[i].len].push_back(i);\n      for (int\
-    \ i = 0; i < n; i++)\n        if (!base[i].empty())\n          copy(begin(base[i]),\
-    \ end(base[i]), back_inserter(topo));\n    }\n    {\n      vector<state> st2;\n\
-    \      st2.reserve(n);\n      for (int i = 0; i < n; i++) st2.emplace_back(std::move(st[topo[i]]));\n\
-    \      st.swap(st2);\n    }\n    vector<int> inv(n);\n    for (int i = 0; i <\
-    \ n; i++) inv[topo[i]] = i;\n    for (int i = 0; i < n; i++) {\n      state &s\
-    \ = st[i];\n      sort(begin(s.nxt), end(s.nxt));\n      for (auto &[_, y] : s.nxt)\
-    \ y = inv[y];\n      if (s.link != -1) s.link = inv[s.link];\n      if (s.origin\
-    \ != -1) s.origin = inv[s.origin];\n    }\n    sorted = true;\n  }\n};\n\ntemplate\
-    \ <int margin>\nbool SuffixAutomaton<margin>::sorted = false;\n\n/**\n * @brief\
-    \ Suffix Automaton\n * @docs docs/string/suffix-automaton.md\n */\n"
-  code: "#pragma once\n\ntemplate <int margin = 'a'>\nstruct SuffixAutomaton {\n \
-    \ struct state {\n    vector<pair<char, int>> nxt;\n    uint64_t hit;\n    int\
-    \ len, link, origin;\n    char key;\n\n    state() : hit(0), len(0), link(-1),\
-    \ origin(-1), key(0) {}\n    state(int l, char k) : hit(0), len(l), link(-1),\
-    \ origin(-1), key(k) {}\n\n    __attribute__((target(\"popcnt\"))) int get_idx(char\
-    \ c) const {\n      c -= margin;\n      if (((hit >> c) & 1) == 0) return -1;\n\
-    \      if (sorted) {\n        return _mm_popcnt_u64(hit & ((1ull << c) - 1));\n\
-    \      } else {\n        c += margin;\n        for (int i = 0; i < (int)nxt.size();\
-    \ i++) {\n          if (nxt[i].first == c) return i;\n        }\n      }\n   \
-    \   exit(1);\n    }\n\n    inline int next(char c) const {\n      int f = get_idx(c);\n\
-    \      return ~f ? nxt[f].second : -1;\n    }\n\n    void add(char c, int i) {\n\
-    \      c -= margin;\n      assert(((hit >> c) & 1) == 0);\n      nxt.emplace_back(c\
-    \ + margin, i);\n      hit |= 1ull << c;\n    }\n  };\n\n  inline int next(int\
-    \ i, char c) { return st[i].next(c); }\n  inline vector<pair<char, int>> &chd(int\
-    \ i) { return st[i].nxt; }\n  inline int link(int i) { return st[i].link; }\n\n\
-    \  vector<state> st;\n  static bool sorted;\n\n  SuffixAutomaton() : st(1) {}\n\
-    \  SuffixAutomaton(const string &S) : st(1) { build(S); }\n\n  void build(const\
-    \ string &S) {\n    int last = 0;\n    for (int i = 0; i < (int)S.size(); i++)\
-    \ extend(S[i], last);\n    tsort();\n  }\n\n  int size() const { return st.size();\
-    \ }\n\n  int find(const string &s) const {\n    int last = 0;\n    for (auto &c\
-    \ : s)\n      if ((last = next(last, c)) == -1) return -1;\n    return last;\n\
-    \  }\n\n  state &operator[](int i) { return st[i]; }\n\n private:\n  void extend(char\
-    \ c, int &last) {\n    int cur = st.size();\n    st.emplace_back(st[last].len\
-    \ + 1, c);\n    int p = last;\n    for (; p != -1 && st[p].get_idx(c) == -1; p\
-    \ = st[p].link) {\n      st[p].add(c, cur);\n    }\n    if (p == -1) {\n     \
-    \ st[cur].link = 0;\n    } else {\n      int q = st[p].next(c);\n      if (st[p].len\
-    \ + 1 == st[q].len)\n        st[cur].link = q;\n      else {\n        int clone\
-    \ = st.size();\n        {\n          state cl = st[q];\n          cl.len = st[p].len\
-    \ + 1, cl.origin = q;\n          st.push_back(std::move(cl));\n        }\n   \
-    \     for (; p != -1; p = st[p].link) {\n          int i = st[p].get_idx(c);\n\
-    \          if (st[p].nxt[i].second != q) break;\n          st[p].nxt[i].second\
-    \ = clone;\n        }\n        st[q].link = st[cur].link = clone;\n      }\n \
-    \   }\n    last = cur;\n  }\n\n  void tsort() {\n    int n = st.size();\n    vector<int>\
+    \ i = 0; i < n; i++)\n        copy(begin(base[i]), end(base[i]), back_inserter(topo));\n\
+    \    }\n    {\n      vector<state> st2;\n      st2.reserve(n);\n      for (int\
+    \ i = 0; i < n; i++) st2.emplace_back(std::move(st[topo[i]]));\n      st.swap(st2);\n\
+    \    }\n    vector<int> inv(n);\n    for (int i = 0; i < n; i++) inv[topo[i]]\
+    \ = i;\n    for (int i = 0; i < n; i++) {\n      state &s = st[i];\n      sort(begin(s.nxt),\
+    \ end(s.nxt));\n      for (auto &[_, y] : s.nxt) y = inv[y];\n      if (s.link\
+    \ != -1) s.link = inv[s.link];\n      if (s.origin != -1) s.origin = inv[s.origin];\n\
+    \    }\n    sorted = true;\n  }\n};\n\n/**\n * @brief Suffix Automaton\n * @docs\
+    \ docs/string/suffix-automaton.md\n */\n"
+  code: "#pragma once\n\n#include <immintrin.h>\n\ntemplate <int margin = 'a'>\nstruct\
+    \ SuffixAutomaton {\n  struct state {\n    vector<pair<char, int>> nxt;\n    uint64_t\
+    \ hit;\n    int len, link, origin;\n    char key;\n\n    state() : hit(0), len(0),\
+    \ link(-1), origin(-1), key(0) {}\n    state(int l, char k) : hit(0), len(l),\
+    \ link(-1), origin(-1), key(k) {}\n\n    void add(char c, int i) {\n      int\
+    \ x = int(c) - margin;\n      assert(0 <= x && x < 64);\n      assert(((hit >>\
+    \ x) & 1) == 0);\n      nxt.emplace_back(c, i);\n      hit |= 1ULL << x;\n   \
+    \ }\n  };\n\n  vector<state> st;\n  bool sorted;\n\n  SuffixAutomaton() { clear();\
+    \ }\n  explicit SuffixAutomaton(const string &S) { build(S); }\n\n  void clear()\
+    \ {\n    st.assign(1, state());\n    sorted = false;\n  }\n\n  void build(const\
+    \ string &S) {\n    clear();\n    int last = 0;\n    for (int i = 0; i < (int)S.size();\
+    \ i++) extend(S[i], last);\n    tsort();\n  }\n\n  int size() const { return (int)st.size();\
+    \ }\n\n  __attribute__((target(\"popcnt\"))) int get_idx(int i, char c) const\
+    \ {\n    const state &s = st[i];\n    int x = int(c) - margin;\n    assert(0 <=\
+    \ x && x < 64);\n    if (((s.hit >> x) & 1) == 0) return -1;\n    if (sorted)\n\
+    \      return _mm_popcnt_u64(s.hit & ((1ULL << x) - 1));\n    else {\n      for\
+    \ (int j = 0; j < (int)s.nxt.size(); j++)\n        if (s.nxt[j].first == c) return\
+    \ j;\n    }\n    assert(false);\n    return -1;\n  }\n\n  int next(int i, char\
+    \ c) const {\n    int j = get_idx(i, c);\n    return j >= 0 ? st[i].nxt[j].second\
+    \ : -1;\n  }\n\n  vector<pair<char, int>> &chd(int i) { return st[i].nxt; }\n\
+    \  const vector<pair<char, int>> &chd(int i) const { return st[i].nxt; }\n\n \
+    \ int link(int i) const { return st[i].link; }\n\n  int find(const string &s)\
+    \ const {\n    int last = 0;\n    for (char c : s) {\n      last = next(last,\
+    \ c);\n      if (last == -1) return -1;\n    }\n    return last;\n  }\n\n  state\
+    \ &operator[](int i) { return st[i]; }\n  const state &operator[](int i) const\
+    \ { return st[i]; }\n\n private:\n  void extend(char c, int &last) {\n    int\
+    \ cur = (int)st.size();\n    st.emplace_back(st[last].len + 1, c);\n    int p\
+    \ = last;\n    for (; p != -1 && get_idx(p, c) == -1; p = st[p].link) {\n    \
+    \  st[p].add(c, cur);\n    }\n    if (p == -1) {\n      st[cur].link = 0;\n  \
+    \  } else {\n      int q = next(p, c);\n      if (st[p].len + 1 == st[q].len)\n\
+    \        st[cur].link = q;\n      else {\n        int clone = (int)st.size();\n\
+    \        {\n          state cl = st[q];\n          cl.len = st[p].len + 1, cl.origin\
+    \ = q;\n          st.push_back(std::move(cl));\n        }\n        for (; p !=\
+    \ -1; p = st[p].link) {\n          int i = get_idx(p, c);\n          if (i ==\
+    \ -1 || st[p].nxt[i].second != q) break;\n          st[p].nxt[i].second = clone;\n\
+    \        }\n        st[q].link = st[cur].link = clone;\n      }\n    }\n    last\
+    \ = cur;\n  }\n\n  void tsort() {\n    int n = (int)st.size();\n    vector<int>\
     \ topo;\n    {\n      topo.reserve(n);\n      vector<vector<int>> base(n + 1);\n\
     \      for (int i = 0; i < n; i++) base[st[i].len].push_back(i);\n      for (int\
-    \ i = 0; i < n; i++)\n        if (!base[i].empty())\n          copy(begin(base[i]),\
-    \ end(base[i]), back_inserter(topo));\n    }\n    {\n      vector<state> st2;\n\
-    \      st2.reserve(n);\n      for (int i = 0; i < n; i++) st2.emplace_back(std::move(st[topo[i]]));\n\
-    \      st.swap(st2);\n    }\n    vector<int> inv(n);\n    for (int i = 0; i <\
-    \ n; i++) inv[topo[i]] = i;\n    for (int i = 0; i < n; i++) {\n      state &s\
-    \ = st[i];\n      sort(begin(s.nxt), end(s.nxt));\n      for (auto &[_, y] : s.nxt)\
-    \ y = inv[y];\n      if (s.link != -1) s.link = inv[s.link];\n      if (s.origin\
-    \ != -1) s.origin = inv[s.origin];\n    }\n    sorted = true;\n  }\n};\n\ntemplate\
-    \ <int margin>\nbool SuffixAutomaton<margin>::sorted = false;\n\n/**\n * @brief\
-    \ Suffix Automaton\n * @docs docs/string/suffix-automaton.md\n */\n"
+    \ i = 0; i < n; i++)\n        copy(begin(base[i]), end(base[i]), back_inserter(topo));\n\
+    \    }\n    {\n      vector<state> st2;\n      st2.reserve(n);\n      for (int\
+    \ i = 0; i < n; i++) st2.emplace_back(std::move(st[topo[i]]));\n      st.swap(st2);\n\
+    \    }\n    vector<int> inv(n);\n    for (int i = 0; i < n; i++) inv[topo[i]]\
+    \ = i;\n    for (int i = 0; i < n; i++) {\n      state &s = st[i];\n      sort(begin(s.nxt),\
+    \ end(s.nxt));\n      for (auto &[_, y] : s.nxt) y = inv[y];\n      if (s.link\
+    \ != -1) s.link = inv[s.link];\n      if (s.origin != -1) s.origin = inv[s.origin];\n\
+    \    }\n    sorted = true;\n  }\n};\n\n/**\n * @brief Suffix Automaton\n * @docs\
+    \ docs/string/suffix-automaton.md\n */\n"
   dependsOn: []
   isVerificationFile: false
   path: string/suffix-automaton.hpp
   requiredBy: []
-  timestamp: '2020-12-11 17:45:42+09:00'
+  timestamp: '2026-05-22 11:18:25+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-string/yosupo-number-of-substrings-suffixautomaton.test.cpp
+  - verify/verify-unit-test/suffix-automaton.test.cpp
 documentation_of: string/suffix-automaton.hpp
 layout: document
 redirect_from:
