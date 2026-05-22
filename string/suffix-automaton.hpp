@@ -1,5 +1,7 @@
 #pragma once
 
+#include <immintrin.h>
+
 template <int margin = 'a'>
 struct SuffixAutomaton {
   struct state {
@@ -11,84 +13,96 @@ struct SuffixAutomaton {
     state() : hit(0), len(0), link(-1), origin(-1), key(0) {}
     state(int l, char k) : hit(0), len(l), link(-1), origin(-1), key(k) {}
 
-    __attribute__((target("popcnt"))) int get_idx(char c) const {
-      c -= margin;
-      if (((hit >> c) & 1) == 0) return -1;
-      if (sorted) {
-        return _mm_popcnt_u64(hit & ((1ull << c) - 1));
-      } else {
-        c += margin;
-        for (int i = 0; i < (int)nxt.size(); i++) {
-          if (nxt[i].first == c) return i;
-        }
-      }
-      exit(1);
-    }
-
-    inline int next(char c) const {
-      int f = get_idx(c);
-      return ~f ? nxt[f].second : -1;
-    }
-
     void add(char c, int i) {
-      c -= margin;
-      assert(((hit >> c) & 1) == 0);
-      nxt.emplace_back(c + margin, i);
-      hit |= 1ull << c;
+      int x = int(c) - margin;
+      assert(0 <= x && x < 64);
+      assert(((hit >> x) & 1) == 0);
+      nxt.emplace_back(c, i);
+      hit |= 1ULL << x;
     }
   };
 
-  inline int next(int i, char c) { return st[i].next(c); }
-  inline vector<pair<char, int>> &chd(int i) { return st[i].nxt; }
-  inline int link(int i) { return st[i].link; }
-
   vector<state> st;
-  static bool sorted;
+  bool sorted;
 
-  SuffixAutomaton() : st(1) {}
-  SuffixAutomaton(const string &S) : st(1) { build(S); }
+  SuffixAutomaton() { clear(); }
+  explicit SuffixAutomaton(const string &S) { build(S); }
+
+  void clear() {
+    st.assign(1, state());
+    sorted = false;
+  }
 
   void build(const string &S) {
+    clear();
     int last = 0;
     for (int i = 0; i < (int)S.size(); i++) extend(S[i], last);
     tsort();
   }
 
-  int size() const { return st.size(); }
+  int size() const { return (int)st.size(); }
+
+  __attribute__((target("popcnt"))) int get_idx(int i, char c) const {
+    const state &s = st[i];
+    int x = int(c) - margin;
+    assert(0 <= x && x < 64);
+    if (((s.hit >> x) & 1) == 0) return -1;
+    if (sorted)
+      return _mm_popcnt_u64(s.hit & ((1ULL << x) - 1));
+    else {
+      for (int j = 0; j < (int)s.nxt.size(); j++)
+        if (s.nxt[j].first == c) return j;
+    }
+    assert(false);
+    return -1;
+  }
+
+  int next(int i, char c) const {
+    int j = get_idx(i, c);
+    return j >= 0 ? st[i].nxt[j].second : -1;
+  }
+
+  vector<pair<char, int>> &chd(int i) { return st[i].nxt; }
+  const vector<pair<char, int>> &chd(int i) const { return st[i].nxt; }
+
+  int link(int i) const { return st[i].link; }
 
   int find(const string &s) const {
     int last = 0;
-    for (auto &c : s)
-      if ((last = next(last, c)) == -1) return -1;
+    for (char c : s) {
+      last = next(last, c);
+      if (last == -1) return -1;
+    }
     return last;
   }
 
   state &operator[](int i) { return st[i]; }
+  const state &operator[](int i) const { return st[i]; }
 
  private:
   void extend(char c, int &last) {
-    int cur = st.size();
+    int cur = (int)st.size();
     st.emplace_back(st[last].len + 1, c);
     int p = last;
-    for (; p != -1 && st[p].get_idx(c) == -1; p = st[p].link) {
+    for (; p != -1 && get_idx(p, c) == -1; p = st[p].link) {
       st[p].add(c, cur);
     }
     if (p == -1) {
       st[cur].link = 0;
     } else {
-      int q = st[p].next(c);
+      int q = next(p, c);
       if (st[p].len + 1 == st[q].len)
         st[cur].link = q;
       else {
-        int clone = st.size();
+        int clone = (int)st.size();
         {
           state cl = st[q];
           cl.len = st[p].len + 1, cl.origin = q;
           st.push_back(std::move(cl));
         }
         for (; p != -1; p = st[p].link) {
-          int i = st[p].get_idx(c);
-          if (st[p].nxt[i].second != q) break;
+          int i = get_idx(p, c);
+          if (i == -1 || st[p].nxt[i].second != q) break;
           st[p].nxt[i].second = clone;
         }
         st[q].link = st[cur].link = clone;
@@ -98,15 +112,14 @@ struct SuffixAutomaton {
   }
 
   void tsort() {
-    int n = st.size();
+    int n = (int)st.size();
     vector<int> topo;
     {
       topo.reserve(n);
       vector<vector<int>> base(n + 1);
       for (int i = 0; i < n; i++) base[st[i].len].push_back(i);
       for (int i = 0; i < n; i++)
-        if (!base[i].empty())
-          copy(begin(base[i]), end(base[i]), back_inserter(topo));
+        copy(begin(base[i]), end(base[i]), back_inserter(topo));
     }
     {
       vector<state> st2;
@@ -126,9 +139,6 @@ struct SuffixAutomaton {
     sorted = true;
   }
 };
-
-template <int margin>
-bool SuffixAutomaton<margin>::sorted = false;
 
 /**
  * @brief Suffix Automaton
