@@ -5,6 +5,15 @@ on:
     paths-ignore:
       - '.verify-helper/timestamps.remote.json'
   workflow_dispatch:
+    inputs:
+      full_verify:
+        description: "Ignore .verify-helper/timestamps.remote.json and re-run all verification"
+        required: false
+        default: false
+        type: boolean
+  schedule:
+    - cron: "37 5 1 * *"
+      timezone: "Asia/Tokyo"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -40,6 +49,12 @@ jobs:
           lscpu || true
           exit 1
         fi
+
+    - name: Disable oj-verify timestamp cache for full verification
+      if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.full_verify) }}
+      run: |
+        rm -f .verify-helper/timestamps.remote.json
+        rm -rf .verify-helper/cache
 
     - name: Verify
       env:
