@@ -9,6 +9,7 @@ exclude:
 - modulo/arbitrary-mod-binomial-large.hpp
 - auto_submit.py
 - simple_template.hpp
+favicon: /favicon.svg
 plugins:
 - jemoji
 - jekyll-redirect-from

@@ -12,3 +12,10 @@ Nyaan さん: [![Nyaan](https://img.shields.io/endpoint?url=https%3A%2F%2Fatcode
 
 Not_Leonian: [![Not_Leonian](https://img.shields.io/endpoint?url=https%3A%2F%2Fatcoder-badges.now.sh%2Fapi%2Fatcoder%2Fjson%2FNot_Leonian)](https://atcoder.jp/users/Not_Leonian)
 [![Not_Leonian](https://img.shields.io/endpoint?url=https%3A%2F%2Fatcoder-badges.now.sh%2Fapi%2Fcodeforces%2Fjson%2FNot_Leonian)](https://codeforces.com/profile/Not_Leonian)
+
+## License
+
+This repository is licensed under CC0-1.0. See `LICENSE`.
+
+Third-party assets are listed in `THIRD_PARTY_NOTICES.md`.
+The favicon uses Twemoji `1f4c4.svg`, licensed under CC BY 4.0.
