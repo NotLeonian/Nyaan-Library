@@ -6,8 +6,6 @@
 
 using namespace Nyaan;
 
-// https://kimiyuki.net/writeups/algo-etc-icpc-2016-domestic-f/
-
 #define whole(f, x, ...) \
   ([&](decltype((x)) y) { return (f)(begin(y), end(y), ##__VA_ARGS__); })(x)
 template <typename T, typename X>
