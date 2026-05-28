@@ -153,7 +153,7 @@ DSU on Treeとは、全ての部分木に対するクエリを高速に処理す
 
 
 ##### 参考にしたサイト
-- [kimiyukiさんの解説。非常にわかりやすい](https://wiki.kimiyuki.net/DSU%20on%20tree)
+- kimiyukiさんの解説 (リンク切れ)
 - [CodeForcesの記事](https://codeforces.com/blog/entry/44351)
 - [謎の記事](http://codingwithrajarshi.blogspot.com/2018/06/small-to-large.html)
 
