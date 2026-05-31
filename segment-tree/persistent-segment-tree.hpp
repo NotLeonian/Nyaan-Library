@@ -125,5 +125,5 @@ struct PersistentSegmentTree {
 
 /**
  * @brief 永続セグメント木
- * @docs docs/segment-tree/persistent-segtree.md
+ * @docs docs/segment-tree/persistent-segment-tree.md
  */
