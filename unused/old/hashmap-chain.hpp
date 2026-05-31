@@ -51,5 +51,5 @@ struct HashMap {
 
 /**
  * @brief Hash Map(連鎖法)
- * @docs docs/hashmap/hashmap_all.md
+ * @docs docs/hashmap/hashmap-chain.md
  */

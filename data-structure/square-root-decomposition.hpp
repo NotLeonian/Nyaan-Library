@@ -33,5 +33,5 @@ struct SquareRootDecomposition {
 
 /**
  * @brief 平方分割
- * @docs docs/data-structure/sqrt-dec.md
+ * @docs docs/data-structure/square-root-decomposition.md
  */
