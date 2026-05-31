@@ -251,10 +251,10 @@ data:
     \ < cap; ++i)\n      if (flag[i]) ret.emplace_back(keys[i], vals[i]);\n    return\
     \ ret;\n  }\n\n  int size() const { return s; }\n\n  // set default_value\n  void\
     \ set_default(const Val& val) { DefaultValue = val; }\n};\n\n/**\n * @brief Hash\
-    \ Map(\u53EF\u5909\u9577\u7248)\n * @docs docs/data-structure/hash-map.md\n */\n\
-    #line 6 \"segment-tree/dynamic-li-chao-tree.hpp\"\n\ntemplate <typename T, T INF>\n\
-    struct DynamicLiChaoTree {\n  struct Line {\n    T slope, intercept;\n    Line()\
-    \ : slope(0), intercept(INF) {}\n    Line(T slope, T intercept) : slope(slope),\
+    \ Map(\u53EF\u5909\u9577\u7248)\n * @docs docs/data-structure/hash-map-variable-length.md\n\
+    \ */\n#line 6 \"segment-tree/dynamic-li-chao-tree.hpp\"\n\ntemplate <typename\
+    \ T, T INF>\nstruct DynamicLiChaoTree {\n  struct Line {\n    T slope, intercept;\n\
+    \    Line() : slope(0), intercept(INF) {}\n    Line(T slope, T intercept) : slope(slope),\
     \ intercept(intercept) {}\n    inline T get(T x) const { return slope * x + intercept;\
     \ }\n    inline bool over(const Line &other, const T &x) const {\n      return\
     \ get(x) < other.get(x);\n    }\n  };\n\n  // remind \u30BB\u30B0\u6728\u306F\
@@ -318,7 +318,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-ds/yosupo-dynamic-li-chao-tree.test.cpp
   requiredBy: []
-  timestamp: '2024-05-03 23:21:26+09:00'
+  timestamp: '2026-05-31 17:09:38+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-ds/yosupo-dynamic-li-chao-tree.test.cpp

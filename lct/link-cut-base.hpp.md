@@ -31,7 +31,7 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/lct/link-cut-tree.md
+    _deprecated_at_docs: docs/lct/link-cut-base.md
     document_title: Link/Cut Tree(base)
     links: []
   bundledCode: "#line 2 \"lct/link-cut-base.hpp\"\n\ntemplate <typename Splay>\nstruct\
@@ -56,7 +56,7 @@ data:
     \ decltype(Node::key)& key) {\n    this->splay(t);\n    t->key = key;\n    this->update(t);\n\
     \  }\n\n  virtual decltype(Node::key) get_key(Ptr t) { return t->key; }\n\n  decltype(Node::key)\
     \ fold(Ptr u, Ptr v) {\n    evert(u);\n    expose(v);\n    return v->sum;\n  }\n\
-    };\n\n/**\n * @brief Link/Cut Tree(base)\n * @docs docs/lct/link-cut-tree.md\n\
+    };\n\n/**\n * @brief Link/Cut Tree(base)\n * @docs docs/lct/link-cut-base.md\n\
     \ */\n"
   code: "#pragma once\n\ntemplate <typename Splay>\nstruct LinkCutBase : Splay {\n\
     \  using Node = typename Splay::Node;\n  using Ptr = Node*;\n\n  virtual Ptr expose(Ptr\
@@ -80,7 +80,7 @@ data:
     \ key) {\n    this->splay(t);\n    t->key = key;\n    this->update(t);\n  }\n\n\
     \  virtual decltype(Node::key) get_key(Ptr t) { return t->key; }\n\n  decltype(Node::key)\
     \ fold(Ptr u, Ptr v) {\n    evert(u);\n    expose(v);\n    return v->sum;\n  }\n\
-    };\n\n/**\n * @brief Link/Cut Tree(base)\n * @docs docs/lct/link-cut-tree.md\n\
+    };\n\n/**\n * @brief Link/Cut Tree(base)\n * @docs docs/lct/link-cut-base.md\n\
     \ */\n"
   dependsOn: []
   isVerificationFile: false
@@ -89,7 +89,7 @@ data:
   - lct/link-cut-tree.hpp
   - lct/link-cut-tree-subtree.hpp
   - lct/link-cut-tree-lazy.hpp
-  timestamp: '2021-04-26 00:32:26+09:00'
+  timestamp: '2026-05-31 17:09:38+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ds/yosupo-range-add-range-sum-linkcuttree.test.cpp

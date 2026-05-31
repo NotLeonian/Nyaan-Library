@@ -622,7 +622,7 @@ data:
     \ i++) f[i] *= C.fac(i);\n  reverse(begin(f), end(f));\n  fps g(N, mint(1));\n\
     \  for (int i = 1; i < N; i++) g[i] = g[i - 1] * a * C.inv(i);\n  f = (f * g).pre(N);\n\
     \  reverse(begin(f), end(f));\n  for (int i = 0; i < N; i++) f[i] *= C.finv(i);\n\
-    \  return f;\n}\n\n/**\n * @brief \u5E73\u884C\u79FB\u52D5\n * @docs docs/fps/fps-taylor-shift.md\n\
+    \  return f;\n}\n\n/**\n * @brief \u5E73\u884C\u79FB\u52D5\n * @docs docs/fps/taylor-shift.md\n\
     \ */\n#line 12 \"verify/verify-unit-test/dual-fps.test.cpp\"\n\nusing mint = LazyMontgomeryModInt<998244353>;\n\
     using fps = FormalPowerSeries<mint>;\nusing dual = DualFPS<fps>;\n\nusing namespace\
     \ Nyaan;\n\nvoid test2_inner(dual A, dual B, fps _a, fps _b, int repeat = 3) {\n\
@@ -728,7 +728,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/dual-fps.test.cpp
   requiredBy: []
-  timestamp: '2026-05-21 18:07:01+09:00'
+  timestamp: '2026-05-31 17:09:38+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/dual-fps.test.cpp

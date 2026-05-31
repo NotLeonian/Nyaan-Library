@@ -22,7 +22,7 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/graph/functional-graph.md
+    _deprecated_at_docs: docs/graph/namori.md
     document_title: "Functional Graph(\u306A\u3082\u308A\u30B0\u30E9\u30D5)\u306E\u5206\
       \u89E3"
     links: []
@@ -151,8 +151,7 @@ data:
     \u8FBA\u3082\u5165\u308C\u305F\u3044\u3068\u304D\u306F\u3053\u3053\u3092\u30AA\
     \u30F3\u306B\u3059\u308B(\u52D5\u304F\u304B\u4E0D\u660E)\n      // aux[i][k].emplace_back(k,\
     \ j, d.cost);\n    }\n  }\n};\n\n/**\n * @brief Functional Graph(\u306A\u3082\u308A\
-    \u30B0\u30E9\u30D5)\u306E\u5206\u89E3\n * @docs docs/graph/functional-graph.md\n\
-    \ */\n"
+    \u30B0\u30E9\u30D5)\u306E\u5206\u89E3\n * @docs docs/graph/namori.md\n */\n"
   code: "#pragma once\n\n#include <vector>\n\n#include \"../data-structure/union-find.hpp\"\
     \n#include \"../tree/heavy-light-decomposition.hpp\"\n#include \"graph-template.hpp\"\
     \n\nusing namespace std;\n\ntemplate <typename T>\nstruct Namori {\n  using G\
@@ -200,7 +199,7 @@ data:
     \u306F\u3053\u3053\u3092\u30AA\u30F3\u306B\u3059\u308B(\u52D5\u304F\u304B\u4E0D\
     \u660E)\n      // aux[i][k].emplace_back(k, j, d.cost);\n    }\n  }\n};\n\n/**\n\
     \ * @brief Functional Graph(\u306A\u3082\u308A\u30B0\u30E9\u30D5)\u306E\u5206\u89E3\
-    \n * @docs docs/graph/functional-graph.md\n */\n"
+    \n * @docs docs/graph/namori.md\n */\n"
   dependsOn:
   - data-structure/union-find.hpp
   - tree/heavy-light-decomposition.hpp
@@ -208,7 +207,7 @@ data:
   isVerificationFile: false
   path: graph/namori.hpp
   requiredBy: []
-  timestamp: '2024-08-10 13:03:16+09:00'
+  timestamp: '2026-05-31 17:09:38+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-aoj-other/aoj-2891.test.cpp

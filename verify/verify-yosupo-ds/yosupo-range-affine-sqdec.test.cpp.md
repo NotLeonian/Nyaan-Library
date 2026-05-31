@@ -238,9 +238,9 @@ data:
     \ merge(ret, sq[l / B].query_part(l % B, B));\n    for (int i = l / B + 1; i <\
     \ r / B; i++) ret = merge(ret, sq[i].query_all());\n    ret = merge(ret, sq[r\
     \ / B].query_part(0, r % B));\n    return ret;\n  }\n};\n\n/**\n * @brief \u5E73\
-    \u65B9\u5206\u5272\n * @docs docs/data-structure/sqrt-dec.md\n */\n#line 2 \"\
-    modint/montgomery-modint.hpp\"\n\n#line 4 \"modint/montgomery-modint.hpp\"\n\n\
-    template <uint32_t mod>\nstruct LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n\
+    \u65B9\u5206\u5272\n * @docs docs/data-structure/square-root-decomposition.md\n\
+    \ */\n#line 2 \"modint/montgomery-modint.hpp\"\n\n#line 4 \"modint/montgomery-modint.hpp\"\
+    \n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n\
     \  using i32 = int32_t;\n  using u32 = uint32_t;\n  using u64 = uint64_t;\n\n\
     \  static constexpr u32 get_r() {\n    u32 ret = mod;\n    for (i32 i = 0; i <\
     \ 4; ++i) ret *= 2 - mod * ret;\n    return ret;\n  }\n\n  static constexpr u32\
@@ -347,7 +347,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-ds/yosupo-range-affine-sqdec.test.cpp
   requiredBy: []
-  timestamp: '2026-05-21 18:07:01+09:00'
+  timestamp: '2026-05-31 17:09:38+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-ds/yosupo-range-affine-sqdec.test.cpp

@@ -232,7 +232,7 @@ data:
     \ N2; n >= x2; n--) {\n      hs[n] -= hs[my_div(n, x)] - pi;\n    }\n    ++pi;\n\
     \  }\n  return hl[1];\n}\n\n}  // namespace PrimeCounting\n\n/**\n * @brief \u7D20\
     \u6570\u30AB\u30A6\u30F3\u30C8( $\\mathrm{O}(\\frac{N^{\\frac{3}{4}}}{\\log N})$\u30FB\
-    \u9AD8\u901F\u5316\u7248)\n * @docs docs/multiplicative-function/prime-counting.md\n\
+    \u9AD8\u901F\u5316\u7248)\n * @docs docs/multiplicative-function/prime-counting-faster.md\n\
     \ */\n#line 5 \"verify/verify-yosupo-math/yosupo-counting-primes-3.test.cpp\"\n\
     \nusing namespace Nyaan; void Nyaan::solve() {\n  inl(N);\n  out(PrimeCounting::prime_counting(N));\n\
     }\n"
@@ -251,7 +251,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-math/yosupo-counting-primes-3.test.cpp
   requiredBy: []
-  timestamp: '2024-05-03 23:21:26+09:00'
+  timestamp: '2026-05-31 17:09:38+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-math/yosupo-counting-primes-3.test.cpp

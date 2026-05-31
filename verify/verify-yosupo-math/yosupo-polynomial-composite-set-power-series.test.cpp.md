@@ -430,7 +430,7 @@ data:
     \ i++) f[i] *= C.fac(i);\n  reverse(begin(f), end(f));\n  fps g(N, mint(1));\n\
     \  for (int i = 1; i < N; i++) g[i] = g[i - 1] * a * C.inv(i);\n  f = (f * g).pre(N);\n\
     \  reverse(begin(f), end(f));\n  for (int i = 0; i < N; i++) f[i] *= C.finv(i);\n\
-    \  return f;\n}\n\n/**\n * @brief \u5E73\u884C\u79FB\u52D5\n * @docs docs/fps/fps-taylor-shift.md\n\
+    \  return f;\n}\n\n/**\n * @brief \u5E73\u884C\u79FB\u52D5\n * @docs docs/fps/taylor-shift.md\n\
     \ */\n#line 2 \"set-function/subset-convolution.hpp\"\n\n#line 5 \"set-function/subset-convolution.hpp\"\
     \nusing namespace std;\n\ntemplate <typename mint, int _s>\nstruct SubsetConvolution\
     \ {\n  using fps = array<mint, _s + 1>;\n  static constexpr int s = _s;\n  vector<int>\
@@ -680,7 +680,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-math/yosupo-polynomial-composite-set-power-series.test.cpp
   requiredBy: []
-  timestamp: '2026-05-21 18:07:01+09:00'
+  timestamp: '2026-05-31 17:09:38+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-math/yosupo-polynomial-composite-set-power-series.test.cpp

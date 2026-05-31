@@ -49,8 +49,8 @@ data:
     \ < cap; ++i)\n      if (flag[i]) ret.emplace_back(keys[i], vals[i]);\n    return\
     \ ret;\n  }\n\n  int size() const { return s; }\n\n  // set default_value\n  void\
     \ set_default(const Val& val) { DefaultValue = val; }\n};\n\n/**\n * @brief Hash\
-    \ Map(\u53EF\u5909\u9577\u7248)\n * @docs docs/data-structure/hash-map.md\n */\n\
-    #line 4 \"data-structure/dynamic-binary-indexed-tree.hpp\"\n\ntemplate <typename\
+    \ Map(\u53EF\u5909\u9577\u7248)\n * @docs docs/data-structure/hash-map-variable-length.md\n\
+    \ */\n#line 4 \"data-structure/dynamic-binary-indexed-tree.hpp\"\n\ntemplate <typename\
     \ S, typename T>\nstruct DynamicFenwickTree {\n  S N;\n  HashMap<S, T> data;\n\
     \  explicit DynamicFenwickTree() = default;\n  explicit DynamicFenwickTree(S size)\
     \ { N = size + 1; }\n\n  void add(S k, T x) {\n    for (++k; k < N; k += k & -k)\
@@ -82,7 +82,7 @@ data:
   path: data-structure/dynamic-binary-indexed-tree.hpp
   requiredBy:
   - data-structure-2d/dynamic-binary-indexed-tree-2d.hpp
-  timestamp: '2021-08-10 23:14:36+09:00'
+  timestamp: '2026-05-31 17:09:38+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-bit2d.test.cpp

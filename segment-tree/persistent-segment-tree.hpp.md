@@ -13,7 +13,7 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/segment-tree/persistent-segtree.md
+    _deprecated_at_docs: docs/segment-tree/persistent-segment-tree.md
     document_title: "\u6C38\u7D9A\u30BB\u30B0\u30E1\u30F3\u30C8\u6728"
     links: []
   bundledCode: "#line 2 \"segment-tree/persistent-segment-tree.hpp\"\n\n\n\ntemplate\
@@ -59,7 +59,7 @@ data:
     \ b) { return query_(a, b, roots[t], 0, N); }\n  T query(ll a, ll b) { return\
     \ query_(a, b, roots.back(), 0, N); }\n\n  Node *new_tree() { return nil; }\n\
     };\n\n/**\n * @brief \u6C38\u7D9A\u30BB\u30B0\u30E1\u30F3\u30C8\u6728\n * @docs\
-    \ docs/segment-tree/persistent-segtree.md\n */\n"
+    \ docs/segment-tree/persistent-segment-tree.md\n */\n"
   code: "#pragma once\n\n\n\ntemplate <typename T, typename F, int NODES = 20000000>\n\
     struct PersistentSegmentTree {\n  using ll = long long;\n  struct Node {\n   \
     \ T data;\n    Node *l, *r;\n    Node() {}\n    Node(const T &_data) : data(_data),\
@@ -102,13 +102,13 @@ data:
     \ b) { return query_(a, b, roots[t], 0, N); }\n  T query(ll a, ll b) { return\
     \ query_(a, b, roots.back(), 0, N); }\n\n  Node *new_tree() { return nil; }\n\
     };\n\n/**\n * @brief \u6C38\u7D9A\u30BB\u30B0\u30E1\u30F3\u30C8\u6728\n * @docs\
-    \ docs/segment-tree/persistent-segtree.md\n */\n"
+    \ docs/segment-tree/persistent-segment-tree.md\n */\n"
   dependsOn: []
   isVerificationFile: false
   path: segment-tree/persistent-segment-tree.hpp
   requiredBy:
   - data-structure-2d/rectangle-sum.hpp
-  timestamp: '2020-12-05 07:59:51+09:00'
+  timestamp: '2026-05-31 17:09:38+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ds/yosupo-rectangle-sum.test.cpp

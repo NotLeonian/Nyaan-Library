@@ -466,7 +466,7 @@ data:
     \ decltype(Node::key)& key) {\n    this->splay(t);\n    t->key = key;\n    this->update(t);\n\
     \  }\n\n  virtual decltype(Node::key) get_key(Ptr t) { return t->key; }\n\n  decltype(Node::key)\
     \ fold(Ptr u, Ptr v) {\n    evert(u);\n    expose(v);\n    return v->sum;\n  }\n\
-    };\n\n/**\n * @brief Link/Cut Tree(base)\n * @docs docs/lct/link-cut-tree.md\n\
+    };\n\n/**\n * @brief Link/Cut Tree(base)\n * @docs docs/lct/link-cut-base.md\n\
     \ */\n#line 7 \"lct/link-cut-tree-lazy.hpp\"\n\ntemplate <typename T, typename\
     \ E, T (*f)(T, T), T (*g)(T, E), E (*h)(E, E),\n          T (*ts)(T)>\nstruct\
     \ LazyLinkCutTree\n    : LinkCutBase<LazyReversibleSplayTree<T, E, f, g, h, ts>>\
@@ -523,7 +523,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-ds/yosupo-range-add-range-sum-linkcuttree.test.cpp
   requiredBy: []
-  timestamp: '2026-05-22 00:23:08+09:00'
+  timestamp: '2026-05-31 17:09:38+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-ds/yosupo-range-add-range-sum-linkcuttree.test.cpp

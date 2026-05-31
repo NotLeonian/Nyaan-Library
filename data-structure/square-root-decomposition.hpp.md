@@ -10,7 +10,7 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/data-structure/sqrt-dec.md
+    _deprecated_at_docs: docs/data-structure/square-root-decomposition.md
     document_title: "\u5E73\u65B9\u5206\u5272"
     links: []
   bundledCode: "#line 2 \"data-structure/square-root-decomposition.hpp\"\n\ntemplate\
@@ -27,7 +27,8 @@ data:
     \ merge(ret, sq[l / B].query_part(l % B, B));\n    for (int i = l / B + 1; i <\
     \ r / B; i++) ret = merge(ret, sq[i].query_all());\n    ret = merge(ret, sq[r\
     \ / B].query_part(0, r % B));\n    return ret;\n  }\n};\n\n/**\n * @brief \u5E73\
-    \u65B9\u5206\u5272\n * @docs docs/data-structure/sqrt-dec.md\n */\n"
+    \u65B9\u5206\u5272\n * @docs docs/data-structure/square-root-decomposition.md\n\
+    \ */\n"
   code: "#pragma once\n\ntemplate <typename MERGE, typename block, int B>\nstruct\
     \ SquareRootDecomposition {\n  int N;\n  vector<block> sq;\n  MERGE merge;\n \
     \ typename block::T UNIT;\n  SquareRootDecomposition(int N_, MERGE merge_, typename\
@@ -41,13 +42,13 @@ data:
     \ B);\n    typename block::T ret = UNIT;\n    ret = merge(ret, sq[l / B].query_part(l\
     \ % B, B));\n    for (int i = l / B + 1; i < r / B; i++) ret = merge(ret, sq[i].query_all());\n\
     \    ret = merge(ret, sq[r / B].query_part(0, r % B));\n    return ret;\n  }\n\
-    };\n\n/**\n * @brief \u5E73\u65B9\u5206\u5272\n * @docs docs/data-structure/sqrt-dec.md\n\
+    };\n\n/**\n * @brief \u5E73\u65B9\u5206\u5272\n * @docs docs/data-structure/square-root-decomposition.md\n\
     \ */\n"
   dependsOn: []
   isVerificationFile: false
   path: data-structure/square-root-decomposition.hpp
   requiredBy: []
-  timestamp: '2020-12-05 07:59:51+09:00'
+  timestamp: '2026-05-31 17:09:38+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ds/yosupo-range-affine-sqdec.test.cpp

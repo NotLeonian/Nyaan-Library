@@ -134,7 +134,7 @@ data:
     \ i++) f[i] *= C.fac(i);\n  reverse(begin(f), end(f));\n  fps g(N, mint(1));\n\
     \  for (int i = 1; i < N; i++) g[i] = g[i - 1] * a * C.inv(i);\n  f = (f * g).pre(N);\n\
     \  reverse(begin(f), end(f));\n  for (int i = 0; i < N; i++) f[i] *= C.finv(i);\n\
-    \  return f;\n}\n\n/**\n * @brief \u5E73\u884C\u79FB\u52D5\n * @docs docs/fps/fps-taylor-shift.md\n\
+    \  return f;\n}\n\n/**\n * @brief \u5E73\u884C\u79FB\u52D5\n * @docs docs/fps/taylor-shift.md\n\
     \ */\n#line 6 \"fps/partial-fraction-decomposition.hpp\"\n\n// \u65B0\u3057\u3044\
     \u65B9\n// \u5165\u529B : f/(x-b_1)(x-b_2)...(x-b_n), f \u306F n-1 \u6B21, b_i\
     \ \u306F distinct\n// \u51FA\u529B : a_1/(x-b_1) + ... + a_n/(x-b_n)\ntemplate\
@@ -217,7 +217,7 @@ data:
   isVerificationFile: false
   path: fps/partial-fraction-decomposition.hpp
   requiredBy: []
-  timestamp: '2023-08-31 20:44:07+09:00'
+  timestamp: '2026-05-31 17:09:38+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yuki/yuki-1510.test.cpp
