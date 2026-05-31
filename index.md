@@ -327,7 +327,8 @@ data:
     pages:
     - icon: ':warning:'
       path: geometry/circle.hpp
-      title: geometry/circle.hpp
+      title: "\u5186\u304A\u3088\u3073 2 \u5186\u306E\u4EA4\u70B9\u306E\u5B58\u5728\
+        \u5224\u5B9A"
     - icon: ':heavy_check_mark:'
       path: geometry/geometry-base.hpp
       title: geometry/geometry-base.hpp

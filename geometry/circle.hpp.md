@@ -10,6 +10,9 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':warning:'
   attributes:
+    _deprecated_at_docs: docs/geometry/circle.md
+    document_title: "\u5186\u304A\u3088\u3073 2 \u5186\u306E\u4EA4\u70B9\u306E\u5B58\
+      \u5728\u5224\u5B9A"
     links: []
   bundledCode: "#line 2 \"geometry/circle.hpp\"\n\n#line 2 \"geometry/geometry-base.hpp\"\
     \n\n#include <algorithm>\n#include <cassert>\n#include <cmath>\n#include <complex>\n\
@@ -59,7 +62,9 @@ data:
     \ / (2 * c1.r * d);\n  if (abs(x) > 1) x = (x > 0 ? 1.0 : -1.0);\n  Real a = acos(x);\n\
     \  Real t = atan2(c2.p.imag() - c1.p.imag(), c2.p.real() - c1.p.real());\n  Point\
     \ p1 = c1.p + Point(cos(t + a) * c1.r, sin(t + a) * c1.r);\n  Point p2 = c1.p\
-    \ + Point(cos(t - a) * c1.r, sin(t - a) * c1.r);\n  return {p1, p2};\n}\n"
+    \ + Point(cos(t - a) * c1.r, sin(t - a) * c1.r);\n  return {p1, p2};\n}\n\n/**\n\
+    \ * @brief \u5186\u304A\u3088\u3073 2 \u5186\u306E\u4EA4\u70B9\u306E\u5B58\u5728\
+    \u5224\u5B9A\n * @docs docs/geometry/circle.md\n */\n"
   code: "#pragma once\n\n#include \"geometry-base.hpp\"\n\nstruct Circle {\n  Point\
     \ p;\n  Real r;\n\n  Circle() = default;\n  Circle(Point _p, Real _r) : p(_p),\
     \ r(_r) {}\n};\n\nusing Circles = vector<Circle>;\n\nint intersect(Circle c1,\
@@ -71,13 +76,15 @@ data:
     \ / (2 * c1.r * d);\n  if (abs(x) > 1) x = (x > 0 ? 1.0 : -1.0);\n  Real a = acos(x);\n\
     \  Real t = atan2(c2.p.imag() - c1.p.imag(), c2.p.real() - c1.p.real());\n  Point\
     \ p1 = c1.p + Point(cos(t + a) * c1.r, sin(t + a) * c1.r);\n  Point p2 = c1.p\
-    \ + Point(cos(t - a) * c1.r, sin(t - a) * c1.r);\n  return {p1, p2};\n}\n"
+    \ + Point(cos(t - a) * c1.r, sin(t - a) * c1.r);\n  return {p1, p2};\n}\n\n/**\n\
+    \ * @brief \u5186\u304A\u3088\u3073 2 \u5186\u306E\u4EA4\u70B9\u306E\u5B58\u5728\
+    \u5224\u5B9A\n * @docs docs/geometry/circle.md\n */\n"
   dependsOn:
   - geometry/geometry-base.hpp
   isVerificationFile: false
   path: geometry/circle.hpp
   requiredBy: []
-  timestamp: '2023-12-29 22:15:29+09:00'
+  timestamp: '2026-05-31 12:17:46+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: geometry/circle.hpp
@@ -85,5 +92,25 @@ layout: document
 redirect_from:
 - /library/geometry/circle.hpp
 - /library/geometry/circle.hpp.html
-title: geometry/circle.hpp
+title: "\u5186\u304A\u3088\u3073 2 \u5186\u306E\u4EA4\u70B9\u306E\u5B58\u5728\u5224\
+  \u5B9A"
 ---
+## 円および 2 円の交点の存在判定
+
+#### 使い方
+
+- `Circle(Point _p, Real _r)`: コンストラクタ。`_p` を中心、`_r` を半径とする円を構築する。
+- `int intersect(Circle c1, Circle c2)`: 円 `c1` と `c2` の交点の存在判定を行う関数。厳密には交点の存在判定ではなく、内接・外接も含めた分類を行う。
+  - `c1` と `c2` の関係によってそれぞれ以下のような値が返る。
+    - 小さい円が大きい円の内部に完全に含まれる場合: 0
+    - 片方の円がもう片方の円に内接している（もしくは同一円である）場合: 1
+    - 2 円が 2 点で交わる場合: 2
+    - 片方の円がもう片方の円に外接している場合: 3
+    - 2 円が外部で離れている場合: 4
+  - `c1` と `c2` が異なる円であれば、返り値は `c1` と `c2` の共通接線の個数と一致する。ただし、`c1` と `c2` が同一円である場合は共通接線は無限個存在するが、返り値は 1 である。
+  - `c1` と `c2` が 1 個以上の交点を持つのは、返り値が 1, 2, 3 のどれかの場合である。1 または 3 であれば交点は 1 点、2 であれば交点は 2 点である（`c1` と `c2` が同一円である場合を除く）。
+- `pair<Point, Point> crosspoint(const Circle& c1, const Circle& c2)`: 円 `c1` と `c2` の交点 2 点を返す関数。
+  - 必ず 2 点の組を返す。ただし、`intersect(c1, c2)` の返り値によっては、同じ点 2 点からなる組や実際には `c1` と `c2` の交点でない点を含む組が返る可能性がある。
+    - `intersect(c1, c2)` の返り値が 2 であれば、`c1` と `c2` の交点 2 点の組を返す。
+    - `c1` と `c2` が同一円ではなく、`intersect(c1, c2)` の返り値が 1 または 3 であれば、`first` と `second` が等しく、両方とも `c1` と `c2` の唯一の交点となる点（接点）である組を返す。
+    - 同心円、同一円や半径 0 の円を与えると 0 除算や `NaN` が発生しうる。そのような `c1` と `c2` を与えることや、返り値を交点として使用することは推奨されない。
