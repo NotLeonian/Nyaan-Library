@@ -32,3 +32,8 @@ pair<Point, Point> crosspoint(const Circle& c1, const Circle& c2) {
   Point p2 = c1.p + Point(cos(t - a) * c1.r, sin(t - a) * c1.r);
   return {p1, p2};
 }
+
+/**
+ * @brief 円および 2 円の交点の存在判定
+ * @docs docs/geometry/circle.md
+ */
