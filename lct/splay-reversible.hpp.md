@@ -113,8 +113,8 @@ data:
   timestamp: '2026-05-22 00:23:08+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-yosupo-ds/yosupo-range-reverse-range-sum.test.cpp
   - verify/verify-yosupo-ds/yosupo-dynamic-tree-vertex-add-path-sum.test.cpp
+  - verify/verify-yosupo-ds/yosupo-range-reverse-range-sum.test.cpp
   - verify/verify-yosupo-ds/yosupo-dynamic-tree-vertex-set-path-composite.test.cpp
 documentation_of: lct/splay-reversible.hpp
 layout: document

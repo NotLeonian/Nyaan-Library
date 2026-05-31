@@ -109,10 +109,10 @@ data:
   timestamp: '2024-05-03 23:21:26+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-unit-test/dynamic-diameter.test.cpp
-  - verify/verify-unit-test/tree-path.test.cpp
   - verify/verify-yosupo-graph/yosupo-point-set-tree-path-composite-sum-fixed-root.test.cpp
   - verify/verify-yuki/yuki-1789.test.cpp
+  - verify/verify-unit-test/tree-path.test.cpp
+  - verify/verify-unit-test/dynamic-diameter.test.cpp
 documentation_of: tree/convert-tree.hpp
 layout: document
 redirect_from:

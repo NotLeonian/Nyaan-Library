@@ -183,8 +183,8 @@ data:
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-fps/yosupo-interpolation.test.cpp
-  - verify/verify-unit-test/stirling-matrix.test.cpp
   - verify/verify-yuki/yuki-1303.test.cpp
+  - verify/verify-unit-test/stirling-matrix.test.cpp
 documentation_of: fps/polynomial-interpolation.hpp
 layout: document
 redirect_from:

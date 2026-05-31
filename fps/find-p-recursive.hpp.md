@@ -385,8 +385,8 @@ data:
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-fps/yosupo-factorial-p-recursive.test.cpp
-  - verify/verify-unit-test/p-recursive.test.cpp
   - verify/verify-yuki/yuki-1533.test.cpp
+  - verify/verify-unit-test/p-recursive.test.cpp
 documentation_of: fps/find-p-recursive.hpp
 layout: document
 redirect_from:

@@ -323,8 +323,8 @@ data:
   timestamp: '2024-09-14 20:40:02+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-unit-test/enumerate-convex.test.cpp
   - verify/verify-yosupo-math/yosupo-two-square-sum.test.cpp
+  - verify/verify-unit-test/enumerate-convex.test.cpp
 documentation_of: math/two-square.hpp
 layout: document
 redirect_from:

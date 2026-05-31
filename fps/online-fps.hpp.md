@@ -459,8 +459,8 @@ data:
   timestamp: '2026-05-21 18:07:01+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-yosupo-fps/yosupo-inv-ofps.test.cpp
   - verify/verify-yosupo-fps/yosupo-exp-ofps.test.cpp
+  - verify/verify-yosupo-fps/yosupo-inv-ofps.test.cpp
 documentation_of: fps/online-fps.hpp
 layout: document
 redirect_from:
