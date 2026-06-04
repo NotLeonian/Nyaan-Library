@@ -13,9 +13,15 @@ data:
     title: "Heavy Light Decomposition(\u91CD\u8EFD\u5206\u89E3)"
   _extendedRequiredBy:
   - icon: ':heavy_check_mark:'
+    path: tree/dynamic-diameter-faster.hpp
+    title: tree/dynamic-diameter-faster.hpp
+  - icon: ':heavy_check_mark:'
     path: tree/dynamic-diameter.hpp
     title: tree/dynamic-diameter.hpp
   _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: verify/verify-unit-test/dynamic-diameter-faster.test.cpp
+    title: verify/verify-unit-test/dynamic-diameter-faster.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/dynamic-diameter.test.cpp
     title: verify/verify-unit-test/dynamic-diameter.test.cpp
@@ -254,12 +260,14 @@ data:
   isVerificationFile: false
   path: tree/static-top-tree-vertex-based.hpp
   requiredBy:
+  - tree/dynamic-diameter-faster.hpp
   - tree/dynamic-diameter.hpp
   timestamp: '2024-05-03 23:21:26+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-graph/yosupo-point-set-tree-path-composite-sum-fixed-root.test.cpp
   - verify/verify-unit-test/dynamic-diameter.test.cpp
+  - verify/verify-unit-test/dynamic-diameter-faster.test.cpp
 documentation_of: tree/static-top-tree-vertex-based.hpp
 layout: document
 redirect_from:

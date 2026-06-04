@@ -85,6 +85,9 @@ data:
     path: verify/verify-unit-test/dijkstra.test.cpp
     title: verify/verify-unit-test/dijkstra.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/verify-unit-test/dynamic-diameter-faster.test.cpp
+    title: verify/verify-unit-test/dynamic-diameter-faster.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/dynamic-diameter.test.cpp
     title: verify/verify-unit-test/dynamic-diameter.test.cpp
   - icon: ':heavy_check_mark:'
@@ -438,6 +441,7 @@ data:
   - verify/verify-unit-test/primitive-root.test.cpp
   - verify/verify-unit-test/factorize.test.cpp
   - verify/verify-unit-test/multiplicative-function.test.cpp
+  - verify/verify-unit-test/dynamic-diameter-faster.test.cpp
   - verify/verify-unit-test/karatsuba.test.cpp
   - verify/verify-unit-test/simulated-annealing.test.cpp
   - verify/verify-unit-test/template.test.cpp

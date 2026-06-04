@@ -13,6 +13,9 @@ data:
     path: verify/verify-aoj-grl/aoj-grl-5-a.test.cpp
     title: verify/verify-aoj-grl/aoj-grl-5-a.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/verify-unit-test/dynamic-diameter-faster.test.cpp
+    title: verify/verify-unit-test/dynamic-diameter-faster.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/dynamic-diameter.test.cpp
     title: verify/verify-unit-test/dynamic-diameter.test.cpp
   - icon: ':heavy_check_mark:'
@@ -140,6 +143,7 @@ data:
   - verify/verify-yosupo-graph/yosupo-shortest-path.test.cpp
   - verify/verify-yosupo-graph/yosupo-shortest-path-dijkstra-abstruct.test.cpp
   - verify/verify-unit-test/dynamic-diameter.test.cpp
+  - verify/verify-unit-test/dynamic-diameter-faster.test.cpp
   - verify/verify-aoj-grl/aoj-grl-5-a.test.cpp
 documentation_of: graph/graph-utility.hpp
 layout: document

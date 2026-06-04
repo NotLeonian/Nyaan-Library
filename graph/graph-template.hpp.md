@@ -79,6 +79,9 @@ data:
     path: tree/dsu-on-tree.hpp
     title: DSU on Tree(Guni)
   - icon: ':heavy_check_mark:'
+    path: tree/dynamic-diameter-faster.hpp
+    title: tree/dynamic-diameter-faster.hpp
+  - icon: ':heavy_check_mark:'
     path: tree/dynamic-diameter.hpp
     title: tree/dynamic-diameter.hpp
   - icon: ':heavy_check_mark:'
@@ -187,6 +190,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/dijkstra.test.cpp
     title: verify/verify-unit-test/dijkstra.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/verify-unit-test/dynamic-diameter-faster.test.cpp
+    title: verify/verify-unit-test/dynamic-diameter-faster.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/dynamic-diameter.test.cpp
     title: verify/verify-unit-test/dynamic-diameter.test.cpp
@@ -394,6 +400,7 @@ data:
   - tree/convert-tree.hpp
   - tree/euler-tour.hpp
   - tree/rerooting.hpp
+  - tree/dynamic-diameter-faster.hpp
   - tree/auxiliary-tree.hpp
   - tree/cartesian-tree.hpp
   - tree/dynamic-diameter.hpp
@@ -448,6 +455,7 @@ data:
   - verify/verify-yuki/yuki-1326.test.cpp
   - verify/verify-unit-test/tree-path.test.cpp
   - verify/verify-unit-test/dynamic-diameter.test.cpp
+  - verify/verify-unit-test/dynamic-diameter-faster.test.cpp
   - verify/verify-unit-test/semiring.test.cpp
   - verify/verify-unit-test/rerooting.test.cpp
   - verify/verify-unit-test/dijkstra.test.cpp

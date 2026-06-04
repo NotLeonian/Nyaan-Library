@@ -1138,6 +1138,9 @@ data:
       path: tree/dsu-on-tree.hpp
       title: DSU on Tree(Guni)
     - icon: ':heavy_check_mark:'
+      path: tree/dynamic-diameter-faster.hpp
+      title: tree/dynamic-diameter-faster.hpp
+    - icon: ':heavy_check_mark:'
       path: tree/dynamic-diameter.hpp
       title: tree/dynamic-diameter.hpp
     - icon: ':heavy_check_mark:'
@@ -1519,6 +1522,9 @@ data:
     - icon: ':heavy_check_mark:'
       path: verify/verify-unit-test/dual-fps.test.cpp
       title: verify/verify-unit-test/dual-fps.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: verify/verify-unit-test/dynamic-diameter-faster.test.cpp
+      title: verify/verify-unit-test/dynamic-diameter-faster.test.cpp
     - icon: ':heavy_check_mark:'
       path: verify/verify-unit-test/dynamic-diameter.test.cpp
       title: verify/verify-unit-test/dynamic-diameter.test.cpp

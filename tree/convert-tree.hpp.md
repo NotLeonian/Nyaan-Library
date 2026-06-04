@@ -6,6 +6,9 @@ data:
     title: "\u30B0\u30E9\u30D5\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8"
   _extendedRequiredBy:
   - icon: ':heavy_check_mark:'
+    path: tree/dynamic-diameter-faster.hpp
+    title: tree/dynamic-diameter-faster.hpp
+  - icon: ':heavy_check_mark:'
     path: tree/dynamic-diameter.hpp
     title: tree/dynamic-diameter.hpp
   - icon: ':warning:'
@@ -15,6 +18,9 @@ data:
     path: tree/static-top-tree-vertex-based.hpp
     title: Static Top Tree
   _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: verify/verify-unit-test/dynamic-diameter-faster.test.cpp
+    title: verify/verify-unit-test/dynamic-diameter-faster.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/dynamic-diameter.test.cpp
     title: verify/verify-unit-test/dynamic-diameter.test.cpp
@@ -105,6 +111,7 @@ data:
   requiredBy:
   - tree/static-top-tree-vertex-based.hpp
   - tree/static-top-tree-edge-based.hpp
+  - tree/dynamic-diameter-faster.hpp
   - tree/dynamic-diameter.hpp
   timestamp: '2024-05-03 23:21:26+09:00'
   verificationStatus: LIBRARY_ALL_AC
@@ -113,6 +120,7 @@ data:
   - verify/verify-yuki/yuki-1789.test.cpp
   - verify/verify-unit-test/tree-path.test.cpp
   - verify/verify-unit-test/dynamic-diameter.test.cpp
+  - verify/verify-unit-test/dynamic-diameter-faster.test.cpp
 documentation_of: tree/convert-tree.hpp
 layout: document
 redirect_from:
