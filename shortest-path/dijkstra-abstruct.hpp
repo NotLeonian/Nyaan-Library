@@ -9,8 +9,6 @@
 #include <vector>
 using namespace std;
 
-#include "../internal/internal-function.hpp"
-
 // start : 始点
 // goal  : 到達した終点 (goal が無い/着かない場合 Index{})
 // dist  : start - goal 間の距離

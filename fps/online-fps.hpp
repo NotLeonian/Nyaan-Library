@@ -9,7 +9,6 @@ using namespace std;
 
 #include "../internal/internal-function.hpp"
 #include "../modint/montgomery-modint.hpp"
-#include "../modulo/binomial.hpp"
 #include "ntt-friendly-fps.hpp"
 
 using mint = LazyMontgomeryModInt<998244353>;
