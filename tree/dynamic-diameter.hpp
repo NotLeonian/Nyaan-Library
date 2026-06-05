@@ -2,7 +2,6 @@
 
 #include <algorithm>
 #include <cassert>
-#include <functional>
 #include <map>
 #include <utility>
 #include <vector>
@@ -135,26 +134,49 @@ struct DynamicDiameter {
   int n;
   Aux_Tree<T> aux;
   HeavyLightDecomposition<vector<vector<int>>> hld;
-  DPonStaticTopTreeVertexBased<
-      vector<vector<int>>, H<T>, L<T>, function<H<T>(int)>,
-      function<H<T>(const H<T>&, const H<T>&)>,
-      function<L<T>(const L<T>&, const L<T>&)>, function<L<T>(const H<T>&)>,
-      function<H<T>(const L<T>&, int)>>
-      dp;
+
+  struct VertexOp {
+    DynamicDiameter* self;
+    H<T> operator()(int i) const {
+      return DynamicDiameterImpl::vertex(self->aux.w[i],
+                                         i < self->n ? i : -1);
+    }
+  };
+  struct CompressOp {
+    H<T> operator()(const H<T>& p, const H<T>& c) const {
+      return DynamicDiameterImpl::compress(p, c);
+    }
+  };
+  struct RakeOp {
+    L<T> operator()(const L<T>& a, const L<T>& b) const {
+      return DynamicDiameterImpl::rake(a, b);
+    }
+  };
+  struct AddEdgeOp {
+    L<T> operator()(const H<T>& a) const {
+      return DynamicDiameterImpl::add_edge(a);
+    }
+  };
+  struct AddVertexOp {
+    DynamicDiameter* self;
+    H<T> operator()(const L<T>& a, int i) const {
+      return DynamicDiameterImpl::add_vertex(a, self->aux.w[i],
+                                             i < self->n ? i : -1);
+    }
+  };
+
+  using DP = DPonStaticTopTreeVertexBased<vector<vector<int>>, H<T>, L<T>,
+                                          VertexOp, CompressOp, RakeOp,
+                                          AddEdgeOp, AddVertexOp>;
+  DP dp;
 
   DynamicDiameter(const WeightedGraph<T>& _g)
       : g(_g),
         n(g.size()),
         aux(g),
         hld(aux.aux),
-        dp(
-            hld, [&](int i) { return vertex(aux.w[i], i < n ? i : -1); },
-            [&](const H<T>& p, const H<T>& c) { return compress(p, c); },
-            [&](const L<T>& a, const L<T>& b) { return rake(a, b); },
-            [&](const H<T>& a) { return add_edge(a); },
-            [&](const L<T>& a, int i) {
-              return add_vertex(a, aux.w[i], i < n ? i : -1);
-            }) {}
+        dp(hld, VertexOp{this}, CompressOp{}, RakeOp{}, AddEdgeOp{},
+           AddVertexOp{this}) {}
 
   pair<T, pair<int, int>> get() {
     auto [d, u, v] = dp.get().dia;

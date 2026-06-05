@@ -1,5 +1,8 @@
 #pragma once
 
+#include <functional>
+#include <type_traits>
+
 #include "../internal/internal-type-traits.hpp"
 
 ENABLE_HAS_VAR(lazy);
@@ -530,15 +533,19 @@ struct RBSTSegmentTreeBase {
 
   // 1 点 値の書き換え
   // func の返り値は void !!!!!!(参照された値を直接更新する)
-  void apply_val(I i, const function<void(T &)> &func) {
+  template <typename F>
+  auto apply_val(I i, F&& func)
+      -> enable_if_t<is_invocable_r_v<void, F&, T&>> {
     auto s = _split_by_key3(root, i);
     if (s[1] == nullptr) s[1] = _my_new(i);
-    func(s[1]->val);
+    std::invoke(func, s[1]->val);
     root = _merge(_merge(s[0], _update(s[1])), s[2]);
   }
   // 1 点 値の書き換え 値が既に存在するときに早い
   // func の返り値は void !!!!!!(参照された値を直接更新する)
-  void apply_val_fast(I i, const function<void(T &)> &func) {
+  template <typename F>
+  auto apply_val_fast(I i, F&& func)
+      -> enable_if_t<is_invocable_r_v<void, F&, T&>> {
     static vector<Ptr> ps;
     ps.clear();
     Ptr t = root;
@@ -552,7 +559,7 @@ struct RBSTSegmentTreeBase {
       apply_val(i, func);
       return;
     }
-    func(t->val);
+    std::invoke(func, t->val);
     for (int j = ps.size() - 1; j >= 0; j--) _update(ps[j]);
   }
 

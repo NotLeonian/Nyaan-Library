@@ -1,6 +1,8 @@
 #pragma once
 
+#include <cassert>
 #include <functional>
+#include <type_traits>
 #include <utility>
 using namespace std;
 
@@ -13,9 +15,10 @@ using namespace std;
 // - f(0) = true の場合は (0/1, 0/1) を返す
 // - true になる分数が存在しない場合は (?, 1/0) を返す
 // - INF = 0 の場合は (0/1, 1/0) を返す
-template <typename I>
-pair<pair<I, I>, pair<I, I>> binary_search_on_stern_brocot_tree(
-    function<bool(pair<I, I>)> f, const I &INF) {
+template <typename I, typename F>
+auto binary_search_on_stern_brocot_tree(F&& f, const I &INF)
+    -> enable_if_t<is_invocable_r_v<bool, F&, pair<I, I>>,
+                   pair<pair<I, I>, pair<I, I>>> {
   // INF >= 0
   assert(0 <= INF);
   SternBrocotTreeNode<I> m;
@@ -23,10 +26,12 @@ pair<pair<I, I>, pair<I, I>> binary_search_on_stern_brocot_tree(
 
   // INF 条件を超える or f(m) = return_value である
   auto over = [&](bool return_value) {
-    return max(m.x, m.y) > INF or f(m.get()) == return_value;
+    return max(m.x, m.y) > INF or
+           std::invoke(f, m.get()) == return_value;
   };
 
-  if (f(make_pair(0, 1))) return {m.lower_bound(), m.lower_bound()};
+  if (std::invoke(f, make_pair(0, 1)))
+    return {m.lower_bound(), m.lower_bound()};
   int go_left = over(true);
   for (; true; go_left ^= 1) {
     if (go_left) {

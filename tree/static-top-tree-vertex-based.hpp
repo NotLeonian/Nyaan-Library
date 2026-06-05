@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cassert>
+#include <functional>
 #include <utility>
 #include <vector>
 using namespace std;
@@ -109,11 +110,11 @@ struct DPonStaticTopTreeVertexBased {
   const StaticTopTreeVertexBased<G> tt;
   vector<Path> path;
   vector<Point> point;
-  const Vertex vertex;
-  const Compress compress;
-  const Rake rake;
-  const Add_edge add_edge;
-  const Add_vertex add_vertex;
+  Vertex vertex;
+  Compress compress;
+  Rake rake;
+  Add_edge add_edge;
+  Add_vertex add_vertex;
 
   DPonStaticTopTreeVertexBased(const HeavyLightDecomposition<G>& hld,
                                const Vertex& _vertex, const Compress& _compress,
@@ -138,15 +139,15 @@ struct DPonStaticTopTreeVertexBased {
  private:
   void _update(int k) {
     if (tt.T[k] == Type::Vertex) {
-      path[k] = vertex(k);
+      path[k] = std::invoke(vertex, k);
     } else if (tt.T[k] == Type::Compress) {
-      path[k] = compress(path[tt.L[k]], path[tt.R[k]]);
+      path[k] = std::invoke(compress, path[tt.L[k]], path[tt.R[k]]);
     } else if (tt.T[k] == Type::Rake) {
-      point[k] = rake(point[tt.L[k]], point[tt.R[k]]);
+      point[k] = std::invoke(rake, point[tt.L[k]], point[tt.R[k]]);
     } else if (tt.T[k] == Type::Add_Edge) {
-      point[k] = add_edge(path[tt.L[k]]);
+      point[k] = std::invoke(add_edge, path[tt.L[k]]);
     } else {
-      path[k] = add_vertex(point[tt.L[k]], k);
+      path[k] = std::invoke(add_vertex, point[tt.L[k]], k);
     }
   }
 

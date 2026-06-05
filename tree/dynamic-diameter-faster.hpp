@@ -2,7 +2,6 @@
 
 #include <algorithm>
 #include <cassert>
-#include <functional>
 #include <utility>
 #include <vector>
 using namespace std;
@@ -197,12 +196,39 @@ struct DynamicDiameter {
   vector<vector<int>> tree;
   RootedEdgeInfo<T> edge;
   HeavyLightDecomposition<vector<vector<int>>> hld;
-  DPonStaticTopTreeVertexBased<
-      vector<vector<int>>, H<T>, L<T>, function<H<T>(int)>,
-      function<H<T>(const H<T>&, const H<T>&)>,
-      function<L<T>(const L<T>&, const L<T>&)>,
-      function<L<T>(const H<T>&)>, function<H<T>(const L<T>&, int)>>
-      dp;
+
+  struct VertexOp {
+    H<T> operator()(int i) const { return DynamicDiameterFasterImpl::vertex<T>(i); }
+  };
+  struct CompressOp {
+    DynamicDiameter* self;
+    H<T> operator()(const H<T>& p, const H<T>& c) const {
+      return DynamicDiameterFasterImpl::compress<T>(
+          p, c, self->edge.get_between_adjacent(p.c, c.p));
+    }
+  };
+  struct RakeOp {
+    L<T> operator()(const L<T>& a, const L<T>& b) const {
+      return DynamicDiameterFasterImpl::rake<T>(a, b);
+    }
+  };
+  struct AddEdgeOp {
+    DynamicDiameter* self;
+    L<T> operator()(const H<T>& a) const {
+      return DynamicDiameterFasterImpl::add_edge<T>(
+          a, self->edge.get_parent_edge(a.p));
+    }
+  };
+  struct AddVertexOp {
+    H<T> operator()(const L<T>& a, int i) const {
+      return DynamicDiameterFasterImpl::add_vertex<T>(a, i);
+    }
+  };
+
+  using DP = DPonStaticTopTreeVertexBased<vector<vector<int>>, H<T>, L<T>,
+                                          VertexOp, CompressOp, RakeOp,
+                                          AddEdgeOp, AddVertexOp>;
+  DP dp;
 
   DynamicDiameter(const WeightedGraph<T>& _g, int root = 0)
       : g(_g),
@@ -210,17 +236,8 @@ struct DynamicDiameter {
         tree(to_unweighted(g)),
         edge(g, root),
         hld(tree, root),
-        dp(
-            hld,
-            [&](int i) { return vertex<T>(i); },
-            [&](const H<T>& p, const H<T>& c) {
-              return compress<T>(p, c, edge.get_between_adjacent(p.c, c.p));
-            },
-            [&](const L<T>& a, const L<T>& b) { return rake<T>(a, b); },
-            [&](const H<T>& a) {
-              return add_edge<T>(a, edge.get_parent_edge(a.p));
-            },
-            [&](const L<T>& a, int i) { return add_vertex<T>(a, i); }) {}
+        dp(hld, VertexOp{}, CompressOp{this}, RakeOp{}, AddEdgeOp{this},
+           AddVertexOp{}) {}
 
   pair<T, pair<int, int>> get() {
     auto [d, u, v] = dp.get().dia;

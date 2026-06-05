@@ -1,3 +1,6 @@
+#include <functional>
+#include <type_traits>
+
 namespace Nyaan {
 using ll = long long;
 using i64 = long long;
@@ -180,20 +183,23 @@ vector<vector<T>> product(const vector<T> &a) {
   return ret;
 }
 
-// F : function(void(T&)), mod を取る操作
+// F : void(T&), mod を取る操作
 // T : 整数型のときはオーバーフローに注意する
-template <typename T>
-T Power(T a, long long n, const T &I, const function<void(T &)> &f) {
+template <typename T, typename F>
+T Power(T a, long long n, const T &I, F &&f) {
+  static_assert(std::is_invocable_r_v<void, F &, T &>,
+                "Power callback must be callable as void(T&)");
   T res = I;
-  for (; n; f(a = a * a), n >>= 1) {
-    if (n & 1) f(res = res * a);
+  for (; n; std::invoke(f, a = a * a), n >>= 1) {
+    if (n & 1) std::invoke(f, res = res * a);
   }
   return res;
 }
 // T : 整数型のときはオーバーフローに注意する
 template <typename T>
 T Power(T a, long long n, const T &I = T{1}) {
-  return Power(a, n, I, function<void(T &)>{[](T &) -> void {}});
+  auto no_op = [](T &) -> void {};
+  return Power(a, n, I, no_op);
 }
 
 template <typename T>

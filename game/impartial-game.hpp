@@ -1,11 +1,16 @@
 #pragma once
 
+#include <algorithm>
+#include <cassert>
+#include <cstdlib>
 #include <functional>
 #include <map>
 #include <type_traits>
 #include <utility>
 #include <vector>
 using namespace std;
+
+#include "../internal/internal-function.hpp"
 
 /**
  * ゲームの遷移が DAG で表せる不偏ゲームの solver
@@ -24,10 +29,10 @@ using namespace std;
  *
  * States は vector<State>
  *
- * F は Board を引数, States を返り値に取る関数。つまり
+ * F は Board を引数, States を返り値に取る callable。つまり
  *
- * - デフォルトの場合   : function<vector<Board>(Board)>
- * - splittable の場合 : function<vector<vector<Board>(Board)>
+ * - デフォルトの場合   : vector<Board>(Board)
+ * - splittable の場合 : vector<vector<Board>>(Board)
  * - Move != void の場合は返り値の value_type が pair(*, move) になる
  *
  * 雑にゲームの勝敗を知りたいときはデフォルトでよい
@@ -41,14 +46,25 @@ struct ImpartialGameSolver {
   using State = conditional_t<is_void_v<Move>, Game, pair<Game, Move>>;
   using States = vector<State>;
   using Nimber = long long;
-  using F = function<States(Board)>;
+  using F = internal::inplace_function<States(Board), 64>;
 
   map<Board, Nimber> mp;
   F f;
 
   ImpartialGameSolver() = default;
   ImpartialGameSolver(const F& _f) : f(_f) {}
+
+  template <typename Func,
+            typename = enable_if_t<is_invocable_r_v<States, Func&, Board>>>
+  ImpartialGameSolver(Func&& _f) : f(std::forward<Func>(_f)) {}
+
   void set_func(const F& _f) { f = _f; }
+
+  template <typename Func>
+  auto set_func(Func&& _f)
+      -> enable_if_t<is_invocable_r_v<States, Func&, Board>, void> {
+    f = std::forward<Func>(_f);
+  }
 
   template <typename T>
   Nimber get(const T& t) {
@@ -88,7 +104,7 @@ struct ImpartialGameSolver {
 
  private:
   Nimber _get(const Board& b) {
-    States gs = f(b);
+    States gs = std::invoke(f, b);
     if (gs.empty()) return {};
     vector<Nimber> ns;
     for (State& st : gs) ns.push_back(get(st));
@@ -104,7 +120,7 @@ struct ImpartialGameSolver {
   pair<bool, Move> change_x(const Board& b, Nimber x) {
     assert(is_void_v<Move> == false);
     Nimber n = get(b);
-    for (auto& st : f(b)) {
+    for (auto& st : std::invoke(f, b)) {
       if (get(st) == (x ^ n)) return {true, st.second};
     }
     return {false, Move{}};

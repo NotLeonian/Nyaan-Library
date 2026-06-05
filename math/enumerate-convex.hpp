@@ -1,6 +1,8 @@
 #pragma once
 
+#include <cassert>
 #include <functional>
+#include <type_traits>
 #include <utility>
 #include <vector>
 using namespace std;
@@ -13,14 +15,18 @@ using namespace std;
 // candicate(x, y, c, d) : (x, y) が凸包外部にあるとする。
 // 凸包内部の点 (x + sc, y + sd) が存在すればそのような s を返す
 // 存在しなければ任意の値 (-1 でもよい) を返す
-template <typename Int>
-vector<pair<Int, Int>> enumerate_convex(
-    Int xl, Int yl, Int xr, const function<bool(Int, Int)>& inside,
-    const function<Int(Int, Int, Int, Int)>& candicate) {
+template <typename Int, typename Inside, typename Candidate>
+auto enumerate_convex(Int xl, Int yl, Int xr, Inside&& inside,
+                      Candidate&& candicate)
+    -> enable_if_t<is_invocable_r_v<bool, Inside&, Int, Int> &&
+                       is_invocable_r_v<Int, Candidate&, Int, Int, Int, Int>,
+                   vector<pair<Int, Int>>> {
   assert(xl <= xr);
 
   // inside かつ x <= xr
-  auto f = [&](Int x, Int y) { return x <= xr && inside(x, y); };
+  auto f = [&](Int x, Int y) {
+    return x <= xr && std::invoke(inside, x, y);
+  };
 
   // (a, b) から (c, d) 方向に進めるだけ進む
   auto go = [&](Int a, Int b, Int c, Int d) -> Int {
@@ -36,18 +42,19 @@ vector<pair<Int, Int>> enumerate_convex(
   // (a, b) が out, (a + c * k, b + d * k) が in とする
   // out の間進めるだけ進む
   auto go2 = [&](Int a, Int b, Int c, Int d, Int k) {
-    assert(!inside(a, b) and inside(a + c * k, b + d * k));
+    assert(!std::invoke(inside, a, b) and
+           std::invoke(inside, a + c * k, b + d * k));
     Int ok = 0, ng = k;
     while (ok + 1 < ng) {
       Int m = (ok + ng) / 2;
-      (inside(a + c * m, b + d * m) ? ng : ok) = m;
+      (std::invoke(inside, a + c * m, b + d * m) ? ng : ok) = m;
     }
     return ok;
   };
 
   vector<pair<Int, Int>> ps;
   Int x = xl, y = yl;
-  assert(inside(x, y) and go(x, y, 0, -1) == 0);
+  assert(std::invoke(inside, x, y) and go(x, y, 0, -1) == 0);
   ps.emplace_back(x, y);
   while (x < xr) {
     Int a, b;
@@ -63,8 +70,10 @@ vector<pair<Int, Int>> enumerate_convex(
           assert(s > 0);
           sb.go_right(s);
         } else {
-          Int s = candicate(x + sb.rx, y + sb.ry, sb.lx, sb.ly);
-          if (s <= 0 || !inside(x + sb.lx * s + sb.rx, y + sb.ly * s + sb.ry)) {
+          Int s = std::invoke(candicate, x + sb.rx, y + sb.ry, sb.lx, sb.ly);
+          if (s <= 0 ||
+              !std::invoke(inside, x + sb.lx * s + sb.rx,
+                           y + sb.ly * s + sb.ry)) {
             a = sb.lx, b = sb.ly;
             break;
           } else {

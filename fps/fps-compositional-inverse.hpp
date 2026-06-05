@@ -2,6 +2,8 @@
 
 #include <cassert>
 #include <functional>
+#include <type_traits>
+#include <utility>
 using namespace std;
 
 #include "../modulo/binomial.hpp"
@@ -28,16 +30,17 @@ FormalPowerSeries<mint> compositional_inverse(FormalPowerSeries<mint> f,
 
 // f(g(x)) = x を満たす g(x) mod x^{deg} を返す
 // calc_f(g, d) は f(g(x)) mod x^d を計算する関数
-template <typename fps>
-fps compositional_inverse(function<fps(fps, int)> calc_f, int deg) {
+template <typename fps, typename F>
+auto compositional_inverse(F&& calc_f, int deg)
+    -> enable_if_t<is_invocable_r_v<fps, F&, fps, int>, fps> {
   if (deg <= 2) {
-    fps g = calc_f(fps{0, 1}, 2);
+    fps g = std::invoke(calc_f, fps{0, 1}, 2);
     assert(g[0] == 0 && g[1] != 0);
     g[1] = g[1].inverse();
     return g.pre(deg);
   }
-  fps g = compositional_inverse(calc_f, (deg + 1) / 2);
-  fps fg = calc_f(g, deg + 1);
+  fps g = compositional_inverse<fps>(calc_f, (deg + 1) / 2);
+  fps fg = std::invoke(calc_f, g, deg + 1);
   fps fdg = (fg.diff() * g.diff().inv(deg)).pre(deg);
   return (g - (fg - fps{0, 1}) * fdg.inv()).pre(deg);
 }
