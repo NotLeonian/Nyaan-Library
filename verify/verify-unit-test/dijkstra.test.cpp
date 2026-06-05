@@ -3,9 +3,9 @@
 #include "../../template/template.hpp"
 //
 #include "../../misc/rng.hpp"
+#include "../../shortest-path/dijkstra.hpp"
 #include "../../shortest-path/dijkstra-fast.hpp"
 #include "../../shortest-path/dijkstra-radix-heap.hpp"
-#include "../../shortest-path/dijkstra.hpp"
 
 using namespace Nyaan;
 template <int N, int M, int C>

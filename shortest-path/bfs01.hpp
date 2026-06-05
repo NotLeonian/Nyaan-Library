@@ -1,5 +1,4 @@
 #pragma once
-
 #include "../graph/graph-template.hpp"
 
 // unreachable -> -1

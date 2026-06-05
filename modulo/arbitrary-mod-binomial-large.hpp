@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../atcoder/math.hpp"
+
 #include "../modint/barrett-reduction.hpp"
 
 #define PRIME_POWER_BINOMIAL_M_MAX ((1LL << 30) - 1)

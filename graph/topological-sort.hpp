@@ -2,6 +2,7 @@
 
 #include "./graph-template.hpp"
 
+
 // if the graph is not DAG, return empty vector
 template <typename T>
 vector<int> TopologicalSort(T &g) {

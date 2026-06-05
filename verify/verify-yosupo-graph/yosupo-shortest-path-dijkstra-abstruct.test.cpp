@@ -2,9 +2,9 @@
 //
 #include "../../template/template.hpp"
 //
-#include "../../graph/graph-utility.hpp"
 //
 #include "../../shortest-path/dijkstra-abstruct.hpp"
+#include "../../graph/graph-utility.hpp"
 using namespace Nyaan;
 
 void q() {

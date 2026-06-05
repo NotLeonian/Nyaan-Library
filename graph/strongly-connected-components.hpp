@@ -2,6 +2,7 @@
 
 #include "./graph-template.hpp"
 
+
 // Strongly Connected Components
 // DAG of SC graph   ... scc.dag (including multiedges)
 // new node of k     ... scc[k]

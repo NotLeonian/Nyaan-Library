@@ -2,7 +2,6 @@
 //
 #include "../../template/template.hpp"
 //
-#include "../../graph/graph-template.hpp"
 //
 #include "../../tree/rerooting.hpp"
 //

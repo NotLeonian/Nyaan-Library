@@ -1,6 +1,5 @@
 #pragma once
 #include "../modulo/binomial.hpp"
-#include "./formal-power-series.hpp"
 
 template <typename fps>
 fps Pi(vector<fps> v) {

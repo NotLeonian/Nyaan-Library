@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../ntt/arbitrary-ntt-mod18446744069414584321.hpp"
-#include "../ntt/arbitrary-ntt.hpp"
 #include "./centroid-decomposition.hpp"
 
 template <typename G>

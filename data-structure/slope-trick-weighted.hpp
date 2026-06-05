@@ -2,7 +2,6 @@
 
 #include <cassert>
 #include <iostream>
-#include <type_traits>
 using namespace std;
 
 #include "../segment-tree/rbst-segment-tree.hpp"

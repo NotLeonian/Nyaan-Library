@@ -1,7 +1,6 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/aplusb"
 //
 #include <cassert>
-#include <cstdint>
 #include <iostream>
 #include <vector>
 using namespace std;

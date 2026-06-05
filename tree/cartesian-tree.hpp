@@ -4,7 +4,6 @@
 #include <vector>
 using namespace std;
 
-#include "../graph/graph-template.hpp"
 
 // return value : pair<graph, root>
 template <typename T>

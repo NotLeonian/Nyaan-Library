@@ -8,7 +8,6 @@ using namespace Nyaan;
 #include "../../modint/montgomery-modint.hpp"
 using mint = LazyMontgomeryModInt<998244353>;
 using vm = vector<mint>;
-#include "../../math/affine-transformation.hpp"
 #include "../../misc/fastio.hpp"
 //
 #include "../../lct/link-cut-tree.hpp"

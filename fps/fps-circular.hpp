@@ -1,6 +1,5 @@
 #pragma once
 #include "../fps/formal-power-series.hpp"
-#include "../modint/montgomery-modint.hpp"
 
 template <typename mint>
 pair<FormalPowerSeries<mint>, FormalPowerSeries<mint>> circular(

@@ -2,7 +2,6 @@
 //
 #include "../../template/template.hpp"
 //
-#include "../../matrix/gauss-elimination.hpp"
 #include "../../matrix/linear-equation.hpp"
 //
 #include "../../misc/fastio.hpp"

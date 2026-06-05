@@ -4,7 +4,6 @@
 //
 #include "../../math/nimber-to-field.hpp"
 #include "../../math/nimber.hpp"
-#include "../../math/sweep-restore.hpp"
 
 using namespace Nyaan;
 

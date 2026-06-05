@@ -3,7 +3,6 @@
 #include "../../template/template.hpp"
 //
 #include "../../misc/rng.hpp"
-#include "../../misc/timer.hpp"
 //
 #include "../../math/bigint-gcd.hpp"
 //

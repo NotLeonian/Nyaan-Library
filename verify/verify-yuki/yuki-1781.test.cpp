@@ -2,7 +2,6 @@
 //
 #include "../../template/template.hpp"
 //
-#include "../../prime/prime-enumerate.hpp"
 
 using namespace Nyaan;
 

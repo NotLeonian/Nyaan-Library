@@ -5,7 +5,6 @@
 #include "../../tree/dynamic-diameter-faster.hpp"
 using namespace Nyaan;
 //
-#include "../../graph/graph-utility.hpp"
 //
 #include "../../shortest-path/dijkstra.hpp"
 //

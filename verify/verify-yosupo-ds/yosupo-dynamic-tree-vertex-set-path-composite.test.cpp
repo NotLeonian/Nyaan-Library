@@ -12,7 +12,6 @@ using vm = vector<mint>;
 #include "../../misc/fastio.hpp"
 //
 #include "../../lct/link-cut-tree.hpp"
-#include "../../lct/splay-reversible.hpp"
 //
 using Af = Affine<mint>;
 using T = pair<Af, Af>;

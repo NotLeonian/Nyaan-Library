@@ -4,7 +4,6 @@
 //
 #include "../../ntt/multivariate-circular-convolution.hpp"
 //
-#include "../../fps/arbitrary-fps.hpp"
 //
 using namespace Nyaan;
 

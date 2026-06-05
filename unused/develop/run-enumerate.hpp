@@ -1,7 +1,6 @@
 #include "../../template/template.hpp"
 //
 #include "../../string/suffix-automaton.hpp"
-#include "../../string/z-algorithm.hpp"
 
 template <char margin = 'a'>
 struct RunEnumerate {

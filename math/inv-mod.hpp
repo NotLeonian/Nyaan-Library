@@ -1,7 +1,6 @@
 #pragma once
 
 #include <cassert>
-#include <type_traits>
 using namespace std;
 
 // gcd(a, m) != 1 のとき 0 除算で RE する

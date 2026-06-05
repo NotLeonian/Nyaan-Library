@@ -3,7 +3,6 @@
 #include "../../template/template.hpp"
 //
 #include "../../data-structure/line-container-2d.hpp"
-#include "../../data-structure/line-container.hpp"
 
 using namespace Nyaan;
 

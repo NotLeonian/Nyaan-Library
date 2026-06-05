@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../modulo/binomial.hpp"
+#include "lagrange-interpolation-point.hpp"
 
 // given  : f(0)...f(k) (deg(f) = k), a, n
 // return : sum_{i=0...n-1} a^i f(i)

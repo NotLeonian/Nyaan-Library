@@ -5,7 +5,6 @@
 #include "../../data-structure/union-find.hpp"
 #include "../../fps/ntt-friendly-fps.hpp"
 #include "../../matrix/matrix-tree.hpp"
-#include "../../matrix/polynomial-matrix-determinant.hpp"
 #include "../../modint/montgomery-modint.hpp"
 #include "../../modulo/binomial.hpp"
 using mint = LazyMontgomeryModInt<998244353>;

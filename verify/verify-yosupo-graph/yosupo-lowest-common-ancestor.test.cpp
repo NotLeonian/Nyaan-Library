@@ -2,7 +2,6 @@
 
 #include "../../template/template.hpp"
 //
-#include "../../graph/graph-utility.hpp"
 #include "../../tree/heavy-light-decomposition.hpp"
 
 using namespace Nyaan;
