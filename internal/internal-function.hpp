@@ -26,8 +26,9 @@ class function_ref<R(Args...)> {
   template <
       class F, class Fn = std::remove_reference_t<F>,
       class = std::enable_if_t<
+          std::is_lvalue_reference_v<F&&> &&
           !std::is_same_v<std::decay_t<F>, function_ref> &&
-          !std::is_pointer_v<std::decay_t<F>> &&
+          !std::is_pointer_v<std::decay_t<F>> && !std::is_function_v<Fn> &&
           std::is_invocable_r_v<R, Fn&, Args...>>>
   function_ref(F&& f) noexcept {
     obj_ = const_cast<void*>(static_cast<const void*>(std::addressof(f)));
