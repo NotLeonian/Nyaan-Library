@@ -1,8 +1,10 @@
 #pragma once
 
+#include <algorithm>
 #include <functional>
 #include <map>
 #include <queue>
+#include <type_traits>
 #include <utility>
 #include <vector>
 using namespace std;
@@ -39,10 +41,11 @@ struct DijkstraResult {
 //
 // goal は lambda 式 or 値 を渡せる, goal が複数ある場合に対応している
 // (始点が複数ある場合は超頂点を使うことにする)
-template <typename Index, typename Cost, bool has_goal = true>
-DijkstraResult<Index, Cost> dijkstra_abstruct(
-    const function<void(Index, Cost, function<void(Index, Cost)>)>& f,
-    const Index& start, const function<bool(Index)>& is_goal) {
+template <typename Index, typename Cost, bool has_goal = true, typename F,
+          typename IsGoal>
+auto dijkstra_abstruct(F&& f, const Index& start, IsGoal&& is_goal)
+    -> enable_if_t<is_invocable_r_v<bool, IsGoal&, Index>,
+                   DijkstraResult<Index, Cost>> {
   using P = pair<Cost, Index>;
 
   map<Index, P> d;
@@ -55,7 +58,7 @@ DijkstraResult<Index, Cost> dijkstra_abstruct(
     Q.pop();
     if (d[t].first != u) continue;
     if constexpr (has_goal) {
-      if (is_goal(t)) return {start, t, u, true, d};
+      if (std::invoke(is_goal, t)) return {start, t, u, true, d};
     }
     auto add = [&](Index nt, Cost nu) {
       if (d.count(nt) == 0 or nu < d[nt].first) {
@@ -63,7 +66,10 @@ DijkstraResult<Index, Cost> dijkstra_abstruct(
         Q.emplace(nu, nt);
       }
     };
-    f(t, u, add);
+    static_assert(is_invocable_r_v<void, F&, Index, Cost, decltype(add)&>,
+                  "dijkstra_abstruct transition must be callable as "
+                  "void(Index, Cost, add_callback)");
+    std::invoke(f, t, u, add);
   }
   return {start, Index{}, Cost{}, false, d};
 }
@@ -75,12 +81,10 @@ DijkstraResult<Index, Cost> dijkstra_abstruct(
 //
 // goal は lambda 式 or 値 を渡せる, goal が複数ある場合に対応している
 // (始点が複数ある場合は超頂点を使うことにする)
-template <typename Index, typename Cost, bool has_goal = true>
-DijkstraResult<Index, Cost> dijkstra_abstruct(
-    const function<void(Index, Cost, function<void(Index, Cost)>)>& f,
-    const Index& start, const Index& goal = Index{}) {
-  const function<bool(Index)> is_goal = [&goal](Index i) -> bool {
-    return i == goal;
-  };
-  return dijkstra_abstruct<Index, Cost, has_goal>(f, start, is_goal);
+template <typename Index, typename Cost, bool has_goal = true, typename F>
+DijkstraResult<Index, Cost> dijkstra_abstruct(F&& f, const Index& start,
+                                              const Index& goal = Index{}) {
+  auto is_goal = [&goal](Index i) -> bool { return i == goal; };
+  return dijkstra_abstruct<Index, Cost, has_goal>(std::forward<F>(f), start,
+                                                  is_goal);
 }

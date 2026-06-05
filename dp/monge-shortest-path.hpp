@@ -1,19 +1,21 @@
 #pragma once
 
 #include <functional>
+#include <type_traits>
 #include <vector>
 using namespace std;
 
 // https://noshi91.hatenablog.com/entry/2023/02/18/005856
 // 辺コストが monge である DAG の 0 - i 最短路
-template <typename T>
-vector<T> monge_shortest_path(int N, const function<T(int, int)>& f) {
+template <typename T, typename F>
+auto monge_shortest_path(int N, F&& f)
+    -> enable_if_t<is_invocable_r_v<T, F&, int, int>, vector<T>> {
   T INF = (T{1} << (sizeof(T) * 8 - 2)) - 1;
   vector<T> dp(N + 1, INF);
   vector<int> x(N + 1, 0);
   auto check = [&](int from, int to) {
     if (from >= to) return;
-    T cost = f(from, to);
+    T cost = std::invoke(f, from, to);
     if (dp[from] + cost < dp[to]) dp[to] = dp[from] + cost, x[to] = from;
   };
   auto dfs = [&](auto rc, int l, int r) -> void {

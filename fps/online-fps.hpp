@@ -2,11 +2,13 @@
 
 #include <cassert>
 #include <functional>
+#include <type_traits>
+#include <utility>
 #include <vector>
 using namespace std;
 
+#include "../internal/internal-function.hpp"
 #include "../modint/montgomery-modint.hpp"
-#include "../modulo/binomial.hpp"
 #include "ntt-friendly-fps.hpp"
 
 using mint = LazyMontgomeryModInt<998244353>;
@@ -14,7 +16,8 @@ using fps = FormalPowerSeries<mint>;
 
 struct ofpsBase {
   using ob = ofpsBase;
-  function<mint(int)> func;
+  using Func = internal::inplace_function<mint(int), 64>;
+  Func func;
   fps f;
   ofpsBase() {
     func = [](int) -> mint { return 0; };
@@ -22,7 +25,10 @@ struct ofpsBase {
   ofpsBase(const fps& _f) : f(_f) {
     func = [this](int i) { return i < (int)f.size() ? f[i] : 0; };
   }
-  ofpsBase(function<mint(int)> _func) : func(_func) {}
+  ofpsBase(const Func& _func) : func(_func) {}
+
+  template <typename F, typename = enable_if_t<is_invocable_r_v<mint, F&, int>>>
+  ofpsBase(F&& _func) : func(std::forward<F>(_func)) {}
 
   ofpsBase(const ob& rhs) = delete;
   ob& operator=(const ob& rhs) = delete;
@@ -30,10 +36,15 @@ struct ofpsBase {
   ob& operator=(ob&& rhs) noexcept = delete;
 
   void set_corner(const fps& _f) { f = _f; }
-  void set_func(function<mint(int)> _func) { func = _func; }
+  void set_func(const Func& _func) { func = _func; }
+
+  template <typename F>
+  auto set_func(F&& _func) -> enable_if_t<is_invocable_r_v<mint, F&, int>> {
+    func = std::forward<F>(_func);
+  }
 
   mint get(int i) {
-    while ((int)f.size() <= i) f.push_back(func(f.size()));
+    while ((int)f.size() <= i) f.push_back(std::invoke(func, f.size()));
     return f[i];
   }
   ob integral() {

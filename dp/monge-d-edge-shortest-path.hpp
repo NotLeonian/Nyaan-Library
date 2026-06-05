@@ -1,5 +1,9 @@
 #pragma once
 
+#include <cstdlib>
+#include <functional>
+#include <type_traits>
+
 #include "golden-section-search.hpp"
 #include "monge-shortest-path.hpp"
 
@@ -7,12 +11,14 @@
 // f : from -> to のコスト (long long)
 // upper : max abs(辺数を 1 増減させたときのコストの変化)
 // (内部で int128 で計算しているので upper は 1e18 でも壊れない)
-long long monge_d_edge_shortest_path(int N, int D, long long upper,
-                                     const function<long long(int, int)>& f) {
+template <typename F>
+auto monge_d_edge_shortest_path(int N, int D, long long upper, F&& f)
+    -> std::enable_if_t<std::is_invocable_r_v<long long, F&, int, int>,
+                        long long> {
   using T = __int128_t;
-  upper = abs(upper);
+  upper = std::abs(upper);
   auto dp = [&](long long x) -> T {
-    auto g = [&](int from, int to) -> T { return f(from, to) + x; };
+    auto g = [&](int from, int to) -> T { return std::invoke(f, from, to) + x; };
     T cost = monge_shortest_path<T>(N, g)[N];
     return cost - T{1} * D * x;
   };

@@ -1,14 +1,26 @@
 #pragma once
 
-// f(vector<mint>& a, bool rev) : 1 次元 DFT (rev は逆変換かどうか)
-template <typename T>
-struct MultidimensionalFourierTransform {
-  vector<int> base;
-  function<void(vector<T>&, bool)> dft1d;
+#include <functional>
+#include <type_traits>
+#include <utility>
+#include <vector>
+using namespace std;
 
-  MultidimensionalFourierTransform(const vector<int>& bs,
-                                   const function<void(vector<T>&, bool)>& f)
-      : base(bs), dft1d(f) {}
+#include "../internal/internal-function.hpp"
+
+// f(vector<mint>& a, bool rev) : 1 次元 DFT (rev は逆変換かどうか)
+template <typename T,
+          typename DFT = internal::inplace_function<void(vector<T>&, bool), 64>>
+struct MultidimensionalFourierTransform {
+  static_assert(is_invocable_r_v<void, DFT&, vector<T>&, bool>,
+                "DFT must be callable as void(vector<T>&, bool)");
+
+  vector<int> base;
+  DFT dft1d;
+
+  template <typename F>
+  MultidimensionalFourierTransform(const vector<int>& bs, F&& f)
+      : base(bs), dft1d(std::forward<F>(f)) {}
 
   bool ascend(vector<int>& v) {
     int i = 0;
@@ -36,7 +48,7 @@ struct MultidimensionalFourierTransform {
     do {
       if (id[dim] != 0) continue;
       for (int j = 0, t = i; j < n; j++, t += shift) f[j] = a[t];
-      dft1d(f, rev);
+      std::invoke(dft1d, f, rev);
       for (int j = 0, t = i; j < n; j++, t += shift) a[t] = f[j];
       id[dim] = 0;
     } while (++i && ascend(id));
