@@ -1,9 +1,8 @@
 #pragma once
 
+
+
 #include "../graph/graph-template.hpp"
-
-
-
 
 // bellman-ford法
 // goalが存在しないとき-> 負閉路が存在するときは空列を返す
