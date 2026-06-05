@@ -1,7 +1,6 @@
 #pragma once
 
 #include "./graph-template.hpp"
-
 #include "./lowlink.hpp"
 
 template <typename G>
