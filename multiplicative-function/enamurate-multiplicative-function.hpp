@@ -1,7 +1,9 @@
 #pragma once
 
+#include <vector>
+using namespace std;
+
 #include "../prime/prime-enumerate.hpp"
-#include "../template/template.hpp"
 
 // f(n, p, c) : n = pow(p, c), f is multiplicative function
 
