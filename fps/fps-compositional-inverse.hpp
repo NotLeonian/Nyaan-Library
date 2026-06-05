@@ -3,10 +3,8 @@
 #include <cassert>
 #include <functional>
 #include <type_traits>
-#include <utility>
 using namespace std;
 
-#include "../modulo/binomial.hpp"
 #include "formal-power-series.hpp"
 #include "pow-enumerate.hpp"
 
