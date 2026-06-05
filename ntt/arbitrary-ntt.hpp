@@ -1,5 +1,10 @@
 #pragma once
 
+#include <algorithm>
+#include <cstdint>
+#include <vector>
+using namespace std;
+
 #include "../modint/montgomery-modint.hpp"
 #include "./ntt.hpp"
 

@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef NYAAN_FPS_BACKEND_DEFINED
+#define NYAAN_FPS_BACKEND_DEFINED
+
 #include "../ntt/ntt.hpp"
 #include "./formal-power-series.hpp"
 
@@ -145,3 +148,5 @@ FormalPowerSeries<mint> FormalPowerSeries<mint>::exp(int deg) const {
  * @brief NTT mod用FPSライブラリ
  * @docs docs/fps/ntt-friendly-fps.md
  */
+
+#endif

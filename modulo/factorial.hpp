@@ -1,5 +1,8 @@
 #pragma once
 
+#include <algorithm>
+#include <iterator>
+
 #include "../fps/formal-power-series.hpp"
 #include "../fps/sample-point-shift.hpp"
 

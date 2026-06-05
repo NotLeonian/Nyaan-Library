@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <iostream>
 
 template <uint32_t mod>
 struct LazyMontgomeryModInt {
@@ -85,11 +86,11 @@ struct LazyMontgomeryModInt {
     return mint{u};
   }
 
-  friend ostream &operator<<(ostream &os, const mint &b) {
+  friend std::ostream &operator<<(std::ostream &os, const mint &b) {
     return os << b.get();
   }
 
-  friend istream &operator>>(istream &is, mint &b) {
+  friend std::istream &operator>>(std::istream &is, mint &b) {
     int64_t t;
     is >> t;
     b = LazyMontgomeryModInt<mod>(t);

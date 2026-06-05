@@ -1,5 +1,12 @@
 #pragma once
 
+#include <algorithm>
+#include <cassert>
+#include <cstdint>
+#include <iterator>
+#include <vector>
+using namespace std;
+
 template <typename mint>
 struct FormalPowerSeries : vector<mint> {
   using vector<mint>::vector;

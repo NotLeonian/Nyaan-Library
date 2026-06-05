@@ -1,6 +1,8 @@
 #pragma once
 
-#include "formal-power-series.hpp"
+#include <cstdint>
+
+#include "arbitrary-fps.hpp"
 
 template <typename mint>
 FormalPowerSeries<mint> mod_pow(int64_t k, const FormalPowerSeries<mint>& base,

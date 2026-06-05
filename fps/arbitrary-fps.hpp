@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef NYAAN_FPS_BACKEND_DEFINED
+#define NYAAN_FPS_BACKEND_DEFINED
+
 #include "../ntt/arbitrary-ntt.hpp"
 #include "./formal-power-series.hpp"
 
@@ -59,3 +62,5 @@ FormalPowerSeries<mint> FormalPowerSeries<mint>::exp(int deg) const {
   }
   return ret.pre(deg);
 }
+
+#endif

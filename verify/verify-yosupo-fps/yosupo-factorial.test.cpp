@@ -2,9 +2,8 @@
 //
 #include "../../template/template.hpp"
 //
-#include "../../modulo/factorial.hpp"
-//
 #include "../../fps/ntt-friendly-fps.hpp"
+#include "../../modulo/factorial.hpp"
 #include "../../modint/montgomery-modint.hpp"
 #include "../../modulo/binomial.hpp"
 // #include "fps/arbitrary-fps.hpp"
