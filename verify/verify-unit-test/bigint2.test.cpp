@@ -3,8 +3,8 @@
 #include "../../template/template.hpp"
 //
 #include "../../math/bigint.hpp"
-#include "../../misc/all.hpp"
 //
+#include "../../misc/all.hpp"
 
 using namespace Nyaan;
 

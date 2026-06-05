@@ -2,8 +2,8 @@
 
 
 
-#include "../data-structure/radix-heap.hpp"
 #include "../graph/graph-template.hpp"
+#include "../data-structure/radix-heap.hpp"
 
 // unreachable -> -1
 template <typename T>

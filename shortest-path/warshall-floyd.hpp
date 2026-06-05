@@ -1,8 +1,8 @@
 #pragma once
 
+
+
 #include "../graph/graph-template.hpp"
-
-
 
 // i : d[i][i] < 0 exists -> negative cycle
 template <typename T>

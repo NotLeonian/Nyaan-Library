@@ -5,9 +5,9 @@
 #include <vector>
 using namespace std;
 
+#include "../misc/rng.hpp"
 #include "../misc/timer.hpp"
 #include "log_table.hpp"
-#include "../misc/rng.hpp"
 
 template <typename state_t, typename score_t>
 struct SA_manager {
