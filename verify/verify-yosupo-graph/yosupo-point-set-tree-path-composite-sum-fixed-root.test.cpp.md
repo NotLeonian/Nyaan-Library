@@ -60,7 +60,7 @@ data:
     #include <set>\n#include <sstream>\n#include <stack>\n#include <streambuf>\n#include\
     \ <string>\n#include <tuple>\n#include <type_traits>\n#include <typeinfo>\n#include\
     \ <unordered_map>\n#include <unordered_set>\n#include <utility>\n#include <vector>\n\
-    \n// utility\n#line 1 \"template/util.hpp\"\nnamespace Nyaan {\nusing ll = long\
+    \n// utility\n#line 3 \"template/util.hpp\"\n\nnamespace Nyaan {\nusing ll = long\
     \ long;\nusing i64 = long long;\nusing u64 = unsigned long long;\nusing i128 =\
     \ __int128_t;\nusing u128 = __uint128_t;\n\ntemplate <typename T>\nusing V = vector<T>;\n\
     template <typename T>\nusing VV = vector<vector<T>>;\nusing vi = vector<int>;\n\
@@ -115,75 +115,77 @@ data:
     \ product(const vector<T> &a) {\n  vector<vector<T>> ret;\n  vector<T> v;\n  auto\
     \ dfs = [&](auto rc, int i) -> void {\n    if (i == (int)a.size()) {\n      ret.push_back(v);\n\
     \      return;\n    }\n    for (int j = 0; j < a[i]; j++) v.push_back(j), rc(rc,\
-    \ i + 1), v.pop_back();\n  };\n  dfs(dfs, 0);\n  return ret;\n}\n\n// F : function(void(T&)),\
+    \ i + 1), v.pop_back();\n  };\n  dfs(dfs, 0);\n  return ret;\n}\n\n// F : void(T&),\
     \ mod \u3092\u53D6\u308B\u64CD\u4F5C\n// T : \u6574\u6570\u578B\u306E\u3068\u304D\
     \u306F\u30AA\u30FC\u30D0\u30FC\u30D5\u30ED\u30FC\u306B\u6CE8\u610F\u3059\u308B\
-    \ntemplate <typename T>\nT Power(T a, long long n, const T &I, const function<void(T\
-    \ &)> &f) {\n  T res = I;\n  for (; n; f(a = a * a), n >>= 1) {\n    if (n & 1)\
-    \ f(res = res * a);\n  }\n  return res;\n}\n// T : \u6574\u6570\u578B\u306E\u3068\
-    \u304D\u306F\u30AA\u30FC\u30D0\u30FC\u30D5\u30ED\u30FC\u306B\u6CE8\u610F\u3059\
-    \u308B\ntemplate <typename T>\nT Power(T a, long long n, const T &I = T{1}) {\n\
-    \  return Power(a, n, I, function<void(T &)>{[](T &) -> void {}});\n}\n\ntemplate\
-    \ <typename T>\nT Rev(const T &v) {\n  T res = v;\n  reverse(begin(res), end(res));\n\
-    \  return res;\n}\n\ntemplate <typename T>\nvector<T> Transpose(const vector<T>\
-    \ &v) {\n  using U = typename T::value_type;\n  if(v.empty()) return {};\n  int\
-    \ H = v.size(), W = v[0].size();\n  vector res(W, T(H, U{}));\n  for (int i =\
-    \ 0; i < H; i++) {\n    for (int j = 0; j < W; j++) {\n      res[j][i] = v[i][j];\n\
-    \    }\n  }\n  return res;\n}\n\ntemplate <typename T>\nvector<T> Rotate(const\
-    \ vector<T> &v, int clockwise = true) {\n  using U = typename T::value_type;\n\
-    \  int H = v.size(), W = v[0].size();\n  vector res(W, T(H, U{}));\n  for (int\
-    \ i = 0; i < H; i++) {\n    for (int j = 0; j < W; j++) {\n      if (clockwise)\
-    \ {\n        res[W - 1 - j][i] = v[i][j];\n      } else {\n        res[j][H -\
-    \ 1 - i] = v[i][j];\n      }\n    }\n  }\n  return res;\n}\n\n}  // namespace\
-    \ Nyaan\n#line 58 \"template/template.hpp\"\n\n// bit operation\n#line 1 \"template/bitop.hpp\"\
-    \nnamespace Nyaan {\n__attribute__((target(\"popcnt\"))) inline int popcnt(const\
-    \ u64 &a) {\n  return __builtin_popcountll(a);\n}\ninline int lsb(const u64 &a)\
-    \ { return a ? __builtin_ctzll(a) : 64; }\ninline int ctz(const u64 &a) { return\
-    \ a ? __builtin_ctzll(a) : 64; }\ninline int msb(const u64 &a) { return a ? 63\
-    \ - __builtin_clzll(a) : -1; }\ntemplate <typename T>\ninline int gbit(const T\
-    \ &a, int i) {\n  return (a >> i) & 1;\n}\ntemplate <typename T>\ninline void\
-    \ sbit(T &a, int i, bool b) {\n  if (gbit(a, i) != b) a ^= T(1) << i;\n}\nconstexpr\
-    \ long long PW(int n) { return 1LL << n; }\nconstexpr long long MSK(int n) { return\
-    \ (1LL << n) - 1; }\n}  // namespace Nyaan\n#line 61 \"template/template.hpp\"\
-    \n\n// inout\n#line 1 \"template/inout.hpp\"\nnamespace Nyaan {\n\ntemplate <typename\
-    \ T, typename U>\nostream &operator<<(ostream &os, const pair<T, U> &p) {\n  os\
-    \ << p.first << \" \" << p.second;\n  return os;\n}\ntemplate <typename T, typename\
-    \ U>\nistream &operator>>(istream &is, pair<T, U> &p) {\n  is >> p.first >> p.second;\n\
-    \  return is;\n}\n\ntemplate <typename T>\nostream &operator<<(ostream &os, const\
-    \ vector<T> &v) {\n  int s = (int)v.size();\n  for (int i = 0; i < s; i++) os\
-    \ << (i ? \" \" : \"\") << v[i];\n  return os;\n}\ntemplate <typename T>\nistream\
-    \ &operator>>(istream &is, vector<T> &v) {\n  for (auto &x : v) is >> x;\n  return\
-    \ is;\n}\n\nistream &operator>>(istream &is, __int128_t &x) {\n  string S;\n \
-    \ is >> S;\n  x = 0;\n  int flag = 0;\n  for (auto &c : S) {\n    if (c == '-')\
-    \ {\n      flag = true;\n      continue;\n    }\n    x *= 10;\n    x += c - '0';\n\
-    \  }\n  if (flag) x = -x;\n  return is;\n}\n\nistream &operator>>(istream &is,\
-    \ __uint128_t &x) {\n  string S;\n  is >> S;\n  x = 0;\n  for (auto &c : S) {\n\
-    \    x *= 10;\n    x += c - '0';\n  }\n  return is;\n}\n\nostream &operator<<(ostream\
-    \ &os, __int128_t x) {\n  if (x == 0) return os << 0;\n  if (x < 0) os << '-',\
-    \ x = -x;\n  string S;\n  while (x) S.push_back('0' + x % 10), x /= 10;\n  reverse(begin(S),\
-    \ end(S));\n  return os << S;\n}\nostream &operator<<(ostream &os, __uint128_t\
-    \ x) {\n  if (x == 0) return os << 0;\n  string S;\n  while (x) S.push_back('0'\
-    \ + x % 10), x /= 10;\n  reverse(begin(S), end(S));\n  return os << S;\n}\n\n\
-    void in() {}\ntemplate <typename T, class... U>\nvoid in(T &t, U &...u) {\n  cin\
-    \ >> t;\n  in(u...);\n}\n\nvoid out() { cout << \"\\n\"; }\ntemplate <typename\
-    \ T, class... U, char sep = ' '>\nvoid out(const T &t, const U &...u) {\n  cout\
-    \ << t;\n  if (sizeof...(u)) cout << sep;\n  out(u...);\n}\n\nstruct IoSetupNya\
-    \ {\n  IoSetupNya() {\n    cin.tie(nullptr);\n    ios::sync_with_stdio(false);\n\
-    \    cout << fixed << setprecision(15);\n    cerr << fixed << setprecision(7);\n\
-    \  }\n} iosetupnya;\n\n}  // namespace Nyaan\n#line 64 \"template/template.hpp\"\
-    \n\n// debug\n#line 1 \"template/debug.hpp\"\nnamespace DebugImpl {\n\ntemplate\
-    \ <typename U, typename = void>\nstruct is_specialize : false_type {};\ntemplate\
-    \ <typename U>\nstruct is_specialize<\n    U, typename conditional<false, typename\
-    \ U::iterator, void>::type>\n    : true_type {};\ntemplate <typename U>\nstruct\
-    \ is_specialize<\n    U, typename conditional<false, decltype(U::first), void>::type>\n\
-    \    : true_type {};\ntemplate <typename U>\nstruct is_specialize<U, enable_if_t<is_integral<U>::value,\
-    \ void>> : true_type {\n};\n\nvoid dump(const char& t) { cerr << t; }\n\nvoid\
-    \ dump(const string& t) { cerr << t; }\n\nvoid dump(const bool& t) { cerr << (t\
-    \ ? \"true\" : \"false\"); }\n\nvoid dump(__int128_t t) {\n  if (t == 0) cerr\
-    \ << 0;\n  if (t < 0) cerr << '-', t = -t;\n  string S;\n  while (t) S.push_back('0'\
-    \ + t % 10), t /= 10;\n  reverse(begin(S), end(S));\n  cerr << S;\n}\n\nvoid dump(__uint128_t\
-    \ t) {\n  if (t == 0) cerr << 0;\n  string S;\n  while (t) S.push_back('0' + t\
-    \ % 10), t /= 10;\n  reverse(begin(S), end(S));\n  cerr << S;\n}\n\ntemplate <typename\
+    \ntemplate <typename T, typename F>\nT Power(T a, long long n, const T &I, F &&f)\
+    \ {\n  static_assert(std::is_invocable_r_v<void, F &, T &>,\n                \"\
+    Power callback must be callable as void(T&)\");\n  T res = I;\n  for (; n; std::invoke(f,\
+    \ a = a * a), n >>= 1) {\n    if (n & 1) std::invoke(f, res = res * a);\n  }\n\
+    \  return res;\n}\n// T : \u6574\u6570\u578B\u306E\u3068\u304D\u306F\u30AA\u30FC\
+    \u30D0\u30FC\u30D5\u30ED\u30FC\u306B\u6CE8\u610F\u3059\u308B\ntemplate <typename\
+    \ T>\nT Power(T a, long long n, const T &I = T{1}) {\n  auto no_op = [](T &) ->\
+    \ void {};\n  return Power(a, n, I, no_op);\n}\n\ntemplate <typename T>\nT Rev(const\
+    \ T &v) {\n  T res = v;\n  reverse(begin(res), end(res));\n  return res;\n}\n\n\
+    template <typename T>\nvector<T> Transpose(const vector<T> &v) {\n  using U =\
+    \ typename T::value_type;\n  if(v.empty()) return {};\n  int H = v.size(), W =\
+    \ v[0].size();\n  vector res(W, T(H, U{}));\n  for (int i = 0; i < H; i++) {\n\
+    \    for (int j = 0; j < W; j++) {\n      res[j][i] = v[i][j];\n    }\n  }\n \
+    \ return res;\n}\n\ntemplate <typename T>\nvector<T> Rotate(const vector<T> &v,\
+    \ int clockwise = true) {\n  using U = typename T::value_type;\n  int H = v.size(),\
+    \ W = v[0].size();\n  vector res(W, T(H, U{}));\n  for (int i = 0; i < H; i++)\
+    \ {\n    for (int j = 0; j < W; j++) {\n      if (clockwise) {\n        res[W\
+    \ - 1 - j][i] = v[i][j];\n      } else {\n        res[j][H - 1 - i] = v[i][j];\n\
+    \      }\n    }\n  }\n  return res;\n}\n\n}  // namespace Nyaan\n#line 58 \"template/template.hpp\"\
+    \n\n// bit operation\n#line 1 \"template/bitop.hpp\"\nnamespace Nyaan {\n__attribute__((target(\"\
+    popcnt\"))) inline int popcnt(const u64 &a) {\n  return __builtin_popcountll(a);\n\
+    }\ninline int lsb(const u64 &a) { return a ? __builtin_ctzll(a) : 64; }\ninline\
+    \ int ctz(const u64 &a) { return a ? __builtin_ctzll(a) : 64; }\ninline int msb(const\
+    \ u64 &a) { return a ? 63 - __builtin_clzll(a) : -1; }\ntemplate <typename T>\n\
+    inline int gbit(const T &a, int i) {\n  return (a >> i) & 1;\n}\ntemplate <typename\
+    \ T>\ninline void sbit(T &a, int i, bool b) {\n  if (gbit(a, i) != b) a ^= T(1)\
+    \ << i;\n}\nconstexpr long long PW(int n) { return 1LL << n; }\nconstexpr long\
+    \ long MSK(int n) { return (1LL << n) - 1; }\n}  // namespace Nyaan\n#line 61\
+    \ \"template/template.hpp\"\n\n// inout\n#line 1 \"template/inout.hpp\"\nnamespace\
+    \ Nyaan {\n\ntemplate <typename T, typename U>\nostream &operator<<(ostream &os,\
+    \ const pair<T, U> &p) {\n  os << p.first << \" \" << p.second;\n  return os;\n\
+    }\ntemplate <typename T, typename U>\nistream &operator>>(istream &is, pair<T,\
+    \ U> &p) {\n  is >> p.first >> p.second;\n  return is;\n}\n\ntemplate <typename\
+    \ T>\nostream &operator<<(ostream &os, const vector<T> &v) {\n  int s = (int)v.size();\n\
+    \  for (int i = 0; i < s; i++) os << (i ? \" \" : \"\") << v[i];\n  return os;\n\
+    }\ntemplate <typename T>\nistream &operator>>(istream &is, vector<T> &v) {\n \
+    \ for (auto &x : v) is >> x;\n  return is;\n}\n\nistream &operator>>(istream &is,\
+    \ __int128_t &x) {\n  string S;\n  is >> S;\n  x = 0;\n  int flag = 0;\n  for\
+    \ (auto &c : S) {\n    if (c == '-') {\n      flag = true;\n      continue;\n\
+    \    }\n    x *= 10;\n    x += c - '0';\n  }\n  if (flag) x = -x;\n  return is;\n\
+    }\n\nistream &operator>>(istream &is, __uint128_t &x) {\n  string S;\n  is >>\
+    \ S;\n  x = 0;\n  for (auto &c : S) {\n    x *= 10;\n    x += c - '0';\n  }\n\
+    \  return is;\n}\n\nostream &operator<<(ostream &os, __int128_t x) {\n  if (x\
+    \ == 0) return os << 0;\n  if (x < 0) os << '-', x = -x;\n  string S;\n  while\
+    \ (x) S.push_back('0' + x % 10), x /= 10;\n  reverse(begin(S), end(S));\n  return\
+    \ os << S;\n}\nostream &operator<<(ostream &os, __uint128_t x) {\n  if (x == 0)\
+    \ return os << 0;\n  string S;\n  while (x) S.push_back('0' + x % 10), x /= 10;\n\
+    \  reverse(begin(S), end(S));\n  return os << S;\n}\n\nvoid in() {}\ntemplate\
+    \ <typename T, class... U>\nvoid in(T &t, U &...u) {\n  cin >> t;\n  in(u...);\n\
+    }\n\nvoid out() { cout << \"\\n\"; }\ntemplate <typename T, class... U, char sep\
+    \ = ' '>\nvoid out(const T &t, const U &...u) {\n  cout << t;\n  if (sizeof...(u))\
+    \ cout << sep;\n  out(u...);\n}\n\nstruct IoSetupNya {\n  IoSetupNya() {\n   \
+    \ cin.tie(nullptr);\n    ios::sync_with_stdio(false);\n    cout << fixed << setprecision(15);\n\
+    \    cerr << fixed << setprecision(7);\n  }\n} iosetupnya;\n\n}  // namespace\
+    \ Nyaan\n#line 64 \"template/template.hpp\"\n\n// debug\n#line 1 \"template/debug.hpp\"\
+    \nnamespace DebugImpl {\n\ntemplate <typename U, typename = void>\nstruct is_specialize\
+    \ : false_type {};\ntemplate <typename U>\nstruct is_specialize<\n    U, typename\
+    \ conditional<false, typename U::iterator, void>::type>\n    : true_type {};\n\
+    template <typename U>\nstruct is_specialize<\n    U, typename conditional<false,\
+    \ decltype(U::first), void>::type>\n    : true_type {};\ntemplate <typename U>\n\
+    struct is_specialize<U, enable_if_t<is_integral<U>::value, void>> : true_type\
+    \ {\n};\n\nvoid dump(const char& t) { cerr << t; }\n\nvoid dump(const string&\
+    \ t) { cerr << t; }\n\nvoid dump(const bool& t) { cerr << (t ? \"true\" : \"false\"\
+    ); }\n\nvoid dump(__int128_t t) {\n  if (t == 0) cerr << 0;\n  if (t < 0) cerr\
+    \ << '-', t = -t;\n  string S;\n  while (t) S.push_back('0' + t % 10), t /= 10;\n\
+    \  reverse(begin(S), end(S));\n  cerr << S;\n}\n\nvoid dump(__uint128_t t) {\n\
+    \  if (t == 0) cerr << 0;\n  string S;\n  while (t) S.push_back('0' + t % 10),\
+    \ t /= 10;\n  reverse(begin(S), end(S));\n  cerr << S;\n}\n\ntemplate <typename\
     \ U,\n          enable_if_t<!is_specialize<U>::value, nullptr_t> = nullptr>\n\
     void dump(const U& t) {\n  cerr << t;\n}\n\ntemplate <typename T>\nvoid dump(const\
     \ T& t, enable_if_t<is_integral<T>::value>* = nullptr) {\n  string res;\n  if\
@@ -269,7 +271,7 @@ data:
     \    return (is);\n  }\n\n  constexpr u32 get() const {\n    u32 ret = reduce(a);\n\
     \    return ret >= mod ? ret - mod : ret;\n  }\n\n  static constexpr u32 get_mod()\
     \ { return mod; }\n};\n#line 6 \"verify/verify-yosupo-graph/yosupo-point-set-tree-path-composite-sum-fixed-root.test.cpp\"\
-    \n//\n#line 2 \"tree/static-top-tree-vertex-based.hpp\"\n\n#line 6 \"tree/static-top-tree-vertex-based.hpp\"\
+    \n//\n#line 2 \"tree/static-top-tree-vertex-based.hpp\"\n\n#line 7 \"tree/static-top-tree-vertex-based.hpp\"\
     \nusing namespace std;\n\n#line 2 \"tree/convert-tree.hpp\"\n\n#line 2 \"graph/graph-template.hpp\"\
     \n\ntemplate <typename T>\nstruct edge {\n  int src, to;\n  T cost;\n\n  edge(int\
     \ _to, T _cost) : src(-1), to(_to), cost(_cost) {}\n  edge(int _src, int _to,\
@@ -355,7 +357,7 @@ data:
     \ return depth[a] < depth[b] ? a : b;\n  }\n\n  int dist(int a, int b) { return\
     \ depth[a] + depth[b] - depth[lca(a, b)] * 2; }\n};\n\n/**\n * @brief Heavy Light\
     \ Decomposition(\u91CD\u8EFD\u5206\u89E3)\n * @docs docs/tree/heavy-light-decomposition.md\n\
-    \ */\n#line 10 \"tree/static-top-tree-vertex-based.hpp\"\n\nnamespace StaticTopTreeVertexBasedImpl\
+    \ */\n#line 11 \"tree/static-top-tree-vertex-based.hpp\"\n\nnamespace StaticTopTreeVertexBasedImpl\
     \ {\n\nenum Type { Vertex, Compress, Rake, Add_Edge, Add_Vertex };\n\ntemplate\
     \ <typename G>\nstruct StaticTopTreeVertexBased {\n  const HeavyLightDecomposition<G>&\
     \ hld;\n  vector<vector<int>> g;\n  int root;     // \u5143\u306E\u6728\u306E\
@@ -393,34 +395,34 @@ data:
     \ G, typename Path, typename Point, typename Vertex,\n          typename Compress,\
     \ typename Rake, typename Add_edge,\n          typename Add_vertex>\nstruct DPonStaticTopTreeVertexBased\
     \ {\n  const StaticTopTreeVertexBased<G> tt;\n  vector<Path> path;\n  vector<Point>\
-    \ point;\n  const Vertex vertex;\n  const Compress compress;\n  const Rake rake;\n\
-    \  const Add_edge add_edge;\n  const Add_vertex add_vertex;\n\n  DPonStaticTopTreeVertexBased(const\
-    \ HeavyLightDecomposition<G>& hld,\n                               const Vertex&\
-    \ _vertex, const Compress& _compress,\n                               const Rake&\
-    \ _rake, const Add_edge& _add_edge,\n                               const Add_vertex&\
-    \ _add_vertex)\n      : tt(hld),\n        vertex(_vertex),\n        compress(_compress),\n\
-    \        rake(_rake),\n        add_edge(_add_edge),\n        add_vertex(_add_vertex)\
+    \ point;\n  Vertex vertex;\n  Compress compress;\n  Rake rake;\n  Add_edge add_edge;\n\
+    \  Add_vertex add_vertex;\n\n  DPonStaticTopTreeVertexBased(const HeavyLightDecomposition<G>&\
+    \ hld,\n                               const Vertex& _vertex, const Compress&\
+    \ _compress,\n                               const Rake& _rake, const Add_edge&\
+    \ _add_edge,\n                               const Add_vertex& _add_vertex)\n\
+    \      : tt(hld),\n        vertex(_vertex),\n        compress(_compress),\n  \
+    \      rake(_rake),\n        add_edge(_add_edge),\n        add_vertex(_add_vertex)\
     \ {\n    int n = tt.P.size();\n    path.resize(n), point.resize(n);\n    dfs(tt.tt_root);\n\
     \  }\n\n  Path get() { return path[tt.tt_root]; }\n  void update(int k) {\n  \
     \  while (k != -1) _update(k), k = tt.P[k];\n  }\n\n private:\n  void _update(int\
-    \ k) {\n    if (tt.T[k] == Type::Vertex) {\n      path[k] = vertex(k);\n    }\
-    \ else if (tt.T[k] == Type::Compress) {\n      path[k] = compress(path[tt.L[k]],\
-    \ path[tt.R[k]]);\n    } else if (tt.T[k] == Type::Rake) {\n      point[k] = rake(point[tt.L[k]],\
-    \ point[tt.R[k]]);\n    } else if (tt.T[k] == Type::Add_Edge) {\n      point[k]\
-    \ = add_edge(path[tt.L[k]]);\n    } else {\n      path[k] = add_vertex(point[tt.L[k]],\
-    \ k);\n    }\n  }\n\n  void dfs(int k) {\n    if (tt.L[k] != -1) dfs(tt.L[k]);\n\
-    \    if (tt.R[k] != -1) dfs(tt.R[k]);\n    _update(k);\n  }\n};\n\n}  // namespace\
-    \ StaticTopTreeVertexBasedImpl\n\nusing StaticTopTreeVertexBasedImpl::DPonStaticTopTreeVertexBased;\n\
-    using StaticTopTreeVertexBasedImpl::StaticTopTreeVertexBased;\n\n/*\n\n  // template\n\
-    \  using Path = ;\n  using Point = ;\n  auto vertex = [&](int i) -> Path {\n\n\
-    \  };\n  auto compress = [&](const Path& p, const Path& c) -> Path {\n\n  };\n\
-    \  auto rake = [&](const Point& a, const Point& b) -> Point {\n\n  };\n  auto\
-    \ add_edge = [&](const Path& a) -> Point {\n\n  };\n  auto add_vertex = [&](const\
-    \ Point& a, int i) -> Path {\n\n  };\n  HeavyLightDecomposition hld{g};\n  DPonStaticTopTreeVertexBased<vector<vector<int>>,\
-    \ Path, Point,\n  decltype(vertex), decltype(compress), decltype(rake), decltype(add_edge),\n\
-    \                    decltype(add_vertex)>\n      dp(hld, vertex, compress, rake,\
-    \ add_edge, add_vertex);\n*/\n\n/**\n * @brief Static Top Tree\n */\n#line 8 \"\
-    verify/verify-yosupo-graph/yosupo-point-set-tree-path-composite-sum-fixed-root.test.cpp\"\
+    \ k) {\n    if (tt.T[k] == Type::Vertex) {\n      path[k] = std::invoke(vertex,\
+    \ k);\n    } else if (tt.T[k] == Type::Compress) {\n      path[k] = std::invoke(compress,\
+    \ path[tt.L[k]], path[tt.R[k]]);\n    } else if (tt.T[k] == Type::Rake) {\n  \
+    \    point[k] = std::invoke(rake, point[tt.L[k]], point[tt.R[k]]);\n    } else\
+    \ if (tt.T[k] == Type::Add_Edge) {\n      point[k] = std::invoke(add_edge, path[tt.L[k]]);\n\
+    \    } else {\n      path[k] = std::invoke(add_vertex, point[tt.L[k]], k);\n \
+    \   }\n  }\n\n  void dfs(int k) {\n    if (tt.L[k] != -1) dfs(tt.L[k]);\n    if\
+    \ (tt.R[k] != -1) dfs(tt.R[k]);\n    _update(k);\n  }\n};\n\n}  // namespace StaticTopTreeVertexBasedImpl\n\
+    \nusing StaticTopTreeVertexBasedImpl::DPonStaticTopTreeVertexBased;\nusing StaticTopTreeVertexBasedImpl::StaticTopTreeVertexBased;\n\
+    \n/*\n\n  // template\n  using Path = ;\n  using Point = ;\n  auto vertex = [&](int\
+    \ i) -> Path {\n\n  };\n  auto compress = [&](const Path& p, const Path& c) ->\
+    \ Path {\n\n  };\n  auto rake = [&](const Point& a, const Point& b) -> Point {\n\
+    \n  };\n  auto add_edge = [&](const Path& a) -> Point {\n\n  };\n  auto add_vertex\
+    \ = [&](const Point& a, int i) -> Path {\n\n  };\n  HeavyLightDecomposition hld{g};\n\
+    \  DPonStaticTopTreeVertexBased<vector<vector<int>>, Path, Point,\n  decltype(vertex),\
+    \ decltype(compress), decltype(rake), decltype(add_edge),\n                  \
+    \  decltype(add_vertex)>\n      dp(hld, vertex, compress, rake, add_edge, add_vertex);\n\
+    */\n\n/**\n * @brief Static Top Tree\n */\n#line 8 \"verify/verify-yosupo-graph/yosupo-point-set-tree-path-composite-sum-fixed-root.test.cpp\"\
     \n//\nusing mint = LazyMontgomeryModInt<998244353>;\n\nstruct Path {\n  mint a,\
     \ b, s, x;\n};\nstruct Point {\n  mint s, x;\n};\nvector<mint> calc(int N, int\
     \ Q, vector<int> A, vector<int> U, vector<int> V,\n                  vector<int>\
@@ -493,7 +495,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-graph/yosupo-point-set-tree-path-composite-sum-fixed-root.test.cpp
   requiredBy: []
-  timestamp: '2026-05-21 18:07:01+09:00'
+  timestamp: '2026-06-05 19:46:06+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-graph/yosupo-point-set-tree-path-composite-sum-fixed-root.test.cpp

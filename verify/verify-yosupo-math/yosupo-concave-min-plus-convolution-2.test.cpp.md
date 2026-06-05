@@ -56,7 +56,7 @@ data:
     #include <set>\n#include <sstream>\n#include <stack>\n#include <streambuf>\n#include\
     \ <string>\n#include <tuple>\n#include <type_traits>\n#include <typeinfo>\n#include\
     \ <unordered_map>\n#include <unordered_set>\n#include <utility>\n#include <vector>\n\
-    \n// utility\n#line 1 \"template/util.hpp\"\nnamespace Nyaan {\nusing ll = long\
+    \n// utility\n#line 3 \"template/util.hpp\"\n\nnamespace Nyaan {\nusing ll = long\
     \ long;\nusing i64 = long long;\nusing u64 = unsigned long long;\nusing i128 =\
     \ __int128_t;\nusing u128 = __uint128_t;\n\ntemplate <typename T>\nusing V = vector<T>;\n\
     template <typename T>\nusing VV = vector<vector<T>>;\nusing vi = vector<int>;\n\
@@ -111,75 +111,77 @@ data:
     \ product(const vector<T> &a) {\n  vector<vector<T>> ret;\n  vector<T> v;\n  auto\
     \ dfs = [&](auto rc, int i) -> void {\n    if (i == (int)a.size()) {\n      ret.push_back(v);\n\
     \      return;\n    }\n    for (int j = 0; j < a[i]; j++) v.push_back(j), rc(rc,\
-    \ i + 1), v.pop_back();\n  };\n  dfs(dfs, 0);\n  return ret;\n}\n\n// F : function(void(T&)),\
+    \ i + 1), v.pop_back();\n  };\n  dfs(dfs, 0);\n  return ret;\n}\n\n// F : void(T&),\
     \ mod \u3092\u53D6\u308B\u64CD\u4F5C\n// T : \u6574\u6570\u578B\u306E\u3068\u304D\
     \u306F\u30AA\u30FC\u30D0\u30FC\u30D5\u30ED\u30FC\u306B\u6CE8\u610F\u3059\u308B\
-    \ntemplate <typename T>\nT Power(T a, long long n, const T &I, const function<void(T\
-    \ &)> &f) {\n  T res = I;\n  for (; n; f(a = a * a), n >>= 1) {\n    if (n & 1)\
-    \ f(res = res * a);\n  }\n  return res;\n}\n// T : \u6574\u6570\u578B\u306E\u3068\
-    \u304D\u306F\u30AA\u30FC\u30D0\u30FC\u30D5\u30ED\u30FC\u306B\u6CE8\u610F\u3059\
-    \u308B\ntemplate <typename T>\nT Power(T a, long long n, const T &I = T{1}) {\n\
-    \  return Power(a, n, I, function<void(T &)>{[](T &) -> void {}});\n}\n\ntemplate\
-    \ <typename T>\nT Rev(const T &v) {\n  T res = v;\n  reverse(begin(res), end(res));\n\
-    \  return res;\n}\n\ntemplate <typename T>\nvector<T> Transpose(const vector<T>\
-    \ &v) {\n  using U = typename T::value_type;\n  if(v.empty()) return {};\n  int\
-    \ H = v.size(), W = v[0].size();\n  vector res(W, T(H, U{}));\n  for (int i =\
-    \ 0; i < H; i++) {\n    for (int j = 0; j < W; j++) {\n      res[j][i] = v[i][j];\n\
-    \    }\n  }\n  return res;\n}\n\ntemplate <typename T>\nvector<T> Rotate(const\
-    \ vector<T> &v, int clockwise = true) {\n  using U = typename T::value_type;\n\
-    \  int H = v.size(), W = v[0].size();\n  vector res(W, T(H, U{}));\n  for (int\
-    \ i = 0; i < H; i++) {\n    for (int j = 0; j < W; j++) {\n      if (clockwise)\
-    \ {\n        res[W - 1 - j][i] = v[i][j];\n      } else {\n        res[j][H -\
-    \ 1 - i] = v[i][j];\n      }\n    }\n  }\n  return res;\n}\n\n}  // namespace\
-    \ Nyaan\n#line 58 \"template/template.hpp\"\n\n// bit operation\n#line 1 \"template/bitop.hpp\"\
-    \nnamespace Nyaan {\n__attribute__((target(\"popcnt\"))) inline int popcnt(const\
-    \ u64 &a) {\n  return __builtin_popcountll(a);\n}\ninline int lsb(const u64 &a)\
-    \ { return a ? __builtin_ctzll(a) : 64; }\ninline int ctz(const u64 &a) { return\
-    \ a ? __builtin_ctzll(a) : 64; }\ninline int msb(const u64 &a) { return a ? 63\
-    \ - __builtin_clzll(a) : -1; }\ntemplate <typename T>\ninline int gbit(const T\
-    \ &a, int i) {\n  return (a >> i) & 1;\n}\ntemplate <typename T>\ninline void\
-    \ sbit(T &a, int i, bool b) {\n  if (gbit(a, i) != b) a ^= T(1) << i;\n}\nconstexpr\
-    \ long long PW(int n) { return 1LL << n; }\nconstexpr long long MSK(int n) { return\
-    \ (1LL << n) - 1; }\n}  // namespace Nyaan\n#line 61 \"template/template.hpp\"\
-    \n\n// inout\n#line 1 \"template/inout.hpp\"\nnamespace Nyaan {\n\ntemplate <typename\
-    \ T, typename U>\nostream &operator<<(ostream &os, const pair<T, U> &p) {\n  os\
-    \ << p.first << \" \" << p.second;\n  return os;\n}\ntemplate <typename T, typename\
-    \ U>\nistream &operator>>(istream &is, pair<T, U> &p) {\n  is >> p.first >> p.second;\n\
-    \  return is;\n}\n\ntemplate <typename T>\nostream &operator<<(ostream &os, const\
-    \ vector<T> &v) {\n  int s = (int)v.size();\n  for (int i = 0; i < s; i++) os\
-    \ << (i ? \" \" : \"\") << v[i];\n  return os;\n}\ntemplate <typename T>\nistream\
-    \ &operator>>(istream &is, vector<T> &v) {\n  for (auto &x : v) is >> x;\n  return\
-    \ is;\n}\n\nistream &operator>>(istream &is, __int128_t &x) {\n  string S;\n \
-    \ is >> S;\n  x = 0;\n  int flag = 0;\n  for (auto &c : S) {\n    if (c == '-')\
-    \ {\n      flag = true;\n      continue;\n    }\n    x *= 10;\n    x += c - '0';\n\
-    \  }\n  if (flag) x = -x;\n  return is;\n}\n\nistream &operator>>(istream &is,\
-    \ __uint128_t &x) {\n  string S;\n  is >> S;\n  x = 0;\n  for (auto &c : S) {\n\
-    \    x *= 10;\n    x += c - '0';\n  }\n  return is;\n}\n\nostream &operator<<(ostream\
-    \ &os, __int128_t x) {\n  if (x == 0) return os << 0;\n  if (x < 0) os << '-',\
-    \ x = -x;\n  string S;\n  while (x) S.push_back('0' + x % 10), x /= 10;\n  reverse(begin(S),\
-    \ end(S));\n  return os << S;\n}\nostream &operator<<(ostream &os, __uint128_t\
-    \ x) {\n  if (x == 0) return os << 0;\n  string S;\n  while (x) S.push_back('0'\
-    \ + x % 10), x /= 10;\n  reverse(begin(S), end(S));\n  return os << S;\n}\n\n\
-    void in() {}\ntemplate <typename T, class... U>\nvoid in(T &t, U &...u) {\n  cin\
-    \ >> t;\n  in(u...);\n}\n\nvoid out() { cout << \"\\n\"; }\ntemplate <typename\
-    \ T, class... U, char sep = ' '>\nvoid out(const T &t, const U &...u) {\n  cout\
-    \ << t;\n  if (sizeof...(u)) cout << sep;\n  out(u...);\n}\n\nstruct IoSetupNya\
-    \ {\n  IoSetupNya() {\n    cin.tie(nullptr);\n    ios::sync_with_stdio(false);\n\
-    \    cout << fixed << setprecision(15);\n    cerr << fixed << setprecision(7);\n\
-    \  }\n} iosetupnya;\n\n}  // namespace Nyaan\n#line 64 \"template/template.hpp\"\
-    \n\n// debug\n#line 1 \"template/debug.hpp\"\nnamespace DebugImpl {\n\ntemplate\
-    \ <typename U, typename = void>\nstruct is_specialize : false_type {};\ntemplate\
-    \ <typename U>\nstruct is_specialize<\n    U, typename conditional<false, typename\
-    \ U::iterator, void>::type>\n    : true_type {};\ntemplate <typename U>\nstruct\
-    \ is_specialize<\n    U, typename conditional<false, decltype(U::first), void>::type>\n\
-    \    : true_type {};\ntemplate <typename U>\nstruct is_specialize<U, enable_if_t<is_integral<U>::value,\
-    \ void>> : true_type {\n};\n\nvoid dump(const char& t) { cerr << t; }\n\nvoid\
-    \ dump(const string& t) { cerr << t; }\n\nvoid dump(const bool& t) { cerr << (t\
-    \ ? \"true\" : \"false\"); }\n\nvoid dump(__int128_t t) {\n  if (t == 0) cerr\
-    \ << 0;\n  if (t < 0) cerr << '-', t = -t;\n  string S;\n  while (t) S.push_back('0'\
-    \ + t % 10), t /= 10;\n  reverse(begin(S), end(S));\n  cerr << S;\n}\n\nvoid dump(__uint128_t\
-    \ t) {\n  if (t == 0) cerr << 0;\n  string S;\n  while (t) S.push_back('0' + t\
-    \ % 10), t /= 10;\n  reverse(begin(S), end(S));\n  cerr << S;\n}\n\ntemplate <typename\
+    \ntemplate <typename T, typename F>\nT Power(T a, long long n, const T &I, F &&f)\
+    \ {\n  static_assert(std::is_invocable_r_v<void, F &, T &>,\n                \"\
+    Power callback must be callable as void(T&)\");\n  T res = I;\n  for (; n; std::invoke(f,\
+    \ a = a * a), n >>= 1) {\n    if (n & 1) std::invoke(f, res = res * a);\n  }\n\
+    \  return res;\n}\n// T : \u6574\u6570\u578B\u306E\u3068\u304D\u306F\u30AA\u30FC\
+    \u30D0\u30FC\u30D5\u30ED\u30FC\u306B\u6CE8\u610F\u3059\u308B\ntemplate <typename\
+    \ T>\nT Power(T a, long long n, const T &I = T{1}) {\n  auto no_op = [](T &) ->\
+    \ void {};\n  return Power(a, n, I, no_op);\n}\n\ntemplate <typename T>\nT Rev(const\
+    \ T &v) {\n  T res = v;\n  reverse(begin(res), end(res));\n  return res;\n}\n\n\
+    template <typename T>\nvector<T> Transpose(const vector<T> &v) {\n  using U =\
+    \ typename T::value_type;\n  if(v.empty()) return {};\n  int H = v.size(), W =\
+    \ v[0].size();\n  vector res(W, T(H, U{}));\n  for (int i = 0; i < H; i++) {\n\
+    \    for (int j = 0; j < W; j++) {\n      res[j][i] = v[i][j];\n    }\n  }\n \
+    \ return res;\n}\n\ntemplate <typename T>\nvector<T> Rotate(const vector<T> &v,\
+    \ int clockwise = true) {\n  using U = typename T::value_type;\n  int H = v.size(),\
+    \ W = v[0].size();\n  vector res(W, T(H, U{}));\n  for (int i = 0; i < H; i++)\
+    \ {\n    for (int j = 0; j < W; j++) {\n      if (clockwise) {\n        res[W\
+    \ - 1 - j][i] = v[i][j];\n      } else {\n        res[j][H - 1 - i] = v[i][j];\n\
+    \      }\n    }\n  }\n  return res;\n}\n\n}  // namespace Nyaan\n#line 58 \"template/template.hpp\"\
+    \n\n// bit operation\n#line 1 \"template/bitop.hpp\"\nnamespace Nyaan {\n__attribute__((target(\"\
+    popcnt\"))) inline int popcnt(const u64 &a) {\n  return __builtin_popcountll(a);\n\
+    }\ninline int lsb(const u64 &a) { return a ? __builtin_ctzll(a) : 64; }\ninline\
+    \ int ctz(const u64 &a) { return a ? __builtin_ctzll(a) : 64; }\ninline int msb(const\
+    \ u64 &a) { return a ? 63 - __builtin_clzll(a) : -1; }\ntemplate <typename T>\n\
+    inline int gbit(const T &a, int i) {\n  return (a >> i) & 1;\n}\ntemplate <typename\
+    \ T>\ninline void sbit(T &a, int i, bool b) {\n  if (gbit(a, i) != b) a ^= T(1)\
+    \ << i;\n}\nconstexpr long long PW(int n) { return 1LL << n; }\nconstexpr long\
+    \ long MSK(int n) { return (1LL << n) - 1; }\n}  // namespace Nyaan\n#line 61\
+    \ \"template/template.hpp\"\n\n// inout\n#line 1 \"template/inout.hpp\"\nnamespace\
+    \ Nyaan {\n\ntemplate <typename T, typename U>\nostream &operator<<(ostream &os,\
+    \ const pair<T, U> &p) {\n  os << p.first << \" \" << p.second;\n  return os;\n\
+    }\ntemplate <typename T, typename U>\nistream &operator>>(istream &is, pair<T,\
+    \ U> &p) {\n  is >> p.first >> p.second;\n  return is;\n}\n\ntemplate <typename\
+    \ T>\nostream &operator<<(ostream &os, const vector<T> &v) {\n  int s = (int)v.size();\n\
+    \  for (int i = 0; i < s; i++) os << (i ? \" \" : \"\") << v[i];\n  return os;\n\
+    }\ntemplate <typename T>\nistream &operator>>(istream &is, vector<T> &v) {\n \
+    \ for (auto &x : v) is >> x;\n  return is;\n}\n\nistream &operator>>(istream &is,\
+    \ __int128_t &x) {\n  string S;\n  is >> S;\n  x = 0;\n  int flag = 0;\n  for\
+    \ (auto &c : S) {\n    if (c == '-') {\n      flag = true;\n      continue;\n\
+    \    }\n    x *= 10;\n    x += c - '0';\n  }\n  if (flag) x = -x;\n  return is;\n\
+    }\n\nistream &operator>>(istream &is, __uint128_t &x) {\n  string S;\n  is >>\
+    \ S;\n  x = 0;\n  for (auto &c : S) {\n    x *= 10;\n    x += c - '0';\n  }\n\
+    \  return is;\n}\n\nostream &operator<<(ostream &os, __int128_t x) {\n  if (x\
+    \ == 0) return os << 0;\n  if (x < 0) os << '-', x = -x;\n  string S;\n  while\
+    \ (x) S.push_back('0' + x % 10), x /= 10;\n  reverse(begin(S), end(S));\n  return\
+    \ os << S;\n}\nostream &operator<<(ostream &os, __uint128_t x) {\n  if (x == 0)\
+    \ return os << 0;\n  string S;\n  while (x) S.push_back('0' + x % 10), x /= 10;\n\
+    \  reverse(begin(S), end(S));\n  return os << S;\n}\n\nvoid in() {}\ntemplate\
+    \ <typename T, class... U>\nvoid in(T &t, U &...u) {\n  cin >> t;\n  in(u...);\n\
+    }\n\nvoid out() { cout << \"\\n\"; }\ntemplate <typename T, class... U, char sep\
+    \ = ' '>\nvoid out(const T &t, const U &...u) {\n  cout << t;\n  if (sizeof...(u))\
+    \ cout << sep;\n  out(u...);\n}\n\nstruct IoSetupNya {\n  IoSetupNya() {\n   \
+    \ cin.tie(nullptr);\n    ios::sync_with_stdio(false);\n    cout << fixed << setprecision(15);\n\
+    \    cerr << fixed << setprecision(7);\n  }\n} iosetupnya;\n\n}  // namespace\
+    \ Nyaan\n#line 64 \"template/template.hpp\"\n\n// debug\n#line 1 \"template/debug.hpp\"\
+    \nnamespace DebugImpl {\n\ntemplate <typename U, typename = void>\nstruct is_specialize\
+    \ : false_type {};\ntemplate <typename U>\nstruct is_specialize<\n    U, typename\
+    \ conditional<false, typename U::iterator, void>::type>\n    : true_type {};\n\
+    template <typename U>\nstruct is_specialize<\n    U, typename conditional<false,\
+    \ decltype(U::first), void>::type>\n    : true_type {};\ntemplate <typename U>\n\
+    struct is_specialize<U, enable_if_t<is_integral<U>::value, void>> : true_type\
+    \ {\n};\n\nvoid dump(const char& t) { cerr << t; }\n\nvoid dump(const string&\
+    \ t) { cerr << t; }\n\nvoid dump(const bool& t) { cerr << (t ? \"true\" : \"false\"\
+    ); }\n\nvoid dump(__int128_t t) {\n  if (t == 0) cerr << 0;\n  if (t < 0) cerr\
+    \ << '-', t = -t;\n  string S;\n  while (t) S.push_back('0' + t % 10), t /= 10;\n\
+    \  reverse(begin(S), end(S));\n  cerr << S;\n}\n\nvoid dump(__uint128_t t) {\n\
+    \  if (t == 0) cerr << 0;\n  string S;\n  while (t) S.push_back('0' + t % 10),\
+    \ t /= 10;\n  reverse(begin(S), end(S));\n  cerr << S;\n}\n\ntemplate <typename\
     \ U,\n          enable_if_t<!is_specialize<U>::value, nullptr_t> = nullptr>\n\
     void dump(const U& t) {\n  cerr << t;\n}\n\ntemplate <typename T>\nvoid dump(const\
     \ T& t, enable_if_t<is_integral<T>::value>* = nullptr) {\n  string res;\n  if\
@@ -259,40 +261,44 @@ data:
     \nusing my_rand::randint;\nusing my_rand::randset;\nusing my_rand::randshf;\n\
     using my_rand::rnd;\nusing my_rand::rng;\n#line 6 \"verify/verify-yosupo-math/yosupo-concave-min-plus-convolution-2.test.cpp\"\
     \n//\n#line 2 \"dp/concave-min-plus-convolution.hpp\"\n\n#line 4 \"dp/concave-min-plus-convolution.hpp\"\
-    \nusing namespace std;\n\n#line 2 \"dp/monotone-minima.hpp\"\n\n#line 5 \"dp/monotone-minima.hpp\"\
+    \nusing namespace std;\n\n#line 2 \"dp/monotone-minima.hpp\"\n\n#line 6 \"dp/monotone-minima.hpp\"\
     \nusing namespace std;\n\n// NxN \u884C\u5217\u304C\u3042\u308B\n// m_i := argmin_j\
     \ (A_{i,j}) \u304C\u5358\u8ABF\u5897\u52A0\u3067\u3042\u308B\u3068\u304D\u306B\
     \ m_i \u3092\u5217\u6319\u3059\u308B\n// f(i, j, k) :\n// A[i][j] \u3068 A[i][k]\
     \ \u3092\u6BD4\u8F03 (j < k \u304C\u4FDD\u8A3C\u3055\u308C\u3066\u3044\u308B)\n\
     // A[i][j] <= A[i][k] \u306E\u3068\u304D true \u3092\u8FD4\u3059\u95A2\u6570\u3092\
     \u5165\u308C\u308B (\u7B49\u53F7\u306F\u3069\u3061\u3089\u3067\u3082\u3088\u3044\
-    )\nvector<int> monotone_minima(int N, int M,\n                            const\
-    \ function<bool(int, int, int)>& f) {\n  vector<int> res(N);\n  auto dfs = [&](auto\
+    )\ntemplate <typename F>\nauto monotone_minima(int N, int M, F&& f)\n    -> enable_if_t<is_invocable_r_v<bool,\
+    \ F&, int, int, int>, vector<int>> {\n  vector<int> res(N);\n  auto dfs = [&](auto\
     \ rc, int is, int ie, int l, int r) -> void {\n    if (is == ie) return;\n   \
     \ int i = (is + ie) / 2;\n    int m = l;\n    for (int k = l + 1; k < r; k++)\
-    \ {\n      if (!f(i, m, k)) m = k;\n    }\n    res[i] = m;\n    rc(rc, is, i,\
-    \ l, m + 1);\n    rc(rc, i + 1, ie, m, r);\n  };\n  dfs(dfs, 0, N, 0, M);\n  return\
-    \ res;\n}\n\n// NxM \u884C\u5217\u304C\u3042\u308B\n// m_i := argmin_j (A_{i,j})\
-    \ \u304C\u5358\u8ABF\u5897\u52A0\u3067\u3042\u308B\u3068\u304D\u306B m_i \u3092\
-    \u5217\u6319\u3059\u308B\n// A(i, j) : A[i][j] \u3092\u8FD4\u3059\u95A2\u6570\n\
-    template <typename T>\nvector<int> monotone_minima(int N, int M, const function<T(int,\
-    \ int)>& A) {\n  function<bool(int, int, int)> f = [&](int i, int j, int k) ->\
-    \ bool {\n    return A(i, j) <= A(i, k);\n  };\n  return monotone_minima(N, M,\
-    \ f);\n}\n\n/**\n * @brief monotone minima\n */\n#line 7 \"dp/concave-min-plus-convolution.hpp\"\
-    \n\n// a \u306F\u4E0B\u306B\u51F8, b \u306F\u81EA\u7531\ntemplate <typename T>\n\
-    vector<T> concave_min_plus_convolution(const vector<T>& a, const vector<T>& b)\
-    \ {\n  if (a.empty() or b.empty()) return {};\n  int n = a.size(), m = b.size();\n\
-    \  auto argmin = monotone_minima(n + m - 1, m, [&](int i, int j, int k) {\n  \
-    \  if (i < k) return true;\n    if (i - j >= n) return false;\n    return a[i\
-    \ - j] + b[j] <= a[i - k] + b[k];\n  });\n  vector<T> ans(n + m - 1);\n  for (int\
-    \ i = 0; i < n + m - 1; i++) {\n    int j = argmin[i];\n    ans[i] = a[i - j]\
-    \ + b[j];\n  }\n  return ans;\n}\n\n// a \u306F\u4E0A\u306B\u51F8, b \u306F\u81EA\
-    \u7531\ntemplate <typename T>\nvector<T> concave_max_plus_convolution(const vector<T>&\
-    \ a, const vector<T>& b) {\n  if (a.empty() or b.empty()) return {};\n  int n\
-    \ = a.size(), m = b.size();\n  auto argmin = monotone_minima(n + m - 1, m, [&](int\
-    \ i, int j, int k) {\n    if (i < k) return true;\n    if (i - j >= n) return\
-    \ false;\n    return a[i - j] + b[j] >= a[i - k] + b[k];\n  });\n  vector<T> ans(n\
-    \ + m - 1);\n  for (int i = 0; i < n + m - 1; i++) {\n    int j = argmin[i];\n\
+    \ {\n      if (!std::invoke(f, i, m, k)) m = k;\n    }\n    res[i] = m;\n    rc(rc,\
+    \ is, i, l, m + 1);\n    rc(rc, i + 1, ie, m, r);\n  };\n  dfs(dfs, 0, N, 0, M);\n\
+    \  return res;\n}\n\n// NxM \u884C\u5217\u304C\u3042\u308B\n// m_i := argmin_j\
+    \ (A_{i,j}) \u304C\u5358\u8ABF\u5897\u52A0\u3067\u3042\u308B\u3068\u304D\u306B\
+    \ m_i \u3092\u5217\u6319\u3059\u308B\n// A(i, j) : A[i][j] \u3092\u8FD4\u3059\u95A2\
+    \u6570\ntemplate <typename T, typename F>\nauto monotone_minima(int N, int M,\
+    \ F&& A)\n    -> enable_if_t<is_invocable_v<F&, int, int>, vector<int>> {\n  auto\
+    \ f = [&](int i, int j, int k) -> bool {\n    return std::invoke(A, i, j) <= std::invoke(A,\
+    \ i, k);\n  };\n  return monotone_minima(N, M, f);\n}\n\ntemplate <typename F>\n\
+    auto monotone_minima(int N, int M, F&& A)\n    -> enable_if_t<!is_invocable_v<F&,\
+    \ int, int, int> &&\n                       is_invocable_v<F&, int, int>,\n  \
+    \                 vector<int>> {\n  using T = invoke_result_t<F&, int, int>;\n\
+    \  return monotone_minima<T>(N, M, A);\n}\n\n/**\n * @brief monotone minima\n\
+    \ */\n#line 7 \"dp/concave-min-plus-convolution.hpp\"\n\n// a \u306F\u4E0B\u306B\
+    \u51F8, b \u306F\u81EA\u7531\ntemplate <typename T>\nvector<T> concave_min_plus_convolution(const\
+    \ vector<T>& a, const vector<T>& b) {\n  if (a.empty() or b.empty()) return {};\n\
+    \  int n = a.size(), m = b.size();\n  auto argmin = monotone_minima(n + m - 1,\
+    \ m, [&](int i, int j, int k) {\n    if (i < k) return true;\n    if (i - j >=\
+    \ n) return false;\n    return a[i - j] + b[j] <= a[i - k] + b[k];\n  });\n  vector<T>\
+    \ ans(n + m - 1);\n  for (int i = 0; i < n + m - 1; i++) {\n    int j = argmin[i];\n\
+    \    ans[i] = a[i - j] + b[j];\n  }\n  return ans;\n}\n\n// a \u306F\u4E0A\u306B\
+    \u51F8, b \u306F\u81EA\u7531\ntemplate <typename T>\nvector<T> concave_max_plus_convolution(const\
+    \ vector<T>& a, const vector<T>& b) {\n  if (a.empty() or b.empty()) return {};\n\
+    \  int n = a.size(), m = b.size();\n  auto argmin = monotone_minima(n + m - 1,\
+    \ m, [&](int i, int j, int k) {\n    if (i < k) return true;\n    if (i - j >=\
+    \ n) return false;\n    return a[i - j] + b[j] >= a[i - k] + b[k];\n  });\n  vector<T>\
+    \ ans(n + m - 1);\n  for (int i = 0; i < n + m - 1; i++) {\n    int j = argmin[i];\n\
     \    ans[i] = a[i - j] + b[j];\n  }\n  return ans;\n}\n#line 8 \"verify/verify-yosupo-math/yosupo-concave-min-plus-convolution-2.test.cpp\"\
     \nusing namespace Nyaan;\n\nvoid test() {\n  rep(_, 10000) {\n    int N = rng(1,\
     \ 30);\n    int M = rng(1, 30);\n\n    vi a(N), b(M);\n    a[0] = -30;\n    for\
@@ -329,7 +335,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-math/yosupo-concave-min-plus-convolution-2.test.cpp
   requiredBy: []
-  timestamp: '2024-05-03 23:21:26+09:00'
+  timestamp: '2026-06-05 19:46:06+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-math/yosupo-concave-min-plus-convolution-2.test.cpp

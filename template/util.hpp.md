@@ -1505,83 +1505,8 @@ data:
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
-  bundledCode: "#line 1 \"template/util.hpp\"\nnamespace Nyaan {\nusing ll = long\
-    \ long;\nusing i64 = long long;\nusing u64 = unsigned long long;\nusing i128 =\
-    \ __int128_t;\nusing u128 = __uint128_t;\n\ntemplate <typename T>\nusing V = vector<T>;\n\
-    template <typename T>\nusing VV = vector<vector<T>>;\nusing vi = vector<int>;\n\
-    using vl = vector<long long>;\nusing vd = V<double>;\nusing vs = V<string>;\n\
-    using vvi = vector<vector<int>>;\nusing vvl = vector<vector<long long>>;\ntemplate\
-    \ <typename T>\nusing minpq = priority_queue<T, vector<T>, greater<T>>;\n\ntemplate\
-    \ <typename T, typename U>\nstruct P : pair<T, U> {\n  template <typename... Args>\n\
-    \  P(Args... args) : pair<T, U>(args...) {}\n\n  using pair<T, U>::first;\n  using\
-    \ pair<T, U>::second;\n\n  P &operator+=(const P &r) {\n    first += r.first;\n\
-    \    second += r.second;\n    return *this;\n  }\n  P &operator-=(const P &r)\
-    \ {\n    first -= r.first;\n    second -= r.second;\n    return *this;\n  }\n\
-    \  P &operator*=(const P &r) {\n    first *= r.first;\n    second *= r.second;\n\
-    \    return *this;\n  }\n  template <typename S>\n  P &operator*=(const S &r)\
-    \ {\n    first *= r, second *= r;\n    return *this;\n  }\n  P operator+(const\
-    \ P &r) const { return P(*this) += r; }\n  P operator-(const P &r) const { return\
-    \ P(*this) -= r; }\n  P operator*(const P &r) const { return P(*this) *= r; }\n\
-    \  template <typename S>\n  P operator*(const S &r) const {\n    return P(*this)\
-    \ *= r;\n  }\n  P operator-() const { return P{-first, -second}; }\n};\n\nusing\
-    \ pl = P<ll, ll>;\nusing pi = P<int, int>;\nusing vp = V<pl>;\n\nconstexpr int\
-    \ inf = 1001001001;\nconstexpr long long infLL = 4004004004004004004LL;\n\ntemplate\
-    \ <typename T>\nint sz(const T &t) {\n  return t.size();\n}\n\ntemplate <typename\
-    \ T, typename U>\ninline bool amin(T &x, U y) {\n  return (y < x) ? (x = y, true)\
-    \ : false;\n}\ntemplate <typename T, typename U>\ninline bool amax(T &x, U y)\
-    \ {\n  return (x < y) ? (x = y, true) : false;\n}\n\ntemplate <typename T>\ninline\
-    \ T Max(const vector<T> &v) {\n  return *max_element(begin(v), end(v));\n}\ntemplate\
-    \ <typename T>\ninline T Min(const vector<T> &v) {\n  return *min_element(begin(v),\
-    \ end(v));\n}\ntemplate <typename T>\ninline long long Sum(const vector<T> &v)\
-    \ {\n  return accumulate(begin(v), end(v), 0LL);\n}\n\ntemplate <typename T>\n\
-    int lb(const vector<T> &v, const T &a) {\n  return lower_bound(begin(v), end(v),\
-    \ a) - begin(v);\n}\ntemplate <typename T>\nint ub(const vector<T> &v, const T\
-    \ &a) {\n  return upper_bound(begin(v), end(v), a) - begin(v);\n}\n\nconstexpr\
-    \ long long TEN(int n) {\n  long long ret = 1, x = 10;\n  for (; n; x *= x, n\
-    \ >>= 1) ret *= (n & 1 ? x : 1);\n  return ret;\n}\n\ntemplate <typename T, typename\
-    \ U>\npair<T, U> mkp(const T &t, const U &u) {\n  return make_pair(t, u);\n}\n\
-    \ntemplate <typename T>\nvector<T> mkrui(const vector<T> &v, bool rev = false)\
-    \ {\n  vector<T> ret(v.size() + 1);\n  if (rev) {\n    for (int i = int(v.size())\
-    \ - 1; i >= 0; i--) ret[i] = v[i] + ret[i + 1];\n  } else {\n    for (int i =\
-    \ 0; i < int(v.size()); i++) ret[i + 1] = ret[i] + v[i];\n  }\n  return ret;\n\
-    };\n\ntemplate <typename T>\nvector<T> mkuni(const vector<T> &v) {\n  vector<T>\
-    \ ret(v);\n  sort(ret.begin(), ret.end());\n  ret.erase(unique(ret.begin(), ret.end()),\
-    \ ret.end());\n  return ret;\n}\n\ntemplate <typename F>\nvector<int> mkord(int\
-    \ N, F f) {\n  vector<int> ord(N);\n  iota(begin(ord), end(ord), 0);\n  sort(begin(ord),\
-    \ end(ord), f);\n  return ord;\n}\n\ntemplate <typename T>\nvector<int> mkinv(vector<T>\
-    \ &v) {\n  int max_val = *max_element(begin(v), end(v));\n  vector<int> inv(max_val\
-    \ + 1, -1);\n  for (int i = 0; i < (int)v.size(); i++) inv[v[i]] = i;\n  return\
-    \ inv;\n}\n\nvector<int> mkiota(int n) {\n  vector<int> ret(n);\n  iota(begin(ret),\
-    \ end(ret), 0);\n  return ret;\n}\n\ntemplate <typename T>\nT mkrev(const T &v)\
-    \ {\n  T w{v};\n  reverse(begin(w), end(w));\n  return w;\n}\n\ntemplate <typename\
-    \ T>\nbool nxp(T &v) {\n  return next_permutation(begin(v), end(v));\n}\n\n//\
-    \ \u8FD4\u308A\u5024\u306E\u578B\u306F\u5165\u529B\u306E T \u306B\u4F9D\u5B58\n\
-    // i \u8981\u7D20\u76EE : [0, a[i])\ntemplate <typename T>\nvector<vector<T>>\
-    \ product(const vector<T> &a) {\n  vector<vector<T>> ret;\n  vector<T> v;\n  auto\
-    \ dfs = [&](auto rc, int i) -> void {\n    if (i == (int)a.size()) {\n      ret.push_back(v);\n\
-    \      return;\n    }\n    for (int j = 0; j < a[i]; j++) v.push_back(j), rc(rc,\
-    \ i + 1), v.pop_back();\n  };\n  dfs(dfs, 0);\n  return ret;\n}\n\n// F : function(void(T&)),\
-    \ mod \u3092\u53D6\u308B\u64CD\u4F5C\n// T : \u6574\u6570\u578B\u306E\u3068\u304D\
-    \u306F\u30AA\u30FC\u30D0\u30FC\u30D5\u30ED\u30FC\u306B\u6CE8\u610F\u3059\u308B\
-    \ntemplate <typename T>\nT Power(T a, long long n, const T &I, const function<void(T\
-    \ &)> &f) {\n  T res = I;\n  for (; n; f(a = a * a), n >>= 1) {\n    if (n & 1)\
-    \ f(res = res * a);\n  }\n  return res;\n}\n// T : \u6574\u6570\u578B\u306E\u3068\
-    \u304D\u306F\u30AA\u30FC\u30D0\u30FC\u30D5\u30ED\u30FC\u306B\u6CE8\u610F\u3059\
-    \u308B\ntemplate <typename T>\nT Power(T a, long long n, const T &I = T{1}) {\n\
-    \  return Power(a, n, I, function<void(T &)>{[](T &) -> void {}});\n}\n\ntemplate\
-    \ <typename T>\nT Rev(const T &v) {\n  T res = v;\n  reverse(begin(res), end(res));\n\
-    \  return res;\n}\n\ntemplate <typename T>\nvector<T> Transpose(const vector<T>\
-    \ &v) {\n  using U = typename T::value_type;\n  if(v.empty()) return {};\n  int\
-    \ H = v.size(), W = v[0].size();\n  vector res(W, T(H, U{}));\n  for (int i =\
-    \ 0; i < H; i++) {\n    for (int j = 0; j < W; j++) {\n      res[j][i] = v[i][j];\n\
-    \    }\n  }\n  return res;\n}\n\ntemplate <typename T>\nvector<T> Rotate(const\
-    \ vector<T> &v, int clockwise = true) {\n  using U = typename T::value_type;\n\
-    \  int H = v.size(), W = v[0].size();\n  vector res(W, T(H, U{}));\n  for (int\
-    \ i = 0; i < H; i++) {\n    for (int j = 0; j < W; j++) {\n      if (clockwise)\
-    \ {\n        res[W - 1 - j][i] = v[i][j];\n      } else {\n        res[j][H -\
-    \ 1 - i] = v[i][j];\n      }\n    }\n  }\n  return res;\n}\n\n}  // namespace\
-    \ Nyaan\n"
-  code: "namespace Nyaan {\nusing ll = long long;\nusing i64 = long long;\nusing u64\
+  bundledCode: "#line 1 \"template/util.hpp\"\n#include <functional>\n#include <type_traits>\n\
+    \nnamespace Nyaan {\nusing ll = long long;\nusing i64 = long long;\nusing u64\
     \ = unsigned long long;\nusing i128 = __int128_t;\nusing u128 = __uint128_t;\n\
     \ntemplate <typename T>\nusing V = vector<T>;\ntemplate <typename T>\nusing VV\
     \ = vector<vector<T>>;\nusing vi = vector<int>;\nusing vl = vector<long long>;\n\
@@ -1635,27 +1560,105 @@ data:
     \ product(const vector<T> &a) {\n  vector<vector<T>> ret;\n  vector<T> v;\n  auto\
     \ dfs = [&](auto rc, int i) -> void {\n    if (i == (int)a.size()) {\n      ret.push_back(v);\n\
     \      return;\n    }\n    for (int j = 0; j < a[i]; j++) v.push_back(j), rc(rc,\
-    \ i + 1), v.pop_back();\n  };\n  dfs(dfs, 0);\n  return ret;\n}\n\n// F : function(void(T&)),\
+    \ i + 1), v.pop_back();\n  };\n  dfs(dfs, 0);\n  return ret;\n}\n\n// F : void(T&),\
     \ mod \u3092\u53D6\u308B\u64CD\u4F5C\n// T : \u6574\u6570\u578B\u306E\u3068\u304D\
     \u306F\u30AA\u30FC\u30D0\u30FC\u30D5\u30ED\u30FC\u306B\u6CE8\u610F\u3059\u308B\
-    \ntemplate <typename T>\nT Power(T a, long long n, const T &I, const function<void(T\
-    \ &)> &f) {\n  T res = I;\n  for (; n; f(a = a * a), n >>= 1) {\n    if (n & 1)\
-    \ f(res = res * a);\n  }\n  return res;\n}\n// T : \u6574\u6570\u578B\u306E\u3068\
-    \u304D\u306F\u30AA\u30FC\u30D0\u30FC\u30D5\u30ED\u30FC\u306B\u6CE8\u610F\u3059\
-    \u308B\ntemplate <typename T>\nT Power(T a, long long n, const T &I = T{1}) {\n\
-    \  return Power(a, n, I, function<void(T &)>{[](T &) -> void {}});\n}\n\ntemplate\
-    \ <typename T>\nT Rev(const T &v) {\n  T res = v;\n  reverse(begin(res), end(res));\n\
-    \  return res;\n}\n\ntemplate <typename T>\nvector<T> Transpose(const vector<T>\
-    \ &v) {\n  using U = typename T::value_type;\n  if(v.empty()) return {};\n  int\
-    \ H = v.size(), W = v[0].size();\n  vector res(W, T(H, U{}));\n  for (int i =\
-    \ 0; i < H; i++) {\n    for (int j = 0; j < W; j++) {\n      res[j][i] = v[i][j];\n\
-    \    }\n  }\n  return res;\n}\n\ntemplate <typename T>\nvector<T> Rotate(const\
-    \ vector<T> &v, int clockwise = true) {\n  using U = typename T::value_type;\n\
-    \  int H = v.size(), W = v[0].size();\n  vector res(W, T(H, U{}));\n  for (int\
-    \ i = 0; i < H; i++) {\n    for (int j = 0; j < W; j++) {\n      if (clockwise)\
-    \ {\n        res[W - 1 - j][i] = v[i][j];\n      } else {\n        res[j][H -\
-    \ 1 - i] = v[i][j];\n      }\n    }\n  }\n  return res;\n}\n\n}  // namespace\
-    \ Nyaan\n"
+    \ntemplate <typename T, typename F>\nT Power(T a, long long n, const T &I, F &&f)\
+    \ {\n  static_assert(std::is_invocable_r_v<void, F &, T &>,\n                \"\
+    Power callback must be callable as void(T&)\");\n  T res = I;\n  for (; n; std::invoke(f,\
+    \ a = a * a), n >>= 1) {\n    if (n & 1) std::invoke(f, res = res * a);\n  }\n\
+    \  return res;\n}\n// T : \u6574\u6570\u578B\u306E\u3068\u304D\u306F\u30AA\u30FC\
+    \u30D0\u30FC\u30D5\u30ED\u30FC\u306B\u6CE8\u610F\u3059\u308B\ntemplate <typename\
+    \ T>\nT Power(T a, long long n, const T &I = T{1}) {\n  auto no_op = [](T &) ->\
+    \ void {};\n  return Power(a, n, I, no_op);\n}\n\ntemplate <typename T>\nT Rev(const\
+    \ T &v) {\n  T res = v;\n  reverse(begin(res), end(res));\n  return res;\n}\n\n\
+    template <typename T>\nvector<T> Transpose(const vector<T> &v) {\n  using U =\
+    \ typename T::value_type;\n  if(v.empty()) return {};\n  int H = v.size(), W =\
+    \ v[0].size();\n  vector res(W, T(H, U{}));\n  for (int i = 0; i < H; i++) {\n\
+    \    for (int j = 0; j < W; j++) {\n      res[j][i] = v[i][j];\n    }\n  }\n \
+    \ return res;\n}\n\ntemplate <typename T>\nvector<T> Rotate(const vector<T> &v,\
+    \ int clockwise = true) {\n  using U = typename T::value_type;\n  int H = v.size(),\
+    \ W = v[0].size();\n  vector res(W, T(H, U{}));\n  for (int i = 0; i < H; i++)\
+    \ {\n    for (int j = 0; j < W; j++) {\n      if (clockwise) {\n        res[W\
+    \ - 1 - j][i] = v[i][j];\n      } else {\n        res[j][H - 1 - i] = v[i][j];\n\
+    \      }\n    }\n  }\n  return res;\n}\n\n}  // namespace Nyaan\n"
+  code: "#include <functional>\n#include <type_traits>\n\nnamespace Nyaan {\nusing\
+    \ ll = long long;\nusing i64 = long long;\nusing u64 = unsigned long long;\nusing\
+    \ i128 = __int128_t;\nusing u128 = __uint128_t;\n\ntemplate <typename T>\nusing\
+    \ V = vector<T>;\ntemplate <typename T>\nusing VV = vector<vector<T>>;\nusing\
+    \ vi = vector<int>;\nusing vl = vector<long long>;\nusing vd = V<double>;\nusing\
+    \ vs = V<string>;\nusing vvi = vector<vector<int>>;\nusing vvl = vector<vector<long\
+    \ long>>;\ntemplate <typename T>\nusing minpq = priority_queue<T, vector<T>, greater<T>>;\n\
+    \ntemplate <typename T, typename U>\nstruct P : pair<T, U> {\n  template <typename...\
+    \ Args>\n  P(Args... args) : pair<T, U>(args...) {}\n\n  using pair<T, U>::first;\n\
+    \  using pair<T, U>::second;\n\n  P &operator+=(const P &r) {\n    first += r.first;\n\
+    \    second += r.second;\n    return *this;\n  }\n  P &operator-=(const P &r)\
+    \ {\n    first -= r.first;\n    second -= r.second;\n    return *this;\n  }\n\
+    \  P &operator*=(const P &r) {\n    first *= r.first;\n    second *= r.second;\n\
+    \    return *this;\n  }\n  template <typename S>\n  P &operator*=(const S &r)\
+    \ {\n    first *= r, second *= r;\n    return *this;\n  }\n  P operator+(const\
+    \ P &r) const { return P(*this) += r; }\n  P operator-(const P &r) const { return\
+    \ P(*this) -= r; }\n  P operator*(const P &r) const { return P(*this) *= r; }\n\
+    \  template <typename S>\n  P operator*(const S &r) const {\n    return P(*this)\
+    \ *= r;\n  }\n  P operator-() const { return P{-first, -second}; }\n};\n\nusing\
+    \ pl = P<ll, ll>;\nusing pi = P<int, int>;\nusing vp = V<pl>;\n\nconstexpr int\
+    \ inf = 1001001001;\nconstexpr long long infLL = 4004004004004004004LL;\n\ntemplate\
+    \ <typename T>\nint sz(const T &t) {\n  return t.size();\n}\n\ntemplate <typename\
+    \ T, typename U>\ninline bool amin(T &x, U y) {\n  return (y < x) ? (x = y, true)\
+    \ : false;\n}\ntemplate <typename T, typename U>\ninline bool amax(T &x, U y)\
+    \ {\n  return (x < y) ? (x = y, true) : false;\n}\n\ntemplate <typename T>\ninline\
+    \ T Max(const vector<T> &v) {\n  return *max_element(begin(v), end(v));\n}\ntemplate\
+    \ <typename T>\ninline T Min(const vector<T> &v) {\n  return *min_element(begin(v),\
+    \ end(v));\n}\ntemplate <typename T>\ninline long long Sum(const vector<T> &v)\
+    \ {\n  return accumulate(begin(v), end(v), 0LL);\n}\n\ntemplate <typename T>\n\
+    int lb(const vector<T> &v, const T &a) {\n  return lower_bound(begin(v), end(v),\
+    \ a) - begin(v);\n}\ntemplate <typename T>\nint ub(const vector<T> &v, const T\
+    \ &a) {\n  return upper_bound(begin(v), end(v), a) - begin(v);\n}\n\nconstexpr\
+    \ long long TEN(int n) {\n  long long ret = 1, x = 10;\n  for (; n; x *= x, n\
+    \ >>= 1) ret *= (n & 1 ? x : 1);\n  return ret;\n}\n\ntemplate <typename T, typename\
+    \ U>\npair<T, U> mkp(const T &t, const U &u) {\n  return make_pair(t, u);\n}\n\
+    \ntemplate <typename T>\nvector<T> mkrui(const vector<T> &v, bool rev = false)\
+    \ {\n  vector<T> ret(v.size() + 1);\n  if (rev) {\n    for (int i = int(v.size())\
+    \ - 1; i >= 0; i--) ret[i] = v[i] + ret[i + 1];\n  } else {\n    for (int i =\
+    \ 0; i < int(v.size()); i++) ret[i + 1] = ret[i] + v[i];\n  }\n  return ret;\n\
+    };\n\ntemplate <typename T>\nvector<T> mkuni(const vector<T> &v) {\n  vector<T>\
+    \ ret(v);\n  sort(ret.begin(), ret.end());\n  ret.erase(unique(ret.begin(), ret.end()),\
+    \ ret.end());\n  return ret;\n}\n\ntemplate <typename F>\nvector<int> mkord(int\
+    \ N, F f) {\n  vector<int> ord(N);\n  iota(begin(ord), end(ord), 0);\n  sort(begin(ord),\
+    \ end(ord), f);\n  return ord;\n}\n\ntemplate <typename T>\nvector<int> mkinv(vector<T>\
+    \ &v) {\n  int max_val = *max_element(begin(v), end(v));\n  vector<int> inv(max_val\
+    \ + 1, -1);\n  for (int i = 0; i < (int)v.size(); i++) inv[v[i]] = i;\n  return\
+    \ inv;\n}\n\nvector<int> mkiota(int n) {\n  vector<int> ret(n);\n  iota(begin(ret),\
+    \ end(ret), 0);\n  return ret;\n}\n\ntemplate <typename T>\nT mkrev(const T &v)\
+    \ {\n  T w{v};\n  reverse(begin(w), end(w));\n  return w;\n}\n\ntemplate <typename\
+    \ T>\nbool nxp(T &v) {\n  return next_permutation(begin(v), end(v));\n}\n\n//\
+    \ \u8FD4\u308A\u5024\u306E\u578B\u306F\u5165\u529B\u306E T \u306B\u4F9D\u5B58\n\
+    // i \u8981\u7D20\u76EE : [0, a[i])\ntemplate <typename T>\nvector<vector<T>>\
+    \ product(const vector<T> &a) {\n  vector<vector<T>> ret;\n  vector<T> v;\n  auto\
+    \ dfs = [&](auto rc, int i) -> void {\n    if (i == (int)a.size()) {\n      ret.push_back(v);\n\
+    \      return;\n    }\n    for (int j = 0; j < a[i]; j++) v.push_back(j), rc(rc,\
+    \ i + 1), v.pop_back();\n  };\n  dfs(dfs, 0);\n  return ret;\n}\n\n// F : void(T&),\
+    \ mod \u3092\u53D6\u308B\u64CD\u4F5C\n// T : \u6574\u6570\u578B\u306E\u3068\u304D\
+    \u306F\u30AA\u30FC\u30D0\u30FC\u30D5\u30ED\u30FC\u306B\u6CE8\u610F\u3059\u308B\
+    \ntemplate <typename T, typename F>\nT Power(T a, long long n, const T &I, F &&f)\
+    \ {\n  static_assert(std::is_invocable_r_v<void, F &, T &>,\n                \"\
+    Power callback must be callable as void(T&)\");\n  T res = I;\n  for (; n; std::invoke(f,\
+    \ a = a * a), n >>= 1) {\n    if (n & 1) std::invoke(f, res = res * a);\n  }\n\
+    \  return res;\n}\n// T : \u6574\u6570\u578B\u306E\u3068\u304D\u306F\u30AA\u30FC\
+    \u30D0\u30FC\u30D5\u30ED\u30FC\u306B\u6CE8\u610F\u3059\u308B\ntemplate <typename\
+    \ T>\nT Power(T a, long long n, const T &I = T{1}) {\n  auto no_op = [](T &) ->\
+    \ void {};\n  return Power(a, n, I, no_op);\n}\n\ntemplate <typename T>\nT Rev(const\
+    \ T &v) {\n  T res = v;\n  reverse(begin(res), end(res));\n  return res;\n}\n\n\
+    template <typename T>\nvector<T> Transpose(const vector<T> &v) {\n  using U =\
+    \ typename T::value_type;\n  if(v.empty()) return {};\n  int H = v.size(), W =\
+    \ v[0].size();\n  vector res(W, T(H, U{}));\n  for (int i = 0; i < H; i++) {\n\
+    \    for (int j = 0; j < W; j++) {\n      res[j][i] = v[i][j];\n    }\n  }\n \
+    \ return res;\n}\n\ntemplate <typename T>\nvector<T> Rotate(const vector<T> &v,\
+    \ int clockwise = true) {\n  using U = typename T::value_type;\n  int H = v.size(),\
+    \ W = v[0].size();\n  vector res(W, T(H, U{}));\n  for (int i = 0; i < H; i++)\
+    \ {\n    for (int j = 0; j < W; j++) {\n      if (clockwise) {\n        res[W\
+    \ - 1 - j][i] = v[i][j];\n      } else {\n        res[j][H - 1 - i] = v[i][j];\n\
+    \      }\n    }\n  }\n  return res;\n}\n\n}  // namespace Nyaan\n"
   dependsOn: []
   isVerificationFile: false
   path: template/util.hpp
@@ -1667,7 +1670,7 @@ data:
   - multiplicative-function/count-square-free.hpp
   - multiplicative-function/mf-famous-series.hpp
   - multiplicative-function/enamurate-multiplicative-function.hpp
-  timestamp: '2024-05-03 23:21:26+09:00'
+  timestamp: '2026-06-05 19:46:06+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-aoj-dsl/aoj-dsl-5-b-bit2d.test.cpp

@@ -74,7 +74,7 @@ data:
     #include <stack>\n#include <streambuf>\n#include <string>\n#include <tuple>\n\
     #include <type_traits>\n#include <typeinfo>\n#include <unordered_map>\n#include\
     \ <unordered_set>\n#include <utility>\n#include <vector>\n\n// utility\n#line\
-    \ 1 \"template/util.hpp\"\nnamespace Nyaan {\nusing ll = long long;\nusing i64\
+    \ 3 \"template/util.hpp\"\n\nnamespace Nyaan {\nusing ll = long long;\nusing i64\
     \ = long long;\nusing u64 = unsigned long long;\nusing i128 = __int128_t;\nusing\
     \ u128 = __uint128_t;\n\ntemplate <typename T>\nusing V = vector<T>;\ntemplate\
     \ <typename T>\nusing VV = vector<vector<T>>;\nusing vi = vector<int>;\nusing\
@@ -129,75 +129,77 @@ data:
     \ product(const vector<T> &a) {\n  vector<vector<T>> ret;\n  vector<T> v;\n  auto\
     \ dfs = [&](auto rc, int i) -> void {\n    if (i == (int)a.size()) {\n      ret.push_back(v);\n\
     \      return;\n    }\n    for (int j = 0; j < a[i]; j++) v.push_back(j), rc(rc,\
-    \ i + 1), v.pop_back();\n  };\n  dfs(dfs, 0);\n  return ret;\n}\n\n// F : function(void(T&)),\
+    \ i + 1), v.pop_back();\n  };\n  dfs(dfs, 0);\n  return ret;\n}\n\n// F : void(T&),\
     \ mod \u3092\u53D6\u308B\u64CD\u4F5C\n// T : \u6574\u6570\u578B\u306E\u3068\u304D\
     \u306F\u30AA\u30FC\u30D0\u30FC\u30D5\u30ED\u30FC\u306B\u6CE8\u610F\u3059\u308B\
-    \ntemplate <typename T>\nT Power(T a, long long n, const T &I, const function<void(T\
-    \ &)> &f) {\n  T res = I;\n  for (; n; f(a = a * a), n >>= 1) {\n    if (n & 1)\
-    \ f(res = res * a);\n  }\n  return res;\n}\n// T : \u6574\u6570\u578B\u306E\u3068\
-    \u304D\u306F\u30AA\u30FC\u30D0\u30FC\u30D5\u30ED\u30FC\u306B\u6CE8\u610F\u3059\
-    \u308B\ntemplate <typename T>\nT Power(T a, long long n, const T &I = T{1}) {\n\
-    \  return Power(a, n, I, function<void(T &)>{[](T &) -> void {}});\n}\n\ntemplate\
-    \ <typename T>\nT Rev(const T &v) {\n  T res = v;\n  reverse(begin(res), end(res));\n\
-    \  return res;\n}\n\ntemplate <typename T>\nvector<T> Transpose(const vector<T>\
-    \ &v) {\n  using U = typename T::value_type;\n  if(v.empty()) return {};\n  int\
-    \ H = v.size(), W = v[0].size();\n  vector res(W, T(H, U{}));\n  for (int i =\
-    \ 0; i < H; i++) {\n    for (int j = 0; j < W; j++) {\n      res[j][i] = v[i][j];\n\
-    \    }\n  }\n  return res;\n}\n\ntemplate <typename T>\nvector<T> Rotate(const\
-    \ vector<T> &v, int clockwise = true) {\n  using U = typename T::value_type;\n\
-    \  int H = v.size(), W = v[0].size();\n  vector res(W, T(H, U{}));\n  for (int\
-    \ i = 0; i < H; i++) {\n    for (int j = 0; j < W; j++) {\n      if (clockwise)\
-    \ {\n        res[W - 1 - j][i] = v[i][j];\n      } else {\n        res[j][H -\
-    \ 1 - i] = v[i][j];\n      }\n    }\n  }\n  return res;\n}\n\n}  // namespace\
-    \ Nyaan\n#line 58 \"template/template.hpp\"\n\n// bit operation\n#line 1 \"template/bitop.hpp\"\
-    \nnamespace Nyaan {\n__attribute__((target(\"popcnt\"))) inline int popcnt(const\
-    \ u64 &a) {\n  return __builtin_popcountll(a);\n}\ninline int lsb(const u64 &a)\
-    \ { return a ? __builtin_ctzll(a) : 64; }\ninline int ctz(const u64 &a) { return\
-    \ a ? __builtin_ctzll(a) : 64; }\ninline int msb(const u64 &a) { return a ? 63\
-    \ - __builtin_clzll(a) : -1; }\ntemplate <typename T>\ninline int gbit(const T\
-    \ &a, int i) {\n  return (a >> i) & 1;\n}\ntemplate <typename T>\ninline void\
-    \ sbit(T &a, int i, bool b) {\n  if (gbit(a, i) != b) a ^= T(1) << i;\n}\nconstexpr\
-    \ long long PW(int n) { return 1LL << n; }\nconstexpr long long MSK(int n) { return\
-    \ (1LL << n) - 1; }\n}  // namespace Nyaan\n#line 61 \"template/template.hpp\"\
-    \n\n// inout\n#line 1 \"template/inout.hpp\"\nnamespace Nyaan {\n\ntemplate <typename\
-    \ T, typename U>\nostream &operator<<(ostream &os, const pair<T, U> &p) {\n  os\
-    \ << p.first << \" \" << p.second;\n  return os;\n}\ntemplate <typename T, typename\
-    \ U>\nistream &operator>>(istream &is, pair<T, U> &p) {\n  is >> p.first >> p.second;\n\
-    \  return is;\n}\n\ntemplate <typename T>\nostream &operator<<(ostream &os, const\
-    \ vector<T> &v) {\n  int s = (int)v.size();\n  for (int i = 0; i < s; i++) os\
-    \ << (i ? \" \" : \"\") << v[i];\n  return os;\n}\ntemplate <typename T>\nistream\
-    \ &operator>>(istream &is, vector<T> &v) {\n  for (auto &x : v) is >> x;\n  return\
-    \ is;\n}\n\nistream &operator>>(istream &is, __int128_t &x) {\n  string S;\n \
-    \ is >> S;\n  x = 0;\n  int flag = 0;\n  for (auto &c : S) {\n    if (c == '-')\
-    \ {\n      flag = true;\n      continue;\n    }\n    x *= 10;\n    x += c - '0';\n\
-    \  }\n  if (flag) x = -x;\n  return is;\n}\n\nistream &operator>>(istream &is,\
-    \ __uint128_t &x) {\n  string S;\n  is >> S;\n  x = 0;\n  for (auto &c : S) {\n\
-    \    x *= 10;\n    x += c - '0';\n  }\n  return is;\n}\n\nostream &operator<<(ostream\
-    \ &os, __int128_t x) {\n  if (x == 0) return os << 0;\n  if (x < 0) os << '-',\
-    \ x = -x;\n  string S;\n  while (x) S.push_back('0' + x % 10), x /= 10;\n  reverse(begin(S),\
-    \ end(S));\n  return os << S;\n}\nostream &operator<<(ostream &os, __uint128_t\
-    \ x) {\n  if (x == 0) return os << 0;\n  string S;\n  while (x) S.push_back('0'\
-    \ + x % 10), x /= 10;\n  reverse(begin(S), end(S));\n  return os << S;\n}\n\n\
-    void in() {}\ntemplate <typename T, class... U>\nvoid in(T &t, U &...u) {\n  cin\
-    \ >> t;\n  in(u...);\n}\n\nvoid out() { cout << \"\\n\"; }\ntemplate <typename\
-    \ T, class... U, char sep = ' '>\nvoid out(const T &t, const U &...u) {\n  cout\
-    \ << t;\n  if (sizeof...(u)) cout << sep;\n  out(u...);\n}\n\nstruct IoSetupNya\
-    \ {\n  IoSetupNya() {\n    cin.tie(nullptr);\n    ios::sync_with_stdio(false);\n\
-    \    cout << fixed << setprecision(15);\n    cerr << fixed << setprecision(7);\n\
-    \  }\n} iosetupnya;\n\n}  // namespace Nyaan\n#line 64 \"template/template.hpp\"\
-    \n\n// debug\n#line 1 \"template/debug.hpp\"\nnamespace DebugImpl {\n\ntemplate\
-    \ <typename U, typename = void>\nstruct is_specialize : false_type {};\ntemplate\
-    \ <typename U>\nstruct is_specialize<\n    U, typename conditional<false, typename\
-    \ U::iterator, void>::type>\n    : true_type {};\ntemplate <typename U>\nstruct\
-    \ is_specialize<\n    U, typename conditional<false, decltype(U::first), void>::type>\n\
-    \    : true_type {};\ntemplate <typename U>\nstruct is_specialize<U, enable_if_t<is_integral<U>::value,\
-    \ void>> : true_type {\n};\n\nvoid dump(const char& t) { cerr << t; }\n\nvoid\
-    \ dump(const string& t) { cerr << t; }\n\nvoid dump(const bool& t) { cerr << (t\
-    \ ? \"true\" : \"false\"); }\n\nvoid dump(__int128_t t) {\n  if (t == 0) cerr\
-    \ << 0;\n  if (t < 0) cerr << '-', t = -t;\n  string S;\n  while (t) S.push_back('0'\
-    \ + t % 10), t /= 10;\n  reverse(begin(S), end(S));\n  cerr << S;\n}\n\nvoid dump(__uint128_t\
-    \ t) {\n  if (t == 0) cerr << 0;\n  string S;\n  while (t) S.push_back('0' + t\
-    \ % 10), t /= 10;\n  reverse(begin(S), end(S));\n  cerr << S;\n}\n\ntemplate <typename\
+    \ntemplate <typename T, typename F>\nT Power(T a, long long n, const T &I, F &&f)\
+    \ {\n  static_assert(std::is_invocable_r_v<void, F &, T &>,\n                \"\
+    Power callback must be callable as void(T&)\");\n  T res = I;\n  for (; n; std::invoke(f,\
+    \ a = a * a), n >>= 1) {\n    if (n & 1) std::invoke(f, res = res * a);\n  }\n\
+    \  return res;\n}\n// T : \u6574\u6570\u578B\u306E\u3068\u304D\u306F\u30AA\u30FC\
+    \u30D0\u30FC\u30D5\u30ED\u30FC\u306B\u6CE8\u610F\u3059\u308B\ntemplate <typename\
+    \ T>\nT Power(T a, long long n, const T &I = T{1}) {\n  auto no_op = [](T &) ->\
+    \ void {};\n  return Power(a, n, I, no_op);\n}\n\ntemplate <typename T>\nT Rev(const\
+    \ T &v) {\n  T res = v;\n  reverse(begin(res), end(res));\n  return res;\n}\n\n\
+    template <typename T>\nvector<T> Transpose(const vector<T> &v) {\n  using U =\
+    \ typename T::value_type;\n  if(v.empty()) return {};\n  int H = v.size(), W =\
+    \ v[0].size();\n  vector res(W, T(H, U{}));\n  for (int i = 0; i < H; i++) {\n\
+    \    for (int j = 0; j < W; j++) {\n      res[j][i] = v[i][j];\n    }\n  }\n \
+    \ return res;\n}\n\ntemplate <typename T>\nvector<T> Rotate(const vector<T> &v,\
+    \ int clockwise = true) {\n  using U = typename T::value_type;\n  int H = v.size(),\
+    \ W = v[0].size();\n  vector res(W, T(H, U{}));\n  for (int i = 0; i < H; i++)\
+    \ {\n    for (int j = 0; j < W; j++) {\n      if (clockwise) {\n        res[W\
+    \ - 1 - j][i] = v[i][j];\n      } else {\n        res[j][H - 1 - i] = v[i][j];\n\
+    \      }\n    }\n  }\n  return res;\n}\n\n}  // namespace Nyaan\n#line 58 \"template/template.hpp\"\
+    \n\n// bit operation\n#line 1 \"template/bitop.hpp\"\nnamespace Nyaan {\n__attribute__((target(\"\
+    popcnt\"))) inline int popcnt(const u64 &a) {\n  return __builtin_popcountll(a);\n\
+    }\ninline int lsb(const u64 &a) { return a ? __builtin_ctzll(a) : 64; }\ninline\
+    \ int ctz(const u64 &a) { return a ? __builtin_ctzll(a) : 64; }\ninline int msb(const\
+    \ u64 &a) { return a ? 63 - __builtin_clzll(a) : -1; }\ntemplate <typename T>\n\
+    inline int gbit(const T &a, int i) {\n  return (a >> i) & 1;\n}\ntemplate <typename\
+    \ T>\ninline void sbit(T &a, int i, bool b) {\n  if (gbit(a, i) != b) a ^= T(1)\
+    \ << i;\n}\nconstexpr long long PW(int n) { return 1LL << n; }\nconstexpr long\
+    \ long MSK(int n) { return (1LL << n) - 1; }\n}  // namespace Nyaan\n#line 61\
+    \ \"template/template.hpp\"\n\n// inout\n#line 1 \"template/inout.hpp\"\nnamespace\
+    \ Nyaan {\n\ntemplate <typename T, typename U>\nostream &operator<<(ostream &os,\
+    \ const pair<T, U> &p) {\n  os << p.first << \" \" << p.second;\n  return os;\n\
+    }\ntemplate <typename T, typename U>\nistream &operator>>(istream &is, pair<T,\
+    \ U> &p) {\n  is >> p.first >> p.second;\n  return is;\n}\n\ntemplate <typename\
+    \ T>\nostream &operator<<(ostream &os, const vector<T> &v) {\n  int s = (int)v.size();\n\
+    \  for (int i = 0; i < s; i++) os << (i ? \" \" : \"\") << v[i];\n  return os;\n\
+    }\ntemplate <typename T>\nistream &operator>>(istream &is, vector<T> &v) {\n \
+    \ for (auto &x : v) is >> x;\n  return is;\n}\n\nistream &operator>>(istream &is,\
+    \ __int128_t &x) {\n  string S;\n  is >> S;\n  x = 0;\n  int flag = 0;\n  for\
+    \ (auto &c : S) {\n    if (c == '-') {\n      flag = true;\n      continue;\n\
+    \    }\n    x *= 10;\n    x += c - '0';\n  }\n  if (flag) x = -x;\n  return is;\n\
+    }\n\nistream &operator>>(istream &is, __uint128_t &x) {\n  string S;\n  is >>\
+    \ S;\n  x = 0;\n  for (auto &c : S) {\n    x *= 10;\n    x += c - '0';\n  }\n\
+    \  return is;\n}\n\nostream &operator<<(ostream &os, __int128_t x) {\n  if (x\
+    \ == 0) return os << 0;\n  if (x < 0) os << '-', x = -x;\n  string S;\n  while\
+    \ (x) S.push_back('0' + x % 10), x /= 10;\n  reverse(begin(S), end(S));\n  return\
+    \ os << S;\n}\nostream &operator<<(ostream &os, __uint128_t x) {\n  if (x == 0)\
+    \ return os << 0;\n  string S;\n  while (x) S.push_back('0' + x % 10), x /= 10;\n\
+    \  reverse(begin(S), end(S));\n  return os << S;\n}\n\nvoid in() {}\ntemplate\
+    \ <typename T, class... U>\nvoid in(T &t, U &...u) {\n  cin >> t;\n  in(u...);\n\
+    }\n\nvoid out() { cout << \"\\n\"; }\ntemplate <typename T, class... U, char sep\
+    \ = ' '>\nvoid out(const T &t, const U &...u) {\n  cout << t;\n  if (sizeof...(u))\
+    \ cout << sep;\n  out(u...);\n}\n\nstruct IoSetupNya {\n  IoSetupNya() {\n   \
+    \ cin.tie(nullptr);\n    ios::sync_with_stdio(false);\n    cout << fixed << setprecision(15);\n\
+    \    cerr << fixed << setprecision(7);\n  }\n} iosetupnya;\n\n}  // namespace\
+    \ Nyaan\n#line 64 \"template/template.hpp\"\n\n// debug\n#line 1 \"template/debug.hpp\"\
+    \nnamespace DebugImpl {\n\ntemplate <typename U, typename = void>\nstruct is_specialize\
+    \ : false_type {};\ntemplate <typename U>\nstruct is_specialize<\n    U, typename\
+    \ conditional<false, typename U::iterator, void>::type>\n    : true_type {};\n\
+    template <typename U>\nstruct is_specialize<\n    U, typename conditional<false,\
+    \ decltype(U::first), void>::type>\n    : true_type {};\ntemplate <typename U>\n\
+    struct is_specialize<U, enable_if_t<is_integral<U>::value, void>> : true_type\
+    \ {\n};\n\nvoid dump(const char& t) { cerr << t; }\n\nvoid dump(const string&\
+    \ t) { cerr << t; }\n\nvoid dump(const bool& t) { cerr << (t ? \"true\" : \"false\"\
+    ); }\n\nvoid dump(__int128_t t) {\n  if (t == 0) cerr << 0;\n  if (t < 0) cerr\
+    \ << '-', t = -t;\n  string S;\n  while (t) S.push_back('0' + t % 10), t /= 10;\n\
+    \  reverse(begin(S), end(S));\n  cerr << S;\n}\n\nvoid dump(__uint128_t t) {\n\
+    \  if (t == 0) cerr << 0;\n  string S;\n  while (t) S.push_back('0' + t % 10),\
+    \ t /= 10;\n  reverse(begin(S), end(S));\n  cerr << S;\n}\n\ntemplate <typename\
     \ U,\n          enable_if_t<!is_specialize<U>::value, nullptr_t> = nullptr>\n\
     void dump(const U& t) {\n  cerr << t;\n}\n\ntemplate <typename T>\nvoid dump(const\
     \ T& t, enable_if_t<is_integral<T>::value>* = nullptr) {\n  string res;\n  if\
@@ -246,16 +248,17 @@ data:
     \ \\\n    return;                  \\\n  } while (0)\n#line 70 \"template/template.hpp\"\
     \n\nnamespace Nyaan {\nvoid solve();\n}\nint main() { Nyaan::solve(); }\n#line\
     \ 4 \"verify/verify-unit-test/rbst-segment-tree.test.cpp\"\n//\n#line 2 \"segment-tree/rbst-segment-tree.hpp\"\
-    \n\n#line 2 \"internal/internal-type-traits.hpp\"\n\n#line 4 \"internal/internal-type-traits.hpp\"\
-    \nusing namespace std;\n\nnamespace internal {\ntemplate <typename T>\nusing is_broadly_integral\
-    \ =\n    typename conditional_t<is_integral_v<T> || is_same_v<T, __int128_t> ||\n\
-    \                               is_same_v<T, __uint128_t>,\n                 \
-    \          true_type, false_type>::type;\n\ntemplate <typename T>\nusing is_broadly_signed\
-    \ =\n    typename conditional_t<is_signed_v<T> || is_same_v<T, __int128_t>,\n\
-    \                           true_type, false_type>::type;\n\ntemplate <typename\
-    \ T>\nusing is_broadly_unsigned =\n    typename conditional_t<is_unsigned_v<T>\
-    \ || is_same_v<T, __uint128_t>,\n                           true_type, false_type>::type;\n\
-    \n#define ENABLE_VALUE(x) \\\n  template <typename T> \\\n  constexpr bool x##_v\
+    \n\n#line 5 \"segment-tree/rbst-segment-tree.hpp\"\n\n#line 2 \"internal/internal-type-traits.hpp\"\
+    \n\n#line 4 \"internal/internal-type-traits.hpp\"\nusing namespace std;\n\nnamespace\
+    \ internal {\ntemplate <typename T>\nusing is_broadly_integral =\n    typename\
+    \ conditional_t<is_integral_v<T> || is_same_v<T, __int128_t> ||\n            \
+    \                   is_same_v<T, __uint128_t>,\n                           true_type,\
+    \ false_type>::type;\n\ntemplate <typename T>\nusing is_broadly_signed =\n   \
+    \ typename conditional_t<is_signed_v<T> || is_same_v<T, __int128_t>,\n       \
+    \                    true_type, false_type>::type;\n\ntemplate <typename T>\n\
+    using is_broadly_unsigned =\n    typename conditional_t<is_unsigned_v<T> || is_same_v<T,\
+    \ __uint128_t>,\n                           true_type, false_type>::type;\n\n\
+    #define ENABLE_VALUE(x) \\\n  template <typename T> \\\n  constexpr bool x##_v\
     \ = x<T>::value;\n\nENABLE_VALUE(is_broadly_integral);\nENABLE_VALUE(is_broadly_signed);\n\
     ENABLE_VALUE(is_broadly_unsigned);\n#undef ENABLE_VALUE\n\n#define ENABLE_HAS_TYPE(var)\
     \                                   \\\n  template <class, class = void>     \
@@ -270,7 +273,7 @@ data:
     \          \\\n  struct has_##var<T, void_t<decltype(T::var)>> : true_type {};\
     \ \\\n  template <class T>                                            \\\n  constexpr\
     \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace internal\n#line\
-    \ 4 \"segment-tree/rbst-segment-tree.hpp\"\n\nENABLE_HAS_VAR(lazy);\nENABLE_HAS_VAR(shift);\n\
+    \ 7 \"segment-tree/rbst-segment-tree.hpp\"\n\nENABLE_HAS_VAR(lazy);\nENABLE_HAS_VAR(shift);\n\
     \ntemplate <typename Node, typename I, typename T, typename E, T (*f)(T, T),\n\
     \          T (*g)(T, E), E (*h)(E, E), T (*ti)(), E (*ei)()>\nstruct RBSTSegmentTreeBase\
     \ {\n protected:\n  using Ptr = Node *;\n  template <typename... Args>\n  static\
@@ -461,76 +464,78 @@ data:
     \ p->val : ti();\n  }\n  bool exist(I i) {\n    Ptr p = _find(root, i);\n    return\
     \ p != nullptr;\n  }\n\n  // 1 \u70B9 \u5024\u306E\u66F8\u304D\u63DB\u3048\n \
     \ // func \u306E\u8FD4\u308A\u5024\u306F void !!!!!!(\u53C2\u7167\u3055\u308C\u305F\
-    \u5024\u3092\u76F4\u63A5\u66F4\u65B0\u3059\u308B)\n  void apply_val(I i, const\
-    \ function<void(T &)> &func) {\n    auto s = _split_by_key3(root, i);\n    if\
-    \ (s[1] == nullptr) s[1] = _my_new(i);\n    func(s[1]->val);\n    root = _merge(_merge(s[0],\
+    \u5024\u3092\u76F4\u63A5\u66F4\u65B0\u3059\u308B)\n  template <typename F>\n \
+    \ auto apply_val(I i, F&& func)\n      -> enable_if_t<is_invocable_r_v<void, F&,\
+    \ T&>> {\n    auto s = _split_by_key3(root, i);\n    if (s[1] == nullptr) s[1]\
+    \ = _my_new(i);\n    std::invoke(func, s[1]->val);\n    root = _merge(_merge(s[0],\
     \ _update(s[1])), s[2]);\n  }\n  // 1 \u70B9 \u5024\u306E\u66F8\u304D\u63DB\u3048\
     \ \u5024\u304C\u65E2\u306B\u5B58\u5728\u3059\u308B\u3068\u304D\u306B\u65E9\u3044\
     \n  // func \u306E\u8FD4\u308A\u5024\u306F void !!!!!!(\u53C2\u7167\u3055\u308C\
-    \u305F\u5024\u3092\u76F4\u63A5\u66F4\u65B0\u3059\u308B)\n  void apply_val_fast(I\
-    \ i, const function<void(T &)> &func) {\n    static vector<Ptr> ps;\n    ps.clear();\n\
-    \    Ptr t = root;\n    while (t) {\n      _push(t);\n      ps.push_back(t);\n\
-    \      if (i == t->key) break;\n      t = i < t->key ? t->l : t->r;\n    }\n \
-    \   if (!t) {\n      apply_val(i, func);\n      return;\n    }\n    func(t->val);\n\
-    \    for (int j = ps.size() - 1; j >= 0; j--) _update(ps[j]);\n  }\n\n  // \u9802\
-    \u70B9\u306E\u524A\u9664\n  virtual void erase(I i) { _erase(root, i); }\n\n \
-    \ // \u7BC4\u56F2\u4F5C\u7528\n  void apply(I l, I r, const E &e) {\n    if (l\
-    \ >= r) return;\n    _apply(root, l, r, e);\n  }\n  void apply_all(const E &e)\
-    \ { _propagate(root, e); }\n\n  // \u7BC4\u56F2\u53D6\u5F97\n  T fold(I l, I r)\
-    \ {\n    if (l >= r) return ti();\n    return _fold(root, l, r);\n  }\n  T fold_all()\
-    \ { return _sum(root); }\n\n  void shift(const I &sh) { _shift(root, sh); }\n\n\
-    \  // key \u6700\u5C0F\u3092\u53D6\u5F97\n  I get_min_key(I failed = {}) { return\
-    \ _get_min_keyval(root, failed).first; }\n  // key \u6700\u5927\u3092\u53D6\u5F97\
-    \n  I get_max_key(I failed = {}) { return _get_max_keyval(root, failed).first;\
-    \ }\n  // (key, val) \u6700\u5C0F\u3092\u53D6\u5F97\n  pair<I, T> get_min_keyval(I\
-    \ failed = {}) {\n    return _get_min_keyval(root, failed);\n  }\n  // (key, val)\
-    \ \u6700\u5927\u3092\u53D6\u5F97\n  pair<I, T> get_max_keyval(I failed = {}) {\n\
-    \    return _get_max_keyval(root, failed);\n  }\n  // (key, val) \u6700\u5C0F\u3092\
-    \ pop\n  pair<I, T> pop_min_keyval(I failed = {}) {\n    assert(root != nullptr);\n\
-    \    auto kv = _get_min_keyval(root, failed);\n    erase(kv.first);\n    return\
-    \ kv;\n  }\n  // (key, val) \u6700\u5927\u3092\u53D6\u5F97\n  pair<I, T> pop_max_keyval(I\
-    \ failed = {}) {\n    assert(root != nullptr);\n    auto kv = _get_max_keyval(root,\
-    \ failed);\n    erase(kv.first);\n    return kv;\n  }\n\n  // n \u672A\u6E80\u306E\
-    \ i \u306E\u3046\u3061\u3001[i, n) \u306E\u533A\u9593 fold \u304C true \u306B\u306A\
-    \u308B\u6700\u5C0F\u306E i \u306F\u4F55\u304B\uFF1F\n  // (\u5B58\u5728\u3057\u306A\
-    \u3044\u5834\u5408\u306F failed \u3092\u8FD4\u3059)\n  template <typename C>\n\
-    \  I min_left(I n, C check, I failed) {\n    assert(check(ti()) == true);\n  \
-    \  auto [x, y] = _split_by_key(root, n);\n    I res = _min_left<C, true>(x, check,\
-    \ failed);\n    root = _merge(x, y);\n    return res;\n  }\n\n  // n \u672A\u6E80\
-    \u306E i \u306E\u3046\u3061\u3001(i, n) \u306E\u533A\u9593 fold \u304C true \u306B\
-    \u306A\u308B\u6700\u5C0F\u306E i \u306F\u4F55\u304B\uFF1F\n  // (\u7A7A\u3060\u3063\
-    \u305F\u308A (\u5DE6\u7AEF, n) \u304C \u771F\u306E\u5834\u5408\u306F minus_infty\
-    \ \u3092\u8FD4\u3059)\n  template <typename C>\n  I min_left_exclusive(I n, C\
-    \ check, I minus_infty) {\n    assert(check(ti()) == true);\n    auto [x, y] =\
-    \ _split_by_key(root, n);\n    I res = _min_left<C, false>(x, check, minus_infty);\n\
-    \    root = _merge(x, y);\n    return res;\n  }\n\n  // n \u4EE5\u4E0A\u306E i\
-    \ \u306E\u3046\u3061\u3001[n, i) \u306E\u533A\u9593 fold \u304C true \u306B\u306A\
-    \u308B\u6700\u5927\u306E i \u306F\u4F55\u304B\uFF1F\n  // (\u7A7A\u3060\u3063\u305F\
-    \u308A [n, \u53F3\u7AEF] \u304C true \u306E\u5834\u5408\u306F infty \u3092\u8FD4\
-    \u3059)\n  template <typename C>\n  I max_right(I n, C check, I infty) {\n   \
-    \ assert(check(ti()) == true);\n    auto [x, y] = _split_by_key(root, n);\n  \
-    \  I res = _max_right<C, true>(y, check, infty);\n    root = _merge(x, y);\n \
-    \   return res;\n  }\n\n  // n \u4EE5\u4E0A\u306E i \u306E\u3046\u3061\u3001[n,\
-    \ i] \u306E\u533A\u9593 fold \u304C true \u306B\u306A\u308B\u6700\u5927\u306E\
+    \u305F\u5024\u3092\u76F4\u63A5\u66F4\u65B0\u3059\u308B)\n  template <typename\
+    \ F>\n  auto apply_val_fast(I i, F&& func)\n      -> enable_if_t<is_invocable_r_v<void,\
+    \ F&, T&>> {\n    static vector<Ptr> ps;\n    ps.clear();\n    Ptr t = root;\n\
+    \    while (t) {\n      _push(t);\n      ps.push_back(t);\n      if (i == t->key)\
+    \ break;\n      t = i < t->key ? t->l : t->r;\n    }\n    if (!t) {\n      apply_val(i,\
+    \ func);\n      return;\n    }\n    std::invoke(func, t->val);\n    for (int j\
+    \ = ps.size() - 1; j >= 0; j--) _update(ps[j]);\n  }\n\n  // \u9802\u70B9\u306E\
+    \u524A\u9664\n  virtual void erase(I i) { _erase(root, i); }\n\n  // \u7BC4\u56F2\
+    \u4F5C\u7528\n  void apply(I l, I r, const E &e) {\n    if (l >= r) return;\n\
+    \    _apply(root, l, r, e);\n  }\n  void apply_all(const E &e) { _propagate(root,\
+    \ e); }\n\n  // \u7BC4\u56F2\u53D6\u5F97\n  T fold(I l, I r) {\n    if (l >= r)\
+    \ return ti();\n    return _fold(root, l, r);\n  }\n  T fold_all() { return _sum(root);\
+    \ }\n\n  void shift(const I &sh) { _shift(root, sh); }\n\n  // key \u6700\u5C0F\
+    \u3092\u53D6\u5F97\n  I get_min_key(I failed = {}) { return _get_min_keyval(root,\
+    \ failed).first; }\n  // key \u6700\u5927\u3092\u53D6\u5F97\n  I get_max_key(I\
+    \ failed = {}) { return _get_max_keyval(root, failed).first; }\n  // (key, val)\
+    \ \u6700\u5C0F\u3092\u53D6\u5F97\n  pair<I, T> get_min_keyval(I failed = {}) {\n\
+    \    return _get_min_keyval(root, failed);\n  }\n  // (key, val) \u6700\u5927\u3092\
+    \u53D6\u5F97\n  pair<I, T> get_max_keyval(I failed = {}) {\n    return _get_max_keyval(root,\
+    \ failed);\n  }\n  // (key, val) \u6700\u5C0F\u3092 pop\n  pair<I, T> pop_min_keyval(I\
+    \ failed = {}) {\n    assert(root != nullptr);\n    auto kv = _get_min_keyval(root,\
+    \ failed);\n    erase(kv.first);\n    return kv;\n  }\n  // (key, val) \u6700\u5927\
+    \u3092\u53D6\u5F97\n  pair<I, T> pop_max_keyval(I failed = {}) {\n    assert(root\
+    \ != nullptr);\n    auto kv = _get_max_keyval(root, failed);\n    erase(kv.first);\n\
+    \    return kv;\n  }\n\n  // n \u672A\u6E80\u306E i \u306E\u3046\u3061\u3001[i,\
+    \ n) \u306E\u533A\u9593 fold \u304C true \u306B\u306A\u308B\u6700\u5C0F\u306E\
     \ i \u306F\u4F55\u304B\uFF1F\n  // (\u5B58\u5728\u3057\u306A\u3044\u5834\u5408\
-    \u306F failed \u3092\u8FD4\u3059)\n  template <typename C>\n  I max_right_inclusive(I\
-    \ n, C check, I failed) {\n    assert(check(ti()) == true);\n    auto [x, y] =\
-    \ _split_by_key(root, n);\n    I res = _max_right<C, false>(y, check, failed);\n\
-    \    root = _merge(x, y);\n    return res;\n  }\n\n  // (key \u672A\u6E80, key\
-    \ \u4EE5\u4E0A) \u3067\u5206\u5272\n  // \u547C\u3073\u51FA\u3057\u5F8C\u306E\u30AA\
-    \u30D6\u30B8\u30A7\u30AF\u30C8\u306F\u7A7A\u306E\u30BB\u30B0\u6728\u306B\u306A\
-    \u308B\n  pair<RBST, RBST> split_by_key(const I &key) {\n    auto [x, y] = _split_by_key(root,\
-    \ key);\n    root = nullptr;\n    return make_pair(RBST{x}, RBST{y});\n  }\n \
-    \ // [i, inf) \u306E\u533A\u9593\u7A4D\u304C (false, true) \u306B\u306A\u308B\u5883\
-    \u754C\u3067\u5206\u5272\n  // \u547C\u3073\u51FA\u3057\u5F8C\u306E\u30AA\u30D6\
-    \u30B8\u30A7\u30AF\u30C8\u306F\u7A7A\u306E\u30BB\u30B0\u6728\u306B\u306A\u308B\
-    \n  template <typename C>\n  pair<RBST, RBST> split_min_left(const C &check) {\n\
-    \    assert(check(ti()) == true);\n    auto [x, y] = _split_min_left(root, check);\n\
-    \    root = nullptr;\n    return make_pair(RBST{x}, RBST{y});\n  }\n  // (-inf,\
-    \ i] \u306E\u533A\u9593\u7A4D\u304C (true, false) \u306B\u306A\u308B\u5883\u754C\
-    \u3067\u5206\u5272\n  // \u547C\u3073\u51FA\u3057\u5F8C\u306E\u30AA\u30D6\u30B8\
-    \u30A7\u30AF\u30C8\u306F\u7A7A\u306E\u30BB\u30B0\u6728\u306B\u306A\u308B\n  template\
-    \ <typename C>\n  pair<RBST, RBST> split_max_right(const C &check) {\n    assert(check(ti())\
+    \u306F failed \u3092\u8FD4\u3059)\n  template <typename C>\n  I min_left(I n,\
+    \ C check, I failed) {\n    assert(check(ti()) == true);\n    auto [x, y] = _split_by_key(root,\
+    \ n);\n    I res = _min_left<C, true>(x, check, failed);\n    root = _merge(x,\
+    \ y);\n    return res;\n  }\n\n  // n \u672A\u6E80\u306E i \u306E\u3046\u3061\u3001\
+    (i, n) \u306E\u533A\u9593 fold \u304C true \u306B\u306A\u308B\u6700\u5C0F\u306E\
+    \ i \u306F\u4F55\u304B\uFF1F\n  // (\u7A7A\u3060\u3063\u305F\u308A (\u5DE6\u7AEF\
+    , n) \u304C \u771F\u306E\u5834\u5408\u306F minus_infty \u3092\u8FD4\u3059)\n \
+    \ template <typename C>\n  I min_left_exclusive(I n, C check, I minus_infty) {\n\
+    \    assert(check(ti()) == true);\n    auto [x, y] = _split_by_key(root, n);\n\
+    \    I res = _min_left<C, false>(x, check, minus_infty);\n    root = _merge(x,\
+    \ y);\n    return res;\n  }\n\n  // n \u4EE5\u4E0A\u306E i \u306E\u3046\u3061\u3001\
+    [n, i) \u306E\u533A\u9593 fold \u304C true \u306B\u306A\u308B\u6700\u5927\u306E\
+    \ i \u306F\u4F55\u304B\uFF1F\n  // (\u7A7A\u3060\u3063\u305F\u308A [n, \u53F3\u7AEF\
+    ] \u304C true \u306E\u5834\u5408\u306F infty \u3092\u8FD4\u3059)\n  template <typename\
+    \ C>\n  I max_right(I n, C check, I infty) {\n    assert(check(ti()) == true);\n\
+    \    auto [x, y] = _split_by_key(root, n);\n    I res = _max_right<C, true>(y,\
+    \ check, infty);\n    root = _merge(x, y);\n    return res;\n  }\n\n  // n \u4EE5\
+    \u4E0A\u306E i \u306E\u3046\u3061\u3001[n, i] \u306E\u533A\u9593 fold \u304C true\
+    \ \u306B\u306A\u308B\u6700\u5927\u306E i \u306F\u4F55\u304B\uFF1F\n  // (\u5B58\
+    \u5728\u3057\u306A\u3044\u5834\u5408\u306F failed \u3092\u8FD4\u3059)\n  template\
+    \ <typename C>\n  I max_right_inclusive(I n, C check, I failed) {\n    assert(check(ti())\
+    \ == true);\n    auto [x, y] = _split_by_key(root, n);\n    I res = _max_right<C,\
+    \ false>(y, check, failed);\n    root = _merge(x, y);\n    return res;\n  }\n\n\
+    \  // (key \u672A\u6E80, key \u4EE5\u4E0A) \u3067\u5206\u5272\n  // \u547C\u3073\
+    \u51FA\u3057\u5F8C\u306E\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8\u306F\u7A7A\u306E\
+    \u30BB\u30B0\u6728\u306B\u306A\u308B\n  pair<RBST, RBST> split_by_key(const I\
+    \ &key) {\n    auto [x, y] = _split_by_key(root, key);\n    root = nullptr;\n\
+    \    return make_pair(RBST{x}, RBST{y});\n  }\n  // [i, inf) \u306E\u533A\u9593\
+    \u7A4D\u304C (false, true) \u306B\u306A\u308B\u5883\u754C\u3067\u5206\u5272\n\
+    \  // \u547C\u3073\u51FA\u3057\u5F8C\u306E\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8\
+    \u306F\u7A7A\u306E\u30BB\u30B0\u6728\u306B\u306A\u308B\n  template <typename C>\n\
+    \  pair<RBST, RBST> split_min_left(const C &check) {\n    assert(check(ti()) ==\
+    \ true);\n    auto [x, y] = _split_min_left(root, check);\n    root = nullptr;\n\
+    \    return make_pair(RBST{x}, RBST{y});\n  }\n  // (-inf, i] \u306E\u533A\u9593\
+    \u7A4D\u304C (true, false) \u306B\u306A\u308B\u5883\u754C\u3067\u5206\u5272\n\
+    \  // \u547C\u3073\u51FA\u3057\u5F8C\u306E\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8\
+    \u306F\u7A7A\u306E\u30BB\u30B0\u6728\u306B\u306A\u308B\n  template <typename C>\n\
+    \  pair<RBST, RBST> split_max_right(const C &check) {\n    assert(check(ti())\
     \ == true);\n    auto [x, y] = _split_max_right(root, check);\n    root = nullptr;\n\
     \    return make_pair(RBST{x}, RBST{y});\n  }\n\n  void clear() { _clear(root),\
     \ root = nullptr; }\n  int size() { return _count(root); }\n  bool empty() { return\
@@ -966,7 +971,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/rbst-segment-tree.test.cpp
   requiredBy: []
-  timestamp: '2026-05-21 18:07:01+09:00'
+  timestamp: '2026-06-05 19:46:06+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/rbst-segment-tree.test.cpp

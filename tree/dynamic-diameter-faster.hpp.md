@@ -25,29 +25,29 @@ data:
   attributes:
     links: []
   bundledCode: "#line 2 \"tree/dynamic-diameter-faster.hpp\"\n\n#include <algorithm>\n\
-    #include <cassert>\n#include <functional>\n#include <utility>\n#include <vector>\n\
-    using namespace std;\n\n#line 2 \"graph/graph-template.hpp\"\n\ntemplate <typename\
-    \ T>\nstruct edge {\n  int src, to;\n  T cost;\n\n  edge(int _to, T _cost) : src(-1),\
-    \ to(_to), cost(_cost) {}\n  edge(int _src, int _to, T _cost) : src(_src), to(_to),\
-    \ cost(_cost) {}\n\n  edge &operator=(const int &x) {\n    to = x;\n    return\
-    \ *this;\n  }\n\n  operator int() const { return to; }\n};\ntemplate <typename\
-    \ T>\nusing Edges = vector<edge<T>>;\ntemplate <typename T>\nusing WeightedGraph\
-    \ = vector<Edges<T>>;\nusing UnweightedGraph = vector<vector<int>>;\n\n// Input\
-    \ of (Unweighted) Graph\nUnweightedGraph graph(int N, int M = -1, bool is_directed\
-    \ = false,\n                      bool is_1origin = true) {\n  UnweightedGraph\
+    #include <cassert>\n#include <utility>\n#include <vector>\nusing namespace std;\n\
+    \n#line 2 \"graph/graph-template.hpp\"\n\ntemplate <typename T>\nstruct edge {\n\
+    \  int src, to;\n  T cost;\n\n  edge(int _to, T _cost) : src(-1), to(_to), cost(_cost)\
+    \ {}\n  edge(int _src, int _to, T _cost) : src(_src), to(_to), cost(_cost) {}\n\
+    \n  edge &operator=(const int &x) {\n    to = x;\n    return *this;\n  }\n\n \
+    \ operator int() const { return to; }\n};\ntemplate <typename T>\nusing Edges\
+    \ = vector<edge<T>>;\ntemplate <typename T>\nusing WeightedGraph = vector<Edges<T>>;\n\
+    using UnweightedGraph = vector<vector<int>>;\n\n// Input of (Unweighted) Graph\n\
+    UnweightedGraph graph(int N, int M = -1, bool is_directed = false,\n         \
+    \             bool is_1origin = true) {\n  UnweightedGraph g(N);\n  if (M == -1)\
+    \ M = N - 1;\n  for (int _ = 0; _ < M; _++) {\n    int x, y;\n    cin >> x >>\
+    \ y;\n    if (is_1origin) x--, y--;\n    g[x].push_back(y);\n    if (!is_directed)\
+    \ g[y].push_back(x);\n  }\n  return g;\n}\n\n// Input of Weighted Graph\ntemplate\
+    \ <typename T>\nWeightedGraph<T> wgraph(int N, int M = -1, bool is_directed =\
+    \ false,\n                        bool is_1origin = true) {\n  WeightedGraph<T>\
     \ g(N);\n  if (M == -1) M = N - 1;\n  for (int _ = 0; _ < M; _++) {\n    int x,\
-    \ y;\n    cin >> x >> y;\n    if (is_1origin) x--, y--;\n    g[x].push_back(y);\n\
-    \    if (!is_directed) g[y].push_back(x);\n  }\n  return g;\n}\n\n// Input of\
-    \ Weighted Graph\ntemplate <typename T>\nWeightedGraph<T> wgraph(int N, int M\
-    \ = -1, bool is_directed = false,\n                        bool is_1origin = true)\
-    \ {\n  WeightedGraph<T> g(N);\n  if (M == -1) M = N - 1;\n  for (int _ = 0; _\
-    \ < M; _++) {\n    int x, y;\n    cin >> x >> y;\n    T c;\n    cin >> c;\n  \
-    \  if (is_1origin) x--, y--;\n    g[x].emplace_back(x, y, c);\n    if (!is_directed)\
-    \ g[y].emplace_back(y, x, c);\n  }\n  return g;\n}\n\n// Input of Edges\ntemplate\
-    \ <typename T>\nEdges<T> esgraph([[maybe_unused]] int N, int M, int is_weighted\
-    \ = true,\n                 bool is_1origin = true) {\n  Edges<T> es;\n  for (int\
-    \ _ = 0; _ < M; _++) {\n    int x, y;\n    cin >> x >> y;\n    T c;\n    if (is_weighted)\n\
-    \      cin >> c;\n    else\n      c = 1;\n    if (is_1origin) x--, y--;\n    es.emplace_back(x,\
+    \ y;\n    cin >> x >> y;\n    T c;\n    cin >> c;\n    if (is_1origin) x--, y--;\n\
+    \    g[x].emplace_back(x, y, c);\n    if (!is_directed) g[y].emplace_back(y, x,\
+    \ c);\n  }\n  return g;\n}\n\n// Input of Edges\ntemplate <typename T>\nEdges<T>\
+    \ esgraph([[maybe_unused]] int N, int M, int is_weighted = true,\n           \
+    \      bool is_1origin = true) {\n  Edges<T> es;\n  for (int _ = 0; _ < M; _++)\
+    \ {\n    int x, y;\n    cin >> x >> y;\n    T c;\n    if (is_weighted)\n     \
+    \ cin >> c;\n    else\n      c = 1;\n    if (is_1origin) x--, y--;\n    es.emplace_back(x,\
     \ y, c);\n  }\n  return es;\n}\n\n// Input of Adjacency Matrix\ntemplate <typename\
     \ T>\nvector<vector<T>> adjgraph(int N, int M, T INF, int is_weighted = true,\n\
     \                           bool is_directed = false, bool is_1origin = true)\
@@ -56,8 +56,9 @@ data:
     \ cin >> c;\n    else\n      c = 1;\n    if (is_1origin) x--, y--;\n    d[x][y]\
     \ = c;\n    if (!is_directed) d[y][x] = c;\n  }\n  return d;\n}\n\n/**\n * @brief\
     \ \u30B0\u30E9\u30D5\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\n * @docs docs/graph/graph-template.md\n\
-    \ */\n#line 2 \"tree/static-top-tree-vertex-based.hpp\"\n\n#line 6 \"tree/static-top-tree-vertex-based.hpp\"\
-    \nusing namespace std;\n\n#line 2 \"tree/convert-tree.hpp\"\n\n#line 4 \"tree/convert-tree.hpp\"\
+    \ */\n#line 2 \"tree/static-top-tree-vertex-based.hpp\"\n\n#line 4 \"tree/static-top-tree-vertex-based.hpp\"\
+    \n#include <functional>\n#line 7 \"tree/static-top-tree-vertex-based.hpp\"\nusing\
+    \ namespace std;\n\n#line 2 \"tree/convert-tree.hpp\"\n\n#line 4 \"tree/convert-tree.hpp\"\
     \n\ntemplate <typename T>\nstruct has_cost {\n private:\n  template <typename\
     \ U>\n  static auto confirm(U u) -> decltype(u.cost, std::true_type());\n  static\
     \ auto confirm(...) -> std::false_type;\n\n public:\n  enum : bool { value = decltype(confirm(std::declval<T>()))::value\
@@ -112,7 +113,7 @@ data:
     \ return depth[a] < depth[b] ? a : b;\n  }\n\n  int dist(int a, int b) { return\
     \ depth[a] + depth[b] - depth[lca(a, b)] * 2; }\n};\n\n/**\n * @brief Heavy Light\
     \ Decomposition(\u91CD\u8EFD\u5206\u89E3)\n * @docs docs/tree/heavy-light-decomposition.md\n\
-    \ */\n#line 10 \"tree/static-top-tree-vertex-based.hpp\"\n\nnamespace StaticTopTreeVertexBasedImpl\
+    \ */\n#line 11 \"tree/static-top-tree-vertex-based.hpp\"\n\nnamespace StaticTopTreeVertexBasedImpl\
     \ {\n\nenum Type { Vertex, Compress, Rake, Add_Edge, Add_Vertex };\n\ntemplate\
     \ <typename G>\nstruct StaticTopTreeVertexBased {\n  const HeavyLightDecomposition<G>&\
     \ hld;\n  vector<vector<int>> g;\n  int root;     // \u5143\u306E\u6728\u306E\
@@ -150,65 +151,66 @@ data:
     \ G, typename Path, typename Point, typename Vertex,\n          typename Compress,\
     \ typename Rake, typename Add_edge,\n          typename Add_vertex>\nstruct DPonStaticTopTreeVertexBased\
     \ {\n  const StaticTopTreeVertexBased<G> tt;\n  vector<Path> path;\n  vector<Point>\
-    \ point;\n  const Vertex vertex;\n  const Compress compress;\n  const Rake rake;\n\
-    \  const Add_edge add_edge;\n  const Add_vertex add_vertex;\n\n  DPonStaticTopTreeVertexBased(const\
-    \ HeavyLightDecomposition<G>& hld,\n                               const Vertex&\
-    \ _vertex, const Compress& _compress,\n                               const Rake&\
-    \ _rake, const Add_edge& _add_edge,\n                               const Add_vertex&\
-    \ _add_vertex)\n      : tt(hld),\n        vertex(_vertex),\n        compress(_compress),\n\
-    \        rake(_rake),\n        add_edge(_add_edge),\n        add_vertex(_add_vertex)\
+    \ point;\n  Vertex vertex;\n  Compress compress;\n  Rake rake;\n  Add_edge add_edge;\n\
+    \  Add_vertex add_vertex;\n\n  DPonStaticTopTreeVertexBased(const HeavyLightDecomposition<G>&\
+    \ hld,\n                               const Vertex& _vertex, const Compress&\
+    \ _compress,\n                               const Rake& _rake, const Add_edge&\
+    \ _add_edge,\n                               const Add_vertex& _add_vertex)\n\
+    \      : tt(hld),\n        vertex(_vertex),\n        compress(_compress),\n  \
+    \      rake(_rake),\n        add_edge(_add_edge),\n        add_vertex(_add_vertex)\
     \ {\n    int n = tt.P.size();\n    path.resize(n), point.resize(n);\n    dfs(tt.tt_root);\n\
     \  }\n\n  Path get() { return path[tt.tt_root]; }\n  void update(int k) {\n  \
     \  while (k != -1) _update(k), k = tt.P[k];\n  }\n\n private:\n  void _update(int\
-    \ k) {\n    if (tt.T[k] == Type::Vertex) {\n      path[k] = vertex(k);\n    }\
-    \ else if (tt.T[k] == Type::Compress) {\n      path[k] = compress(path[tt.L[k]],\
-    \ path[tt.R[k]]);\n    } else if (tt.T[k] == Type::Rake) {\n      point[k] = rake(point[tt.L[k]],\
-    \ point[tt.R[k]]);\n    } else if (tt.T[k] == Type::Add_Edge) {\n      point[k]\
-    \ = add_edge(path[tt.L[k]]);\n    } else {\n      path[k] = add_vertex(point[tt.L[k]],\
-    \ k);\n    }\n  }\n\n  void dfs(int k) {\n    if (tt.L[k] != -1) dfs(tt.L[k]);\n\
-    \    if (tt.R[k] != -1) dfs(tt.R[k]);\n    _update(k);\n  }\n};\n\n}  // namespace\
-    \ StaticTopTreeVertexBasedImpl\n\nusing StaticTopTreeVertexBasedImpl::DPonStaticTopTreeVertexBased;\n\
-    using StaticTopTreeVertexBasedImpl::StaticTopTreeVertexBased;\n\n/*\n\n  // template\n\
-    \  using Path = ;\n  using Point = ;\n  auto vertex = [&](int i) -> Path {\n\n\
-    \  };\n  auto compress = [&](const Path& p, const Path& c) -> Path {\n\n  };\n\
-    \  auto rake = [&](const Point& a, const Point& b) -> Point {\n\n  };\n  auto\
-    \ add_edge = [&](const Path& a) -> Point {\n\n  };\n  auto add_vertex = [&](const\
-    \ Point& a, int i) -> Path {\n\n  };\n  HeavyLightDecomposition hld{g};\n  DPonStaticTopTreeVertexBased<vector<vector<int>>,\
-    \ Path, Point,\n  decltype(vertex), decltype(compress), decltype(rake), decltype(add_edge),\n\
-    \                    decltype(add_vertex)>\n      dp(hld, vertex, compress, rake,\
-    \ add_edge, add_vertex);\n*/\n\n/**\n * @brief Static Top Tree\n */\n#line 12\
-    \ \"tree/dynamic-diameter-faster.hpp\"\n\nnamespace DynamicDiameterFasterImpl\
-    \ {\n\ntemplate <typename T>\nstruct HalfPath {\n  T d;\n  int u;\n  friend HalfPath\
-    \ max(const HalfPath& lhs, const HalfPath& rhs) {\n    if (lhs.d != rhs.d) return\
-    \ lhs.d > rhs.d ? lhs : rhs;\n    return lhs.u > rhs.u ? lhs : rhs;\n  }\n};\n\
-    template <typename T>\nstruct Path {\n  T d;\n  int u, v;\n  friend Path max(const\
-    \ Path& lhs, const Path& rhs) {\n    if (lhs.d != rhs.d) return lhs.d > rhs.d\
-    \ ? lhs : rhs;\n    if (lhs.u != rhs.u) return lhs.u > rhs.u ? lhs : rhs;\n  \
-    \  return lhs.v > rhs.v ? lhs : rhs;\n  }\n};\ntemplate <typename T>\nPath<T>\
-    \ path(T d, int u, int v) {\n  if (u < v) swap(u, v);\n  return {d, u, v};\n}\n\
-    \ntemplate <typename T>\nstruct L {\n  Path<T> dia;\n  HalfPath<T> d1, d2;\n};\n\
-    template <typename T>\nstruct H {\n  Path<T> dia;\n  HalfPath<T> pd, cd;\n  T\
-    \ p_to_c;\n  int p, c;\n};\n\ntemplate <typename T>\nH<T> vertex(int i) {\n  H<T>\
-    \ r;\n  r.dia = path<T>(0, i, i);\n  r.pd = r.cd = {0, i};\n  r.p_to_c = 0;\n\
-    \  r.p = r.c = i;\n  return r;\n}\n\ntemplate <typename T>\nstruct RootedEdgeInfo\
-    \ {\n  int N, root;\n  vector<int> par, depth;\n  vector<T> cost_to_parent;\n\n\
-    \  RootedEdgeInfo() = default;\n\n  RootedEdgeInfo(const WeightedGraph<T>& g,\
-    \ int r = 0)\n      : N((int)g.size()),\n        root(r),\n        par(N, -2),\n\
-    \        depth(N, 0),\n        cost_to_parent(N, T{}) {\n    vector<int> st;\n\
-    \    st.push_back(root);\n    par[root] = -1;\n\n    for (int it = 0; it < (int)st.size();\
-    \ it++) {\n      int v = st[it];\n      for (auto& e : g[v]) {\n        if (e.to\
-    \ == par[v]) continue;\n        if (par[e.to] != -2) continue;\n        par[e.to]\
-    \ = v;\n        depth[e.to] = depth[v] + 1;\n        cost_to_parent[e.to] = e.cost;\n\
-    \        st.push_back(e.to);\n      }\n    }\n    assert((int)st.size() == N);\n\
-    \  }\n\n  int child_if_adjacent(int u, int v) const {\n    if (par[u] == v) return\
-    \ u;\n    if (par[v] == u) return v;\n    return -1;\n  }\n\n  int parent_if_adjacent(int\
-    \ u, int v) const {\n    int c = child_if_adjacent(u, v);\n    if (c == -1) return\
-    \ -1;\n    return u ^ v ^ c;\n  }\n\n  bool adjacent(int u, int v) const { return\
-    \ child_if_adjacent(u, v) != -1; }\n\n  T get_parent_edge(int child) const {\n\
-    \    assert(child != root);\n    return cost_to_parent[child];\n  }\n\n  T get_between_adjacent(int\
-    \ u, int v) const {\n    int c = child_if_adjacent(u, v);\n    assert(c != -1);\n\
-    \    return cost_to_parent[c];\n  }\n\n  void set_between_adjacent(int u, int\
-    \ v, T x) {\n    int c = child_if_adjacent(u, v);\n    assert(c != -1);\n    cost_to_parent[c]\
+    \ k) {\n    if (tt.T[k] == Type::Vertex) {\n      path[k] = std::invoke(vertex,\
+    \ k);\n    } else if (tt.T[k] == Type::Compress) {\n      path[k] = std::invoke(compress,\
+    \ path[tt.L[k]], path[tt.R[k]]);\n    } else if (tt.T[k] == Type::Rake) {\n  \
+    \    point[k] = std::invoke(rake, point[tt.L[k]], point[tt.R[k]]);\n    } else\
+    \ if (tt.T[k] == Type::Add_Edge) {\n      point[k] = std::invoke(add_edge, path[tt.L[k]]);\n\
+    \    } else {\n      path[k] = std::invoke(add_vertex, point[tt.L[k]], k);\n \
+    \   }\n  }\n\n  void dfs(int k) {\n    if (tt.L[k] != -1) dfs(tt.L[k]);\n    if\
+    \ (tt.R[k] != -1) dfs(tt.R[k]);\n    _update(k);\n  }\n};\n\n}  // namespace StaticTopTreeVertexBasedImpl\n\
+    \nusing StaticTopTreeVertexBasedImpl::DPonStaticTopTreeVertexBased;\nusing StaticTopTreeVertexBasedImpl::StaticTopTreeVertexBased;\n\
+    \n/*\n\n  // template\n  using Path = ;\n  using Point = ;\n  auto vertex = [&](int\
+    \ i) -> Path {\n\n  };\n  auto compress = [&](const Path& p, const Path& c) ->\
+    \ Path {\n\n  };\n  auto rake = [&](const Point& a, const Point& b) -> Point {\n\
+    \n  };\n  auto add_edge = [&](const Path& a) -> Point {\n\n  };\n  auto add_vertex\
+    \ = [&](const Point& a, int i) -> Path {\n\n  };\n  HeavyLightDecomposition hld{g};\n\
+    \  DPonStaticTopTreeVertexBased<vector<vector<int>>, Path, Point,\n  decltype(vertex),\
+    \ decltype(compress), decltype(rake), decltype(add_edge),\n                  \
+    \  decltype(add_vertex)>\n      dp(hld, vertex, compress, rake, add_edge, add_vertex);\n\
+    */\n\n/**\n * @brief Static Top Tree\n */\n#line 11 \"tree/dynamic-diameter-faster.hpp\"\
+    \n\nnamespace DynamicDiameterFasterImpl {\n\ntemplate <typename T>\nstruct HalfPath\
+    \ {\n  T d;\n  int u;\n  friend HalfPath max(const HalfPath& lhs, const HalfPath&\
+    \ rhs) {\n    if (lhs.d != rhs.d) return lhs.d > rhs.d ? lhs : rhs;\n    return\
+    \ lhs.u > rhs.u ? lhs : rhs;\n  }\n};\ntemplate <typename T>\nstruct Path {\n\
+    \  T d;\n  int u, v;\n  friend Path max(const Path& lhs, const Path& rhs) {\n\
+    \    if (lhs.d != rhs.d) return lhs.d > rhs.d ? lhs : rhs;\n    if (lhs.u != rhs.u)\
+    \ return lhs.u > rhs.u ? lhs : rhs;\n    return lhs.v > rhs.v ? lhs : rhs;\n \
+    \ }\n};\ntemplate <typename T>\nPath<T> path(T d, int u, int v) {\n  if (u < v)\
+    \ swap(u, v);\n  return {d, u, v};\n}\n\ntemplate <typename T>\nstruct L {\n \
+    \ Path<T> dia;\n  HalfPath<T> d1, d2;\n};\ntemplate <typename T>\nstruct H {\n\
+    \  Path<T> dia;\n  HalfPath<T> pd, cd;\n  T p_to_c;\n  int p, c;\n};\n\ntemplate\
+    \ <typename T>\nH<T> vertex(int i) {\n  H<T> r;\n  r.dia = path<T>(0, i, i);\n\
+    \  r.pd = r.cd = {0, i};\n  r.p_to_c = 0;\n  r.p = r.c = i;\n  return r;\n}\n\n\
+    template <typename T>\nstruct RootedEdgeInfo {\n  int N, root;\n  vector<int>\
+    \ par, depth;\n  vector<T> cost_to_parent;\n\n  RootedEdgeInfo() = default;\n\n\
+    \  RootedEdgeInfo(const WeightedGraph<T>& g, int r = 0)\n      : N((int)g.size()),\n\
+    \        root(r),\n        par(N, -2),\n        depth(N, 0),\n        cost_to_parent(N,\
+    \ T{}) {\n    vector<int> st;\n    st.push_back(root);\n    par[root] = -1;\n\n\
+    \    for (int it = 0; it < (int)st.size(); it++) {\n      int v = st[it];\n  \
+    \    for (auto& e : g[v]) {\n        if (e.to == par[v]) continue;\n        if\
+    \ (par[e.to] != -2) continue;\n        par[e.to] = v;\n        depth[e.to] = depth[v]\
+    \ + 1;\n        cost_to_parent[e.to] = e.cost;\n        st.push_back(e.to);\n\
+    \      }\n    }\n    assert((int)st.size() == N);\n  }\n\n  int child_if_adjacent(int\
+    \ u, int v) const {\n    if (par[u] == v) return u;\n    if (par[v] == u) return\
+    \ v;\n    return -1;\n  }\n\n  int parent_if_adjacent(int u, int v) const {\n\
+    \    int c = child_if_adjacent(u, v);\n    if (c == -1) return -1;\n    return\
+    \ u ^ v ^ c;\n  }\n\n  bool adjacent(int u, int v) const { return child_if_adjacent(u,\
+    \ v) != -1; }\n\n  T get_parent_edge(int child) const {\n    assert(child != root);\n\
+    \    return cost_to_parent[child];\n  }\n\n  T get_between_adjacent(int u, int\
+    \ v) const {\n    int c = child_if_adjacent(u, v);\n    assert(c != -1);\n   \
+    \ return cost_to_parent[c];\n  }\n\n  void set_between_adjacent(int u, int v,\
+    \ T x) {\n    int c = child_if_adjacent(u, v);\n    assert(c != -1);\n    cost_to_parent[c]\
     \ = x;\n  }\n};\n\ntemplate <typename T>\nvector<vector<int>> to_unweighted(const\
     \ WeightedGraph<T>& g) {\n  int n = (int)g.size();\n  vector<vector<int>> res(n);\n\
     \  for (int i = 0; i < n; i++) {\n    for (auto& e : g[i]) res[i].push_back(e.to);\n\
@@ -231,28 +233,33 @@ data:
     \ a.d2.u));\n  }\n  r.pd = r.cd = max(HalfPath<T>{0, i}, a.d1);\n  r.p_to_c =\
     \ 0;\n  r.p = r.c = i;\n  return r;\n}\n\ntemplate <typename T>\nstruct DynamicDiameter\
     \ {\n  const WeightedGraph<T>& g;\n  int n;\n  vector<vector<int>> tree;\n  RootedEdgeInfo<T>\
-    \ edge;\n  HeavyLightDecomposition<vector<vector<int>>> hld;\n  DPonStaticTopTreeVertexBased<\n\
-    \      vector<vector<int>>, H<T>, L<T>, function<H<T>(int)>,\n      function<H<T>(const\
-    \ H<T>&, const H<T>&)>,\n      function<L<T>(const L<T>&, const L<T>&)>,\n   \
-    \   function<L<T>(const H<T>&)>, function<H<T>(const L<T>&, int)>>\n      dp;\n\
+    \ edge;\n  HeavyLightDecomposition<vector<vector<int>>> hld;\n\n  struct VertexOp\
+    \ {\n    H<T> operator()(int i) const { return DynamicDiameterFasterImpl::vertex<T>(i);\
+    \ }\n  };\n  struct CompressOp {\n    DynamicDiameter* self;\n    H<T> operator()(const\
+    \ H<T>& p, const H<T>& c) const {\n      return DynamicDiameterFasterImpl::compress<T>(\n\
+    \          p, c, self->edge.get_between_adjacent(p.c, c.p));\n    }\n  };\n  struct\
+    \ RakeOp {\n    L<T> operator()(const L<T>& a, const L<T>& b) const {\n      return\
+    \ DynamicDiameterFasterImpl::rake<T>(a, b);\n    }\n  };\n  struct AddEdgeOp {\n\
+    \    DynamicDiameter* self;\n    L<T> operator()(const H<T>& a) const {\n    \
+    \  return DynamicDiameterFasterImpl::add_edge<T>(\n          a, self->edge.get_parent_edge(a.p));\n\
+    \    }\n  };\n  struct AddVertexOp {\n    H<T> operator()(const L<T>& a, int i)\
+    \ const {\n      return DynamicDiameterFasterImpl::add_vertex<T>(a, i);\n    }\n\
+    \  };\n\n  using DP = DPonStaticTopTreeVertexBased<vector<vector<int>>, H<T>,\
+    \ L<T>,\n                                          VertexOp, CompressOp, RakeOp,\n\
+    \                                          AddEdgeOp, AddVertexOp>;\n  DP dp;\n\
     \n  DynamicDiameter(const WeightedGraph<T>& _g, int root = 0)\n      : g(_g),\n\
     \        n((int)g.size()),\n        tree(to_unweighted(g)),\n        edge(g, root),\n\
-    \        hld(tree, root),\n        dp(\n            hld,\n            [&](int\
-    \ i) { return vertex<T>(i); },\n            [&](const H<T>& p, const H<T>& c)\
-    \ {\n              return compress<T>(p, c, edge.get_between_adjacent(p.c, c.p));\n\
-    \            },\n            [&](const L<T>& a, const L<T>& b) { return rake<T>(a,\
-    \ b); },\n            [&](const H<T>& a) {\n              return add_edge<T>(a,\
-    \ edge.get_parent_edge(a.p));\n            },\n            [&](const L<T>& a,\
-    \ int i) { return add_vertex<T>(a, i); }) {}\n\n  pair<T, pair<int, int>> get()\
-    \ {\n    auto [d, u, v] = dp.get().dia;\n    return make_pair(d, make_pair(u,\
+    \        hld(tree, root),\n        dp(hld, VertexOp{}, CompressOp{this}, RakeOp{},\
+    \ AddEdgeOp{this},\n           AddVertexOp{}) {}\n\n  pair<T, pair<int, int>>\
+    \ get() {\n    auto [d, u, v] = dp.get().dia;\n    return make_pair(d, make_pair(u,\
     \ v));\n  }\n\n  bool adjacent(int u, int v) const { return edge.adjacent(u, v);\
     \ }\n\n  int child_if_adjacent(int u, int v) const {\n    return edge.child_if_adjacent(u,\
     \ v);\n  }\n\n  int parent_if_adjacent(int u, int v) const {\n    return edge.parent_if_adjacent(u,\
     \ v);\n  }\n\n  void update(int u, int v, T x) {\n    int c = edge.child_if_adjacent(u,\
     \ v);\n    assert(c != -1);\n    edge.cost_to_parent[c] = x;\n    dp.update(c);\n\
     \  }\n};\n}  // namespace DynamicDiameterFasterImpl\n\nusing DynamicDiameterFasterImpl::DynamicDiameter;\n"
-  code: "#pragma once\n\n#include <algorithm>\n#include <cassert>\n#include <functional>\n\
-    #include <utility>\n#include <vector>\nusing namespace std;\n\n#include \"../graph/graph-template.hpp\"\
+  code: "#pragma once\n\n#include <algorithm>\n#include <cassert>\n#include <utility>\n\
+    #include <vector>\nusing namespace std;\n\n#include \"../graph/graph-template.hpp\"\
     \n#include \"static-top-tree-vertex-based.hpp\"\n\nnamespace DynamicDiameterFasterImpl\
     \ {\n\ntemplate <typename T>\nstruct HalfPath {\n  T d;\n  int u;\n  friend HalfPath\
     \ max(const HalfPath& lhs, const HalfPath& rhs) {\n    if (lhs.d != rhs.d) return\
@@ -307,20 +314,25 @@ data:
     \ a.d2.u));\n  }\n  r.pd = r.cd = max(HalfPath<T>{0, i}, a.d1);\n  r.p_to_c =\
     \ 0;\n  r.p = r.c = i;\n  return r;\n}\n\ntemplate <typename T>\nstruct DynamicDiameter\
     \ {\n  const WeightedGraph<T>& g;\n  int n;\n  vector<vector<int>> tree;\n  RootedEdgeInfo<T>\
-    \ edge;\n  HeavyLightDecomposition<vector<vector<int>>> hld;\n  DPonStaticTopTreeVertexBased<\n\
-    \      vector<vector<int>>, H<T>, L<T>, function<H<T>(int)>,\n      function<H<T>(const\
-    \ H<T>&, const H<T>&)>,\n      function<L<T>(const L<T>&, const L<T>&)>,\n   \
-    \   function<L<T>(const H<T>&)>, function<H<T>(const L<T>&, int)>>\n      dp;\n\
+    \ edge;\n  HeavyLightDecomposition<vector<vector<int>>> hld;\n\n  struct VertexOp\
+    \ {\n    H<T> operator()(int i) const { return DynamicDiameterFasterImpl::vertex<T>(i);\
+    \ }\n  };\n  struct CompressOp {\n    DynamicDiameter* self;\n    H<T> operator()(const\
+    \ H<T>& p, const H<T>& c) const {\n      return DynamicDiameterFasterImpl::compress<T>(\n\
+    \          p, c, self->edge.get_between_adjacent(p.c, c.p));\n    }\n  };\n  struct\
+    \ RakeOp {\n    L<T> operator()(const L<T>& a, const L<T>& b) const {\n      return\
+    \ DynamicDiameterFasterImpl::rake<T>(a, b);\n    }\n  };\n  struct AddEdgeOp {\n\
+    \    DynamicDiameter* self;\n    L<T> operator()(const H<T>& a) const {\n    \
+    \  return DynamicDiameterFasterImpl::add_edge<T>(\n          a, self->edge.get_parent_edge(a.p));\n\
+    \    }\n  };\n  struct AddVertexOp {\n    H<T> operator()(const L<T>& a, int i)\
+    \ const {\n      return DynamicDiameterFasterImpl::add_vertex<T>(a, i);\n    }\n\
+    \  };\n\n  using DP = DPonStaticTopTreeVertexBased<vector<vector<int>>, H<T>,\
+    \ L<T>,\n                                          VertexOp, CompressOp, RakeOp,\n\
+    \                                          AddEdgeOp, AddVertexOp>;\n  DP dp;\n\
     \n  DynamicDiameter(const WeightedGraph<T>& _g, int root = 0)\n      : g(_g),\n\
     \        n((int)g.size()),\n        tree(to_unweighted(g)),\n        edge(g, root),\n\
-    \        hld(tree, root),\n        dp(\n            hld,\n            [&](int\
-    \ i) { return vertex<T>(i); },\n            [&](const H<T>& p, const H<T>& c)\
-    \ {\n              return compress<T>(p, c, edge.get_between_adjacent(p.c, c.p));\n\
-    \            },\n            [&](const L<T>& a, const L<T>& b) { return rake<T>(a,\
-    \ b); },\n            [&](const H<T>& a) {\n              return add_edge<T>(a,\
-    \ edge.get_parent_edge(a.p));\n            },\n            [&](const L<T>& a,\
-    \ int i) { return add_vertex<T>(a, i); }) {}\n\n  pair<T, pair<int, int>> get()\
-    \ {\n    auto [d, u, v] = dp.get().dia;\n    return make_pair(d, make_pair(u,\
+    \        hld(tree, root),\n        dp(hld, VertexOp{}, CompressOp{this}, RakeOp{},\
+    \ AddEdgeOp{this},\n           AddVertexOp{}) {}\n\n  pair<T, pair<int, int>>\
+    \ get() {\n    auto [d, u, v] = dp.get().dia;\n    return make_pair(d, make_pair(u,\
     \ v));\n  }\n\n  bool adjacent(int u, int v) const { return edge.adjacent(u, v);\
     \ }\n\n  int child_if_adjacent(int u, int v) const {\n    return edge.child_if_adjacent(u,\
     \ v);\n  }\n\n  int parent_if_adjacent(int u, int v) const {\n    return edge.parent_if_adjacent(u,\
@@ -335,7 +347,7 @@ data:
   isVerificationFile: false
   path: tree/dynamic-diameter-faster.hpp
   requiredBy: []
-  timestamp: '2026-06-04 22:00:13+09:00'
+  timestamp: '2026-06-05 19:46:06+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-unit-test/dynamic-diameter-faster.test.cpp

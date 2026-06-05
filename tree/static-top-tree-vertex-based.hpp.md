@@ -35,29 +35,29 @@ data:
     document_title: Static Top Tree
     links: []
   bundledCode: "#line 2 \"tree/static-top-tree-vertex-based.hpp\"\n\n#include <cassert>\n\
-    #include <utility>\n#include <vector>\nusing namespace std;\n\n#line 2 \"tree/convert-tree.hpp\"\
-    \n\n#line 2 \"graph/graph-template.hpp\"\n\ntemplate <typename T>\nstruct edge\
-    \ {\n  int src, to;\n  T cost;\n\n  edge(int _to, T _cost) : src(-1), to(_to),\
-    \ cost(_cost) {}\n  edge(int _src, int _to, T _cost) : src(_src), to(_to), cost(_cost)\
-    \ {}\n\n  edge &operator=(const int &x) {\n    to = x;\n    return *this;\n  }\n\
-    \n  operator int() const { return to; }\n};\ntemplate <typename T>\nusing Edges\
-    \ = vector<edge<T>>;\ntemplate <typename T>\nusing WeightedGraph = vector<Edges<T>>;\n\
-    using UnweightedGraph = vector<vector<int>>;\n\n// Input of (Unweighted) Graph\n\
-    UnweightedGraph graph(int N, int M = -1, bool is_directed = false,\n         \
-    \             bool is_1origin = true) {\n  UnweightedGraph g(N);\n  if (M == -1)\
-    \ M = N - 1;\n  for (int _ = 0; _ < M; _++) {\n    int x, y;\n    cin >> x >>\
-    \ y;\n    if (is_1origin) x--, y--;\n    g[x].push_back(y);\n    if (!is_directed)\
-    \ g[y].push_back(x);\n  }\n  return g;\n}\n\n// Input of Weighted Graph\ntemplate\
-    \ <typename T>\nWeightedGraph<T> wgraph(int N, int M = -1, bool is_directed =\
-    \ false,\n                        bool is_1origin = true) {\n  WeightedGraph<T>\
+    #include <functional>\n#include <utility>\n#include <vector>\nusing namespace\
+    \ std;\n\n#line 2 \"tree/convert-tree.hpp\"\n\n#line 2 \"graph/graph-template.hpp\"\
+    \n\ntemplate <typename T>\nstruct edge {\n  int src, to;\n  T cost;\n\n  edge(int\
+    \ _to, T _cost) : src(-1), to(_to), cost(_cost) {}\n  edge(int _src, int _to,\
+    \ T _cost) : src(_src), to(_to), cost(_cost) {}\n\n  edge &operator=(const int\
+    \ &x) {\n    to = x;\n    return *this;\n  }\n\n  operator int() const { return\
+    \ to; }\n};\ntemplate <typename T>\nusing Edges = vector<edge<T>>;\ntemplate <typename\
+    \ T>\nusing WeightedGraph = vector<Edges<T>>;\nusing UnweightedGraph = vector<vector<int>>;\n\
+    \n// Input of (Unweighted) Graph\nUnweightedGraph graph(int N, int M = -1, bool\
+    \ is_directed = false,\n                      bool is_1origin = true) {\n  UnweightedGraph\
     \ g(N);\n  if (M == -1) M = N - 1;\n  for (int _ = 0; _ < M; _++) {\n    int x,\
-    \ y;\n    cin >> x >> y;\n    T c;\n    cin >> c;\n    if (is_1origin) x--, y--;\n\
-    \    g[x].emplace_back(x, y, c);\n    if (!is_directed) g[y].emplace_back(y, x,\
-    \ c);\n  }\n  return g;\n}\n\n// Input of Edges\ntemplate <typename T>\nEdges<T>\
-    \ esgraph([[maybe_unused]] int N, int M, int is_weighted = true,\n           \
-    \      bool is_1origin = true) {\n  Edges<T> es;\n  for (int _ = 0; _ < M; _++)\
-    \ {\n    int x, y;\n    cin >> x >> y;\n    T c;\n    if (is_weighted)\n     \
-    \ cin >> c;\n    else\n      c = 1;\n    if (is_1origin) x--, y--;\n    es.emplace_back(x,\
+    \ y;\n    cin >> x >> y;\n    if (is_1origin) x--, y--;\n    g[x].push_back(y);\n\
+    \    if (!is_directed) g[y].push_back(x);\n  }\n  return g;\n}\n\n// Input of\
+    \ Weighted Graph\ntemplate <typename T>\nWeightedGraph<T> wgraph(int N, int M\
+    \ = -1, bool is_directed = false,\n                        bool is_1origin = true)\
+    \ {\n  WeightedGraph<T> g(N);\n  if (M == -1) M = N - 1;\n  for (int _ = 0; _\
+    \ < M; _++) {\n    int x, y;\n    cin >> x >> y;\n    T c;\n    cin >> c;\n  \
+    \  if (is_1origin) x--, y--;\n    g[x].emplace_back(x, y, c);\n    if (!is_directed)\
+    \ g[y].emplace_back(y, x, c);\n  }\n  return g;\n}\n\n// Input of Edges\ntemplate\
+    \ <typename T>\nEdges<T> esgraph([[maybe_unused]] int N, int M, int is_weighted\
+    \ = true,\n                 bool is_1origin = true) {\n  Edges<T> es;\n  for (int\
+    \ _ = 0; _ < M; _++) {\n    int x, y;\n    cin >> x >> y;\n    T c;\n    if (is_weighted)\n\
+    \      cin >> c;\n    else\n      c = 1;\n    if (is_1origin) x--, y--;\n    es.emplace_back(x,\
     \ y, c);\n  }\n  return es;\n}\n\n// Input of Adjacency Matrix\ntemplate <typename\
     \ T>\nvector<vector<T>> adjgraph(int N, int M, T INF, int is_weighted = true,\n\
     \                           bool is_directed = false, bool is_1origin = true)\
@@ -121,7 +121,7 @@ data:
     \ return depth[a] < depth[b] ? a : b;\n  }\n\n  int dist(int a, int b) { return\
     \ depth[a] + depth[b] - depth[lca(a, b)] * 2; }\n};\n\n/**\n * @brief Heavy Light\
     \ Decomposition(\u91CD\u8EFD\u5206\u89E3)\n * @docs docs/tree/heavy-light-decomposition.md\n\
-    \ */\n#line 10 \"tree/static-top-tree-vertex-based.hpp\"\n\nnamespace StaticTopTreeVertexBasedImpl\
+    \ */\n#line 11 \"tree/static-top-tree-vertex-based.hpp\"\n\nnamespace StaticTopTreeVertexBasedImpl\
     \ {\n\nenum Type { Vertex, Compress, Rake, Add_Edge, Add_Vertex };\n\ntemplate\
     \ <typename G>\nstruct StaticTopTreeVertexBased {\n  const HeavyLightDecomposition<G>&\
     \ hld;\n  vector<vector<int>> g;\n  int root;     // \u5143\u306E\u6728\u306E\
@@ -159,100 +159,102 @@ data:
     \ G, typename Path, typename Point, typename Vertex,\n          typename Compress,\
     \ typename Rake, typename Add_edge,\n          typename Add_vertex>\nstruct DPonStaticTopTreeVertexBased\
     \ {\n  const StaticTopTreeVertexBased<G> tt;\n  vector<Path> path;\n  vector<Point>\
-    \ point;\n  const Vertex vertex;\n  const Compress compress;\n  const Rake rake;\n\
-    \  const Add_edge add_edge;\n  const Add_vertex add_vertex;\n\n  DPonStaticTopTreeVertexBased(const\
-    \ HeavyLightDecomposition<G>& hld,\n                               const Vertex&\
-    \ _vertex, const Compress& _compress,\n                               const Rake&\
-    \ _rake, const Add_edge& _add_edge,\n                               const Add_vertex&\
-    \ _add_vertex)\n      : tt(hld),\n        vertex(_vertex),\n        compress(_compress),\n\
-    \        rake(_rake),\n        add_edge(_add_edge),\n        add_vertex(_add_vertex)\
+    \ point;\n  Vertex vertex;\n  Compress compress;\n  Rake rake;\n  Add_edge add_edge;\n\
+    \  Add_vertex add_vertex;\n\n  DPonStaticTopTreeVertexBased(const HeavyLightDecomposition<G>&\
+    \ hld,\n                               const Vertex& _vertex, const Compress&\
+    \ _compress,\n                               const Rake& _rake, const Add_edge&\
+    \ _add_edge,\n                               const Add_vertex& _add_vertex)\n\
+    \      : tt(hld),\n        vertex(_vertex),\n        compress(_compress),\n  \
+    \      rake(_rake),\n        add_edge(_add_edge),\n        add_vertex(_add_vertex)\
     \ {\n    int n = tt.P.size();\n    path.resize(n), point.resize(n);\n    dfs(tt.tt_root);\n\
     \  }\n\n  Path get() { return path[tt.tt_root]; }\n  void update(int k) {\n  \
     \  while (k != -1) _update(k), k = tt.P[k];\n  }\n\n private:\n  void _update(int\
-    \ k) {\n    if (tt.T[k] == Type::Vertex) {\n      path[k] = vertex(k);\n    }\
-    \ else if (tt.T[k] == Type::Compress) {\n      path[k] = compress(path[tt.L[k]],\
-    \ path[tt.R[k]]);\n    } else if (tt.T[k] == Type::Rake) {\n      point[k] = rake(point[tt.L[k]],\
-    \ point[tt.R[k]]);\n    } else if (tt.T[k] == Type::Add_Edge) {\n      point[k]\
-    \ = add_edge(path[tt.L[k]]);\n    } else {\n      path[k] = add_vertex(point[tt.L[k]],\
-    \ k);\n    }\n  }\n\n  void dfs(int k) {\n    if (tt.L[k] != -1) dfs(tt.L[k]);\n\
-    \    if (tt.R[k] != -1) dfs(tt.R[k]);\n    _update(k);\n  }\n};\n\n}  // namespace\
-    \ StaticTopTreeVertexBasedImpl\n\nusing StaticTopTreeVertexBasedImpl::DPonStaticTopTreeVertexBased;\n\
-    using StaticTopTreeVertexBasedImpl::StaticTopTreeVertexBased;\n\n/*\n\n  // template\n\
-    \  using Path = ;\n  using Point = ;\n  auto vertex = [&](int i) -> Path {\n\n\
-    \  };\n  auto compress = [&](const Path& p, const Path& c) -> Path {\n\n  };\n\
-    \  auto rake = [&](const Point& a, const Point& b) -> Point {\n\n  };\n  auto\
-    \ add_edge = [&](const Path& a) -> Point {\n\n  };\n  auto add_vertex = [&](const\
-    \ Point& a, int i) -> Path {\n\n  };\n  HeavyLightDecomposition hld{g};\n  DPonStaticTopTreeVertexBased<vector<vector<int>>,\
-    \ Path, Point,\n  decltype(vertex), decltype(compress), decltype(rake), decltype(add_edge),\n\
-    \                    decltype(add_vertex)>\n      dp(hld, vertex, compress, rake,\
-    \ add_edge, add_vertex);\n*/\n\n/**\n * @brief Static Top Tree\n */\n"
-  code: "#pragma once\n\n#include <cassert>\n#include <utility>\n#include <vector>\n\
-    using namespace std;\n\n#include \"convert-tree.hpp\"\n#include \"heavy-light-decomposition.hpp\"\
-    \n\nnamespace StaticTopTreeVertexBasedImpl {\n\nenum Type { Vertex, Compress,\
-    \ Rake, Add_Edge, Add_Vertex };\n\ntemplate <typename G>\nstruct StaticTopTreeVertexBased\
-    \ {\n  const HeavyLightDecomposition<G>& hld;\n  vector<vector<int>> g;\n  int\
-    \ root;     // \u5143\u306E\u6728\u306E root\n  int tt_root;  // top tree \u306E\
-    \ root\n  vector<int> P, L, R;\n  vector<Type> T;\n\n  StaticTopTreeVertexBased(const\
-    \ HeavyLightDecomposition<G>& _hld) : hld(_hld) {\n    root = hld.root;\n    g\
-    \ = rooted_tree(hld.g, root);\n    int n = g.size();\n    P.resize(n, -1), L.resize(n,\
-    \ -1), R.resize(n, -1);\n    T.resize(n, Type::Vertex);\n    build();\n  }\n\n\
-    \ private:\n  int add(int l, int r, Type t) {\n    if (t == Type::Compress or\
-    \ t == Type::Rake) {\n      assert(l != -1 and r != -1);\n    }\n    if (t ==\
-    \ Type::Add_Edge) {\n      assert(l != -1 and r == -1);\n    }\n    assert(t !=\
-    \ Type::Vertex and t != Type::Add_Vertex);\n    int k = P.size();\n    P.push_back(-1),\
-    \ L.push_back(l), R.push_back(r), T.push_back(t);\n    if (l != -1) P[l] = k;\n\
-    \    if (r != -1) P[r] = k;\n    return k;\n  }\n  int add2(int k, int l, int\
-    \ r, Type t) {\n    assert(k < (int)g.size());\n    assert(t == Type::Vertex or\
-    \ t == Type::Add_Vertex);\n    if (t == Type::Vertex) {\n      assert(l == -1\
-    \ and r == -1);\n    } else {\n      assert(l != -1 and r == -1);\n    }\n   \
-    \ P[k] = -1, L[k] = l, R[k] = r, T[k] = t;\n    if (l != -1) P[l] = k;\n    if\
-    \ (r != -1) P[r] = k;\n    return k;\n  }\n  pair<int, int> merge(const vector<pair<int,\
-    \ int>>& a, Type t) {\n    assert(!a.empty());\n    if (a.size() == 1) return\
-    \ a[0];\n    int sum_s = 0;\n    for (auto& [_, s] : a) sum_s += s;\n    vector<pair<int,\
-    \ int>> b, c;\n    for (auto& [i, s] : a) {\n      (sum_s > s ? b : c).emplace_back(i,\
-    \ s);\n      sum_s -= s * 2;\n    }\n    auto [i, si] = merge(b, t);\n    auto\
-    \ [j, sj] = merge(c, t);\n    return {add(i, j, t), si + sj};\n  }\n  pair<int,\
-    \ int> compress(int i) {\n    vector<pair<int, int>> chs;\n    while (true) {\n\
-    \      chs.push_back(add_vertex(i));\n      if (g[i].empty()) break;\n      i\
-    \ = g[i][0];\n    }\n    return merge(chs, Type::Compress);\n  }\n  pair<int,\
-    \ int> rake(int i) {\n    vector<pair<int, int>> chs;\n    for (int j = 1; j <\
-    \ (int)g[i].size(); j++) chs.push_back(add_edge(g[i][j]));\n    if (chs.empty())\
-    \ return {-1, 0};\n    return merge(chs, Type::Rake);\n  }\n  pair<int, int> add_edge(int\
-    \ i) {\n    auto [j, sj] = compress(i);\n    return {add(j, -1, Type::Add_Edge),\
-    \ sj};\n  }\n  pair<int, int> add_vertex(int i) {\n    auto [j, sj] = rake(i);\n\
-    \    return {add2(i, j, -1, j == -1 ? Type::Vertex : Type::Add_Vertex), sj + 1};\n\
-    \  }\n  void build() {\n    auto [i, n] = compress(root);\n    assert((int)g.size()\
-    \ == n);\n    tt_root = i;\n  }\n};\n\ntemplate <typename G, typename Path, typename\
-    \ Point, typename Vertex,\n          typename Compress, typename Rake, typename\
-    \ Add_edge,\n          typename Add_vertex>\nstruct DPonStaticTopTreeVertexBased\
+    \ k) {\n    if (tt.T[k] == Type::Vertex) {\n      path[k] = std::invoke(vertex,\
+    \ k);\n    } else if (tt.T[k] == Type::Compress) {\n      path[k] = std::invoke(compress,\
+    \ path[tt.L[k]], path[tt.R[k]]);\n    } else if (tt.T[k] == Type::Rake) {\n  \
+    \    point[k] = std::invoke(rake, point[tt.L[k]], point[tt.R[k]]);\n    } else\
+    \ if (tt.T[k] == Type::Add_Edge) {\n      point[k] = std::invoke(add_edge, path[tt.L[k]]);\n\
+    \    } else {\n      path[k] = std::invoke(add_vertex, point[tt.L[k]], k);\n \
+    \   }\n  }\n\n  void dfs(int k) {\n    if (tt.L[k] != -1) dfs(tt.L[k]);\n    if\
+    \ (tt.R[k] != -1) dfs(tt.R[k]);\n    _update(k);\n  }\n};\n\n}  // namespace StaticTopTreeVertexBasedImpl\n\
+    \nusing StaticTopTreeVertexBasedImpl::DPonStaticTopTreeVertexBased;\nusing StaticTopTreeVertexBasedImpl::StaticTopTreeVertexBased;\n\
+    \n/*\n\n  // template\n  using Path = ;\n  using Point = ;\n  auto vertex = [&](int\
+    \ i) -> Path {\n\n  };\n  auto compress = [&](const Path& p, const Path& c) ->\
+    \ Path {\n\n  };\n  auto rake = [&](const Point& a, const Point& b) -> Point {\n\
+    \n  };\n  auto add_edge = [&](const Path& a) -> Point {\n\n  };\n  auto add_vertex\
+    \ = [&](const Point& a, int i) -> Path {\n\n  };\n  HeavyLightDecomposition hld{g};\n\
+    \  DPonStaticTopTreeVertexBased<vector<vector<int>>, Path, Point,\n  decltype(vertex),\
+    \ decltype(compress), decltype(rake), decltype(add_edge),\n                  \
+    \  decltype(add_vertex)>\n      dp(hld, vertex, compress, rake, add_edge, add_vertex);\n\
+    */\n\n/**\n * @brief Static Top Tree\n */\n"
+  code: "#pragma once\n\n#include <cassert>\n#include <functional>\n#include <utility>\n\
+    #include <vector>\nusing namespace std;\n\n#include \"convert-tree.hpp\"\n#include\
+    \ \"heavy-light-decomposition.hpp\"\n\nnamespace StaticTopTreeVertexBasedImpl\
+    \ {\n\nenum Type { Vertex, Compress, Rake, Add_Edge, Add_Vertex };\n\ntemplate\
+    \ <typename G>\nstruct StaticTopTreeVertexBased {\n  const HeavyLightDecomposition<G>&\
+    \ hld;\n  vector<vector<int>> g;\n  int root;     // \u5143\u306E\u6728\u306E\
+    \ root\n  int tt_root;  // top tree \u306E root\n  vector<int> P, L, R;\n  vector<Type>\
+    \ T;\n\n  StaticTopTreeVertexBased(const HeavyLightDecomposition<G>& _hld) : hld(_hld)\
+    \ {\n    root = hld.root;\n    g = rooted_tree(hld.g, root);\n    int n = g.size();\n\
+    \    P.resize(n, -1), L.resize(n, -1), R.resize(n, -1);\n    T.resize(n, Type::Vertex);\n\
+    \    build();\n  }\n\n private:\n  int add(int l, int r, Type t) {\n    if (t\
+    \ == Type::Compress or t == Type::Rake) {\n      assert(l != -1 and r != -1);\n\
+    \    }\n    if (t == Type::Add_Edge) {\n      assert(l != -1 and r == -1);\n \
+    \   }\n    assert(t != Type::Vertex and t != Type::Add_Vertex);\n    int k = P.size();\n\
+    \    P.push_back(-1), L.push_back(l), R.push_back(r), T.push_back(t);\n    if\
+    \ (l != -1) P[l] = k;\n    if (r != -1) P[r] = k;\n    return k;\n  }\n  int add2(int\
+    \ k, int l, int r, Type t) {\n    assert(k < (int)g.size());\n    assert(t ==\
+    \ Type::Vertex or t == Type::Add_Vertex);\n    if (t == Type::Vertex) {\n    \
+    \  assert(l == -1 and r == -1);\n    } else {\n      assert(l != -1 and r == -1);\n\
+    \    }\n    P[k] = -1, L[k] = l, R[k] = r, T[k] = t;\n    if (l != -1) P[l] =\
+    \ k;\n    if (r != -1) P[r] = k;\n    return k;\n  }\n  pair<int, int> merge(const\
+    \ vector<pair<int, int>>& a, Type t) {\n    assert(!a.empty());\n    if (a.size()\
+    \ == 1) return a[0];\n    int sum_s = 0;\n    for (auto& [_, s] : a) sum_s +=\
+    \ s;\n    vector<pair<int, int>> b, c;\n    for (auto& [i, s] : a) {\n      (sum_s\
+    \ > s ? b : c).emplace_back(i, s);\n      sum_s -= s * 2;\n    }\n    auto [i,\
+    \ si] = merge(b, t);\n    auto [j, sj] = merge(c, t);\n    return {add(i, j, t),\
+    \ si + sj};\n  }\n  pair<int, int> compress(int i) {\n    vector<pair<int, int>>\
+    \ chs;\n    while (true) {\n      chs.push_back(add_vertex(i));\n      if (g[i].empty())\
+    \ break;\n      i = g[i][0];\n    }\n    return merge(chs, Type::Compress);\n\
+    \  }\n  pair<int, int> rake(int i) {\n    vector<pair<int, int>> chs;\n    for\
+    \ (int j = 1; j < (int)g[i].size(); j++) chs.push_back(add_edge(g[i][j]));\n \
+    \   if (chs.empty()) return {-1, 0};\n    return merge(chs, Type::Rake);\n  }\n\
+    \  pair<int, int> add_edge(int i) {\n    auto [j, sj] = compress(i);\n    return\
+    \ {add(j, -1, Type::Add_Edge), sj};\n  }\n  pair<int, int> add_vertex(int i) {\n\
+    \    auto [j, sj] = rake(i);\n    return {add2(i, j, -1, j == -1 ? Type::Vertex\
+    \ : Type::Add_Vertex), sj + 1};\n  }\n  void build() {\n    auto [i, n] = compress(root);\n\
+    \    assert((int)g.size() == n);\n    tt_root = i;\n  }\n};\n\ntemplate <typename\
+    \ G, typename Path, typename Point, typename Vertex,\n          typename Compress,\
+    \ typename Rake, typename Add_edge,\n          typename Add_vertex>\nstruct DPonStaticTopTreeVertexBased\
     \ {\n  const StaticTopTreeVertexBased<G> tt;\n  vector<Path> path;\n  vector<Point>\
-    \ point;\n  const Vertex vertex;\n  const Compress compress;\n  const Rake rake;\n\
-    \  const Add_edge add_edge;\n  const Add_vertex add_vertex;\n\n  DPonStaticTopTreeVertexBased(const\
-    \ HeavyLightDecomposition<G>& hld,\n                               const Vertex&\
-    \ _vertex, const Compress& _compress,\n                               const Rake&\
-    \ _rake, const Add_edge& _add_edge,\n                               const Add_vertex&\
-    \ _add_vertex)\n      : tt(hld),\n        vertex(_vertex),\n        compress(_compress),\n\
-    \        rake(_rake),\n        add_edge(_add_edge),\n        add_vertex(_add_vertex)\
+    \ point;\n  Vertex vertex;\n  Compress compress;\n  Rake rake;\n  Add_edge add_edge;\n\
+    \  Add_vertex add_vertex;\n\n  DPonStaticTopTreeVertexBased(const HeavyLightDecomposition<G>&\
+    \ hld,\n                               const Vertex& _vertex, const Compress&\
+    \ _compress,\n                               const Rake& _rake, const Add_edge&\
+    \ _add_edge,\n                               const Add_vertex& _add_vertex)\n\
+    \      : tt(hld),\n        vertex(_vertex),\n        compress(_compress),\n  \
+    \      rake(_rake),\n        add_edge(_add_edge),\n        add_vertex(_add_vertex)\
     \ {\n    int n = tt.P.size();\n    path.resize(n), point.resize(n);\n    dfs(tt.tt_root);\n\
     \  }\n\n  Path get() { return path[tt.tt_root]; }\n  void update(int k) {\n  \
     \  while (k != -1) _update(k), k = tt.P[k];\n  }\n\n private:\n  void _update(int\
-    \ k) {\n    if (tt.T[k] == Type::Vertex) {\n      path[k] = vertex(k);\n    }\
-    \ else if (tt.T[k] == Type::Compress) {\n      path[k] = compress(path[tt.L[k]],\
-    \ path[tt.R[k]]);\n    } else if (tt.T[k] == Type::Rake) {\n      point[k] = rake(point[tt.L[k]],\
-    \ point[tt.R[k]]);\n    } else if (tt.T[k] == Type::Add_Edge) {\n      point[k]\
-    \ = add_edge(path[tt.L[k]]);\n    } else {\n      path[k] = add_vertex(point[tt.L[k]],\
-    \ k);\n    }\n  }\n\n  void dfs(int k) {\n    if (tt.L[k] != -1) dfs(tt.L[k]);\n\
-    \    if (tt.R[k] != -1) dfs(tt.R[k]);\n    _update(k);\n  }\n};\n\n}  // namespace\
-    \ StaticTopTreeVertexBasedImpl\n\nusing StaticTopTreeVertexBasedImpl::DPonStaticTopTreeVertexBased;\n\
-    using StaticTopTreeVertexBasedImpl::StaticTopTreeVertexBased;\n\n/*\n\n  // template\n\
-    \  using Path = ;\n  using Point = ;\n  auto vertex = [&](int i) -> Path {\n\n\
-    \  };\n  auto compress = [&](const Path& p, const Path& c) -> Path {\n\n  };\n\
-    \  auto rake = [&](const Point& a, const Point& b) -> Point {\n\n  };\n  auto\
-    \ add_edge = [&](const Path& a) -> Point {\n\n  };\n  auto add_vertex = [&](const\
-    \ Point& a, int i) -> Path {\n\n  };\n  HeavyLightDecomposition hld{g};\n  DPonStaticTopTreeVertexBased<vector<vector<int>>,\
-    \ Path, Point,\n  decltype(vertex), decltype(compress), decltype(rake), decltype(add_edge),\n\
-    \                    decltype(add_vertex)>\n      dp(hld, vertex, compress, rake,\
-    \ add_edge, add_vertex);\n*/\n\n/**\n * @brief Static Top Tree\n */\n"
+    \ k) {\n    if (tt.T[k] == Type::Vertex) {\n      path[k] = std::invoke(vertex,\
+    \ k);\n    } else if (tt.T[k] == Type::Compress) {\n      path[k] = std::invoke(compress,\
+    \ path[tt.L[k]], path[tt.R[k]]);\n    } else if (tt.T[k] == Type::Rake) {\n  \
+    \    point[k] = std::invoke(rake, point[tt.L[k]], point[tt.R[k]]);\n    } else\
+    \ if (tt.T[k] == Type::Add_Edge) {\n      point[k] = std::invoke(add_edge, path[tt.L[k]]);\n\
+    \    } else {\n      path[k] = std::invoke(add_vertex, point[tt.L[k]], k);\n \
+    \   }\n  }\n\n  void dfs(int k) {\n    if (tt.L[k] != -1) dfs(tt.L[k]);\n    if\
+    \ (tt.R[k] != -1) dfs(tt.R[k]);\n    _update(k);\n  }\n};\n\n}  // namespace StaticTopTreeVertexBasedImpl\n\
+    \nusing StaticTopTreeVertexBasedImpl::DPonStaticTopTreeVertexBased;\nusing StaticTopTreeVertexBasedImpl::StaticTopTreeVertexBased;\n\
+    \n/*\n\n  // template\n  using Path = ;\n  using Point = ;\n  auto vertex = [&](int\
+    \ i) -> Path {\n\n  };\n  auto compress = [&](const Path& p, const Path& c) ->\
+    \ Path {\n\n  };\n  auto rake = [&](const Point& a, const Point& b) -> Point {\n\
+    \n  };\n  auto add_edge = [&](const Path& a) -> Point {\n\n  };\n  auto add_vertex\
+    \ = [&](const Point& a, int i) -> Path {\n\n  };\n  HeavyLightDecomposition hld{g};\n\
+    \  DPonStaticTopTreeVertexBased<vector<vector<int>>, Path, Point,\n  decltype(vertex),\
+    \ decltype(compress), decltype(rake), decltype(add_edge),\n                  \
+    \  decltype(add_vertex)>\n      dp(hld, vertex, compress, rake, add_edge, add_vertex);\n\
+    */\n\n/**\n * @brief Static Top Tree\n */\n"
   dependsOn:
   - tree/convert-tree.hpp
   - graph/graph-template.hpp
@@ -262,7 +264,7 @@ data:
   requiredBy:
   - tree/dynamic-diameter-faster.hpp
   - tree/dynamic-diameter.hpp
-  timestamp: '2024-05-03 23:21:26+09:00'
+  timestamp: '2026-06-05 19:46:06+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-graph/yosupo-point-set-tree-path-composite-sum-fixed-root.test.cpp

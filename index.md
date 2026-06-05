@@ -415,6 +415,9 @@ data:
   - name: internal
     pages:
     - icon: ':heavy_check_mark:'
+      path: internal/internal-function.hpp
+      title: internal/internal-function.hpp
+    - icon: ':heavy_check_mark:'
       path: internal/internal-hash-function.hpp
       title: "\u30CF\u30C3\u30B7\u30E5\u95A2\u6570"
     - icon: ':heavy_check_mark:'

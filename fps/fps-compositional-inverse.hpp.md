@@ -8,9 +8,6 @@ data:
   - icon: ':heavy_check_mark:'
     path: fps/pow-enumerate.hpp
     title: "pow \u5217\u6319"
-  - icon: ':heavy_check_mark:'
-    path: modulo/binomial.hpp
-    title: modulo/binomial.hpp
   _extendedRequiredBy: []
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
@@ -38,44 +35,11 @@ data:
     document_title: "\u9006\u95A2\u6570"
     links: []
   bundledCode: "#line 2 \"fps/fps-compositional-inverse.hpp\"\n\n#include <cassert>\n\
-    #include <functional>\nusing namespace std;\n\n#line 2 \"modulo/binomial.hpp\"\
-    \n\n#line 4 \"modulo/binomial.hpp\"\n#include <type_traits>\n#include <vector>\n\
-    using namespace std;\n\n// \u30B3\u30F3\u30B9\u30C8\u30E9\u30AF\u30BF\u306E MAX\
-    \ \u306B \u300CC(n, r) \u3084 fac(n) \u3067\u30AF\u30A8\u30EA\u3092\u6295\u3052\
-    \u308B\u6700\u5927\u306E n \u300D\n// \u3092\u5165\u308C\u308B\u3068\u500D\u901F\
-    \u304F\u3089\u3044\u306B\u306A\u308B\n// mod \u3092\u8D85\u3048\u3066\u524D\u8A08\
-    \u7B97\u3057\u3066 0 \u5272\u308A\u3092\u8E0F\u3080\u30D0\u30B0\u306F\u5BFE\u7B56\
-    \u6E08\u307F\ntemplate <typename T>\nstruct Binomial {\n  vector<T> f, g, h;\n\
-    \  Binomial(int MAX = 0) {\n    assert(T::get_mod() != 0 && \"Binomial<mint>()\"\
-    );\n    f.resize(1, T{1});\n    g.resize(1, T{1});\n    h.resize(1, T{1});\n \
-    \   if (MAX > 0) extend(MAX + 1);\n  }\n\n  void extend(int m = -1) {\n    int\
-    \ n = f.size();\n    if (m == -1) m = n * 2;\n    m = min<int>(m, T::get_mod());\n\
-    \    if (n >= m) return;\n    f.resize(m);\n    g.resize(m);\n    h.resize(m);\n\
-    \    for (int i = n; i < m; i++) f[i] = f[i - 1] * T(i);\n    g[m - 1] = f[m -\
-    \ 1].inverse();\n    h[m - 1] = g[m - 1] * f[m - 2];\n    for (int i = m - 2;\
-    \ i >= n; i--) {\n      g[i] = g[i + 1] * T(i + 1);\n      h[i] = g[i] * f[i -\
-    \ 1];\n    }\n  }\n\n  T fac(int i) {\n    if (i < 0) return T(0);\n    while\
-    \ (i >= (int)f.size()) extend();\n    return f[i];\n  }\n\n  T finv(int i) {\n\
-    \    if (i < 0) return T(0);\n    while (i >= (int)g.size()) extend();\n    return\
-    \ g[i];\n  }\n\n  T inv(int i) {\n    if (i < 0) return -inv(-i);\n    while (i\
-    \ >= (int)h.size()) extend();\n    return h[i];\n  }\n\n  T C(int n, int r) {\n\
-    \    if (n < 0 || n < r || r < 0) return T(0);\n    return fac(n) * finv(n - r)\
-    \ * finv(r);\n  }\n\n  inline T operator()(int n, int r) { return C(n, r); }\n\
-    \n  template <typename I>\n  T multinomial(const vector<I>& r) {\n    static_assert(is_integral<I>::value\
-    \ == true);\n    int n = 0;\n    for (auto& x : r) {\n      if (x < 0) return\
-    \ T(0);\n      n += x;\n    }\n    T res = fac(n);\n    for (auto& x : r) res\
-    \ *= finv(x);\n    return res;\n  }\n\n  template <typename I>\n  T operator()(const\
-    \ vector<I>& r) {\n    return multinomial(r);\n  }\n\n  T C_naive(int n, int r)\
-    \ {\n    if (n < 0 || n < r || r < 0) return T(0);\n    T ret = T(1);\n    r =\
-    \ min(r, n - r);\n    for (int i = 1; i <= r; ++i) ret *= inv(i) * (n--);\n  \
-    \  return ret;\n  }\n\n  T P(int n, int r) {\n    if (n < 0 || n < r || r < 0)\
-    \ return T(0);\n    return fac(n) * finv(n - r);\n  }\n\n  // [x^r] 1 / (1-x)^n\n\
-    \  T H(int n, int r) {\n    if (n < 0 || r < 0) return T(0);\n    return r ==\
-    \ 0 ? 1 : C(n + r - 1, r);\n  }\n};\n#line 2 \"fps/formal-power-series.hpp\"\n\
-    \ntemplate <typename mint>\nstruct FormalPowerSeries : vector<mint> {\n  using\
-    \ vector<mint>::vector;\n  using FPS = FormalPowerSeries;\n\n  FPS &operator+=(const\
-    \ FPS &r) {\n    if (r.size() > this->size()) this->resize(r.size());\n    for\
-    \ (int i = 0; i < (int)r.size(); i++) (*this)[i] += r[i];\n    return *this;\n\
+    #include <functional>\n#include <type_traits>\nusing namespace std;\n\n#line 2\
+    \ \"fps/formal-power-series.hpp\"\n\ntemplate <typename mint>\nstruct FormalPowerSeries\
+    \ : vector<mint> {\n  using vector<mint>::vector;\n  using FPS = FormalPowerSeries;\n\
+    \n  FPS &operator+=(const FPS &r) {\n    if (r.size() > this->size()) this->resize(r.size());\n\
+    \    for (int i = 0; i < (int)r.size(); i++) (*this)[i] += r[i];\n    return *this;\n\
     \  }\n\n  FPS &operator+=(const mint &r) {\n    if (this->empty()) this->resize(1);\n\
     \    (*this)[0] += r;\n    return *this;\n  }\n\n  FPS &operator-=(const FPS &r)\
     \ {\n    if (r.size() > this->size()) this->resize(r.size());\n    for (int i\
@@ -140,11 +104,12 @@ data:
     \ mint>\nvoid *FormalPowerSeries<mint>::ntt_ptr = nullptr;\n\n/**\n * @brief \u591A\
     \u9805\u5F0F/\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\
     \n * @docs docs/fps/formal-power-series.md\n */\n#line 2 \"fps/pow-enumerate.hpp\"\
-    \n\n#line 5 \"fps/pow-enumerate.hpp\"\nusing namespace std;\n\n#line 8 \"fps/pow-enumerate.hpp\"\
-    \n\n// [x^n] f(x)^i g(x) \u3092 i=0,1,...,m \u3067\u5217\u6319\n// n = (f \u306E\
-    \u6B21\u6570) - 1\ntemplate <typename mint>\nFormalPowerSeries<mint> pow_enumerate(FormalPowerSeries<mint>\
-    \ f,\n                                      FormalPowerSeries<mint> g = {1},\n\
-    \                                      int m = -1) {\n  using fps = FormalPowerSeries<mint>;\n\
+    \n\n#line 4 \"fps/pow-enumerate.hpp\"\n#include <vector>\nusing namespace std;\n\
+    \n#line 8 \"fps/pow-enumerate.hpp\"\n\n// [x^n] f(x)^i g(x) \u3092 i=0,1,...,m\
+    \ \u3067\u5217\u6319\n// n = (f \u306E\u6B21\u6570) - 1\ntemplate <typename mint>\n\
+    FormalPowerSeries<mint> pow_enumerate(FormalPowerSeries<mint> f,\n           \
+    \                           FormalPowerSeries<mint> g = {1},\n               \
+    \                       int m = -1) {\n  using fps = FormalPowerSeries<mint>;\n\
     \  int n = f.size() - 1, k = 1;\n  g.resize(n + 1);\n  if (m == -1) m = n;\n \
     \ int h = 1;\n  while (h < n + 1) h *= 2;\n  fps P((n + 1) * k), Q((n + 1) * k),\
     \ nP, nQ, buf, buf2;\n  for (int i = 0; i <= n; i++) P[i * k + 0] = g[i];\n  for\
@@ -212,44 +177,57 @@ data:
     \  if (deg < 2) return fps{0, f[1].inverse()}.pre(deg);\n  int n = deg - 1;\n\
     \  fps h = pow_enumerate(f) * n;\n  for (int k = 1; k <= n; k++) h[k] /= k;\n\
     \  h = h.rev();\n  h *= h[0].inverse();\n  fps g = (h.log() * mint{-n}.inverse()).exp();\n\
-    \  g *= f[1].inverse();\n  return (g << 1).pre(deg);\n}\n\n// f(g(x)) = x \u3092\
-    \u6E80\u305F\u3059 g(x) mod x^{deg} \u3092\u8FD4\u3059\n// calc_f(g, d) \u306F\
-    \ f(g(x)) mod x^d \u3092\u8A08\u7B97\u3059\u308B\u95A2\u6570\ntemplate <typename\
-    \ fps>\nfps compositional_inverse(function<fps(fps, int)> calc_f, int deg) {\n\
-    \  if (deg <= 2) {\n    fps g = calc_f(fps{0, 1}, 2);\n    assert(g[0] == 0 &&\
-    \ g[1] != 0);\n    g[1] = g[1].inverse();\n    return g.pre(deg);\n  }\n  fps\
-    \ g = compositional_inverse(calc_f, (deg + 1) / 2);\n  fps fg = calc_f(g, deg\
-    \ + 1);\n  fps fdg = (fg.diff() * g.diff().inv(deg)).pre(deg);\n  return (g -\
-    \ (fg - fps{0, 1}) * fdg.inv()).pre(deg);\n}\n\n/*\n *  @brief \u9006\u95A2\u6570\
-    \n */\n"
-  code: "#pragma once\n\n#include <cassert>\n#include <functional>\nusing namespace\
-    \ std;\n\n#include \"../modulo/binomial.hpp\"\n#include \"formal-power-series.hpp\"\
-    \n#include \"pow-enumerate.hpp\"\n\n// f \u3092\u5165\u529B\u3068\u3057\u3066\
-    , f(g(x)) = x \u3092\u6E80\u305F\u3059 g(x) mod x^{deg} \u3092\u8FD4\u3059\ntemplate\
-    \ <typename mint>\nFormalPowerSeries<mint> compositional_inverse(FormalPowerSeries<mint>\
-    \ f,\n                                              int deg = -1) {\n  using fps\
-    \ = FormalPowerSeries<mint>;\n  assert((int)f.size() >= 2 and f[1] != 0);\n  if\
-    \ (deg == -1) deg = f.size();\n  if (deg < 2) return fps{0, f[1].inverse()}.pre(deg);\n\
-    \  int n = deg - 1;\n  fps h = pow_enumerate(f) * n;\n  for (int k = 1; k <= n;\
-    \ k++) h[k] /= k;\n  h = h.rev();\n  h *= h[0].inverse();\n  fps g = (h.log()\
-    \ * mint{-n}.inverse()).exp();\n  g *= f[1].inverse();\n  return (g << 1).pre(deg);\n\
-    }\n\n// f(g(x)) = x \u3092\u6E80\u305F\u3059 g(x) mod x^{deg} \u3092\u8FD4\u3059\
-    \n// calc_f(g, d) \u306F f(g(x)) mod x^d \u3092\u8A08\u7B97\u3059\u308B\u95A2\u6570\
+    \  g *= f[1].inverse();\n  return (g << 1).pre(deg);\n}\n\nnamespace CompositionalInverseImpl\
+    \ {\n\ntemplate <typename fps, typename F>\nfps compositional_inverse_impl(F&\
+    \ calc_f, int deg) {\n  if (deg <= 2) {\n    fps g = std::invoke(calc_f, fps{0,\
+    \ 1}, 2);\n    assert(g[0] == 0 && g[1] != 0);\n    g[1] = g[1].inverse();\n \
+    \   return g.pre(deg);\n  }\n  fps g = compositional_inverse_impl<fps>(calc_f,\
+    \ (deg + 1) / 2);\n  fps fg = std::invoke(calc_f, g, deg + 1);\n  fps fdg = (fg.diff()\
+    \ * g.diff().inv(deg)).pre(deg);\n  return (g - (fg - fps{0, 1}) * fdg.inv()).pre(deg);\n\
+    }\n\n}  // namespace CompositionalInverseImpl\n\n// f(g(x)) = x \u3092\u6E80\u305F\
+    \u3059 g(x) mod x^{deg} \u3092\u8FD4\u3059\n// calc_f(g, d) \u306F f(g(x)) mod\
+    \ x^d \u3092\u8A08\u7B97\u3059\u308B\u95A2\u6570\ntemplate <typename fps, typename\
+    \ F>\nauto compositional_inverse(F&& calc_f, int deg)\n    -> enable_if_t<is_invocable_r_v<fps,\
+    \ F&, fps, int>, fps> {\n  return CompositionalInverseImpl::compositional_inverse_impl<fps>(calc_f,\n\
+    \                                                                   deg);\n}\n\
     \ntemplate <typename fps>\nfps compositional_inverse(function<fps(fps, int)> calc_f,\
-    \ int deg) {\n  if (deg <= 2) {\n    fps g = calc_f(fps{0, 1}, 2);\n    assert(g[0]\
-    \ == 0 && g[1] != 0);\n    g[1] = g[1].inverse();\n    return g.pre(deg);\n  }\n\
-    \  fps g = compositional_inverse(calc_f, (deg + 1) / 2);\n  fps fg = calc_f(g,\
-    \ deg + 1);\n  fps fdg = (fg.diff() * g.diff().inv(deg)).pre(deg);\n  return (g\
-    \ - (fg - fps{0, 1}) * fdg.inv()).pre(deg);\n}\n\n/*\n *  @brief \u9006\u95A2\u6570\
-    \n */\n"
+    \ int deg) {\n  return CompositionalInverseImpl::compositional_inverse_impl<fps>(calc_f,\n\
+    \                                                                   deg);\n}\n\
+    \n/*\n *  @brief \u9006\u95A2\u6570\n */\n"
+  code: "#pragma once\n\n#include <cassert>\n#include <functional>\n#include <type_traits>\n\
+    using namespace std;\n\n#include \"formal-power-series.hpp\"\n#include \"pow-enumerate.hpp\"\
+    \n\n// f \u3092\u5165\u529B\u3068\u3057\u3066, f(g(x)) = x \u3092\u6E80\u305F\u3059\
+    \ g(x) mod x^{deg} \u3092\u8FD4\u3059\ntemplate <typename mint>\nFormalPowerSeries<mint>\
+    \ compositional_inverse(FormalPowerSeries<mint> f,\n                         \
+    \                     int deg = -1) {\n  using fps = FormalPowerSeries<mint>;\n\
+    \  assert((int)f.size() >= 2 and f[1] != 0);\n  if (deg == -1) deg = f.size();\n\
+    \  if (deg < 2) return fps{0, f[1].inverse()}.pre(deg);\n  int n = deg - 1;\n\
+    \  fps h = pow_enumerate(f) * n;\n  for (int k = 1; k <= n; k++) h[k] /= k;\n\
+    \  h = h.rev();\n  h *= h[0].inverse();\n  fps g = (h.log() * mint{-n}.inverse()).exp();\n\
+    \  g *= f[1].inverse();\n  return (g << 1).pre(deg);\n}\n\nnamespace CompositionalInverseImpl\
+    \ {\n\ntemplate <typename fps, typename F>\nfps compositional_inverse_impl(F&\
+    \ calc_f, int deg) {\n  if (deg <= 2) {\n    fps g = std::invoke(calc_f, fps{0,\
+    \ 1}, 2);\n    assert(g[0] == 0 && g[1] != 0);\n    g[1] = g[1].inverse();\n \
+    \   return g.pre(deg);\n  }\n  fps g = compositional_inverse_impl<fps>(calc_f,\
+    \ (deg + 1) / 2);\n  fps fg = std::invoke(calc_f, g, deg + 1);\n  fps fdg = (fg.diff()\
+    \ * g.diff().inv(deg)).pre(deg);\n  return (g - (fg - fps{0, 1}) * fdg.inv()).pre(deg);\n\
+    }\n\n}  // namespace CompositionalInverseImpl\n\n// f(g(x)) = x \u3092\u6E80\u305F\
+    \u3059 g(x) mod x^{deg} \u3092\u8FD4\u3059\n// calc_f(g, d) \u306F f(g(x)) mod\
+    \ x^d \u3092\u8A08\u7B97\u3059\u308B\u95A2\u6570\ntemplate <typename fps, typename\
+    \ F>\nauto compositional_inverse(F&& calc_f, int deg)\n    -> enable_if_t<is_invocable_r_v<fps,\
+    \ F&, fps, int>, fps> {\n  return CompositionalInverseImpl::compositional_inverse_impl<fps>(calc_f,\n\
+    \                                                                   deg);\n}\n\
+    \ntemplate <typename fps>\nfps compositional_inverse(function<fps(fps, int)> calc_f,\
+    \ int deg) {\n  return CompositionalInverseImpl::compositional_inverse_impl<fps>(calc_f,\n\
+    \                                                                   deg);\n}\n\
+    \n/*\n *  @brief \u9006\u95A2\u6570\n */\n"
   dependsOn:
-  - modulo/binomial.hpp
   - fps/formal-power-series.hpp
   - fps/pow-enumerate.hpp
   isVerificationFile: false
   path: fps/fps-compositional-inverse.hpp
   requiredBy: []
-  timestamp: '2024-03-28 20:36:39+09:00'
+  timestamp: '2026-06-05 19:46:06+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-fps/yosupo-compositional-inverse.test.cpp
