@@ -1,7 +1,6 @@
 #define PROBLEM "https://yukicoder.me/problems/no/1781"
 //
 #include "../../template/template.hpp"
-//
 
 using namespace Nyaan;
 

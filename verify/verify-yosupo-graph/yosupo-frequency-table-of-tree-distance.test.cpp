@@ -2,7 +2,6 @@
 
 #include "../../template/template.hpp"
 
-
 #include "../../misc/fastio.hpp"
 
 #include "../../tree/frequency-table-of-tree-distance.hpp"

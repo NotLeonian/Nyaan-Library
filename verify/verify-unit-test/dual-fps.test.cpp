@@ -6,7 +6,6 @@
 #include "../../modint/montgomery-modint.hpp"
 //
 #include "../../fps/dual-fps.hpp"
-//
 
 using mint = LazyMontgomeryModInt<998244353>;
 using fps = FormalPowerSeries<mint>;

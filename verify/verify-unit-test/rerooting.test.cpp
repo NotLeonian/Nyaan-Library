@@ -2,7 +2,6 @@
 //
 #include "../../template/template.hpp"
 //
-//
 #include "../../tree/rerooting.hpp"
 //
 #include "../../misc/rng.hpp"

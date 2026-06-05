@@ -4,7 +4,6 @@
 #include <vector>
 using namespace std;
 
-
 // return value : pair<graph, root>
 template <typename T>
 pair<vector<vector<int>>, int> CartesianTree(vector<T> &a) {

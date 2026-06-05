@@ -4,7 +4,6 @@
 //
 #include "../../ntt/multivariate-circular-convolution.hpp"
 //
-//
 using namespace Nyaan;
 
 void q() {

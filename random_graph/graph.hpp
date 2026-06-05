@@ -5,7 +5,6 @@
 #include <iostream>
 #include <vector>
 
-
 using namespace std;
 
 // 辺の重みはlong long決め打ち
