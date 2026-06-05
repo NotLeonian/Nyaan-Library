@@ -12,10 +12,8 @@ namespace golden_section_search_impl {
 
 using i64 = long long;
 
-// [min, max] は閉区間を入力する
-template <typename T, bool get_min = true, typename F = void>
-auto golden_section_search(F&& f, i64 min, i64 max)
-    -> enable_if_t<is_invocable_r_v<T, F&, i64>, pair<i64, T>> {
+template <typename T, bool get_min, typename F>
+pair<i64, T> golden_section_search_body(F& f, i64 min, i64 max) {
   assert(min <= max);
   i64 a = min - 1, x, b;
   {
@@ -37,6 +35,21 @@ auto golden_section_search(F&& f, i64 min, i64 max)
     }
   }
   return {x, fx};
+}
+
+// [min, max] は閉区間を入力する
+template <typename T, bool get_min = true, typename F = void>
+auto golden_section_search(F&& f, i64 min, i64 max)
+    -> enable_if_t<is_invocable_r_v<T, F&, i64>, pair<i64, T>> {
+  return golden_section_search_body<T, get_min>(f, min, max);
+}
+
+template <bool get_min = true, typename F>
+auto golden_section_search(F&& f, i64 min, i64 max)
+    -> enable_if_t<is_invocable_v<F&, i64>,
+                   pair<i64, invoke_result_t<F&, i64>>> {
+  using T = invoke_result_t<F&, i64>;
+  return golden_section_search_body<T, get_min>(f, min, max);
 }
 
 }  // namespace golden_section_search_impl
