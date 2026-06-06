@@ -5,7 +5,7 @@
 #include <vector>
 using namespace std;
 
-#include "../fps/formal-power-series.hpp"
+#include "../fps/arbitrary-fps.hpp"
 #include "../internal/internal-math.hpp"
 #include "../math/constexpr-primitive-root.hpp"
 #include "../modint/arbitrary-modint.hpp"

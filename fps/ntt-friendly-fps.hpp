@@ -1,80 +1,78 @@
 #pragma once
 
-#ifndef NYAAN_FPS_BACKEND_DEFINED
-#define NYAAN_FPS_BACKEND_DEFINED
-
 #include "../ntt/ntt.hpp"
 #include "./formal-power-series.hpp"
 
 template <typename mint>
-void FormalPowerSeries<mint>::set_fft() {
-  if (!ntt_ptr) ntt_ptr = new NTT<mint>;
-}
-
-template <typename mint>
-FormalPowerSeries<mint>& FormalPowerSeries<mint>::operator*=(
-    const FormalPowerSeries<mint>& r) {
-  if (this->empty() || r.empty()) {
-    this->clear();
-    return *this;
+void fps_set_fft_impl(FormalPowerSeries<mint>*, FPSBackendPriority<1>) {
+  if (!FormalPowerSeries<mint>::ntt_ptr) {
+    FormalPowerSeries<mint>::ntt_ptr = new NTT<mint>;
   }
-  set_fft();
-  auto ret = static_cast<NTT<mint>*>(ntt_ptr)->multiply(*this, r);
-  return *this = FormalPowerSeries<mint>(ret.begin(), ret.end());
 }
 
 template <typename mint>
-void FormalPowerSeries<mint>::ntt() {
-  set_fft();
-  static_cast<NTT<mint>*>(ntt_ptr)->ntt(*this);
+FormalPowerSeries<mint>& fps_multiply_impl(FormalPowerSeries<mint>& f,
+                                           const FormalPowerSeries<mint>& r,
+                                           FPSBackendPriority<1>) {
+  FormalPowerSeries<mint>::set_fft();
+  auto ret = static_cast<NTT<mint>*>(FormalPowerSeries<mint>::ntt_ptr)->multiply(f, r);
+  return f = FormalPowerSeries<mint>(ret.begin(), ret.end());
 }
 
 template <typename mint>
-void FormalPowerSeries<mint>::intt() {
-  set_fft();
-  static_cast<NTT<mint>*>(ntt_ptr)->intt(*this);
+void fps_ntt_impl(FormalPowerSeries<mint>& f, FPSBackendPriority<1>) {
+  FormalPowerSeries<mint>::set_fft();
+  static_cast<NTT<mint>*>(FormalPowerSeries<mint>::ntt_ptr)->ntt(f);
 }
 
 template <typename mint>
-void FormalPowerSeries<mint>::ntt_doubling() {
-  set_fft();
-  static_cast<NTT<mint>*>(ntt_ptr)->ntt_doubling(*this);
+void fps_intt_impl(FormalPowerSeries<mint>& f, FPSBackendPriority<1>) {
+  FormalPowerSeries<mint>::set_fft();
+  static_cast<NTT<mint>*>(FormalPowerSeries<mint>::ntt_ptr)->intt(f);
 }
 
 template <typename mint>
-int FormalPowerSeries<mint>::ntt_pr() {
-  set_fft();
-  return static_cast<NTT<mint>*>(ntt_ptr)->pr;
+void fps_ntt_doubling_impl(FormalPowerSeries<mint>& f, FPSBackendPriority<1>) {
+  FormalPowerSeries<mint>::set_fft();
+  static_cast<NTT<mint>*>(FormalPowerSeries<mint>::ntt_ptr)->ntt_doubling(f);
 }
 
 template <typename mint>
-FormalPowerSeries<mint> FormalPowerSeries<mint>::inv(int deg) const {
-  assert((*this)[0] != mint(0));
-  if (deg == -1) deg = (int)this->size();
+int fps_ntt_pr_impl(FormalPowerSeries<mint>*, FPSBackendPriority<1>) {
+  FormalPowerSeries<mint>::set_fft();
+  return static_cast<NTT<mint>*>(FormalPowerSeries<mint>::ntt_ptr)->pr;
+}
+
+template <typename mint>
+FormalPowerSeries<mint> fps_inv_impl(const FormalPowerSeries<mint>& f, int deg,
+                                     FPSBackendPriority<1>) {
+  assert(f[0] != mint(0));
+  if (deg == -1) deg = (int)f.size();
   FormalPowerSeries<mint> res(deg);
-  res[0] = {mint(1) / (*this)[0]};
+  res[0] = {mint(1) / f[0]};
   for (int d = 1; d < deg; d <<= 1) {
-    FormalPowerSeries<mint> f(2 * d), g(2 * d);
-    for (int j = 0; j < min((int)this->size(), 2 * d); j++) f[j] = (*this)[j];
+    FormalPowerSeries<mint> F(2 * d), g(2 * d);
+    for (int j = 0; j < min((int)f.size(), 2 * d); j++) F[j] = f[j];
     for (int j = 0; j < d; j++) g[j] = res[j];
-    f.ntt();
+    F.ntt();
     g.ntt();
-    for (int j = 0; j < 2 * d; j++) f[j] *= g[j];
-    f.intt();
-    for (int j = 0; j < d; j++) f[j] = 0;
-    f.ntt();
-    for (int j = 0; j < 2 * d; j++) f[j] *= g[j];
-    f.intt();
-    for (int j = d; j < min(2 * d, deg); j++) res[j] = -f[j];
+    for (int j = 0; j < 2 * d; j++) F[j] *= g[j];
+    F.intt();
+    for (int j = 0; j < d; j++) F[j] = 0;
+    F.ntt();
+    for (int j = 0; j < 2 * d; j++) F[j] *= g[j];
+    F.intt();
+    for (int j = d; j < min(2 * d, deg); j++) res[j] = -F[j];
   }
   return res.pre(deg);
 }
 
 template <typename mint>
-FormalPowerSeries<mint> FormalPowerSeries<mint>::exp(int deg) const {
+FormalPowerSeries<mint> fps_exp_impl(const FormalPowerSeries<mint>& f, int deg,
+                                     FPSBackendPriority<1>) {
   using fps = FormalPowerSeries<mint>;
-  assert((*this).size() == 0 || (*this)[0] == mint(0));
-  if (deg == -1) deg = this->size();
+  assert(f.size() == 0 || f[0] == mint(0));
+  if (deg == -1) deg = f.size();
 
   fps inv;
   inv.reserve(deg + 1);
@@ -102,7 +100,7 @@ FormalPowerSeries<mint> FormalPowerSeries<mint>::exp(int deg) const {
     }
   };
 
-  fps b{1, 1 < (int)this->size() ? (*this)[1] : 0}, c{1}, z1, z2{1, 1};
+  fps b{1, 1 < (int)f.size() ? f[1] : 0}, c{1}, z1, z2{1, 1};
   for (int m = 2; m < deg; m *= 2) {
     auto y = b;
     y.resize(2 * m);
@@ -119,7 +117,7 @@ FormalPowerSeries<mint> FormalPowerSeries<mint>::exp(int deg) const {
     z2 = c;
     z2.resize(2 * m);
     z2.ntt();
-    fps x(begin(*this), begin(*this) + min<int>(this->size(), m));
+    fps x(begin(f), begin(f) + min<int>(f.size(), m));
     x.resize(m);
     inplace_diff(x);
     x.push_back(mint(0));
@@ -134,7 +132,7 @@ FormalPowerSeries<mint> FormalPowerSeries<mint>::exp(int deg) const {
     x.intt();
     x.pop_back();
     inplace_integral(x);
-    for (int i = m; i < min<int>(this->size(), 2 * m); ++i) x[i] += (*this)[i];
+    for (int i = m; i < min<int>(f.size(), 2 * m); ++i) x[i] += f[i];
     fill(begin(x), begin(x) + m, mint(0));
     x.ntt();
     for (int i = 0; i < 2 * m; ++i) x[i] *= y[i];
@@ -148,5 +146,3 @@ FormalPowerSeries<mint> FormalPowerSeries<mint>::exp(int deg) const {
  * @brief NTT mod用FPSライブラリ
  * @docs docs/fps/ntt-friendly-fps.md
  */
-
-#endif
