@@ -1,7 +1,6 @@
 #pragma once
 
 #include <functional>
-#include <unordered_map>
 using namespace std;
 
 #include "../math/enumerate-quotient.hpp"

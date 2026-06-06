@@ -2,7 +2,6 @@
 
 #include "../../template/template.hpp"
 #include "../../prime/fast-factorize.hpp"
-#include "../../prime/osak.hpp"
 
 unsigned long long rng2() {
   static unsigned long long x_ =

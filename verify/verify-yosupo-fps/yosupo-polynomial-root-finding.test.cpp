@@ -2,9 +2,9 @@
 //
 #include "../../template/template.hpp"
 //
+#include "../../fps/ntt-friendly-fps.hpp"
 #include "../../fps/root-finding.hpp"
 //
-#include "../../fps/ntt-friendly-fps.hpp"
 #include "../../modint/montgomery-modint.hpp"
 #include "../../modulo/binomial.hpp"
 // #include "fps/arbitrary-fps.hpp"

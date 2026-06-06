@@ -1,6 +1,10 @@
 #pragma once
 
-#include "formal-power-series.hpp"
+#include <cassert>
+#include <vector>
+using namespace std;
+
+#include "arbitrary-fps.hpp"
 
 template <typename mint>
 mint LinearRecurrence(long long k, FormalPowerSeries<mint> Q,

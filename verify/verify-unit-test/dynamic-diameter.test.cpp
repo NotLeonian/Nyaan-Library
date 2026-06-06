@@ -5,8 +5,6 @@
 #include "../../tree/dynamic-diameter.hpp"
 using namespace Nyaan;
 //
-#include "../../graph/graph-utility.hpp"
-//
 #include "../../shortest-path/dijkstra.hpp"
 //
 #include "../../misc/rng.hpp"

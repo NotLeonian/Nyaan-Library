@@ -6,7 +6,7 @@
 //
 #include "../../modint/arbitrary-modint.hpp"
 //
-#include "../../prime/fast-factorize.hpp"
+#include "../../prime/miller-rabin.hpp"
 #include "../../prime/prime-enumerate.hpp"
 //
 #include "../../misc/all.hpp"

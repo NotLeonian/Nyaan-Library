@@ -1,5 +1,12 @@
 #pragma once
 
+#include <algorithm>
+#include <cassert>
+#include <cstdint>
+#include <iterator>
+#include <vector>
+using namespace std;
+
 template <typename mint>
 struct FormalPowerSeries : vector<mint> {
   using vector<mint>::vector;
@@ -183,6 +190,56 @@ struct FormalPowerSeries : vector<mint> {
 };
 template <typename mint>
 void *FormalPowerSeries<mint>::ntt_ptr = nullptr;
+
+template <int N>
+struct FPSBackendPriority : FPSBackendPriority<N - 1> {};
+template <>
+struct FPSBackendPriority<0> {};
+
+template <typename mint>
+void FormalPowerSeries<mint>::set_fft() {
+  fps_set_fft_impl((FormalPowerSeries<mint>*)nullptr, FPSBackendPriority<1>{});
+}
+
+template <typename mint>
+FormalPowerSeries<mint>& FormalPowerSeries<mint>::operator*=(const FPS& r) {
+  if (this->empty() || r.empty()) {
+    this->clear();
+    return *this;
+  }
+  return fps_multiply_impl(*this, r, FPSBackendPriority<1>{});
+}
+
+template <typename mint>
+void FormalPowerSeries<mint>::ntt() {
+  fps_ntt_impl(*this, FPSBackendPriority<1>{});
+}
+
+template <typename mint>
+void FormalPowerSeries<mint>::intt() {
+  fps_intt_impl(*this, FPSBackendPriority<1>{});
+}
+
+template <typename mint>
+void FormalPowerSeries<mint>::ntt_doubling() {
+  fps_ntt_doubling_impl(*this, FPSBackendPriority<1>{});
+}
+
+template <typename mint>
+int FormalPowerSeries<mint>::ntt_pr() {
+  return fps_ntt_pr_impl((FormalPowerSeries<mint>*)nullptr,
+                         FPSBackendPriority<1>{});
+}
+
+template <typename mint>
+FormalPowerSeries<mint> FormalPowerSeries<mint>::inv(int deg) const {
+  return fps_inv_impl(*this, deg, FPSBackendPriority<1>{});
+}
+
+template <typename mint>
+FormalPowerSeries<mint> FormalPowerSeries<mint>::exp(int deg) const {
+  return fps_exp_impl(*this, deg, FPSBackendPriority<1>{});
+}
 
 /**
  * @brief 多項式/形式的冪級数ライブラリ

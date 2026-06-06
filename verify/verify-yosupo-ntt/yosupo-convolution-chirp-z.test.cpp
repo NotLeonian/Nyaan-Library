@@ -4,7 +4,6 @@
 //
 #include "../../fps/arbitrary-fps.hpp"
 #include "../../modint/montgomery-modint.hpp"
-#include "../../ntt/arbitrary-ntt.hpp"
 #include "../../ntt/chirp-z.hpp"
 
 using mint = LazyMontgomeryModInt<998244353>;

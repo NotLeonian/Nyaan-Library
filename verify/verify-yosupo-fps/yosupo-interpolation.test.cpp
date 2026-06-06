@@ -1,7 +1,6 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/polynomial_interpolation"
 
 #include "../../template/template.hpp"
-#include "../../fps/multipoint-evaluation.hpp"
 #include "../../fps/ntt-friendly-fps.hpp"
 #include "../../modint/montgomery-modint.hpp"
 #include "../../fps/polynomial-interpolation.hpp"

@@ -3,7 +3,6 @@
 #include "../../template/template.hpp"
 //
 #include "../../graph/cycle-detection.hpp"
-#include "../../graph/graph-template.hpp"
 
 using namespace Nyaan;
 void Nyaan::solve() {

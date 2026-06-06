@@ -1,5 +1,11 @@
 #pragma once
 
+#include <algorithm>
+#include <cstdint>
+#include <iterator>
+#include <vector>
+using namespace std;
+
 template <typename mint>
 struct NTT {
   static constexpr uint32_t get_pr() {

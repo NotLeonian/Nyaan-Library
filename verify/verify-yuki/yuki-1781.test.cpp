@@ -1,8 +1,6 @@
 #define PROBLEM "https://yukicoder.me/problems/no/1781"
 //
 #include "../../template/template.hpp"
-//
-#include "../../prime/prime-enumerate.hpp"
 
 using namespace Nyaan;
 

@@ -1,7 +1,5 @@
 #pragma once
 
-#include "arbitrary-ntt.hpp"
-
 // f(A W^0), f(A W^1), ..., f(A W^{N-1}) を返す
 template <typename fps>
 fps ChirpZ(fps f, typename fps::value_type W, int N = -1,

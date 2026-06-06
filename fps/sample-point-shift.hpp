@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../modulo/binomial.hpp"
-#include "formal-power-series.hpp"
+#include "arbitrary-fps.hpp"
 
 // input : y(0), y(1), ..., y(n - 1)
 // output : y(t), y(t + 1), ..., y(t + m - 1)

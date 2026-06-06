@@ -1,6 +1,5 @@
 #pragma once
 
-#include "rational-binomial.hpp"
 #include "rational.hpp"
 
 template <typename R = Rational>

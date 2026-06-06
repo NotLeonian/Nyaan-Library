@@ -4,7 +4,6 @@
 #include "../../misc/fastio.hpp"
 #include "../../modint/montgomery-modint.hpp"
 #include "../../modulo/binomial.hpp"
-#include "../../fps/lagrange-interpolation-point.hpp"
 #include "../../fps/sum-of-exponential-times-poly.hpp"
 
 using namespace Nyaan; void Nyaan::solve() {

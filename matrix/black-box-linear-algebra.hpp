@@ -1,3 +1,10 @@
+#include <algorithm>
+#include <cassert>
+#include <cstdint>
+#include <cstdlib>
+#include <utility>
+#include <vector>
+using namespace std;
 
 #include "../fps/berlekamp-massey.hpp"
 #include "../fps/formal-power-series.hpp"

@@ -1,7 +1,6 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/shortest_path"
 
 #include "../../template/template.hpp"
-#include "../../graph/graph-utility.hpp"
 #include "../../shortest-path/dijkstra.hpp"
 #include "../../shortest-path/restore-shortest-path.hpp"
 

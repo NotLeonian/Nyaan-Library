@@ -1,5 +1,9 @@
 #pragma once
-#include "./randomized-binary-search-tree.hpp"
+
+#include <functional>
+using namespace std;
+
+#include "randomized-binary-search-tree.hpp"
 
 template <typename T, int S = 2000000, bool MULTI = false>
 struct OrderedSet {

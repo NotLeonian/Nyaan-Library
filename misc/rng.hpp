@@ -1,5 +1,11 @@
 #pragma once
 
+#include <algorithm>
+#include <cassert>
+#include <unordered_set>
+#include <vector>
+using namespace std;
+
 #include "../internal/internal-seed.hpp"
 
 namespace my_rand {

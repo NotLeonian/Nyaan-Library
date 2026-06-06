@@ -1,5 +1,10 @@
 #pragma once
 
+#include <algorithm>
+#include <iterator>
+#include <vector>
+using namespace std;
+
 template <typename mint>
 vector<mint> BerlekampMassey(const vector<mint> &s) {
   const int N = (int)s.size();

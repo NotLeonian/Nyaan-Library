@@ -1,5 +1,6 @@
 #pragma once
 
+#include "./lagrange-interpolation-point.hpp"
 #include "../modulo/binomial.hpp"
 
 // given  : f(0)...f(k) (deg(f) = k), a, n
