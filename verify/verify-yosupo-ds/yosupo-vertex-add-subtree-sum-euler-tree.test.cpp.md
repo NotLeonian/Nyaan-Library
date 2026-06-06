@@ -277,7 +277,7 @@ data:
     \ operator[](int u) const {\n    return {begin(es) + head[u], begin(es) + head[u\
     \ + 1]};\n  }\n  int size() const { return N; }\n};\n\n}  // namespace StaticGraphImpl\n\
     \nusing StaticGraphImpl::StaticGraph;\n\n/**\n * @brief Static Graph\n * @docs\
-    \ docs/graph/static-graph.md\n */\n#line 2 \"misc/fastio.hpp\"\n\n#line 8 \"misc/fastio.hpp\"\
+    \ docs/graph/static-graph.md\n */\n#line 2 \"misc/fastio.hpp\"\n\n#line 9 \"misc/fastio.hpp\"\
     \n\nusing namespace std;\n\n#line 2 \"internal/internal-type-traits.hpp\"\n\n\
     #line 4 \"internal/internal-type-traits.hpp\"\nusing namespace std;\n\nnamespace\
     \ internal {\ntemplate <typename T>\nusing is_broadly_integral =\n    typename\
@@ -303,7 +303,7 @@ data:
     \          \\\n  struct has_##var<T, void_t<decltype(T::var)>> : true_type {};\
     \ \\\n  template <class T>                                            \\\n  constexpr\
     \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace internal\n#line\
-    \ 12 \"misc/fastio.hpp\"\n\nnamespace fastio {\nstatic constexpr int SZ = 1 <<\
+    \ 13 \"misc/fastio.hpp\"\n\nnamespace fastio {\nstatic constexpr int SZ = 1 <<\
     \ 17;\nstatic constexpr int offset = 64;\nchar inbuf[SZ], outbuf[SZ];\nint in_left\
     \ = 0, in_right = 0, out_right = 0;\n\nstruct Pre {\n  char num[40000];\n  constexpr\
     \ Pre() : num() {\n    for (int i = 0; i < 10000; i++) {\n      int n = i;\n \
@@ -452,7 +452,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-ds/yosupo-vertex-add-subtree-sum-euler-tree.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-ds/yosupo-vertex-add-subtree-sum-euler-tree.test.cpp

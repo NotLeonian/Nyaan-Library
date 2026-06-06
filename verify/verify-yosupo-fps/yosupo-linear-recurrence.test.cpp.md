@@ -229,7 +229,7 @@ data:
     \n  }\n#define die(...)             \\\n  do {                       \\\n    Nyaan::out(__VA_ARGS__);\
     \ \\\n    return;                  \\\n  } while (0)\n#line 70 \"template/template.hpp\"\
     \n\nnamespace Nyaan {\nvoid solve();\n}\nint main() { Nyaan::solve(); }\n#line\
-    \ 2 \"modint/montgomery-modint.hpp\"\n\n#line 4 \"modint/montgomery-modint.hpp\"\
+    \ 2 \"modint/montgomery-modint.hpp\"\n\n#line 5 \"modint/montgomery-modint.hpp\"\
     \n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n\
     \  using i32 = int32_t;\n  using u32 = uint32_t;\n  using u64 = uint64_t;\n\n\
     \  static constexpr u32 get_r() {\n    u32 ret = mod;\n    for (i32 i = 0; i <\
@@ -260,25 +260,26 @@ data:
     \ ret;\n  }\n\n  constexpr mint inverse() const {\n    int x = get(), y = mod,\
     \ u = 1, v = 0, t = 0, tmp = 0;\n    while (y > 0) {\n      t = x / y;\n     \
     \ x -= t * y, u -= t * v;\n      tmp = x, x = y, y = tmp;\n      tmp = u, u =\
-    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend ostream &operator<<(ostream\
-    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend istream &operator>>(istream\
-    \ &is, mint &b) {\n    int64_t t;\n    is >> t;\n    b = LazyMontgomeryModInt<mod>(t);\n\
-    \    return (is);\n  }\n\n  constexpr u32 get() const {\n    u32 ret = reduce(a);\n\
-    \    return ret >= mod ? ret - mod : ret;\n  }\n\n  static constexpr u32 get_mod()\
-    \ { return mod; }\n};\n#line 2 \"fps/berlekamp-massey.hpp\"\n\ntemplate <typename\
-    \ mint>\nvector<mint> BerlekampMassey(const vector<mint> &s) {\n  const int N\
-    \ = (int)s.size();\n  vector<mint> b, c;\n  b.reserve(N + 1);\n  c.reserve(N +\
-    \ 1);\n  b.push_back(mint(1));\n  c.push_back(mint(1));\n  mint y = mint(1);\n\
-    \  for (int ed = 1; ed <= N; ed++) {\n    int l = int(c.size()), m = int(b.size());\n\
-    \    mint x = 0;\n    for (int i = 0; i < l; i++) x += c[i] * s[ed - l + i];\n\
-    \    b.emplace_back(mint(0));\n    m++;\n    if (x == mint(0)) continue;\n   \
-    \ mint freq = x / y;\n    if (l < m) {\n      auto tmp = c;\n      c.insert(begin(c),\
-    \ m - l, mint(0));\n      for (int i = 0; i < m; i++) c[m - 1 - i] -= freq * b[m\
-    \ - 1 - i];\n      b = tmp;\n      y = x;\n    } else {\n      for (int i = 0;\
-    \ i < m; i++) c[l - 1 - i] -= freq * b[m - 1 - i];\n    }\n  }\n  reverse(begin(c),\
-    \ end(c));\n  return c;\n}\n#line 2 \"misc/fastio.hpp\"\n\n#line 8 \"misc/fastio.hpp\"\
-    \n\nusing namespace std;\n\n#line 2 \"internal/internal-type-traits.hpp\"\n\n\
-    #line 4 \"internal/internal-type-traits.hpp\"\nusing namespace std;\n\nnamespace\
+    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend std::ostream &operator<<(std::ostream\
+    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend std::istream\
+    \ &operator>>(std::istream &is, mint &b) {\n    int64_t t;\n    is >> t;\n   \
+    \ b = LazyMontgomeryModInt<mod>(t);\n    return (is);\n  }\n\n  constexpr u32\
+    \ get() const {\n    u32 ret = reduce(a);\n    return ret >= mod ? ret - mod :\
+    \ ret;\n  }\n\n  static constexpr u32 get_mod() { return mod; }\n};\n#line 2 \"\
+    fps/berlekamp-massey.hpp\"\n\n#line 6 \"fps/berlekamp-massey.hpp\"\nusing namespace\
+    \ std;\n\ntemplate <typename mint>\nvector<mint> BerlekampMassey(const vector<mint>\
+    \ &s) {\n  const int N = (int)s.size();\n  vector<mint> b, c;\n  b.reserve(N +\
+    \ 1);\n  c.reserve(N + 1);\n  b.push_back(mint(1));\n  c.push_back(mint(1));\n\
+    \  mint y = mint(1);\n  for (int ed = 1; ed <= N; ed++) {\n    int l = int(c.size()),\
+    \ m = int(b.size());\n    mint x = 0;\n    for (int i = 0; i < l; i++) x += c[i]\
+    \ * s[ed - l + i];\n    b.emplace_back(mint(0));\n    m++;\n    if (x == mint(0))\
+    \ continue;\n    mint freq = x / y;\n    if (l < m) {\n      auto tmp = c;\n \
+    \     c.insert(begin(c), m - l, mint(0));\n      for (int i = 0; i < m; i++) c[m\
+    \ - 1 - i] -= freq * b[m - 1 - i];\n      b = tmp;\n      y = x;\n    } else {\n\
+    \      for (int i = 0; i < m; i++) c[l - 1 - i] -= freq * b[m - 1 - i];\n    }\n\
+    \  }\n  reverse(begin(c), end(c));\n  return c;\n}\n#line 2 \"misc/fastio.hpp\"\
+    \n\n#line 9 \"misc/fastio.hpp\"\n\nusing namespace std;\n\n#line 2 \"internal/internal-type-traits.hpp\"\
+    \n\n#line 4 \"internal/internal-type-traits.hpp\"\nusing namespace std;\n\nnamespace\
     \ internal {\ntemplate <typename T>\nusing is_broadly_integral =\n    typename\
     \ conditional_t<is_integral_v<T> || is_same_v<T, __int128_t> ||\n            \
     \                   is_same_v<T, __uint128_t>,\n                           true_type,\
@@ -302,7 +303,7 @@ data:
     \          \\\n  struct has_##var<T, void_t<decltype(T::var)>> : true_type {};\
     \ \\\n  template <class T>                                            \\\n  constexpr\
     \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace internal\n#line\
-    \ 12 \"misc/fastio.hpp\"\n\nnamespace fastio {\nstatic constexpr int SZ = 1 <<\
+    \ 13 \"misc/fastio.hpp\"\n\nnamespace fastio {\nstatic constexpr int SZ = 1 <<\
     \ 17;\nstatic constexpr int offset = 64;\nchar inbuf[SZ], outbuf[SZ];\nint in_left\
     \ = 0, in_right = 0, out_right = 0;\n\nstruct Pre {\n  char num[40000];\n  constexpr\
     \ Pre() : num() {\n    for (int i = 0; i < 10000; i++) {\n      int n = i;\n \
@@ -378,7 +379,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-fps/yosupo-linear-recurrence.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-fps/yosupo-linear-recurrence.test.cpp

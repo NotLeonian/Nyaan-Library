@@ -449,8 +449,9 @@ data:
     \ BASE_NUM>::basis =\n    internal::Hash<BASE_NUM>::get_basis();\nusing roriha\
     \ = RollingHash<string, 2>;\n\n/**\n * @brief Rolling Hash\n * @docs docs/string/rolling-hash.md\n\
     \ */\n#line 8 \"verify/verify-unit-test/string-search.test.cpp\"\n//\n#line 2\
-    \ \"misc/rng.hpp\"\n\n#line 2 \"internal/internal-seed.hpp\"\n\n#line 4 \"internal/internal-seed.hpp\"\
-    \nusing namespace std;\n\nnamespace internal {\nunsigned long long non_deterministic_seed()\
+    \ \"misc/rng.hpp\"\n\n#line 7 \"misc/rng.hpp\"\nusing namespace std;\n\n#line\
+    \ 2 \"internal/internal-seed.hpp\"\n\n#line 4 \"internal/internal-seed.hpp\"\n\
+    using namespace std;\n\nnamespace internal {\nunsigned long long non_deterministic_seed()\
     \ {\n  unsigned long long m =\n      chrono::duration_cast<chrono::nanoseconds>(\n\
     \          chrono::high_resolution_clock::now().time_since_epoch())\n        \
     \  .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >> 31, m\
@@ -462,7 +463,7 @@ data:
     \u30FC\u30C9\u304C\u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long long\
     \ seed() {\n#if defined(NyaanLocal) && !defined(RANDOMIZED_SEED)\n  return deterministic_seed();\n\
     #else\n  return non_deterministic_seed();\n#endif\n}\n\n}  // namespace internal\n\
-    #line 4 \"misc/rng.hpp\"\n\nnamespace my_rand {\nusing i64 = long long;\nusing\
+    #line 10 \"misc/rng.hpp\"\n\nnamespace my_rand {\nusing i64 = long long;\nusing\
     \ u64 = unsigned long long;\n\n// [0, 2^64 - 1)\nu64 rng() {\n  static u64 _x\
     \ = internal::seed();\n  return _x ^= _x << 7, _x ^= _x >> 9;\n}\n\n// [l, r]\n\
     i64 rng(i64 l, i64 r) {\n  assert(l <= r);\n  return l + rng() % u64(r - l + 1);\n\
@@ -528,7 +529,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/string-search.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/string-search.test.cpp

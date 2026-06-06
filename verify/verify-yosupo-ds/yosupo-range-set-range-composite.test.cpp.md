@@ -266,7 +266,7 @@ data:
     \ 1; l < r; l >>= 1, r >>= 1) {\n      if (l & 1) vl = f(vl, reflect(l++));\n\
     \      if (r & 1) vr = f(reflect(--r), vr);\n    }\n    return f(vl, vr);\n  }\n\
     };\n#line 7 \"verify/verify-yosupo-ds/yosupo-range-set-range-composite.test.cpp\"\
-    \n//\n#line 2 \"modint/montgomery-modint.hpp\"\n\n#line 4 \"modint/montgomery-modint.hpp\"\
+    \n//\n#line 2 \"modint/montgomery-modint.hpp\"\n\n#line 5 \"modint/montgomery-modint.hpp\"\
     \n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n\
     \  using i32 = int32_t;\n  using u32 = uint32_t;\n  using u64 = uint64_t;\n\n\
     \  static constexpr u32 get_r() {\n    u32 ret = mod;\n    for (i32 i = 0; i <\
@@ -297,25 +297,26 @@ data:
     \ ret;\n  }\n\n  constexpr mint inverse() const {\n    int x = get(), y = mod,\
     \ u = 1, v = 0, t = 0, tmp = 0;\n    while (y > 0) {\n      t = x / y;\n     \
     \ x -= t * y, u -= t * v;\n      tmp = x, x = y, y = tmp;\n      tmp = u, u =\
-    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend ostream &operator<<(ostream\
-    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend istream &operator>>(istream\
-    \ &is, mint &b) {\n    int64_t t;\n    is >> t;\n    b = LazyMontgomeryModInt<mod>(t);\n\
-    \    return (is);\n  }\n\n  constexpr u32 get() const {\n    u32 ret = reduce(a);\n\
-    \    return ret >= mod ? ret - mod : ret;\n  }\n\n  static constexpr u32 get_mod()\
-    \ { return mod; }\n};\n#line 9 \"verify/verify-yosupo-ds/yosupo-range-set-range-composite.test.cpp\"\
-    \n//\nusing namespace Nyaan;\nusing mint = LazyMontgomeryModInt<998244353>;\n\
-    // using mint = LazyMontgomeryModInt<1000000007>;\nusing vm = vector<mint>;\n\
-    using vvm = vector<vm>;\n\nusing namespace Nyaan;\n\nvoid q() {\n  ini(N, Q);\n\
-    \n  using A = Affine<mint>;\n  using D = pair<A, int>;\n\n  D ti = make_pair(A{1,\
-    \ 0}, 0);\n  A ei{0, 0};\n  auto f = [](const D& a, const D& b) -> D {\n    return\
-    \ make_pair(b.fi(a.fi), a.se + b.se);\n  };\n  auto g = [](const D& a, const A&\
-    \ b) -> D {\n    return make_pair(Power(b, a.se, A{1, 0}), a.se);\n  };\n  auto\
-    \ h = [](const A&, const A& b) { return b; };\n\n  V<D> v(N, make_pair(ei, 1));\n\
-    \  rep(i, N) in(v[i].fi.a, v[i].fi.b);\n\n  LazySegmentTree seg(v, f, g, h, ti,\
-    \ ei);\n\n  rep(i, Q) {\n    ini(cmd);\n    if (cmd == 0) {\n      ini(l, r, c,\
-    \ d);\n      seg.update(l, r, A{c, d});\n    } else {\n      ini(l, r, x);\n \
-    \     auto a = seg.query(l, r);\n      out(a.fi(x));\n    }\n  }\n}\n\nvoid Nyaan::solve()\
-    \ {\n  int t = 1;\n  // in(t);\n  while (t--) q();\n}\n"
+    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend std::ostream &operator<<(std::ostream\
+    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend std::istream\
+    \ &operator>>(std::istream &is, mint &b) {\n    int64_t t;\n    is >> t;\n   \
+    \ b = LazyMontgomeryModInt<mod>(t);\n    return (is);\n  }\n\n  constexpr u32\
+    \ get() const {\n    u32 ret = reduce(a);\n    return ret >= mod ? ret - mod :\
+    \ ret;\n  }\n\n  static constexpr u32 get_mod() { return mod; }\n};\n#line 9 \"\
+    verify/verify-yosupo-ds/yosupo-range-set-range-composite.test.cpp\"\n//\nusing\
+    \ namespace Nyaan;\nusing mint = LazyMontgomeryModInt<998244353>;\n// using mint\
+    \ = LazyMontgomeryModInt<1000000007>;\nusing vm = vector<mint>;\nusing vvm = vector<vm>;\n\
+    \nusing namespace Nyaan;\n\nvoid q() {\n  ini(N, Q);\n\n  using A = Affine<mint>;\n\
+    \  using D = pair<A, int>;\n\n  D ti = make_pair(A{1, 0}, 0);\n  A ei{0, 0};\n\
+    \  auto f = [](const D& a, const D& b) -> D {\n    return make_pair(b.fi(a.fi),\
+    \ a.se + b.se);\n  };\n  auto g = [](const D& a, const A& b) -> D {\n    return\
+    \ make_pair(Power(b, a.se, A{1, 0}), a.se);\n  };\n  auto h = [](const A&, const\
+    \ A& b) { return b; };\n\n  V<D> v(N, make_pair(ei, 1));\n  rep(i, N) in(v[i].fi.a,\
+    \ v[i].fi.b);\n\n  LazySegmentTree seg(v, f, g, h, ti, ei);\n\n  rep(i, Q) {\n\
+    \    ini(cmd);\n    if (cmd == 0) {\n      ini(l, r, c, d);\n      seg.update(l,\
+    \ r, A{c, d});\n    } else {\n      ini(l, r, x);\n      auto a = seg.query(l,\
+    \ r);\n      out(a.fi(x));\n    }\n  }\n}\n\nvoid Nyaan::solve() {\n  int t =\
+    \ 1;\n  // in(t);\n  while (t--) q();\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/range_set_range_composite\"\
     \n//\n#include \"../../template/template.hpp\"\n//\n#include \"../../math/affine-transformation.hpp\"\
     \n#include \"../../segment-tree/lazy-segment-tree.hpp\"\n//\n#include \"../../modint/montgomery-modint.hpp\"\
@@ -345,7 +346,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-ds/yosupo-range-set-range-composite.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-ds/yosupo-range-set-range-composite.test.cpp

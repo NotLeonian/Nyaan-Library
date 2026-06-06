@@ -236,7 +236,7 @@ data:
     \ \\\n    return;                  \\\n  } while (0)\n#line 70 \"template/template.hpp\"\
     \n\nnamespace Nyaan {\nvoid solve();\n}\nint main() { Nyaan::solve(); }\n#line\
     \ 4 \"verify/verify-unit-test/mf.test.cpp\"\n//\n#line 2 \"modint/montgomery-modint.hpp\"\
-    \n\n#line 4 \"modint/montgomery-modint.hpp\"\n\ntemplate <uint32_t mod>\nstruct\
+    \n\n#line 5 \"modint/montgomery-modint.hpp\"\n\ntemplate <uint32_t mod>\nstruct\
     \ LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n  using i32 =\
     \ int32_t;\n  using u32 = uint32_t;\n  using u64 = uint64_t;\n\n  static constexpr\
     \ u32 get_r() {\n    u32 ret = mod;\n    for (i32 i = 0; i < 4; ++i) ret *= 2\
@@ -267,18 +267,19 @@ data:
     \ ret;\n  }\n\n  constexpr mint inverse() const {\n    int x = get(), y = mod,\
     \ u = 1, v = 0, t = 0, tmp = 0;\n    while (y > 0) {\n      t = x / y;\n     \
     \ x -= t * y, u -= t * v;\n      tmp = x, x = y, y = tmp;\n      tmp = u, u =\
-    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend ostream &operator<<(ostream\
-    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend istream &operator>>(istream\
-    \ &is, mint &b) {\n    int64_t t;\n    is >> t;\n    b = LazyMontgomeryModInt<mod>(t);\n\
-    \    return (is);\n  }\n\n  constexpr u32 get() const {\n    u32 ret = reduce(a);\n\
-    \    return ret >= mod ? ret - mod : ret;\n  }\n\n  static constexpr u32 get_mod()\
-    \ { return mod; }\n};\n#line 2 \"multiplicative-function/divisor-multiple-transform.hpp\"\
-    \n\n#line 5 \"multiplicative-function/divisor-multiple-transform.hpp\"\nusing\
-    \ namespace std;\n\n#line 2 \"prime/prime-enumerate.hpp\"\n\n// Prime Sieve {2,\
-    \ 3, 5, 7, 11, 13, 17, ...}\nvector<int> prime_enumerate(int N) {\n  vector<bool>\
-    \ sieve(N / 3 + 1, 1);\n  for (int p = 5, d = 4, i = 1, sqn = sqrt(N); p <= sqn;\
-    \ p += d = 6 - d, i++) {\n    if (!sieve[i]) continue;\n    for (int q = p * p\
-    \ / 3, r = d * p / 3 + (d * p % 3 == 2), s = 2 * p,\n             qe = sieve.size();\n\
+    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend std::ostream &operator<<(std::ostream\
+    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend std::istream\
+    \ &operator>>(std::istream &is, mint &b) {\n    int64_t t;\n    is >> t;\n   \
+    \ b = LazyMontgomeryModInt<mod>(t);\n    return (is);\n  }\n\n  constexpr u32\
+    \ get() const {\n    u32 ret = reduce(a);\n    return ret >= mod ? ret - mod :\
+    \ ret;\n  }\n\n  static constexpr u32 get_mod() { return mod; }\n};\n#line 2 \"\
+    multiplicative-function/divisor-multiple-transform.hpp\"\n\n#line 5 \"multiplicative-function/divisor-multiple-transform.hpp\"\
+    \nusing namespace std;\n\n#line 2 \"prime/prime-enumerate.hpp\"\n\n#line 5 \"\
+    prime/prime-enumerate.hpp\"\nusing namespace std;\n\n// Prime Sieve {2, 3, 5,\
+    \ 7, 11, 13, 17, ...}\nvector<int> prime_enumerate(int N) {\n  vector<bool> sieve(N\
+    \ / 3 + 1, 1);\n  for (int p = 5, d = 4, i = 1, sqn = sqrt(N); p <= sqn; p +=\
+    \ d = 6 - d, i++) {\n    if (!sieve[i]) continue;\n    for (int q = p * p / 3,\
+    \ r = d * p / 3 + (d * p % 3 == 2), s = 2 * p,\n             qe = sieve.size();\n\
     \         q < qe; q += r = s - r)\n      sieve[q] = 0;\n  }\n  vector<int> ret{2,\
     \ 3};\n  for (int p = 5, d = 4, i = 1; p <= N; p += d = 6 - d, i++)\n    if (sieve[i])\
     \ ret.push_back(p);\n  while (!ret.empty() && ret.back() > N) ret.pop_back();\n\
@@ -310,9 +311,10 @@ data:
     \ p2 = rbegin(a); p2 != p1; p2++)\n        if (p2->first % p1->first == 0) p1->second\
     \ -= p2->second;\n  }\n};\n\n/**\n * @brief \u500D\u6570\u5909\u63DB\u30FB\u7D04\
     \u6570\u5909\u63DB\n * @docs docs/multiplicative-function/divisor-multiple-transform.md\n\
-    \ */\n#line 2 \"multiplicative-function/enamurate-multiplicative-function.hpp\"\
-    \n\n#line 5 \"multiplicative-function/enamurate-multiplicative-function.hpp\"\n\
-    \n// f(n, p, c) : n = pow(p, c), f is multiplicative function\n\ntemplate <typename\
+    \ */\n#line 2 \"multiplicative-function/mf-famous-series.hpp\"\n\n#line 2 \"multiplicative-function/enamurate-multiplicative-function.hpp\"\
+    \n\n#line 4 \"multiplicative-function/enamurate-multiplicative-function.hpp\"\n\
+    using namespace std;\n\n#line 7 \"multiplicative-function/enamurate-multiplicative-function.hpp\"\
+    \n\n// f(n, p, c) : n = pow(p, c), f is multiplicative function\n\ntemplate <typename\
     \ T, T (*f)(int, int, int)>\nstruct enamurate_multiplicative_function {\n  enamurate_multiplicative_function(int\
     \ _n)\n      : ps(prime_enumerate(_n)), a(_n + 1, T()), n(_n), p(ps.size()) {}\n\
     \n  vector<T> run() {\n    a[1] = 1;\n    dfs(-1, 1, 1);\n    return a;\n  }\n\
@@ -322,8 +324,7 @@ data:
     \ = ps[j];\n      if (nx > n) break;\n      for (int c = 1; nx <= n; nx *= ps[j],\
     \ dx *= ps[j], ++c) {\n        dfs(j, nx, y * f(dx, ps[j], c));\n      }\n   \
     \ }\n  }\n};\n\n/**\n * @brief \u4E57\u6CD5\u7684\u95A2\u6570\u306E\u5217\u6319\
-    \n */\n#line 2 \"multiplicative-function/mf-famous-series.hpp\"\n\n#line 5 \"\
-    multiplicative-function/mf-famous-series.hpp\"\n\nnamespace multiplicative_function\
+    \n */\n#line 4 \"multiplicative-function/mf-famous-series.hpp\"\n\nnamespace multiplicative_function\
     \ {\ntemplate <typename T>\nT moebius(int, int, int c) {\n  return c == 0 ? 1\
     \ : c == 1 ? -1 : 0;\n}\ntemplate <typename T>\nT sigma0(int, int, int c) {\n\
     \  return c + 1;\n}\ntemplate <typename T>\nT sigma1(int n, int p, int) {\n  return\
@@ -338,13 +339,13 @@ data:
     template <typename T>\nstatic constexpr vector<T> totient(int n) {\n  enamurate_multiplicative_function<T,\
     \ multiplicative_function::totient<T>> em(\n      n);\n  return em.run();\n}\n\
     \n/**\n * @brief \u6709\u540D\u306A\u4E57\u6CD5\u7684\u95A2\u6570\n * @docs docs/multiplicative-function/mf-famous-series.md\n\
-    \ */\n#line 9 \"verify/verify-unit-test/mf.test.cpp\"\nusing mint = LazyMontgomeryModInt<998244353>;\n\
+    \ */\n#line 8 \"verify/verify-unit-test/mf.test.cpp\"\nusing mint = LazyMontgomeryModInt<998244353>;\n\
     \n#line 2 \"misc/timer.hpp\"\n\n#line 4 \"misc/timer.hpp\"\nusing namespace std;\n\
     \nstruct Timer {\n  chrono::high_resolution_clock::time_point st;\n\n  Timer()\
     \ { reset(); }\n  void reset() { st = chrono::high_resolution_clock::now(); }\n\
     \n  long long elapsed() {\n    auto ed = chrono::high_resolution_clock::now();\n\
     \    return chrono::duration_cast<chrono::milliseconds>(ed - st).count();\n  }\n\
-    \  long long operator()() { return elapsed(); }\n};\n#line 12 \"verify/verify-unit-test/mf.test.cpp\"\
+    \  long long operator()() { return elapsed(); }\n};\n#line 11 \"verify/verify-unit-test/mf.test.cpp\"\
     \n\nusing namespace Nyaan;\n\n#include <cxxabi.h>\nstring get_name(const type_info&\
     \ id) {\n  int stat;\n  char* name = abi::__cxa_demangle(id.name(), 0, 0, &stat);\n\
     \  assert(name != NULL && stat == 0);\n  string res = string(name);\n  free(name);\n\
@@ -381,11 +382,10 @@ data:
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/aplusb\"\n\n#include \"\
     ../../template/template.hpp\"\n//\n#include \"../../modint/montgomery-modint.hpp\"\
     \n#include \"../../multiplicative-function/divisor-multiple-transform.hpp\"\n\
-    #include \"../../multiplicative-function/enamurate-multiplicative-function.hpp\"\
-    \n#include \"../../multiplicative-function/mf-famous-series.hpp\"\nusing mint\
-    \ = LazyMontgomeryModInt<998244353>;\n\n#include \"../../misc/timer.hpp\"\n\n\
-    using namespace Nyaan;\n\n#include <cxxabi.h>\nstring get_name(const type_info&\
-    \ id) {\n  int stat;\n  char* name = abi::__cxa_demangle(id.name(), 0, 0, &stat);\n\
+    #include \"../../multiplicative-function/mf-famous-series.hpp\"\nusing mint =\
+    \ LazyMontgomeryModInt<998244353>;\n\n#include \"../../misc/timer.hpp\"\n\nusing\
+    \ namespace Nyaan;\n\n#include <cxxabi.h>\nstring get_name(const type_info& id)\
+    \ {\n  int stat;\n  char* name = abi::__cxa_demangle(id.name(), 0, 0, &stat);\n\
     \  assert(name != NULL && stat == 0);\n  string res = string(name);\n  free(name);\n\
     \  return res;\n}\n\ntemplate <typename T>\nvoid test_moebius(int n = TEN(7))\
     \ {\n  Timer timer;\n  // moebius function\n  {\n    // cerr << \"moebius, \"\
@@ -427,13 +427,13 @@ data:
   - modint/montgomery-modint.hpp
   - multiplicative-function/divisor-multiple-transform.hpp
   - prime/prime-enumerate.hpp
-  - multiplicative-function/enamurate-multiplicative-function.hpp
   - multiplicative-function/mf-famous-series.hpp
+  - multiplicative-function/enamurate-multiplicative-function.hpp
   - misc/timer.hpp
   isVerificationFile: true
   path: verify/verify-unit-test/mf.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/mf.test.cpp

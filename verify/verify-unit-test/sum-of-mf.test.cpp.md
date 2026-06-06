@@ -237,17 +237,19 @@ data:
     \n\nnamespace Nyaan {\nvoid solve();\n}\nint main() { Nyaan::solve(); }\n#line\
     \ 4 \"verify/verify-unit-test/sum-of-mf.test.cpp\"\n//\n#line 2 \"multiplicative-function/mf-famous-series.hpp\"\
     \n\n#line 2 \"multiplicative-function/enamurate-multiplicative-function.hpp\"\n\
-    \n#line 2 \"prime/prime-enumerate.hpp\"\n\n// Prime Sieve {2, 3, 5, 7, 11, 13,\
-    \ 17, ...}\nvector<int> prime_enumerate(int N) {\n  vector<bool> sieve(N / 3 +\
-    \ 1, 1);\n  for (int p = 5, d = 4, i = 1, sqn = sqrt(N); p <= sqn; p += d = 6\
-    \ - d, i++) {\n    if (!sieve[i]) continue;\n    for (int q = p * p / 3, r = d\
-    \ * p / 3 + (d * p % 3 == 2), s = 2 * p,\n             qe = sieve.size();\n  \
-    \       q < qe; q += r = s - r)\n      sieve[q] = 0;\n  }\n  vector<int> ret{2,\
-    \ 3};\n  for (int p = 5, d = 4, i = 1; p <= N; p += d = 6 - d, i++)\n    if (sieve[i])\
-    \ ret.push_back(p);\n  while (!ret.empty() && ret.back() > N) ret.pop_back();\n\
-    \  return ret;\n}\n#line 5 \"multiplicative-function/enamurate-multiplicative-function.hpp\"\
-    \n\n// f(n, p, c) : n = pow(p, c), f is multiplicative function\n\ntemplate <typename\
-    \ T, T (*f)(int, int, int)>\nstruct enamurate_multiplicative_function {\n  enamurate_multiplicative_function(int\
+    \n#line 4 \"multiplicative-function/enamurate-multiplicative-function.hpp\"\n\
+    using namespace std;\n\n#line 2 \"prime/prime-enumerate.hpp\"\n\n#line 5 \"prime/prime-enumerate.hpp\"\
+    \nusing namespace std;\n\n// Prime Sieve {2, 3, 5, 7, 11, 13, 17, ...}\nvector<int>\
+    \ prime_enumerate(int N) {\n  vector<bool> sieve(N / 3 + 1, 1);\n  for (int p\
+    \ = 5, d = 4, i = 1, sqn = sqrt(N); p <= sqn; p += d = 6 - d, i++) {\n    if (!sieve[i])\
+    \ continue;\n    for (int q = p * p / 3, r = d * p / 3 + (d * p % 3 == 2), s =\
+    \ 2 * p,\n             qe = sieve.size();\n         q < qe; q += r = s - r)\n\
+    \      sieve[q] = 0;\n  }\n  vector<int> ret{2, 3};\n  for (int p = 5, d = 4,\
+    \ i = 1; p <= N; p += d = 6 - d, i++)\n    if (sieve[i]) ret.push_back(p);\n \
+    \ while (!ret.empty() && ret.back() > N) ret.pop_back();\n  return ret;\n}\n#line\
+    \ 7 \"multiplicative-function/enamurate-multiplicative-function.hpp\"\n\n// f(n,\
+    \ p, c) : n = pow(p, c), f is multiplicative function\n\ntemplate <typename T,\
+    \ T (*f)(int, int, int)>\nstruct enamurate_multiplicative_function {\n  enamurate_multiplicative_function(int\
     \ _n)\n      : ps(prime_enumerate(_n)), a(_n + 1, T()), n(_n), p(ps.size()) {}\n\
     \n  vector<T> run() {\n    a[1] = 1;\n    dfs(-1, 1, 1);\n    return a;\n  }\n\
     \n private:\n  vector<int> ps;\n  vector<T> a;\n  int n, p;\n  void dfs(int i,\
@@ -256,7 +258,7 @@ data:
     \ = ps[j];\n      if (nx > n) break;\n      for (int c = 1; nx <= n; nx *= ps[j],\
     \ dx *= ps[j], ++c) {\n        dfs(j, nx, y * f(dx, ps[j], c));\n      }\n   \
     \ }\n  }\n};\n\n/**\n * @brief \u4E57\u6CD5\u7684\u95A2\u6570\u306E\u5217\u6319\
-    \n */\n#line 5 \"multiplicative-function/mf-famous-series.hpp\"\n\nnamespace multiplicative_function\
+    \n */\n#line 4 \"multiplicative-function/mf-famous-series.hpp\"\n\nnamespace multiplicative_function\
     \ {\ntemplate <typename T>\nT moebius(int, int, int c) {\n  return c == 0 ? 1\
     \ : c == 1 ? -1 : 0;\n}\ntemplate <typename T>\nT sigma0(int, int, int c) {\n\
     \  return c + 1;\n}\ntemplate <typename T>\nT sigma1(int n, int p, int) {\n  return\
@@ -350,7 +352,7 @@ data:
     \  for (int i = 0; i < (int)p.size(); i++) dfs(dfs, i, 1, p[i], N / p[i], 1);\n\
     \  return ans;\n}\n\n/**\n * @brief \u30C8\u30FC\u30B7\u30A7\u30F3\u30C8\u95A2\
     \u6570\u306E\u548C\n */\n#line 8 \"verify/verify-unit-test/sum-of-mf.test.cpp\"\
-    \n//\n#line 2 \"modint/montgomery-modint.hpp\"\n\n#line 4 \"modint/montgomery-modint.hpp\"\
+    \n//\n#line 2 \"modint/montgomery-modint.hpp\"\n\n#line 5 \"modint/montgomery-modint.hpp\"\
     \n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n\
     \  using i32 = int32_t;\n  using u32 = uint32_t;\n  using u64 = uint64_t;\n\n\
     \  static constexpr u32 get_r() {\n    u32 ret = mod;\n    for (i32 i = 0; i <\
@@ -381,18 +383,18 @@ data:
     \ ret;\n  }\n\n  constexpr mint inverse() const {\n    int x = get(), y = mod,\
     \ u = 1, v = 0, t = 0, tmp = 0;\n    while (y > 0) {\n      t = x / y;\n     \
     \ x -= t * y, u -= t * v;\n      tmp = x, x = y, y = tmp;\n      tmp = u, u =\
-    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend ostream &operator<<(ostream\
-    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend istream &operator>>(istream\
-    \ &is, mint &b) {\n    int64_t t;\n    is >> t;\n    b = LazyMontgomeryModInt<mod>(t);\n\
-    \    return (is);\n  }\n\n  constexpr u32 get() const {\n    u32 ret = reduce(a);\n\
-    \    return ret >= mod ? ret - mod : ret;\n  }\n\n  static constexpr u32 get_mod()\
-    \ { return mod; }\n};\n#line 10 \"verify/verify-unit-test/sum-of-mf.test.cpp\"\
-    \n//\nusing namespace Nyaan;\nusing mint = LazyMontgomeryModInt<998244353>;\n\
-    // using mint = LazyMontgomeryModInt<1000000007>;\nusing vm = vector<mint>;\n\
-    using vvm = vector<vm>;\n\nusing namespace Nyaan;\n\nmint f(ll p, ll c) {\n  ll\
-    \ res = 1;\n  while (--c) res *= p;\n  return res * (p - 1);\n}\n\nvoid Nyaan::solve()\
-    \ {\n  int N = 1000;\n  auto tot = totient<mint>(N);\n\n  rep(i, N) tot[i + 1]\
-    \ += tot[i];\n  rep1(i, N) {\n    assert(tot[i] == sum_of_totient<mint>(i));\n\
+    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend std::ostream &operator<<(std::ostream\
+    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend std::istream\
+    \ &operator>>(std::istream &is, mint &b) {\n    int64_t t;\n    is >> t;\n   \
+    \ b = LazyMontgomeryModInt<mod>(t);\n    return (is);\n  }\n\n  constexpr u32\
+    \ get() const {\n    u32 ret = reduce(a);\n    return ret >= mod ? ret - mod :\
+    \ ret;\n  }\n\n  static constexpr u32 get_mod() { return mod; }\n};\n#line 10\
+    \ \"verify/verify-unit-test/sum-of-mf.test.cpp\"\n//\nusing namespace Nyaan;\n\
+    using mint = LazyMontgomeryModInt<998244353>;\n// using mint = LazyMontgomeryModInt<1000000007>;\n\
+    using vm = vector<mint>;\nusing vvm = vector<vm>;\n\nusing namespace Nyaan;\n\n\
+    mint f(ll p, ll c) {\n  ll res = 1;\n  while (--c) res *= p;\n  return res * (p\
+    \ - 1);\n}\n\nvoid Nyaan::solve() {\n  int N = 1000;\n  auto tot = totient<mint>(N);\n\
+    \n  rep(i, N) tot[i + 1] += tot[i];\n  rep1(i, N) {\n    assert(tot[i] == sum_of_totient<mint>(i));\n\
     \    mf_prefix_sum<mint, f> mf(i);\n    auto h1 = mf.prime_sum_table();\n    auto\
     \ h0 = mf.pi_table();\n    assert(sz(h1) == sz(h0));\n    rep(j, sz(h1)) h1[j]\
     \ -= h0[j];\n\n    auto g = mf.min_25_sieve(h1);\n    rep1(j, mf.s - mf.sq - 1)\
@@ -431,7 +433,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/sum-of-mf.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/sum-of-mf.test.cpp

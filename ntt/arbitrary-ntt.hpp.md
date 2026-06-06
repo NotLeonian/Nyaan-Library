@@ -11,6 +11,24 @@ data:
   - icon: ':heavy_check_mark:'
     path: fps/arbitrary-fps.hpp
     title: fps/arbitrary-fps.hpp
+  - icon: ':heavy_check_mark:'
+    path: fps/find-p-recursive.hpp
+    title: "P-recursive\u306E\u9AD8\u901F\u8A08\u7B97"
+  - icon: ':heavy_check_mark:'
+    path: fps/kitamasa.hpp
+    title: "\u7DDA\u5F62\u6F38\u5316\u5F0F\u306E\u9AD8\u901F\u8A08\u7B97"
+  - icon: ':heavy_check_mark:'
+    path: fps/mod-pow.hpp
+    title: Mod-Pow ($f(x)^k \mod g(x)$)
+  - icon: ':heavy_check_mark:'
+    path: fps/nth-term.hpp
+    title: "\u7DDA\u5F62\u56DE\u5E30\u6570\u5217\u306E\u9AD8\u901F\u8A08\u7B97(Berlekamp-Massey/Bostan-Mori)"
+  - icon: ':heavy_check_mark:'
+    path: fps/root-finding.hpp
+    title: fps/root-finding.hpp
+  - icon: ':heavy_check_mark:'
+    path: fps/sample-point-shift.hpp
+    title: fps/sample-point-shift.hpp
   - icon: ':warning:'
     path: math/bigint-all.hpp
     title: math/bigint-all.hpp
@@ -33,8 +51,14 @@ data:
     path: math/bigint.hpp
     title: "\u591A\u500D\u9577\u6574\u6570"
   - icon: ':heavy_check_mark:'
-    path: ntt/chirp-z.hpp
-    title: Chirp Z-transform(Bluestein's algorithm)
+    path: matrix/black-box-linear-algebra.hpp
+    title: Black Box Linear Algebra
+  - icon: ':heavy_check_mark:'
+    path: matrix/polynomial-matrix-prefix-prod.hpp
+    title: "\u591A\u9805\u5F0F\u884C\u5217\u306Eprefix product"
+  - icon: ':heavy_check_mark:'
+    path: modulo/factorial.hpp
+    title: "\u968E\u4E57 $\\mod p$"
   - icon: ':heavy_check_mark:'
     path: ntt/cooley-tukey-ntt.hpp
     title: Cooley-Tukey FFT Algorithm
@@ -44,9 +68,6 @@ data:
   - icon: ':heavy_check_mark:'
     path: ntt/rader-ntt.hpp
     title: Rader's FFT Algorithm
-  - icon: ':heavy_check_mark:'
-    path: tree/frequency-table-of-tree-distance.hpp
-    title: "\u9802\u70B9\u9593\u306E\u8DDD\u96E2\u306E\u5EA6\u6570\u5206\u5E03"
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-ntl/aoj-ntl-2-a.test.cpp
@@ -91,8 +112,20 @@ data:
     path: verify/verify-unit-test/garner-bigint.test.cpp
     title: verify/verify-unit-test/garner-bigint.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/verify-unit-test/p-recursive.test.cpp
+    title: verify/verify-unit-test/p-recursive.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/verify-unit-test/polynomial-matrix-prod.test.cpp
+    title: verify/verify-unit-test/polynomial-matrix-prod.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-exp-arb.test.cpp
     title: verify/verify-yosupo-fps/yosupo-exp-arb.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/verify-yosupo-fps/yosupo-factorial-p-recursive.test.cpp
+    title: verify/verify-yosupo-fps/yosupo-factorial-p-recursive.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/verify-yosupo-fps/yosupo-factorial.test.cpp
+    title: verify/verify-yosupo-fps/yosupo-factorial.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-inv-arb.test.cpp
     title: verify/verify-yosupo-fps/yosupo-inv-arb.test.cpp
@@ -100,17 +133,26 @@ data:
     path: verify/verify-yosupo-fps/yosupo-log-arb.test.cpp
     title: verify/verify-yosupo-fps/yosupo-log-arb.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/verify-yosupo-fps/yosupo-polynomial-root-finding.test.cpp
+    title: verify/verify-yosupo-fps/yosupo-polynomial-root-finding.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-pow-arb.test.cpp
     title: verify/verify-yosupo-fps/yosupo-pow-arb.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/verify-yosupo-graph/yosupo-frequency-table-of-tree-distance.test.cpp
-    title: verify/verify-yosupo-graph/yosupo-frequency-table-of-tree-distance.test.cpp
+    path: verify/verify-yosupo-fps/yosupo-sample-point-shift.test.cpp
+    title: verify/verify-yosupo-fps/yosupo-sample-point-shift.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-addition-of-big-integers.test.cpp
     title: verify/verify-yosupo-math/yosupo-addition-of-big-integers.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-addition-of-hex.test.cpp
     title: verify/verify-yosupo-math/yosupo-addition-of-hex.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/verify-yosupo-math/yosupo-determinant-of-matrix-bbla.test.cpp
+    title: verify/verify-yosupo-math/yosupo-determinant-of-matrix-bbla.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/verify-yosupo-math/yosupo-determinant-of-sparse-matrix-bbla.test.cpp
+    title: verify/verify-yosupo-math/yosupo-determinant-of-sparse-matrix-bbla.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-math/yosupo-division-of-big-integers.test.cpp
     title: verify/verify-yosupo-math/yosupo-division-of-big-integers.test.cpp
@@ -138,9 +180,6 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ntt/yosupo-convolution-chirp-z.test.cpp
     title: verify/verify-yosupo-ntt/yosupo-convolution-chirp-z.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/verify-yosupo-ntt/yosupo-multipoint-evaluation-chirp-z.test.cpp
-    title: verify/verify-yosupo-ntt/yosupo-multipoint-evaluation-chirp-z.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ntt/yosupo-multivariate-circular-convolution.test.cpp
     title: verify/verify-yosupo-ntt/yosupo-multivariate-circular-convolution.test.cpp
@@ -175,6 +214,9 @@ data:
     path: verify/verify-yuki/yuki-1112.test.cpp
     title: verify/verify-yuki/yuki-1112.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/verify-yuki/yuki-1533.test.cpp
+    title: verify/verify-yuki/yuki-1533.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-2580.test.cpp
     title: verify/verify-yuki/yuki-2580.test.cpp
   _isVerificationFailed: false
@@ -182,85 +224,89 @@ data:
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
-  bundledCode: "#line 2 \"ntt/arbitrary-ntt.hpp\"\n\n#line 2 \"modint/montgomery-modint.hpp\"\
-    \n\n#include <cstdint>\n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt\
-    \ {\n  using mint = LazyMontgomeryModInt;\n  using i32 = int32_t;\n  using u32\
-    \ = uint32_t;\n  using u64 = uint64_t;\n\n  static constexpr u32 get_r() {\n \
-    \   u32 ret = mod;\n    for (i32 i = 0; i < 4; ++i) ret *= 2 - mod * ret;\n  \
-    \  return ret;\n  }\n\n  static constexpr u32 r = get_r();\n  static constexpr\
-    \ u32 n2 = -u64(mod) % mod;\n  static_assert(mod < (1 << 30), \"invalid, mod >=\
-    \ 2 ^ 30\");\n  static_assert((mod & 1) == 1, \"invalid, mod % 2 == 0\");\n  static_assert(r\
-    \ * mod == 1, \"this code has bugs.\");\n\n  u32 a;\n\n  constexpr LazyMontgomeryModInt()\
-    \ : a(0) {}\n  constexpr LazyMontgomeryModInt(const int64_t &b)\n      : a(reduce(u64(b\
-    \ % mod + mod) * n2)){};\n\n  static constexpr u32 reduce(const u64 &b) {\n  \
-    \  return (b + u64(u32(b) * u32(-r)) * mod) >> 32;\n  }\n\n  constexpr mint &operator+=(const\
-    \ mint &b) {\n    if (i32(a += b.a - 2 * mod) < 0) a += 2 * mod;\n    return *this;\n\
-    \  }\n\n  constexpr mint &operator-=(const mint &b) {\n    if (i32(a -= b.a) <\
-    \ 0) a += 2 * mod;\n    return *this;\n  }\n\n  constexpr mint &operator*=(const\
-    \ mint &b) {\n    a = reduce(u64(a) * b.a);\n    return *this;\n  }\n\n  constexpr\
-    \ mint &operator/=(const mint &b) {\n    *this *= b.inverse();\n    return *this;\n\
-    \  }\n\n  constexpr mint operator+(const mint &b) const { return mint(*this) +=\
-    \ b; }\n  constexpr mint operator-(const mint &b) const { return mint(*this) -=\
-    \ b; }\n  constexpr mint operator*(const mint &b) const { return mint(*this) *=\
-    \ b; }\n  constexpr mint operator/(const mint &b) const { return mint(*this) /=\
-    \ b; }\n  constexpr bool operator==(const mint &b) const {\n    return (a >= mod\
-    \ ? a - mod : a) == (b.a >= mod ? b.a - mod : b.a);\n  }\n  constexpr bool operator!=(const\
-    \ mint &b) const {\n    return (a >= mod ? a - mod : a) != (b.a >= mod ? b.a -\
-    \ mod : b.a);\n  }\n  constexpr mint operator-() const { return mint() - mint(*this);\
+  bundledCode: "#line 2 \"ntt/arbitrary-ntt.hpp\"\n\n#include <algorithm>\n#include\
+    \ <cstdint>\n#include <vector>\nusing namespace std;\n\n#line 2 \"modint/montgomery-modint.hpp\"\
+    \n\n#line 4 \"modint/montgomery-modint.hpp\"\n#include <iostream>\n\ntemplate\
+    \ <uint32_t mod>\nstruct LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n\
+    \  using i32 = int32_t;\n  using u32 = uint32_t;\n  using u64 = uint64_t;\n\n\
+    \  static constexpr u32 get_r() {\n    u32 ret = mod;\n    for (i32 i = 0; i <\
+    \ 4; ++i) ret *= 2 - mod * ret;\n    return ret;\n  }\n\n  static constexpr u32\
+    \ r = get_r();\n  static constexpr u32 n2 = -u64(mod) % mod;\n  static_assert(mod\
+    \ < (1 << 30), \"invalid, mod >= 2 ^ 30\");\n  static_assert((mod & 1) == 1, \"\
+    invalid, mod % 2 == 0\");\n  static_assert(r * mod == 1, \"this code has bugs.\"\
+    );\n\n  u32 a;\n\n  constexpr LazyMontgomeryModInt() : a(0) {}\n  constexpr LazyMontgomeryModInt(const\
+    \ int64_t &b)\n      : a(reduce(u64(b % mod + mod) * n2)){};\n\n  static constexpr\
+    \ u32 reduce(const u64 &b) {\n    return (b + u64(u32(b) * u32(-r)) * mod) >>\
+    \ 32;\n  }\n\n  constexpr mint &operator+=(const mint &b) {\n    if (i32(a +=\
+    \ b.a - 2 * mod) < 0) a += 2 * mod;\n    return *this;\n  }\n\n  constexpr mint\
+    \ &operator-=(const mint &b) {\n    if (i32(a -= b.a) < 0) a += 2 * mod;\n   \
+    \ return *this;\n  }\n\n  constexpr mint &operator*=(const mint &b) {\n    a =\
+    \ reduce(u64(a) * b.a);\n    return *this;\n  }\n\n  constexpr mint &operator/=(const\
+    \ mint &b) {\n    *this *= b.inverse();\n    return *this;\n  }\n\n  constexpr\
+    \ mint operator+(const mint &b) const { return mint(*this) += b; }\n  constexpr\
+    \ mint operator-(const mint &b) const { return mint(*this) -= b; }\n  constexpr\
+    \ mint operator*(const mint &b) const { return mint(*this) *= b; }\n  constexpr\
+    \ mint operator/(const mint &b) const { return mint(*this) /= b; }\n  constexpr\
+    \ bool operator==(const mint &b) const {\n    return (a >= mod ? a - mod : a)\
+    \ == (b.a >= mod ? b.a - mod : b.a);\n  }\n  constexpr bool operator!=(const mint\
+    \ &b) const {\n    return (a >= mod ? a - mod : a) != (b.a >= mod ? b.a - mod\
+    \ : b.a);\n  }\n  constexpr mint operator-() const { return mint() - mint(*this);\
     \ }\n  constexpr mint operator+() const { return mint(*this); }\n\n  constexpr\
     \ mint pow(u64 n) const {\n    mint ret(1), mul(*this);\n    while (n > 0) {\n\
     \      if (n & 1) ret *= mul;\n      mul *= mul;\n      n >>= 1;\n    }\n    return\
     \ ret;\n  }\n\n  constexpr mint inverse() const {\n    int x = get(), y = mod,\
     \ u = 1, v = 0, t = 0, tmp = 0;\n    while (y > 0) {\n      t = x / y;\n     \
     \ x -= t * y, u -= t * v;\n      tmp = x, x = y, y = tmp;\n      tmp = u, u =\
-    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend ostream &operator<<(ostream\
-    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend istream &operator>>(istream\
-    \ &is, mint &b) {\n    int64_t t;\n    is >> t;\n    b = LazyMontgomeryModInt<mod>(t);\n\
-    \    return (is);\n  }\n\n  constexpr u32 get() const {\n    u32 ret = reduce(a);\n\
-    \    return ret >= mod ? ret - mod : ret;\n  }\n\n  static constexpr u32 get_mod()\
-    \ { return mod; }\n};\n#line 2 \"ntt/ntt.hpp\"\n\ntemplate <typename mint>\nstruct\
-    \ NTT {\n  static constexpr uint32_t get_pr() {\n    uint32_t _mod = mint::get_mod();\n\
-    \    using u64 = uint64_t;\n    u64 ds[32] = {};\n    int idx = 0;\n    u64 m\
-    \ = _mod - 1;\n    for (u64 i = 2; i * i <= m; ++i) {\n      if (m % i == 0) {\n\
-    \        ds[idx++] = i;\n        while (m % i == 0) m /= i;\n      }\n    }\n\
-    \    if (m != 1) ds[idx++] = m;\n\n    uint32_t _pr = 2;\n    while (1) {\n  \
-    \    int flg = 1;\n      for (int i = 0; i < idx; ++i) {\n        u64 a = _pr,\
-    \ b = (_mod - 1) / ds[i], r = 1;\n        while (b) {\n          if (b & 1) r\
-    \ = r * a % _mod;\n          a = a * a % _mod;\n          b >>= 1;\n        }\n\
-    \        if (r == 1) {\n          flg = 0;\n          break;\n        }\n    \
-    \  }\n      if (flg == 1) break;\n      ++_pr;\n    }\n    return _pr;\n  };\n\
-    \n  static constexpr uint32_t mod = mint::get_mod();\n  static constexpr uint32_t\
-    \ pr = get_pr();\n  static constexpr int level = __builtin_ctzll(mod - 1);\n \
-    \ mint dw[level], dy[level];\n\n  void setwy(int k) {\n    mint w[level], y[level];\n\
-    \    w[k - 1] = mint(pr).pow((mod - 1) / (1 << k));\n    y[k - 1] = w[k - 1].inverse();\n\
-    \    for (int i = k - 2; i > 0; --i)\n      w[i] = w[i + 1] * w[i + 1], y[i] =\
-    \ y[i + 1] * y[i + 1];\n    dw[1] = w[1], dy[1] = y[1], dw[2] = w[2], dy[2] =\
-    \ y[2];\n    for (int i = 3; i < k; ++i) {\n      dw[i] = dw[i - 1] * y[i - 2]\
-    \ * w[i];\n      dy[i] = dy[i - 1] * w[i - 2] * y[i];\n    }\n  }\n\n  NTT() {\
-    \ setwy(level); }\n\n  void fft4(vector<mint> &a, int k) {\n    if ((int)a.size()\
-    \ <= 1) return;\n    if (k == 1) {\n      mint a1 = a[1];\n      a[1] = a[0] -\
-    \ a[1];\n      a[0] = a[0] + a1;\n      return;\n    }\n    if (k & 1) {\n   \
-    \   int v = 1 << (k - 1);\n      for (int j = 0; j < v; ++j) {\n        mint ajv\
-    \ = a[j + v];\n        a[j + v] = a[j] - ajv;\n        a[j] += ajv;\n      }\n\
-    \    }\n    int u = 1 << (2 + (k & 1));\n    int v = 1 << (k - 2 - (k & 1));\n\
-    \    mint one = mint(1);\n    mint imag = dw[1];\n    while (v) {\n      // jh\
-    \ = 0\n      {\n        int j0 = 0;\n        int j1 = v;\n        int j2 = j1\
-    \ + v;\n        int j3 = j2 + v;\n        for (; j0 < v; ++j0, ++j1, ++j2, ++j3)\
-    \ {\n          mint t0 = a[j0], t1 = a[j1], t2 = a[j2], t3 = a[j3];\n        \
-    \  mint t0p2 = t0 + t2, t1p3 = t1 + t3;\n          mint t0m2 = t0 - t2, t1m3 =\
-    \ (t1 - t3) * imag;\n          a[j0] = t0p2 + t1p3, a[j1] = t0p2 - t1p3;\n   \
-    \       a[j2] = t0m2 + t1m3, a[j3] = t0m2 - t1m3;\n        }\n      }\n      //\
-    \ jh >= 1\n      mint ww = one, xx = one * dw[2], wx = one;\n      for (int jh\
-    \ = 4; jh < u;) {\n        ww = xx * xx, wx = ww * xx;\n        int j0 = jh *\
-    \ v;\n        int je = j0 + v;\n        int j2 = je + v;\n        for (; j0 <\
-    \ je; ++j0, ++j2) {\n          mint t0 = a[j0], t1 = a[j0 + v] * xx, t2 = a[j2]\
-    \ * ww,\n               t3 = a[j2 + v] * wx;\n          mint t0p2 = t0 + t2, t1p3\
+    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend std::ostream &operator<<(std::ostream\
+    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend std::istream\
+    \ &operator>>(std::istream &is, mint &b) {\n    int64_t t;\n    is >> t;\n   \
+    \ b = LazyMontgomeryModInt<mod>(t);\n    return (is);\n  }\n\n  constexpr u32\
+    \ get() const {\n    u32 ret = reduce(a);\n    return ret >= mod ? ret - mod :\
+    \ ret;\n  }\n\n  static constexpr u32 get_mod() { return mod; }\n};\n#line 2 \"\
+    ntt/ntt.hpp\"\n\n#line 5 \"ntt/ntt.hpp\"\n#include <iterator>\n#line 7 \"ntt/ntt.hpp\"\
+    \nusing namespace std;\n\ntemplate <typename mint>\nstruct NTT {\n  static constexpr\
+    \ uint32_t get_pr() {\n    uint32_t _mod = mint::get_mod();\n    using u64 = uint64_t;\n\
+    \    u64 ds[32] = {};\n    int idx = 0;\n    u64 m = _mod - 1;\n    for (u64 i\
+    \ = 2; i * i <= m; ++i) {\n      if (m % i == 0) {\n        ds[idx++] = i;\n \
+    \       while (m % i == 0) m /= i;\n      }\n    }\n    if (m != 1) ds[idx++]\
+    \ = m;\n\n    uint32_t _pr = 2;\n    while (1) {\n      int flg = 1;\n      for\
+    \ (int i = 0; i < idx; ++i) {\n        u64 a = _pr, b = (_mod - 1) / ds[i], r\
+    \ = 1;\n        while (b) {\n          if (b & 1) r = r * a % _mod;\n        \
+    \  a = a * a % _mod;\n          b >>= 1;\n        }\n        if (r == 1) {\n \
+    \         flg = 0;\n          break;\n        }\n      }\n      if (flg == 1)\
+    \ break;\n      ++_pr;\n    }\n    return _pr;\n  };\n\n  static constexpr uint32_t\
+    \ mod = mint::get_mod();\n  static constexpr uint32_t pr = get_pr();\n  static\
+    \ constexpr int level = __builtin_ctzll(mod - 1);\n  mint dw[level], dy[level];\n\
+    \n  void setwy(int k) {\n    mint w[level], y[level];\n    w[k - 1] = mint(pr).pow((mod\
+    \ - 1) / (1 << k));\n    y[k - 1] = w[k - 1].inverse();\n    for (int i = k -\
+    \ 2; i > 0; --i)\n      w[i] = w[i + 1] * w[i + 1], y[i] = y[i + 1] * y[i + 1];\n\
+    \    dw[1] = w[1], dy[1] = y[1], dw[2] = w[2], dy[2] = y[2];\n    for (int i =\
+    \ 3; i < k; ++i) {\n      dw[i] = dw[i - 1] * y[i - 2] * w[i];\n      dy[i] =\
+    \ dy[i - 1] * w[i - 2] * y[i];\n    }\n  }\n\n  NTT() { setwy(level); }\n\n  void\
+    \ fft4(vector<mint> &a, int k) {\n    if ((int)a.size() <= 1) return;\n    if\
+    \ (k == 1) {\n      mint a1 = a[1];\n      a[1] = a[0] - a[1];\n      a[0] = a[0]\
+    \ + a1;\n      return;\n    }\n    if (k & 1) {\n      int v = 1 << (k - 1);\n\
+    \      for (int j = 0; j < v; ++j) {\n        mint ajv = a[j + v];\n        a[j\
+    \ + v] = a[j] - ajv;\n        a[j] += ajv;\n      }\n    }\n    int u = 1 << (2\
+    \ + (k & 1));\n    int v = 1 << (k - 2 - (k & 1));\n    mint one = mint(1);\n\
+    \    mint imag = dw[1];\n    while (v) {\n      // jh = 0\n      {\n        int\
+    \ j0 = 0;\n        int j1 = v;\n        int j2 = j1 + v;\n        int j3 = j2\
+    \ + v;\n        for (; j0 < v; ++j0, ++j1, ++j2, ++j3) {\n          mint t0 =\
+    \ a[j0], t1 = a[j1], t2 = a[j2], t3 = a[j3];\n          mint t0p2 = t0 + t2, t1p3\
     \ = t1 + t3;\n          mint t0m2 = t0 - t2, t1m3 = (t1 - t3) * imag;\n      \
-    \    a[j0] = t0p2 + t1p3, a[j0 + v] = t0p2 - t1p3;\n          a[j2] = t0m2 + t1m3,\
-    \ a[j2 + v] = t0m2 - t1m3;\n        }\n        xx *= dw[__builtin_ctzll((jh +=\
-    \ 4))];\n      }\n      u <<= 2;\n      v >>= 2;\n    }\n  }\n\n  void ifft4(vector<mint>\
-    \ &a, int k) {\n    if ((int)a.size() <= 1) return;\n    if (k == 1) {\n     \
-    \ mint a1 = a[1];\n      a[1] = a[0] - a[1];\n      a[0] = a[0] + a1;\n      return;\n\
+    \    a[j0] = t0p2 + t1p3, a[j1] = t0p2 - t1p3;\n          a[j2] = t0m2 + t1m3,\
+    \ a[j3] = t0m2 - t1m3;\n        }\n      }\n      // jh >= 1\n      mint ww =\
+    \ one, xx = one * dw[2], wx = one;\n      for (int jh = 4; jh < u;) {\n      \
+    \  ww = xx * xx, wx = ww * xx;\n        int j0 = jh * v;\n        int je = j0\
+    \ + v;\n        int j2 = je + v;\n        for (; j0 < je; ++j0, ++j2) {\n    \
+    \      mint t0 = a[j0], t1 = a[j0 + v] * xx, t2 = a[j2] * ww,\n              \
+    \ t3 = a[j2 + v] * wx;\n          mint t0p2 = t0 + t2, t1p3 = t1 + t3;\n     \
+    \     mint t0m2 = t0 - t2, t1m3 = (t1 - t3) * imag;\n          a[j0] = t0p2 +\
+    \ t1p3, a[j0 + v] = t0p2 - t1p3;\n          a[j2] = t0m2 + t1m3, a[j2 + v] = t0m2\
+    \ - t1m3;\n        }\n        xx *= dw[__builtin_ctzll((jh += 4))];\n      }\n\
+    \      u <<= 2;\n      v >>= 2;\n    }\n  }\n\n  void ifft4(vector<mint> &a, int\
+    \ k) {\n    if ((int)a.size() <= 1) return;\n    if (k == 1) {\n      mint a1\
+    \ = a[1];\n      a[1] = a[0] - a[1];\n      a[0] = a[0] + a1;\n      return;\n\
     \    }\n    int u = 1 << (k - 2);\n    int v = 1;\n    mint one = mint(1);\n \
     \   mint imag = dy[1];\n    while (u) {\n      // jh = 0\n      {\n        int\
     \ j0 = 0;\n        int j1 = v;\n        int j2 = v + v;\n        int j3 = j2 +\
@@ -298,7 +344,7 @@ data:
     \ &a) {\n    int M = (int)a.size();\n    auto b = a;\n    intt(b);\n    mint r\
     \ = 1, zeta = mint(pr).pow((mint::get_mod() - 1) / (M << 1));\n    for (int i\
     \ = 0; i < M; i++) b[i] *= r, r *= zeta;\n    ntt(b);\n    copy(begin(b), end(b),\
-    \ back_inserter(a));\n  }\n};\n#line 5 \"ntt/arbitrary-ntt.hpp\"\n\nnamespace\
+    \ back_inserter(a));\n  }\n};\n#line 10 \"ntt/arbitrary-ntt.hpp\"\n\nnamespace\
     \ ArbitraryNTT {\nusing i64 = int64_t;\nusing u128 = __uint128_t;\nconstexpr int32_t\
     \ m0 = 167772161;\nconstexpr int32_t m1 = 469762049;\nconstexpr int32_t m2 = 754974721;\n\
     using mint0 = LazyMontgomeryModInt<m0>;\nusing mint1 = LazyMontgomeryModInt<m1>;\n\
@@ -337,12 +383,13 @@ data:
     \ i64 a = d0[i].get();\n    i64 b = (n1 + m1 - a) * r01 % m1;\n    i64 c = ((n2\
     \ + m2 - a) * r02r12 + (m2 - b) * r12) % m2;\n    ret[i] = a + b * w1 + u128(c)\
     \ * w2;\n  }\n  return ret;\n}\n}  // namespace ArbitraryNTT\n"
-  code: "#pragma once\n\n#include \"../modint/montgomery-modint.hpp\"\n#include \"\
-    ./ntt.hpp\"\n\nnamespace ArbitraryNTT {\nusing i64 = int64_t;\nusing u128 = __uint128_t;\n\
-    constexpr int32_t m0 = 167772161;\nconstexpr int32_t m1 = 469762049;\nconstexpr\
-    \ int32_t m2 = 754974721;\nusing mint0 = LazyMontgomeryModInt<m0>;\nusing mint1\
-    \ = LazyMontgomeryModInt<m1>;\nusing mint2 = LazyMontgomeryModInt<m2>;\nconstexpr\
-    \ int r01 = mint1(m0).inverse().get();\nconstexpr int r02 = mint2(m0).inverse().get();\n\
+  code: "#pragma once\n\n#include <algorithm>\n#include <cstdint>\n#include <vector>\n\
+    using namespace std;\n\n#include \"../modint/montgomery-modint.hpp\"\n#include\
+    \ \"./ntt.hpp\"\n\nnamespace ArbitraryNTT {\nusing i64 = int64_t;\nusing u128\
+    \ = __uint128_t;\nconstexpr int32_t m0 = 167772161;\nconstexpr int32_t m1 = 469762049;\n\
+    constexpr int32_t m2 = 754974721;\nusing mint0 = LazyMontgomeryModInt<m0>;\nusing\
+    \ mint1 = LazyMontgomeryModInt<m1>;\nusing mint2 = LazyMontgomeryModInt<m2>;\n\
+    constexpr int r01 = mint1(m0).inverse().get();\nconstexpr int r02 = mint2(m0).inverse().get();\n\
     constexpr int r12 = mint2(m1).inverse().get();\nconstexpr int r02r12 = i64(r02)\
     \ * r12 % m2;\nconstexpr i64 w1 = m0;\nconstexpr i64 w2 = i64(m0) * m1;\n\ntemplate\
     \ <typename T, typename submint>\nvector<submint> mul(const vector<T> &a, const\
@@ -383,7 +430,13 @@ data:
   isVerificationFile: false
   path: ntt/arbitrary-ntt.hpp
   requiredBy:
+  - fps/find-p-recursive.hpp
+  - fps/root-finding.hpp
+  - fps/kitamasa.hpp
+  - fps/nth-term.hpp
   - fps/arbitrary-fps.hpp
+  - fps/mod-pow.hpp
+  - fps/sample-point-shift.hpp
   - math/bigint-to-hex.hpp
   - math/bigint-binary.hpp
   - math/bigint.hpp
@@ -393,21 +446,24 @@ data:
   - math/bigint-garner.hpp
   - ntt/rader-ntt.hpp
   - ntt/multivariate-circular-convolution.hpp
-  - ntt/chirp-z.hpp
   - ntt/cooley-tukey-ntt.hpp
-  - tree/frequency-table-of-tree-distance.hpp
-  timestamp: '2026-05-21 18:07:01+09:00'
+  - matrix/black-box-linear-algebra.hpp
+  - matrix/polynomial-matrix-prefix-prod.hpp
+  - modulo/factorial.hpp
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-yosupo-graph/yosupo-frequency-table-of-tree-distance.test.cpp
   - verify/verify-yosupo-ntt/yosupo-convolution-arbitraryntt-arbitraryprimemodint.test.cpp
-  - verify/verify-yosupo-ntt/yosupo-multipoint-evaluation-chirp-z.test.cpp
   - verify/verify-yosupo-ntt/yosupo-convolution-arbitrarylengthntt.test.cpp
   - verify/verify-yosupo-ntt/yosupo-convolution-chirp-z.test.cpp
   - verify/verify-yosupo-ntt/yosupo-convolution-arbitraryntt.test.cpp
   - verify/verify-yosupo-ntt/yosupo-convolution-arbitraryntt-arbitrarymodint.test.cpp
   - verify/verify-yosupo-ntt/yosupo-multivariate-circular-convolution.test.cpp
+  - verify/verify-yosupo-fps/yosupo-factorial.test.cpp
   - verify/verify-yosupo-fps/yosupo-inv-arb.test.cpp
+  - verify/verify-yosupo-fps/yosupo-sample-point-shift.test.cpp
+  - verify/verify-yosupo-fps/yosupo-polynomial-root-finding.test.cpp
+  - verify/verify-yosupo-fps/yosupo-factorial-p-recursive.test.cpp
   - verify/verify-yosupo-fps/yosupo-exp-arb.test.cpp
   - verify/verify-yosupo-fps/yosupo-pow-arb.test.cpp
   - verify/verify-yosupo-fps/yosupo-log-arb.test.cpp
@@ -420,7 +476,9 @@ data:
   - verify/verify-yosupo-other/yosupo-a-plus-b-128bit-bigint.test.cpp
   - verify/verify-aoj-other/aoj-2171-bigrational.test.cpp
   - verify/verify-yosupo-math/yosupo-addition-of-big-integers.test.cpp
+  - verify/verify-yosupo-math/yosupo-determinant-of-matrix-bbla.test.cpp
   - verify/verify-yosupo-math/yosupo-addition-of-hex.test.cpp
+  - verify/verify-yosupo-math/yosupo-determinant-of-sparse-matrix-bbla.test.cpp
   - verify/verify-yosupo-math/yosupo-division-of-hex.test.cpp
   - verify/verify-yosupo-math/yosupo-multiplication-of-hex.test.cpp
   - verify/verify-yosupo-math/yosupo-multiplication-of-big-integers.test.cpp
@@ -434,12 +492,15 @@ data:
   - verify/verify-yuki/yuki-2580.test.cpp
   - verify/verify-yuki/yuki-1112.test.cpp
   - verify/verify-yuki/yuki-1080.test.cpp
+  - verify/verify-yuki/yuki-1533.test.cpp
   - verify/verify-yuki/yuki-0303.test.cpp
   - verify/verify-unit-test/bigint2.test.cpp
   - verify/verify-unit-test/arbitrary-ntt-mod18446744069414584321.test.cpp
   - verify/verify-unit-test/garner-bigint.test.cpp
+  - verify/verify-unit-test/polynomial-matrix-prod.test.cpp
   - verify/verify-unit-test/bigrational.test.cpp
   - verify/verify-unit-test/bigint.test.cpp
+  - verify/verify-unit-test/p-recursive.test.cpp
   - verify/verify-unit-test/bigint3.test.cpp
   - verify/verify-unit-test/bigint-gcd.test.cpp
 documentation_of: ntt/arbitrary-ntt.hpp

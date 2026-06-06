@@ -21,9 +21,6 @@ data:
     path: lct/splay-reversible.hpp
     title: "\u53CD\u8EE2\u53EF\u80FDSplay Tree"
   - icon: ':heavy_check_mark:'
-    path: math/affine-transformation.hpp
-    title: "\u30A2\u30D5\u30A3\u30F3\u5909\u63DB"
-  - icon: ':heavy_check_mark:'
     path: misc/fastio.hpp
     title: misc/fastio.hpp
   - icon: ':heavy_check_mark:'
@@ -247,7 +244,7 @@ data:
     \n\nnamespace Nyaan {\nvoid solve();\n}\nint main() { Nyaan::solve(); }\n#line\
     \ 4 \"verify/verify-yosupo-ds/yosupo-dynamic-tree-vertex-add-path-sum.test.cpp\"\
     \n//\n\nusing namespace Nyaan;\n\n#line 2 \"modint/montgomery-modint.hpp\"\n\n\
-    #line 4 \"modint/montgomery-modint.hpp\"\n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt\
+    #line 5 \"modint/montgomery-modint.hpp\"\n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt\
     \ {\n  using mint = LazyMontgomeryModInt;\n  using i32 = int32_t;\n  using u32\
     \ = uint32_t;\n  using u64 = uint64_t;\n\n  static constexpr u32 get_r() {\n \
     \   u32 ret = mod;\n    for (i32 i = 0; i < 4; ++i) ret *= 2 - mod * ret;\n  \
@@ -277,25 +274,16 @@ data:
     \ ret;\n  }\n\n  constexpr mint inverse() const {\n    int x = get(), y = mod,\
     \ u = 1, v = 0, t = 0, tmp = 0;\n    while (y > 0) {\n      t = x / y;\n     \
     \ x -= t * y, u -= t * v;\n      tmp = x, x = y, y = tmp;\n      tmp = u, u =\
-    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend ostream &operator<<(ostream\
-    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend istream &operator>>(istream\
-    \ &is, mint &b) {\n    int64_t t;\n    is >> t;\n    b = LazyMontgomeryModInt<mod>(t);\n\
-    \    return (is);\n  }\n\n  constexpr u32 get() const {\n    u32 ret = reduce(a);\n\
-    \    return ret >= mod ? ret - mod : ret;\n  }\n\n  static constexpr u32 get_mod()\
-    \ { return mod; }\n};\n#line 9 \"verify/verify-yosupo-ds/yosupo-dynamic-tree-vertex-add-path-sum.test.cpp\"\
-    \nusing mint = LazyMontgomeryModInt<998244353>;\nusing vm = vector<mint>;\n#line\
-    \ 2 \"math/affine-transformation.hpp\"\n\ntemplate <typename mint>\nstruct Affine\
-    \ {\n  mint a, b;\n  constexpr Affine() : a(1), b(0) {}\n  constexpr Affine(mint\
-    \ _a, mint _b) : a(_a), b(_b) {}\n  // R(L(x))\n  friend Affine operator*(const\
-    \ Affine& l, const Affine& r) {\n    return Affine(l.a * r.a, l.b * r.a + r.b);\n\
-    \  }\n  mint operator()(mint x) const { return a * x + b; }\n  Affine operator()(const\
-    \ Affine& r) const { return r * (*this); }\n  bool operator==(const Affine& r)\
-    \ const { return a == r.a && b == r.b; }\n  bool operator!=(const Affine& r) const\
-    \ { return a != r.a || b != r.b; }\n  friend ostream& operator<<(ostream& os,\
-    \ const Affine& r) {\n    os << \"( \" << r.a << \", \" << r.b << \" )\";\n  \
-    \  return os;\n  }\n};\n\n/**\n * @brief \u30A2\u30D5\u30A3\u30F3\u5909\u63DB\n\
-    \ */\n#line 2 \"misc/fastio.hpp\"\n\n#line 8 \"misc/fastio.hpp\"\n\nusing namespace\
-    \ std;\n\n#line 2 \"internal/internal-type-traits.hpp\"\n\n#line 4 \"internal/internal-type-traits.hpp\"\
+    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend std::ostream &operator<<(std::ostream\
+    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend std::istream\
+    \ &operator>>(std::istream &is, mint &b) {\n    int64_t t;\n    is >> t;\n   \
+    \ b = LazyMontgomeryModInt<mod>(t);\n    return (is);\n  }\n\n  constexpr u32\
+    \ get() const {\n    u32 ret = reduce(a);\n    return ret >= mod ? ret - mod :\
+    \ ret;\n  }\n\n  static constexpr u32 get_mod() { return mod; }\n};\n#line 9 \"\
+    verify/verify-yosupo-ds/yosupo-dynamic-tree-vertex-add-path-sum.test.cpp\"\nusing\
+    \ mint = LazyMontgomeryModInt<998244353>;\nusing vm = vector<mint>;\n#line 2 \"\
+    misc/fastio.hpp\"\n\n#line 9 \"misc/fastio.hpp\"\n\nusing namespace std;\n\n#line\
+    \ 2 \"internal/internal-type-traits.hpp\"\n\n#line 4 \"internal/internal-type-traits.hpp\"\
     \nusing namespace std;\n\nnamespace internal {\ntemplate <typename T>\nusing is_broadly_integral\
     \ =\n    typename conditional_t<is_integral_v<T> || is_same_v<T, __int128_t> ||\n\
     \                               is_same_v<T, __uint128_t>,\n                 \
@@ -319,7 +307,7 @@ data:
     \          \\\n  struct has_##var<T, void_t<decltype(T::var)>> : true_type {};\
     \ \\\n  template <class T>                                            \\\n  constexpr\
     \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace internal\n#line\
-    \ 12 \"misc/fastio.hpp\"\n\nnamespace fastio {\nstatic constexpr int SZ = 1 <<\
+    \ 13 \"misc/fastio.hpp\"\n\nnamespace fastio {\nstatic constexpr int SZ = 1 <<\
     \ 17;\nstatic constexpr int offset = 64;\nchar inbuf[SZ], outbuf[SZ];\nint in_left\
     \ = 0, in_right = 0, out_right = 0;\n\nstruct Pre {\n  char num[40000];\n  constexpr\
     \ Pre() : num() {\n    for (int i = 0; i < 10000; i++) {\n      int n = i;\n \
@@ -367,7 +355,7 @@ data:
     \ Tail>(tail)...);\n}\ntemplate <typename... Args>\nvoid wtn(const Args&... x)\
     \ {\n  wt(std::forward<const Args>(x)...);\n  wt('\\n');\n}\n\nstruct Dummy {\n\
     \  Dummy() { atexit(flush); }\n} dummy;\n\n}  // namespace fastio\nusing fastio::rd;\n\
-    using fastio::skip_space;\nusing fastio::wt;\nusing fastio::wtn;\n#line 13 \"\
+    using fastio::skip_space;\nusing fastio::wt;\nusing fastio::wtn;\n#line 12 \"\
     verify/verify-yosupo-ds/yosupo-dynamic-tree-vertex-add-path-sum.test.cpp\"\n//\n\
     #line 2 \"lct/link-cut-tree.hpp\"\n\n#line 2 \"lct/splay-reversible.hpp\"\n\n\
     #line 2 \"lct/reversible-bbst-base.hpp\"\n\ntemplate <typename Tree, typename\
@@ -463,7 +451,7 @@ data:
     \ */\n#line 7 \"lct/link-cut-tree.hpp\"\n\ntemplate <typename T, T (*f)(T, T),\
     \ T (*ts)(T)>\nstruct LinkCutTree : LinkCutBase<ReversibleSplayTree<T, f, ts>>\
     \ {};\n\n/**\n * @brief Link/Cut Tree\n * @docs docs/lct/link-cut-tree.md\n */\n\
-    #line 15 \"verify/verify-yosupo-ds/yosupo-dynamic-tree-vertex-add-path-sum.test.cpp\"\
+    #line 14 \"verify/verify-yosupo-ds/yosupo-dynamic-tree-vertex-add-path-sum.test.cpp\"\
     \n//\n\nusing T = long long;\nT f(T a, T b) { return a + b; }\nT ts(T a) { return\
     \ a; }\n\nusing namespace Nyaan;\nvoid Nyaan::solve() {\n  int N, Q;\n  rd(N,\
     \ Q);\n\n  using LCT = LinkCutTree<T, f, ts>;\n  LCT lct;\n\n  vector<LCT::Ptr>\
@@ -478,19 +466,18 @@ data:
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/dynamic_tree_vertex_add_path_sum\"\
     \n\n#include \"../../template/template.hpp\"\n//\n\nusing namespace Nyaan;\n\n\
     #include \"../../modint/montgomery-modint.hpp\"\nusing mint = LazyMontgomeryModInt<998244353>;\n\
-    using vm = vector<mint>;\n#include \"../../math/affine-transformation.hpp\"\n\
-    #include \"../../misc/fastio.hpp\"\n//\n#include \"../../lct/link-cut-tree.hpp\"\
-    \n//\n\nusing T = long long;\nT f(T a, T b) { return a + b; }\nT ts(T a) { return\
-    \ a; }\n\nusing namespace Nyaan;\nvoid Nyaan::solve() {\n  int N, Q;\n  rd(N,\
-    \ Q);\n\n  using LCT = LinkCutTree<T, f, ts>;\n  LCT lct;\n\n  vector<LCT::Ptr>\
-    \ vs(N);\n  rep(i, N) {\n    int a;\n    rd(a);\n    vs[i] = lct.my_new(a);\n\
-    \  }\n\n  for (int i = 1; i < N; i++) {\n    int a, b;\n    rd(a, b);\n    lct.link(vs[a],\
-    \ vs[b]);\n  }\n  while (Q--) {\n    int cmd;\n    rd(cmd);\n    if (cmd == 0)\
-    \ {\n      int u, v, w, x;\n      rd(u, v, w, x);\n      lct.cut(vs[u], vs[v]);\n\
-    \      lct.link(vs[w], vs[x]);\n    } else if (cmd == 1) {\n      int u, x;\n\
-    \      rd(u, x);\n      lct.set_key(vs[u], lct.get_key(vs[u]) + x);\n    } else\
-    \ {\n      int u, v;\n      rd(u, v);\n      T fold = lct.fold(vs[u], vs[v]);\n\
-    \      wtn(fold);\n    }\n  }\n}\n"
+    using vm = vector<mint>;\n#include \"../../misc/fastio.hpp\"\n//\n#include \"\
+    ../../lct/link-cut-tree.hpp\"\n//\n\nusing T = long long;\nT f(T a, T b) { return\
+    \ a + b; }\nT ts(T a) { return a; }\n\nusing namespace Nyaan;\nvoid Nyaan::solve()\
+    \ {\n  int N, Q;\n  rd(N, Q);\n\n  using LCT = LinkCutTree<T, f, ts>;\n  LCT lct;\n\
+    \n  vector<LCT::Ptr> vs(N);\n  rep(i, N) {\n    int a;\n    rd(a);\n    vs[i]\
+    \ = lct.my_new(a);\n  }\n\n  for (int i = 1; i < N; i++) {\n    int a, b;\n  \
+    \  rd(a, b);\n    lct.link(vs[a], vs[b]);\n  }\n  while (Q--) {\n    int cmd;\n\
+    \    rd(cmd);\n    if (cmd == 0) {\n      int u, v, w, x;\n      rd(u, v, w, x);\n\
+    \      lct.cut(vs[u], vs[v]);\n      lct.link(vs[w], vs[x]);\n    } else if (cmd\
+    \ == 1) {\n      int u, x;\n      rd(u, x);\n      lct.set_key(vs[u], lct.get_key(vs[u])\
+    \ + x);\n    } else {\n      int u, v;\n      rd(u, v);\n      T fold = lct.fold(vs[u],\
+    \ vs[v]);\n      wtn(fold);\n    }\n  }\n}\n"
   dependsOn:
   - template/template.hpp
   - template/util.hpp
@@ -499,7 +486,6 @@ data:
   - template/debug.hpp
   - template/macro.hpp
   - modint/montgomery-modint.hpp
-  - math/affine-transformation.hpp
   - misc/fastio.hpp
   - internal/internal-type-traits.hpp
   - lct/link-cut-tree.hpp
@@ -510,7 +496,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-ds/yosupo-dynamic-tree-vertex-add-path-sum.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-ds/yosupo-dynamic-tree-vertex-add-path-sum.test.cpp

@@ -7,9 +7,6 @@ data:
   _extendedRequiredBy: []
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
-    path: verify/verify-unit-test/factorize.test.cpp
-    title: verify/verify-unit-test/factorize.test.cpp
-  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/osak.test.cpp
     title: verify/verify-unit-test/osak.test.cpp
   _isVerificationFailed: false
@@ -59,7 +56,6 @@ data:
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-unit-test/osak.test.cpp
-  - verify/verify-unit-test/factorize.test.cpp
 documentation_of: prime/osak.hpp
 layout: document
 redirect_from:

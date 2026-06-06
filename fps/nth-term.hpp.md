@@ -2,6 +2,9 @@
 data:
   _extendedDependsOn:
   - icon: ':heavy_check_mark:'
+    path: fps/arbitrary-fps.hpp
+    title: fps/arbitrary-fps.hpp
+  - icon: ':heavy_check_mark:'
     path: fps/berlekamp-massey.hpp
     title: fps/berlekamp-massey.hpp
   - icon: ':heavy_check_mark:'
@@ -11,6 +14,15 @@ data:
   - icon: ':heavy_check_mark:'
     path: fps/kitamasa.hpp
     title: "\u7DDA\u5F62\u6F38\u5316\u5F0F\u306E\u9AD8\u901F\u8A08\u7B97"
+  - icon: ':heavy_check_mark:'
+    path: modint/montgomery-modint.hpp
+    title: modint/montgomery-modint.hpp
+  - icon: ':heavy_check_mark:'
+    path: ntt/arbitrary-ntt.hpp
+    title: ntt/arbitrary-ntt.hpp
+  - icon: ':heavy_check_mark:'
+    path: ntt/ntt.hpp
+    title: ntt/ntt.hpp
   _extendedRequiredBy: []
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
@@ -25,7 +37,8 @@ data:
       (Berlekamp-Massey/Bostan-Mori)"
     links: []
   bundledCode: "#line 2 \"fps/nth-term.hpp\"\n\n#line 2 \"fps/berlekamp-massey.hpp\"\
-    \n\ntemplate <typename mint>\nvector<mint> BerlekampMassey(const vector<mint>\
+    \n\n#include <algorithm>\n#include <iterator>\n#include <vector>\nusing namespace\
+    \ std;\n\ntemplate <typename mint>\nvector<mint> BerlekampMassey(const vector<mint>\
     \ &s) {\n  const int N = (int)s.size();\n  vector<mint> b, c;\n  b.reserve(N +\
     \ 1);\n  c.reserve(N + 1);\n  b.push_back(mint(1));\n  c.push_back(mint(1));\n\
     \  mint y = mint(1);\n  for (int ed = 1; ed <= N; ed++) {\n    int l = int(c.size()),\
@@ -36,10 +49,171 @@ data:
     \ - 1 - i] -= freq * b[m - 1 - i];\n      b = tmp;\n      y = x;\n    } else {\n\
     \      for (int i = 0; i < m; i++) c[l - 1 - i] -= freq * b[m - 1 - i];\n    }\n\
     \  }\n  reverse(begin(c), end(c));\n  return c;\n}\n#line 2 \"fps/kitamasa.hpp\"\
-    \n\n#line 2 \"fps/formal-power-series.hpp\"\n\ntemplate <typename mint>\nstruct\
-    \ FormalPowerSeries : vector<mint> {\n  using vector<mint>::vector;\n  using FPS\
-    \ = FormalPowerSeries;\n\n  FPS &operator+=(const FPS &r) {\n    if (r.size()\
-    \ > this->size()) this->resize(r.size());\n    for (int i = 0; i < (int)r.size();\
+    \n\n#include <cassert>\n#line 5 \"fps/kitamasa.hpp\"\nusing namespace std;\n\n\
+    #line 2 \"fps/arbitrary-fps.hpp\"\n\n#include <cstdlib>\n\n#line 2 \"ntt/arbitrary-ntt.hpp\"\
+    \n\n#line 4 \"ntt/arbitrary-ntt.hpp\"\n#include <cstdint>\n#line 6 \"ntt/arbitrary-ntt.hpp\"\
+    \nusing namespace std;\n\n#line 2 \"modint/montgomery-modint.hpp\"\n\n#line 4\
+    \ \"modint/montgomery-modint.hpp\"\n#include <iostream>\n\ntemplate <uint32_t\
+    \ mod>\nstruct LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n\
+    \  using i32 = int32_t;\n  using u32 = uint32_t;\n  using u64 = uint64_t;\n\n\
+    \  static constexpr u32 get_r() {\n    u32 ret = mod;\n    for (i32 i = 0; i <\
+    \ 4; ++i) ret *= 2 - mod * ret;\n    return ret;\n  }\n\n  static constexpr u32\
+    \ r = get_r();\n  static constexpr u32 n2 = -u64(mod) % mod;\n  static_assert(mod\
+    \ < (1 << 30), \"invalid, mod >= 2 ^ 30\");\n  static_assert((mod & 1) == 1, \"\
+    invalid, mod % 2 == 0\");\n  static_assert(r * mod == 1, \"this code has bugs.\"\
+    );\n\n  u32 a;\n\n  constexpr LazyMontgomeryModInt() : a(0) {}\n  constexpr LazyMontgomeryModInt(const\
+    \ int64_t &b)\n      : a(reduce(u64(b % mod + mod) * n2)){};\n\n  static constexpr\
+    \ u32 reduce(const u64 &b) {\n    return (b + u64(u32(b) * u32(-r)) * mod) >>\
+    \ 32;\n  }\n\n  constexpr mint &operator+=(const mint &b) {\n    if (i32(a +=\
+    \ b.a - 2 * mod) < 0) a += 2 * mod;\n    return *this;\n  }\n\n  constexpr mint\
+    \ &operator-=(const mint &b) {\n    if (i32(a -= b.a) < 0) a += 2 * mod;\n   \
+    \ return *this;\n  }\n\n  constexpr mint &operator*=(const mint &b) {\n    a =\
+    \ reduce(u64(a) * b.a);\n    return *this;\n  }\n\n  constexpr mint &operator/=(const\
+    \ mint &b) {\n    *this *= b.inverse();\n    return *this;\n  }\n\n  constexpr\
+    \ mint operator+(const mint &b) const { return mint(*this) += b; }\n  constexpr\
+    \ mint operator-(const mint &b) const { return mint(*this) -= b; }\n  constexpr\
+    \ mint operator*(const mint &b) const { return mint(*this) *= b; }\n  constexpr\
+    \ mint operator/(const mint &b) const { return mint(*this) /= b; }\n  constexpr\
+    \ bool operator==(const mint &b) const {\n    return (a >= mod ? a - mod : a)\
+    \ == (b.a >= mod ? b.a - mod : b.a);\n  }\n  constexpr bool operator!=(const mint\
+    \ &b) const {\n    return (a >= mod ? a - mod : a) != (b.a >= mod ? b.a - mod\
+    \ : b.a);\n  }\n  constexpr mint operator-() const { return mint() - mint(*this);\
+    \ }\n  constexpr mint operator+() const { return mint(*this); }\n\n  constexpr\
+    \ mint pow(u64 n) const {\n    mint ret(1), mul(*this);\n    while (n > 0) {\n\
+    \      if (n & 1) ret *= mul;\n      mul *= mul;\n      n >>= 1;\n    }\n    return\
+    \ ret;\n  }\n\n  constexpr mint inverse() const {\n    int x = get(), y = mod,\
+    \ u = 1, v = 0, t = 0, tmp = 0;\n    while (y > 0) {\n      t = x / y;\n     \
+    \ x -= t * y, u -= t * v;\n      tmp = x, x = y, y = tmp;\n      tmp = u, u =\
+    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend std::ostream &operator<<(std::ostream\
+    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend std::istream\
+    \ &operator>>(std::istream &is, mint &b) {\n    int64_t t;\n    is >> t;\n   \
+    \ b = LazyMontgomeryModInt<mod>(t);\n    return (is);\n  }\n\n  constexpr u32\
+    \ get() const {\n    u32 ret = reduce(a);\n    return ret >= mod ? ret - mod :\
+    \ ret;\n  }\n\n  static constexpr u32 get_mod() { return mod; }\n};\n#line 2 \"\
+    ntt/ntt.hpp\"\n\n#line 7 \"ntt/ntt.hpp\"\nusing namespace std;\n\ntemplate <typename\
+    \ mint>\nstruct NTT {\n  static constexpr uint32_t get_pr() {\n    uint32_t _mod\
+    \ = mint::get_mod();\n    using u64 = uint64_t;\n    u64 ds[32] = {};\n    int\
+    \ idx = 0;\n    u64 m = _mod - 1;\n    for (u64 i = 2; i * i <= m; ++i) {\n  \
+    \    if (m % i == 0) {\n        ds[idx++] = i;\n        while (m % i == 0) m /=\
+    \ i;\n      }\n    }\n    if (m != 1) ds[idx++] = m;\n\n    uint32_t _pr = 2;\n\
+    \    while (1) {\n      int flg = 1;\n      for (int i = 0; i < idx; ++i) {\n\
+    \        u64 a = _pr, b = (_mod - 1) / ds[i], r = 1;\n        while (b) {\n  \
+    \        if (b & 1) r = r * a % _mod;\n          a = a * a % _mod;\n         \
+    \ b >>= 1;\n        }\n        if (r == 1) {\n          flg = 0;\n          break;\n\
+    \        }\n      }\n      if (flg == 1) break;\n      ++_pr;\n    }\n    return\
+    \ _pr;\n  };\n\n  static constexpr uint32_t mod = mint::get_mod();\n  static constexpr\
+    \ uint32_t pr = get_pr();\n  static constexpr int level = __builtin_ctzll(mod\
+    \ - 1);\n  mint dw[level], dy[level];\n\n  void setwy(int k) {\n    mint w[level],\
+    \ y[level];\n    w[k - 1] = mint(pr).pow((mod - 1) / (1 << k));\n    y[k - 1]\
+    \ = w[k - 1].inverse();\n    for (int i = k - 2; i > 0; --i)\n      w[i] = w[i\
+    \ + 1] * w[i + 1], y[i] = y[i + 1] * y[i + 1];\n    dw[1] = w[1], dy[1] = y[1],\
+    \ dw[2] = w[2], dy[2] = y[2];\n    for (int i = 3; i < k; ++i) {\n      dw[i]\
+    \ = dw[i - 1] * y[i - 2] * w[i];\n      dy[i] = dy[i - 1] * w[i - 2] * y[i];\n\
+    \    }\n  }\n\n  NTT() { setwy(level); }\n\n  void fft4(vector<mint> &a, int k)\
+    \ {\n    if ((int)a.size() <= 1) return;\n    if (k == 1) {\n      mint a1 = a[1];\n\
+    \      a[1] = a[0] - a[1];\n      a[0] = a[0] + a1;\n      return;\n    }\n  \
+    \  if (k & 1) {\n      int v = 1 << (k - 1);\n      for (int j = 0; j < v; ++j)\
+    \ {\n        mint ajv = a[j + v];\n        a[j + v] = a[j] - ajv;\n        a[j]\
+    \ += ajv;\n      }\n    }\n    int u = 1 << (2 + (k & 1));\n    int v = 1 << (k\
+    \ - 2 - (k & 1));\n    mint one = mint(1);\n    mint imag = dw[1];\n    while\
+    \ (v) {\n      // jh = 0\n      {\n        int j0 = 0;\n        int j1 = v;\n\
+    \        int j2 = j1 + v;\n        int j3 = j2 + v;\n        for (; j0 < v; ++j0,\
+    \ ++j1, ++j2, ++j3) {\n          mint t0 = a[j0], t1 = a[j1], t2 = a[j2], t3 =\
+    \ a[j3];\n          mint t0p2 = t0 + t2, t1p3 = t1 + t3;\n          mint t0m2\
+    \ = t0 - t2, t1m3 = (t1 - t3) * imag;\n          a[j0] = t0p2 + t1p3, a[j1] =\
+    \ t0p2 - t1p3;\n          a[j2] = t0m2 + t1m3, a[j3] = t0m2 - t1m3;\n        }\n\
+    \      }\n      // jh >= 1\n      mint ww = one, xx = one * dw[2], wx = one;\n\
+    \      for (int jh = 4; jh < u;) {\n        ww = xx * xx, wx = ww * xx;\n    \
+    \    int j0 = jh * v;\n        int je = j0 + v;\n        int j2 = je + v;\n  \
+    \      for (; j0 < je; ++j0, ++j2) {\n          mint t0 = a[j0], t1 = a[j0 + v]\
+    \ * xx, t2 = a[j2] * ww,\n               t3 = a[j2 + v] * wx;\n          mint\
+    \ t0p2 = t0 + t2, t1p3 = t1 + t3;\n          mint t0m2 = t0 - t2, t1m3 = (t1 -\
+    \ t3) * imag;\n          a[j0] = t0p2 + t1p3, a[j0 + v] = t0p2 - t1p3;\n     \
+    \     a[j2] = t0m2 + t1m3, a[j2 + v] = t0m2 - t1m3;\n        }\n        xx *=\
+    \ dw[__builtin_ctzll((jh += 4))];\n      }\n      u <<= 2;\n      v >>= 2;\n \
+    \   }\n  }\n\n  void ifft4(vector<mint> &a, int k) {\n    if ((int)a.size() <=\
+    \ 1) return;\n    if (k == 1) {\n      mint a1 = a[1];\n      a[1] = a[0] - a[1];\n\
+    \      a[0] = a[0] + a1;\n      return;\n    }\n    int u = 1 << (k - 2);\n  \
+    \  int v = 1;\n    mint one = mint(1);\n    mint imag = dy[1];\n    while (u)\
+    \ {\n      // jh = 0\n      {\n        int j0 = 0;\n        int j1 = v;\n    \
+    \    int j2 = v + v;\n        int j3 = j2 + v;\n        for (; j0 < v; ++j0, ++j1,\
+    \ ++j2, ++j3) {\n          mint t0 = a[j0], t1 = a[j1], t2 = a[j2], t3 = a[j3];\n\
+    \          mint t0p1 = t0 + t1, t2p3 = t2 + t3;\n          mint t0m1 = t0 - t1,\
+    \ t2m3 = (t2 - t3) * imag;\n          a[j0] = t0p1 + t2p3, a[j2] = t0p1 - t2p3;\n\
+    \          a[j1] = t0m1 + t2m3, a[j3] = t0m1 - t2m3;\n        }\n      }\n   \
+    \   // jh >= 1\n      mint ww = one, xx = one * dy[2], yy = one;\n      u <<=\
+    \ 2;\n      for (int jh = 4; jh < u;) {\n        ww = xx * xx, yy = xx * imag;\n\
+    \        int j0 = jh * v;\n        int je = j0 + v;\n        int j2 = je + v;\n\
+    \        for (; j0 < je; ++j0, ++j2) {\n          mint t0 = a[j0], t1 = a[j0 +\
+    \ v], t2 = a[j2], t3 = a[j2 + v];\n          mint t0p1 = t0 + t1, t2p3 = t2 +\
+    \ t3;\n          mint t0m1 = (t0 - t1) * xx, t2m3 = (t2 - t3) * yy;\n        \
+    \  a[j0] = t0p1 + t2p3, a[j2] = (t0p1 - t2p3) * ww;\n          a[j0 + v] = t0m1\
+    \ + t2m3, a[j2 + v] = (t0m1 - t2m3) * ww;\n        }\n        xx *= dy[__builtin_ctzll(jh\
+    \ += 4)];\n      }\n      u >>= 4;\n      v <<= 2;\n    }\n    if (k & 1) {\n\
+    \      u = 1 << (k - 1);\n      for (int j = 0; j < u; ++j) {\n        mint ajv\
+    \ = a[j] - a[j + u];\n        a[j] += a[j + u];\n        a[j + u] = ajv;\n   \
+    \   }\n    }\n  }\n\n  void ntt(vector<mint> &a) {\n    if ((int)a.size() <= 1)\
+    \ return;\n    fft4(a, __builtin_ctz(a.size()));\n  }\n\n  void intt(vector<mint>\
+    \ &a) {\n    if ((int)a.size() <= 1) return;\n    ifft4(a, __builtin_ctz(a.size()));\n\
+    \    mint iv = mint(a.size()).inverse();\n    for (auto &x : a) x *= iv;\n  }\n\
+    \n  vector<mint> multiply(const vector<mint> &a, const vector<mint> &b) {\n  \
+    \  int l = a.size() + b.size() - 1;\n    if (min<int>(a.size(), b.size()) <= 40)\
+    \ {\n      vector<mint> s(l);\n      for (int i = 0; i < (int)a.size(); ++i)\n\
+    \        for (int j = 0; j < (int)b.size(); ++j) s[i + j] += a[i] * b[j];\n  \
+    \    return s;\n    }\n    int k = 2, M = 4;\n    while (M < l) M <<= 1, ++k;\n\
+    \    setwy(k);\n    vector<mint> s(M);\n    for (int i = 0; i < (int)a.size();\
+    \ ++i) s[i] = a[i];\n    fft4(s, k);\n    if (a.size() == b.size() && a == b)\
+    \ {\n      for (int i = 0; i < M; ++i) s[i] *= s[i];\n    } else {\n      vector<mint>\
+    \ t(M);\n      for (int i = 0; i < (int)b.size(); ++i) t[i] = b[i];\n      fft4(t,\
+    \ k);\n      for (int i = 0; i < M; ++i) s[i] *= t[i];\n    }\n    ifft4(s, k);\n\
+    \    s.resize(l);\n    mint invm = mint(M).inverse();\n    for (int i = 0; i <\
+    \ l; ++i) s[i] *= invm;\n    return s;\n  }\n\n  void ntt_doubling(vector<mint>\
+    \ &a) {\n    int M = (int)a.size();\n    auto b = a;\n    intt(b);\n    mint r\
+    \ = 1, zeta = mint(pr).pow((mint::get_mod() - 1) / (M << 1));\n    for (int i\
+    \ = 0; i < M; i++) b[i] *= r, r *= zeta;\n    ntt(b);\n    copy(begin(b), end(b),\
+    \ back_inserter(a));\n  }\n};\n#line 10 \"ntt/arbitrary-ntt.hpp\"\n\nnamespace\
+    \ ArbitraryNTT {\nusing i64 = int64_t;\nusing u128 = __uint128_t;\nconstexpr int32_t\
+    \ m0 = 167772161;\nconstexpr int32_t m1 = 469762049;\nconstexpr int32_t m2 = 754974721;\n\
+    using mint0 = LazyMontgomeryModInt<m0>;\nusing mint1 = LazyMontgomeryModInt<m1>;\n\
+    using mint2 = LazyMontgomeryModInt<m2>;\nconstexpr int r01 = mint1(m0).inverse().get();\n\
+    constexpr int r02 = mint2(m0).inverse().get();\nconstexpr int r12 = mint2(m1).inverse().get();\n\
+    constexpr int r02r12 = i64(r02) * r12 % m2;\nconstexpr i64 w1 = m0;\nconstexpr\
+    \ i64 w2 = i64(m0) * m1;\n\ntemplate <typename T, typename submint>\nvector<submint>\
+    \ mul(const vector<T> &a, const vector<T> &b) {\n  static NTT<submint> ntt;\n\
+    \  vector<submint> s(a.size()), t(b.size());\n  for (int i = 0; i < (int)a.size();\
+    \ ++i) s[i] = i64(a[i] % submint::get_mod());\n  for (int i = 0; i < (int)b.size();\
+    \ ++i) t[i] = i64(b[i] % submint::get_mod());\n  return ntt.multiply(s, t);\n\
+    }\n\ntemplate <typename T>\nvector<int> multiply(const vector<T> &s, const vector<T>\
+    \ &t, int mod) {\n  auto d0 = mul<T, mint0>(s, t);\n  auto d1 = mul<T, mint1>(s,\
+    \ t);\n  auto d2 = mul<T, mint2>(s, t);\n  int n = d0.size();\n  vector<int> ret(n);\n\
+    \  const int W1 = w1 % mod;\n  const int W2 = w2 % mod;\n  for (int i = 0; i <\
+    \ n; i++) {\n    int n1 = d1[i].get(), n2 = d2[i].get(), a = d0[i].get();\n  \
+    \  int b = i64(n1 + m1 - a) * r01 % m1;\n    int c = (i64(n2 + m2 - a) * r02r12\
+    \ + i64(m2 - b) * r12) % m2;\n    ret[i] = (i64(a) + i64(b) * W1 + i64(c) * W2)\
+    \ % mod;\n  }\n  return ret;\n}\n\ntemplate <typename mint>\nvector<mint> multiply(const\
+    \ vector<mint> &a, const vector<mint> &b) {\n  if (a.size() == 0 && b.size() ==\
+    \ 0) return {};\n  if (min<int>(a.size(), b.size()) < 128) {\n    vector<mint>\
+    \ ret(a.size() + b.size() - 1);\n    for (int i = 0; i < (int)a.size(); ++i)\n\
+    \      for (int j = 0; j < (int)b.size(); ++j) ret[i + j] += a[i] * b[j];\n  \
+    \  return ret;\n  }\n  vector<int> s(a.size()), t(b.size());\n  for (int i = 0;\
+    \ i < (int)a.size(); ++i) s[i] = a[i].get();\n  for (int i = 0; i < (int)b.size();\
+    \ ++i) t[i] = b[i].get();\n  vector<int> u = multiply<int>(s, t, mint::get_mod());\n\
+    \  vector<mint> ret(u.size());\n  for (int i = 0; i < (int)u.size(); ++i) ret[i]\
+    \ = mint(u[i]);\n  return ret;\n}\n\ntemplate <typename T>\nvector<u128> multiply_u128(const\
+    \ vector<T> &s, const vector<T> &t) {\n  if (s.size() == 0 && t.size() == 0) return\
+    \ {};\n  if (min<int>(s.size(), t.size()) < 128) {\n    vector<u128> ret(s.size()\
+    \ + t.size() - 1);\n    for (int i = 0; i < (int)s.size(); ++i)\n      for (int\
+    \ j = 0; j < (int)t.size(); ++j) ret[i + j] += i64(s[i]) * t[j];\n    return ret;\n\
+    \  }\n  auto d0 = mul<T, mint0>(s, t);\n  auto d1 = mul<T, mint1>(s, t);\n  auto\
+    \ d2 = mul<T, mint2>(s, t);\n  int n = d0.size();\n  vector<u128> ret(n);\n  for\
+    \ (int i = 0; i < n; i++) {\n    i64 n1 = d1[i].get(), n2 = d2[i].get();\n   \
+    \ i64 a = d0[i].get();\n    i64 b = (n1 + m1 - a) * r01 % m1;\n    i64 c = ((n2\
+    \ + m2 - a) * r02r12 + (m2 - b) * r12) % m2;\n    ret[i] = a + b * w1 + u128(c)\
+    \ * w2;\n  }\n  return ret;\n}\n}  // namespace ArbitraryNTT\n#line 2 \"fps/formal-power-series.hpp\"\
+    \n\n#line 8 \"fps/formal-power-series.hpp\"\nusing namespace std;\n\ntemplate\
+    \ <typename mint>\nstruct FormalPowerSeries : vector<mint> {\n  using vector<mint>::vector;\n\
+    \  using FPS = FormalPowerSeries;\n\n  FPS &operator+=(const FPS &r) {\n    if\
+    \ (r.size() > this->size()) this->resize(r.size());\n    for (int i = 0; i < (int)r.size();\
     \ i++) (*this)[i] += r[i];\n    return *this;\n  }\n\n  FPS &operator+=(const\
     \ mint &r) {\n    if (this->empty()) this->resize(1);\n    (*this)[0] += r;\n\
     \    return *this;\n  }\n\n  FPS &operator-=(const FPS &r) {\n    if (r.size()\
@@ -102,42 +276,80 @@ data:
     \ set_fft();\n  FPS &operator*=(const FPS &r);\n  void ntt();\n  void intt();\n\
     \  void ntt_doubling();\n  static int ntt_pr();\n  FPS inv(int deg = -1) const;\n\
     \  FPS exp(int deg = -1) const;\n};\ntemplate <typename mint>\nvoid *FormalPowerSeries<mint>::ntt_ptr\
-    \ = nullptr;\n\n/**\n * @brief \u591A\u9805\u5F0F/\u5F62\u5F0F\u7684\u51AA\u7D1A\
-    \u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n * @docs docs/fps/formal-power-series.md\n\
-    \ */\n#line 4 \"fps/kitamasa.hpp\"\n\ntemplate <typename mint>\nmint LinearRecurrence(long\
-    \ long k, FormalPowerSeries<mint> Q,\n                      FormalPowerSeries<mint>\
-    \ P) {\n  Q.shrink();\n  mint ret = 0;\n  if (P.size() >= Q.size()) {\n    auto\
-    \ R = P / Q;\n    P -= R * Q;\n    P.shrink();\n    if (k < (int)R.size()) ret\
-    \ += R[k];\n  }\n  if ((int)P.size() == 0) return ret;\n\n  FormalPowerSeries<mint>::set_fft();\n\
-    \  if (FormalPowerSeries<mint>::ntt_ptr == nullptr) {\n    P.resize((int)Q.size()\
-    \ - 1);\n    while (k) {\n      auto Q2 = Q;\n      for (int i = 1; i < (int)Q2.size();\
-    \ i += 2) Q2[i] = -Q2[i];\n      auto S = P * Q2;\n      auto T = Q * Q2;\n  \
-    \    if (k & 1) {\n        for (int i = 1; i < (int)S.size(); i += 2) P[i >> 1]\
-    \ = S[i];\n        for (int i = 0; i < (int)T.size(); i += 2) Q[i >> 1] = T[i];\n\
-    \      } else {\n        for (int i = 0; i < (int)S.size(); i += 2) P[i >> 1]\
-    \ = S[i];\n        for (int i = 0; i < (int)T.size(); i += 2) Q[i >> 1] = T[i];\n\
-    \      }\n      k >>= 1;\n    }\n    return ret + P[0];\n  } else {\n    int N\
-    \ = 1;\n    while (N < (int)Q.size()) N <<= 1;\n\n    P.resize(2 * N);\n    Q.resize(2\
-    \ * N);\n    P.ntt();\n    Q.ntt();\n    vector<mint> S(2 * N), T(2 * N);\n\n\
-    \    vector<int> btr(N);\n    for (int i = 0, logn = __builtin_ctz(N); i < (1\
-    \ << logn); i++) {\n      btr[i] = (btr[i >> 1] >> 1) + ((i & 1) << (logn - 1));\n\
-    \    }\n    mint dw = mint(FormalPowerSeries<mint>::ntt_pr())\n              \
-    \    .inverse()\n                  .pow((mint::get_mod() - 1) / (2 * N));\n\n\
-    \    while (k) {\n      mint inv2 = mint(2).inverse();\n\n      // even degree\
-    \ of Q(x)Q(-x)\n      T.resize(N);\n      for (int i = 0; i < N; i++) T[i] = Q[(i\
-    \ << 1) | 0] * Q[(i << 1) | 1];\n\n      S.resize(N);\n      if (k & 1) {\n  \
-    \      // odd degree of P(x)Q(-x)\n        for (auto &i : btr) {\n          S[i]\
-    \ = (P[(i << 1) | 0] * Q[(i << 1) | 1] -\n                  P[(i << 1) | 1] *\
-    \ Q[(i << 1) | 0]) *\n                 inv2;\n          inv2 *= dw;\n        }\n\
-    \      } else {\n        // even degree of P(x)Q(-x)\n        for (int i = 0;\
-    \ i < N; i++) {\n          S[i] = (P[(i << 1) | 0] * Q[(i << 1) | 1] +\n     \
-    \             P[(i << 1) | 1] * Q[(i << 1) | 0]) *\n                 inv2;\n \
-    \       }\n      }\n      swap(P, S);\n      swap(Q, T);\n      k >>= 1;\n   \
-    \   if (k < N) break;\n      P.ntt_doubling();\n      Q.ntt_doubling();\n    }\n\
-    \    P.intt();\n    Q.intt();\n    return ret + (P * (Q.inv()))[k];\n  }\n}\n\n\
-    template <typename mint>\nmint kitamasa(long long N, FormalPowerSeries<mint> Q,\n\
-    \              FormalPowerSeries<mint> a) {\n  assert(!Q.empty() && Q[0] != 0);\n\
-    \  if (N < (int)a.size()) return a[N];\n  assert((int)a.size() >= int(Q.size())\
+    \ = nullptr;\n\ntemplate <int N>\nstruct FPSBackendPriority : FPSBackendPriority<N\
+    \ - 1> {};\ntemplate <>\nstruct FPSBackendPriority<0> {};\n\ntemplate <typename\
+    \ mint>\nvoid FormalPowerSeries<mint>::set_fft() {\n  fps_set_fft_impl((FormalPowerSeries<mint>*)nullptr,\
+    \ FPSBackendPriority<1>{});\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>&\
+    \ FormalPowerSeries<mint>::operator*=(const FPS& r) {\n  if (this->empty() ||\
+    \ r.empty()) {\n    this->clear();\n    return *this;\n  }\n  return fps_multiply_impl(*this,\
+    \ r, FPSBackendPriority<1>{});\n}\n\ntemplate <typename mint>\nvoid FormalPowerSeries<mint>::ntt()\
+    \ {\n  fps_ntt_impl(*this, FPSBackendPriority<1>{});\n}\n\ntemplate <typename\
+    \ mint>\nvoid FormalPowerSeries<mint>::intt() {\n  fps_intt_impl(*this, FPSBackendPriority<1>{});\n\
+    }\n\ntemplate <typename mint>\nvoid FormalPowerSeries<mint>::ntt_doubling() {\n\
+    \  fps_ntt_doubling_impl(*this, FPSBackendPriority<1>{});\n}\n\ntemplate <typename\
+    \ mint>\nint FormalPowerSeries<mint>::ntt_pr() {\n  return fps_ntt_pr_impl((FormalPowerSeries<mint>*)nullptr,\n\
+    \                         FPSBackendPriority<1>{});\n}\n\ntemplate <typename mint>\n\
+    FormalPowerSeries<mint> FormalPowerSeries<mint>::inv(int deg) const {\n  return\
+    \ fps_inv_impl(*this, deg, FPSBackendPriority<1>{});\n}\n\ntemplate <typename\
+    \ mint>\nFormalPowerSeries<mint> FormalPowerSeries<mint>::exp(int deg) const {\n\
+    \  return fps_exp_impl(*this, deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief\
+    \ \u591A\u9805\u5F0F/\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\
+    \u30EA\n * @docs docs/fps/formal-power-series.md\n */\n#line 7 \"fps/arbitrary-fps.hpp\"\
+    \n\ntemplate <typename mint>\nvoid fps_set_fft_impl(FormalPowerSeries<mint>*,\
+    \ FPSBackendPriority<0>) {\n  FormalPowerSeries<mint>::ntt_ptr = nullptr;\n}\n\
+    \ntemplate <typename mint>\nvoid fps_ntt_impl(FormalPowerSeries<mint>&, FPSBackendPriority<0>)\
+    \ {\n  exit(1);\n}\n\ntemplate <typename mint>\nvoid fps_intt_impl(FormalPowerSeries<mint>&,\
+    \ FPSBackendPriority<0>) {\n  exit(1);\n}\n\ntemplate <typename mint>\nvoid fps_ntt_doubling_impl(FormalPowerSeries<mint>&,\
+    \ FPSBackendPriority<0>) {\n  exit(1);\n}\n\ntemplate <typename mint>\nint fps_ntt_pr_impl(FormalPowerSeries<mint>*,\
+    \ FPSBackendPriority<0>) {\n  exit(1);\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>&\
+    \ fps_multiply_impl(FormalPowerSeries<mint>& f,\n                            \
+    \               const FormalPowerSeries<mint>& r,\n                          \
+    \                 FPSBackendPriority<0>) {\n  auto ret = ArbitraryNTT::multiply(f,\
+    \ r);\n  return f = FormalPowerSeries<mint>(ret.begin(), ret.end());\n}\n\ntemplate\
+    \ <typename mint>\nFormalPowerSeries<mint> fps_inv_impl(const FormalPowerSeries<mint>&\
+    \ f, int deg,\n                                     FPSBackendPriority<0>) {\n\
+    \  assert(f[0] != mint(0));\n  if (deg == -1) deg = f.size();\n  FormalPowerSeries<mint>\
+    \ ret({mint(1) / f[0]});\n  for (int i = 1; i < deg; i <<= 1)\n    ret = (ret\
+    \ + ret - ret * ret * f.pre(i << 1)).pre(i << 1);\n  return ret.pre(deg);\n}\n\
+    \ntemplate <typename mint>\nFormalPowerSeries<mint> fps_exp_impl(const FormalPowerSeries<mint>&\
+    \ f, int deg,\n                                     FPSBackendPriority<0>) {\n\
+    \  assert(f.size() == 0 || f[0] == mint(0));\n  if (deg == -1) deg = (int)f.size();\n\
+    \  FormalPowerSeries<mint> ret({mint(1)});\n  for (int i = 1; i < deg; i <<= 1)\
+    \ {\n    ret = (ret * (f.pre(i << 1) + mint(1) - ret.log(i << 1))).pre(i << 1);\n\
+    \  }\n  return ret.pre(deg);\n}\n#line 8 \"fps/kitamasa.hpp\"\n\ntemplate <typename\
+    \ mint>\nmint LinearRecurrence(long long k, FormalPowerSeries<mint> Q,\n     \
+    \                 FormalPowerSeries<mint> P) {\n  Q.shrink();\n  mint ret = 0;\n\
+    \  if (P.size() >= Q.size()) {\n    auto R = P / Q;\n    P -= R * Q;\n    P.shrink();\n\
+    \    if (k < (int)R.size()) ret += R[k];\n  }\n  if ((int)P.size() == 0) return\
+    \ ret;\n\n  FormalPowerSeries<mint>::set_fft();\n  if (FormalPowerSeries<mint>::ntt_ptr\
+    \ == nullptr) {\n    P.resize((int)Q.size() - 1);\n    while (k) {\n      auto\
+    \ Q2 = Q;\n      for (int i = 1; i < (int)Q2.size(); i += 2) Q2[i] = -Q2[i];\n\
+    \      auto S = P * Q2;\n      auto T = Q * Q2;\n      if (k & 1) {\n        for\
+    \ (int i = 1; i < (int)S.size(); i += 2) P[i >> 1] = S[i];\n        for (int i\
+    \ = 0; i < (int)T.size(); i += 2) Q[i >> 1] = T[i];\n      } else {\n        for\
+    \ (int i = 0; i < (int)S.size(); i += 2) P[i >> 1] = S[i];\n        for (int i\
+    \ = 0; i < (int)T.size(); i += 2) Q[i >> 1] = T[i];\n      }\n      k >>= 1;\n\
+    \    }\n    return ret + P[0];\n  } else {\n    int N = 1;\n    while (N < (int)Q.size())\
+    \ N <<= 1;\n\n    P.resize(2 * N);\n    Q.resize(2 * N);\n    P.ntt();\n    Q.ntt();\n\
+    \    vector<mint> S(2 * N), T(2 * N);\n\n    vector<int> btr(N);\n    for (int\
+    \ i = 0, logn = __builtin_ctz(N); i < (1 << logn); i++) {\n      btr[i] = (btr[i\
+    \ >> 1] >> 1) + ((i & 1) << (logn - 1));\n    }\n    mint dw = mint(FormalPowerSeries<mint>::ntt_pr())\n\
+    \                  .inverse()\n                  .pow((mint::get_mod() - 1) /\
+    \ (2 * N));\n\n    while (k) {\n      mint inv2 = mint(2).inverse();\n\n     \
+    \ // even degree of Q(x)Q(-x)\n      T.resize(N);\n      for (int i = 0; i < N;\
+    \ i++) T[i] = Q[(i << 1) | 0] * Q[(i << 1) | 1];\n\n      S.resize(N);\n     \
+    \ if (k & 1) {\n        // odd degree of P(x)Q(-x)\n        for (auto &i : btr)\
+    \ {\n          S[i] = (P[(i << 1) | 0] * Q[(i << 1) | 1] -\n                 \
+    \ P[(i << 1) | 1] * Q[(i << 1) | 0]) *\n                 inv2;\n          inv2\
+    \ *= dw;\n        }\n      } else {\n        // even degree of P(x)Q(-x)\n   \
+    \     for (int i = 0; i < N; i++) {\n          S[i] = (P[(i << 1) | 0] * Q[(i\
+    \ << 1) | 1] +\n                  P[(i << 1) | 1] * Q[(i << 1) | 0]) *\n     \
+    \            inv2;\n        }\n      }\n      swap(P, S);\n      swap(Q, T);\n\
+    \      k >>= 1;\n      if (k < N) break;\n      P.ntt_doubling();\n      Q.ntt_doubling();\n\
+    \    }\n    P.intt();\n    Q.intt();\n    return ret + (P * (Q.inv()))[k];\n \
+    \ }\n}\n\ntemplate <typename mint>\nmint kitamasa(long long N, FormalPowerSeries<mint>\
+    \ Q,\n              FormalPowerSeries<mint> a) {\n  assert(!Q.empty() && Q[0]\
+    \ != 0);\n  if (N < (int)a.size()) return a[N];\n  assert((int)a.size() >= int(Q.size())\
     \ - 1);\n  auto P = a.pre((int)Q.size() - 1) * Q;\n  P.resize(Q.size() - 1);\n\
     \  return LinearRecurrence<mint>(N, Q, P);\n}\n\n/**\n * @brief \u7DDA\u5F62\u6F38\
     \u5316\u5F0F\u306E\u9AD8\u901F\u8A08\u7B97\n * @docs docs/fps/kitamasa.md\n */\n\
@@ -156,11 +368,15 @@ data:
   dependsOn:
   - fps/berlekamp-massey.hpp
   - fps/kitamasa.hpp
+  - fps/arbitrary-fps.hpp
+  - ntt/arbitrary-ntt.hpp
+  - modint/montgomery-modint.hpp
+  - ntt/ntt.hpp
   - fps/formal-power-series.hpp
   isVerificationFile: false
   path: fps/nth-term.hpp
   requiredBy: []
-  timestamp: '2023-08-31 20:44:07+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yuki/yuki-0215-nth-term.test.cpp

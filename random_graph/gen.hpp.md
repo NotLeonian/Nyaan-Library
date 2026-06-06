@@ -22,22 +22,19 @@ data:
     , line 187, in bundle\n    bundler.update(path)\n  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/onlinejudge_verify/languages/cplusplus_bundle.py\"\
     , line 401, in update\n    self.update(self._resolve(pathlib.Path(included), included_from=path))\n\
     \  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/onlinejudge_verify/languages/cplusplus_bundle.py\"\
-    , line 401, in update\n    self.update(self._resolve(pathlib.Path(included), included_from=path))\n\
-    \  File \"/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/onlinejudge_verify/languages/cplusplus_bundle.py\"\
     , line 312, in update\n    raise BundleErrorAt(path, i + 1, \"#pragma once found\
     \ in a non-first line\")\nonlinejudge_verify.languages.cplusplus_bundle.BundleErrorAt:\
     \ random_graph/random.hpp: line 4: #pragma once found in a non-first line\n"
-  code: "#pragma once\n\n#include <algorithm>\n#include <array>\n#include <cassert>\n\
-    #include <chrono>\n#include <cstdint>\n#include <functional>\n#include <iostream>\n\
-    #include <numeric>\n#include <random>\n#include <set>\n#include <vector>\n\n#include\
-    \ \"graph.hpp\"\n#include \"random.hpp\"\n\n// \u30B8\u30A7\u30CD\u30EC\u30FC\u30BF\
-    \u672C\u4F53\nstruct UndirectedGraphGenerator {\n private:\n  // \u4E71\u6570\u751F\
-    \u6210\u5668 (static\u30E1\u30F3\u30D0\u5909\u6570\u306E\u4EE3\u308F\u308A)\n\
-    \  Random& _gen() {\n    static Random gen{};\n    return gen;\n  }\n  // [l,\
-    \ r]\u4E0A\u306E\u4E00\u69D8\u4E71\u6570\u3092\u751F\u6210\n  long long random(long\
-    \ long l, long long r) {\n    assert(l <= r && \"UndirectedGraphGenerator::random(l,\
-    \ r)\");\n    return _gen().uniform(l, r);\n  }\n  // v\u3092\u30E9\u30F3\u30C0\
-    \u30E0\u306B\u30B7\u30E3\u30C3\u30D5\u30EB\n  template <typename U>\n  void random_shuffle(vector<U>&\
+  code: "#pragma once\n\n#include <array>\n#include <cassert>\n#include <chrono>\n\
+    #include <numeric>\n#include <set>\n#include <vector>\n\n#include \"graph.hpp\"\
+    \n#include \"random.hpp\"\n\n// \u30B8\u30A7\u30CD\u30EC\u30FC\u30BF\u672C\u4F53\
+    \nstruct UndirectedGraphGenerator {\n private:\n  // \u4E71\u6570\u751F\u6210\u5668\
+    \ (static\u30E1\u30F3\u30D0\u5909\u6570\u306E\u4EE3\u308F\u308A)\n  Random& _gen()\
+    \ {\n    static Random gen{};\n    return gen;\n  }\n  // [l, r]\u4E0A\u306E\u4E00\
+    \u69D8\u4E71\u6570\u3092\u751F\u6210\n  long long random(long long l, long long\
+    \ r) {\n    assert(l <= r && \"UndirectedGraphGenerator::random(l, r)\");\n  \
+    \  return _gen().uniform(l, r);\n  }\n  // v\u3092\u30E9\u30F3\u30C0\u30E0\u306B\
+    \u30B7\u30E3\u30C3\u30D5\u30EB\n  template <typename U>\n  void random_shuffle(vector<U>&\
     \ v) {\n    _gen().shuffle(begin(v), end(v));\n  }\n\n  W _w_min, _w_max;\n\n\
     \  // \u8FBA\u306E\u91CD\u307F\u3092\u8A2D\u5B9A\n  void set_weight(bool weighted,\
     \ W w_min, W w_max) {\n    _w_min = w_min, _w_max = w_max;\n    if (!weighted)\
@@ -105,7 +102,7 @@ data:
   isVerificationFile: false
   path: random_graph/gen.hpp
   requiredBy: []
-  timestamp: '2021-08-11 08:31:05+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: random_graph/gen.hpp

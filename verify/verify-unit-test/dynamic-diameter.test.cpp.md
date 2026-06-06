@@ -5,9 +5,6 @@ data:
     path: graph/graph-template.hpp
     title: "\u30B0\u30E9\u30D5\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8"
   - icon: ':heavy_check_mark:'
-    path: graph/graph-utility.hpp
-    title: "\u30B0\u30E9\u30D5\u30E6\u30FC\u30C6\u30A3\u30EA\u30C6\u30A3"
-  - icon: ':heavy_check_mark:'
     path: internal/internal-seed.hpp
     title: internal/internal-seed.hpp
   - icon: ':heavy_check_mark:'
@@ -455,98 +452,47 @@ data:
     \ v)));\n    int i = aux.e_to_id[minmax(u, v)];\n    aux.w[i] = x;\n    dp.update(i);\n\
     \  }\n};\n}  // namespace DynamicDiameterImpl\n\nusing DynamicDiameterImpl::DynamicDiameter;\n\
     #line 6 \"verify/verify-unit-test/dynamic-diameter.test.cpp\"\nusing namespace\
-    \ Nyaan;\n//\n#line 2 \"graph/graph-utility.hpp\"\n\n#line 4 \"graph/graph-utility.hpp\"\
-    \n\n// \u4E00\u822C\u306E\u30B0\u30E9\u30D5\u306Est\u304B\u3089\u306E\u8DDD\u96E2\
-    \uFF01\uFF01\uFF01\uFF01\n// unvisited nodes : d = -1\nvector<int> Depth(const\
-    \ UnweightedGraph &g, int start = 0) {\n  int n = g.size();\n  vector<int> ds(n,\
-    \ -1);\n  ds[start] = 0;\n  queue<int> q;\n  q.push(start);\n  while (!q.empty())\
-    \ {\n    int c = q.front();\n    q.pop();\n    int dc = ds[c];\n    for (auto\
-    \ &d : g[c]) {\n      if (ds[d] == -1) {\n        ds[d] = dc + 1;\n        q.push(d);\n\
-    \      }\n    }\n  }\n  return ds;\n}\n\n// Depth of Rooted Weighted Tree\n//\
-    \ unvisited nodes : d = -1\ntemplate <typename T>\nvector<T> Depth(const WeightedGraph<T>\
-    \ &g, int start = 0) {\n  vector<T> d(g.size(), -1);\n  auto dfs = [&](auto rec,\
-    \ int cur, T val, int par = -1) -> void {\n    d[cur] = val;\n    for (auto &dst\
-    \ : g[cur]) {\n      if (dst == par) continue;\n      rec(rec, dst, val + dst.cost,\
-    \ cur);\n    }\n  };\n  dfs(dfs, start, 0);\n  return d;\n}\n\n// Diameter of\
-    \ Tree\n// return value : { {u, v}, length }\npair<pair<int, int>, int> Diameter(const\
-    \ UnweightedGraph &g) {\n  auto d = Depth(g, 0);\n  int u = max_element(begin(d),\
-    \ end(d)) - begin(d);\n  d = Depth(g, u);\n  int v = max_element(begin(d), end(d))\
-    \ - begin(d);\n  return make_pair(make_pair(u, v), d[v]);\n}\n\n// Diameter of\
-    \ Weighted Tree\n// return value : { {u, v}, length }\ntemplate <typename T>\n\
-    pair<pair<int, int>, T> Diameter(const WeightedGraph<T> &g) {\n  auto d = Depth(g,\
-    \ 0);\n  int u = max_element(begin(d), end(d)) - begin(d);\n  d = Depth(g, u);\n\
-    \  int v = max_element(begin(d), end(d)) - begin(d);\n  return make_pair(make_pair(u,\
-    \ v), d[v]);\n}\n\n// nodes on the path u-v ( O(N) )\ntemplate <typename G>\n\
-    vector<int> Path(G &g, int u, int v) {\n  vector<int> ret;\n  int end = 0;\n \
-    \ auto dfs = [&](auto rec, int cur, int par = -1) -> void {\n    ret.push_back(cur);\n\
-    \    if (cur == v) {\n      end = 1;\n      return;\n    }\n    for (int dst :\
-    \ g[cur]) {\n      if (dst == par) continue;\n      rec(rec, dst, cur);\n    \
-    \  if (end) return;\n    }\n    if (end) return;\n    ret.pop_back();\n  };\n\
-    \  dfs(dfs, u);\n  return ret;\n}\n\n/**\n * @brief \u30B0\u30E9\u30D5\u30E6\u30FC\
-    \u30C6\u30A3\u30EA\u30C6\u30A3\n * @docs docs/graph/graph-utility.md\n */\n#line\
-    \ 9 \"verify/verify-unit-test/dynamic-diameter.test.cpp\"\n//\n#line 2 \"shortest-path/dijkstra.hpp\"\
-    \n\n#line 4 \"shortest-path/dijkstra.hpp\"\n\n// unreachable -> -1\ntemplate <typename\
-    \ T>\nvector<T> dijkstra(WeightedGraph<T> &g, int start = 0) {\n  using P = pair<T,\
-    \ int>;\n  int N = (int)g.size();\n  vector<T> d(N, T(-1));\n  priority_queue<P,\
-    \ vector<P>, greater<P> > Q;\n  d[start] = 0;\n  Q.emplace(0, start);\n  while\
-    \ (!Q.empty()) {\n    P p = Q.top();\n    Q.pop();\n    int cur = p.second;\n\
-    \    if (d[cur] < p.first) continue;\n    for (auto dst : g[cur]) {\n      if\
-    \ (d[dst] == T(-1) || d[cur] + dst.cost < d[dst]) {\n        d[dst] = d[cur] +\
-    \ dst.cost;\n        Q.emplace(d[dst], dst);\n      }\n    }\n  }\n  return d;\n\
-    }\n\n/**\n * @brief \u30C0\u30A4\u30AF\u30B9\u30C8\u30E9\u6CD5\n * @docs docs/shortest-path/dijkstra.md\n\
-    \ */\n#line 11 \"verify/verify-unit-test/dynamic-diameter.test.cpp\"\n//\n#line\
-    \ 2 \"misc/rng.hpp\"\n\n#line 2 \"internal/internal-seed.hpp\"\n\n#line 4 \"internal/internal-seed.hpp\"\
-    \nusing namespace std;\n\nnamespace internal {\nunsigned long long non_deterministic_seed()\
-    \ {\n  unsigned long long m =\n      chrono::duration_cast<chrono::nanoseconds>(\n\
-    \          chrono::high_resolution_clock::now().time_since_epoch())\n        \
-    \  .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >> 31, m\
-    \ ^= m << 35;\n  return m;\n}\nunsigned long long deterministic_seed() { return\
-    \ 88172645463325252UL; }\n\n// 64 bit \u306E seed \u5024\u3092\u751F\u6210 (\u624B\
-    \u5143\u3067\u306F seed \u56FA\u5B9A)\n// \u9023\u7D9A\u3067\u547C\u3073\u51FA\
-    \u3059\u3068\u540C\u3058\u5024\u304C\u4F55\u5EA6\u3082\u8FD4\u3063\u3066\u304F\
-    \u308B\u306E\u3067\u6CE8\u610F\n// #define RANDOMIZED_SEED \u3059\u308B\u3068\u30B7\
-    \u30FC\u30C9\u304C\u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long long\
-    \ seed() {\n#if defined(NyaanLocal) && !defined(RANDOMIZED_SEED)\n  return deterministic_seed();\n\
-    #else\n  return non_deterministic_seed();\n#endif\n}\n\n}  // namespace internal\n\
-    #line 4 \"misc/rng.hpp\"\n\nnamespace my_rand {\nusing i64 = long long;\nusing\
-    \ u64 = unsigned long long;\n\n// [0, 2^64 - 1)\nu64 rng() {\n  static u64 _x\
-    \ = internal::seed();\n  return _x ^= _x << 7, _x ^= _x >> 9;\n}\n\n// [l, r]\n\
-    i64 rng(i64 l, i64 r) {\n  assert(l <= r);\n  return l + rng() % u64(r - l + 1);\n\
-    }\n\n// [l, r)\ni64 randint(i64 l, i64 r) {\n  assert(l < r);\n  return l + rng()\
-    \ % u64(r - l);\n}\n\n// choose n numbers from [l, r) without overlapping\nvector<i64>\
-    \ randset(i64 l, i64 r, i64 n) {\n  assert(l <= r && n <= r - l);\n  unordered_set<i64>\
-    \ s;\n  for (i64 i = n; i; --i) {\n    i64 m = randint(l, r + 1 - i);\n    if\
-    \ (s.find(m) != s.end()) m = r - i;\n    s.insert(m);\n  }\n  vector<i64> ret;\n\
-    \  for (auto& x : s) ret.push_back(x);\n  sort(begin(ret), end(ret));\n  return\
-    \ ret;\n}\n\n// [0.0, 1.0)\ndouble rnd() { return rng() * 5.42101086242752217004e-20;\
-    \ }\n// [l, r)\ndouble rnd(double l, double r) {\n  assert(l < r);\n  return l\
-    \ + rnd() * (r - l);\n}\n\ntemplate <typename T>\nvoid randshf(vector<T>& v) {\n\
-    \  int n = v.size();\n  for (int i = 1; i < n; i++) swap(v[i], v[randint(0, i\
-    \ + 1)]);\n}\n\n}  // namespace my_rand\n\nusing my_rand::randint;\nusing my_rand::randset;\n\
-    using my_rand::randshf;\nusing my_rand::rnd;\nusing my_rand::rng;\n#line 13 \"\
-    verify/verify-unit-test/dynamic-diameter.test.cpp\"\n\nvoid test() {\n  ll wmax\
-    \ = TEN(9);\n\n  rep1(N, 50) {\n    rep(_, 100) {\n      WeightedGraph<ll> g;\n\
-    \      Edges<ll> es;\n      rep1(i, N - 1) {\n        int j = rng(0, i - 1);\n\
-    \        es.emplace_back(j, i, rng(0, wmax));\n      }\n\n      auto gen = [&]()\
-    \ {\n        g.clear();\n        g.resize(N);\n        each(e, es) {\n       \
-    \   g[e.src].emplace_back(e.src, e.to, e.cost);\n          g[e.to].emplace_back(e.to,\
-    \ e.src, e.cost);\n        }\n      };\n      gen();\n\n      auto DP = DynamicDiameter(g);\n\
-    \n      rep(t, 100) {\n        // check\n        auto [d, uv] = DP.get();\n\n\
-    \        ll d2 = -1;\n        {\n          int u = 0;\n          auto du = dijkstra(g,\
-    \ u);\n          int v = max_element(all(du)) - begin(du);\n          auto dv\
-    \ = dijkstra(g, v);\n          int w = max_element(all(dv)) - begin(dv);\n   \
-    \       d2 = dv[w];\n        }\n        assert(uv.first != -1 and uv.second !=\
-    \ -1);\n        assert(d == d2);\n        assert(d == dijkstra(g, uv.first)[uv.second]);\n\
-    \n        if (N >= 2) {\n          // update\n          int e_num = rng(0, N -\
-    \ 2);\n          int u = es[e_num].src, v = es[e_num].to;\n          ll x = rng(0,\
-    \ wmax);\n\n          DP.update(u, v, x);\n          es[e_num].cost = x;\n   \
-    \       gen();\n        }\n      }\n    }\n  }\n  trc2(\"OK\");\n}\n\nvoid q()\
-    \ {\n  test();\n\n  int a, b;\n  cin >> a >> b;\n  cout << a + b << endl;\n}\n\
-    \nvoid Nyaan::solve() {\n  int t = 1;\n  // in(t);\n  while (t--) q();\n}\n"
-  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/aplusb\"\n//\n#include\
-    \ \"../../template/template.hpp\"\n//\n#include \"../../tree/dynamic-diameter.hpp\"\
-    \nusing namespace Nyaan;\n//\n#include \"../../graph/graph-utility.hpp\"\n//\n\
-    #include \"../../shortest-path/dijkstra.hpp\"\n//\n#include \"../../misc/rng.hpp\"\
+    \ Nyaan;\n//\n#line 2 \"shortest-path/dijkstra.hpp\"\n\n#line 4 \"shortest-path/dijkstra.hpp\"\
+    \n\n// unreachable -> -1\ntemplate <typename T>\nvector<T> dijkstra(WeightedGraph<T>\
+    \ &g, int start = 0) {\n  using P = pair<T, int>;\n  int N = (int)g.size();\n\
+    \  vector<T> d(N, T(-1));\n  priority_queue<P, vector<P>, greater<P> > Q;\n  d[start]\
+    \ = 0;\n  Q.emplace(0, start);\n  while (!Q.empty()) {\n    P p = Q.top();\n \
+    \   Q.pop();\n    int cur = p.second;\n    if (d[cur] < p.first) continue;\n \
+    \   for (auto dst : g[cur]) {\n      if (d[dst] == T(-1) || d[cur] + dst.cost\
+    \ < d[dst]) {\n        d[dst] = d[cur] + dst.cost;\n        Q.emplace(d[dst],\
+    \ dst);\n      }\n    }\n  }\n  return d;\n}\n\n/**\n * @brief \u30C0\u30A4\u30AF\
+    \u30B9\u30C8\u30E9\u6CD5\n * @docs docs/shortest-path/dijkstra.md\n */\n#line\
+    \ 9 \"verify/verify-unit-test/dynamic-diameter.test.cpp\"\n//\n#line 2 \"misc/rng.hpp\"\
+    \n\n#line 7 \"misc/rng.hpp\"\nusing namespace std;\n\n#line 2 \"internal/internal-seed.hpp\"\
+    \n\n#line 4 \"internal/internal-seed.hpp\"\nusing namespace std;\n\nnamespace\
+    \ internal {\nunsigned long long non_deterministic_seed() {\n  unsigned long long\
+    \ m =\n      chrono::duration_cast<chrono::nanoseconds>(\n          chrono::high_resolution_clock::now().time_since_epoch())\n\
+    \          .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >>\
+    \ 31, m ^= m << 35;\n  return m;\n}\nunsigned long long deterministic_seed() {\
+    \ return 88172645463325252UL; }\n\n// 64 bit \u306E seed \u5024\u3092\u751F\u6210\
+    \ (\u624B\u5143\u3067\u306F seed \u56FA\u5B9A)\n// \u9023\u7D9A\u3067\u547C\u3073\
+    \u51FA\u3059\u3068\u540C\u3058\u5024\u304C\u4F55\u5EA6\u3082\u8FD4\u3063\u3066\
+    \u304F\u308B\u306E\u3067\u6CE8\u610F\n// #define RANDOMIZED_SEED \u3059\u308B\u3068\
+    \u30B7\u30FC\u30C9\u304C\u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long\
+    \ long seed() {\n#if defined(NyaanLocal) && !defined(RANDOMIZED_SEED)\n  return\
+    \ deterministic_seed();\n#else\n  return non_deterministic_seed();\n#endif\n}\n\
+    \n}  // namespace internal\n#line 10 \"misc/rng.hpp\"\n\nnamespace my_rand {\n\
+    using i64 = long long;\nusing u64 = unsigned long long;\n\n// [0, 2^64 - 1)\n\
+    u64 rng() {\n  static u64 _x = internal::seed();\n  return _x ^= _x << 7, _x ^=\
+    \ _x >> 9;\n}\n\n// [l, r]\ni64 rng(i64 l, i64 r) {\n  assert(l <= r);\n  return\
+    \ l + rng() % u64(r - l + 1);\n}\n\n// [l, r)\ni64 randint(i64 l, i64 r) {\n \
+    \ assert(l < r);\n  return l + rng() % u64(r - l);\n}\n\n// choose n numbers from\
+    \ [l, r) without overlapping\nvector<i64> randset(i64 l, i64 r, i64 n) {\n  assert(l\
+    \ <= r && n <= r - l);\n  unordered_set<i64> s;\n  for (i64 i = n; i; --i) {\n\
+    \    i64 m = randint(l, r + 1 - i);\n    if (s.find(m) != s.end()) m = r - i;\n\
+    \    s.insert(m);\n  }\n  vector<i64> ret;\n  for (auto& x : s) ret.push_back(x);\n\
+    \  sort(begin(ret), end(ret));\n  return ret;\n}\n\n// [0.0, 1.0)\ndouble rnd()\
+    \ { return rng() * 5.42101086242752217004e-20; }\n// [l, r)\ndouble rnd(double\
+    \ l, double r) {\n  assert(l < r);\n  return l + rnd() * (r - l);\n}\n\ntemplate\
+    \ <typename T>\nvoid randshf(vector<T>& v) {\n  int n = v.size();\n  for (int\
+    \ i = 1; i < n; i++) swap(v[i], v[randint(0, i + 1)]);\n}\n\n}  // namespace my_rand\n\
+    \nusing my_rand::randint;\nusing my_rand::randset;\nusing my_rand::randshf;\n\
+    using my_rand::rnd;\nusing my_rand::rng;\n#line 11 \"verify/verify-unit-test/dynamic-diameter.test.cpp\"\
     \n\nvoid test() {\n  ll wmax = TEN(9);\n\n  rep1(N, 50) {\n    rep(_, 100) {\n\
     \      WeightedGraph<ll> g;\n      Edges<ll> es;\n      rep1(i, N - 1) {\n   \
     \     int j = rng(0, i - 1);\n        es.emplace_back(j, i, rng(0, wmax));\n \
@@ -566,6 +512,28 @@ data:
     \        }\n      }\n    }\n  }\n  trc2(\"OK\");\n}\n\nvoid q() {\n  test();\n\
     \n  int a, b;\n  cin >> a >> b;\n  cout << a + b << endl;\n}\n\nvoid Nyaan::solve()\
     \ {\n  int t = 1;\n  // in(t);\n  while (t--) q();\n}\n"
+  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/aplusb\"\n//\n#include\
+    \ \"../../template/template.hpp\"\n//\n#include \"../../tree/dynamic-diameter.hpp\"\
+    \nusing namespace Nyaan;\n//\n#include \"../../shortest-path/dijkstra.hpp\"\n\
+    //\n#include \"../../misc/rng.hpp\"\n\nvoid test() {\n  ll wmax = TEN(9);\n\n\
+    \  rep1(N, 50) {\n    rep(_, 100) {\n      WeightedGraph<ll> g;\n      Edges<ll>\
+    \ es;\n      rep1(i, N - 1) {\n        int j = rng(0, i - 1);\n        es.emplace_back(j,\
+    \ i, rng(0, wmax));\n      }\n\n      auto gen = [&]() {\n        g.clear();\n\
+    \        g.resize(N);\n        each(e, es) {\n          g[e.src].emplace_back(e.src,\
+    \ e.to, e.cost);\n          g[e.to].emplace_back(e.to, e.src, e.cost);\n     \
+    \   }\n      };\n      gen();\n\n      auto DP = DynamicDiameter(g);\n\n     \
+    \ rep(t, 100) {\n        // check\n        auto [d, uv] = DP.get();\n\n      \
+    \  ll d2 = -1;\n        {\n          int u = 0;\n          auto du = dijkstra(g,\
+    \ u);\n          int v = max_element(all(du)) - begin(du);\n          auto dv\
+    \ = dijkstra(g, v);\n          int w = max_element(all(dv)) - begin(dv);\n   \
+    \       d2 = dv[w];\n        }\n        assert(uv.first != -1 and uv.second !=\
+    \ -1);\n        assert(d == d2);\n        assert(d == dijkstra(g, uv.first)[uv.second]);\n\
+    \n        if (N >= 2) {\n          // update\n          int e_num = rng(0, N -\
+    \ 2);\n          int u = es[e_num].src, v = es[e_num].to;\n          ll x = rng(0,\
+    \ wmax);\n\n          DP.update(u, v, x);\n          es[e_num].cost = x;\n   \
+    \       gen();\n        }\n      }\n    }\n  }\n  trc2(\"OK\");\n}\n\nvoid q()\
+    \ {\n  test();\n\n  int a, b;\n  cin >> a >> b;\n  cout << a + b << endl;\n}\n\
+    \nvoid Nyaan::solve() {\n  int t = 1;\n  // in(t);\n  while (t--) q();\n}\n"
   dependsOn:
   - template/template.hpp
   - template/util.hpp
@@ -578,14 +546,13 @@ data:
   - tree/static-top-tree-vertex-based.hpp
   - tree/convert-tree.hpp
   - tree/heavy-light-decomposition.hpp
-  - graph/graph-utility.hpp
   - shortest-path/dijkstra.hpp
   - misc/rng.hpp
   - internal/internal-seed.hpp
   isVerificationFile: true
   path: verify/verify-unit-test/dynamic-diameter.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/dynamic-diameter.test.cpp

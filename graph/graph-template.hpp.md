@@ -69,9 +69,6 @@ data:
     path: tree/block-cut-tree.hpp
     title: Block Cut Tree
   - icon: ':heavy_check_mark:'
-    path: tree/cartesian-tree.hpp
-    title: Cartesian Tree
-  - icon: ':heavy_check_mark:'
     path: tree/convert-tree.hpp
     title: "\u6839\u4ED8\u304D\u6728\u30FB\u9006\u8FBA\u304B\u3089\u306A\u308B\u6728\
       \u3078\u306E\u5909\u63DB"
@@ -224,9 +221,6 @@ data:
     path: verify/verify-yosupo-ds/yosupo-vertex-set-path-composite.test.cpp
     title: verify/verify-yosupo-ds/yosupo-vertex-set-path-composite.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/verify-yosupo-graph/yosupo-cartesian.test.cpp
-    title: verify/verify-yosupo-graph/yosupo-cartesian.test.cpp
-  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-graph/yosupo-chromatic-number.test.cpp
     title: verify/verify-yosupo-graph/yosupo-chromatic-number.test.cpp
   - icon: ':heavy_check_mark:'
@@ -238,9 +232,6 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-graph/yosupo-directed-mst.test.cpp
     title: verify/verify-yosupo-graph/yosupo-directed-mst.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/verify-yosupo-graph/yosupo-frequency-table-of-tree-distance.test.cpp
-    title: verify/verify-yosupo-graph/yosupo-frequency-table-of-tree-distance.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-graph/yosupo-jump-on-tree.test.cpp
     title: verify/verify-yosupo-graph/yosupo-jump-on-tree.test.cpp
@@ -402,7 +393,6 @@ data:
   - tree/rerooting.hpp
   - tree/dynamic-diameter-faster.hpp
   - tree/auxiliary-tree.hpp
-  - tree/cartesian-tree.hpp
   - tree/dynamic-diameter.hpp
   - tree/tree-query.hpp
   - tree/dsu-on-tree.hpp
@@ -420,12 +410,10 @@ data:
   - verify/verify-yosupo-graph/yosupo-chromatic-number.test.cpp
   - verify/verify-yosupo-graph/yosupo-shortest-path.test.cpp
   - verify/verify-yosupo-graph/yosupo-jump-on-tree.test.cpp
-  - verify/verify-yosupo-graph/yosupo-cartesian.test.cpp
   - verify/verify-yosupo-graph/yosupo-cycle-detection.test.cpp
   - verify/verify-yosupo-graph/yosupo-point-set-tree-path-composite-sum-fixed-root.test.cpp
   - verify/verify-yosupo-graph/yosupo-shortest-path-dijkstra-abstruct.test.cpp
   - verify/verify-yosupo-graph/yosupo-shortest-path-2.test.cpp
-  - verify/verify-yosupo-graph/yosupo-frequency-table-of-tree-distance.test.cpp
   - verify/verify-yosupo-graph/yosupo-lowest-common-ancestor-euler-tour.test.cpp
   - verify/verify-aoj-other/aoj-2821.test.cpp
   - verify/verify-aoj-other/aoj-2995.test.cpp

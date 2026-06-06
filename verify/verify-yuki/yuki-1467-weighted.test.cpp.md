@@ -232,7 +232,7 @@ data:
     \ \\\n    return;                  \\\n  } while (0)\n#line 70 \"template/template.hpp\"\
     \n\nnamespace Nyaan {\nvoid solve();\n}\nint main() { Nyaan::solve(); }\n#line\
     \ 4 \"verify/verify-yuki/yuki-1467-weighted.test.cpp\"\n//\n#line 2 \"data-structure/slope-trick-weighted.hpp\"\
-    \n\n#line 6 \"data-structure/slope-trick-weighted.hpp\"\nusing namespace std;\n\
+    \n\n#line 5 \"data-structure/slope-trick-weighted.hpp\"\nusing namespace std;\n\
     \n#line 2 \"segment-tree/rbst-segment-tree.hpp\"\n\n#line 5 \"segment-tree/rbst-segment-tree.hpp\"\
     \n\n#line 2 \"internal/internal-type-traits.hpp\"\n\n#line 4 \"internal/internal-type-traits.hpp\"\
     \nusing namespace std;\n\nnamespace internal {\ntemplate <typename T>\nusing is_broadly_integral\
@@ -553,7 +553,7 @@ data:
     \                             nullptr, nullptr, ti, _ei>;\n\n}  // namespace RBSTSegmentTreeImpl\n\
     \nusing RBSTSegmentTreeImpl::RBSTLazySegmentTree;\nusing RBSTSegmentTreeImpl::RBSTSegmentTree;\n\
     using RBSTSegmentTreeImpl::RBSTShiftableLazySegmentTree;\n\n/**\n * @brief RBST-based\
-    \ Dynamic Lazy Segment Tree\n */\n#line 9 \"data-structure/slope-trick-weighted.hpp\"\
+    \ Dynamic Lazy Segment Tree\n */\n#line 8 \"data-structure/slope-trick-weighted.hpp\"\
     \n\nnamespace SlopeTrickImpl {\n\ntemplate <typename Int>\nusing T = pair<Int,\
     \ Int>;\ntemplate <typename Int>\nusing E = Int;\ntemplate <typename Int>\nT<Int>\
     \ f(T<Int> a, T<Int> b) {\n  return {a.first + b.first, a.second + b.second};\n\
@@ -724,7 +724,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yuki/yuki-1467-weighted.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yuki/yuki-1467-weighted.test.cpp

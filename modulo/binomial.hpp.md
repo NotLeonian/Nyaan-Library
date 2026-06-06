@@ -70,9 +70,6 @@ data:
     path: verify/verify-unit-test/composition.test.cpp
     title: verify/verify-unit-test/composition.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/verify-unit-test/dual-fps.test.cpp
-    title: verify/verify-unit-test/dual-fps.test.cpp
-  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/fft2d.test.cpp
     title: verify/verify-unit-test/fft2d.test.cpp
   - icon: ':heavy_check_mark:'
@@ -454,7 +451,6 @@ data:
   - verify/verify-yuki/yuki-1145-frac.test.cpp
   - verify/verify-yuki/yuki-1533.test.cpp
   - verify/verify-yuki/yuki-0963-circular.test.cpp
-  - verify/verify-unit-test/dual-fps.test.cpp
   - verify/verify-unit-test/composite-exp.test.cpp
   - verify/verify-unit-test/partial-fraction-decomposition.test.cpp
   - verify/verify-unit-test/composition.test.cpp

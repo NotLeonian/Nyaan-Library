@@ -24,7 +24,8 @@ data:
   bundledCode: "#line 2 \"multiplicative-function/gcd-convolution.hpp\"\n\n\n\n#line\
     \ 2 \"multiplicative-function/divisor-multiple-transform.hpp\"\n\n#include <map>\n\
     #include <vector>\nusing namespace std;\n\n#line 2 \"prime/prime-enumerate.hpp\"\
-    \n\n// Prime Sieve {2, 3, 5, 7, 11, 13, 17, ...}\nvector<int> prime_enumerate(int\
+    \n\n#include <cmath>\n#line 5 \"prime/prime-enumerate.hpp\"\nusing namespace std;\n\
+    \n// Prime Sieve {2, 3, 5, 7, 11, 13, 17, ...}\nvector<int> prime_enumerate(int\
     \ N) {\n  vector<bool> sieve(N / 3 + 1, 1);\n  for (int p = 5, d = 4, i = 1, sqn\
     \ = sqrt(N); p <= sqn; p += d = 6 - d, i++) {\n    if (!sieve[i]) continue;\n\
     \    for (int q = p * p / 3, r = d * p / 3 + (d * p % 3 == 2), s = 2 * p,\n  \
@@ -77,7 +78,7 @@ data:
   isVerificationFile: false
   path: multiplicative-function/gcd-convolution.hpp
   requiredBy: []
-  timestamp: '2023-08-30 23:05:07+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-math/yosupo-gcd-convolution.test.cpp

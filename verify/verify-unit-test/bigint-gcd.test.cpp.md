@@ -35,9 +35,6 @@ data:
     path: misc/rng.hpp
     title: misc/rng.hpp
   - icon: ':heavy_check_mark:'
-    path: misc/timer.hpp
-    title: misc/timer.hpp
-  - icon: ':heavy_check_mark:'
     path: modint/montgomery-modint.hpp
     title: modint/montgomery-modint.hpp
   - icon: ':heavy_check_mark:'
@@ -263,41 +260,36 @@ data:
     \ \\\n    return;                  \\\n  } while (0)\n#line 70 \"template/template.hpp\"\
     \n\nnamespace Nyaan {\nvoid solve();\n}\nint main() { Nyaan::solve(); }\n#line\
     \ 4 \"verify/verify-unit-test/bigint-gcd.test.cpp\"\n//\n#line 2 \"misc/rng.hpp\"\
-    \n\n#line 2 \"internal/internal-seed.hpp\"\n\n#line 4 \"internal/internal-seed.hpp\"\
-    \nusing namespace std;\n\nnamespace internal {\nunsigned long long non_deterministic_seed()\
-    \ {\n  unsigned long long m =\n      chrono::duration_cast<chrono::nanoseconds>(\n\
-    \          chrono::high_resolution_clock::now().time_since_epoch())\n        \
-    \  .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >> 31, m\
-    \ ^= m << 35;\n  return m;\n}\nunsigned long long deterministic_seed() { return\
-    \ 88172645463325252UL; }\n\n// 64 bit \u306E seed \u5024\u3092\u751F\u6210 (\u624B\
-    \u5143\u3067\u306F seed \u56FA\u5B9A)\n// \u9023\u7D9A\u3067\u547C\u3073\u51FA\
-    \u3059\u3068\u540C\u3058\u5024\u304C\u4F55\u5EA6\u3082\u8FD4\u3063\u3066\u304F\
-    \u308B\u306E\u3067\u6CE8\u610F\n// #define RANDOMIZED_SEED \u3059\u308B\u3068\u30B7\
-    \u30FC\u30C9\u304C\u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long long\
-    \ seed() {\n#if defined(NyaanLocal) && !defined(RANDOMIZED_SEED)\n  return deterministic_seed();\n\
-    #else\n  return non_deterministic_seed();\n#endif\n}\n\n}  // namespace internal\n\
-    #line 4 \"misc/rng.hpp\"\n\nnamespace my_rand {\nusing i64 = long long;\nusing\
-    \ u64 = unsigned long long;\n\n// [0, 2^64 - 1)\nu64 rng() {\n  static u64 _x\
-    \ = internal::seed();\n  return _x ^= _x << 7, _x ^= _x >> 9;\n}\n\n// [l, r]\n\
-    i64 rng(i64 l, i64 r) {\n  assert(l <= r);\n  return l + rng() % u64(r - l + 1);\n\
-    }\n\n// [l, r)\ni64 randint(i64 l, i64 r) {\n  assert(l < r);\n  return l + rng()\
-    \ % u64(r - l);\n}\n\n// choose n numbers from [l, r) without overlapping\nvector<i64>\
-    \ randset(i64 l, i64 r, i64 n) {\n  assert(l <= r && n <= r - l);\n  unordered_set<i64>\
-    \ s;\n  for (i64 i = n; i; --i) {\n    i64 m = randint(l, r + 1 - i);\n    if\
-    \ (s.find(m) != s.end()) m = r - i;\n    s.insert(m);\n  }\n  vector<i64> ret;\n\
-    \  for (auto& x : s) ret.push_back(x);\n  sort(begin(ret), end(ret));\n  return\
-    \ ret;\n}\n\n// [0.0, 1.0)\ndouble rnd() { return rng() * 5.42101086242752217004e-20;\
-    \ }\n// [l, r)\ndouble rnd(double l, double r) {\n  assert(l < r);\n  return l\
-    \ + rnd() * (r - l);\n}\n\ntemplate <typename T>\nvoid randshf(vector<T>& v) {\n\
-    \  int n = v.size();\n  for (int i = 1; i < n; i++) swap(v[i], v[randint(0, i\
-    \ + 1)]);\n}\n\n}  // namespace my_rand\n\nusing my_rand::randint;\nusing my_rand::randset;\n\
-    using my_rand::randshf;\nusing my_rand::rnd;\nusing my_rand::rng;\n#line 2 \"\
-    misc/timer.hpp\"\n\n#line 4 \"misc/timer.hpp\"\nusing namespace std;\n\nstruct\
-    \ Timer {\n  chrono::high_resolution_clock::time_point st;\n\n  Timer() { reset();\
-    \ }\n  void reset() { st = chrono::high_resolution_clock::now(); }\n\n  long long\
-    \ elapsed() {\n    auto ed = chrono::high_resolution_clock::now();\n    return\
-    \ chrono::duration_cast<chrono::milliseconds>(ed - st).count();\n  }\n  long long\
-    \ operator()() { return elapsed(); }\n};\n#line 7 \"verify/verify-unit-test/bigint-gcd.test.cpp\"\
+    \n\n#line 7 \"misc/rng.hpp\"\nusing namespace std;\n\n#line 2 \"internal/internal-seed.hpp\"\
+    \n\n#line 4 \"internal/internal-seed.hpp\"\nusing namespace std;\n\nnamespace\
+    \ internal {\nunsigned long long non_deterministic_seed() {\n  unsigned long long\
+    \ m =\n      chrono::duration_cast<chrono::nanoseconds>(\n          chrono::high_resolution_clock::now().time_since_epoch())\n\
+    \          .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >>\
+    \ 31, m ^= m << 35;\n  return m;\n}\nunsigned long long deterministic_seed() {\
+    \ return 88172645463325252UL; }\n\n// 64 bit \u306E seed \u5024\u3092\u751F\u6210\
+    \ (\u624B\u5143\u3067\u306F seed \u56FA\u5B9A)\n// \u9023\u7D9A\u3067\u547C\u3073\
+    \u51FA\u3059\u3068\u540C\u3058\u5024\u304C\u4F55\u5EA6\u3082\u8FD4\u3063\u3066\
+    \u304F\u308B\u306E\u3067\u6CE8\u610F\n// #define RANDOMIZED_SEED \u3059\u308B\u3068\
+    \u30B7\u30FC\u30C9\u304C\u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long\
+    \ long seed() {\n#if defined(NyaanLocal) && !defined(RANDOMIZED_SEED)\n  return\
+    \ deterministic_seed();\n#else\n  return non_deterministic_seed();\n#endif\n}\n\
+    \n}  // namespace internal\n#line 10 \"misc/rng.hpp\"\n\nnamespace my_rand {\n\
+    using i64 = long long;\nusing u64 = unsigned long long;\n\n// [0, 2^64 - 1)\n\
+    u64 rng() {\n  static u64 _x = internal::seed();\n  return _x ^= _x << 7, _x ^=\
+    \ _x >> 9;\n}\n\n// [l, r]\ni64 rng(i64 l, i64 r) {\n  assert(l <= r);\n  return\
+    \ l + rng() % u64(r - l + 1);\n}\n\n// [l, r)\ni64 randint(i64 l, i64 r) {\n \
+    \ assert(l < r);\n  return l + rng() % u64(r - l);\n}\n\n// choose n numbers from\
+    \ [l, r) without overlapping\nvector<i64> randset(i64 l, i64 r, i64 n) {\n  assert(l\
+    \ <= r && n <= r - l);\n  unordered_set<i64> s;\n  for (i64 i = n; i; --i) {\n\
+    \    i64 m = randint(l, r + 1 - i);\n    if (s.find(m) != s.end()) m = r - i;\n\
+    \    s.insert(m);\n  }\n  vector<i64> ret;\n  for (auto& x : s) ret.push_back(x);\n\
+    \  sort(begin(ret), end(ret));\n  return ret;\n}\n\n// [0.0, 1.0)\ndouble rnd()\
+    \ { return rng() * 5.42101086242752217004e-20; }\n// [l, r)\ndouble rnd(double\
+    \ l, double r) {\n  assert(l < r);\n  return l + rnd() * (r - l);\n}\n\ntemplate\
+    \ <typename T>\nvoid randshf(vector<T>& v) {\n  int n = v.size();\n  for (int\
+    \ i = 1; i < n; i++) swap(v[i], v[randint(0, i + 1)]);\n}\n\n}  // namespace my_rand\n\
+    \nusing my_rand::randint;\nusing my_rand::randset;\nusing my_rand::randshf;\n\
+    using my_rand::rnd;\nusing my_rand::rng;\n#line 6 \"verify/verify-unit-test/bigint-gcd.test.cpp\"\
     \n//\n#line 2 \"math/bigint-gcd.hpp\"\n\n#line 4 \"math/bigint-gcd.hpp\"\nusing\
     \ namespace std;\n\n#line 2 \"math-fast/gcd.hpp\"\n\n#line 4 \"math-fast/gcd.hpp\"\
     \nusing namespace std;\n\nnamespace BinaryGCDImpl {\nusing u64 = unsigned long\
@@ -316,7 +308,7 @@ data:
     \ abs(b));\n}\n__int128_t binary_gcd128(__int128_t a, __int128_t b) {\n  if (a\
     \ < 0) a = -a;\n  if (b < 0) b = -b;\n  return BinaryGCDImpl::binary_gcd128(a,\
     \ b);\n}\n\n/**\n * @brief binary GCD\n */\n#line 2 \"math/bigint.hpp\"\n\n#line\
-    \ 10 \"math/bigint.hpp\"\nusing namespace std;\n\n#line 2 \"internal/internal-type-traits.hpp\"\
+    \ 9 \"math/bigint.hpp\"\nusing namespace std;\n\n#line 2 \"internal/internal-type-traits.hpp\"\
     \n\n#line 4 \"internal/internal-type-traits.hpp\"\nusing namespace std;\n\nnamespace\
     \ internal {\ntemplate <typename T>\nusing is_broadly_integral =\n    typename\
     \ conditional_t<is_integral_v<T> || is_same_v<T, __int128_t> ||\n            \
@@ -341,112 +333,115 @@ data:
     \          \\\n  struct has_##var<T, void_t<decltype(T::var)>> : true_type {};\
     \ \\\n  template <class T>                                            \\\n  constexpr\
     \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace internal\n#line\
-    \ 2 \"ntt/arbitrary-ntt.hpp\"\n\n#line 2 \"modint/montgomery-modint.hpp\"\n\n\
-    #line 4 \"modint/montgomery-modint.hpp\"\n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt\
-    \ {\n  using mint = LazyMontgomeryModInt;\n  using i32 = int32_t;\n  using u32\
-    \ = uint32_t;\n  using u64 = uint64_t;\n\n  static constexpr u32 get_r() {\n \
-    \   u32 ret = mod;\n    for (i32 i = 0; i < 4; ++i) ret *= 2 - mod * ret;\n  \
-    \  return ret;\n  }\n\n  static constexpr u32 r = get_r();\n  static constexpr\
-    \ u32 n2 = -u64(mod) % mod;\n  static_assert(mod < (1 << 30), \"invalid, mod >=\
-    \ 2 ^ 30\");\n  static_assert((mod & 1) == 1, \"invalid, mod % 2 == 0\");\n  static_assert(r\
-    \ * mod == 1, \"this code has bugs.\");\n\n  u32 a;\n\n  constexpr LazyMontgomeryModInt()\
-    \ : a(0) {}\n  constexpr LazyMontgomeryModInt(const int64_t &b)\n      : a(reduce(u64(b\
-    \ % mod + mod) * n2)){};\n\n  static constexpr u32 reduce(const u64 &b) {\n  \
-    \  return (b + u64(u32(b) * u32(-r)) * mod) >> 32;\n  }\n\n  constexpr mint &operator+=(const\
-    \ mint &b) {\n    if (i32(a += b.a - 2 * mod) < 0) a += 2 * mod;\n    return *this;\n\
-    \  }\n\n  constexpr mint &operator-=(const mint &b) {\n    if (i32(a -= b.a) <\
-    \ 0) a += 2 * mod;\n    return *this;\n  }\n\n  constexpr mint &operator*=(const\
-    \ mint &b) {\n    a = reduce(u64(a) * b.a);\n    return *this;\n  }\n\n  constexpr\
-    \ mint &operator/=(const mint &b) {\n    *this *= b.inverse();\n    return *this;\n\
-    \  }\n\n  constexpr mint operator+(const mint &b) const { return mint(*this) +=\
-    \ b; }\n  constexpr mint operator-(const mint &b) const { return mint(*this) -=\
-    \ b; }\n  constexpr mint operator*(const mint &b) const { return mint(*this) *=\
-    \ b; }\n  constexpr mint operator/(const mint &b) const { return mint(*this) /=\
-    \ b; }\n  constexpr bool operator==(const mint &b) const {\n    return (a >= mod\
-    \ ? a - mod : a) == (b.a >= mod ? b.a - mod : b.a);\n  }\n  constexpr bool operator!=(const\
-    \ mint &b) const {\n    return (a >= mod ? a - mod : a) != (b.a >= mod ? b.a -\
-    \ mod : b.a);\n  }\n  constexpr mint operator-() const { return mint() - mint(*this);\
+    \ 2 \"ntt/arbitrary-ntt.hpp\"\n\n#line 6 \"ntt/arbitrary-ntt.hpp\"\nusing namespace\
+    \ std;\n\n#line 2 \"modint/montgomery-modint.hpp\"\n\n#line 5 \"modint/montgomery-modint.hpp\"\
+    \n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n\
+    \  using i32 = int32_t;\n  using u32 = uint32_t;\n  using u64 = uint64_t;\n\n\
+    \  static constexpr u32 get_r() {\n    u32 ret = mod;\n    for (i32 i = 0; i <\
+    \ 4; ++i) ret *= 2 - mod * ret;\n    return ret;\n  }\n\n  static constexpr u32\
+    \ r = get_r();\n  static constexpr u32 n2 = -u64(mod) % mod;\n  static_assert(mod\
+    \ < (1 << 30), \"invalid, mod >= 2 ^ 30\");\n  static_assert((mod & 1) == 1, \"\
+    invalid, mod % 2 == 0\");\n  static_assert(r * mod == 1, \"this code has bugs.\"\
+    );\n\n  u32 a;\n\n  constexpr LazyMontgomeryModInt() : a(0) {}\n  constexpr LazyMontgomeryModInt(const\
+    \ int64_t &b)\n      : a(reduce(u64(b % mod + mod) * n2)){};\n\n  static constexpr\
+    \ u32 reduce(const u64 &b) {\n    return (b + u64(u32(b) * u32(-r)) * mod) >>\
+    \ 32;\n  }\n\n  constexpr mint &operator+=(const mint &b) {\n    if (i32(a +=\
+    \ b.a - 2 * mod) < 0) a += 2 * mod;\n    return *this;\n  }\n\n  constexpr mint\
+    \ &operator-=(const mint &b) {\n    if (i32(a -= b.a) < 0) a += 2 * mod;\n   \
+    \ return *this;\n  }\n\n  constexpr mint &operator*=(const mint &b) {\n    a =\
+    \ reduce(u64(a) * b.a);\n    return *this;\n  }\n\n  constexpr mint &operator/=(const\
+    \ mint &b) {\n    *this *= b.inverse();\n    return *this;\n  }\n\n  constexpr\
+    \ mint operator+(const mint &b) const { return mint(*this) += b; }\n  constexpr\
+    \ mint operator-(const mint &b) const { return mint(*this) -= b; }\n  constexpr\
+    \ mint operator*(const mint &b) const { return mint(*this) *= b; }\n  constexpr\
+    \ mint operator/(const mint &b) const { return mint(*this) /= b; }\n  constexpr\
+    \ bool operator==(const mint &b) const {\n    return (a >= mod ? a - mod : a)\
+    \ == (b.a >= mod ? b.a - mod : b.a);\n  }\n  constexpr bool operator!=(const mint\
+    \ &b) const {\n    return (a >= mod ? a - mod : a) != (b.a >= mod ? b.a - mod\
+    \ : b.a);\n  }\n  constexpr mint operator-() const { return mint() - mint(*this);\
     \ }\n  constexpr mint operator+() const { return mint(*this); }\n\n  constexpr\
     \ mint pow(u64 n) const {\n    mint ret(1), mul(*this);\n    while (n > 0) {\n\
     \      if (n & 1) ret *= mul;\n      mul *= mul;\n      n >>= 1;\n    }\n    return\
     \ ret;\n  }\n\n  constexpr mint inverse() const {\n    int x = get(), y = mod,\
     \ u = 1, v = 0, t = 0, tmp = 0;\n    while (y > 0) {\n      t = x / y;\n     \
     \ x -= t * y, u -= t * v;\n      tmp = x, x = y, y = tmp;\n      tmp = u, u =\
-    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend ostream &operator<<(ostream\
-    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend istream &operator>>(istream\
-    \ &is, mint &b) {\n    int64_t t;\n    is >> t;\n    b = LazyMontgomeryModInt<mod>(t);\n\
-    \    return (is);\n  }\n\n  constexpr u32 get() const {\n    u32 ret = reduce(a);\n\
-    \    return ret >= mod ? ret - mod : ret;\n  }\n\n  static constexpr u32 get_mod()\
-    \ { return mod; }\n};\n#line 2 \"ntt/ntt.hpp\"\n\ntemplate <typename mint>\nstruct\
-    \ NTT {\n  static constexpr uint32_t get_pr() {\n    uint32_t _mod = mint::get_mod();\n\
-    \    using u64 = uint64_t;\n    u64 ds[32] = {};\n    int idx = 0;\n    u64 m\
-    \ = _mod - 1;\n    for (u64 i = 2; i * i <= m; ++i) {\n      if (m % i == 0) {\n\
-    \        ds[idx++] = i;\n        while (m % i == 0) m /= i;\n      }\n    }\n\
-    \    if (m != 1) ds[idx++] = m;\n\n    uint32_t _pr = 2;\n    while (1) {\n  \
-    \    int flg = 1;\n      for (int i = 0; i < idx; ++i) {\n        u64 a = _pr,\
-    \ b = (_mod - 1) / ds[i], r = 1;\n        while (b) {\n          if (b & 1) r\
-    \ = r * a % _mod;\n          a = a * a % _mod;\n          b >>= 1;\n        }\n\
-    \        if (r == 1) {\n          flg = 0;\n          break;\n        }\n    \
-    \  }\n      if (flg == 1) break;\n      ++_pr;\n    }\n    return _pr;\n  };\n\
-    \n  static constexpr uint32_t mod = mint::get_mod();\n  static constexpr uint32_t\
-    \ pr = get_pr();\n  static constexpr int level = __builtin_ctzll(mod - 1);\n \
-    \ mint dw[level], dy[level];\n\n  void setwy(int k) {\n    mint w[level], y[level];\n\
-    \    w[k - 1] = mint(pr).pow((mod - 1) / (1 << k));\n    y[k - 1] = w[k - 1].inverse();\n\
-    \    for (int i = k - 2; i > 0; --i)\n      w[i] = w[i + 1] * w[i + 1], y[i] =\
-    \ y[i + 1] * y[i + 1];\n    dw[1] = w[1], dy[1] = y[1], dw[2] = w[2], dy[2] =\
-    \ y[2];\n    for (int i = 3; i < k; ++i) {\n      dw[i] = dw[i - 1] * y[i - 2]\
-    \ * w[i];\n      dy[i] = dy[i - 1] * w[i - 2] * y[i];\n    }\n  }\n\n  NTT() {\
-    \ setwy(level); }\n\n  void fft4(vector<mint> &a, int k) {\n    if ((int)a.size()\
-    \ <= 1) return;\n    if (k == 1) {\n      mint a1 = a[1];\n      a[1] = a[0] -\
-    \ a[1];\n      a[0] = a[0] + a1;\n      return;\n    }\n    if (k & 1) {\n   \
-    \   int v = 1 << (k - 1);\n      for (int j = 0; j < v; ++j) {\n        mint ajv\
-    \ = a[j + v];\n        a[j + v] = a[j] - ajv;\n        a[j] += ajv;\n      }\n\
-    \    }\n    int u = 1 << (2 + (k & 1));\n    int v = 1 << (k - 2 - (k & 1));\n\
-    \    mint one = mint(1);\n    mint imag = dw[1];\n    while (v) {\n      // jh\
-    \ = 0\n      {\n        int j0 = 0;\n        int j1 = v;\n        int j2 = j1\
-    \ + v;\n        int j3 = j2 + v;\n        for (; j0 < v; ++j0, ++j1, ++j2, ++j3)\
-    \ {\n          mint t0 = a[j0], t1 = a[j1], t2 = a[j2], t3 = a[j3];\n        \
-    \  mint t0p2 = t0 + t2, t1p3 = t1 + t3;\n          mint t0m2 = t0 - t2, t1m3 =\
-    \ (t1 - t3) * imag;\n          a[j0] = t0p2 + t1p3, a[j1] = t0p2 - t1p3;\n   \
-    \       a[j2] = t0m2 + t1m3, a[j3] = t0m2 - t1m3;\n        }\n      }\n      //\
-    \ jh >= 1\n      mint ww = one, xx = one * dw[2], wx = one;\n      for (int jh\
-    \ = 4; jh < u;) {\n        ww = xx * xx, wx = ww * xx;\n        int j0 = jh *\
-    \ v;\n        int je = j0 + v;\n        int j2 = je + v;\n        for (; j0 <\
-    \ je; ++j0, ++j2) {\n          mint t0 = a[j0], t1 = a[j0 + v] * xx, t2 = a[j2]\
-    \ * ww,\n               t3 = a[j2 + v] * wx;\n          mint t0p2 = t0 + t2, t1p3\
-    \ = t1 + t3;\n          mint t0m2 = t0 - t2, t1m3 = (t1 - t3) * imag;\n      \
-    \    a[j0] = t0p2 + t1p3, a[j0 + v] = t0p2 - t1p3;\n          a[j2] = t0m2 + t1m3,\
-    \ a[j2 + v] = t0m2 - t1m3;\n        }\n        xx *= dw[__builtin_ctzll((jh +=\
-    \ 4))];\n      }\n      u <<= 2;\n      v >>= 2;\n    }\n  }\n\n  void ifft4(vector<mint>\
-    \ &a, int k) {\n    if ((int)a.size() <= 1) return;\n    if (k == 1) {\n     \
-    \ mint a1 = a[1];\n      a[1] = a[0] - a[1];\n      a[0] = a[0] + a1;\n      return;\n\
-    \    }\n    int u = 1 << (k - 2);\n    int v = 1;\n    mint one = mint(1);\n \
-    \   mint imag = dy[1];\n    while (u) {\n      // jh = 0\n      {\n        int\
-    \ j0 = 0;\n        int j1 = v;\n        int j2 = v + v;\n        int j3 = j2 +\
-    \ v;\n        for (; j0 < v; ++j0, ++j1, ++j2, ++j3) {\n          mint t0 = a[j0],\
-    \ t1 = a[j1], t2 = a[j2], t3 = a[j3];\n          mint t0p1 = t0 + t1, t2p3 = t2\
-    \ + t3;\n          mint t0m1 = t0 - t1, t2m3 = (t2 - t3) * imag;\n          a[j0]\
-    \ = t0p1 + t2p3, a[j2] = t0p1 - t2p3;\n          a[j1] = t0m1 + t2m3, a[j3] =\
-    \ t0m1 - t2m3;\n        }\n      }\n      // jh >= 1\n      mint ww = one, xx\
-    \ = one * dy[2], yy = one;\n      u <<= 2;\n      for (int jh = 4; jh < u;) {\n\
-    \        ww = xx * xx, yy = xx * imag;\n        int j0 = jh * v;\n        int\
-    \ je = j0 + v;\n        int j2 = je + v;\n        for (; j0 < je; ++j0, ++j2)\
-    \ {\n          mint t0 = a[j0], t1 = a[j0 + v], t2 = a[j2], t3 = a[j2 + v];\n\
-    \          mint t0p1 = t0 + t1, t2p3 = t2 + t3;\n          mint t0m1 = (t0 - t1)\
-    \ * xx, t2m3 = (t2 - t3) * yy;\n          a[j0] = t0p1 + t2p3, a[j2] = (t0p1 -\
-    \ t2p3) * ww;\n          a[j0 + v] = t0m1 + t2m3, a[j2 + v] = (t0m1 - t2m3) *\
-    \ ww;\n        }\n        xx *= dy[__builtin_ctzll(jh += 4)];\n      }\n     \
-    \ u >>= 4;\n      v <<= 2;\n    }\n    if (k & 1) {\n      u = 1 << (k - 1);\n\
-    \      for (int j = 0; j < u; ++j) {\n        mint ajv = a[j] - a[j + u];\n  \
-    \      a[j] += a[j + u];\n        a[j + u] = ajv;\n      }\n    }\n  }\n\n  void\
-    \ ntt(vector<mint> &a) {\n    if ((int)a.size() <= 1) return;\n    fft4(a, __builtin_ctz(a.size()));\n\
-    \  }\n\n  void intt(vector<mint> &a) {\n    if ((int)a.size() <= 1) return;\n\
-    \    ifft4(a, __builtin_ctz(a.size()));\n    mint iv = mint(a.size()).inverse();\n\
-    \    for (auto &x : a) x *= iv;\n  }\n\n  vector<mint> multiply(const vector<mint>\
-    \ &a, const vector<mint> &b) {\n    int l = a.size() + b.size() - 1;\n    if (min<int>(a.size(),\
-    \ b.size()) <= 40) {\n      vector<mint> s(l);\n      for (int i = 0; i < (int)a.size();\
-    \ ++i)\n        for (int j = 0; j < (int)b.size(); ++j) s[i + j] += a[i] * b[j];\n\
-    \      return s;\n    }\n    int k = 2, M = 4;\n    while (M < l) M <<= 1, ++k;\n\
+    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend std::ostream &operator<<(std::ostream\
+    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend std::istream\
+    \ &operator>>(std::istream &is, mint &b) {\n    int64_t t;\n    is >> t;\n   \
+    \ b = LazyMontgomeryModInt<mod>(t);\n    return (is);\n  }\n\n  constexpr u32\
+    \ get() const {\n    u32 ret = reduce(a);\n    return ret >= mod ? ret - mod :\
+    \ ret;\n  }\n\n  static constexpr u32 get_mod() { return mod; }\n};\n#line 2 \"\
+    ntt/ntt.hpp\"\n\n#line 7 \"ntt/ntt.hpp\"\nusing namespace std;\n\ntemplate <typename\
+    \ mint>\nstruct NTT {\n  static constexpr uint32_t get_pr() {\n    uint32_t _mod\
+    \ = mint::get_mod();\n    using u64 = uint64_t;\n    u64 ds[32] = {};\n    int\
+    \ idx = 0;\n    u64 m = _mod - 1;\n    for (u64 i = 2; i * i <= m; ++i) {\n  \
+    \    if (m % i == 0) {\n        ds[idx++] = i;\n        while (m % i == 0) m /=\
+    \ i;\n      }\n    }\n    if (m != 1) ds[idx++] = m;\n\n    uint32_t _pr = 2;\n\
+    \    while (1) {\n      int flg = 1;\n      for (int i = 0; i < idx; ++i) {\n\
+    \        u64 a = _pr, b = (_mod - 1) / ds[i], r = 1;\n        while (b) {\n  \
+    \        if (b & 1) r = r * a % _mod;\n          a = a * a % _mod;\n         \
+    \ b >>= 1;\n        }\n        if (r == 1) {\n          flg = 0;\n          break;\n\
+    \        }\n      }\n      if (flg == 1) break;\n      ++_pr;\n    }\n    return\
+    \ _pr;\n  };\n\n  static constexpr uint32_t mod = mint::get_mod();\n  static constexpr\
+    \ uint32_t pr = get_pr();\n  static constexpr int level = __builtin_ctzll(mod\
+    \ - 1);\n  mint dw[level], dy[level];\n\n  void setwy(int k) {\n    mint w[level],\
+    \ y[level];\n    w[k - 1] = mint(pr).pow((mod - 1) / (1 << k));\n    y[k - 1]\
+    \ = w[k - 1].inverse();\n    for (int i = k - 2; i > 0; --i)\n      w[i] = w[i\
+    \ + 1] * w[i + 1], y[i] = y[i + 1] * y[i + 1];\n    dw[1] = w[1], dy[1] = y[1],\
+    \ dw[2] = w[2], dy[2] = y[2];\n    for (int i = 3; i < k; ++i) {\n      dw[i]\
+    \ = dw[i - 1] * y[i - 2] * w[i];\n      dy[i] = dy[i - 1] * w[i - 2] * y[i];\n\
+    \    }\n  }\n\n  NTT() { setwy(level); }\n\n  void fft4(vector<mint> &a, int k)\
+    \ {\n    if ((int)a.size() <= 1) return;\n    if (k == 1) {\n      mint a1 = a[1];\n\
+    \      a[1] = a[0] - a[1];\n      a[0] = a[0] + a1;\n      return;\n    }\n  \
+    \  if (k & 1) {\n      int v = 1 << (k - 1);\n      for (int j = 0; j < v; ++j)\
+    \ {\n        mint ajv = a[j + v];\n        a[j + v] = a[j] - ajv;\n        a[j]\
+    \ += ajv;\n      }\n    }\n    int u = 1 << (2 + (k & 1));\n    int v = 1 << (k\
+    \ - 2 - (k & 1));\n    mint one = mint(1);\n    mint imag = dw[1];\n    while\
+    \ (v) {\n      // jh = 0\n      {\n        int j0 = 0;\n        int j1 = v;\n\
+    \        int j2 = j1 + v;\n        int j3 = j2 + v;\n        for (; j0 < v; ++j0,\
+    \ ++j1, ++j2, ++j3) {\n          mint t0 = a[j0], t1 = a[j1], t2 = a[j2], t3 =\
+    \ a[j3];\n          mint t0p2 = t0 + t2, t1p3 = t1 + t3;\n          mint t0m2\
+    \ = t0 - t2, t1m3 = (t1 - t3) * imag;\n          a[j0] = t0p2 + t1p3, a[j1] =\
+    \ t0p2 - t1p3;\n          a[j2] = t0m2 + t1m3, a[j3] = t0m2 - t1m3;\n        }\n\
+    \      }\n      // jh >= 1\n      mint ww = one, xx = one * dw[2], wx = one;\n\
+    \      for (int jh = 4; jh < u;) {\n        ww = xx * xx, wx = ww * xx;\n    \
+    \    int j0 = jh * v;\n        int je = j0 + v;\n        int j2 = je + v;\n  \
+    \      for (; j0 < je; ++j0, ++j2) {\n          mint t0 = a[j0], t1 = a[j0 + v]\
+    \ * xx, t2 = a[j2] * ww,\n               t3 = a[j2 + v] * wx;\n          mint\
+    \ t0p2 = t0 + t2, t1p3 = t1 + t3;\n          mint t0m2 = t0 - t2, t1m3 = (t1 -\
+    \ t3) * imag;\n          a[j0] = t0p2 + t1p3, a[j0 + v] = t0p2 - t1p3;\n     \
+    \     a[j2] = t0m2 + t1m3, a[j2 + v] = t0m2 - t1m3;\n        }\n        xx *=\
+    \ dw[__builtin_ctzll((jh += 4))];\n      }\n      u <<= 2;\n      v >>= 2;\n \
+    \   }\n  }\n\n  void ifft4(vector<mint> &a, int k) {\n    if ((int)a.size() <=\
+    \ 1) return;\n    if (k == 1) {\n      mint a1 = a[1];\n      a[1] = a[0] - a[1];\n\
+    \      a[0] = a[0] + a1;\n      return;\n    }\n    int u = 1 << (k - 2);\n  \
+    \  int v = 1;\n    mint one = mint(1);\n    mint imag = dy[1];\n    while (u)\
+    \ {\n      // jh = 0\n      {\n        int j0 = 0;\n        int j1 = v;\n    \
+    \    int j2 = v + v;\n        int j3 = j2 + v;\n        for (; j0 < v; ++j0, ++j1,\
+    \ ++j2, ++j3) {\n          mint t0 = a[j0], t1 = a[j1], t2 = a[j2], t3 = a[j3];\n\
+    \          mint t0p1 = t0 + t1, t2p3 = t2 + t3;\n          mint t0m1 = t0 - t1,\
+    \ t2m3 = (t2 - t3) * imag;\n          a[j0] = t0p1 + t2p3, a[j2] = t0p1 - t2p3;\n\
+    \          a[j1] = t0m1 + t2m3, a[j3] = t0m1 - t2m3;\n        }\n      }\n   \
+    \   // jh >= 1\n      mint ww = one, xx = one * dy[2], yy = one;\n      u <<=\
+    \ 2;\n      for (int jh = 4; jh < u;) {\n        ww = xx * xx, yy = xx * imag;\n\
+    \        int j0 = jh * v;\n        int je = j0 + v;\n        int j2 = je + v;\n\
+    \        for (; j0 < je; ++j0, ++j2) {\n          mint t0 = a[j0], t1 = a[j0 +\
+    \ v], t2 = a[j2], t3 = a[j2 + v];\n          mint t0p1 = t0 + t1, t2p3 = t2 +\
+    \ t3;\n          mint t0m1 = (t0 - t1) * xx, t2m3 = (t2 - t3) * yy;\n        \
+    \  a[j0] = t0p1 + t2p3, a[j2] = (t0p1 - t2p3) * ww;\n          a[j0 + v] = t0m1\
+    \ + t2m3, a[j2 + v] = (t0m1 - t2m3) * ww;\n        }\n        xx *= dy[__builtin_ctzll(jh\
+    \ += 4)];\n      }\n      u >>= 4;\n      v <<= 2;\n    }\n    if (k & 1) {\n\
+    \      u = 1 << (k - 1);\n      for (int j = 0; j < u; ++j) {\n        mint ajv\
+    \ = a[j] - a[j + u];\n        a[j] += a[j + u];\n        a[j + u] = ajv;\n   \
+    \   }\n    }\n  }\n\n  void ntt(vector<mint> &a) {\n    if ((int)a.size() <= 1)\
+    \ return;\n    fft4(a, __builtin_ctz(a.size()));\n  }\n\n  void intt(vector<mint>\
+    \ &a) {\n    if ((int)a.size() <= 1) return;\n    ifft4(a, __builtin_ctz(a.size()));\n\
+    \    mint iv = mint(a.size()).inverse();\n    for (auto &x : a) x *= iv;\n  }\n\
+    \n  vector<mint> multiply(const vector<mint> &a, const vector<mint> &b) {\n  \
+    \  int l = a.size() + b.size() - 1;\n    if (min<int>(a.size(), b.size()) <= 40)\
+    \ {\n      vector<mint> s(l);\n      for (int i = 0; i < (int)a.size(); ++i)\n\
+    \        for (int j = 0; j < (int)b.size(); ++j) s[i + j] += a[i] * b[j];\n  \
+    \    return s;\n    }\n    int k = 2, M = 4;\n    while (M < l) M <<= 1, ++k;\n\
     \    setwy(k);\n    vector<mint> s(M);\n    for (int i = 0; i < (int)a.size();\
     \ ++i) s[i] = a[i];\n    fft4(s, k);\n    if (a.size() == b.size() && a == b)\
     \ {\n      for (int i = 0; i < M; ++i) s[i] *= s[i];\n    } else {\n      vector<mint>\
@@ -457,7 +452,7 @@ data:
     \ &a) {\n    int M = (int)a.size();\n    auto b = a;\n    intt(b);\n    mint r\
     \ = 1, zeta = mint(pr).pow((mint::get_mod() - 1) / (M << 1));\n    for (int i\
     \ = 0; i < M; i++) b[i] *= r, r *= zeta;\n    ntt(b);\n    copy(begin(b), end(b),\
-    \ back_inserter(a));\n  }\n};\n#line 5 \"ntt/arbitrary-ntt.hpp\"\n\nnamespace\
+    \ back_inserter(a));\n  }\n};\n#line 10 \"ntt/arbitrary-ntt.hpp\"\n\nnamespace\
     \ ArbitraryNTT {\nusing i64 = int64_t;\nusing u128 = __uint128_t;\nconstexpr int32_t\
     \ m0 = 167772161;\nconstexpr int32_t m1 = 469762049;\nconstexpr int32_t m2 = 754974721;\n\
     using mint0 = LazyMontgomeryModInt<m0>;\nusing mint1 = LazyMontgomeryModInt<m1>;\n\
@@ -495,7 +490,7 @@ data:
     \ (int i = 0; i < n; i++) {\n    i64 n1 = d1[i].get(), n2 = d2[i].get();\n   \
     \ i64 a = d0[i].get();\n    i64 b = (n1 + m1 - a) * r01 % m1;\n    i64 c = ((n2\
     \ + m2 - a) * r02r12 + (m2 - b) * r12) % m2;\n    ret[i] = a + b * w1 + u128(c)\
-    \ * w2;\n  }\n  return ret;\n}\n}  // namespace ArbitraryNTT\n#line 14 \"math/bigint.hpp\"\
+    \ * w2;\n  }\n  return ret;\n}\n}  // namespace ArbitraryNTT\n#line 13 \"math/bigint.hpp\"\
     \n\nnamespace MultiPrecisionIntegerImpl {\nstruct TENS {\n  static constexpr int\
     \ offset = 30;\n  constexpr TENS() : _tend() {\n    _tend[offset] = 1;\n    for\
     \ (int i = 1; i <= offset; i++) {\n      _tend[offset + i] = _tend[offset + i\
@@ -732,9 +727,9 @@ data:
     \          const MultiPrecisionInteger& b) {\n  return GCDforBigintImpl::gcd_d_ary<true>(a,\
     \ b);\n}\n\nMultiPrecisionInteger lcm(const MultiPrecisionInteger& a,\n      \
     \                    const MultiPrecisionInteger& b) {\n  return a / gcd(a, b)\
-    \ * b;\n}\n#line 9 \"verify/verify-unit-test/bigint-gcd.test.cpp\"\n//\n#line\
-    \ 1 \"math/bigint-binary.hpp\"\n\n#line 9 \"math/bigint-binary.hpp\"\nusing namespace\
-    \ std;\n\n#line 12 \"math/bigint-binary.hpp\"\n\nnamespace BinaryBigIntImpl {\n\
+    \ * b;\n}\n#line 8 \"verify/verify-unit-test/bigint-gcd.test.cpp\"\n//\n#line\
+    \ 1 \"math/bigint-binary.hpp\"\n\n#line 8 \"math/bigint-binary.hpp\"\nusing namespace\
+    \ std;\n\n#line 11 \"math/bigint-binary.hpp\"\n\nnamespace BinaryBigIntImpl {\n\
     \nusing u32 = unsigned int;\nusing u64 = unsigned long long;\nusing i64 = long\
     \ long;\n\n// 0 \u306F neg=false, dat={} \u3068\u3057\u3066\u6271\u3046\nstruct\
     \ BinaryBigInt {\n  using M = BinaryBigInt;\n  bool neg;\n  vector<u32> dat;\n\
@@ -847,7 +842,7 @@ data:
     \ 1 == (int)ys.size()) ys.push_back(ys.back() * ys.back());\n    if (ys[log_e\
     \ + 1] > x) break;\n    log_e++;\n  }\n  int e = 1 << log_e;\n  bigint y = ys[log_e];\n\
     \  bigint q = x / y;\n  bigint r = x - q * y;\n  string hi = BtoH(q);\n  string\
-    \ lo = BtoH(r);\n  return hi + string(e - lo.size(), '0') + lo;\n}\n#line 12 \"\
+    \ lo = BtoH(r);\n  return hi + string(e - lo.size(), '0') + lo;\n}\n#line 11 \"\
     verify/verify-unit-test/bigint-gcd.test.cpp\"\n//\n#line 2 \"matrix/matrix.hpp\"\
     \n\n#line 2 \"matrix/inverse-matrix.hpp\"\n\n#line 2 \"matrix/gauss-elimination.hpp\"\
     \n\n#line 5 \"matrix/gauss-elimination.hpp\"\nusing namespace std;\n\n// {rank,\
@@ -921,7 +916,7 @@ data:
     \ {\n        T a = B[j][i];\n        if (a == 0) continue;\n        for (int k\
     \ = i; k < W(); k++) {\n          B[j][k] -= B[i][k] * a;\n        }\n      }\n\
     \    }\n    return ret;\n  }\n};\n\n/**\n * @brief \u884C\u5217\u30E9\u30A4\u30D6\
-    \u30E9\u30EA\n */\n#line 15 \"verify/verify-unit-test/bigint-gcd.test.cpp\"\n\n\
+    \u30E9\u30EA\n */\n#line 14 \"verify/verify-unit-test/bigint-gcd.test.cpp\"\n\n\
     namespace GCDforBigintImpl {\n\nusing Mat = Matrix<bigint>;\n\n// \u4E0B\u4F4D\
     \ d \u6841\u3092\u9664\u304F\nbigint suf(const bigint& n, int d) {\n  d = min(d,\
     \ (int)n.dat.size());\n  return bigint{false, vector<int>{begin(n.dat) + d, end(n.dat)}};\n\
@@ -1011,31 +1006,31 @@ data:
     \n  {\n    int a, b;\n    cin >> a >> b;\n    cout << a + b << \"\\n\";\n  }\n\
     }\n\nvoid Nyaan::solve() {\n  int t = 1;\n  // in(t);\n  while (t--) q();\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/aplusb\"\n//\n#include\
-    \ \"../../template/template.hpp\"\n//\n#include \"../../misc/rng.hpp\"\n#include\
-    \ \"../../misc/timer.hpp\"\n//\n#include \"../../math/bigint-gcd.hpp\"\n//\n#include\
-    \ \"../../math/bigint-binary.hpp\"\n#include \"../../math/bigint-to-hex.hpp\"\n\
-    //\n#include \"../../math/bigint.hpp\"\n#include \"../../matrix/matrix.hpp\"\n\
-    \nnamespace GCDforBigintImpl {\n\nusing Mat = Matrix<bigint>;\n\n// \u4E0B\u4F4D\
-    \ d \u6841\u3092\u9664\u304F\nbigint suf(const bigint& n, int d) {\n  d = min(d,\
-    \ (int)n.dat.size());\n  return bigint{false, vector<int>{begin(n.dat) + d, end(n.dat)}};\n\
-    }\n\n// \u7E26\u30D9\u30AF\u30C8\u30EB (p00, p10) \u3092\u4F5C\u308B\nMat make_vec(const\
-    \ bigint& p00, const bigint& p10) {\n  Mat m(2, 1);\n  m[0][0] = p00, m[1][0]\
-    \ = p10;\n  return m;\n}\n\ntemplate <typename I>\nMat inner_naive(Mat& p) {\n\
-    \  assert(p[0][0] >= p[1][0]);\n  assert((int)p[0][0].dat.size() <= 4);\n  I g\
-    \ = 1;\n  // solve : ax + by = gcd(a, b)\n  // return : pair(x, y)\n  auto extgcd\
-    \ = [&](auto rc, I a, I b) -> pair<I, I> {\n    if (b == 0) {\n      g = a;\n\
-    \      return make_pair(1, 0);\n    }\n    I x, y;\n    tie(y, x) = rc(rc, b,\
-    \ a % b);\n    y -= a / b * x;\n    return make_pair(x, y);\n  };\n  I a = p[0][0].to_i128(),\
-    \ b = p[1][0].to_i128(), x, y;\n  tie(x, y) = extgcd(extgcd, a, b);\n  Mat m(2);\n\
-    \  m[0][0] = x, m[0][1] = y;\n  m[1][0] = b / g, m[1][1] = -a / g;\n  return m;\n\
-    }\n// p_0 >= p_1, 1 \u624B\u9032\u3081\u308B\nvoid inner_succ(Mat& m, Mat& p)\
-    \ {\n  assert(p[0][0] >= p[1][0]);\n  if (p[1][0] == 0) return;\n  auto [quo,\
-    \ rem] = divmod(p[0][0], p[1][0]);\n  m[0][0] -= m[1][0] * quo;\n  m[0][1] -=\
-    \ m[1][1] * quo;\n  swap(m[0][0], m[1][0]), swap(m[0][1], m[1][1]);\n  p[0][0]\
-    \ = p[1][0], p[1][0] = rem;\n}\nMat inner_half_gcd(Mat p) {\n  assert(p[0][0]\
-    \ >= p[1][0]);\n  int n = p[0][0].dat.size(), m = p[1][0].dat.size();\n  if (n\
-    \ <= 2) return inner_naive<long long>(p);\n  if (n <= 4) return inner_naive<__int128_t>(p);\n\
-    \  int k = (n + 1) / 2;\n  if (m <= k) return Mat::I(2);\n  Mat m1 = inner_half_gcd(make_vec(suf(p[0][0],\
+    \ \"../../template/template.hpp\"\n//\n#include \"../../misc/rng.hpp\"\n//\n#include\
+    \ \"../../math/bigint-gcd.hpp\"\n//\n#include \"../../math/bigint-binary.hpp\"\
+    \n#include \"../../math/bigint-to-hex.hpp\"\n//\n#include \"../../math/bigint.hpp\"\
+    \n#include \"../../matrix/matrix.hpp\"\n\nnamespace GCDforBigintImpl {\n\nusing\
+    \ Mat = Matrix<bigint>;\n\n// \u4E0B\u4F4D d \u6841\u3092\u9664\u304F\nbigint\
+    \ suf(const bigint& n, int d) {\n  d = min(d, (int)n.dat.size());\n  return bigint{false,\
+    \ vector<int>{begin(n.dat) + d, end(n.dat)}};\n}\n\n// \u7E26\u30D9\u30AF\u30C8\
+    \u30EB (p00, p10) \u3092\u4F5C\u308B\nMat make_vec(const bigint& p00, const bigint&\
+    \ p10) {\n  Mat m(2, 1);\n  m[0][0] = p00, m[1][0] = p10;\n  return m;\n}\n\n\
+    template <typename I>\nMat inner_naive(Mat& p) {\n  assert(p[0][0] >= p[1][0]);\n\
+    \  assert((int)p[0][0].dat.size() <= 4);\n  I g = 1;\n  // solve : ax + by = gcd(a,\
+    \ b)\n  // return : pair(x, y)\n  auto extgcd = [&](auto rc, I a, I b) -> pair<I,\
+    \ I> {\n    if (b == 0) {\n      g = a;\n      return make_pair(1, 0);\n    }\n\
+    \    I x, y;\n    tie(y, x) = rc(rc, b, a % b);\n    y -= a / b * x;\n    return\
+    \ make_pair(x, y);\n  };\n  I a = p[0][0].to_i128(), b = p[1][0].to_i128(), x,\
+    \ y;\n  tie(x, y) = extgcd(extgcd, a, b);\n  Mat m(2);\n  m[0][0] = x, m[0][1]\
+    \ = y;\n  m[1][0] = b / g, m[1][1] = -a / g;\n  return m;\n}\n// p_0 >= p_1, 1\
+    \ \u624B\u9032\u3081\u308B\nvoid inner_succ(Mat& m, Mat& p) {\n  assert(p[0][0]\
+    \ >= p[1][0]);\n  if (p[1][0] == 0) return;\n  auto [quo, rem] = divmod(p[0][0],\
+    \ p[1][0]);\n  m[0][0] -= m[1][0] * quo;\n  m[0][1] -= m[1][1] * quo;\n  swap(m[0][0],\
+    \ m[1][0]), swap(m[0][1], m[1][1]);\n  p[0][0] = p[1][0], p[1][0] = rem;\n}\n\
+    Mat inner_half_gcd(Mat p) {\n  assert(p[0][0] >= p[1][0]);\n  int n = p[0][0].dat.size(),\
+    \ m = p[1][0].dat.size();\n  if (n <= 2) return inner_naive<long long>(p);\n \
+    \ if (n <= 4) return inner_naive<__int128_t>(p);\n  int k = (n + 1) / 2;\n  if\
+    \ (m <= k) return Mat::I(2);\n  Mat m1 = inner_half_gcd(make_vec(suf(p[0][0],\
     \ k), suf(p[1][0], k)));\n  p = m1 * p;\n  for (int i = 0; i < 2; i++) {\n   \
     \ if (p[i][0] < 0) {\n      m1[i][0] = -m1[i][0], m1[i][1] = -m1[i][1], p[i][0]\
     \ = -p[i][0];\n    }\n  }\n  if (p[0][0] < p[1][0]) {\n    swap(m1[0][0], m1[1][0]),\
@@ -1112,7 +1107,6 @@ data:
   - template/macro.hpp
   - misc/rng.hpp
   - internal/internal-seed.hpp
-  - misc/timer.hpp
   - math/bigint-gcd.hpp
   - math-fast/gcd.hpp
   - math/bigint.hpp
@@ -1128,7 +1122,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/bigint-gcd.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/bigint-gcd.test.cpp

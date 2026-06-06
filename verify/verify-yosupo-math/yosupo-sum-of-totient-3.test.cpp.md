@@ -234,7 +234,7 @@ data:
     \n\nnamespace Nyaan {\nvoid solve();\n}\nint main() { Nyaan::solve(); }\n#line\
     \ 4 \"verify/verify-yosupo-math/yosupo-sum-of-totient-3.test.cpp\"\n//\n#line\
     \ 2 \"multiplicative-function/enumerate-sum-of-multiplicative-function.hpp\"\n\
-    \n#line 5 \"multiplicative-function/enumerate-sum-of-multiplicative-function.hpp\"\
+    \n#line 4 \"multiplicative-function/enumerate-sum-of-multiplicative-function.hpp\"\
     \nusing namespace std;\n\n#line 2 \"math/enumerate-quotient.hpp\"\n\n#line 2 \"\
     math/isqrt.hpp\"\n\n#line 4 \"math/isqrt.hpp\"\nusing namespace std;\n\n// floor(sqrt(n))\
     \ \u3092\u8FD4\u3059 (\u305F\u3060\u3057 n \u304C\u8CA0\u306E\u5834\u5408\u306F\
@@ -256,7 +256,7 @@ data:
     \ upper), upper - 1, upper); \\\n    upper--;                          \\\n  }\n\
     \n  if (N <= 1e12) {\n    FUNC(EnumerateQuotientImpl::fast_div);\n  } else {\n\
     \    FUNC(EnumerateQuotientImpl::slow_div);\n  }\n#undef FUNC\n}\n\n/**\n *  @brief\
-    \ \u5546\u306E\u5217\u6319\n */\n#line 9 \"multiplicative-function/enumerate-sum-of-multiplicative-function.hpp\"\
+    \ \u5546\u306E\u5217\u6319\n */\n#line 8 \"multiplicative-function/enumerate-sum-of-multiplicative-function.hpp\"\
     \n/**\n * S(f, n) = f(1) + f(2) + ... + f(n) \u3068\u3059\u308B\n * f \u3068 g\
     \ \u306E\u30C7\u30A3\u30EA\u30AF\u30EC\u7A4D\u3092 h \u3068\u3059\u308B\n * S(h,\
     \ n) \u3068 S(g, n) \u304C\u9AD8\u901F\u306B\u8A08\u7B97\u3067\u304D\u308B, \u304B\
@@ -277,7 +277,7 @@ data:
     \ long n) { return get(n); }\n};\n\n/**\n * @brief \u4E57\u6CD5\u7684\u95A2\u6570\
     \u306Eprefix sum \u306E\u5217\u6319\n */\n#line 6 \"verify/verify-yosupo-math/yosupo-sum-of-totient-3.test.cpp\"\
     \nusing namespace Nyaan;\n\n#line 2 \"modint/montgomery-modint.hpp\"\n\n#line\
-    \ 4 \"modint/montgomery-modint.hpp\"\n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt\
+    \ 5 \"modint/montgomery-modint.hpp\"\n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt\
     \ {\n  using mint = LazyMontgomeryModInt;\n  using i32 = int32_t;\n  using u32\
     \ = uint32_t;\n  using u64 = uint64_t;\n\n  static constexpr u32 get_r() {\n \
     \   u32 ret = mod;\n    for (i32 i = 0; i < 4; ++i) ret *= 2 - mod * ret;\n  \
@@ -307,34 +307,35 @@ data:
     \ ret;\n  }\n\n  constexpr mint inverse() const {\n    int x = get(), y = mod,\
     \ u = 1, v = 0, t = 0, tmp = 0;\n    while (y > 0) {\n      t = x / y;\n     \
     \ x -= t * y, u -= t * v;\n      tmp = x, x = y, y = tmp;\n      tmp = u, u =\
-    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend ostream &operator<<(ostream\
-    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend istream &operator>>(istream\
-    \ &is, mint &b) {\n    int64_t t;\n    is >> t;\n    b = LazyMontgomeryModInt<mod>(t);\n\
-    \    return (is);\n  }\n\n  constexpr u32 get() const {\n    u32 ret = reduce(a);\n\
-    \    return ret >= mod ? ret - mod : ret;\n  }\n\n  static constexpr u32 get_mod()\
-    \ { return mod; }\n};\n#line 2 \"modulo/binomial.hpp\"\n\n#line 6 \"modulo/binomial.hpp\"\
-    \nusing namespace std;\n\n// \u30B3\u30F3\u30B9\u30C8\u30E9\u30AF\u30BF\u306E\
-    \ MAX \u306B \u300CC(n, r) \u3084 fac(n) \u3067\u30AF\u30A8\u30EA\u3092\u6295\u3052\
-    \u308B\u6700\u5927\u306E n \u300D\n// \u3092\u5165\u308C\u308B\u3068\u500D\u901F\
-    \u304F\u3089\u3044\u306B\u306A\u308B\n// mod \u3092\u8D85\u3048\u3066\u524D\u8A08\
-    \u7B97\u3057\u3066 0 \u5272\u308A\u3092\u8E0F\u3080\u30D0\u30B0\u306F\u5BFE\u7B56\
-    \u6E08\u307F\ntemplate <typename T>\nstruct Binomial {\n  vector<T> f, g, h;\n\
-    \  Binomial(int MAX = 0) {\n    assert(T::get_mod() != 0 && \"Binomial<mint>()\"\
-    );\n    f.resize(1, T{1});\n    g.resize(1, T{1});\n    h.resize(1, T{1});\n \
-    \   if (MAX > 0) extend(MAX + 1);\n  }\n\n  void extend(int m = -1) {\n    int\
-    \ n = f.size();\n    if (m == -1) m = n * 2;\n    m = min<int>(m, T::get_mod());\n\
-    \    if (n >= m) return;\n    f.resize(m);\n    g.resize(m);\n    h.resize(m);\n\
-    \    for (int i = n; i < m; i++) f[i] = f[i - 1] * T(i);\n    g[m - 1] = f[m -\
-    \ 1].inverse();\n    h[m - 1] = g[m - 1] * f[m - 2];\n    for (int i = m - 2;\
-    \ i >= n; i--) {\n      g[i] = g[i + 1] * T(i + 1);\n      h[i] = g[i] * f[i -\
-    \ 1];\n    }\n  }\n\n  T fac(int i) {\n    if (i < 0) return T(0);\n    while\
-    \ (i >= (int)f.size()) extend();\n    return f[i];\n  }\n\n  T finv(int i) {\n\
-    \    if (i < 0) return T(0);\n    while (i >= (int)g.size()) extend();\n    return\
-    \ g[i];\n  }\n\n  T inv(int i) {\n    if (i < 0) return -inv(-i);\n    while (i\
-    \ >= (int)h.size()) extend();\n    return h[i];\n  }\n\n  T C(int n, int r) {\n\
-    \    if (n < 0 || n < r || r < 0) return T(0);\n    return fac(n) * finv(n - r)\
-    \ * finv(r);\n  }\n\n  inline T operator()(int n, int r) { return C(n, r); }\n\
-    \n  template <typename I>\n  T multinomial(const vector<I>& r) {\n    static_assert(is_integral<I>::value\
+    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend std::ostream &operator<<(std::ostream\
+    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend std::istream\
+    \ &operator>>(std::istream &is, mint &b) {\n    int64_t t;\n    is >> t;\n   \
+    \ b = LazyMontgomeryModInt<mod>(t);\n    return (is);\n  }\n\n  constexpr u32\
+    \ get() const {\n    u32 ret = reduce(a);\n    return ret >= mod ? ret - mod :\
+    \ ret;\n  }\n\n  static constexpr u32 get_mod() { return mod; }\n};\n#line 2 \"\
+    modulo/binomial.hpp\"\n\n#line 6 \"modulo/binomial.hpp\"\nusing namespace std;\n\
+    \n// \u30B3\u30F3\u30B9\u30C8\u30E9\u30AF\u30BF\u306E MAX \u306B \u300CC(n, r)\
+    \ \u3084 fac(n) \u3067\u30AF\u30A8\u30EA\u3092\u6295\u3052\u308B\u6700\u5927\u306E\
+    \ n \u300D\n// \u3092\u5165\u308C\u308B\u3068\u500D\u901F\u304F\u3089\u3044\u306B\
+    \u306A\u308B\n// mod \u3092\u8D85\u3048\u3066\u524D\u8A08\u7B97\u3057\u3066 0\
+    \ \u5272\u308A\u3092\u8E0F\u3080\u30D0\u30B0\u306F\u5BFE\u7B56\u6E08\u307F\ntemplate\
+    \ <typename T>\nstruct Binomial {\n  vector<T> f, g, h;\n  Binomial(int MAX =\
+    \ 0) {\n    assert(T::get_mod() != 0 && \"Binomial<mint>()\");\n    f.resize(1,\
+    \ T{1});\n    g.resize(1, T{1});\n    h.resize(1, T{1});\n    if (MAX > 0) extend(MAX\
+    \ + 1);\n  }\n\n  void extend(int m = -1) {\n    int n = f.size();\n    if (m\
+    \ == -1) m = n * 2;\n    m = min<int>(m, T::get_mod());\n    if (n >= m) return;\n\
+    \    f.resize(m);\n    g.resize(m);\n    h.resize(m);\n    for (int i = n; i <\
+    \ m; i++) f[i] = f[i - 1] * T(i);\n    g[m - 1] = f[m - 1].inverse();\n    h[m\
+    \ - 1] = g[m - 1] * f[m - 2];\n    for (int i = m - 2; i >= n; i--) {\n      g[i]\
+    \ = g[i + 1] * T(i + 1);\n      h[i] = g[i] * f[i - 1];\n    }\n  }\n\n  T fac(int\
+    \ i) {\n    if (i < 0) return T(0);\n    while (i >= (int)f.size()) extend();\n\
+    \    return f[i];\n  }\n\n  T finv(int i) {\n    if (i < 0) return T(0);\n   \
+    \ while (i >= (int)g.size()) extend();\n    return g[i];\n  }\n\n  T inv(int i)\
+    \ {\n    if (i < 0) return -inv(-i);\n    while (i >= (int)h.size()) extend();\n\
+    \    return h[i];\n  }\n\n  T C(int n, int r) {\n    if (n < 0 || n < r || r <\
+    \ 0) return T(0);\n    return fac(n) * finv(n - r) * finv(r);\n  }\n\n  inline\
+    \ T operator()(int n, int r) { return C(n, r); }\n\n  template <typename I>\n\
+    \  T multinomial(const vector<I>& r) {\n    static_assert(is_integral<I>::value\
     \ == true);\n    int n = 0;\n    for (auto& x : r) {\n      if (x < 0) return\
     \ T(0);\n      n += x;\n    }\n    T res = fac(n);\n    for (auto& x : r) res\
     \ *= finv(x);\n    return res;\n  }\n\n  template <typename I>\n  T operator()(const\
@@ -377,7 +378,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-math/yosupo-sum-of-totient-3.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-math/yosupo-sum-of-totient-3.test.cpp

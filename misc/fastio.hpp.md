@@ -272,16 +272,16 @@ data:
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
-  bundledCode: "#line 2 \"misc/fastio.hpp\"\n\n#include <cstdio>\n#include <cstring>\n\
-    #include <string>\n#include <type_traits>\n#include <utility>\n\nusing namespace\
-    \ std;\n\n#line 2 \"internal/internal-type-traits.hpp\"\n\n#line 4 \"internal/internal-type-traits.hpp\"\
-    \nusing namespace std;\n\nnamespace internal {\ntemplate <typename T>\nusing is_broadly_integral\
-    \ =\n    typename conditional_t<is_integral_v<T> || is_same_v<T, __int128_t> ||\n\
-    \                               is_same_v<T, __uint128_t>,\n                 \
-    \          true_type, false_type>::type;\n\ntemplate <typename T>\nusing is_broadly_signed\
-    \ =\n    typename conditional_t<is_signed_v<T> || is_same_v<T, __int128_t>,\n\
-    \                           true_type, false_type>::type;\n\ntemplate <typename\
-    \ T>\nusing is_broadly_unsigned =\n    typename conditional_t<is_unsigned_v<T>\
+  bundledCode: "#line 2 \"misc/fastio.hpp\"\n\n#include <cstdint>\n#include <cstdio>\n\
+    #include <cstring>\n#include <string>\n#include <type_traits>\n#include <utility>\n\
+    \nusing namespace std;\n\n#line 2 \"internal/internal-type-traits.hpp\"\n\n#line\
+    \ 4 \"internal/internal-type-traits.hpp\"\nusing namespace std;\n\nnamespace internal\
+    \ {\ntemplate <typename T>\nusing is_broadly_integral =\n    typename conditional_t<is_integral_v<T>\
+    \ || is_same_v<T, __int128_t> ||\n                               is_same_v<T,\
+    \ __uint128_t>,\n                           true_type, false_type>::type;\n\n\
+    template <typename T>\nusing is_broadly_signed =\n    typename conditional_t<is_signed_v<T>\
+    \ || is_same_v<T, __int128_t>,\n                           true_type, false_type>::type;\n\
+    \ntemplate <typename T>\nusing is_broadly_unsigned =\n    typename conditional_t<is_unsigned_v<T>\
     \ || is_same_v<T, __uint128_t>,\n                           true_type, false_type>::type;\n\
     \n#define ENABLE_VALUE(x) \\\n  template <typename T> \\\n  constexpr bool x##_v\
     \ = x<T>::value;\n\nENABLE_VALUE(is_broadly_integral);\nENABLE_VALUE(is_broadly_signed);\n\
@@ -298,7 +298,7 @@ data:
     \          \\\n  struct has_##var<T, void_t<decltype(T::var)>> : true_type {};\
     \ \\\n  template <class T>                                            \\\n  constexpr\
     \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace internal\n#line\
-    \ 12 \"misc/fastio.hpp\"\n\nnamespace fastio {\nstatic constexpr int SZ = 1 <<\
+    \ 13 \"misc/fastio.hpp\"\n\nnamespace fastio {\nstatic constexpr int SZ = 1 <<\
     \ 17;\nstatic constexpr int offset = 64;\nchar inbuf[SZ], outbuf[SZ];\nint in_left\
     \ = 0, in_right = 0, out_right = 0;\n\nstruct Pre {\n  char num[40000];\n  constexpr\
     \ Pre() : num() {\n    for (int i = 0; i < 10000; i++) {\n      int n = i;\n \
@@ -347,36 +347,37 @@ data:
     \ {\n  wt(std::forward<const Args>(x)...);\n  wt('\\n');\n}\n\nstruct Dummy {\n\
     \  Dummy() { atexit(flush); }\n} dummy;\n\n}  // namespace fastio\nusing fastio::rd;\n\
     using fastio::skip_space;\nusing fastio::wt;\nusing fastio::wtn;\n"
-  code: "#pragma once\n\n#include <cstdio>\n#include <cstring>\n#include <string>\n\
-    #include <type_traits>\n#include <utility>\n\nusing namespace std;\n\n#include\
-    \ \"../internal/internal-type-traits.hpp\"\n\nnamespace fastio {\nstatic constexpr\
-    \ int SZ = 1 << 17;\nstatic constexpr int offset = 64;\nchar inbuf[SZ], outbuf[SZ];\n\
-    int in_left = 0, in_right = 0, out_right = 0;\n\nstruct Pre {\n  char num[40000];\n\
-    \  constexpr Pre() : num() {\n    for (int i = 0; i < 10000; i++) {\n      int\
-    \ n = i;\n      for (int j = 3; j >= 0; j--) {\n        num[i * 4 + j] = n % 10\
-    \ + '0';\n        n /= 10;\n      }\n    }\n  }\n} constexpr pre;\n\nvoid load()\
-    \ {\n  int len = in_right - in_left;\n  memmove(inbuf, inbuf + in_left, len);\n\
-    \  in_right = len + fread(inbuf + len, 1, SZ - len, stdin);\n  in_left = 0;\n\
-    }\nvoid flush() {\n  fwrite(outbuf, 1, out_right, stdout);\n  out_right = 0;\n\
-    }\nvoid skip_space() {\n  if (in_left + offset > in_right) load();\n  while (inbuf[in_left]\
-    \ <= ' ') in_left++;\n}\n\nvoid single_read(char& c) {\n  if (in_left + offset\
-    \ > in_right) load();\n  skip_space();\n  c = inbuf[in_left++];\n}\nvoid single_read(string&\
-    \ S) {\n  skip_space();\n  while (true) {\n    if (in_left == in_right) load();\n\
-    \    int i = in_left;\n    for (; i != in_right; i++) {\n      if (inbuf[i] <=\
-    \ ' ') break;\n    }\n    copy(inbuf + in_left, inbuf + i, back_inserter(S));\n\
-    \    in_left = i;\n    if (i != in_right) break;\n  }\n}\ntemplate <typename T,\n\
-    \          enable_if_t<internal::is_broadly_integral_v<T>>* = nullptr>\nvoid single_read(T&\
-    \ x) {\n  if (in_left + offset > in_right) load();\n  skip_space();\n  char c\
-    \ = inbuf[in_left++];\n  [[maybe_unused]] bool minus = false;\n  if constexpr\
-    \ (internal::is_broadly_signed_v<T>) {\n    if (c == '-') minus = true, c = inbuf[in_left++];\n\
-    \  }\n  x = 0;\n  while (c >= '0') {\n    x = x * 10 + (c & 15);\n    c = inbuf[in_left++];\n\
-    \  }\n  if constexpr (internal::is_broadly_signed_v<T>) {\n    if (minus) x =\
-    \ -x;\n  }\n}\nvoid rd() {}\ntemplate <typename Head, typename... Tail>\nvoid\
-    \ rd(Head& head, Tail&... tail) {\n  single_read(head);\n  rd(tail...);\n}\n\n\
-    void single_write(const char& c) {\n  if (out_right > SZ - offset) flush();\n\
-    \  outbuf[out_right++] = c;\n}\nvoid single_write(const bool& b) {\n  if (out_right\
-    \ > SZ - offset) flush();\n  outbuf[out_right++] = b ? '1' : '0';\n}\nvoid single_write(const\
-    \ string& S) {\n  flush(), fwrite(S.data(), 1, S.size(), stdout);\n}\nvoid single_write(const\
+  code: "#pragma once\n\n#include <cstdint>\n#include <cstdio>\n#include <cstring>\n\
+    #include <string>\n#include <type_traits>\n#include <utility>\n\nusing namespace\
+    \ std;\n\n#include \"../internal/internal-type-traits.hpp\"\n\nnamespace fastio\
+    \ {\nstatic constexpr int SZ = 1 << 17;\nstatic constexpr int offset = 64;\nchar\
+    \ inbuf[SZ], outbuf[SZ];\nint in_left = 0, in_right = 0, out_right = 0;\n\nstruct\
+    \ Pre {\n  char num[40000];\n  constexpr Pre() : num() {\n    for (int i = 0;\
+    \ i < 10000; i++) {\n      int n = i;\n      for (int j = 3; j >= 0; j--) {\n\
+    \        num[i * 4 + j] = n % 10 + '0';\n        n /= 10;\n      }\n    }\n  }\n\
+    } constexpr pre;\n\nvoid load() {\n  int len = in_right - in_left;\n  memmove(inbuf,\
+    \ inbuf + in_left, len);\n  in_right = len + fread(inbuf + len, 1, SZ - len, stdin);\n\
+    \  in_left = 0;\n}\nvoid flush() {\n  fwrite(outbuf, 1, out_right, stdout);\n\
+    \  out_right = 0;\n}\nvoid skip_space() {\n  if (in_left + offset > in_right)\
+    \ load();\n  while (inbuf[in_left] <= ' ') in_left++;\n}\n\nvoid single_read(char&\
+    \ c) {\n  if (in_left + offset > in_right) load();\n  skip_space();\n  c = inbuf[in_left++];\n\
+    }\nvoid single_read(string& S) {\n  skip_space();\n  while (true) {\n    if (in_left\
+    \ == in_right) load();\n    int i = in_left;\n    for (; i != in_right; i++) {\n\
+    \      if (inbuf[i] <= ' ') break;\n    }\n    copy(inbuf + in_left, inbuf + i,\
+    \ back_inserter(S));\n    in_left = i;\n    if (i != in_right) break;\n  }\n}\n\
+    template <typename T,\n          enable_if_t<internal::is_broadly_integral_v<T>>*\
+    \ = nullptr>\nvoid single_read(T& x) {\n  if (in_left + offset > in_right) load();\n\
+    \  skip_space();\n  char c = inbuf[in_left++];\n  [[maybe_unused]] bool minus\
+    \ = false;\n  if constexpr (internal::is_broadly_signed_v<T>) {\n    if (c ==\
+    \ '-') minus = true, c = inbuf[in_left++];\n  }\n  x = 0;\n  while (c >= '0')\
+    \ {\n    x = x * 10 + (c & 15);\n    c = inbuf[in_left++];\n  }\n  if constexpr\
+    \ (internal::is_broadly_signed_v<T>) {\n    if (minus) x = -x;\n  }\n}\nvoid rd()\
+    \ {}\ntemplate <typename Head, typename... Tail>\nvoid rd(Head& head, Tail&...\
+    \ tail) {\n  single_read(head);\n  rd(tail...);\n}\n\nvoid single_write(const\
+    \ char& c) {\n  if (out_right > SZ - offset) flush();\n  outbuf[out_right++] =\
+    \ c;\n}\nvoid single_write(const bool& b) {\n  if (out_right > SZ - offset) flush();\n\
+    \  outbuf[out_right++] = b ? '1' : '0';\n}\nvoid single_write(const string& S)\
+    \ {\n  flush(), fwrite(S.data(), 1, S.size(), stdout);\n}\nvoid single_write(const\
     \ char* p) { flush(), fwrite(p, 1, strlen(p), stdout); }\ntemplate <typename T,\n\
     \          enable_if_t<internal::is_broadly_integral_v<T>>* = nullptr>\nvoid single_write(const\
     \ T& _x) {\n  if (out_right > SZ - offset) flush();\n  if (_x == 0) {\n    outbuf[out_right++]\
@@ -404,7 +405,7 @@ data:
   path: misc/fastio.hpp
   requiredBy:
   - misc/all.hpp
-  timestamp: '2024-05-03 23:21:26+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-graph/yosupo-log-of-set-power-series.test.cpp

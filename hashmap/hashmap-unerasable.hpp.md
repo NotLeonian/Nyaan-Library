@@ -39,23 +39,23 @@ data:
   attributes:
     links: []
   bundledCode: "#line 2 \"hashmap/hashmap-unerasable.hpp\"\n\n#include <cassert>\n\
-    #include <chrono>\n#include <functional>\n#include <vector>\nusing namespace std;\n\
-    \n#line 2 \"internal/internal-hash-function.hpp\"\n\n#line 4 \"internal/internal-hash-function.hpp\"\
-    \nusing namespace std;\n\n#line 2 \"internal/internal-seed.hpp\"\n\n#line 4 \"\
-    internal/internal-seed.hpp\"\nusing namespace std;\n\nnamespace internal {\nunsigned\
-    \ long long non_deterministic_seed() {\n  unsigned long long m =\n      chrono::duration_cast<chrono::nanoseconds>(\n\
-    \          chrono::high_resolution_clock::now().time_since_epoch())\n        \
-    \  .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >> 31, m\
-    \ ^= m << 35;\n  return m;\n}\nunsigned long long deterministic_seed() { return\
-    \ 88172645463325252UL; }\n\n// 64 bit \u306E seed \u5024\u3092\u751F\u6210 (\u624B\
-    \u5143\u3067\u306F seed \u56FA\u5B9A)\n// \u9023\u7D9A\u3067\u547C\u3073\u51FA\
-    \u3059\u3068\u540C\u3058\u5024\u304C\u4F55\u5EA6\u3082\u8FD4\u3063\u3066\u304F\
-    \u308B\u306E\u3067\u6CE8\u610F\n// #define RANDOMIZED_SEED \u3059\u308B\u3068\u30B7\
-    \u30FC\u30C9\u304C\u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long long\
-    \ seed() {\n#if defined(NyaanLocal) && !defined(RANDOMIZED_SEED)\n  return deterministic_seed();\n\
-    #else\n  return non_deterministic_seed();\n#endif\n}\n\n}  // namespace internal\n\
-    #line 2 \"internal/internal-type-traits.hpp\"\n\n#include <type_traits>\nusing\
-    \ namespace std;\n\nnamespace internal {\ntemplate <typename T>\nusing is_broadly_integral\
+    #include <vector>\nusing namespace std;\n\n#line 2 \"internal/internal-hash-function.hpp\"\
+    \n\n#line 4 \"internal/internal-hash-function.hpp\"\nusing namespace std;\n\n\
+    #line 2 \"internal/internal-seed.hpp\"\n\n#include <chrono>\nusing namespace std;\n\
+    \nnamespace internal {\nunsigned long long non_deterministic_seed() {\n  unsigned\
+    \ long long m =\n      chrono::duration_cast<chrono::nanoseconds>(\n         \
+    \ chrono::high_resolution_clock::now().time_since_epoch())\n          .count();\n\
+    \  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >> 31, m ^= m << 35;\n\
+    \  return m;\n}\nunsigned long long deterministic_seed() { return 88172645463325252UL;\
+    \ }\n\n// 64 bit \u306E seed \u5024\u3092\u751F\u6210 (\u624B\u5143\u3067\u306F\
+    \ seed \u56FA\u5B9A)\n// \u9023\u7D9A\u3067\u547C\u3073\u51FA\u3059\u3068\u540C\
+    \u3058\u5024\u304C\u4F55\u5EA6\u3082\u8FD4\u3063\u3066\u304F\u308B\u306E\u3067\
+    \u6CE8\u610F\n// #define RANDOMIZED_SEED \u3059\u308B\u3068\u30B7\u30FC\u30C9\u304C\
+    \u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long long seed() {\n#if defined(NyaanLocal)\
+    \ && !defined(RANDOMIZED_SEED)\n  return deterministic_seed();\n#else\n  return\
+    \ non_deterministic_seed();\n#endif\n}\n\n}  // namespace internal\n#line 2 \"\
+    internal/internal-type-traits.hpp\"\n\n#include <type_traits>\nusing namespace\
+    \ std;\n\nnamespace internal {\ntemplate <typename T>\nusing is_broadly_integral\
     \ =\n    typename conditional_t<is_integral_v<T> || is_same_v<T, __int128_t> ||\n\
     \                               is_same_v<T, __uint128_t>,\n                 \
     \          true_type, false_type>::type;\n\ntemplate <typename T>\nusing is_broadly_signed\
@@ -96,7 +96,7 @@ data:
     \ m ^= m << 35;\n    return m;\n  } else {\n    static_assert([]() { return false;\
     \ }());\n  }\n}\n\ntemplate <typename Key>\nstruct HashObject {\n  size_t operator()(const\
     \ Key& x) const { return hash_function(x); }\n};\n\n}  // namespace internal\n\
-    \n/*\n@brief \u30CF\u30C3\u30B7\u30E5\u95A2\u6570\n*/\n#line 10 \"hashmap/hashmap-unerasable.hpp\"\
+    \n/*\n@brief \u30CF\u30C3\u30B7\u30E5\u95A2\u6570\n*/\n#line 8 \"hashmap/hashmap-unerasable.hpp\"\
     \n\n// \u524A\u9664\u4E0D\u53EF\u80FD\u306A hashmap\n//\n// \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\u5F15\u6570\n// fixed_size : \u3053\u308C\u3092 true \u306B\
     \u3059\u308B\u3059\u308B\u3068\u30D0\u30B1\u30C3\u30C8\u30B5\u30A4\u30BA\u304C\
@@ -141,35 +141,34 @@ data:
     \ Key& k) { return flag[hint(k)]; }\n  int size() const { return occupied_num;\
     \ }\n  void reset() { init(default_size, true); }\n  void clear() { init(default_size,\
     \ true); }\n};\n"
-  code: "#pragma once\n\n#include <cassert>\n#include <chrono>\n#include <functional>\n\
-    #include <vector>\nusing namespace std;\n\n#include \"../internal/internal-hash-function.hpp\"\
-    \n\n// \u524A\u9664\u4E0D\u53EF\u80FD\u306A hashmap\n//\n// \u30C6\u30F3\u30D7\
-    \u30EC\u30FC\u30C8\u5F15\u6570\n// fixed_size : \u3053\u308C\u3092 true \u306B\
-    \u3059\u308B\u3059\u308B\u3068\u30D0\u30B1\u30C3\u30C8\u30B5\u30A4\u30BA\u304C\
-    \u56FA\u5B9A\u306B\u306A\u308B\n// get_hash : \u30CF\u30C3\u30B7\u30E5\u95A2\u6570\
-    \u306E\u6307\u5B9A\n// \u5F15\u6570\n// _default_value : val \u306E\u521D\u671F\
-    \u5024, \u3053\u306E\u5024\u3067\u521D\u671F\u5316\n// _default_size :\n// \u30D0\
-    \u30B1\u30C3\u30C8\u30B5\u30A4\u30BA, max(4, _default_size) \u4EE5\u4E0A\u306E\
-    \ 2 \u3079\u304D\u3067\u521D\u671F\u5316\n// \u305F\u3060\u3057 fixed_size \u304C\
-    \ true \u306E\u6642\u306B\u3057\u304B\u30B5\u30A4\u30BA\u3092\u5909\u66F4\u3067\
-    \u304D\u306A\u3044\n\ntemplate <typename Key, typename Val, bool fixed_size =\
-    \ false,\n          unsigned long long (*get_hash)(const Key&) =\n           \
-    \   internal::hash_function<Key>>\nstruct UnerasableHashMap {\n  int N, occupied_num,\
-    \ shift;\n  vector<Key> keys;\n  vector<Val> vals;\n  vector<char> flag;\n\n \
-    \ Val default_value;\n  int default_size;\n\n  // \u30B5\u30A4\u30BA\u3092 n \u306B\
-    \u5909\u66F4\u3059\u308B\n  void init(int n, bool reset = false) {\n    assert(n\
-    \ >= 4 && (n & (n - 1)) == 0);\n    if constexpr (fixed_size) {\n      assert(reset\
-    \ == true);\n      n = N;\n    }\n    if (reset == true) {\n      N = n, occupied_num\
-    \ = 0, shift = 64 - __builtin_ctz(n);\n      keys.resize(n);\n      vals.resize(n);\n\
-    \      flag.resize(n);\n      fill(begin(vals), end(vals), default_value);\n \
-    \     fill(begin(flag), end(flag), 0);\n    } else {\n      N = n, shift = 64\
-    \ - __builtin_ctz(n);\n      vector<Key> keys2(n);\n      vector<Val> vals2(n,\
-    \ default_value);\n      vector<char> flag2(n);\n      swap(keys, keys2), swap(vals,\
-    \ vals2), swap(flag, flag2);\n      for (int i = 0; i < (int)flag2.size(); i++)\
-    \ {\n        if (flag2[i]) {\n          int j = hint(keys2[i]);\n          keys[j]\
-    \ = keys2[i], vals[j] = vals2[i], flag[j] = 1;\n        }\n      }\n    }\n  }\n\
-    \n  UnerasableHashMap(const Val& _default_value = Val{}, int _default_size = 4)\n\
-    \      : occupied_num(0), default_value(_default_value) {\n    if (fixed_size\
+  code: "#pragma once\n\n#include <cassert>\n#include <vector>\nusing namespace std;\n\
+    \n#include \"../internal/internal-hash-function.hpp\"\n\n// \u524A\u9664\u4E0D\
+    \u53EF\u80FD\u306A hashmap\n//\n// \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\u5F15\u6570\
+    \n// fixed_size : \u3053\u308C\u3092 true \u306B\u3059\u308B\u3059\u308B\u3068\
+    \u30D0\u30B1\u30C3\u30C8\u30B5\u30A4\u30BA\u304C\u56FA\u5B9A\u306B\u306A\u308B\
+    \n// get_hash : \u30CF\u30C3\u30B7\u30E5\u95A2\u6570\u306E\u6307\u5B9A\n// \u5F15\
+    \u6570\n// _default_value : val \u306E\u521D\u671F\u5024, \u3053\u306E\u5024\u3067\
+    \u521D\u671F\u5316\n// _default_size :\n// \u30D0\u30B1\u30C3\u30C8\u30B5\u30A4\
+    \u30BA, max(4, _default_size) \u4EE5\u4E0A\u306E 2 \u3079\u304D\u3067\u521D\u671F\
+    \u5316\n// \u305F\u3060\u3057 fixed_size \u304C true \u306E\u6642\u306B\u3057\u304B\
+    \u30B5\u30A4\u30BA\u3092\u5909\u66F4\u3067\u304D\u306A\u3044\n\ntemplate <typename\
+    \ Key, typename Val, bool fixed_size = false,\n          unsigned long long (*get_hash)(const\
+    \ Key&) =\n              internal::hash_function<Key>>\nstruct UnerasableHashMap\
+    \ {\n  int N, occupied_num, shift;\n  vector<Key> keys;\n  vector<Val> vals;\n\
+    \  vector<char> flag;\n\n  Val default_value;\n  int default_size;\n\n  // \u30B5\
+    \u30A4\u30BA\u3092 n \u306B\u5909\u66F4\u3059\u308B\n  void init(int n, bool reset\
+    \ = false) {\n    assert(n >= 4 && (n & (n - 1)) == 0);\n    if constexpr (fixed_size)\
+    \ {\n      assert(reset == true);\n      n = N;\n    }\n    if (reset == true)\
+    \ {\n      N = n, occupied_num = 0, shift = 64 - __builtin_ctz(n);\n      keys.resize(n);\n\
+    \      vals.resize(n);\n      flag.resize(n);\n      fill(begin(vals), end(vals),\
+    \ default_value);\n      fill(begin(flag), end(flag), 0);\n    } else {\n    \
+    \  N = n, shift = 64 - __builtin_ctz(n);\n      vector<Key> keys2(n);\n      vector<Val>\
+    \ vals2(n, default_value);\n      vector<char> flag2(n);\n      swap(keys, keys2),\
+    \ swap(vals, vals2), swap(flag, flag2);\n      for (int i = 0; i < (int)flag2.size();\
+    \ i++) {\n        if (flag2[i]) {\n          int j = hint(keys2[i]);\n       \
+    \   keys[j] = keys2[i], vals[j] = vals2[i], flag[j] = 1;\n        }\n      }\n\
+    \    }\n  }\n\n  UnerasableHashMap(const Val& _default_value = Val{}, int _default_size\
+    \ = 4)\n      : occupied_num(0), default_value(_default_value) {\n    if (fixed_size\
     \ == false) _default_size = 4;\n    N = 4;\n    while (N < _default_size) N *=\
     \ 2;\n    default_size = N;\n    init(N, true);\n  }\n\n  int hint(const Key&\
     \ k) {\n    int hash = get_hash(k) >> shift;\n    while (flag[hash] && keys[hash]\
@@ -196,7 +195,7 @@ data:
   requiredBy:
   - string/number-of-subsequences.hpp
   - marathon/top-k.hpp
-  timestamp: '2023-09-05 21:46:27+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-graph/yosupo-tree-hash.test.cpp

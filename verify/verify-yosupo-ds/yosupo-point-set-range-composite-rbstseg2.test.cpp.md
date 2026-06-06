@@ -240,7 +240,7 @@ data:
     \ { return a != r.a || b != r.b; }\n  friend ostream& operator<<(ostream& os,\
     \ const Affine& r) {\n    os << \"( \" << r.a << \", \" << r.b << \" )\";\n  \
     \  return os;\n  }\n};\n\n/**\n * @brief \u30A2\u30D5\u30A3\u30F3\u5909\u63DB\n\
-    \ */\n#line 2 \"modint/montgomery-modint.hpp\"\n\n#line 4 \"modint/montgomery-modint.hpp\"\
+    \ */\n#line 2 \"modint/montgomery-modint.hpp\"\n\n#line 5 \"modint/montgomery-modint.hpp\"\
     \n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n\
     \  using i32 = int32_t;\n  using u32 = uint32_t;\n  using u64 = uint64_t;\n\n\
     \  static constexpr u32 get_r() {\n    u32 ret = mod;\n    for (i32 i = 0; i <\
@@ -271,23 +271,23 @@ data:
     \ ret;\n  }\n\n  constexpr mint inverse() const {\n    int x = get(), y = mod,\
     \ u = 1, v = 0, t = 0, tmp = 0;\n    while (y > 0) {\n      t = x / y;\n     \
     \ x -= t * y, u -= t * v;\n      tmp = x, x = y, y = tmp;\n      tmp = u, u =\
-    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend ostream &operator<<(ostream\
-    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend istream &operator>>(istream\
-    \ &is, mint &b) {\n    int64_t t;\n    is >> t;\n    b = LazyMontgomeryModInt<mod>(t);\n\
-    \    return (is);\n  }\n\n  constexpr u32 get() const {\n    u32 ret = reduce(a);\n\
-    \    return ret >= mod ? ret - mod : ret;\n  }\n\n  static constexpr u32 get_mod()\
-    \ { return mod; }\n};\n#line 2 \"segment-tree/rbst-segment-tree.hpp\"\n\n#line\
-    \ 5 \"segment-tree/rbst-segment-tree.hpp\"\n\n#line 2 \"internal/internal-type-traits.hpp\"\
-    \n\n#line 4 \"internal/internal-type-traits.hpp\"\nusing namespace std;\n\nnamespace\
-    \ internal {\ntemplate <typename T>\nusing is_broadly_integral =\n    typename\
-    \ conditional_t<is_integral_v<T> || is_same_v<T, __int128_t> ||\n            \
-    \                   is_same_v<T, __uint128_t>,\n                           true_type,\
-    \ false_type>::type;\n\ntemplate <typename T>\nusing is_broadly_signed =\n   \
-    \ typename conditional_t<is_signed_v<T> || is_same_v<T, __int128_t>,\n       \
-    \                    true_type, false_type>::type;\n\ntemplate <typename T>\n\
-    using is_broadly_unsigned =\n    typename conditional_t<is_unsigned_v<T> || is_same_v<T,\
-    \ __uint128_t>,\n                           true_type, false_type>::type;\n\n\
-    #define ENABLE_VALUE(x) \\\n  template <typename T> \\\n  constexpr bool x##_v\
+    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend std::ostream &operator<<(std::ostream\
+    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend std::istream\
+    \ &operator>>(std::istream &is, mint &b) {\n    int64_t t;\n    is >> t;\n   \
+    \ b = LazyMontgomeryModInt<mod>(t);\n    return (is);\n  }\n\n  constexpr u32\
+    \ get() const {\n    u32 ret = reduce(a);\n    return ret >= mod ? ret - mod :\
+    \ ret;\n  }\n\n  static constexpr u32 get_mod() { return mod; }\n};\n#line 2 \"\
+    segment-tree/rbst-segment-tree.hpp\"\n\n#line 5 \"segment-tree/rbst-segment-tree.hpp\"\
+    \n\n#line 2 \"internal/internal-type-traits.hpp\"\n\n#line 4 \"internal/internal-type-traits.hpp\"\
+    \nusing namespace std;\n\nnamespace internal {\ntemplate <typename T>\nusing is_broadly_integral\
+    \ =\n    typename conditional_t<is_integral_v<T> || is_same_v<T, __int128_t> ||\n\
+    \                               is_same_v<T, __uint128_t>,\n                 \
+    \          true_type, false_type>::type;\n\ntemplate <typename T>\nusing is_broadly_signed\
+    \ =\n    typename conditional_t<is_signed_v<T> || is_same_v<T, __int128_t>,\n\
+    \                           true_type, false_type>::type;\n\ntemplate <typename\
+    \ T>\nusing is_broadly_unsigned =\n    typename conditional_t<is_unsigned_v<T>\
+    \ || is_same_v<T, __uint128_t>,\n                           true_type, false_type>::type;\n\
+    \n#define ENABLE_VALUE(x) \\\n  template <typename T> \\\n  constexpr bool x##_v\
     \ = x<T>::value;\n\nENABLE_VALUE(is_broadly_integral);\nENABLE_VALUE(is_broadly_signed);\n\
     ENABLE_VALUE(is_broadly_unsigned);\n#undef ENABLE_VALUE\n\n#define ENABLE_HAS_TYPE(var)\
     \                                   \\\n  template <class, class = void>     \
@@ -629,7 +629,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-ds/yosupo-point-set-range-composite-rbstseg2.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-ds/yosupo-point-set-range-composite-rbstseg2.test.cpp

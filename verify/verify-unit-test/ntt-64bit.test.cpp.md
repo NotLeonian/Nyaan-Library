@@ -245,65 +245,65 @@ data:
     \ \\\n    return;                  \\\n  } while (0)\n#line 70 \"template/template.hpp\"\
     \n\nnamespace Nyaan {\nvoid solve();\n}\nint main() { Nyaan::solve(); }\n#line\
     \ 4 \"verify/verify-unit-test/ntt-64bit.test.cpp\"\n//\n#line 2 \"misc/rng.hpp\"\
-    \n\n#line 2 \"internal/internal-seed.hpp\"\n\n#line 4 \"internal/internal-seed.hpp\"\
-    \nusing namespace std;\n\nnamespace internal {\nunsigned long long non_deterministic_seed()\
-    \ {\n  unsigned long long m =\n      chrono::duration_cast<chrono::nanoseconds>(\n\
-    \          chrono::high_resolution_clock::now().time_since_epoch())\n        \
-    \  .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >> 31, m\
-    \ ^= m << 35;\n  return m;\n}\nunsigned long long deterministic_seed() { return\
-    \ 88172645463325252UL; }\n\n// 64 bit \u306E seed \u5024\u3092\u751F\u6210 (\u624B\
-    \u5143\u3067\u306F seed \u56FA\u5B9A)\n// \u9023\u7D9A\u3067\u547C\u3073\u51FA\
-    \u3059\u3068\u540C\u3058\u5024\u304C\u4F55\u5EA6\u3082\u8FD4\u3063\u3066\u304F\
-    \u308B\u306E\u3067\u6CE8\u610F\n// #define RANDOMIZED_SEED \u3059\u308B\u3068\u30B7\
-    \u30FC\u30C9\u304C\u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long long\
-    \ seed() {\n#if defined(NyaanLocal) && !defined(RANDOMIZED_SEED)\n  return deterministic_seed();\n\
-    #else\n  return non_deterministic_seed();\n#endif\n}\n\n}  // namespace internal\n\
-    #line 4 \"misc/rng.hpp\"\n\nnamespace my_rand {\nusing i64 = long long;\nusing\
-    \ u64 = unsigned long long;\n\n// [0, 2^64 - 1)\nu64 rng() {\n  static u64 _x\
-    \ = internal::seed();\n  return _x ^= _x << 7, _x ^= _x >> 9;\n}\n\n// [l, r]\n\
-    i64 rng(i64 l, i64 r) {\n  assert(l <= r);\n  return l + rng() % u64(r - l + 1);\n\
-    }\n\n// [l, r)\ni64 randint(i64 l, i64 r) {\n  assert(l < r);\n  return l + rng()\
-    \ % u64(r - l);\n}\n\n// choose n numbers from [l, r) without overlapping\nvector<i64>\
-    \ randset(i64 l, i64 r, i64 n) {\n  assert(l <= r && n <= r - l);\n  unordered_set<i64>\
-    \ s;\n  for (i64 i = n; i; --i) {\n    i64 m = randint(l, r + 1 - i);\n    if\
-    \ (s.find(m) != s.end()) m = r - i;\n    s.insert(m);\n  }\n  vector<i64> ret;\n\
-    \  for (auto& x : s) ret.push_back(x);\n  sort(begin(ret), end(ret));\n  return\
-    \ ret;\n}\n\n// [0.0, 1.0)\ndouble rnd() { return rng() * 5.42101086242752217004e-20;\
-    \ }\n// [l, r)\ndouble rnd(double l, double r) {\n  assert(l < r);\n  return l\
-    \ + rnd() * (r - l);\n}\n\ntemplate <typename T>\nvoid randshf(vector<T>& v) {\n\
-    \  int n = v.size();\n  for (int i = 1; i < n; i++) swap(v[i], v[randint(0, i\
-    \ + 1)]);\n}\n\n}  // namespace my_rand\n\nusing my_rand::randint;\nusing my_rand::randset;\n\
-    using my_rand::randshf;\nusing my_rand::rnd;\nusing my_rand::rng;\n#line 2 \"\
-    modint/arbitrary-montgomery-modint.hpp\"\n\n#line 4 \"modint/arbitrary-montgomery-modint.hpp\"\
-    \nusing namespace std;\n\ntemplate <typename Int, typename UInt, typename Long,\
-    \ typename ULong, int id>\nstruct ArbitraryLazyMontgomeryModIntBase {\n  using\
-    \ mint = ArbitraryLazyMontgomeryModIntBase;\n\n  inline static UInt mod;\n  inline\
-    \ static UInt r;\n  inline static UInt n2;\n  static constexpr int bit_length\
-    \ = sizeof(UInt) * 8;\n\n  static UInt get_r() {\n    UInt ret = mod;\n    while\
-    \ (mod * ret != 1) ret *= UInt(2) - mod * ret;\n    return ret;\n  }\n  static\
-    \ void set_mod(UInt m) {\n    assert(m < (UInt(1u) << (bit_length - 2)));\n  \
-    \  assert((m & 1) == 1);\n    mod = m, n2 = -ULong(m) % m, r = get_r();\n  }\n\
-    \  UInt a;\n\n  ArbitraryLazyMontgomeryModIntBase() : a(0) {}\n  ArbitraryLazyMontgomeryModIntBase(const\
-    \ Long &b)\n      : a(reduce(ULong(b % mod + mod) * n2)){};\n\n  static UInt reduce(const\
-    \ ULong &b) {\n    return (b + ULong(UInt(b) * UInt(-r)) * mod) >> bit_length;\n\
-    \  }\n\n  mint &operator+=(const mint &b) {\n    if (Int(a += b.a - 2 * mod) <\
-    \ 0) a += 2 * mod;\n    return *this;\n  }\n  mint &operator-=(const mint &b)\
-    \ {\n    if (Int(a -= b.a) < 0) a += 2 * mod;\n    return *this;\n  }\n  mint\
-    \ &operator*=(const mint &b) {\n    a = reduce(ULong(a) * b.a);\n    return *this;\n\
-    \  }\n  mint &operator/=(const mint &b) {\n    *this *= b.inverse();\n    return\
-    \ *this;\n  }\n\n  mint operator+(const mint &b) const { return mint(*this) +=\
-    \ b; }\n  mint operator-(const mint &b) const { return mint(*this) -= b; }\n \
-    \ mint operator*(const mint &b) const { return mint(*this) *= b; }\n  mint operator/(const\
-    \ mint &b) const { return mint(*this) /= b; }\n\n  bool operator==(const mint\
-    \ &b) const {\n    return (a >= mod ? a - mod : a) == (b.a >= mod ? b.a - mod\
-    \ : b.a);\n  }\n  bool operator!=(const mint &b) const {\n    return (a >= mod\
-    \ ? a - mod : a) != (b.a >= mod ? b.a - mod : b.a);\n  }\n  mint operator-() const\
-    \ { return mint(0) - mint(*this); }\n  mint operator+() const { return mint(*this);\
-    \ }\n\n  mint pow(ULong n) const {\n    mint ret(1), mul(*this);\n    while (n\
-    \ > 0) {\n      if (n & 1) ret *= mul;\n      mul *= mul, n >>= 1;\n    }\n  \
-    \  return ret;\n  }\n\n  friend ostream &operator<<(ostream &os, const mint &b)\
-    \ {\n    return os << b.get();\n  }\n\n  friend istream &operator>>(istream &is,\
-    \ mint &b) {\n    Long t;\n    is >> t;\n    b = ArbitraryLazyMontgomeryModIntBase(t);\n\
+    \n\n#line 7 \"misc/rng.hpp\"\nusing namespace std;\n\n#line 2 \"internal/internal-seed.hpp\"\
+    \n\n#line 4 \"internal/internal-seed.hpp\"\nusing namespace std;\n\nnamespace\
+    \ internal {\nunsigned long long non_deterministic_seed() {\n  unsigned long long\
+    \ m =\n      chrono::duration_cast<chrono::nanoseconds>(\n          chrono::high_resolution_clock::now().time_since_epoch())\n\
+    \          .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >>\
+    \ 31, m ^= m << 35;\n  return m;\n}\nunsigned long long deterministic_seed() {\
+    \ return 88172645463325252UL; }\n\n// 64 bit \u306E seed \u5024\u3092\u751F\u6210\
+    \ (\u624B\u5143\u3067\u306F seed \u56FA\u5B9A)\n// \u9023\u7D9A\u3067\u547C\u3073\
+    \u51FA\u3059\u3068\u540C\u3058\u5024\u304C\u4F55\u5EA6\u3082\u8FD4\u3063\u3066\
+    \u304F\u308B\u306E\u3067\u6CE8\u610F\n// #define RANDOMIZED_SEED \u3059\u308B\u3068\
+    \u30B7\u30FC\u30C9\u304C\u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long\
+    \ long seed() {\n#if defined(NyaanLocal) && !defined(RANDOMIZED_SEED)\n  return\
+    \ deterministic_seed();\n#else\n  return non_deterministic_seed();\n#endif\n}\n\
+    \n}  // namespace internal\n#line 10 \"misc/rng.hpp\"\n\nnamespace my_rand {\n\
+    using i64 = long long;\nusing u64 = unsigned long long;\n\n// [0, 2^64 - 1)\n\
+    u64 rng() {\n  static u64 _x = internal::seed();\n  return _x ^= _x << 7, _x ^=\
+    \ _x >> 9;\n}\n\n// [l, r]\ni64 rng(i64 l, i64 r) {\n  assert(l <= r);\n  return\
+    \ l + rng() % u64(r - l + 1);\n}\n\n// [l, r)\ni64 randint(i64 l, i64 r) {\n \
+    \ assert(l < r);\n  return l + rng() % u64(r - l);\n}\n\n// choose n numbers from\
+    \ [l, r) without overlapping\nvector<i64> randset(i64 l, i64 r, i64 n) {\n  assert(l\
+    \ <= r && n <= r - l);\n  unordered_set<i64> s;\n  for (i64 i = n; i; --i) {\n\
+    \    i64 m = randint(l, r + 1 - i);\n    if (s.find(m) != s.end()) m = r - i;\n\
+    \    s.insert(m);\n  }\n  vector<i64> ret;\n  for (auto& x : s) ret.push_back(x);\n\
+    \  sort(begin(ret), end(ret));\n  return ret;\n}\n\n// [0.0, 1.0)\ndouble rnd()\
+    \ { return rng() * 5.42101086242752217004e-20; }\n// [l, r)\ndouble rnd(double\
+    \ l, double r) {\n  assert(l < r);\n  return l + rnd() * (r - l);\n}\n\ntemplate\
+    \ <typename T>\nvoid randshf(vector<T>& v) {\n  int n = v.size();\n  for (int\
+    \ i = 1; i < n; i++) swap(v[i], v[randint(0, i + 1)]);\n}\n\n}  // namespace my_rand\n\
+    \nusing my_rand::randint;\nusing my_rand::randset;\nusing my_rand::randshf;\n\
+    using my_rand::rnd;\nusing my_rand::rng;\n#line 2 \"modint/arbitrary-montgomery-modint.hpp\"\
+    \n\n#line 4 \"modint/arbitrary-montgomery-modint.hpp\"\nusing namespace std;\n\
+    \ntemplate <typename Int, typename UInt, typename Long, typename ULong, int id>\n\
+    struct ArbitraryLazyMontgomeryModIntBase {\n  using mint = ArbitraryLazyMontgomeryModIntBase;\n\
+    \n  inline static UInt mod;\n  inline static UInt r;\n  inline static UInt n2;\n\
+    \  static constexpr int bit_length = sizeof(UInt) * 8;\n\n  static UInt get_r()\
+    \ {\n    UInt ret = mod;\n    while (mod * ret != 1) ret *= UInt(2) - mod * ret;\n\
+    \    return ret;\n  }\n  static void set_mod(UInt m) {\n    assert(m < (UInt(1u)\
+    \ << (bit_length - 2)));\n    assert((m & 1) == 1);\n    mod = m, n2 = -ULong(m)\
+    \ % m, r = get_r();\n  }\n  UInt a;\n\n  ArbitraryLazyMontgomeryModIntBase() :\
+    \ a(0) {}\n  ArbitraryLazyMontgomeryModIntBase(const Long &b)\n      : a(reduce(ULong(b\
+    \ % mod + mod) * n2)){};\n\n  static UInt reduce(const ULong &b) {\n    return\
+    \ (b + ULong(UInt(b) * UInt(-r)) * mod) >> bit_length;\n  }\n\n  mint &operator+=(const\
+    \ mint &b) {\n    if (Int(a += b.a - 2 * mod) < 0) a += 2 * mod;\n    return *this;\n\
+    \  }\n  mint &operator-=(const mint &b) {\n    if (Int(a -= b.a) < 0) a += 2 *\
+    \ mod;\n    return *this;\n  }\n  mint &operator*=(const mint &b) {\n    a = reduce(ULong(a)\
+    \ * b.a);\n    return *this;\n  }\n  mint &operator/=(const mint &b) {\n    *this\
+    \ *= b.inverse();\n    return *this;\n  }\n\n  mint operator+(const mint &b) const\
+    \ { return mint(*this) += b; }\n  mint operator-(const mint &b) const { return\
+    \ mint(*this) -= b; }\n  mint operator*(const mint &b) const { return mint(*this)\
+    \ *= b; }\n  mint operator/(const mint &b) const { return mint(*this) /= b; }\n\
+    \n  bool operator==(const mint &b) const {\n    return (a >= mod ? a - mod : a)\
+    \ == (b.a >= mod ? b.a - mod : b.a);\n  }\n  bool operator!=(const mint &b) const\
+    \ {\n    return (a >= mod ? a - mod : a) != (b.a >= mod ? b.a - mod : b.a);\n\
+    \  }\n  mint operator-() const { return mint(0) - mint(*this); }\n  mint operator+()\
+    \ const { return mint(*this); }\n\n  mint pow(ULong n) const {\n    mint ret(1),\
+    \ mul(*this);\n    while (n > 0) {\n      if (n & 1) ret *= mul;\n      mul *=\
+    \ mul, n >>= 1;\n    }\n    return ret;\n  }\n\n  friend ostream &operator<<(ostream\
+    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend istream &operator>>(istream\
+    \ &is, mint &b) {\n    Long t;\n    is >> t;\n    b = ArbitraryLazyMontgomeryModIntBase(t);\n\
     \    return (is);\n  }\n\n  mint inverse() const {\n    Int x = get(), y = get_mod(),\
     \ u = 1, v = 0;\n    while (y > 0) {\n      Int t = x / y;\n      swap(x -= t\
     \ * y, y);\n      swap(u -= t * v, v);\n    }\n    return mint{u};\n  }\n\n  UInt\
@@ -342,7 +342,7 @@ data:
     \          \\\n  struct has_##var<T, void_t<decltype(T::var)>> : true_type {};\
     \ \\\n  template <class T>                                            \\\n  constexpr\
     \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace internal\n#line\
-    \ 4 \"internal/internal-math.hpp\"\n\nnamespace internal {\n\n#line 10 \"internal/internal-math.hpp\"\
+    \ 4 \"internal/internal-math.hpp\"\n\nnamespace internal {\n\n#line 9 \"internal/internal-math.hpp\"\
     \nusing namespace std;\n\n// a mod p\ntemplate <typename T>\nT safe_mod(T a, T\
     \ p) {\n  a %= p;\n  if constexpr (is_broadly_signed_v<T>) {\n    if (a < 0) a\
     \ += p;\n  }\n  return a;\n}\n\n// \u8FD4\u308A\u5024\uFF1Apair(g, x)\n// s.t.\
@@ -544,7 +544,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/ntt-64bit.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/ntt-64bit.test.cpp

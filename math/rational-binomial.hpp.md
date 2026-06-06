@@ -14,9 +14,6 @@ data:
   - icon: ':warning:'
     path: math/bigint-all.hpp
     title: math/bigint-all.hpp
-  - icon: ':heavy_check_mark:'
-    path: math/rational-fps.hpp
-    title: math/rational-fps.hpp
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/bigrational.test.cpp
@@ -156,7 +153,6 @@ data:
   path: math/rational-binomial.hpp
   requiredBy:
   - math/bigint-all.hpp
-  - math/rational-fps.hpp
   timestamp: '2024-08-10 13:03:16+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:

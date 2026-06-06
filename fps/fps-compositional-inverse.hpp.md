@@ -36,10 +36,12 @@ data:
     links: []
   bundledCode: "#line 2 \"fps/fps-compositional-inverse.hpp\"\n\n#include <cassert>\n\
     #include <functional>\n#include <type_traits>\nusing namespace std;\n\n#line 2\
-    \ \"fps/formal-power-series.hpp\"\n\ntemplate <typename mint>\nstruct FormalPowerSeries\
-    \ : vector<mint> {\n  using vector<mint>::vector;\n  using FPS = FormalPowerSeries;\n\
-    \n  FPS &operator+=(const FPS &r) {\n    if (r.size() > this->size()) this->resize(r.size());\n\
-    \    for (int i = 0; i < (int)r.size(); i++) (*this)[i] += r[i];\n    return *this;\n\
+    \ \"fps/formal-power-series.hpp\"\n\n#include <algorithm>\n#line 5 \"fps/formal-power-series.hpp\"\
+    \n#include <cstdint>\n#include <iterator>\n#include <vector>\nusing namespace\
+    \ std;\n\ntemplate <typename mint>\nstruct FormalPowerSeries : vector<mint> {\n\
+    \  using vector<mint>::vector;\n  using FPS = FormalPowerSeries;\n\n  FPS &operator+=(const\
+    \ FPS &r) {\n    if (r.size() > this->size()) this->resize(r.size());\n    for\
+    \ (int i = 0; i < (int)r.size(); i++) (*this)[i] += r[i];\n    return *this;\n\
     \  }\n\n  FPS &operator+=(const mint &r) {\n    if (this->empty()) this->resize(1);\n\
     \    (*this)[0] += r;\n    return *this;\n  }\n\n  FPS &operator-=(const FPS &r)\
     \ {\n    if (r.size() > this->size()) this->resize(r.size());\n    for (int i\
@@ -101,15 +103,31 @@ data:
     \ *ntt_ptr;\n  static void set_fft();\n  FPS &operator*=(const FPS &r);\n  void\
     \ ntt();\n  void intt();\n  void ntt_doubling();\n  static int ntt_pr();\n  FPS\
     \ inv(int deg = -1) const;\n  FPS exp(int deg = -1) const;\n};\ntemplate <typename\
-    \ mint>\nvoid *FormalPowerSeries<mint>::ntt_ptr = nullptr;\n\n/**\n * @brief \u591A\
-    \u9805\u5F0F/\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\
-    \n * @docs docs/fps/formal-power-series.md\n */\n#line 2 \"fps/pow-enumerate.hpp\"\
-    \n\n#line 4 \"fps/pow-enumerate.hpp\"\n#include <vector>\nusing namespace std;\n\
-    \n#line 8 \"fps/pow-enumerate.hpp\"\n\n// [x^n] f(x)^i g(x) \u3092 i=0,1,...,m\
-    \ \u3067\u5217\u6319\n// n = (f \u306E\u6B21\u6570) - 1\ntemplate <typename mint>\n\
-    FormalPowerSeries<mint> pow_enumerate(FormalPowerSeries<mint> f,\n           \
-    \                           FormalPowerSeries<mint> g = {1},\n               \
-    \                       int m = -1) {\n  using fps = FormalPowerSeries<mint>;\n\
+    \ mint>\nvoid *FormalPowerSeries<mint>::ntt_ptr = nullptr;\n\ntemplate <int N>\n\
+    struct FPSBackendPriority : FPSBackendPriority<N - 1> {};\ntemplate <>\nstruct\
+    \ FPSBackendPriority<0> {};\n\ntemplate <typename mint>\nvoid FormalPowerSeries<mint>::set_fft()\
+    \ {\n  fps_set_fft_impl((FormalPowerSeries<mint>*)nullptr, FPSBackendPriority<1>{});\n\
+    }\n\ntemplate <typename mint>\nFormalPowerSeries<mint>& FormalPowerSeries<mint>::operator*=(const\
+    \ FPS& r) {\n  if (this->empty() || r.empty()) {\n    this->clear();\n    return\
+    \ *this;\n  }\n  return fps_multiply_impl(*this, r, FPSBackendPriority<1>{});\n\
+    }\n\ntemplate <typename mint>\nvoid FormalPowerSeries<mint>::ntt() {\n  fps_ntt_impl(*this,\
+    \ FPSBackendPriority<1>{});\n}\n\ntemplate <typename mint>\nvoid FormalPowerSeries<mint>::intt()\
+    \ {\n  fps_intt_impl(*this, FPSBackendPriority<1>{});\n}\n\ntemplate <typename\
+    \ mint>\nvoid FormalPowerSeries<mint>::ntt_doubling() {\n  fps_ntt_doubling_impl(*this,\
+    \ FPSBackendPriority<1>{});\n}\n\ntemplate <typename mint>\nint FormalPowerSeries<mint>::ntt_pr()\
+    \ {\n  return fps_ntt_pr_impl((FormalPowerSeries<mint>*)nullptr,\n           \
+    \              FPSBackendPriority<1>{});\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>\
+    \ FormalPowerSeries<mint>::inv(int deg) const {\n  return fps_inv_impl(*this,\
+    \ deg, FPSBackendPriority<1>{});\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>\
+    \ FormalPowerSeries<mint>::exp(int deg) const {\n  return fps_exp_impl(*this,\
+    \ deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief \u591A\u9805\u5F0F/\u5F62\
+    \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n * @docs docs/fps/formal-power-series.md\n\
+    \ */\n#line 2 \"fps/pow-enumerate.hpp\"\n\n#line 5 \"fps/pow-enumerate.hpp\"\n\
+    using namespace std;\n\n#line 8 \"fps/pow-enumerate.hpp\"\n\n// [x^n] f(x)^i g(x)\
+    \ \u3092 i=0,1,...,m \u3067\u5217\u6319\n// n = (f \u306E\u6B21\u6570) - 1\ntemplate\
+    \ <typename mint>\nFormalPowerSeries<mint> pow_enumerate(FormalPowerSeries<mint>\
+    \ f,\n                                      FormalPowerSeries<mint> g = {1},\n\
+    \                                      int m = -1) {\n  using fps = FormalPowerSeries<mint>;\n\
     \  int n = f.size() - 1, k = 1;\n  g.resize(n + 1);\n  if (m == -1) m = n;\n \
     \ int h = 1;\n  while (h < n + 1) h *= 2;\n  fps P((n + 1) * k), Q((n + 1) * k),\
     \ nP, nQ, buf, buf2;\n  for (int i = 0; i <= n; i++) P[i * k + 0] = g[i];\n  for\
@@ -227,7 +245,7 @@ data:
   isVerificationFile: false
   path: fps/fps-compositional-inverse.hpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-fps/yosupo-compositional-inverse.test.cpp

@@ -16,9 +16,6 @@ data:
     path: verify/verify-unit-test/arbitrary-ntt-mod18446744069414584321.test.cpp
     title: verify/verify-unit-test/arbitrary-ntt-mod18446744069414584321.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/verify-unit-test/bigint-gcd.test.cpp
-    title: verify/verify-unit-test/bigint-gcd.test.cpp
-  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/bigint2.test.cpp
     title: verify/verify-unit-test/bigint2.test.cpp
   - icon: ':heavy_check_mark:'
@@ -109,7 +106,6 @@ data:
   - verify/verify-unit-test/fast-inv.test.cpp
   - verify/verify-unit-test/multipoint-binomial-sum.test.cpp
   - verify/verify-unit-test/bigint3.test.cpp
-  - verify/verify-unit-test/bigint-gcd.test.cpp
 documentation_of: misc/timer.hpp
 layout: document
 redirect_from:

@@ -19,9 +19,6 @@ data:
     path: verify/verify-yosupo-ds/yosupo-dynamic-sequence-range-affine-range-sum.test.cpp
     title: verify/verify-yosupo-ds/yosupo-dynamic-sequence-range-affine-range-sum.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/verify-yosupo-ds/yosupo-dynamic-tree-vertex-add-path-sum.test.cpp
-    title: verify/verify-yosupo-ds/yosupo-dynamic-tree-vertex-add-path-sum.test.cpp
-  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-dynamic-tree-vertex-set-path-composite.test.cpp
     title: verify/verify-yosupo-ds/yosupo-dynamic-tree-vertex-set-path-composite.test.cpp
   - icon: ':heavy_check_mark:'
@@ -89,7 +86,6 @@ data:
   - verify/verify-yosupo-ds/yosupo-range-add-range-sum-linkcuttree.test.cpp
   - verify/verify-yosupo-ds/yosupo-point-set-range-composite-dynamic-segtree.test.cpp
   - verify/verify-yosupo-ds/yosupo-dynamic-sequence-range-affine-range-sum-treap.test.cpp
-  - verify/verify-yosupo-ds/yosupo-dynamic-tree-vertex-add-path-sum.test.cpp
   - verify/verify-yosupo-ds/yosupo-range-affine-range-sum-dynamic-segtree.test.cpp
   - verify/verify-yosupo-ds/yosupo-range-affine-sqdec.test.cpp
   - verify/verify-yosupo-ds/yosupo-deque-operate-all-composite.test.cpp

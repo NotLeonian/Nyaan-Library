@@ -223,7 +223,7 @@ data:
     \n  }\n#define die(...)             \\\n  do {                       \\\n    Nyaan::out(__VA_ARGS__);\
     \ \\\n    return;                  \\\n  } while (0)\n#line 70 \"template/template.hpp\"\
     \n\nnamespace Nyaan {\nvoid solve();\n}\nint main() { Nyaan::solve(); }\n#line\
-    \ 2 \"modint/montgomery-modint.hpp\"\n\n#line 4 \"modint/montgomery-modint.hpp\"\
+    \ 2 \"modint/montgomery-modint.hpp\"\n\n#line 5 \"modint/montgomery-modint.hpp\"\
     \n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n\
     \  using i32 = int32_t;\n  using u32 = uint32_t;\n  using u64 = uint64_t;\n\n\
     \  static constexpr u32 get_r() {\n    u32 ret = mod;\n    for (i32 i = 0; i <\
@@ -254,50 +254,51 @@ data:
     \ ret;\n  }\n\n  constexpr mint inverse() const {\n    int x = get(), y = mod,\
     \ u = 1, v = 0, t = 0, tmp = 0;\n    while (y > 0) {\n      t = x / y;\n     \
     \ x -= t * y, u -= t * v;\n      tmp = x, x = y, y = tmp;\n      tmp = u, u =\
-    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend ostream &operator<<(ostream\
-    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend istream &operator>>(istream\
-    \ &is, mint &b) {\n    int64_t t;\n    is >> t;\n    b = LazyMontgomeryModInt<mod>(t);\n\
-    \    return (is);\n  }\n\n  constexpr u32 get() const {\n    u32 ret = reduce(a);\n\
-    \    return ret >= mod ? ret - mod : ret;\n  }\n\n  static constexpr u32 get_mod()\
-    \ { return mod; }\n};\n#line 2 \"segment-tree/lazy-segment-tree.hpp\"\n\n// LazySegmentTree\n\
-    template <typename T, typename E, typename F, typename G, typename H>\nstruct\
-    \ LazySegmentTree {\n  int n, height;\n  F f;\n  G g;\n  H h;\n  T ti;\n  E ei;\n\
-    \  vector<T> dat;\n  vector<E> laz;\n  LazySegmentTree(int _n, F _f, G _g, H _h,\
-    \ T _ti, E _ei)\n      : f(_f), g(_g), h(_h), ti(_ti), ei(_ei) {\n    init(_n);\n\
-    \  }\n  LazySegmentTree(const vector<T> &v, F _f, G _g, H _h, T _ti, E _ei)\n\
-    \      : f(_f), g(_g), h(_h), ti(_ti), ei(_ei) {\n    init((int)v.size());\n \
-    \   build(v);\n  }\n  void init(int _n) {\n    n = 1;\n    height = 0;\n    while\
-    \ (n < _n) n <<= 1, height++;\n    dat.assign(2 * n, ti);\n    laz.assign(2 *\
-    \ n, ei);\n  }\n  void build(const vector<T> &v) {\n    int _n = v.size();\n \
-    \   init(_n);\n    for (int i = 0; i < _n; i++) dat[n + i] = v[i];\n    for (int\
-    \ i = n - 1; i; i--)\n      dat[i] = f(dat[(i << 1) | 0], dat[(i << 1) | 1]);\n\
-    \  }\n  inline T reflect(int k) { return laz[k] == ei ? dat[k] : g(dat[k], laz[k]);\
-    \ }\n  inline void eval(int k) {\n    if (laz[k] == ei) return;\n    laz[(k <<\
-    \ 1) | 0] = h(laz[(k << 1) | 0], laz[k]);\n    laz[(k << 1) | 1] = h(laz[(k <<\
-    \ 1) | 1], laz[k]);\n    dat[k] = reflect(k);\n    laz[k] = ei;\n  }\n  inline\
-    \ void thrust(int k) {\n    for (int i = height; i; i--) eval(k >> i);\n  }\n\
-    \  inline void recalc(int k) {\n    while (k >>= 1) dat[k] = f(reflect((k << 1)\
-    \ | 0), reflect((k << 1) | 1));\n  }\n  void update(int a, int b, E x) {\n   \
-    \ if (a >= b) return;\n    thrust(a += n);\n    thrust(b += n - 1);\n    for (int\
-    \ l = a, r = b + 1; l < r; l >>= 1, r >>= 1) {\n      if (l & 1) laz[l] = h(laz[l],\
-    \ x), l++;\n      if (r & 1) --r, laz[r] = h(laz[r], x);\n    }\n    recalc(a);\n\
-    \    recalc(b);\n  }\n  void set_val(int a, T x) {\n    thrust(a += n);\n    dat[a]\
-    \ = x;\n    laz[a] = ei;\n    recalc(a);\n  }\n  T get_val(int a) {\n    thrust(a\
-    \ += n);\n    return reflect(a);\n  }\n  T query(int a, int b) {\n    if (a >=\
-    \ b) return ti;\n    thrust(a += n);\n    thrust(b += n - 1);\n    T vl = ti,\
-    \ vr = ti;\n    for (int l = a, r = b + 1; l < r; l >>= 1, r >>= 1) {\n      if\
-    \ (l & 1) vl = f(vl, reflect(l++));\n      if (r & 1) vr = f(reflect(--r), vr);\n\
-    \    }\n    return f(vl, vr);\n  }\n};\n#line 6 \"verify/verify-yosupo-ds/yosupo-lazysegtree.test.cpp\"\
-    \n\nusing mint = LazyMontgomeryModInt<998244353>;\n\nusing namespace Nyaan; void\
-    \ Nyaan::solve() {\n  using P = pair<mint, mint>;\n  auto f = [](P a, P b) { return\
-    \ P{a.first + b.first, a.second + b.second}; };\n  auto g = [](P a, P b) {\n \
-    \   return P{a.first * b.first + a.second * b.second, a.second};\n  };\n  auto\
-    \ h = [](P a, P b) {\n    return P{a.first * b.first, a.second * b.first + b.second};\n\
-    \  };\n  P ti = {0, 0};\n  P ei = {1, 0};\n  ini(N, Q);\n  V<P> a(N, {0, 1});\n\
-    \  rep(i, N) in(a[i].first);\n\n  LazySegmentTree<P, P, decltype(f), decltype(g),\
-    \ decltype(h)> seg(a, f, g, h, ti, ei);\n\n  rep(_, Q) {\n    ini(cmd);\n    if\
-    \ (!cmd) {\n      inl(l, r, b, c);\n      seg.update(l, r, {b, c});\n    } else\
-    \ {\n      inl(l, r);\n      out(seg.query(l, r).first);\n    }\n  }\n}\n"
+    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend std::ostream &operator<<(std::ostream\
+    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend std::istream\
+    \ &operator>>(std::istream &is, mint &b) {\n    int64_t t;\n    is >> t;\n   \
+    \ b = LazyMontgomeryModInt<mod>(t);\n    return (is);\n  }\n\n  constexpr u32\
+    \ get() const {\n    u32 ret = reduce(a);\n    return ret >= mod ? ret - mod :\
+    \ ret;\n  }\n\n  static constexpr u32 get_mod() { return mod; }\n};\n#line 2 \"\
+    segment-tree/lazy-segment-tree.hpp\"\n\n// LazySegmentTree\ntemplate <typename\
+    \ T, typename E, typename F, typename G, typename H>\nstruct LazySegmentTree {\n\
+    \  int n, height;\n  F f;\n  G g;\n  H h;\n  T ti;\n  E ei;\n  vector<T> dat;\n\
+    \  vector<E> laz;\n  LazySegmentTree(int _n, F _f, G _g, H _h, T _ti, E _ei)\n\
+    \      : f(_f), g(_g), h(_h), ti(_ti), ei(_ei) {\n    init(_n);\n  }\n  LazySegmentTree(const\
+    \ vector<T> &v, F _f, G _g, H _h, T _ti, E _ei)\n      : f(_f), g(_g), h(_h),\
+    \ ti(_ti), ei(_ei) {\n    init((int)v.size());\n    build(v);\n  }\n  void init(int\
+    \ _n) {\n    n = 1;\n    height = 0;\n    while (n < _n) n <<= 1, height++;\n\
+    \    dat.assign(2 * n, ti);\n    laz.assign(2 * n, ei);\n  }\n  void build(const\
+    \ vector<T> &v) {\n    int _n = v.size();\n    init(_n);\n    for (int i = 0;\
+    \ i < _n; i++) dat[n + i] = v[i];\n    for (int i = n - 1; i; i--)\n      dat[i]\
+    \ = f(dat[(i << 1) | 0], dat[(i << 1) | 1]);\n  }\n  inline T reflect(int k) {\
+    \ return laz[k] == ei ? dat[k] : g(dat[k], laz[k]); }\n  inline void eval(int\
+    \ k) {\n    if (laz[k] == ei) return;\n    laz[(k << 1) | 0] = h(laz[(k << 1)\
+    \ | 0], laz[k]);\n    laz[(k << 1) | 1] = h(laz[(k << 1) | 1], laz[k]);\n    dat[k]\
+    \ = reflect(k);\n    laz[k] = ei;\n  }\n  inline void thrust(int k) {\n    for\
+    \ (int i = height; i; i--) eval(k >> i);\n  }\n  inline void recalc(int k) {\n\
+    \    while (k >>= 1) dat[k] = f(reflect((k << 1) | 0), reflect((k << 1) | 1));\n\
+    \  }\n  void update(int a, int b, E x) {\n    if (a >= b) return;\n    thrust(a\
+    \ += n);\n    thrust(b += n - 1);\n    for (int l = a, r = b + 1; l < r; l >>=\
+    \ 1, r >>= 1) {\n      if (l & 1) laz[l] = h(laz[l], x), l++;\n      if (r & 1)\
+    \ --r, laz[r] = h(laz[r], x);\n    }\n    recalc(a);\n    recalc(b);\n  }\n  void\
+    \ set_val(int a, T x) {\n    thrust(a += n);\n    dat[a] = x;\n    laz[a] = ei;\n\
+    \    recalc(a);\n  }\n  T get_val(int a) {\n    thrust(a += n);\n    return reflect(a);\n\
+    \  }\n  T query(int a, int b) {\n    if (a >= b) return ti;\n    thrust(a += n);\n\
+    \    thrust(b += n - 1);\n    T vl = ti, vr = ti;\n    for (int l = a, r = b +\
+    \ 1; l < r; l >>= 1, r >>= 1) {\n      if (l & 1) vl = f(vl, reflect(l++));\n\
+    \      if (r & 1) vr = f(reflect(--r), vr);\n    }\n    return f(vl, vr);\n  }\n\
+    };\n#line 6 \"verify/verify-yosupo-ds/yosupo-lazysegtree.test.cpp\"\n\nusing mint\
+    \ = LazyMontgomeryModInt<998244353>;\n\nusing namespace Nyaan; void Nyaan::solve()\
+    \ {\n  using P = pair<mint, mint>;\n  auto f = [](P a, P b) { return P{a.first\
+    \ + b.first, a.second + b.second}; };\n  auto g = [](P a, P b) {\n    return P{a.first\
+    \ * b.first + a.second * b.second, a.second};\n  };\n  auto h = [](P a, P b) {\n\
+    \    return P{a.first * b.first, a.second * b.first + b.second};\n  };\n  P ti\
+    \ = {0, 0};\n  P ei = {1, 0};\n  ini(N, Q);\n  V<P> a(N, {0, 1});\n  rep(i, N)\
+    \ in(a[i].first);\n\n  LazySegmentTree<P, P, decltype(f), decltype(g), decltype(h)>\
+    \ seg(a, f, g, h, ti, ei);\n\n  rep(_, Q) {\n    ini(cmd);\n    if (!cmd) {\n\
+    \      inl(l, r, b, c);\n      seg.update(l, r, {b, c});\n    } else {\n     \
+    \ inl(l, r);\n      out(seg.query(l, r).first);\n    }\n  }\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/range_affine_range_sum\"\
     \n\n#include \"../../template/template.hpp\"\n#include \"../../modint/montgomery-modint.hpp\"\
     \n#include \"../../segment-tree/lazy-segment-tree.hpp\"\n\nusing mint = LazyMontgomeryModInt<998244353>;\n\
@@ -323,7 +324,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-ds/yosupo-lazysegtree.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-ds/yosupo-lazysegtree.test.cpp

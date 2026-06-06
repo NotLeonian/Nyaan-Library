@@ -435,7 +435,7 @@ data:
     \ {\n        T a = B[j][i];\n        if (a == 0) continue;\n        for (int k\
     \ = i; k < W(); k++) {\n          B[j][k] -= B[i][k] * a;\n        }\n      }\n\
     \    }\n    return ret;\n  }\n};\n\n/**\n * @brief \u884C\u5217\u30E9\u30A4\u30D6\
-    \u30E9\u30EA\n */\n#line 2 \"modint/montgomery-modint.hpp\"\n\n#line 4 \"modint/montgomery-modint.hpp\"\
+    \u30E9\u30EA\n */\n#line 2 \"modint/montgomery-modint.hpp\"\n\n#line 5 \"modint/montgomery-modint.hpp\"\
     \n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n\
     \  using i32 = int32_t;\n  using u32 = uint32_t;\n  using u64 = uint64_t;\n\n\
     \  static constexpr u32 get_r() {\n    u32 ret = mod;\n    for (i32 i = 0; i <\
@@ -466,47 +466,48 @@ data:
     \ ret;\n  }\n\n  constexpr mint inverse() const {\n    int x = get(), y = mod,\
     \ u = 1, v = 0, t = 0, tmp = 0;\n    while (y > 0) {\n      t = x / y;\n     \
     \ x -= t * y, u -= t * v;\n      tmp = x, x = y, y = tmp;\n      tmp = u, u =\
-    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend ostream &operator<<(ostream\
-    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend istream &operator>>(istream\
-    \ &is, mint &b) {\n    int64_t t;\n    is >> t;\n    b = LazyMontgomeryModInt<mod>(t);\n\
-    \    return (is);\n  }\n\n  constexpr u32 get() const {\n    u32 ret = reduce(a);\n\
-    \    return ret >= mod ? ret - mod : ret;\n  }\n\n  static constexpr u32 get_mod()\
-    \ { return mod; }\n};\n#line 9 \"verify/verify-unit-test/debug.test.cpp\"\nusing\
-    \ namespace Nyaan;\n\nvoid test() {\n  using DebugImpl::trace;\n  // number\n\
-    \  {\n    cerr << \"number\" << endl;\n    trace(1, 2, 3);\n    trace(inf, -inf,\
-    \ infLL);\n    trace(-infLL, 1.1, (long double)(1.2));\n  }\n  // unsigned\n \
-    \ {\n    cerr << \"unsigned number\" << endl;\n    trace(1u, 2u, 3u);\n    trace(uint32_t(inf),\
-    \ -inf, uint64_t(infLL));\n  }\n  // bool\n  {\n    cerr << \"bool\" << endl;\n\
-    \    bool t = true, f = false;\n    trace(t, f);\n    vector<bool> v(4);\n   \
-    \ v[0] = v[3] = true;\n    trace(v);\n  }\n  // pair\n  {\n    cerr << \"pair\"\
-    \ << endl;\n    pair<int, int> p1{1, 2};\n    pair<pair<int, int>, int> p2{p1,\
-    \ 3};\n    pair<vector<int>, int> p3{{1, 2}, 3};\n    trace(p1, p2, p3);\n  }\n\
-    \  // Container\n  {\n    cerr << \"container\" << endl;\n    vector<int> vc{1,\
-    \ inf};\n    set<int> st{2, 3};\n    array<int, 3> ar{{1, 2, 3}};\n    trace(vc,\
-    \ st, ar);\n  }\n  // Dict\n  {\n    cerr << \"dict\" << endl;\n    map<int, int>\
-    \ m;\n    m[0] = 1, m[1] = 2;\n    trace(m);\n  }\n  // Native array\n  {\n  \
-    \  cerr << \"native array\" << endl;\n    int a[] = {1, 2, 3, 4, 5};\n    trace(make_pair(a,\
-    \ 2), make_pair(a + 3, 2));\n  }\n  // string, char\n  {\n    cerr << \"char &\
-    \ string\" << endl;\n    char c = 'a';\n    string s = \"abc\";\n    trace(c,\
-    \ s);\n  }\n  // other\n  {\n    cerr << \"high-dimensional vector\" << endl;\n\
-    \    vector<pair<int, int>> v;\n    v.push_back({0, 1});\n    v.push_back({2,\
-    \ 3});\n    trace(v);\n    vector<vector<int>> a(2);\n    a[0] = vector<int>{0,\
-    \ 1};\n    a[1] = vector<int>{2, 3};\n    trace(a);\n    vector<vector<vector<int>>>\
-    \ b(2);\n    b[0] = b[1] = a;\n    trace(b);\n  }\n  // cv qualifier (int)\n \
-    \ {\n    cerr << \"cv qualifier (int)\" << endl;\n    int a0 = 0;\n    const int\
-    \ a1 = 1;\n    int& a2 = a0;\n    const int& a3 = a1;\n    trace(a0, a1, a2, a3);\n\
-    \  }\n  // cv qualifier (char)\n  {\n    cerr << \"cv qualifier (char)\" << endl;\n\
-    \    char a0 = 'a';\n    const char a1 = 'b';\n    char& a2 = a0;\n    const char&\
-    \ a3 = a1;\n    trace(a0, a1, a2, a3);\n  }\n  // cv qualifier (string)\n  {\n\
-    \    cerr << \"cv qualifier (char)\" << endl;\n    string a0 = \"abc\";\n    const\
-    \ string a1 = \"def\";\n    string& a2 = a0;\n    const string& a3 = a1;\n   \
-    \ trace(a0, a1, a2, a3);\n  }\n  // original iterator\n  {\n    cerr << \"original\
-    \ iterator\" << endl;\n    HashSet<int> st;\n    st.insert(2);\n    st.insert(3);\n\
-    \    HashMap<int, int> m;\n    m[0] = 1, m[1] = 2;\n    trace(st, m);\n  }\n \
-    \ // original structure\n  {\n    cerr << \"original strucure\" << endl;\n   \
-    \ LazyMontgomeryModInt<998244353> a(998244354);\n    trace(a);\n    Matrix<LazyMontgomeryModInt<998244353>>\
-    \ mat;\n    mat = mat.I(3);\n    trace(mat);\n  }\n}\n\nvoid Nyaan::solve() {\n\
-    \  test();\n  int a, b;\n  cin >> a >> b;\n  cout << a + b << endl;\n}\n"
+    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend std::ostream &operator<<(std::ostream\
+    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend std::istream\
+    \ &operator>>(std::istream &is, mint &b) {\n    int64_t t;\n    is >> t;\n   \
+    \ b = LazyMontgomeryModInt<mod>(t);\n    return (is);\n  }\n\n  constexpr u32\
+    \ get() const {\n    u32 ret = reduce(a);\n    return ret >= mod ? ret - mod :\
+    \ ret;\n  }\n\n  static constexpr u32 get_mod() { return mod; }\n};\n#line 9 \"\
+    verify/verify-unit-test/debug.test.cpp\"\nusing namespace Nyaan;\n\nvoid test()\
+    \ {\n  using DebugImpl::trace;\n  // number\n  {\n    cerr << \"number\" << endl;\n\
+    \    trace(1, 2, 3);\n    trace(inf, -inf, infLL);\n    trace(-infLL, 1.1, (long\
+    \ double)(1.2));\n  }\n  // unsigned\n  {\n    cerr << \"unsigned number\" <<\
+    \ endl;\n    trace(1u, 2u, 3u);\n    trace(uint32_t(inf), -inf, uint64_t(infLL));\n\
+    \  }\n  // bool\n  {\n    cerr << \"bool\" << endl;\n    bool t = true, f = false;\n\
+    \    trace(t, f);\n    vector<bool> v(4);\n    v[0] = v[3] = true;\n    trace(v);\n\
+    \  }\n  // pair\n  {\n    cerr << \"pair\" << endl;\n    pair<int, int> p1{1,\
+    \ 2};\n    pair<pair<int, int>, int> p2{p1, 3};\n    pair<vector<int>, int> p3{{1,\
+    \ 2}, 3};\n    trace(p1, p2, p3);\n  }\n  // Container\n  {\n    cerr << \"container\"\
+    \ << endl;\n    vector<int> vc{1, inf};\n    set<int> st{2, 3};\n    array<int,\
+    \ 3> ar{{1, 2, 3}};\n    trace(vc, st, ar);\n  }\n  // Dict\n  {\n    cerr <<\
+    \ \"dict\" << endl;\n    map<int, int> m;\n    m[0] = 1, m[1] = 2;\n    trace(m);\n\
+    \  }\n  // Native array\n  {\n    cerr << \"native array\" << endl;\n    int a[]\
+    \ = {1, 2, 3, 4, 5};\n    trace(make_pair(a, 2), make_pair(a + 3, 2));\n  }\n\
+    \  // string, char\n  {\n    cerr << \"char & string\" << endl;\n    char c =\
+    \ 'a';\n    string s = \"abc\";\n    trace(c, s);\n  }\n  // other\n  {\n    cerr\
+    \ << \"high-dimensional vector\" << endl;\n    vector<pair<int, int>> v;\n   \
+    \ v.push_back({0, 1});\n    v.push_back({2, 3});\n    trace(v);\n    vector<vector<int>>\
+    \ a(2);\n    a[0] = vector<int>{0, 1};\n    a[1] = vector<int>{2, 3};\n    trace(a);\n\
+    \    vector<vector<vector<int>>> b(2);\n    b[0] = b[1] = a;\n    trace(b);\n\
+    \  }\n  // cv qualifier (int)\n  {\n    cerr << \"cv qualifier (int)\" << endl;\n\
+    \    int a0 = 0;\n    const int a1 = 1;\n    int& a2 = a0;\n    const int& a3\
+    \ = a1;\n    trace(a0, a1, a2, a3);\n  }\n  // cv qualifier (char)\n  {\n    cerr\
+    \ << \"cv qualifier (char)\" << endl;\n    char a0 = 'a';\n    const char a1 =\
+    \ 'b';\n    char& a2 = a0;\n    const char& a3 = a1;\n    trace(a0, a1, a2, a3);\n\
+    \  }\n  // cv qualifier (string)\n  {\n    cerr << \"cv qualifier (char)\" <<\
+    \ endl;\n    string a0 = \"abc\";\n    const string a1 = \"def\";\n    string&\
+    \ a2 = a0;\n    const string& a3 = a1;\n    trace(a0, a1, a2, a3);\n  }\n  //\
+    \ original iterator\n  {\n    cerr << \"original iterator\" << endl;\n    HashSet<int>\
+    \ st;\n    st.insert(2);\n    st.insert(3);\n    HashMap<int, int> m;\n    m[0]\
+    \ = 1, m[1] = 2;\n    trace(st, m);\n  }\n  // original structure\n  {\n    cerr\
+    \ << \"original strucure\" << endl;\n    LazyMontgomeryModInt<998244353> a(998244354);\n\
+    \    trace(a);\n    Matrix<LazyMontgomeryModInt<998244353>> mat;\n    mat = mat.I(3);\n\
+    \    trace(mat);\n  }\n}\n\nvoid Nyaan::solve() {\n  test();\n  int a, b;\n  cin\
+    \ >> a >> b;\n  cout << a + b << endl;\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/aplusb\"\n\n#include \"\
     ../../template/template.hpp\"\n//\n#include \"../../hashmap/hashmap.hpp\"\n#include\
     \ \"../../hashmap/hashset.hpp\"\n#include \"../../matrix/matrix.hpp\"\n#include\
@@ -563,7 +564,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/debug.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/debug.test.cpp

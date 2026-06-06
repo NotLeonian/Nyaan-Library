@@ -418,45 +418,45 @@ data:
     \        if (pivot[k] != -1) x[k] = -a[pivot[k]][j];\n      res.push_back(x);\n\
     \    }\n  }\n  return res;\n}\n\n}  // namespace Gauss\n\nusing Gauss::determinant;\n\
     using Gauss::LinearEquation;\n#line 13 \"verify/verify-unit-test/gauss-elimination.test.cpp\"\
-    \n}  // namespace Fast\n\n#line 2 \"misc/rng.hpp\"\n\n#line 2 \"internal/internal-seed.hpp\"\
-    \n\n#line 4 \"internal/internal-seed.hpp\"\nusing namespace std;\n\nnamespace\
-    \ internal {\nunsigned long long non_deterministic_seed() {\n  unsigned long long\
-    \ m =\n      chrono::duration_cast<chrono::nanoseconds>(\n          chrono::high_resolution_clock::now().time_since_epoch())\n\
-    \          .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >>\
-    \ 31, m ^= m << 35;\n  return m;\n}\nunsigned long long deterministic_seed() {\
-    \ return 88172645463325252UL; }\n\n// 64 bit \u306E seed \u5024\u3092\u751F\u6210\
-    \ (\u624B\u5143\u3067\u306F seed \u56FA\u5B9A)\n// \u9023\u7D9A\u3067\u547C\u3073\
-    \u51FA\u3059\u3068\u540C\u3058\u5024\u304C\u4F55\u5EA6\u3082\u8FD4\u3063\u3066\
-    \u304F\u308B\u306E\u3067\u6CE8\u610F\n// #define RANDOMIZED_SEED \u3059\u308B\u3068\
-    \u30B7\u30FC\u30C9\u304C\u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long\
-    \ long seed() {\n#if defined(NyaanLocal) && !defined(RANDOMIZED_SEED)\n  return\
-    \ deterministic_seed();\n#else\n  return non_deterministic_seed();\n#endif\n}\n\
-    \n}  // namespace internal\n#line 4 \"misc/rng.hpp\"\n\nnamespace my_rand {\n\
-    using i64 = long long;\nusing u64 = unsigned long long;\n\n// [0, 2^64 - 1)\n\
-    u64 rng() {\n  static u64 _x = internal::seed();\n  return _x ^= _x << 7, _x ^=\
-    \ _x >> 9;\n}\n\n// [l, r]\ni64 rng(i64 l, i64 r) {\n  assert(l <= r);\n  return\
-    \ l + rng() % u64(r - l + 1);\n}\n\n// [l, r)\ni64 randint(i64 l, i64 r) {\n \
-    \ assert(l < r);\n  return l + rng() % u64(r - l);\n}\n\n// choose n numbers from\
-    \ [l, r) without overlapping\nvector<i64> randset(i64 l, i64 r, i64 n) {\n  assert(l\
-    \ <= r && n <= r - l);\n  unordered_set<i64> s;\n  for (i64 i = n; i; --i) {\n\
-    \    i64 m = randint(l, r + 1 - i);\n    if (s.find(m) != s.end()) m = r - i;\n\
-    \    s.insert(m);\n  }\n  vector<i64> ret;\n  for (auto& x : s) ret.push_back(x);\n\
-    \  sort(begin(ret), end(ret));\n  return ret;\n}\n\n// [0.0, 1.0)\ndouble rnd()\
-    \ { return rng() * 5.42101086242752217004e-20; }\n// [l, r)\ndouble rnd(double\
-    \ l, double r) {\n  assert(l < r);\n  return l + rnd() * (r - l);\n}\n\ntemplate\
-    \ <typename T>\nvoid randshf(vector<T>& v) {\n  int n = v.size();\n  for (int\
-    \ i = 1; i < n; i++) swap(v[i], v[randint(0, i + 1)]);\n}\n\n}  // namespace my_rand\n\
-    \nusing my_rand::randint;\nusing my_rand::randset;\nusing my_rand::randshf;\n\
-    using my_rand::rnd;\nusing my_rand::rng;\n#line 2 \"modint/montgomery-modint.hpp\"\
-    \n\n#line 4 \"modint/montgomery-modint.hpp\"\n\ntemplate <uint32_t mod>\nstruct\
-    \ LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n  using i32 =\
-    \ int32_t;\n  using u32 = uint32_t;\n  using u64 = uint64_t;\n\n  static constexpr\
-    \ u32 get_r() {\n    u32 ret = mod;\n    for (i32 i = 0; i < 4; ++i) ret *= 2\
-    \ - mod * ret;\n    return ret;\n  }\n\n  static constexpr u32 r = get_r();\n\
-    \  static constexpr u32 n2 = -u64(mod) % mod;\n  static_assert(mod < (1 << 30),\
-    \ \"invalid, mod >= 2 ^ 30\");\n  static_assert((mod & 1) == 1, \"invalid, mod\
-    \ % 2 == 0\");\n  static_assert(r * mod == 1, \"this code has bugs.\");\n\n  u32\
-    \ a;\n\n  constexpr LazyMontgomeryModInt() : a(0) {}\n  constexpr LazyMontgomeryModInt(const\
+    \n}  // namespace Fast\n\n#line 2 \"misc/rng.hpp\"\n\n#line 7 \"misc/rng.hpp\"\
+    \nusing namespace std;\n\n#line 2 \"internal/internal-seed.hpp\"\n\n#line 4 \"\
+    internal/internal-seed.hpp\"\nusing namespace std;\n\nnamespace internal {\nunsigned\
+    \ long long non_deterministic_seed() {\n  unsigned long long m =\n      chrono::duration_cast<chrono::nanoseconds>(\n\
+    \          chrono::high_resolution_clock::now().time_since_epoch())\n        \
+    \  .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >> 31, m\
+    \ ^= m << 35;\n  return m;\n}\nunsigned long long deterministic_seed() { return\
+    \ 88172645463325252UL; }\n\n// 64 bit \u306E seed \u5024\u3092\u751F\u6210 (\u624B\
+    \u5143\u3067\u306F seed \u56FA\u5B9A)\n// \u9023\u7D9A\u3067\u547C\u3073\u51FA\
+    \u3059\u3068\u540C\u3058\u5024\u304C\u4F55\u5EA6\u3082\u8FD4\u3063\u3066\u304F\
+    \u308B\u306E\u3067\u6CE8\u610F\n// #define RANDOMIZED_SEED \u3059\u308B\u3068\u30B7\
+    \u30FC\u30C9\u304C\u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long long\
+    \ seed() {\n#if defined(NyaanLocal) && !defined(RANDOMIZED_SEED)\n  return deterministic_seed();\n\
+    #else\n  return non_deterministic_seed();\n#endif\n}\n\n}  // namespace internal\n\
+    #line 10 \"misc/rng.hpp\"\n\nnamespace my_rand {\nusing i64 = long long;\nusing\
+    \ u64 = unsigned long long;\n\n// [0, 2^64 - 1)\nu64 rng() {\n  static u64 _x\
+    \ = internal::seed();\n  return _x ^= _x << 7, _x ^= _x >> 9;\n}\n\n// [l, r]\n\
+    i64 rng(i64 l, i64 r) {\n  assert(l <= r);\n  return l + rng() % u64(r - l + 1);\n\
+    }\n\n// [l, r)\ni64 randint(i64 l, i64 r) {\n  assert(l < r);\n  return l + rng()\
+    \ % u64(r - l);\n}\n\n// choose n numbers from [l, r) without overlapping\nvector<i64>\
+    \ randset(i64 l, i64 r, i64 n) {\n  assert(l <= r && n <= r - l);\n  unordered_set<i64>\
+    \ s;\n  for (i64 i = n; i; --i) {\n    i64 m = randint(l, r + 1 - i);\n    if\
+    \ (s.find(m) != s.end()) m = r - i;\n    s.insert(m);\n  }\n  vector<i64> ret;\n\
+    \  for (auto& x : s) ret.push_back(x);\n  sort(begin(ret), end(ret));\n  return\
+    \ ret;\n}\n\n// [0.0, 1.0)\ndouble rnd() { return rng() * 5.42101086242752217004e-20;\
+    \ }\n// [l, r)\ndouble rnd(double l, double r) {\n  assert(l < r);\n  return l\
+    \ + rnd() * (r - l);\n}\n\ntemplate <typename T>\nvoid randshf(vector<T>& v) {\n\
+    \  int n = v.size();\n  for (int i = 1; i < n; i++) swap(v[i], v[randint(0, i\
+    \ + 1)]);\n}\n\n}  // namespace my_rand\n\nusing my_rand::randint;\nusing my_rand::randset;\n\
+    using my_rand::randshf;\nusing my_rand::rnd;\nusing my_rand::rng;\n#line 2 \"\
+    modint/montgomery-modint.hpp\"\n\n#line 5 \"modint/montgomery-modint.hpp\"\n\n\
+    template <uint32_t mod>\nstruct LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n\
+    \  using i32 = int32_t;\n  using u32 = uint32_t;\n  using u64 = uint64_t;\n\n\
+    \  static constexpr u32 get_r() {\n    u32 ret = mod;\n    for (i32 i = 0; i <\
+    \ 4; ++i) ret *= 2 - mod * ret;\n    return ret;\n  }\n\n  static constexpr u32\
+    \ r = get_r();\n  static constexpr u32 n2 = -u64(mod) % mod;\n  static_assert(mod\
+    \ < (1 << 30), \"invalid, mod >= 2 ^ 30\");\n  static_assert((mod & 1) == 1, \"\
+    invalid, mod % 2 == 0\");\n  static_assert(r * mod == 1, \"this code has bugs.\"\
+    );\n\n  u32 a;\n\n  constexpr LazyMontgomeryModInt() : a(0) {}\n  constexpr LazyMontgomeryModInt(const\
     \ int64_t &b)\n      : a(reduce(u64(b % mod + mod) * n2)){};\n\n  static constexpr\
     \ u32 reduce(const u64 &b) {\n    return (b + u64(u32(b) * u32(-r)) * mod) >>\
     \ 32;\n  }\n\n  constexpr mint &operator+=(const mint &b) {\n    if (i32(a +=\
@@ -479,24 +479,24 @@ data:
     \ ret;\n  }\n\n  constexpr mint inverse() const {\n    int x = get(), y = mod,\
     \ u = 1, v = 0, t = 0, tmp = 0;\n    while (y > 0) {\n      t = x / y;\n     \
     \ x -= t * y, u -= t * v;\n      tmp = x, x = y, y = tmp;\n      tmp = u, u =\
-    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend ostream &operator<<(ostream\
-    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend istream &operator>>(istream\
-    \ &is, mint &b) {\n    int64_t t;\n    is >> t;\n    b = LazyMontgomeryModInt<mod>(t);\n\
-    \    return (is);\n  }\n\n  constexpr u32 get() const {\n    u32 ret = reduce(a);\n\
-    \    return ret >= mod ? ret - mod : ret;\n  }\n\n  static constexpr u32 get_mod()\
-    \ { return mod; }\n};\n#line 17 \"verify/verify-unit-test/gauss-elimination.test.cpp\"\
-    \n\nusing namespace Nyaan;\n\nusing mint = LazyMontgomeryModInt<998244353>;\n\n\
-    void test(int n, int m, bool sparse) {\n  Matrix<mint> a(n, m);\n  each(v, a.A)\
-    \ {\n    each(x, v) {\n      if (sparse) {\n        if (randint(0, m) == 0) x\
-    \ = rng();\n      } else {\n        x = rng();\n      }\n    }\n  }\n  // trc(n,\
-    \ m, sparse);\n  // trc(a);\n\n  if (n == m) {\n    mint det1, det2, det3;\n \
-    \   {\n      auto b = a;\n      det1 = b.determinant();\n    }\n    {\n      auto\
-    \ b = a;\n      det2 = GaussElimination<mint>(b.A).second;\n    }\n    {\n   \
-    \   auto b = a;\n      det3 = Fast::determinant(b.A);\n    }\n    // trc(det1,\
-    \ det2, det3);\n    assert(det1 == det2 and det2 == det3);\n  }\n  vector<mint>\
-    \ c(n);\n  if (rng() & 1) each(x, c) x = rng();\n\n  vector<vector<mint>> sol1,\
-    \ sol2;\n  {\n    auto b = a;\n    sol1 = Normal::LinearEquation<mint>(b.A, c);\n\
-    \    // trc(sol1);\n  }\n  {\n    auto b = a;\n    sol2 = Fast::LinearEquation<mint>(b.A,\
+    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend std::ostream &operator<<(std::ostream\
+    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend std::istream\
+    \ &operator>>(std::istream &is, mint &b) {\n    int64_t t;\n    is >> t;\n   \
+    \ b = LazyMontgomeryModInt<mod>(t);\n    return (is);\n  }\n\n  constexpr u32\
+    \ get() const {\n    u32 ret = reduce(a);\n    return ret >= mod ? ret - mod :\
+    \ ret;\n  }\n\n  static constexpr u32 get_mod() { return mod; }\n};\n#line 17\
+    \ \"verify/verify-unit-test/gauss-elimination.test.cpp\"\n\nusing namespace Nyaan;\n\
+    \nusing mint = LazyMontgomeryModInt<998244353>;\n\nvoid test(int n, int m, bool\
+    \ sparse) {\n  Matrix<mint> a(n, m);\n  each(v, a.A) {\n    each(x, v) {\n   \
+    \   if (sparse) {\n        if (randint(0, m) == 0) x = rng();\n      } else {\n\
+    \        x = rng();\n      }\n    }\n  }\n  // trc(n, m, sparse);\n  // trc(a);\n\
+    \n  if (n == m) {\n    mint det1, det2, det3;\n    {\n      auto b = a;\n    \
+    \  det1 = b.determinant();\n    }\n    {\n      auto b = a;\n      det2 = GaussElimination<mint>(b.A).second;\n\
+    \    }\n    {\n      auto b = a;\n      det3 = Fast::determinant(b.A);\n    }\n\
+    \    // trc(det1, det2, det3);\n    assert(det1 == det2 and det2 == det3);\n \
+    \ }\n  vector<mint> c(n);\n  if (rng() & 1) each(x, c) x = rng();\n\n  vector<vector<mint>>\
+    \ sol1, sol2;\n  {\n    auto b = a;\n    sol1 = Normal::LinearEquation<mint>(b.A,\
+    \ c);\n    // trc(sol1);\n  }\n  {\n    auto b = a;\n    sol2 = Fast::LinearEquation<mint>(b.A,\
     \ c);\n    // trc(sol2);\n  }\n  assert(sol1 == sol2);\n}\n\nvoid Nyaan::solve()\
     \ {\n  rep(i, TEN(5)) test(randint(1, 17), randint(1, 17), rng() % 2 == 1);\n\n\
     \  int a, b;\n  cin >> a >> b;\n  cout << a + b << endl;\n}\n"
@@ -540,7 +540,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/gauss-elimination.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/gauss-elimination.test.cpp

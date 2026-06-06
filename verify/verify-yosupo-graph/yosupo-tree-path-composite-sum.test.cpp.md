@@ -230,28 +230,28 @@ data:
     \ \\\n    return;                  \\\n  } while (0)\n#line 70 \"template/template.hpp\"\
     \n\nnamespace Nyaan {\nvoid solve();\n}\nint main() { Nyaan::solve(); }\n#line\
     \ 4 \"verify/verify-yosupo-graph/yosupo-tree-path-composite-sum.test.cpp\"\n//\n\
-    #line 2 \"graph/graph-template.hpp\"\n\ntemplate <typename T>\nstruct edge {\n\
-    \  int src, to;\n  T cost;\n\n  edge(int _to, T _cost) : src(-1), to(_to), cost(_cost)\
-    \ {}\n  edge(int _src, int _to, T _cost) : src(_src), to(_to), cost(_cost) {}\n\
-    \n  edge &operator=(const int &x) {\n    to = x;\n    return *this;\n  }\n\n \
-    \ operator int() const { return to; }\n};\ntemplate <typename T>\nusing Edges\
-    \ = vector<edge<T>>;\ntemplate <typename T>\nusing WeightedGraph = vector<Edges<T>>;\n\
-    using UnweightedGraph = vector<vector<int>>;\n\n// Input of (Unweighted) Graph\n\
-    UnweightedGraph graph(int N, int M = -1, bool is_directed = false,\n         \
-    \             bool is_1origin = true) {\n  UnweightedGraph g(N);\n  if (M == -1)\
-    \ M = N - 1;\n  for (int _ = 0; _ < M; _++) {\n    int x, y;\n    cin >> x >>\
-    \ y;\n    if (is_1origin) x--, y--;\n    g[x].push_back(y);\n    if (!is_directed)\
-    \ g[y].push_back(x);\n  }\n  return g;\n}\n\n// Input of Weighted Graph\ntemplate\
-    \ <typename T>\nWeightedGraph<T> wgraph(int N, int M = -1, bool is_directed =\
-    \ false,\n                        bool is_1origin = true) {\n  WeightedGraph<T>\
+    #line 2 \"tree/rerooting.hpp\"\n\n#line 2 \"graph/graph-template.hpp\"\n\ntemplate\
+    \ <typename T>\nstruct edge {\n  int src, to;\n  T cost;\n\n  edge(int _to, T\
+    \ _cost) : src(-1), to(_to), cost(_cost) {}\n  edge(int _src, int _to, T _cost)\
+    \ : src(_src), to(_to), cost(_cost) {}\n\n  edge &operator=(const int &x) {\n\
+    \    to = x;\n    return *this;\n  }\n\n  operator int() const { return to; }\n\
+    };\ntemplate <typename T>\nusing Edges = vector<edge<T>>;\ntemplate <typename\
+    \ T>\nusing WeightedGraph = vector<Edges<T>>;\nusing UnweightedGraph = vector<vector<int>>;\n\
+    \n// Input of (Unweighted) Graph\nUnweightedGraph graph(int N, int M = -1, bool\
+    \ is_directed = false,\n                      bool is_1origin = true) {\n  UnweightedGraph\
     \ g(N);\n  if (M == -1) M = N - 1;\n  for (int _ = 0; _ < M; _++) {\n    int x,\
-    \ y;\n    cin >> x >> y;\n    T c;\n    cin >> c;\n    if (is_1origin) x--, y--;\n\
-    \    g[x].emplace_back(x, y, c);\n    if (!is_directed) g[y].emplace_back(y, x,\
-    \ c);\n  }\n  return g;\n}\n\n// Input of Edges\ntemplate <typename T>\nEdges<T>\
-    \ esgraph([[maybe_unused]] int N, int M, int is_weighted = true,\n           \
-    \      bool is_1origin = true) {\n  Edges<T> es;\n  for (int _ = 0; _ < M; _++)\
-    \ {\n    int x, y;\n    cin >> x >> y;\n    T c;\n    if (is_weighted)\n     \
-    \ cin >> c;\n    else\n      c = 1;\n    if (is_1origin) x--, y--;\n    es.emplace_back(x,\
+    \ y;\n    cin >> x >> y;\n    if (is_1origin) x--, y--;\n    g[x].push_back(y);\n\
+    \    if (!is_directed) g[y].push_back(x);\n  }\n  return g;\n}\n\n// Input of\
+    \ Weighted Graph\ntemplate <typename T>\nWeightedGraph<T> wgraph(int N, int M\
+    \ = -1, bool is_directed = false,\n                        bool is_1origin = true)\
+    \ {\n  WeightedGraph<T> g(N);\n  if (M == -1) M = N - 1;\n  for (int _ = 0; _\
+    \ < M; _++) {\n    int x, y;\n    cin >> x >> y;\n    T c;\n    cin >> c;\n  \
+    \  if (is_1origin) x--, y--;\n    g[x].emplace_back(x, y, c);\n    if (!is_directed)\
+    \ g[y].emplace_back(y, x, c);\n  }\n  return g;\n}\n\n// Input of Edges\ntemplate\
+    \ <typename T>\nEdges<T> esgraph([[maybe_unused]] int N, int M, int is_weighted\
+    \ = true,\n                 bool is_1origin = true) {\n  Edges<T> es;\n  for (int\
+    \ _ = 0; _ < M; _++) {\n    int x, y;\n    cin >> x >> y;\n    T c;\n    if (is_weighted)\n\
+    \      cin >> c;\n    else\n      c = 1;\n    if (is_1origin) x--, y--;\n    es.emplace_back(x,\
     \ y, c);\n  }\n  return es;\n}\n\n// Input of Adjacency Matrix\ntemplate <typename\
     \ T>\nvector<vector<T>> adjgraph(int N, int M, T INF, int is_weighted = true,\n\
     \                           bool is_directed = false, bool is_1origin = true)\
@@ -260,38 +260,37 @@ data:
     \ cin >> c;\n    else\n      c = 1;\n    if (is_1origin) x--, y--;\n    d[x][y]\
     \ = c;\n    if (!is_directed) d[y][x] = c;\n  }\n  return d;\n}\n\n/**\n * @brief\
     \ \u30B0\u30E9\u30D5\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\n * @docs docs/graph/graph-template.md\n\
-    \ */\n#line 6 \"verify/verify-yosupo-graph/yosupo-tree-path-composite-sum.test.cpp\"\
-    \n//\n#line 2 \"tree/rerooting.hpp\"\n\n#line 4 \"tree/rerooting.hpp\"\n\n// Rerooting\n\
-    // f1(c1, c2) ... merge value of child node\n// f2(memo[i], chd, par) ... return\
-    \ value from child node to parent node\n// memo[i] ... result of subtree rooted\
-    \ i\n// dp[i] ... result of tree rooted i\ntemplate <typename T, typename G, typename\
-    \ F1, typename F2>\nstruct Rerooting {\n  const G &g;\n  const F1 f1;\n  const\
-    \ F2 f2;\n  vector<T> memo, dp;\n  T leaf;\n\n  Rerooting(const G &_g, const F1\
-    \ _f1, const F2 _f2, const T &_leaf)\n      : g(_g), f1(_f1), f2(_f2), memo(g.size()),\
-    \ dp(g.size()), leaf(_leaf) {\n    dfs(0, -1);\n    dfs2(0, -1, T{});\n  }\n\n\
-    \  const T &operator[](int i) const { return dp[i]; }\n\n  void dfs(int cur, int\
-    \ par) {\n    vector<T> chds;\n    for (auto &dst : g[cur]) {\n      if (dst ==\
-    \ par) continue;\n      dfs(dst, cur);\n      chds.push_back(f2(memo[dst], dst,\
-    \ cur));\n    }\n    if (chds.empty()) {\n      memo[cur] = leaf;\n    } else\
-    \ {\n      memo[cur] = chds[0];\n      for (int i = 1; i < (int)chds.size(); i++)\
-    \ {\n        memo[cur] = f1(memo[cur], chds[i]);\n      }\n    }\n  }\n\n  void\
-    \ dfs2(int cur, int par, const T &pval) {\n    // get cumulative sum\n    vector<T>\
-    \ buf;\n    if (cur != 0) buf.push_back(pval);\n    for (auto dst : g[cur]) {\n\
-    \      if (dst == par) continue;\n      buf.push_back(f2(memo[dst], dst, cur));\n\
-    \    }\n    vector<T> head(buf.size()), tail(buf.size());\n    if (!buf.empty())\
-    \ {\n      head[0] = buf[0];\n      for (int i = 1; i < (int)buf.size(); i++)\
-    \ {\n        head[i] = f1(head[i - 1], buf[i]);\n      }\n      tail.back() =\
-    \ buf.back();\n      for (int i = (int)buf.size() - 2; i >= 0; i--) {\n      \
-    \  tail[i] = f1(tail[i + 1], buf[i]);\n      }\n    }\n    dp[cur] = head.empty()\
-    \ ? leaf : head.back();\n    int idx = cur == 0 ? 0 : 1;\n    for (auto &dst :\
-    \ g[cur]) {\n      if (dst == par) continue;\n      T val;\n      bool first =\
-    \ idx == 0;\n      bool last = idx + 1 == (int)head.size();\n      if (first and\
-    \ last) {\n        val = leaf;\n      } else if (first) {\n        val = tail[idx\
-    \ + 1];\n      } else if (last) {\n        val = head[idx - 1];\n      } else\
-    \ {\n        val = f1(head[idx - 1], tail[idx + 1]);\n      }\n      dfs2(dst,\
-    \ cur, f2(val, cur, dst));\n      idx++;\n    }\n  }\n};\n\n/**\n * @brief Rerooting(\u5168\
-    \u65B9\u4F4D\u6728DP)\n * @docs docs/tree/rerooting.md\n */\n#line 8 \"verify/verify-yosupo-graph/yosupo-tree-path-composite-sum.test.cpp\"\
-    \n//\n#line 2 \"modint/montgomery-modint.hpp\"\n\n#line 4 \"modint/montgomery-modint.hpp\"\
+    \ */\n#line 4 \"tree/rerooting.hpp\"\n\n// Rerooting\n// f1(c1, c2) ... merge\
+    \ value of child node\n// f2(memo[i], chd, par) ... return value from child node\
+    \ to parent node\n// memo[i] ... result of subtree rooted i\n// dp[i] ... result\
+    \ of tree rooted i\ntemplate <typename T, typename G, typename F1, typename F2>\n\
+    struct Rerooting {\n  const G &g;\n  const F1 f1;\n  const F2 f2;\n  vector<T>\
+    \ memo, dp;\n  T leaf;\n\n  Rerooting(const G &_g, const F1 _f1, const F2 _f2,\
+    \ const T &_leaf)\n      : g(_g), f1(_f1), f2(_f2), memo(g.size()), dp(g.size()),\
+    \ leaf(_leaf) {\n    dfs(0, -1);\n    dfs2(0, -1, T{});\n  }\n\n  const T &operator[](int\
+    \ i) const { return dp[i]; }\n\n  void dfs(int cur, int par) {\n    vector<T>\
+    \ chds;\n    for (auto &dst : g[cur]) {\n      if (dst == par) continue;\n   \
+    \   dfs(dst, cur);\n      chds.push_back(f2(memo[dst], dst, cur));\n    }\n  \
+    \  if (chds.empty()) {\n      memo[cur] = leaf;\n    } else {\n      memo[cur]\
+    \ = chds[0];\n      for (int i = 1; i < (int)chds.size(); i++) {\n        memo[cur]\
+    \ = f1(memo[cur], chds[i]);\n      }\n    }\n  }\n\n  void dfs2(int cur, int par,\
+    \ const T &pval) {\n    // get cumulative sum\n    vector<T> buf;\n    if (cur\
+    \ != 0) buf.push_back(pval);\n    for (auto dst : g[cur]) {\n      if (dst ==\
+    \ par) continue;\n      buf.push_back(f2(memo[dst], dst, cur));\n    }\n    vector<T>\
+    \ head(buf.size()), tail(buf.size());\n    if (!buf.empty()) {\n      head[0]\
+    \ = buf[0];\n      for (int i = 1; i < (int)buf.size(); i++) {\n        head[i]\
+    \ = f1(head[i - 1], buf[i]);\n      }\n      tail.back() = buf.back();\n     \
+    \ for (int i = (int)buf.size() - 2; i >= 0; i--) {\n        tail[i] = f1(tail[i\
+    \ + 1], buf[i]);\n      }\n    }\n    dp[cur] = head.empty() ? leaf : head.back();\n\
+    \    int idx = cur == 0 ? 0 : 1;\n    for (auto &dst : g[cur]) {\n      if (dst\
+    \ == par) continue;\n      T val;\n      bool first = idx == 0;\n      bool last\
+    \ = idx + 1 == (int)head.size();\n      if (first and last) {\n        val = leaf;\n\
+    \      } else if (first) {\n        val = tail[idx + 1];\n      } else if (last)\
+    \ {\n        val = head[idx - 1];\n      } else {\n        val = f1(head[idx -\
+    \ 1], tail[idx + 1]);\n      }\n      dfs2(dst, cur, f2(val, cur, dst));\n   \
+    \   idx++;\n    }\n  }\n};\n\n/**\n * @brief Rerooting(\u5168\u65B9\u4F4D\u6728\
+    DP)\n * @docs docs/tree/rerooting.md\n */\n#line 6 \"verify/verify-yosupo-graph/yosupo-tree-path-composite-sum.test.cpp\"\
+    \n//\n#line 2 \"modint/montgomery-modint.hpp\"\n\n#line 5 \"modint/montgomery-modint.hpp\"\
     \n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n\
     \  using i32 = int32_t;\n  using u32 = uint32_t;\n  using u64 = uint64_t;\n\n\
     \  static constexpr u32 get_r() {\n    u32 ret = mod;\n    for (i32 i = 0; i <\
@@ -322,34 +321,35 @@ data:
     \ ret;\n  }\n\n  constexpr mint inverse() const {\n    int x = get(), y = mod,\
     \ u = 1, v = 0, t = 0, tmp = 0;\n    while (y > 0) {\n      t = x / y;\n     \
     \ x -= t * y, u -= t * v;\n      tmp = x, x = y, y = tmp;\n      tmp = u, u =\
-    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend ostream &operator<<(ostream\
-    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend istream &operator>>(istream\
-    \ &is, mint &b) {\n    int64_t t;\n    is >> t;\n    b = LazyMontgomeryModInt<mod>(t);\n\
-    \    return (is);\n  }\n\n  constexpr u32 get() const {\n    u32 ret = reduce(a);\n\
-    \    return ret >= mod ? ret - mod : ret;\n  }\n\n  static constexpr u32 get_mod()\
-    \ { return mod; }\n};\n#line 2 \"modulo/binomial.hpp\"\n\n#line 6 \"modulo/binomial.hpp\"\
-    \nusing namespace std;\n\n// \u30B3\u30F3\u30B9\u30C8\u30E9\u30AF\u30BF\u306E\
-    \ MAX \u306B \u300CC(n, r) \u3084 fac(n) \u3067\u30AF\u30A8\u30EA\u3092\u6295\u3052\
-    \u308B\u6700\u5927\u306E n \u300D\n// \u3092\u5165\u308C\u308B\u3068\u500D\u901F\
-    \u304F\u3089\u3044\u306B\u306A\u308B\n// mod \u3092\u8D85\u3048\u3066\u524D\u8A08\
-    \u7B97\u3057\u3066 0 \u5272\u308A\u3092\u8E0F\u3080\u30D0\u30B0\u306F\u5BFE\u7B56\
-    \u6E08\u307F\ntemplate <typename T>\nstruct Binomial {\n  vector<T> f, g, h;\n\
-    \  Binomial(int MAX = 0) {\n    assert(T::get_mod() != 0 && \"Binomial<mint>()\"\
-    );\n    f.resize(1, T{1});\n    g.resize(1, T{1});\n    h.resize(1, T{1});\n \
-    \   if (MAX > 0) extend(MAX + 1);\n  }\n\n  void extend(int m = -1) {\n    int\
-    \ n = f.size();\n    if (m == -1) m = n * 2;\n    m = min<int>(m, T::get_mod());\n\
-    \    if (n >= m) return;\n    f.resize(m);\n    g.resize(m);\n    h.resize(m);\n\
-    \    for (int i = n; i < m; i++) f[i] = f[i - 1] * T(i);\n    g[m - 1] = f[m -\
-    \ 1].inverse();\n    h[m - 1] = g[m - 1] * f[m - 2];\n    for (int i = m - 2;\
-    \ i >= n; i--) {\n      g[i] = g[i + 1] * T(i + 1);\n      h[i] = g[i] * f[i -\
-    \ 1];\n    }\n  }\n\n  T fac(int i) {\n    if (i < 0) return T(0);\n    while\
-    \ (i >= (int)f.size()) extend();\n    return f[i];\n  }\n\n  T finv(int i) {\n\
-    \    if (i < 0) return T(0);\n    while (i >= (int)g.size()) extend();\n    return\
-    \ g[i];\n  }\n\n  T inv(int i) {\n    if (i < 0) return -inv(-i);\n    while (i\
-    \ >= (int)h.size()) extend();\n    return h[i];\n  }\n\n  T C(int n, int r) {\n\
-    \    if (n < 0 || n < r || r < 0) return T(0);\n    return fac(n) * finv(n - r)\
-    \ * finv(r);\n  }\n\n  inline T operator()(int n, int r) { return C(n, r); }\n\
-    \n  template <typename I>\n  T multinomial(const vector<I>& r) {\n    static_assert(is_integral<I>::value\
+    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend std::ostream &operator<<(std::ostream\
+    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend std::istream\
+    \ &operator>>(std::istream &is, mint &b) {\n    int64_t t;\n    is >> t;\n   \
+    \ b = LazyMontgomeryModInt<mod>(t);\n    return (is);\n  }\n\n  constexpr u32\
+    \ get() const {\n    u32 ret = reduce(a);\n    return ret >= mod ? ret - mod :\
+    \ ret;\n  }\n\n  static constexpr u32 get_mod() { return mod; }\n};\n#line 2 \"\
+    modulo/binomial.hpp\"\n\n#line 6 \"modulo/binomial.hpp\"\nusing namespace std;\n\
+    \n// \u30B3\u30F3\u30B9\u30C8\u30E9\u30AF\u30BF\u306E MAX \u306B \u300CC(n, r)\
+    \ \u3084 fac(n) \u3067\u30AF\u30A8\u30EA\u3092\u6295\u3052\u308B\u6700\u5927\u306E\
+    \ n \u300D\n// \u3092\u5165\u308C\u308B\u3068\u500D\u901F\u304F\u3089\u3044\u306B\
+    \u306A\u308B\n// mod \u3092\u8D85\u3048\u3066\u524D\u8A08\u7B97\u3057\u3066 0\
+    \ \u5272\u308A\u3092\u8E0F\u3080\u30D0\u30B0\u306F\u5BFE\u7B56\u6E08\u307F\ntemplate\
+    \ <typename T>\nstruct Binomial {\n  vector<T> f, g, h;\n  Binomial(int MAX =\
+    \ 0) {\n    assert(T::get_mod() != 0 && \"Binomial<mint>()\");\n    f.resize(1,\
+    \ T{1});\n    g.resize(1, T{1});\n    h.resize(1, T{1});\n    if (MAX > 0) extend(MAX\
+    \ + 1);\n  }\n\n  void extend(int m = -1) {\n    int n = f.size();\n    if (m\
+    \ == -1) m = n * 2;\n    m = min<int>(m, T::get_mod());\n    if (n >= m) return;\n\
+    \    f.resize(m);\n    g.resize(m);\n    h.resize(m);\n    for (int i = n; i <\
+    \ m; i++) f[i] = f[i - 1] * T(i);\n    g[m - 1] = f[m - 1].inverse();\n    h[m\
+    \ - 1] = g[m - 1] * f[m - 2];\n    for (int i = m - 2; i >= n; i--) {\n      g[i]\
+    \ = g[i + 1] * T(i + 1);\n      h[i] = g[i] * f[i - 1];\n    }\n  }\n\n  T fac(int\
+    \ i) {\n    if (i < 0) return T(0);\n    while (i >= (int)f.size()) extend();\n\
+    \    return f[i];\n  }\n\n  T finv(int i) {\n    if (i < 0) return T(0);\n   \
+    \ while (i >= (int)g.size()) extend();\n    return g[i];\n  }\n\n  T inv(int i)\
+    \ {\n    if (i < 0) return -inv(-i);\n    while (i >= (int)h.size()) extend();\n\
+    \    return h[i];\n  }\n\n  T C(int n, int r) {\n    if (n < 0 || n < r || r <\
+    \ 0) return T(0);\n    return fac(n) * finv(n - r) * finv(r);\n  }\n\n  inline\
+    \ T operator()(int n, int r) { return C(n, r); }\n\n  template <typename I>\n\
+    \  T multinomial(const vector<I>& r) {\n    static_assert(is_integral<I>::value\
     \ == true);\n    int n = 0;\n    for (auto& x : r) {\n      if (x < 0) return\
     \ T(0);\n      n += x;\n    }\n    T res = fac(n);\n    for (auto& x : r) res\
     \ *= finv(x);\n    return res;\n  }\n\n  template <typename I>\n  T operator()(const\
@@ -359,7 +359,7 @@ data:
     \  return ret;\n  }\n\n  T P(int n, int r) {\n    if (n < 0 || n < r || r < 0)\
     \ return T(0);\n    return fac(n) * finv(n - r);\n  }\n\n  // [x^r] 1 / (1-x)^n\n\
     \  T H(int n, int r) {\n    if (n < 0 || r < 0) return T(0);\n    return r ==\
-    \ 0 ? 1 : C(n + r - 1, r);\n  }\n};\n#line 11 \"verify/verify-yosupo-graph/yosupo-tree-path-composite-sum.test.cpp\"\
+    \ 0 ? 1 : C(n + r - 1, r);\n  }\n};\n#line 9 \"verify/verify-yosupo-graph/yosupo-tree-path-composite-sum.test.cpp\"\
     \n//\nusing namespace Nyaan;\nusing mint = LazyMontgomeryModInt<998244353>;\n\
     // using mint = LazyMontgomeryModInt<1000000007>;\nusing vm = vector<mint>;\n\
     using vvm = vector<vm>;\nBinomial<mint> C;\n\nusing namespace Nyaan;\n\nvoid q()\
@@ -379,26 +379,26 @@ data:
     \ (ans[i].fi + A[i]) << \" \\n\"[i + 1 == N];\n}\n\nvoid Nyaan::solve() {\n  int\
     \ t = 1;\n  // in(t);\n  while (t--) q();\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/tree_path_composite_sum\"\
-    \n//\n#include \"../../template/template.hpp\"\n//\n#include \"../../graph/graph-template.hpp\"\
-    \n//\n#include \"../../tree/rerooting.hpp\"\n//\n#include \"../../modint/montgomery-modint.hpp\"\
-    \n#include \"../../modulo/binomial.hpp\"\n//\nusing namespace Nyaan;\nusing mint\
-    \ = LazyMontgomeryModInt<998244353>;\n// using mint = LazyMontgomeryModInt<1000000007>;\n\
-    using vm = vector<mint>;\nusing vvm = vector<vm>;\nBinomial<mint> C;\n\nusing\
-    \ namespace Nyaan;\n\nvoid q() {\n  inl(N);\n  vm A(N);\n  in(A);\n\n  using pm\
-    \ = pair<mint, mint>;\n  vvi g(N);\n  map<pi, pm> mp;\n  rep(_, N - 1) {\n   \
-    \ ini(u, v, b, c);\n    g[u].push_back(v);\n    g[v].push_back(u);\n    mp[minmax(u,\
-    \ v)] = {b, c};\n  }\n\n  // \u300CT : \u6839\u304C virtual \u3067\u3042\u308B\
-    \u6839\u4ED8\u304D\u6728\u300D\u306B\u5BFE\u5FDC\u3059\u308B\u60C5\u5831\u3092\
-    \u7BA1\u7406\u3059\u308B\n  using T = pair<mint, int>;\n  // \u7A7A\u306E\u72B6\
-    \u614B\u306B\u5BFE\u5FDC\u3059\u308B\u60C5\u5831\n  T leaf = {0, 0};\n  // T \u540C\
-    \u58EB\u3092\u30DE\u30FC\u30B8\n  auto f1 = [&](T x, T y) -> T { return {x.fi\
-    \ + y.fi, x.se + y.se}; };\n  // T \u306E\u6839\u306B\u9802\u70B9 c \u304A\u3088\
-    \u3073\u8FBA c-p \u3092\u8FFD\u52A0\u3059\u308B (p \u306F virtual)\n  auto f2\
-    \ = [&](T xn, int c, int p) -> T {\n    auto [x, n] = xn;\n    auto [a, b] = mp[minmax(c,\
-    \ p)];\n    return make_pair((x + A[c]) * a + b * (n + 1), n + 1);\n  };\n  Rerooting<T,\
-    \ decltype(g), decltype(f1), decltype(f2)> dp(g, f1, f2, leaf);\n  auto ans =\
-    \ dp.dp;\n  rep(i, N) cout << (ans[i].fi + A[i]) << \" \\n\"[i + 1 == N];\n}\n\
-    \nvoid Nyaan::solve() {\n  int t = 1;\n  // in(t);\n  while (t--) q();\n}\n"
+    \n//\n#include \"../../template/template.hpp\"\n//\n#include \"../../tree/rerooting.hpp\"\
+    \n//\n#include \"../../modint/montgomery-modint.hpp\"\n#include \"../../modulo/binomial.hpp\"\
+    \n//\nusing namespace Nyaan;\nusing mint = LazyMontgomeryModInt<998244353>;\n\
+    // using mint = LazyMontgomeryModInt<1000000007>;\nusing vm = vector<mint>;\n\
+    using vvm = vector<vm>;\nBinomial<mint> C;\n\nusing namespace Nyaan;\n\nvoid q()\
+    \ {\n  inl(N);\n  vm A(N);\n  in(A);\n\n  using pm = pair<mint, mint>;\n  vvi\
+    \ g(N);\n  map<pi, pm> mp;\n  rep(_, N - 1) {\n    ini(u, v, b, c);\n    g[u].push_back(v);\n\
+    \    g[v].push_back(u);\n    mp[minmax(u, v)] = {b, c};\n  }\n\n  // \u300CT :\
+    \ \u6839\u304C virtual \u3067\u3042\u308B\u6839\u4ED8\u304D\u6728\u300D\u306B\u5BFE\
+    \u5FDC\u3059\u308B\u60C5\u5831\u3092\u7BA1\u7406\u3059\u308B\n  using T = pair<mint,\
+    \ int>;\n  // \u7A7A\u306E\u72B6\u614B\u306B\u5BFE\u5FDC\u3059\u308B\u60C5\u5831\
+    \n  T leaf = {0, 0};\n  // T \u540C\u58EB\u3092\u30DE\u30FC\u30B8\n  auto f1 =\
+    \ [&](T x, T y) -> T { return {x.fi + y.fi, x.se + y.se}; };\n  // T \u306E\u6839\
+    \u306B\u9802\u70B9 c \u304A\u3088\u3073\u8FBA c-p \u3092\u8FFD\u52A0\u3059\u308B\
+    \ (p \u306F virtual)\n  auto f2 = [&](T xn, int c, int p) -> T {\n    auto [x,\
+    \ n] = xn;\n    auto [a, b] = mp[minmax(c, p)];\n    return make_pair((x + A[c])\
+    \ * a + b * (n + 1), n + 1);\n  };\n  Rerooting<T, decltype(g), decltype(f1),\
+    \ decltype(f2)> dp(g, f1, f2, leaf);\n  auto ans = dp.dp;\n  rep(i, N) cout <<\
+    \ (ans[i].fi + A[i]) << \" \\n\"[i + 1 == N];\n}\n\nvoid Nyaan::solve() {\n  int\
+    \ t = 1;\n  // in(t);\n  while (t--) q();\n}\n"
   dependsOn:
   - template/template.hpp
   - template/util.hpp
@@ -406,14 +406,14 @@ data:
   - template/inout.hpp
   - template/debug.hpp
   - template/macro.hpp
-  - graph/graph-template.hpp
   - tree/rerooting.hpp
+  - graph/graph-template.hpp
   - modint/montgomery-modint.hpp
   - modulo/binomial.hpp
   isVerificationFile: true
   path: verify/verify-yosupo-graph/yosupo-tree-path-composite-sum.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-graph/yosupo-tree-path-composite-sum.test.cpp

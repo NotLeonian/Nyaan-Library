@@ -233,8 +233,9 @@ data:
     \ \\\n    return;                  \\\n  } while (0)\n#line 70 \"template/template.hpp\"\
     \n\nnamespace Nyaan {\nvoid solve();\n}\nint main() { Nyaan::solve(); }\n#line\
     \ 4 \"verify/verify-unit-test/internal-type-traits.test.cpp\"\n//\n#line 2 \"\
-    misc/rng.hpp\"\n\n#line 2 \"internal/internal-seed.hpp\"\n\n#line 4 \"internal/internal-seed.hpp\"\
-    \nusing namespace std;\n\nnamespace internal {\nunsigned long long non_deterministic_seed()\
+    misc/rng.hpp\"\n\n#line 7 \"misc/rng.hpp\"\nusing namespace std;\n\n#line 2 \"\
+    internal/internal-seed.hpp\"\n\n#line 4 \"internal/internal-seed.hpp\"\nusing\
+    \ namespace std;\n\nnamespace internal {\nunsigned long long non_deterministic_seed()\
     \ {\n  unsigned long long m =\n      chrono::duration_cast<chrono::nanoseconds>(\n\
     \          chrono::high_resolution_clock::now().time_since_epoch())\n        \
     \  .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >> 31, m\
@@ -246,7 +247,7 @@ data:
     \u30FC\u30C9\u304C\u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long long\
     \ seed() {\n#if defined(NyaanLocal) && !defined(RANDOMIZED_SEED)\n  return deterministic_seed();\n\
     #else\n  return non_deterministic_seed();\n#endif\n}\n\n}  // namespace internal\n\
-    #line 4 \"misc/rng.hpp\"\n\nnamespace my_rand {\nusing i64 = long long;\nusing\
+    #line 10 \"misc/rng.hpp\"\n\nnamespace my_rand {\nusing i64 = long long;\nusing\
     \ u64 = unsigned long long;\n\n// [0, 2^64 - 1)\nu64 rng() {\n  static u64 _x\
     \ = internal::seed();\n  return _x ^= _x << 7, _x ^= _x >> 9;\n}\n\n// [l, r]\n\
     i64 rng(i64 l, i64 r) {\n  assert(l <= r);\n  return l + rng() % u64(r - l + 1);\n\
@@ -263,7 +264,7 @@ data:
     \ + 1)]);\n}\n\n}  // namespace my_rand\n\nusing my_rand::randint;\nusing my_rand::randset;\n\
     using my_rand::randshf;\nusing my_rand::rnd;\nusing my_rand::rng;\n#line 6 \"\
     verify/verify-unit-test/internal-type-traits.test.cpp\"\n//\n#line 2 \"hashmap/hashmap-unerasable.hpp\"\
-    \n\n#line 7 \"hashmap/hashmap-unerasable.hpp\"\nusing namespace std;\n\n#line\
+    \n\n#line 5 \"hashmap/hashmap-unerasable.hpp\"\nusing namespace std;\n\n#line\
     \ 2 \"internal/internal-hash-function.hpp\"\n\n#line 4 \"internal/internal-hash-function.hpp\"\
     \nusing namespace std;\n\n#line 2 \"internal/internal-type-traits.hpp\"\n\n#line\
     \ 4 \"internal/internal-type-traits.hpp\"\nusing namespace std;\n\nnamespace internal\
@@ -307,7 +308,7 @@ data:
     \ m ^= m << 35;\n    return m;\n  } else {\n    static_assert([]() { return false;\
     \ }());\n  }\n}\n\ntemplate <typename Key>\nstruct HashObject {\n  size_t operator()(const\
     \ Key& x) const { return hash_function(x); }\n};\n\n}  // namespace internal\n\
-    \n/*\n@brief \u30CF\u30C3\u30B7\u30E5\u95A2\u6570\n*/\n#line 10 \"hashmap/hashmap-unerasable.hpp\"\
+    \n/*\n@brief \u30CF\u30C3\u30B7\u30E5\u95A2\u6570\n*/\n#line 8 \"hashmap/hashmap-unerasable.hpp\"\
     \n\n// \u524A\u9664\u4E0D\u53EF\u80FD\u306A hashmap\n//\n// \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\u5F15\u6570\n// fixed_size : \u3053\u308C\u3092 true \u306B\
     \u3059\u308B\u3059\u308B\u3068\u30D0\u30B1\u30C3\u30C8\u30B5\u30A4\u30BA\u304C\
@@ -417,7 +418,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/internal-type-traits.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/internal-type-traits.test.cpp

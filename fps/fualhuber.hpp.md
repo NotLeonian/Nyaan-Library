@@ -58,8 +58,10 @@ data:
     \ return T(0);\n    return fac(n) * finv(n - r);\n  }\n\n  // [x^r] 1 / (1-x)^n\n\
     \  T H(int n, int r) {\n    if (n < 0 || r < 0) return T(0);\n    return r ==\
     \ 0 ? 1 : C(n + r - 1, r);\n  }\n};\n#line 2 \"fps/formal-power-series.hpp\"\n\
-    \ntemplate <typename mint>\nstruct FormalPowerSeries : vector<mint> {\n  using\
-    \ vector<mint>::vector;\n  using FPS = FormalPowerSeries;\n\n  FPS &operator+=(const\
+    \n#include <algorithm>\n#line 5 \"fps/formal-power-series.hpp\"\n#include <cstdint>\n\
+    #include <iterator>\n#line 8 \"fps/formal-power-series.hpp\"\nusing namespace\
+    \ std;\n\ntemplate <typename mint>\nstruct FormalPowerSeries : vector<mint> {\n\
+    \  using vector<mint>::vector;\n  using FPS = FormalPowerSeries;\n\n  FPS &operator+=(const\
     \ FPS &r) {\n    if (r.size() > this->size()) this->resize(r.size());\n    for\
     \ (int i = 0; i < (int)r.size(); i++) (*this)[i] += r[i];\n    return *this;\n\
     \  }\n\n  FPS &operator+=(const mint &r) {\n    if (this->empty()) this->resize(1);\n\
@@ -123,18 +125,34 @@ data:
     \ *ntt_ptr;\n  static void set_fft();\n  FPS &operator*=(const FPS &r);\n  void\
     \ ntt();\n  void intt();\n  void ntt_doubling();\n  static int ntt_pr();\n  FPS\
     \ inv(int deg = -1) const;\n  FPS exp(int deg = -1) const;\n};\ntemplate <typename\
-    \ mint>\nvoid *FormalPowerSeries<mint>::ntt_ptr = nullptr;\n\n/**\n * @brief \u591A\
-    \u9805\u5F0F/\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\
-    \n * @docs docs/fps/formal-power-series.md\n */\n#line 2 \"fps/fps-famous-series.hpp\"\
-    \n\n#line 4 \"fps/taylor-shift.hpp\"\n\n// calculate F(x + a)\ntemplate <typename\
-    \ mint>\nFormalPowerSeries<mint> TaylorShift(FormalPowerSeries<mint> f, mint a,\n\
-    \                                    Binomial<mint>& C) {\n  using fps = FormalPowerSeries<mint>;\n\
-    \  int N = f.size();\n  for (int i = 0; i < N; i++) f[i] *= C.fac(i);\n  reverse(begin(f),\
-    \ end(f));\n  fps g(N, mint(1));\n  for (int i = 1; i < N; i++) g[i] = g[i - 1]\
-    \ * a * C.inv(i);\n  f = (f * g).pre(N);\n  reverse(begin(f), end(f));\n  for\
-    \ (int i = 0; i < N; i++) f[i] *= C.finv(i);\n  return f;\n}\n\n/**\n * @brief\
-    \ \u5E73\u884C\u79FB\u52D5\n * @docs docs/fps/taylor-shift.md\n */\n#line 6 \"\
-    fps/fps-famous-series.hpp\"\n\ntemplate <typename mint>\nFormalPowerSeries<mint>\
+    \ mint>\nvoid *FormalPowerSeries<mint>::ntt_ptr = nullptr;\n\ntemplate <int N>\n\
+    struct FPSBackendPriority : FPSBackendPriority<N - 1> {};\ntemplate <>\nstruct\
+    \ FPSBackendPriority<0> {};\n\ntemplate <typename mint>\nvoid FormalPowerSeries<mint>::set_fft()\
+    \ {\n  fps_set_fft_impl((FormalPowerSeries<mint>*)nullptr, FPSBackendPriority<1>{});\n\
+    }\n\ntemplate <typename mint>\nFormalPowerSeries<mint>& FormalPowerSeries<mint>::operator*=(const\
+    \ FPS& r) {\n  if (this->empty() || r.empty()) {\n    this->clear();\n    return\
+    \ *this;\n  }\n  return fps_multiply_impl(*this, r, FPSBackendPriority<1>{});\n\
+    }\n\ntemplate <typename mint>\nvoid FormalPowerSeries<mint>::ntt() {\n  fps_ntt_impl(*this,\
+    \ FPSBackendPriority<1>{});\n}\n\ntemplate <typename mint>\nvoid FormalPowerSeries<mint>::intt()\
+    \ {\n  fps_intt_impl(*this, FPSBackendPriority<1>{});\n}\n\ntemplate <typename\
+    \ mint>\nvoid FormalPowerSeries<mint>::ntt_doubling() {\n  fps_ntt_doubling_impl(*this,\
+    \ FPSBackendPriority<1>{});\n}\n\ntemplate <typename mint>\nint FormalPowerSeries<mint>::ntt_pr()\
+    \ {\n  return fps_ntt_pr_impl((FormalPowerSeries<mint>*)nullptr,\n           \
+    \              FPSBackendPriority<1>{});\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>\
+    \ FormalPowerSeries<mint>::inv(int deg) const {\n  return fps_inv_impl(*this,\
+    \ deg, FPSBackendPriority<1>{});\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>\
+    \ FormalPowerSeries<mint>::exp(int deg) const {\n  return fps_exp_impl(*this,\
+    \ deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief \u591A\u9805\u5F0F/\u5F62\
+    \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n * @docs docs/fps/formal-power-series.md\n\
+    \ */\n#line 2 \"fps/fps-famous-series.hpp\"\n\n#line 4 \"fps/taylor-shift.hpp\"\
+    \n\n// calculate F(x + a)\ntemplate <typename mint>\nFormalPowerSeries<mint> TaylorShift(FormalPowerSeries<mint>\
+    \ f, mint a,\n                                    Binomial<mint>& C) {\n  using\
+    \ fps = FormalPowerSeries<mint>;\n  int N = f.size();\n  for (int i = 0; i < N;\
+    \ i++) f[i] *= C.fac(i);\n  reverse(begin(f), end(f));\n  fps g(N, mint(1));\n\
+    \  for (int i = 1; i < N; i++) g[i] = g[i - 1] * a * C.inv(i);\n  f = (f * g).pre(N);\n\
+    \  reverse(begin(f), end(f));\n  for (int i = 0; i < N; i++) f[i] *= C.finv(i);\n\
+    \  return f;\n}\n\n/**\n * @brief \u5E73\u884C\u79FB\u52D5\n * @docs docs/fps/taylor-shift.md\n\
+    \ */\n#line 6 \"fps/fps-famous-series.hpp\"\n\ntemplate <typename mint>\nFormalPowerSeries<mint>\
     \ Stirling1st(int N, Binomial<mint> &C) {\n  using fps = FormalPowerSeries<mint>;\n\
     \  if (N <= 0) return fps{1};\n  int lg = 31 - __builtin_clz(N);\n  fps f = {0,\
     \ 1};\n  for (int i = lg - 1; i >= 0; i--) {\n    int n = N >> i;\n    f *= TaylorShift(f,\
@@ -195,7 +213,7 @@ data:
   isVerificationFile: false
   path: fps/fualhuber.hpp
   requiredBy: []
-  timestamp: '2026-05-31 17:09:38+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yuki/yuki-2580.test.cpp

@@ -227,7 +227,7 @@ data:
     \ \\\n    return;                  \\\n  } while (0)\n#line 70 \"template/template.hpp\"\
     \n\nnamespace Nyaan {\nvoid solve();\n}\nint main() { Nyaan::solve(); }\n#line\
     \ 4 \"verify/verify-unit-test/binomial-table.test.cpp\"\n//\n#line 2 \"modint/montgomery-modint.hpp\"\
-    \n\n#line 4 \"modint/montgomery-modint.hpp\"\n\ntemplate <uint32_t mod>\nstruct\
+    \n\n#line 5 \"modint/montgomery-modint.hpp\"\n\ntemplate <uint32_t mod>\nstruct\
     \ LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n  using i32 =\
     \ int32_t;\n  using u32 = uint32_t;\n  using u64 = uint64_t;\n\n  static constexpr\
     \ u32 get_r() {\n    u32 ret = mod;\n    for (i32 i = 0; i < 4; ++i) ret *= 2\
@@ -258,19 +258,20 @@ data:
     \ ret;\n  }\n\n  constexpr mint inverse() const {\n    int x = get(), y = mod,\
     \ u = 1, v = 0, t = 0, tmp = 0;\n    while (y > 0) {\n      t = x / y;\n     \
     \ x -= t * y, u -= t * v;\n      tmp = x, x = y, y = tmp;\n      tmp = u, u =\
-    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend ostream &operator<<(ostream\
-    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend istream &operator>>(istream\
-    \ &is, mint &b) {\n    int64_t t;\n    is >> t;\n    b = LazyMontgomeryModInt<mod>(t);\n\
-    \    return (is);\n  }\n\n  constexpr u32 get() const {\n    u32 ret = reduce(a);\n\
-    \    return ret >= mod ? ret - mod : ret;\n  }\n\n  static constexpr u32 get_mod()\
-    \ { return mod; }\n};\n#line 2 \"modulo/binomial-table.hpp\"\n\n#line 4 \"modulo/binomial-table.hpp\"\
-    \nusing namespace std;\n\ntemplate <typename mint>\nvector<vector<mint>> binomial_table(int\
-    \ n) {\n  n += 10;\n  vector dp(n, vector(n, mint{0}));\n  dp[0][0] = 1;\n  for\
-    \ (int i = 0; i + 1 < n; i++) {\n    for (int j = 0; j <= i; j++) {\n      dp[i\
-    \ + 1][j + 0] += dp[i][j];\n      dp[i + 1][j + 1] += dp[i][j];\n    }\n  }\n\
-    \  return dp;\n}\n#line 2 \"modulo/binomial.hpp\"\n\n#line 6 \"modulo/binomial.hpp\"\
-    \nusing namespace std;\n\n// \u30B3\u30F3\u30B9\u30C8\u30E9\u30AF\u30BF\u306E\
-    \ MAX \u306B \u300CC(n, r) \u3084 fac(n) \u3067\u30AF\u30A8\u30EA\u3092\u6295\u3052\
+    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend std::ostream &operator<<(std::ostream\
+    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend std::istream\
+    \ &operator>>(std::istream &is, mint &b) {\n    int64_t t;\n    is >> t;\n   \
+    \ b = LazyMontgomeryModInt<mod>(t);\n    return (is);\n  }\n\n  constexpr u32\
+    \ get() const {\n    u32 ret = reduce(a);\n    return ret >= mod ? ret - mod :\
+    \ ret;\n  }\n\n  static constexpr u32 get_mod() { return mod; }\n};\n#line 2 \"\
+    modulo/binomial-table.hpp\"\n\n#line 4 \"modulo/binomial-table.hpp\"\nusing namespace\
+    \ std;\n\ntemplate <typename mint>\nvector<vector<mint>> binomial_table(int n)\
+    \ {\n  n += 10;\n  vector dp(n, vector(n, mint{0}));\n  dp[0][0] = 1;\n  for (int\
+    \ i = 0; i + 1 < n; i++) {\n    for (int j = 0; j <= i; j++) {\n      dp[i + 1][j\
+    \ + 0] += dp[i][j];\n      dp[i + 1][j + 1] += dp[i][j];\n    }\n  }\n  return\
+    \ dp;\n}\n#line 2 \"modulo/binomial.hpp\"\n\n#line 6 \"modulo/binomial.hpp\"\n\
+    using namespace std;\n\n// \u30B3\u30F3\u30B9\u30C8\u30E9\u30AF\u30BF\u306E MAX\
+    \ \u306B \u300CC(n, r) \u3084 fac(n) \u3067\u30AF\u30A8\u30EA\u3092\u6295\u3052\
     \u308B\u6700\u5927\u306E n \u300D\n// \u3092\u5165\u308C\u308B\u3068\u500D\u901F\
     \u304F\u3089\u3044\u306B\u306A\u308B\n// mod \u3092\u8D85\u3048\u3066\u524D\u8A08\
     \u7B97\u3057\u3066 0 \u5272\u308A\u3092\u8E0F\u3080\u30D0\u30B0\u306F\u5BFE\u7B56\
@@ -331,7 +332,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/binomial-table.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/binomial-table.test.cpp

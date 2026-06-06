@@ -270,7 +270,7 @@ data:
     \        for (int k = i; k < n; k++) {\n          B[j][k] -= B[i][k] * a;\n  \
     \      }\n      }\n    }\n    return (ret);\n  }\n};\n\n/**\n * @brief \u884C\u5217\
     \u30E9\u30A4\u30D6\u30E9\u30EA(std::array\u7248)\n */\n#line 2 \"modint/montgomery-modint.hpp\"\
-    \n\n#line 4 \"modint/montgomery-modint.hpp\"\n\ntemplate <uint32_t mod>\nstruct\
+    \n\n#line 5 \"modint/montgomery-modint.hpp\"\n\ntemplate <uint32_t mod>\nstruct\
     \ LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n  using i32 =\
     \ int32_t;\n  using u32 = uint32_t;\n  using u64 = uint64_t;\n\n  static constexpr\
     \ u32 get_r() {\n    u32 ret = mod;\n    for (i32 i = 0; i < 4; ++i) ret *= 2\
@@ -301,16 +301,17 @@ data:
     \ ret;\n  }\n\n  constexpr mint inverse() const {\n    int x = get(), y = mod,\
     \ u = 1, v = 0, t = 0, tmp = 0;\n    while (y > 0) {\n      t = x / y;\n     \
     \ x -= t * y, u -= t * v;\n      tmp = x, x = y, y = tmp;\n      tmp = u, u =\
-    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend ostream &operator<<(ostream\
-    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend istream &operator>>(istream\
-    \ &is, mint &b) {\n    int64_t t;\n    is >> t;\n    b = LazyMontgomeryModInt<mod>(t);\n\
-    \    return (is);\n  }\n\n  constexpr u32 get() const {\n    u32 ret = reduce(a);\n\
-    \    return ret >= mod ? ret - mod : ret;\n  }\n\n  static constexpr u32 get_mod()\
-    \ { return mod; }\n};\n#line 7 \"verify/verify-unit-test/template.test.cpp\"\n\
-    //\n#line 2 \"misc/rng.hpp\"\n\n#line 2 \"internal/internal-seed.hpp\"\n\n#line\
-    \ 4 \"internal/internal-seed.hpp\"\nusing namespace std;\n\nnamespace internal\
-    \ {\nunsigned long long non_deterministic_seed() {\n  unsigned long long m =\n\
-    \      chrono::duration_cast<chrono::nanoseconds>(\n          chrono::high_resolution_clock::now().time_since_epoch())\n\
+    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend std::ostream &operator<<(std::ostream\
+    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend std::istream\
+    \ &operator>>(std::istream &is, mint &b) {\n    int64_t t;\n    is >> t;\n   \
+    \ b = LazyMontgomeryModInt<mod>(t);\n    return (is);\n  }\n\n  constexpr u32\
+    \ get() const {\n    u32 ret = reduce(a);\n    return ret >= mod ? ret - mod :\
+    \ ret;\n  }\n\n  static constexpr u32 get_mod() { return mod; }\n};\n#line 7 \"\
+    verify/verify-unit-test/template.test.cpp\"\n//\n#line 2 \"misc/rng.hpp\"\n\n\
+    #line 7 \"misc/rng.hpp\"\nusing namespace std;\n\n#line 2 \"internal/internal-seed.hpp\"\
+    \n\n#line 4 \"internal/internal-seed.hpp\"\nusing namespace std;\n\nnamespace\
+    \ internal {\nunsigned long long non_deterministic_seed() {\n  unsigned long long\
+    \ m =\n      chrono::duration_cast<chrono::nanoseconds>(\n          chrono::high_resolution_clock::now().time_since_epoch())\n\
     \          .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >>\
     \ 31, m ^= m << 35;\n  return m;\n}\nunsigned long long deterministic_seed() {\
     \ return 88172645463325252UL; }\n\n// 64 bit \u306E seed \u5024\u3092\u751F\u6210\
@@ -320,7 +321,7 @@ data:
     \u30B7\u30FC\u30C9\u304C\u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long\
     \ long seed() {\n#if defined(NyaanLocal) && !defined(RANDOMIZED_SEED)\n  return\
     \ deterministic_seed();\n#else\n  return non_deterministic_seed();\n#endif\n}\n\
-    \n}  // namespace internal\n#line 4 \"misc/rng.hpp\"\n\nnamespace my_rand {\n\
+    \n}  // namespace internal\n#line 10 \"misc/rng.hpp\"\n\nnamespace my_rand {\n\
     using i64 = long long;\nusing u64 = unsigned long long;\n\n// [0, 2^64 - 1)\n\
     u64 rng() {\n  static u64 _x = internal::seed();\n  return _x ^= _x << 7, _x ^=\
     \ _x >> 9;\n}\n\n// [l, r]\ni64 rng(i64 l, i64 r) {\n  assert(l <= r);\n  return\
@@ -570,7 +571,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/template.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/template.test.cpp

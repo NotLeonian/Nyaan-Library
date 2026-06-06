@@ -257,7 +257,7 @@ data:
     \ != r.b; }\n  friend ostream& operator<<(ostream& os, const Affine& r) {\n  \
     \  os << \"( \" << r.a << \", \" << r.b << \" )\";\n    return os;\n  }\n};\n\n\
     /**\n * @brief \u30A2\u30D5\u30A3\u30F3\u5909\u63DB\n */\n#line 7 \"verify/verify-yosupo-ds/yosupo-deque-operate-all-composite.test.cpp\"\
-    \n//\n#line 2 \"modint/montgomery-modint.hpp\"\n\n#line 4 \"modint/montgomery-modint.hpp\"\
+    \n//\n#line 2 \"modint/montgomery-modint.hpp\"\n\n#line 5 \"modint/montgomery-modint.hpp\"\
     \n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n\
     \  using i32 = int32_t;\n  using u32 = uint32_t;\n  using u64 = uint64_t;\n\n\
     \  static constexpr u32 get_r() {\n    u32 ret = mod;\n    for (i32 i = 0; i <\
@@ -288,25 +288,26 @@ data:
     \ ret;\n  }\n\n  constexpr mint inverse() const {\n    int x = get(), y = mod,\
     \ u = 1, v = 0, t = 0, tmp = 0;\n    while (y > 0) {\n      t = x / y;\n     \
     \ x -= t * y, u -= t * v;\n      tmp = x, x = y, y = tmp;\n      tmp = u, u =\
-    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend ostream &operator<<(ostream\
-    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend istream &operator>>(istream\
-    \ &is, mint &b) {\n    int64_t t;\n    is >> t;\n    b = LazyMontgomeryModInt<mod>(t);\n\
-    \    return (is);\n  }\n\n  constexpr u32 get() const {\n    u32 ret = reduce(a);\n\
-    \    return ret >= mod ? ret - mod : ret;\n  }\n\n  static constexpr u32 get_mod()\
-    \ { return mod; }\n};\n#line 9 \"verify/verify-yosupo-ds/yosupo-deque-operate-all-composite.test.cpp\"\
-    \n//\nusing namespace Nyaan;\nusing mint = LazyMontgomeryModInt<998244353>;\n\
-    // using mint = LazyMontgomeryModInt<1000000007>;\nusing vm = vector<mint>;\n\
-    using vvm = vector<vm>;\nusing namespace Nyaan;\n\nvoid q() {\n  using A = Affine<mint>;\n\
-    \n  SlideWindowAggregationDeque swag([](const A &l, const A &r) { return l * r;\
-    \ },\n                                   A{});\n  deque<A> dq;\n\n  ini(Q);\n\
-    \  while (Q--) {\n    ini(cmd);\n    if (cmd == 0) {\n      ini(a, b);\n     \
-    \ swag.push_front({a, b});\n      dq.push_front({a, b});\n    } else if (cmd ==\
-    \ 1) {\n      ini(a, b);\n      swag.push_back({a, b});\n      dq.push_back({a,\
-    \ b});\n    } else if (cmd == 2) {\n      if (dq.front() != swag.front()) exit(1);\n\
-    \      swag.pop_front();\n      dq.pop_front();\n    } else if (cmd == 3) {\n\
-    \      if (dq.back() != swag.back()) exit(1);\n      swag.pop_back();\n      dq.pop_back();\n\
-    \    } else {\n      ini(x);\n      out(swag.query()(x));\n    }\n  }\n}\n\nvoid\
-    \ Nyaan::solve() {\n  int t = 1;\n  // in(t);\n  while (t--) q();\n}\n"
+    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend std::ostream &operator<<(std::ostream\
+    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend std::istream\
+    \ &operator>>(std::istream &is, mint &b) {\n    int64_t t;\n    is >> t;\n   \
+    \ b = LazyMontgomeryModInt<mod>(t);\n    return (is);\n  }\n\n  constexpr u32\
+    \ get() const {\n    u32 ret = reduce(a);\n    return ret >= mod ? ret - mod :\
+    \ ret;\n  }\n\n  static constexpr u32 get_mod() { return mod; }\n};\n#line 9 \"\
+    verify/verify-yosupo-ds/yosupo-deque-operate-all-composite.test.cpp\"\n//\nusing\
+    \ namespace Nyaan;\nusing mint = LazyMontgomeryModInt<998244353>;\n// using mint\
+    \ = LazyMontgomeryModInt<1000000007>;\nusing vm = vector<mint>;\nusing vvm = vector<vm>;\n\
+    using namespace Nyaan;\n\nvoid q() {\n  using A = Affine<mint>;\n\n  SlideWindowAggregationDeque\
+    \ swag([](const A &l, const A &r) { return l * r; },\n                       \
+    \            A{});\n  deque<A> dq;\n\n  ini(Q);\n  while (Q--) {\n    ini(cmd);\n\
+    \    if (cmd == 0) {\n      ini(a, b);\n      swag.push_front({a, b});\n     \
+    \ dq.push_front({a, b});\n    } else if (cmd == 1) {\n      ini(a, b);\n     \
+    \ swag.push_back({a, b});\n      dq.push_back({a, b});\n    } else if (cmd ==\
+    \ 2) {\n      if (dq.front() != swag.front()) exit(1);\n      swag.pop_front();\n\
+    \      dq.pop_front();\n    } else if (cmd == 3) {\n      if (dq.back() != swag.back())\
+    \ exit(1);\n      swag.pop_back();\n      dq.pop_back();\n    } else {\n     \
+    \ ini(x);\n      out(swag.query()(x));\n    }\n  }\n}\n\nvoid Nyaan::solve() {\n\
+    \  int t = 1;\n  // in(t);\n  while (t--) q();\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/deque_operate_all_composite\"\
     \n//\n#include \"../../template/template.hpp\"\n//\n#include \"../../data-structure/slide-window-aggregation-deque.hpp\"\
     \n#include \"../../math/affine-transformation.hpp\"\n//\n#include \"../../modint/montgomery-modint.hpp\"\
@@ -336,7 +337,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-ds/yosupo-deque-operate-all-composite.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-ds/yosupo-deque-operate-all-composite.test.cpp

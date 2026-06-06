@@ -229,12 +229,12 @@ data:
     \n  }\n#define die(...)             \\\n  do {                       \\\n    Nyaan::out(__VA_ARGS__);\
     \ \\\n    return;                  \\\n  } while (0)\n#line 70 \"template/template.hpp\"\
     \n\nnamespace Nyaan {\nvoid solve();\n}\nint main() { Nyaan::solve(); }\n#line\
-    \ 2 \"graph/graph-utility.hpp\"\n\n#line 2 \"graph/graph-template.hpp\"\n\ntemplate\
-    \ <typename T>\nstruct edge {\n  int src, to;\n  T cost;\n\n  edge(int _to, T\
-    \ _cost) : src(-1), to(_to), cost(_cost) {}\n  edge(int _src, int _to, T _cost)\
-    \ : src(_src), to(_to), cost(_cost) {}\n\n  edge &operator=(const int &x) {\n\
-    \    to = x;\n    return *this;\n  }\n\n  operator int() const { return to; }\n\
-    };\ntemplate <typename T>\nusing Edges = vector<edge<T>>;\ntemplate <typename\
+    \ 2 \"shortest-path/dijkstra.hpp\"\n\n#line 2 \"graph/graph-template.hpp\"\n\n\
+    template <typename T>\nstruct edge {\n  int src, to;\n  T cost;\n\n  edge(int\
+    \ _to, T _cost) : src(-1), to(_to), cost(_cost) {}\n  edge(int _src, int _to,\
+    \ T _cost) : src(_src), to(_to), cost(_cost) {}\n\n  edge &operator=(const int\
+    \ &x) {\n    to = x;\n    return *this;\n  }\n\n  operator int() const { return\
+    \ to; }\n};\ntemplate <typename T>\nusing Edges = vector<edge<T>>;\ntemplate <typename\
     \ T>\nusing WeightedGraph = vector<Edges<T>>;\nusing UnweightedGraph = vector<vector<int>>;\n\
     \n// Input of (Unweighted) Graph\nUnweightedGraph graph(int N, int M = -1, bool\
     \ is_directed = false,\n                      bool is_1origin = true) {\n  UnweightedGraph\
@@ -259,11 +259,21 @@ data:
     \ cin >> c;\n    else\n      c = 1;\n    if (is_1origin) x--, y--;\n    d[x][y]\
     \ = c;\n    if (!is_directed) d[y][x] = c;\n  }\n  return d;\n}\n\n/**\n * @brief\
     \ \u30B0\u30E9\u30D5\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\n * @docs docs/graph/graph-template.md\n\
-    \ */\n#line 4 \"graph/graph-utility.hpp\"\n\n// \u4E00\u822C\u306E\u30B0\u30E9\
-    \u30D5\u306Est\u304B\u3089\u306E\u8DDD\u96E2\uFF01\uFF01\uFF01\uFF01\n// unvisited\
-    \ nodes : d = -1\nvector<int> Depth(const UnweightedGraph &g, int start = 0) {\n\
-    \  int n = g.size();\n  vector<int> ds(n, -1);\n  ds[start] = 0;\n  queue<int>\
-    \ q;\n  q.push(start);\n  while (!q.empty()) {\n    int c = q.front();\n    q.pop();\n\
+    \ */\n#line 4 \"shortest-path/dijkstra.hpp\"\n\n// unreachable -> -1\ntemplate\
+    \ <typename T>\nvector<T> dijkstra(WeightedGraph<T> &g, int start = 0) {\n  using\
+    \ P = pair<T, int>;\n  int N = (int)g.size();\n  vector<T> d(N, T(-1));\n  priority_queue<P,\
+    \ vector<P>, greater<P> > Q;\n  d[start] = 0;\n  Q.emplace(0, start);\n  while\
+    \ (!Q.empty()) {\n    P p = Q.top();\n    Q.pop();\n    int cur = p.second;\n\
+    \    if (d[cur] < p.first) continue;\n    for (auto dst : g[cur]) {\n      if\
+    \ (d[dst] == T(-1) || d[cur] + dst.cost < d[dst]) {\n        d[dst] = d[cur] +\
+    \ dst.cost;\n        Q.emplace(d[dst], dst);\n      }\n    }\n  }\n  return d;\n\
+    }\n\n/**\n * @brief \u30C0\u30A4\u30AF\u30B9\u30C8\u30E9\u6CD5\n * @docs docs/shortest-path/dijkstra.md\n\
+    \ */\n#line 2 \"shortest-path/restore-shortest-path.hpp\"\n\n#line 2 \"graph/graph-utility.hpp\"\
+    \n\n#line 4 \"graph/graph-utility.hpp\"\n\n// \u4E00\u822C\u306E\u30B0\u30E9\u30D5\
+    \u306Est\u304B\u3089\u306E\u8DDD\u96E2\uFF01\uFF01\uFF01\uFF01\n// unvisited nodes\
+    \ : d = -1\nvector<int> Depth(const UnweightedGraph &g, int start = 0) {\n  int\
+    \ n = g.size();\n  vector<int> ds(n, -1);\n  ds[start] = 0;\n  queue<int> q;\n\
+    \  q.push(start);\n  while (!q.empty()) {\n    int c = q.front();\n    q.pop();\n\
     \    int dc = ds[c];\n    for (auto &d : g[c]) {\n      if (ds[d] == -1) {\n \
     \       ds[d] = dc + 1;\n        q.push(d);\n      }\n    }\n  }\n  return ds;\n\
     }\n\n// Depth of Rooted Weighted Tree\n// unvisited nodes : d = -1\ntemplate <typename\
@@ -287,17 +297,7 @@ data:
     \ == par) continue;\n      rec(rec, dst, cur);\n      if (end) return;\n    }\n\
     \    if (end) return;\n    ret.pop_back();\n  };\n  dfs(dfs, u);\n  return ret;\n\
     }\n\n/**\n * @brief \u30B0\u30E9\u30D5\u30E6\u30FC\u30C6\u30A3\u30EA\u30C6\u30A3\
-    \n * @docs docs/graph/graph-utility.md\n */\n#line 2 \"shortest-path/dijkstra.hpp\"\
-    \n\n#line 4 \"shortest-path/dijkstra.hpp\"\n\n// unreachable -> -1\ntemplate <typename\
-    \ T>\nvector<T> dijkstra(WeightedGraph<T> &g, int start = 0) {\n  using P = pair<T,\
-    \ int>;\n  int N = (int)g.size();\n  vector<T> d(N, T(-1));\n  priority_queue<P,\
-    \ vector<P>, greater<P> > Q;\n  d[start] = 0;\n  Q.emplace(0, start);\n  while\
-    \ (!Q.empty()) {\n    P p = Q.top();\n    Q.pop();\n    int cur = p.second;\n\
-    \    if (d[cur] < p.first) continue;\n    for (auto dst : g[cur]) {\n      if\
-    \ (d[dst] == T(-1) || d[cur] + dst.cost < d[dst]) {\n        d[dst] = d[cur] +\
-    \ dst.cost;\n        Q.emplace(d[dst], dst);\n      }\n    }\n  }\n  return d;\n\
-    }\n\n/**\n * @brief \u30C0\u30A4\u30AF\u30B9\u30C8\u30E9\u6CD5\n * @docs docs/shortest-path/dijkstra.md\n\
-    \ */\n#line 2 \"shortest-path/restore-shortest-path.hpp\"\n\n#line 4 \"shortest-path/restore-shortest-path.hpp\"\
+    \n * @docs docs/graph/graph-utility.md\n */\n#line 4 \"shortest-path/restore-shortest-path.hpp\"\
     \n\n// restore shortest path from S to G\ntemplate <typename T>\nvector<int> restore_shortest_path(WeightedGraph<T>\
     \ &g, vector<T> &d, int S,\n                                  int G) {\n  int\
     \ N = g.size();\n  WeightedGraph<T> rev(g.size());\n  for (int i = 0; i < N; i++)\n\
@@ -308,18 +308,18 @@ data:
     \ != dist) continue;\n      if (d[e.to] != -1 && d[e.to] < nval) nval = d[e.to],\
     \ nxt = e.to;\n    }\n    ret.push_back((vis[nxt] = 1, dist = nval, p = nxt));\n\
     \  } while (p != S);\n  reverse(begin(ret), end(ret));\n  return ret;\n}\n#line\
-    \ 7 \"verify/verify-yosupo-graph/yosupo-shortest-path.test.cpp\"\n\nusing namespace\
+    \ 6 \"verify/verify-yosupo-graph/yosupo-shortest-path.test.cpp\"\n\nusing namespace\
     \ Nyaan; void Nyaan::solve() {\n  ini(N, M, S, T);\n  auto g = wgraph<ll>(N, M,\
     \ true, false);\n  auto d = dijkstra<ll>(g, S);\n  if (d[T] == -1) die(-1);\n\
     \  auto p = restore_shortest_path<ll>(g, d, S, T);\n  out(d[T], sz(p) - 1);\n\
     \  rep(i, sz(p) - 1) out(p[i], p[i + 1]);\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/shortest_path\"\n\n#include\
-    \ \"../../template/template.hpp\"\n#include \"../../graph/graph-utility.hpp\"\n\
-    #include \"../../shortest-path/dijkstra.hpp\"\n#include \"../../shortest-path/restore-shortest-path.hpp\"\
-    \n\nusing namespace Nyaan; void Nyaan::solve() {\n  ini(N, M, S, T);\n  auto g\
-    \ = wgraph<ll>(N, M, true, false);\n  auto d = dijkstra<ll>(g, S);\n  if (d[T]\
-    \ == -1) die(-1);\n  auto p = restore_shortest_path<ll>(g, d, S, T);\n  out(d[T],\
-    \ sz(p) - 1);\n  rep(i, sz(p) - 1) out(p[i], p[i + 1]);\n}"
+    \ \"../../template/template.hpp\"\n#include \"../../shortest-path/dijkstra.hpp\"\
+    \n#include \"../../shortest-path/restore-shortest-path.hpp\"\n\nusing namespace\
+    \ Nyaan; void Nyaan::solve() {\n  ini(N, M, S, T);\n  auto g = wgraph<ll>(N, M,\
+    \ true, false);\n  auto d = dijkstra<ll>(g, S);\n  if (d[T] == -1) die(-1);\n\
+    \  auto p = restore_shortest_path<ll>(g, d, S, T);\n  out(d[T], sz(p) - 1);\n\
+    \  rep(i, sz(p) - 1) out(p[i], p[i + 1]);\n}"
   dependsOn:
   - template/template.hpp
   - template/util.hpp
@@ -327,14 +327,14 @@ data:
   - template/inout.hpp
   - template/debug.hpp
   - template/macro.hpp
-  - graph/graph-utility.hpp
-  - graph/graph-template.hpp
   - shortest-path/dijkstra.hpp
+  - graph/graph-template.hpp
   - shortest-path/restore-shortest-path.hpp
+  - graph/graph-utility.hpp
   isVerificationFile: true
   path: verify/verify-yosupo-graph/yosupo-shortest-path.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-graph/yosupo-shortest-path.test.cpp

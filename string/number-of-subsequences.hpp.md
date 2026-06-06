@@ -24,11 +24,10 @@ data:
   attributes:
     links: []
   bundledCode: "#line 2 \"string/number-of-subsequences.hpp\"\n\n#line 2 \"hashmap/hashmap-unerasable.hpp\"\
-    \n\n#include <cassert>\n#include <chrono>\n#include <functional>\n#include <vector>\n\
-    using namespace std;\n\n#line 2 \"internal/internal-hash-function.hpp\"\n\n#line\
-    \ 4 \"internal/internal-hash-function.hpp\"\nusing namespace std;\n\n#line 2 \"\
-    internal/internal-seed.hpp\"\n\n#line 4 \"internal/internal-seed.hpp\"\nusing\
-    \ namespace std;\n\nnamespace internal {\nunsigned long long non_deterministic_seed()\
+    \n\n#include <cassert>\n#include <vector>\nusing namespace std;\n\n#line 2 \"\
+    internal/internal-hash-function.hpp\"\n\n#line 4 \"internal/internal-hash-function.hpp\"\
+    \nusing namespace std;\n\n#line 2 \"internal/internal-seed.hpp\"\n\n#include <chrono>\n\
+    using namespace std;\n\nnamespace internal {\nunsigned long long non_deterministic_seed()\
     \ {\n  unsigned long long m =\n      chrono::duration_cast<chrono::nanoseconds>(\n\
     \          chrono::high_resolution_clock::now().time_since_epoch())\n        \
     \  .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >> 31, m\
@@ -82,7 +81,7 @@ data:
     \ m ^= m << 35;\n    return m;\n  } else {\n    static_assert([]() { return false;\
     \ }());\n  }\n}\n\ntemplate <typename Key>\nstruct HashObject {\n  size_t operator()(const\
     \ Key& x) const { return hash_function(x); }\n};\n\n}  // namespace internal\n\
-    \n/*\n@brief \u30CF\u30C3\u30B7\u30E5\u95A2\u6570\n*/\n#line 10 \"hashmap/hashmap-unerasable.hpp\"\
+    \n/*\n@brief \u30CF\u30C3\u30B7\u30E5\u95A2\u6570\n*/\n#line 8 \"hashmap/hashmap-unerasable.hpp\"\
     \n\n// \u524A\u9664\u4E0D\u53EF\u80FD\u306A hashmap\n//\n// \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\u5F15\u6570\n// fixed_size : \u3053\u308C\u3092 true \u306B\
     \u3059\u308B\u3059\u308B\u3068\u30D0\u30B1\u30C3\u30C8\u30B5\u30A4\u30BA\u304C\
@@ -144,7 +143,7 @@ data:
   isVerificationFile: false
   path: string/number-of-subsequences.hpp
   requiredBy: []
-  timestamp: '2024-09-14 20:40:02+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-string/yosupo-number-of-subsequences.test.cpp

@@ -356,7 +356,7 @@ data:
     \ x = n.x;\n    for (; x; x &= x - 1) res ^= ntf[__builtin_ctzll(x)];\n    return\
     \ res;\n  }\n  N field2nimber(uint x) {\n    uint res = 0;\n    for (; x; x &=\
     \ x - 1) res ^= ftn[__builtin_ctzll(x)];\n    return res;\n  }\n};\n\n/**\n *\
-    \ @brief Nimber <-> \u591A\u9805\u5F0F\u74B0\n */\n#line 8 \"verify/verify-unit-test/nimber-to-field.test.cpp\"\
+    \ @brief Nimber <-> \u591A\u9805\u5F0F\u74B0\n */\n#line 7 \"verify/verify-unit-test/nimber-to-field.test.cpp\"\
     \n\nusing namespace Nyaan;\n\nvoid Nyaan::solve() {\n  using nim = Nimber16;\n\
     \  using u16 = uint16_t;\n  nim proot = NimberImpl::c16.proot;\n  vector<u16>\
     \ ntf{0x0001u, 0x8ff5u, 0x6cbfu, 0xa5beu, 0x761au, 0x8238u,\n                \
@@ -368,13 +368,12 @@ data:
     \n  {\n    int a, b;\n    cin >> a >> b;\n    cout << a + b << endl;\n  }\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/aplusb\"\n//\n#include\
     \ \"../../template/template.hpp\"\n//\n#include \"../../math/nimber-to-field.hpp\"\
-    \n#include \"../../math/nimber.hpp\"\n#include \"../../math/sweep-restore.hpp\"\
-    \n\nusing namespace Nyaan;\n\nvoid Nyaan::solve() {\n  using nim = Nimber16;\n\
-    \  using u16 = uint16_t;\n  nim proot = NimberImpl::c16.proot;\n  vector<u16>\
-    \ ntf{0x0001u, 0x8ff5u, 0x6cbfu, 0xa5beu, 0x761au, 0x8238u,\n                \
-    \  0x4f08u, 0x95acu, 0xf340u, 0x1336u, 0x7d5eu, 0x86e7u,\n                  0x3a47u,\
-    \ 0xe796u, 0xb7c3u, 0x0008u};\n  NimberToField<nim> mp(proot);\n  rep(i, 16) {\n\
-    \    assert(ntf[i] == mp.nimber2field(1 << i));\n    assert(mp.field2nimber(1\
+    \n#include \"../../math/nimber.hpp\"\n\nusing namespace Nyaan;\n\nvoid Nyaan::solve()\
+    \ {\n  using nim = Nimber16;\n  using u16 = uint16_t;\n  nim proot = NimberImpl::c16.proot;\n\
+    \  vector<u16> ntf{0x0001u, 0x8ff5u, 0x6cbfu, 0xa5beu, 0x761au, 0x8238u,\n   \
+    \               0x4f08u, 0x95acu, 0xf340u, 0x1336u, 0x7d5eu, 0x86e7u,\n      \
+    \            0x3a47u, 0xe796u, 0xb7c3u, 0x0008u};\n  NimberToField<nim> mp(proot);\n\
+    \  rep(i, 16) {\n    assert(ntf[i] == mp.nimber2field(1 << i));\n    assert(mp.field2nimber(1\
     \ << i) == proot.pow(i));\n  }\n  nim p16 = proot.pow(16);\n  u16 f16 = mp.nimber2field(p16);\n\
     \  unsigned ppoly = (unsigned(1) << 16) ^ f16;\n  assert(ppoly == NimberImpl::c16.ppoly);\n\
     \n  {\n    int a, b;\n    cin >> a >> b;\n    cout << a + b << endl;\n  }\n}\n"
@@ -392,7 +391,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/nimber-to-field.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/nimber-to-field.test.cpp

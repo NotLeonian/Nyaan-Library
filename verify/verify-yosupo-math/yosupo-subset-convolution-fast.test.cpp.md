@@ -28,19 +28,18 @@ data:
     - https://judge.yosupo.jp/problem/subset_convolution
   bundledCode: "#line 1 \"verify/verify-yosupo-math/yosupo-subset-convolution-fast.test.cpp\"\
     \n#define PROBLEM \"https://judge.yosupo.jp/problem/subset_convolution\"\n//\n\
-    #include <immintrin.h>\n//\n#include <algorithm>\n#include <cassert>\n#include\
-    \ <chrono>\n#include <cstdint>\n#include <cstdio>\n#include <cstring>\n#include\
-    \ <iostream>\n#include <random>\n#include <type_traits>\n#include <utility>\n\
-    #include <vector>\n\nusing namespace std;\n\n#line 2 \"misc/fastio.hpp\"\n\n#line\
-    \ 5 \"misc/fastio.hpp\"\n#include <string>\n#line 8 \"misc/fastio.hpp\"\n\nusing\
-    \ namespace std;\n\n#line 2 \"internal/internal-type-traits.hpp\"\n\n#line 4 \"\
-    internal/internal-type-traits.hpp\"\nusing namespace std;\n\nnamespace internal\
-    \ {\ntemplate <typename T>\nusing is_broadly_integral =\n    typename conditional_t<is_integral_v<T>\
-    \ || is_same_v<T, __int128_t> ||\n                               is_same_v<T,\
-    \ __uint128_t>,\n                           true_type, false_type>::type;\n\n\
-    template <typename T>\nusing is_broadly_signed =\n    typename conditional_t<is_signed_v<T>\
-    \ || is_same_v<T, __int128_t>,\n                           true_type, false_type>::type;\n\
-    \ntemplate <typename T>\nusing is_broadly_unsigned =\n    typename conditional_t<is_unsigned_v<T>\
+    #include <immintrin.h>\n//\n#include <cassert>\n#include <cstdint>\n#include <cstdio>\n\
+    #include <cstring>\n#include <utility>\n#include <vector>\n\nusing namespace std;\n\
+    \n#line 2 \"misc/fastio.hpp\"\n\n#line 6 \"misc/fastio.hpp\"\n#include <string>\n\
+    #include <type_traits>\n#line 9 \"misc/fastio.hpp\"\n\nusing namespace std;\n\n\
+    #line 2 \"internal/internal-type-traits.hpp\"\n\n#line 4 \"internal/internal-type-traits.hpp\"\
+    \nusing namespace std;\n\nnamespace internal {\ntemplate <typename T>\nusing is_broadly_integral\
+    \ =\n    typename conditional_t<is_integral_v<T> || is_same_v<T, __int128_t> ||\n\
+    \                               is_same_v<T, __uint128_t>,\n                 \
+    \          true_type, false_type>::type;\n\ntemplate <typename T>\nusing is_broadly_signed\
+    \ =\n    typename conditional_t<is_signed_v<T> || is_same_v<T, __int128_t>,\n\
+    \                           true_type, false_type>::type;\n\ntemplate <typename\
+    \ T>\nusing is_broadly_unsigned =\n    typename conditional_t<is_unsigned_v<T>\
     \ || is_same_v<T, __uint128_t>,\n                           true_type, false_type>::type;\n\
     \n#define ENABLE_VALUE(x) \\\n  template <typename T> \\\n  constexpr bool x##_v\
     \ = x<T>::value;\n\nENABLE_VALUE(is_broadly_integral);\nENABLE_VALUE(is_broadly_signed);\n\
@@ -57,7 +56,7 @@ data:
     \          \\\n  struct has_##var<T, void_t<decltype(T::var)>> : true_type {};\
     \ \\\n  template <class T>                                            \\\n  constexpr\
     \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace internal\n#line\
-    \ 12 \"misc/fastio.hpp\"\n\nnamespace fastio {\nstatic constexpr int SZ = 1 <<\
+    \ 13 \"misc/fastio.hpp\"\n\nnamespace fastio {\nstatic constexpr int SZ = 1 <<\
     \ 17;\nstatic constexpr int offset = 64;\nchar inbuf[SZ], outbuf[SZ];\nint in_left\
     \ = 0, in_right = 0, out_right = 0;\n\nstruct Pre {\n  char num[40000];\n  constexpr\
     \ Pre() : num() {\n    for (int i = 0; i < 10000; i++) {\n      int n = i;\n \
@@ -105,14 +104,14 @@ data:
     \ Tail>(tail)...);\n}\ntemplate <typename... Args>\nvoid wtn(const Args&... x)\
     \ {\n  wt(std::forward<const Args>(x)...);\n  wt('\\n');\n}\n\nstruct Dummy {\n\
     \  Dummy() { atexit(flush); }\n} dummy;\n\n}  // namespace fastio\nusing fastio::rd;\n\
-    using fastio::skip_space;\nusing fastio::wt;\nusing fastio::wtn;\n#line 20 \"\
+    using fastio::skip_space;\nusing fastio::wt;\nusing fastio::wtn;\n#line 15 \"\
     verify/verify-yosupo-math/yosupo-subset-convolution-fast.test.cpp\"\n//\n#line\
     \ 2 \"math-fast/subset-convolution.hpp\"\n\n#line 5 \"math-fast/subset-convolution.hpp\"\
     \nusing namespace std;\n\n#line 2 \"modint/vectorize-modint.hpp\"\n\n#pragma GCC\
-    \ optimize(\"O3,unroll-loops\")\n#pragma GCC target(\"avx2\")\n\n#line 8 \"modint/vectorize-modint.hpp\"\
-    \nusing namespace std;\n\nusing m256 = __m256i;\nstruct alignas(32) mmint {\n\
-    \  m256 x;\n  static mmint R, M0, M1, M2, N2;\n\n  mmint() : x() {}\n  inline\
-    \ mmint(const m256& _x) : x(_x) {}\n  inline mmint(unsigned int a) : x(_mm256_set1_epi32(a))\
+    \ optimize(\"O3,unroll-loops\")\n#pragma GCC target(\"avx2\")\n\n#line 7 \"modint/vectorize-modint.hpp\"\
+    \n#include <iostream>\nusing namespace std;\n\nusing m256 = __m256i;\nstruct alignas(32)\
+    \ mmint {\n  m256 x;\n  static mmint R, M0, M1, M2, N2;\n\n  mmint() : x() {}\n\
+    \  inline mmint(const m256& _x) : x(_x) {}\n  inline mmint(unsigned int a) : x(_mm256_set1_epi32(a))\
     \ {}\n  inline mmint(unsigned int a0, unsigned int a1, unsigned int a2,\n    \
     \           unsigned int a3, unsigned int a4, unsigned int a5,\n             \
     \  unsigned int a6, unsigned int a7)\n      : x(_mm256_set_epi32(a7, a6, a5, a4,\
@@ -214,8 +213,8 @@ data:
     \ i++) {\n        a1[ri * 3 + i] -= a1[li * 3 + i];\n      }\n    }\n  }\n\n \
     \ vector<mint> c(n);\n  for (int i = 0; i < n; i++) {\n    unsigned int pc = __builtin_popcount(i);\n\
     \    c[i].a = a1[i * 3 + pc / 8][pc % 8];\n  }\n\n  delete[] (a1);\n  delete[]\
-    \ (a2);\n  return c;\n}\n#line 22 \"verify/verify-yosupo-math/yosupo-subset-convolution-fast.test.cpp\"\
-    \n//\n#line 2 \"modint/montgomery-modint.hpp\"\n\n#line 4 \"modint/montgomery-modint.hpp\"\
+    \ (a2);\n  return c;\n}\n#line 17 \"verify/verify-yosupo-math/yosupo-subset-convolution-fast.test.cpp\"\
+    \n//\n#line 2 \"modint/montgomery-modint.hpp\"\n\n#line 5 \"modint/montgomery-modint.hpp\"\
     \n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n\
     \  using i32 = int32_t;\n  using u32 = uint32_t;\n  using u64 = uint64_t;\n\n\
     \  static constexpr u32 get_r() {\n    u32 ret = mod;\n    for (i32 i = 0; i <\
@@ -246,34 +245,33 @@ data:
     \ ret;\n  }\n\n  constexpr mint inverse() const {\n    int x = get(), y = mod,\
     \ u = 1, v = 0, t = 0, tmp = 0;\n    while (y > 0) {\n      t = x / y;\n     \
     \ x -= t * y, u -= t * v;\n      tmp = x, x = y, y = tmp;\n      tmp = u, u =\
-    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend ostream &operator<<(ostream\
-    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend istream &operator>>(istream\
-    \ &is, mint &b) {\n    int64_t t;\n    is >> t;\n    b = LazyMontgomeryModInt<mod>(t);\n\
-    \    return (is);\n  }\n\n  constexpr u32 get() const {\n    u32 ret = reduce(a);\n\
-    \    return ret >= mod ? ret - mod : ret;\n  }\n\n  static constexpr u32 get_mod()\
-    \ { return mod; }\n};\n#line 24 \"verify/verify-yosupo-math/yosupo-subset-convolution-fast.test.cpp\"\
-    \n\nint main() {\n  using mint = LazyMontgomeryModInt<998244353>;\n  using vm\
-    \ = vector<mint>;\n  mmint::set_mod<mint>();\n\n  int N;\n  rd(N);\n  using vm\
-    \ = vector<mint>;\n  vm a(1 << N), b(1 << N);\n  unsigned int n;\n  for (int i\
-    \ = 0; i < 1 << N; i++) {\n    rd(n);\n    a[i].a = mint::reduce(uint64_t(n) *\
-    \ mint::n2);\n  }\n  for (int i = 0; i < 1 << N; i++) {\n    rd(n);\n    b[i].a\
-    \ = mint::reduce(uint64_t(n) * mint::n2);\n  }\n  auto c = fast_multiply(a, b);\n\
-    \n  for (int i = 0; i < 1 << N; i++) {\n    if (i) wt(' ');\n    wt(c[i].get());\n\
-    \  }\n  wt('\\n');\n}\n"
+    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend std::ostream &operator<<(std::ostream\
+    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend std::istream\
+    \ &operator>>(std::istream &is, mint &b) {\n    int64_t t;\n    is >> t;\n   \
+    \ b = LazyMontgomeryModInt<mod>(t);\n    return (is);\n  }\n\n  constexpr u32\
+    \ get() const {\n    u32 ret = reduce(a);\n    return ret >= mod ? ret - mod :\
+    \ ret;\n  }\n\n  static constexpr u32 get_mod() { return mod; }\n};\n#line 19\
+    \ \"verify/verify-yosupo-math/yosupo-subset-convolution-fast.test.cpp\"\n\nint\
+    \ main() {\n  using mint = LazyMontgomeryModInt<998244353>;\n  using vm = vector<mint>;\n\
+    \  mmint::set_mod<mint>();\n\n  int N;\n  rd(N);\n  using vm = vector<mint>;\n\
+    \  vm a(1 << N), b(1 << N);\n  unsigned int n;\n  for (int i = 0; i < 1 << N;\
+    \ i++) {\n    rd(n);\n    a[i].a = mint::reduce(uint64_t(n) * mint::n2);\n  }\n\
+    \  for (int i = 0; i < 1 << N; i++) {\n    rd(n);\n    b[i].a = mint::reduce(uint64_t(n)\
+    \ * mint::n2);\n  }\n  auto c = fast_multiply(a, b);\n\n  for (int i = 0; i <\
+    \ 1 << N; i++) {\n    if (i) wt(' ');\n    wt(c[i].get());\n  }\n  wt('\\n');\n\
+    }\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/subset_convolution\"\n\
-    //\n#include <immintrin.h>\n//\n#include <algorithm>\n#include <cassert>\n#include\
-    \ <chrono>\n#include <cstdint>\n#include <cstdio>\n#include <cstring>\n#include\
-    \ <iostream>\n#include <random>\n#include <type_traits>\n#include <utility>\n\
-    #include <vector>\n\nusing namespace std;\n\n#include \"../../misc/fastio.hpp\"\
-    \n//\n#include \"../../math-fast/subset-convolution.hpp\"\n//\n#include \"../../modint/montgomery-modint.hpp\"\
-    \n\nint main() {\n  using mint = LazyMontgomeryModInt<998244353>;\n  using vm\
-    \ = vector<mint>;\n  mmint::set_mod<mint>();\n\n  int N;\n  rd(N);\n  using vm\
-    \ = vector<mint>;\n  vm a(1 << N), b(1 << N);\n  unsigned int n;\n  for (int i\
-    \ = 0; i < 1 << N; i++) {\n    rd(n);\n    a[i].a = mint::reduce(uint64_t(n) *\
-    \ mint::n2);\n  }\n  for (int i = 0; i < 1 << N; i++) {\n    rd(n);\n    b[i].a\
-    \ = mint::reduce(uint64_t(n) * mint::n2);\n  }\n  auto c = fast_multiply(a, b);\n\
-    \n  for (int i = 0; i < 1 << N; i++) {\n    if (i) wt(' ');\n    wt(c[i].get());\n\
-    \  }\n  wt('\\n');\n}\n"
+    //\n#include <immintrin.h>\n//\n#include <cassert>\n#include <cstdint>\n#include\
+    \ <cstdio>\n#include <cstring>\n#include <utility>\n#include <vector>\n\nusing\
+    \ namespace std;\n\n#include \"../../misc/fastio.hpp\"\n//\n#include \"../../math-fast/subset-convolution.hpp\"\
+    \n//\n#include \"../../modint/montgomery-modint.hpp\"\n\nint main() {\n  using\
+    \ mint = LazyMontgomeryModInt<998244353>;\n  using vm = vector<mint>;\n  mmint::set_mod<mint>();\n\
+    \n  int N;\n  rd(N);\n  using vm = vector<mint>;\n  vm a(1 << N), b(1 << N);\n\
+    \  unsigned int n;\n  for (int i = 0; i < 1 << N; i++) {\n    rd(n);\n    a[i].a\
+    \ = mint::reduce(uint64_t(n) * mint::n2);\n  }\n  for (int i = 0; i < 1 << N;\
+    \ i++) {\n    rd(n);\n    b[i].a = mint::reduce(uint64_t(n) * mint::n2);\n  }\n\
+    \  auto c = fast_multiply(a, b);\n\n  for (int i = 0; i < 1 << N; i++) {\n   \
+    \ if (i) wt(' ');\n    wt(c[i].get());\n  }\n  wt('\\n');\n}\n"
   dependsOn:
   - misc/fastio.hpp
   - internal/internal-type-traits.hpp
@@ -283,7 +281,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-math/yosupo-subset-convolution-fast.test.cpp
   requiredBy: []
-  timestamp: '2026-05-21 18:07:01+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-math/yosupo-subset-convolution-fast.test.cpp

@@ -45,8 +45,8 @@ data:
   attributes:
     links: []
   bundledCode: "#line 2 \"misc/all.hpp\"\n\n#line 2 \"misc/fastio.hpp\"\n\n#include\
-    \ <cstdio>\n#include <cstring>\n#include <string>\n#include <type_traits>\n#include\
-    \ <utility>\n\nusing namespace std;\n\n#line 2 \"internal/internal-type-traits.hpp\"\
+    \ <cstdint>\n#include <cstdio>\n#include <cstring>\n#include <string>\n#include\
+    \ <type_traits>\n#include <utility>\n\nusing namespace std;\n\n#line 2 \"internal/internal-type-traits.hpp\"\
     \n\n#line 4 \"internal/internal-type-traits.hpp\"\nusing namespace std;\n\nnamespace\
     \ internal {\ntemplate <typename T>\nusing is_broadly_integral =\n    typename\
     \ conditional_t<is_integral_v<T> || is_same_v<T, __int128_t> ||\n            \
@@ -71,7 +71,7 @@ data:
     \          \\\n  struct has_##var<T, void_t<decltype(T::var)>> : true_type {};\
     \ \\\n  template <class T>                                            \\\n  constexpr\
     \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace internal\n#line\
-    \ 12 \"misc/fastio.hpp\"\n\nnamespace fastio {\nstatic constexpr int SZ = 1 <<\
+    \ 13 \"misc/fastio.hpp\"\n\nnamespace fastio {\nstatic constexpr int SZ = 1 <<\
     \ 17;\nstatic constexpr int offset = 64;\nchar inbuf[SZ], outbuf[SZ];\nint in_left\
     \ = 0, in_right = 0, out_right = 0;\n\nstruct Pre {\n  char num[40000];\n  constexpr\
     \ Pre() : num() {\n    for (int i = 0; i < 10000; i++) {\n      int n = i;\n \
@@ -120,9 +120,10 @@ data:
     \ {\n  wt(std::forward<const Args>(x)...);\n  wt('\\n');\n}\n\nstruct Dummy {\n\
     \  Dummy() { atexit(flush); }\n} dummy;\n\n}  // namespace fastio\nusing fastio::rd;\n\
     using fastio::skip_space;\nusing fastio::wt;\nusing fastio::wtn;\n#line 2 \"misc/rng.hpp\"\
-    \n\n#line 2 \"internal/internal-seed.hpp\"\n\n#include <chrono>\nusing namespace\
-    \ std;\n\nnamespace internal {\nunsigned long long non_deterministic_seed() {\n\
-    \  unsigned long long m =\n      chrono::duration_cast<chrono::nanoseconds>(\n\
+    \n\n#include <algorithm>\n#include <cassert>\n#include <unordered_set>\n#include\
+    \ <vector>\nusing namespace std;\n\n#line 2 \"internal/internal-seed.hpp\"\n\n\
+    #include <chrono>\nusing namespace std;\n\nnamespace internal {\nunsigned long\
+    \ long non_deterministic_seed() {\n  unsigned long long m =\n      chrono::duration_cast<chrono::nanoseconds>(\n\
     \          chrono::high_resolution_clock::now().time_since_epoch())\n        \
     \  .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >> 31, m\
     \ ^= m << 35;\n  return m;\n}\nunsigned long long deterministic_seed() { return\
@@ -133,7 +134,7 @@ data:
     \u30FC\u30C9\u304C\u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long long\
     \ seed() {\n#if defined(NyaanLocal) && !defined(RANDOMIZED_SEED)\n  return deterministic_seed();\n\
     #else\n  return non_deterministic_seed();\n#endif\n}\n\n}  // namespace internal\n\
-    #line 4 \"misc/rng.hpp\"\n\nnamespace my_rand {\nusing i64 = long long;\nusing\
+    #line 10 \"misc/rng.hpp\"\n\nnamespace my_rand {\nusing i64 = long long;\nusing\
     \ u64 = unsigned long long;\n\n// [0, 2^64 - 1)\nu64 rng() {\n  static u64 _x\
     \ = internal::seed();\n  return _x ^= _x << 7, _x ^= _x >> 9;\n}\n\n// [l, r]\n\
     i64 rng(i64 l, i64 r) {\n  assert(l <= r);\n  return l + rng() % u64(r - l + 1);\n\
@@ -174,7 +175,7 @@ data:
   isVerificationFile: false
   path: misc/all.hpp
   requiredBy: []
-  timestamp: '2024-05-03 23:21:26+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-unit-test/radix-sort.test.cpp

@@ -47,9 +47,6 @@ data:
     path: ntt/ntt.hpp
     title: ntt/ntt.hpp
   - icon: ':heavy_check_mark:'
-    path: prime/fast-factorize.hpp
-    title: "\u9AD8\u901F\u7D20\u56E0\u6570\u5206\u89E3(Miller Rabin/Pollard's Rho)"
-  - icon: ':heavy_check_mark:'
     path: prime/miller-rabin.hpp
     title: Miller-Rabin primality test
   - icon: ':heavy_check_mark:'
@@ -272,7 +269,7 @@ data:
     \ \\\n    return;                  \\\n  } while (0)\n#line 70 \"template/template.hpp\"\
     \n\nnamespace Nyaan {\nvoid solve();\n}\nint main() { Nyaan::solve(); }\n#line\
     \ 4 \"verify/verify-unit-test/garner-bigint.test.cpp\"\n//\n#line 1 \"math/bigint-garner.hpp\"\
-    \n\n#line 2 \"math/bigint.hpp\"\n\n#line 10 \"math/bigint.hpp\"\nusing namespace\
+    \n\n#line 2 \"math/bigint.hpp\"\n\n#line 9 \"math/bigint.hpp\"\nusing namespace\
     \ std;\n\n#line 2 \"internal/internal-type-traits.hpp\"\n\n#line 4 \"internal/internal-type-traits.hpp\"\
     \nusing namespace std;\n\nnamespace internal {\ntemplate <typename T>\nusing is_broadly_integral\
     \ =\n    typename conditional_t<is_integral_v<T> || is_same_v<T, __int128_t> ||\n\
@@ -297,112 +294,115 @@ data:
     \          \\\n  struct has_##var<T, void_t<decltype(T::var)>> : true_type {};\
     \ \\\n  template <class T>                                            \\\n  constexpr\
     \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace internal\n#line\
-    \ 2 \"ntt/arbitrary-ntt.hpp\"\n\n#line 2 \"modint/montgomery-modint.hpp\"\n\n\
-    #line 4 \"modint/montgomery-modint.hpp\"\n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt\
-    \ {\n  using mint = LazyMontgomeryModInt;\n  using i32 = int32_t;\n  using u32\
-    \ = uint32_t;\n  using u64 = uint64_t;\n\n  static constexpr u32 get_r() {\n \
-    \   u32 ret = mod;\n    for (i32 i = 0; i < 4; ++i) ret *= 2 - mod * ret;\n  \
-    \  return ret;\n  }\n\n  static constexpr u32 r = get_r();\n  static constexpr\
-    \ u32 n2 = -u64(mod) % mod;\n  static_assert(mod < (1 << 30), \"invalid, mod >=\
-    \ 2 ^ 30\");\n  static_assert((mod & 1) == 1, \"invalid, mod % 2 == 0\");\n  static_assert(r\
-    \ * mod == 1, \"this code has bugs.\");\n\n  u32 a;\n\n  constexpr LazyMontgomeryModInt()\
-    \ : a(0) {}\n  constexpr LazyMontgomeryModInt(const int64_t &b)\n      : a(reduce(u64(b\
-    \ % mod + mod) * n2)){};\n\n  static constexpr u32 reduce(const u64 &b) {\n  \
-    \  return (b + u64(u32(b) * u32(-r)) * mod) >> 32;\n  }\n\n  constexpr mint &operator+=(const\
-    \ mint &b) {\n    if (i32(a += b.a - 2 * mod) < 0) a += 2 * mod;\n    return *this;\n\
-    \  }\n\n  constexpr mint &operator-=(const mint &b) {\n    if (i32(a -= b.a) <\
-    \ 0) a += 2 * mod;\n    return *this;\n  }\n\n  constexpr mint &operator*=(const\
-    \ mint &b) {\n    a = reduce(u64(a) * b.a);\n    return *this;\n  }\n\n  constexpr\
-    \ mint &operator/=(const mint &b) {\n    *this *= b.inverse();\n    return *this;\n\
-    \  }\n\n  constexpr mint operator+(const mint &b) const { return mint(*this) +=\
-    \ b; }\n  constexpr mint operator-(const mint &b) const { return mint(*this) -=\
-    \ b; }\n  constexpr mint operator*(const mint &b) const { return mint(*this) *=\
-    \ b; }\n  constexpr mint operator/(const mint &b) const { return mint(*this) /=\
-    \ b; }\n  constexpr bool operator==(const mint &b) const {\n    return (a >= mod\
-    \ ? a - mod : a) == (b.a >= mod ? b.a - mod : b.a);\n  }\n  constexpr bool operator!=(const\
-    \ mint &b) const {\n    return (a >= mod ? a - mod : a) != (b.a >= mod ? b.a -\
-    \ mod : b.a);\n  }\n  constexpr mint operator-() const { return mint() - mint(*this);\
+    \ 2 \"ntt/arbitrary-ntt.hpp\"\n\n#line 6 \"ntt/arbitrary-ntt.hpp\"\nusing namespace\
+    \ std;\n\n#line 2 \"modint/montgomery-modint.hpp\"\n\n#line 5 \"modint/montgomery-modint.hpp\"\
+    \n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n\
+    \  using i32 = int32_t;\n  using u32 = uint32_t;\n  using u64 = uint64_t;\n\n\
+    \  static constexpr u32 get_r() {\n    u32 ret = mod;\n    for (i32 i = 0; i <\
+    \ 4; ++i) ret *= 2 - mod * ret;\n    return ret;\n  }\n\n  static constexpr u32\
+    \ r = get_r();\n  static constexpr u32 n2 = -u64(mod) % mod;\n  static_assert(mod\
+    \ < (1 << 30), \"invalid, mod >= 2 ^ 30\");\n  static_assert((mod & 1) == 1, \"\
+    invalid, mod % 2 == 0\");\n  static_assert(r * mod == 1, \"this code has bugs.\"\
+    );\n\n  u32 a;\n\n  constexpr LazyMontgomeryModInt() : a(0) {}\n  constexpr LazyMontgomeryModInt(const\
+    \ int64_t &b)\n      : a(reduce(u64(b % mod + mod) * n2)){};\n\n  static constexpr\
+    \ u32 reduce(const u64 &b) {\n    return (b + u64(u32(b) * u32(-r)) * mod) >>\
+    \ 32;\n  }\n\n  constexpr mint &operator+=(const mint &b) {\n    if (i32(a +=\
+    \ b.a - 2 * mod) < 0) a += 2 * mod;\n    return *this;\n  }\n\n  constexpr mint\
+    \ &operator-=(const mint &b) {\n    if (i32(a -= b.a) < 0) a += 2 * mod;\n   \
+    \ return *this;\n  }\n\n  constexpr mint &operator*=(const mint &b) {\n    a =\
+    \ reduce(u64(a) * b.a);\n    return *this;\n  }\n\n  constexpr mint &operator/=(const\
+    \ mint &b) {\n    *this *= b.inverse();\n    return *this;\n  }\n\n  constexpr\
+    \ mint operator+(const mint &b) const { return mint(*this) += b; }\n  constexpr\
+    \ mint operator-(const mint &b) const { return mint(*this) -= b; }\n  constexpr\
+    \ mint operator*(const mint &b) const { return mint(*this) *= b; }\n  constexpr\
+    \ mint operator/(const mint &b) const { return mint(*this) /= b; }\n  constexpr\
+    \ bool operator==(const mint &b) const {\n    return (a >= mod ? a - mod : a)\
+    \ == (b.a >= mod ? b.a - mod : b.a);\n  }\n  constexpr bool operator!=(const mint\
+    \ &b) const {\n    return (a >= mod ? a - mod : a) != (b.a >= mod ? b.a - mod\
+    \ : b.a);\n  }\n  constexpr mint operator-() const { return mint() - mint(*this);\
     \ }\n  constexpr mint operator+() const { return mint(*this); }\n\n  constexpr\
     \ mint pow(u64 n) const {\n    mint ret(1), mul(*this);\n    while (n > 0) {\n\
     \      if (n & 1) ret *= mul;\n      mul *= mul;\n      n >>= 1;\n    }\n    return\
     \ ret;\n  }\n\n  constexpr mint inverse() const {\n    int x = get(), y = mod,\
     \ u = 1, v = 0, t = 0, tmp = 0;\n    while (y > 0) {\n      t = x / y;\n     \
     \ x -= t * y, u -= t * v;\n      tmp = x, x = y, y = tmp;\n      tmp = u, u =\
-    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend ostream &operator<<(ostream\
-    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend istream &operator>>(istream\
-    \ &is, mint &b) {\n    int64_t t;\n    is >> t;\n    b = LazyMontgomeryModInt<mod>(t);\n\
-    \    return (is);\n  }\n\n  constexpr u32 get() const {\n    u32 ret = reduce(a);\n\
-    \    return ret >= mod ? ret - mod : ret;\n  }\n\n  static constexpr u32 get_mod()\
-    \ { return mod; }\n};\n#line 2 \"ntt/ntt.hpp\"\n\ntemplate <typename mint>\nstruct\
-    \ NTT {\n  static constexpr uint32_t get_pr() {\n    uint32_t _mod = mint::get_mod();\n\
-    \    using u64 = uint64_t;\n    u64 ds[32] = {};\n    int idx = 0;\n    u64 m\
-    \ = _mod - 1;\n    for (u64 i = 2; i * i <= m; ++i) {\n      if (m % i == 0) {\n\
-    \        ds[idx++] = i;\n        while (m % i == 0) m /= i;\n      }\n    }\n\
-    \    if (m != 1) ds[idx++] = m;\n\n    uint32_t _pr = 2;\n    while (1) {\n  \
-    \    int flg = 1;\n      for (int i = 0; i < idx; ++i) {\n        u64 a = _pr,\
-    \ b = (_mod - 1) / ds[i], r = 1;\n        while (b) {\n          if (b & 1) r\
-    \ = r * a % _mod;\n          a = a * a % _mod;\n          b >>= 1;\n        }\n\
-    \        if (r == 1) {\n          flg = 0;\n          break;\n        }\n    \
-    \  }\n      if (flg == 1) break;\n      ++_pr;\n    }\n    return _pr;\n  };\n\
-    \n  static constexpr uint32_t mod = mint::get_mod();\n  static constexpr uint32_t\
-    \ pr = get_pr();\n  static constexpr int level = __builtin_ctzll(mod - 1);\n \
-    \ mint dw[level], dy[level];\n\n  void setwy(int k) {\n    mint w[level], y[level];\n\
-    \    w[k - 1] = mint(pr).pow((mod - 1) / (1 << k));\n    y[k - 1] = w[k - 1].inverse();\n\
-    \    for (int i = k - 2; i > 0; --i)\n      w[i] = w[i + 1] * w[i + 1], y[i] =\
-    \ y[i + 1] * y[i + 1];\n    dw[1] = w[1], dy[1] = y[1], dw[2] = w[2], dy[2] =\
-    \ y[2];\n    for (int i = 3; i < k; ++i) {\n      dw[i] = dw[i - 1] * y[i - 2]\
-    \ * w[i];\n      dy[i] = dy[i - 1] * w[i - 2] * y[i];\n    }\n  }\n\n  NTT() {\
-    \ setwy(level); }\n\n  void fft4(vector<mint> &a, int k) {\n    if ((int)a.size()\
-    \ <= 1) return;\n    if (k == 1) {\n      mint a1 = a[1];\n      a[1] = a[0] -\
-    \ a[1];\n      a[0] = a[0] + a1;\n      return;\n    }\n    if (k & 1) {\n   \
-    \   int v = 1 << (k - 1);\n      for (int j = 0; j < v; ++j) {\n        mint ajv\
-    \ = a[j + v];\n        a[j + v] = a[j] - ajv;\n        a[j] += ajv;\n      }\n\
-    \    }\n    int u = 1 << (2 + (k & 1));\n    int v = 1 << (k - 2 - (k & 1));\n\
-    \    mint one = mint(1);\n    mint imag = dw[1];\n    while (v) {\n      // jh\
-    \ = 0\n      {\n        int j0 = 0;\n        int j1 = v;\n        int j2 = j1\
-    \ + v;\n        int j3 = j2 + v;\n        for (; j0 < v; ++j0, ++j1, ++j2, ++j3)\
-    \ {\n          mint t0 = a[j0], t1 = a[j1], t2 = a[j2], t3 = a[j3];\n        \
-    \  mint t0p2 = t0 + t2, t1p3 = t1 + t3;\n          mint t0m2 = t0 - t2, t1m3 =\
-    \ (t1 - t3) * imag;\n          a[j0] = t0p2 + t1p3, a[j1] = t0p2 - t1p3;\n   \
-    \       a[j2] = t0m2 + t1m3, a[j3] = t0m2 - t1m3;\n        }\n      }\n      //\
-    \ jh >= 1\n      mint ww = one, xx = one * dw[2], wx = one;\n      for (int jh\
-    \ = 4; jh < u;) {\n        ww = xx * xx, wx = ww * xx;\n        int j0 = jh *\
-    \ v;\n        int je = j0 + v;\n        int j2 = je + v;\n        for (; j0 <\
-    \ je; ++j0, ++j2) {\n          mint t0 = a[j0], t1 = a[j0 + v] * xx, t2 = a[j2]\
-    \ * ww,\n               t3 = a[j2 + v] * wx;\n          mint t0p2 = t0 + t2, t1p3\
-    \ = t1 + t3;\n          mint t0m2 = t0 - t2, t1m3 = (t1 - t3) * imag;\n      \
-    \    a[j0] = t0p2 + t1p3, a[j0 + v] = t0p2 - t1p3;\n          a[j2] = t0m2 + t1m3,\
-    \ a[j2 + v] = t0m2 - t1m3;\n        }\n        xx *= dw[__builtin_ctzll((jh +=\
-    \ 4))];\n      }\n      u <<= 2;\n      v >>= 2;\n    }\n  }\n\n  void ifft4(vector<mint>\
-    \ &a, int k) {\n    if ((int)a.size() <= 1) return;\n    if (k == 1) {\n     \
-    \ mint a1 = a[1];\n      a[1] = a[0] - a[1];\n      a[0] = a[0] + a1;\n      return;\n\
-    \    }\n    int u = 1 << (k - 2);\n    int v = 1;\n    mint one = mint(1);\n \
-    \   mint imag = dy[1];\n    while (u) {\n      // jh = 0\n      {\n        int\
-    \ j0 = 0;\n        int j1 = v;\n        int j2 = v + v;\n        int j3 = j2 +\
-    \ v;\n        for (; j0 < v; ++j0, ++j1, ++j2, ++j3) {\n          mint t0 = a[j0],\
-    \ t1 = a[j1], t2 = a[j2], t3 = a[j3];\n          mint t0p1 = t0 + t1, t2p3 = t2\
-    \ + t3;\n          mint t0m1 = t0 - t1, t2m3 = (t2 - t3) * imag;\n          a[j0]\
-    \ = t0p1 + t2p3, a[j2] = t0p1 - t2p3;\n          a[j1] = t0m1 + t2m3, a[j3] =\
-    \ t0m1 - t2m3;\n        }\n      }\n      // jh >= 1\n      mint ww = one, xx\
-    \ = one * dy[2], yy = one;\n      u <<= 2;\n      for (int jh = 4; jh < u;) {\n\
-    \        ww = xx * xx, yy = xx * imag;\n        int j0 = jh * v;\n        int\
-    \ je = j0 + v;\n        int j2 = je + v;\n        for (; j0 < je; ++j0, ++j2)\
-    \ {\n          mint t0 = a[j0], t1 = a[j0 + v], t2 = a[j2], t3 = a[j2 + v];\n\
-    \          mint t0p1 = t0 + t1, t2p3 = t2 + t3;\n          mint t0m1 = (t0 - t1)\
-    \ * xx, t2m3 = (t2 - t3) * yy;\n          a[j0] = t0p1 + t2p3, a[j2] = (t0p1 -\
-    \ t2p3) * ww;\n          a[j0 + v] = t0m1 + t2m3, a[j2 + v] = (t0m1 - t2m3) *\
-    \ ww;\n        }\n        xx *= dy[__builtin_ctzll(jh += 4)];\n      }\n     \
-    \ u >>= 4;\n      v <<= 2;\n    }\n    if (k & 1) {\n      u = 1 << (k - 1);\n\
-    \      for (int j = 0; j < u; ++j) {\n        mint ajv = a[j] - a[j + u];\n  \
-    \      a[j] += a[j + u];\n        a[j + u] = ajv;\n      }\n    }\n  }\n\n  void\
-    \ ntt(vector<mint> &a) {\n    if ((int)a.size() <= 1) return;\n    fft4(a, __builtin_ctz(a.size()));\n\
-    \  }\n\n  void intt(vector<mint> &a) {\n    if ((int)a.size() <= 1) return;\n\
-    \    ifft4(a, __builtin_ctz(a.size()));\n    mint iv = mint(a.size()).inverse();\n\
-    \    for (auto &x : a) x *= iv;\n  }\n\n  vector<mint> multiply(const vector<mint>\
-    \ &a, const vector<mint> &b) {\n    int l = a.size() + b.size() - 1;\n    if (min<int>(a.size(),\
-    \ b.size()) <= 40) {\n      vector<mint> s(l);\n      for (int i = 0; i < (int)a.size();\
-    \ ++i)\n        for (int j = 0; j < (int)b.size(); ++j) s[i + j] += a[i] * b[j];\n\
-    \      return s;\n    }\n    int k = 2, M = 4;\n    while (M < l) M <<= 1, ++k;\n\
+    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend std::ostream &operator<<(std::ostream\
+    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend std::istream\
+    \ &operator>>(std::istream &is, mint &b) {\n    int64_t t;\n    is >> t;\n   \
+    \ b = LazyMontgomeryModInt<mod>(t);\n    return (is);\n  }\n\n  constexpr u32\
+    \ get() const {\n    u32 ret = reduce(a);\n    return ret >= mod ? ret - mod :\
+    \ ret;\n  }\n\n  static constexpr u32 get_mod() { return mod; }\n};\n#line 2 \"\
+    ntt/ntt.hpp\"\n\n#line 7 \"ntt/ntt.hpp\"\nusing namespace std;\n\ntemplate <typename\
+    \ mint>\nstruct NTT {\n  static constexpr uint32_t get_pr() {\n    uint32_t _mod\
+    \ = mint::get_mod();\n    using u64 = uint64_t;\n    u64 ds[32] = {};\n    int\
+    \ idx = 0;\n    u64 m = _mod - 1;\n    for (u64 i = 2; i * i <= m; ++i) {\n  \
+    \    if (m % i == 0) {\n        ds[idx++] = i;\n        while (m % i == 0) m /=\
+    \ i;\n      }\n    }\n    if (m != 1) ds[idx++] = m;\n\n    uint32_t _pr = 2;\n\
+    \    while (1) {\n      int flg = 1;\n      for (int i = 0; i < idx; ++i) {\n\
+    \        u64 a = _pr, b = (_mod - 1) / ds[i], r = 1;\n        while (b) {\n  \
+    \        if (b & 1) r = r * a % _mod;\n          a = a * a % _mod;\n         \
+    \ b >>= 1;\n        }\n        if (r == 1) {\n          flg = 0;\n          break;\n\
+    \        }\n      }\n      if (flg == 1) break;\n      ++_pr;\n    }\n    return\
+    \ _pr;\n  };\n\n  static constexpr uint32_t mod = mint::get_mod();\n  static constexpr\
+    \ uint32_t pr = get_pr();\n  static constexpr int level = __builtin_ctzll(mod\
+    \ - 1);\n  mint dw[level], dy[level];\n\n  void setwy(int k) {\n    mint w[level],\
+    \ y[level];\n    w[k - 1] = mint(pr).pow((mod - 1) / (1 << k));\n    y[k - 1]\
+    \ = w[k - 1].inverse();\n    for (int i = k - 2; i > 0; --i)\n      w[i] = w[i\
+    \ + 1] * w[i + 1], y[i] = y[i + 1] * y[i + 1];\n    dw[1] = w[1], dy[1] = y[1],\
+    \ dw[2] = w[2], dy[2] = y[2];\n    for (int i = 3; i < k; ++i) {\n      dw[i]\
+    \ = dw[i - 1] * y[i - 2] * w[i];\n      dy[i] = dy[i - 1] * w[i - 2] * y[i];\n\
+    \    }\n  }\n\n  NTT() { setwy(level); }\n\n  void fft4(vector<mint> &a, int k)\
+    \ {\n    if ((int)a.size() <= 1) return;\n    if (k == 1) {\n      mint a1 = a[1];\n\
+    \      a[1] = a[0] - a[1];\n      a[0] = a[0] + a1;\n      return;\n    }\n  \
+    \  if (k & 1) {\n      int v = 1 << (k - 1);\n      for (int j = 0; j < v; ++j)\
+    \ {\n        mint ajv = a[j + v];\n        a[j + v] = a[j] - ajv;\n        a[j]\
+    \ += ajv;\n      }\n    }\n    int u = 1 << (2 + (k & 1));\n    int v = 1 << (k\
+    \ - 2 - (k & 1));\n    mint one = mint(1);\n    mint imag = dw[1];\n    while\
+    \ (v) {\n      // jh = 0\n      {\n        int j0 = 0;\n        int j1 = v;\n\
+    \        int j2 = j1 + v;\n        int j3 = j2 + v;\n        for (; j0 < v; ++j0,\
+    \ ++j1, ++j2, ++j3) {\n          mint t0 = a[j0], t1 = a[j1], t2 = a[j2], t3 =\
+    \ a[j3];\n          mint t0p2 = t0 + t2, t1p3 = t1 + t3;\n          mint t0m2\
+    \ = t0 - t2, t1m3 = (t1 - t3) * imag;\n          a[j0] = t0p2 + t1p3, a[j1] =\
+    \ t0p2 - t1p3;\n          a[j2] = t0m2 + t1m3, a[j3] = t0m2 - t1m3;\n        }\n\
+    \      }\n      // jh >= 1\n      mint ww = one, xx = one * dw[2], wx = one;\n\
+    \      for (int jh = 4; jh < u;) {\n        ww = xx * xx, wx = ww * xx;\n    \
+    \    int j0 = jh * v;\n        int je = j0 + v;\n        int j2 = je + v;\n  \
+    \      for (; j0 < je; ++j0, ++j2) {\n          mint t0 = a[j0], t1 = a[j0 + v]\
+    \ * xx, t2 = a[j2] * ww,\n               t3 = a[j2 + v] * wx;\n          mint\
+    \ t0p2 = t0 + t2, t1p3 = t1 + t3;\n          mint t0m2 = t0 - t2, t1m3 = (t1 -\
+    \ t3) * imag;\n          a[j0] = t0p2 + t1p3, a[j0 + v] = t0p2 - t1p3;\n     \
+    \     a[j2] = t0m2 + t1m3, a[j2 + v] = t0m2 - t1m3;\n        }\n        xx *=\
+    \ dw[__builtin_ctzll((jh += 4))];\n      }\n      u <<= 2;\n      v >>= 2;\n \
+    \   }\n  }\n\n  void ifft4(vector<mint> &a, int k) {\n    if ((int)a.size() <=\
+    \ 1) return;\n    if (k == 1) {\n      mint a1 = a[1];\n      a[1] = a[0] - a[1];\n\
+    \      a[0] = a[0] + a1;\n      return;\n    }\n    int u = 1 << (k - 2);\n  \
+    \  int v = 1;\n    mint one = mint(1);\n    mint imag = dy[1];\n    while (u)\
+    \ {\n      // jh = 0\n      {\n        int j0 = 0;\n        int j1 = v;\n    \
+    \    int j2 = v + v;\n        int j3 = j2 + v;\n        for (; j0 < v; ++j0, ++j1,\
+    \ ++j2, ++j3) {\n          mint t0 = a[j0], t1 = a[j1], t2 = a[j2], t3 = a[j3];\n\
+    \          mint t0p1 = t0 + t1, t2p3 = t2 + t3;\n          mint t0m1 = t0 - t1,\
+    \ t2m3 = (t2 - t3) * imag;\n          a[j0] = t0p1 + t2p3, a[j2] = t0p1 - t2p3;\n\
+    \          a[j1] = t0m1 + t2m3, a[j3] = t0m1 - t2m3;\n        }\n      }\n   \
+    \   // jh >= 1\n      mint ww = one, xx = one * dy[2], yy = one;\n      u <<=\
+    \ 2;\n      for (int jh = 4; jh < u;) {\n        ww = xx * xx, yy = xx * imag;\n\
+    \        int j0 = jh * v;\n        int je = j0 + v;\n        int j2 = je + v;\n\
+    \        for (; j0 < je; ++j0, ++j2) {\n          mint t0 = a[j0], t1 = a[j0 +\
+    \ v], t2 = a[j2], t3 = a[j2 + v];\n          mint t0p1 = t0 + t1, t2p3 = t2 +\
+    \ t3;\n          mint t0m1 = (t0 - t1) * xx, t2m3 = (t2 - t3) * yy;\n        \
+    \  a[j0] = t0p1 + t2p3, a[j2] = (t0p1 - t2p3) * ww;\n          a[j0 + v] = t0m1\
+    \ + t2m3, a[j2 + v] = (t0m1 - t2m3) * ww;\n        }\n        xx *= dy[__builtin_ctzll(jh\
+    \ += 4)];\n      }\n      u >>= 4;\n      v <<= 2;\n    }\n    if (k & 1) {\n\
+    \      u = 1 << (k - 1);\n      for (int j = 0; j < u; ++j) {\n        mint ajv\
+    \ = a[j] - a[j + u];\n        a[j] += a[j + u];\n        a[j + u] = ajv;\n   \
+    \   }\n    }\n  }\n\n  void ntt(vector<mint> &a) {\n    if ((int)a.size() <= 1)\
+    \ return;\n    fft4(a, __builtin_ctz(a.size()));\n  }\n\n  void intt(vector<mint>\
+    \ &a) {\n    if ((int)a.size() <= 1) return;\n    ifft4(a, __builtin_ctz(a.size()));\n\
+    \    mint iv = mint(a.size()).inverse();\n    for (auto &x : a) x *= iv;\n  }\n\
+    \n  vector<mint> multiply(const vector<mint> &a, const vector<mint> &b) {\n  \
+    \  int l = a.size() + b.size() - 1;\n    if (min<int>(a.size(), b.size()) <= 40)\
+    \ {\n      vector<mint> s(l);\n      for (int i = 0; i < (int)a.size(); ++i)\n\
+    \        for (int j = 0; j < (int)b.size(); ++j) s[i + j] += a[i] * b[j];\n  \
+    \    return s;\n    }\n    int k = 2, M = 4;\n    while (M < l) M <<= 1, ++k;\n\
     \    setwy(k);\n    vector<mint> s(M);\n    for (int i = 0; i < (int)a.size();\
     \ ++i) s[i] = a[i];\n    fft4(s, k);\n    if (a.size() == b.size() && a == b)\
     \ {\n      for (int i = 0; i < M; ++i) s[i] *= s[i];\n    } else {\n      vector<mint>\
@@ -413,7 +413,7 @@ data:
     \ &a) {\n    int M = (int)a.size();\n    auto b = a;\n    intt(b);\n    mint r\
     \ = 1, zeta = mint(pr).pow((mint::get_mod() - 1) / (M << 1));\n    for (int i\
     \ = 0; i < M; i++) b[i] *= r, r *= zeta;\n    ntt(b);\n    copy(begin(b), end(b),\
-    \ back_inserter(a));\n  }\n};\n#line 5 \"ntt/arbitrary-ntt.hpp\"\n\nnamespace\
+    \ back_inserter(a));\n  }\n};\n#line 10 \"ntt/arbitrary-ntt.hpp\"\n\nnamespace\
     \ ArbitraryNTT {\nusing i64 = int64_t;\nusing u128 = __uint128_t;\nconstexpr int32_t\
     \ m0 = 167772161;\nconstexpr int32_t m1 = 469762049;\nconstexpr int32_t m2 = 754974721;\n\
     using mint0 = LazyMontgomeryModInt<m0>;\nusing mint1 = LazyMontgomeryModInt<m1>;\n\
@@ -451,7 +451,7 @@ data:
     \ (int i = 0; i < n; i++) {\n    i64 n1 = d1[i].get(), n2 = d2[i].get();\n   \
     \ i64 a = d0[i].get();\n    i64 b = (n1 + m1 - a) * r01 % m1;\n    i64 c = ((n2\
     \ + m2 - a) * r02r12 + (m2 - b) * r12) % m2;\n    ret[i] = a + b * w1 + u128(c)\
-    \ * w2;\n  }\n  return ret;\n}\n}  // namespace ArbitraryNTT\n#line 14 \"math/bigint.hpp\"\
+    \ * w2;\n  }\n  return ret;\n}\n}  // namespace ArbitraryNTT\n#line 13 \"math/bigint.hpp\"\
     \n\nnamespace MultiPrecisionIntegerImpl {\nstruct TENS {\n  static constexpr int\
     \ offset = 30;\n  constexpr TENS() : _tend() {\n    _tend[offset] = 1;\n    for\
     \ (int i = 1; i <= offset; i++) {\n      _tend[offset + i] = _tend[offset + i\
@@ -736,9 +736,9 @@ data:
     \    get_mod() = md;\n    barrett() = Barrett(md);\n  }\n};\n\nusing ArbitraryModInt\
     \ = ArbitraryModIntBase<-1>;\n\n/**\n * @brief modint (2^{30} \u672A\u6E80\u306E\
     \u4EFB\u610F mod \u7528)\n */\n#line 8 \"verify/verify-unit-test/garner-bigint.test.cpp\"\
-    \n//\n#line 2 \"prime/fast-factorize.hpp\"\n\n#line 6 \"prime/fast-factorize.hpp\"\
+    \n//\n#line 2 \"prime/miller-rabin.hpp\"\n\n#line 4 \"prime/miller-rabin.hpp\"\
     \nusing namespace std;\n\n#line 2 \"internal/internal-math.hpp\"\n\n#line 4 \"\
-    internal/internal-math.hpp\"\n\nnamespace internal {\n\n#line 10 \"internal/internal-math.hpp\"\
+    internal/internal-math.hpp\"\n\nnamespace internal {\n\n#line 9 \"internal/internal-math.hpp\"\
     \nusing namespace std;\n\n// a mod p\ntemplate <typename T>\nT safe_mod(T a, T\
     \ p) {\n  a %= p;\n  if constexpr (is_broadly_signed_v<T>) {\n    if (a < 0) a\
     \ += p;\n  }\n  return a;\n}\n\n// \u8FD4\u308A\u5024\uFF1Apair(g, x)\n// s.t.\
@@ -766,65 +766,36 @@ data:
     \ [g, im] = inv_gcd(m0, m1);\n    T u1 = m1 / g;\n    if ((r1 - r0) % g) return\
     \ {0, 0};\n    T x = (r1 - r0) / g % u1 * im % u1;\n    r0 += x * m0;\n    m0\
     \ *= u1;\n    if (r0 < 0) r0 += m0;\n  }\n  return {r0, m0};\n}\n\n}  // namespace\
-    \ internal\n#line 2 \"misc/rng.hpp\"\n\n#line 2 \"internal/internal-seed.hpp\"\
-    \n\n#line 4 \"internal/internal-seed.hpp\"\nusing namespace std;\n\nnamespace\
-    \ internal {\nunsigned long long non_deterministic_seed() {\n  unsigned long long\
-    \ m =\n      chrono::duration_cast<chrono::nanoseconds>(\n          chrono::high_resolution_clock::now().time_since_epoch())\n\
-    \          .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >>\
-    \ 31, m ^= m << 35;\n  return m;\n}\nunsigned long long deterministic_seed() {\
-    \ return 88172645463325252UL; }\n\n// 64 bit \u306E seed \u5024\u3092\u751F\u6210\
-    \ (\u624B\u5143\u3067\u306F seed \u56FA\u5B9A)\n// \u9023\u7D9A\u3067\u547C\u3073\
-    \u51FA\u3059\u3068\u540C\u3058\u5024\u304C\u4F55\u5EA6\u3082\u8FD4\u3063\u3066\
-    \u304F\u308B\u306E\u3067\u6CE8\u610F\n// #define RANDOMIZED_SEED \u3059\u308B\u3068\
-    \u30B7\u30FC\u30C9\u304C\u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long\
-    \ long seed() {\n#if defined(NyaanLocal) && !defined(RANDOMIZED_SEED)\n  return\
-    \ deterministic_seed();\n#else\n  return non_deterministic_seed();\n#endif\n}\n\
-    \n}  // namespace internal\n#line 4 \"misc/rng.hpp\"\n\nnamespace my_rand {\n\
-    using i64 = long long;\nusing u64 = unsigned long long;\n\n// [0, 2^64 - 1)\n\
-    u64 rng() {\n  static u64 _x = internal::seed();\n  return _x ^= _x << 7, _x ^=\
-    \ _x >> 9;\n}\n\n// [l, r]\ni64 rng(i64 l, i64 r) {\n  assert(l <= r);\n  return\
-    \ l + rng() % u64(r - l + 1);\n}\n\n// [l, r)\ni64 randint(i64 l, i64 r) {\n \
-    \ assert(l < r);\n  return l + rng() % u64(r - l);\n}\n\n// choose n numbers from\
-    \ [l, r) without overlapping\nvector<i64> randset(i64 l, i64 r, i64 n) {\n  assert(l\
-    \ <= r && n <= r - l);\n  unordered_set<i64> s;\n  for (i64 i = n; i; --i) {\n\
-    \    i64 m = randint(l, r + 1 - i);\n    if (s.find(m) != s.end()) m = r - i;\n\
-    \    s.insert(m);\n  }\n  vector<i64> ret;\n  for (auto& x : s) ret.push_back(x);\n\
-    \  sort(begin(ret), end(ret));\n  return ret;\n}\n\n// [0.0, 1.0)\ndouble rnd()\
-    \ { return rng() * 5.42101086242752217004e-20; }\n// [l, r)\ndouble rnd(double\
-    \ l, double r) {\n  assert(l < r);\n  return l + rnd() * (r - l);\n}\n\ntemplate\
-    \ <typename T>\nvoid randshf(vector<T>& v) {\n  int n = v.size();\n  for (int\
-    \ i = 1; i < n; i++) swap(v[i], v[randint(0, i + 1)]);\n}\n\n}  // namespace my_rand\n\
-    \nusing my_rand::randint;\nusing my_rand::randset;\nusing my_rand::randshf;\n\
-    using my_rand::rnd;\nusing my_rand::rng;\n#line 2 \"modint/arbitrary-montgomery-modint.hpp\"\
-    \n\n#line 4 \"modint/arbitrary-montgomery-modint.hpp\"\nusing namespace std;\n\
-    \ntemplate <typename Int, typename UInt, typename Long, typename ULong, int id>\n\
-    struct ArbitraryLazyMontgomeryModIntBase {\n  using mint = ArbitraryLazyMontgomeryModIntBase;\n\
-    \n  inline static UInt mod;\n  inline static UInt r;\n  inline static UInt n2;\n\
-    \  static constexpr int bit_length = sizeof(UInt) * 8;\n\n  static UInt get_r()\
-    \ {\n    UInt ret = mod;\n    while (mod * ret != 1) ret *= UInt(2) - mod * ret;\n\
-    \    return ret;\n  }\n  static void set_mod(UInt m) {\n    assert(m < (UInt(1u)\
-    \ << (bit_length - 2)));\n    assert((m & 1) == 1);\n    mod = m, n2 = -ULong(m)\
-    \ % m, r = get_r();\n  }\n  UInt a;\n\n  ArbitraryLazyMontgomeryModIntBase() :\
-    \ a(0) {}\n  ArbitraryLazyMontgomeryModIntBase(const Long &b)\n      : a(reduce(ULong(b\
-    \ % mod + mod) * n2)){};\n\n  static UInt reduce(const ULong &b) {\n    return\
-    \ (b + ULong(UInt(b) * UInt(-r)) * mod) >> bit_length;\n  }\n\n  mint &operator+=(const\
-    \ mint &b) {\n    if (Int(a += b.a - 2 * mod) < 0) a += 2 * mod;\n    return *this;\n\
-    \  }\n  mint &operator-=(const mint &b) {\n    if (Int(a -= b.a) < 0) a += 2 *\
-    \ mod;\n    return *this;\n  }\n  mint &operator*=(const mint &b) {\n    a = reduce(ULong(a)\
-    \ * b.a);\n    return *this;\n  }\n  mint &operator/=(const mint &b) {\n    *this\
-    \ *= b.inverse();\n    return *this;\n  }\n\n  mint operator+(const mint &b) const\
-    \ { return mint(*this) += b; }\n  mint operator-(const mint &b) const { return\
-    \ mint(*this) -= b; }\n  mint operator*(const mint &b) const { return mint(*this)\
-    \ *= b; }\n  mint operator/(const mint &b) const { return mint(*this) /= b; }\n\
-    \n  bool operator==(const mint &b) const {\n    return (a >= mod ? a - mod : a)\
-    \ == (b.a >= mod ? b.a - mod : b.a);\n  }\n  bool operator!=(const mint &b) const\
-    \ {\n    return (a >= mod ? a - mod : a) != (b.a >= mod ? b.a - mod : b.a);\n\
-    \  }\n  mint operator-() const { return mint(0) - mint(*this); }\n  mint operator+()\
-    \ const { return mint(*this); }\n\n  mint pow(ULong n) const {\n    mint ret(1),\
-    \ mul(*this);\n    while (n > 0) {\n      if (n & 1) ret *= mul;\n      mul *=\
-    \ mul, n >>= 1;\n    }\n    return ret;\n  }\n\n  friend ostream &operator<<(ostream\
-    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend istream &operator>>(istream\
-    \ &is, mint &b) {\n    Long t;\n    is >> t;\n    b = ArbitraryLazyMontgomeryModIntBase(t);\n\
+    \ internal\n#line 2 \"modint/arbitrary-montgomery-modint.hpp\"\n\n#line 4 \"modint/arbitrary-montgomery-modint.hpp\"\
+    \nusing namespace std;\n\ntemplate <typename Int, typename UInt, typename Long,\
+    \ typename ULong, int id>\nstruct ArbitraryLazyMontgomeryModIntBase {\n  using\
+    \ mint = ArbitraryLazyMontgomeryModIntBase;\n\n  inline static UInt mod;\n  inline\
+    \ static UInt r;\n  inline static UInt n2;\n  static constexpr int bit_length\
+    \ = sizeof(UInt) * 8;\n\n  static UInt get_r() {\n    UInt ret = mod;\n    while\
+    \ (mod * ret != 1) ret *= UInt(2) - mod * ret;\n    return ret;\n  }\n  static\
+    \ void set_mod(UInt m) {\n    assert(m < (UInt(1u) << (bit_length - 2)));\n  \
+    \  assert((m & 1) == 1);\n    mod = m, n2 = -ULong(m) % m, r = get_r();\n  }\n\
+    \  UInt a;\n\n  ArbitraryLazyMontgomeryModIntBase() : a(0) {}\n  ArbitraryLazyMontgomeryModIntBase(const\
+    \ Long &b)\n      : a(reduce(ULong(b % mod + mod) * n2)){};\n\n  static UInt reduce(const\
+    \ ULong &b) {\n    return (b + ULong(UInt(b) * UInt(-r)) * mod) >> bit_length;\n\
+    \  }\n\n  mint &operator+=(const mint &b) {\n    if (Int(a += b.a - 2 * mod) <\
+    \ 0) a += 2 * mod;\n    return *this;\n  }\n  mint &operator-=(const mint &b)\
+    \ {\n    if (Int(a -= b.a) < 0) a += 2 * mod;\n    return *this;\n  }\n  mint\
+    \ &operator*=(const mint &b) {\n    a = reduce(ULong(a) * b.a);\n    return *this;\n\
+    \  }\n  mint &operator/=(const mint &b) {\n    *this *= b.inverse();\n    return\
+    \ *this;\n  }\n\n  mint operator+(const mint &b) const { return mint(*this) +=\
+    \ b; }\n  mint operator-(const mint &b) const { return mint(*this) -= b; }\n \
+    \ mint operator*(const mint &b) const { return mint(*this) *= b; }\n  mint operator/(const\
+    \ mint &b) const { return mint(*this) /= b; }\n\n  bool operator==(const mint\
+    \ &b) const {\n    return (a >= mod ? a - mod : a) == (b.a >= mod ? b.a - mod\
+    \ : b.a);\n  }\n  bool operator!=(const mint &b) const {\n    return (a >= mod\
+    \ ? a - mod : a) != (b.a >= mod ? b.a - mod : b.a);\n  }\n  mint operator-() const\
+    \ { return mint(0) - mint(*this); }\n  mint operator+() const { return mint(*this);\
+    \ }\n\n  mint pow(ULong n) const {\n    mint ret(1), mul(*this);\n    while (n\
+    \ > 0) {\n      if (n & 1) ret *= mul;\n      mul *= mul, n >>= 1;\n    }\n  \
+    \  return ret;\n  }\n\n  friend ostream &operator<<(ostream &os, const mint &b)\
+    \ {\n    return os << b.get();\n  }\n\n  friend istream &operator>>(istream &is,\
+    \ mint &b) {\n    Long t;\n    is >> t;\n    b = ArbitraryLazyMontgomeryModIntBase(t);\n\
     \    return (is);\n  }\n\n  mint inverse() const {\n    Int x = get(), y = get_mod(),\
     \ u = 1, v = 0;\n    while (y > 0) {\n      Int t = x / y;\n      swap(x -= t\
     \ * y, y);\n      swap(u -= t * v, v);\n    }\n    return mint{u};\n  }\n\n  UInt\
@@ -835,8 +806,7 @@ data:
     \ unsigned int, long long,\n                                      unsigned long\
     \ long, id>;\ntemplate <int id>\nusing ArbitraryLazyMontgomeryModInt64bit =\n\
     \    ArbitraryLazyMontgomeryModIntBase<long long, unsigned long long, __int128_t,\n\
-    \                                      __uint128_t, id>;\n#line 2 \"prime/miller-rabin.hpp\"\
-    \n\n#line 4 \"prime/miller-rabin.hpp\"\nusing namespace std;\n\n#line 8 \"prime/miller-rabin.hpp\"\
+    \                                      __uint128_t, id>;\n#line 8 \"prime/miller-rabin.hpp\"\
     \n\nnamespace fast_factorize {\n\ntemplate <typename T, typename U>\nbool miller_rabin(const\
     \ T& n, vector<T> ws) {\n  if (n <= 2) return n == 2;\n  if (n % 2 == 0) return\
     \ false;\n\n  T d = n - 1;\n  while (d % 2 == 0) d /= 2;\n  U e = 1, rev = n -\
@@ -860,77 +830,45 @@ data:
     \        n, {2, 325, 9375, 28178, 450775, 9780504, 1795265022});\n  } else {\n\
     \    return miller_rabin_u64(n);\n  }\n}\n\n}  // namespace fast_factorize\n\n\
     using fast_factorize::is_prime;\n\n/**\n * @brief Miller-Rabin primality test\n\
-    \ */\n#line 12 \"prime/fast-factorize.hpp\"\n\nnamespace fast_factorize {\nusing\
-    \ u64 = uint64_t;\n\ntemplate <typename mint, typename T>\nT pollard_rho(T n)\
-    \ {\n  if (~n & 1) return 2;\n  if (is_prime(n)) return n;\n  if (mint::get_mod()\
-    \ != n) mint::set_mod(n);\n  mint R, one = 1;\n  auto f = [&](mint x) { return\
-    \ x * x + R; };\n  auto rnd_ = [&]() { return rng() % (n - 2) + 2; };\n  while\
-    \ (1) {\n    mint x, y, ys, q = one;\n    R = rnd_(), y = rnd_();\n    T g = 1;\n\
-    \    constexpr int m = 128;\n    for (int r = 1; g == 1; r <<= 1) {\n      x =\
-    \ y;\n      for (int i = 0; i < r; ++i) y = f(y);\n      for (int k = 0; g ==\
-    \ 1 && k < r; k += m) {\n        ys = y;\n        for (int i = 0; i < m && i <\
-    \ r - k; ++i) q *= x - (y = f(y));\n        g = gcd(q.get(), n);\n      }\n  \
-    \  }\n    if (g == n) do\n        g = gcd((x - (ys = f(ys))).get(), n);\n    \
-    \  while (g == 1);\n    if (g != n) return g;\n  }\n  exit(1);\n}\n\nusing i64\
-    \ = long long;\n\nvector<i64> inner_factorize(u64 n) {\n  using mint32 = ArbitraryLazyMontgomeryModInt<452288976>;\n\
-    \  using mint64 = ArbitraryLazyMontgomeryModInt64bit<401243123>;\n\n  if (n <=\
-    \ 1) return {};\n  u64 p;\n  if (n <= (1LL << 30)) {\n    p = pollard_rho<mint32,\
-    \ uint32_t>(n);\n  } else if (n <= (1LL << 62)) {\n    p = pollard_rho<mint64,\
-    \ uint64_t>(n);\n  } else {\n    exit(1);\n  }\n  if (p == n) return {i64(p)};\n\
-    \  auto l = inner_factorize(p);\n  auto r = inner_factorize(n / p);\n  copy(begin(r),\
-    \ end(r), back_inserter(l));\n  return l;\n}\n\nvector<i64> factorize(u64 n) {\n\
-    \  auto ret = inner_factorize(n);\n  sort(begin(ret), end(ret));\n  return ret;\n\
-    }\n\nmap<i64, i64> factor_count(u64 n) {\n  map<i64, i64> mp;\n  for (auto &x\
-    \ : factorize(n)) mp[x]++;\n  return mp;\n}\n\nvector<i64> divisors(u64 n) {\n\
-    \  if (n == 0) return {};\n  vector<pair<i64, i64>> v;\n  for (auto &p : factorize(n))\
-    \ {\n    if (v.empty() || v.back().first != p) {\n      v.emplace_back(p, 1);\n\
-    \    } else {\n      v.back().second++;\n    }\n  }\n  vector<i64> ret;\n  auto\
-    \ f = [&](auto rc, int i, i64 x) -> void {\n    if (i == (int)v.size()) {\n  \
-    \    ret.push_back(x);\n      return;\n    }\n    rc(rc, i + 1, x);\n    for (int\
-    \ j = 0; j < v[i].second; j++) rc(rc, i + 1, x *= v[i].first);\n  };\n  f(f, 0,\
-    \ 1);\n  sort(begin(ret), end(ret));\n  return ret;\n}\n\n}  // namespace fast_factorize\n\
-    \nusing fast_factorize::divisors;\nusing fast_factorize::factor_count;\nusing\
-    \ fast_factorize::factorize;\n\n/**\n * @brief \u9AD8\u901F\u7D20\u56E0\u6570\u5206\
-    \u89E3(Miller Rabin/Pollard's Rho)\n * @docs docs/prime/fast-factorize.md\n */\n\
-    #line 2 \"prime/prime-enumerate.hpp\"\n\n// Prime Sieve {2, 3, 5, 7, 11, 13, 17,\
-    \ ...}\nvector<int> prime_enumerate(int N) {\n  vector<bool> sieve(N / 3 + 1,\
-    \ 1);\n  for (int p = 5, d = 4, i = 1, sqn = sqrt(N); p <= sqn; p += d = 6 - d,\
-    \ i++) {\n    if (!sieve[i]) continue;\n    for (int q = p * p / 3, r = d * p\
-    \ / 3 + (d * p % 3 == 2), s = 2 * p,\n             qe = sieve.size();\n      \
-    \   q < qe; q += r = s - r)\n      sieve[q] = 0;\n  }\n  vector<int> ret{2, 3};\n\
-    \  for (int p = 5, d = 4, i = 1; p <= N; p += d = 6 - d, i++)\n    if (sieve[i])\
-    \ ret.push_back(p);\n  while (!ret.empty() && ret.back() > N) ret.pop_back();\n\
-    \  return ret;\n}\n#line 11 \"verify/verify-unit-test/garner-bigint.test.cpp\"\
-    \n//\n#line 2 \"misc/all.hpp\"\n\n#line 2 \"misc/fastio.hpp\"\n\n#line 8 \"misc/fastio.hpp\"\
-    \n\nusing namespace std;\n\n#line 12 \"misc/fastio.hpp\"\n\nnamespace fastio {\n\
-    static constexpr int SZ = 1 << 17;\nstatic constexpr int offset = 64;\nchar inbuf[SZ],\
-    \ outbuf[SZ];\nint in_left = 0, in_right = 0, out_right = 0;\n\nstruct Pre {\n\
-    \  char num[40000];\n  constexpr Pre() : num() {\n    for (int i = 0; i < 10000;\
-    \ i++) {\n      int n = i;\n      for (int j = 3; j >= 0; j--) {\n        num[i\
-    \ * 4 + j] = n % 10 + '0';\n        n /= 10;\n      }\n    }\n  }\n} constexpr\
-    \ pre;\n\nvoid load() {\n  int len = in_right - in_left;\n  memmove(inbuf, inbuf\
-    \ + in_left, len);\n  in_right = len + fread(inbuf + len, 1, SZ - len, stdin);\n\
-    \  in_left = 0;\n}\nvoid flush() {\n  fwrite(outbuf, 1, out_right, stdout);\n\
-    \  out_right = 0;\n}\nvoid skip_space() {\n  if (in_left + offset > in_right)\
-    \ load();\n  while (inbuf[in_left] <= ' ') in_left++;\n}\n\nvoid single_read(char&\
-    \ c) {\n  if (in_left + offset > in_right) load();\n  skip_space();\n  c = inbuf[in_left++];\n\
-    }\nvoid single_read(string& S) {\n  skip_space();\n  while (true) {\n    if (in_left\
-    \ == in_right) load();\n    int i = in_left;\n    for (; i != in_right; i++) {\n\
-    \      if (inbuf[i] <= ' ') break;\n    }\n    copy(inbuf + in_left, inbuf + i,\
-    \ back_inserter(S));\n    in_left = i;\n    if (i != in_right) break;\n  }\n}\n\
-    template <typename T,\n          enable_if_t<internal::is_broadly_integral_v<T>>*\
-    \ = nullptr>\nvoid single_read(T& x) {\n  if (in_left + offset > in_right) load();\n\
-    \  skip_space();\n  char c = inbuf[in_left++];\n  [[maybe_unused]] bool minus\
-    \ = false;\n  if constexpr (internal::is_broadly_signed_v<T>) {\n    if (c ==\
-    \ '-') minus = true, c = inbuf[in_left++];\n  }\n  x = 0;\n  while (c >= '0')\
-    \ {\n    x = x * 10 + (c & 15);\n    c = inbuf[in_left++];\n  }\n  if constexpr\
-    \ (internal::is_broadly_signed_v<T>) {\n    if (minus) x = -x;\n  }\n}\nvoid rd()\
-    \ {}\ntemplate <typename Head, typename... Tail>\nvoid rd(Head& head, Tail&...\
-    \ tail) {\n  single_read(head);\n  rd(tail...);\n}\n\nvoid single_write(const\
-    \ char& c) {\n  if (out_right > SZ - offset) flush();\n  outbuf[out_right++] =\
-    \ c;\n}\nvoid single_write(const bool& b) {\n  if (out_right > SZ - offset) flush();\n\
-    \  outbuf[out_right++] = b ? '1' : '0';\n}\nvoid single_write(const string& S)\
-    \ {\n  flush(), fwrite(S.data(), 1, S.size(), stdout);\n}\nvoid single_write(const\
+    \ */\n#line 2 \"prime/prime-enumerate.hpp\"\n\n#line 5 \"prime/prime-enumerate.hpp\"\
+    \nusing namespace std;\n\n// Prime Sieve {2, 3, 5, 7, 11, 13, 17, ...}\nvector<int>\
+    \ prime_enumerate(int N) {\n  vector<bool> sieve(N / 3 + 1, 1);\n  for (int p\
+    \ = 5, d = 4, i = 1, sqn = sqrt(N); p <= sqn; p += d = 6 - d, i++) {\n    if (!sieve[i])\
+    \ continue;\n    for (int q = p * p / 3, r = d * p / 3 + (d * p % 3 == 2), s =\
+    \ 2 * p,\n             qe = sieve.size();\n         q < qe; q += r = s - r)\n\
+    \      sieve[q] = 0;\n  }\n  vector<int> ret{2, 3};\n  for (int p = 5, d = 4,\
+    \ i = 1; p <= N; p += d = 6 - d, i++)\n    if (sieve[i]) ret.push_back(p);\n \
+    \ while (!ret.empty() && ret.back() > N) ret.pop_back();\n  return ret;\n}\n#line\
+    \ 11 \"verify/verify-unit-test/garner-bigint.test.cpp\"\n//\n#line 2 \"misc/all.hpp\"\
+    \n\n#line 2 \"misc/fastio.hpp\"\n\n#line 9 \"misc/fastio.hpp\"\n\nusing namespace\
+    \ std;\n\n#line 13 \"misc/fastio.hpp\"\n\nnamespace fastio {\nstatic constexpr\
+    \ int SZ = 1 << 17;\nstatic constexpr int offset = 64;\nchar inbuf[SZ], outbuf[SZ];\n\
+    int in_left = 0, in_right = 0, out_right = 0;\n\nstruct Pre {\n  char num[40000];\n\
+    \  constexpr Pre() : num() {\n    for (int i = 0; i < 10000; i++) {\n      int\
+    \ n = i;\n      for (int j = 3; j >= 0; j--) {\n        num[i * 4 + j] = n % 10\
+    \ + '0';\n        n /= 10;\n      }\n    }\n  }\n} constexpr pre;\n\nvoid load()\
+    \ {\n  int len = in_right - in_left;\n  memmove(inbuf, inbuf + in_left, len);\n\
+    \  in_right = len + fread(inbuf + len, 1, SZ - len, stdin);\n  in_left = 0;\n\
+    }\nvoid flush() {\n  fwrite(outbuf, 1, out_right, stdout);\n  out_right = 0;\n\
+    }\nvoid skip_space() {\n  if (in_left + offset > in_right) load();\n  while (inbuf[in_left]\
+    \ <= ' ') in_left++;\n}\n\nvoid single_read(char& c) {\n  if (in_left + offset\
+    \ > in_right) load();\n  skip_space();\n  c = inbuf[in_left++];\n}\nvoid single_read(string&\
+    \ S) {\n  skip_space();\n  while (true) {\n    if (in_left == in_right) load();\n\
+    \    int i = in_left;\n    for (; i != in_right; i++) {\n      if (inbuf[i] <=\
+    \ ' ') break;\n    }\n    copy(inbuf + in_left, inbuf + i, back_inserter(S));\n\
+    \    in_left = i;\n    if (i != in_right) break;\n  }\n}\ntemplate <typename T,\n\
+    \          enable_if_t<internal::is_broadly_integral_v<T>>* = nullptr>\nvoid single_read(T&\
+    \ x) {\n  if (in_left + offset > in_right) load();\n  skip_space();\n  char c\
+    \ = inbuf[in_left++];\n  [[maybe_unused]] bool minus = false;\n  if constexpr\
+    \ (internal::is_broadly_signed_v<T>) {\n    if (c == '-') minus = true, c = inbuf[in_left++];\n\
+    \  }\n  x = 0;\n  while (c >= '0') {\n    x = x * 10 + (c & 15);\n    c = inbuf[in_left++];\n\
+    \  }\n  if constexpr (internal::is_broadly_signed_v<T>) {\n    if (minus) x =\
+    \ -x;\n  }\n}\nvoid rd() {}\ntemplate <typename Head, typename... Tail>\nvoid\
+    \ rd(Head& head, Tail&... tail) {\n  single_read(head);\n  rd(tail...);\n}\n\n\
+    void single_write(const char& c) {\n  if (out_right > SZ - offset) flush();\n\
+    \  outbuf[out_right++] = c;\n}\nvoid single_write(const bool& b) {\n  if (out_right\
+    \ > SZ - offset) flush();\n  outbuf[out_right++] = b ? '1' : '0';\n}\nvoid single_write(const\
+    \ string& S) {\n  flush(), fwrite(S.data(), 1, S.size(), stdout);\n}\nvoid single_write(const\
     \ char* p) { flush(), fwrite(p, 1, strlen(p), stdout); }\ntemplate <typename T,\n\
     \          enable_if_t<internal::is_broadly_integral_v<T>>* = nullptr>\nvoid single_write(const\
     \ T& _x) {\n  if (out_right > SZ - offset) flush();\n  if (_x == 0) {\n    outbuf[out_right++]\
@@ -951,8 +889,38 @@ data:
     \ Tail>(tail)...);\n}\ntemplate <typename... Args>\nvoid wtn(const Args&... x)\
     \ {\n  wt(std::forward<const Args>(x)...);\n  wt('\\n');\n}\n\nstruct Dummy {\n\
     \  Dummy() { atexit(flush); }\n} dummy;\n\n}  // namespace fastio\nusing fastio::rd;\n\
-    using fastio::skip_space;\nusing fastio::wt;\nusing fastio::wtn;\n#line 2 \"misc/timer.hpp\"\
-    \n\n#line 4 \"misc/timer.hpp\"\nusing namespace std;\n\nstruct Timer {\n  chrono::high_resolution_clock::time_point\
+    using fastio::skip_space;\nusing fastio::wt;\nusing fastio::wtn;\n#line 2 \"misc/rng.hpp\"\
+    \n\n#line 7 \"misc/rng.hpp\"\nusing namespace std;\n\n#line 2 \"internal/internal-seed.hpp\"\
+    \n\n#line 4 \"internal/internal-seed.hpp\"\nusing namespace std;\n\nnamespace\
+    \ internal {\nunsigned long long non_deterministic_seed() {\n  unsigned long long\
+    \ m =\n      chrono::duration_cast<chrono::nanoseconds>(\n          chrono::high_resolution_clock::now().time_since_epoch())\n\
+    \          .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >>\
+    \ 31, m ^= m << 35;\n  return m;\n}\nunsigned long long deterministic_seed() {\
+    \ return 88172645463325252UL; }\n\n// 64 bit \u306E seed \u5024\u3092\u751F\u6210\
+    \ (\u624B\u5143\u3067\u306F seed \u56FA\u5B9A)\n// \u9023\u7D9A\u3067\u547C\u3073\
+    \u51FA\u3059\u3068\u540C\u3058\u5024\u304C\u4F55\u5EA6\u3082\u8FD4\u3063\u3066\
+    \u304F\u308B\u306E\u3067\u6CE8\u610F\n// #define RANDOMIZED_SEED \u3059\u308B\u3068\
+    \u30B7\u30FC\u30C9\u304C\u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long\
+    \ long seed() {\n#if defined(NyaanLocal) && !defined(RANDOMIZED_SEED)\n  return\
+    \ deterministic_seed();\n#else\n  return non_deterministic_seed();\n#endif\n}\n\
+    \n}  // namespace internal\n#line 10 \"misc/rng.hpp\"\n\nnamespace my_rand {\n\
+    using i64 = long long;\nusing u64 = unsigned long long;\n\n// [0, 2^64 - 1)\n\
+    u64 rng() {\n  static u64 _x = internal::seed();\n  return _x ^= _x << 7, _x ^=\
+    \ _x >> 9;\n}\n\n// [l, r]\ni64 rng(i64 l, i64 r) {\n  assert(l <= r);\n  return\
+    \ l + rng() % u64(r - l + 1);\n}\n\n// [l, r)\ni64 randint(i64 l, i64 r) {\n \
+    \ assert(l < r);\n  return l + rng() % u64(r - l);\n}\n\n// choose n numbers from\
+    \ [l, r) without overlapping\nvector<i64> randset(i64 l, i64 r, i64 n) {\n  assert(l\
+    \ <= r && n <= r - l);\n  unordered_set<i64> s;\n  for (i64 i = n; i; --i) {\n\
+    \    i64 m = randint(l, r + 1 - i);\n    if (s.find(m) != s.end()) m = r - i;\n\
+    \    s.insert(m);\n  }\n  vector<i64> ret;\n  for (auto& x : s) ret.push_back(x);\n\
+    \  sort(begin(ret), end(ret));\n  return ret;\n}\n\n// [0.0, 1.0)\ndouble rnd()\
+    \ { return rng() * 5.42101086242752217004e-20; }\n// [l, r)\ndouble rnd(double\
+    \ l, double r) {\n  assert(l < r);\n  return l + rnd() * (r - l);\n}\n\ntemplate\
+    \ <typename T>\nvoid randshf(vector<T>& v) {\n  int n = v.size();\n  for (int\
+    \ i = 1; i < n; i++) swap(v[i], v[randint(0, i + 1)]);\n}\n\n}  // namespace my_rand\n\
+    \nusing my_rand::randint;\nusing my_rand::randset;\nusing my_rand::randshf;\n\
+    using my_rand::rnd;\nusing my_rand::rng;\n#line 2 \"misc/timer.hpp\"\n\n#line\
+    \ 4 \"misc/timer.hpp\"\nusing namespace std;\n\nstruct Timer {\n  chrono::high_resolution_clock::time_point\
     \ st;\n\n  Timer() { reset(); }\n  void reset() { st = chrono::high_resolution_clock::now();\
     \ }\n\n  long long elapsed() {\n    auto ed = chrono::high_resolution_clock::now();\n\
     \    return chrono::duration_cast<chrono::milliseconds>(ed - st).count();\n  }\n\
@@ -988,7 +956,7 @@ data:
     }\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/aplusb\"\n//\n#include\
     \ \"../../template/template.hpp\"\n//\n#include \"../../math/bigint-garner.hpp\"\
-    \n//\n#include \"../../modint/arbitrary-modint.hpp\"\n//\n#include \"../../prime/fast-factorize.hpp\"\
+    \n//\n#include \"../../modint/arbitrary-modint.hpp\"\n//\n#include \"../../prime/miller-rabin.hpp\"\
     \n#include \"../../prime/prime-enumerate.hpp\"\n//\n#include \"../../misc/all.hpp\"\
     \n\nusing namespace Nyaan;\nusing mint = ArbitraryModInt;\n\n// n^e\nbigint pow1(ll\
     \ n, int e) {\n  assert(1 <= n);\n  if (e == 0) return 1;\n  bigint half = pow1(n,\
@@ -1034,20 +1002,19 @@ data:
   - ntt/ntt.hpp
   - modint/arbitrary-modint.hpp
   - modint/barrett-reduction.hpp
-  - prime/fast-factorize.hpp
-  - internal/internal-math.hpp
-  - misc/rng.hpp
-  - internal/internal-seed.hpp
-  - modint/arbitrary-montgomery-modint.hpp
   - prime/miller-rabin.hpp
+  - internal/internal-math.hpp
+  - modint/arbitrary-montgomery-modint.hpp
   - prime/prime-enumerate.hpp
   - misc/all.hpp
   - misc/fastio.hpp
+  - misc/rng.hpp
+  - internal/internal-seed.hpp
   - misc/timer.hpp
   isVerificationFile: true
   path: verify/verify-unit-test/garner-bigint.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/garner-bigint.test.cpp

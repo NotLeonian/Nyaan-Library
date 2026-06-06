@@ -32,7 +32,8 @@ data:
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
-  bundledCode: "#line 2 \"fps/berlekamp-massey.hpp\"\n\ntemplate <typename mint>\n\
+  bundledCode: "#line 2 \"fps/berlekamp-massey.hpp\"\n\n#include <algorithm>\n#include\
+    \ <iterator>\n#include <vector>\nusing namespace std;\n\ntemplate <typename mint>\n\
     vector<mint> BerlekampMassey(const vector<mint> &s) {\n  const int N = (int)s.size();\n\
     \  vector<mint> b, c;\n  b.reserve(N + 1);\n  c.reserve(N + 1);\n  b.push_back(mint(1));\n\
     \  c.push_back(mint(1));\n  mint y = mint(1);\n  for (int ed = 1; ed <= N; ed++)\
@@ -44,7 +45,8 @@ data:
     \ = tmp;\n      y = x;\n    } else {\n      for (int i = 0; i < m; i++) c[l -\
     \ 1 - i] -= freq * b[m - 1 - i];\n    }\n  }\n  reverse(begin(c), end(c));\n \
     \ return c;\n}\n"
-  code: "#pragma once\n\ntemplate <typename mint>\nvector<mint> BerlekampMassey(const\
+  code: "#pragma once\n\n#include <algorithm>\n#include <iterator>\n#include <vector>\n\
+    using namespace std;\n\ntemplate <typename mint>\nvector<mint> BerlekampMassey(const\
     \ vector<mint> &s) {\n  const int N = (int)s.size();\n  vector<mint> b, c;\n \
     \ b.reserve(N + 1);\n  c.reserve(N + 1);\n  b.push_back(mint(1));\n  c.push_back(mint(1));\n\
     \  mint y = mint(1);\n  for (int ed = 1; ed <= N; ed++) {\n    int l = int(c.size()),\
@@ -61,7 +63,7 @@ data:
   requiredBy:
   - fps/nth-term.hpp
   - matrix/black-box-linear-algebra.hpp
-  timestamp: '2020-12-05 08:16:44+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-fps/yosupo-linear-recurrence.test.cpp

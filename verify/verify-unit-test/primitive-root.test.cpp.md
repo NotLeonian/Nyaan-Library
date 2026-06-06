@@ -248,64 +248,65 @@ data:
     \ \\\n    return;                  \\\n  } while (0)\n#line 70 \"template/template.hpp\"\
     \n\nnamespace Nyaan {\nvoid solve();\n}\nint main() { Nyaan::solve(); }\n#line\
     \ 4 \"verify/verify-unit-test/primitive-root.test.cpp\"\n//\n#line 2 \"misc/rng.hpp\"\
-    \n\n#line 2 \"internal/internal-seed.hpp\"\n\n#line 4 \"internal/internal-seed.hpp\"\
-    \nusing namespace std;\n\nnamespace internal {\nunsigned long long non_deterministic_seed()\
-    \ {\n  unsigned long long m =\n      chrono::duration_cast<chrono::nanoseconds>(\n\
-    \          chrono::high_resolution_clock::now().time_since_epoch())\n        \
-    \  .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >> 31, m\
-    \ ^= m << 35;\n  return m;\n}\nunsigned long long deterministic_seed() { return\
-    \ 88172645463325252UL; }\n\n// 64 bit \u306E seed \u5024\u3092\u751F\u6210 (\u624B\
-    \u5143\u3067\u306F seed \u56FA\u5B9A)\n// \u9023\u7D9A\u3067\u547C\u3073\u51FA\
-    \u3059\u3068\u540C\u3058\u5024\u304C\u4F55\u5EA6\u3082\u8FD4\u3063\u3066\u304F\
-    \u308B\u306E\u3067\u6CE8\u610F\n// #define RANDOMIZED_SEED \u3059\u308B\u3068\u30B7\
-    \u30FC\u30C9\u304C\u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long long\
-    \ seed() {\n#if defined(NyaanLocal) && !defined(RANDOMIZED_SEED)\n  return deterministic_seed();\n\
-    #else\n  return non_deterministic_seed();\n#endif\n}\n\n}  // namespace internal\n\
-    #line 4 \"misc/rng.hpp\"\n\nnamespace my_rand {\nusing i64 = long long;\nusing\
-    \ u64 = unsigned long long;\n\n// [0, 2^64 - 1)\nu64 rng() {\n  static u64 _x\
-    \ = internal::seed();\n  return _x ^= _x << 7, _x ^= _x >> 9;\n}\n\n// [l, r]\n\
-    i64 rng(i64 l, i64 r) {\n  assert(l <= r);\n  return l + rng() % u64(r - l + 1);\n\
-    }\n\n// [l, r)\ni64 randint(i64 l, i64 r) {\n  assert(l < r);\n  return l + rng()\
-    \ % u64(r - l);\n}\n\n// choose n numbers from [l, r) without overlapping\nvector<i64>\
-    \ randset(i64 l, i64 r, i64 n) {\n  assert(l <= r && n <= r - l);\n  unordered_set<i64>\
-    \ s;\n  for (i64 i = n; i; --i) {\n    i64 m = randint(l, r + 1 - i);\n    if\
-    \ (s.find(m) != s.end()) m = r - i;\n    s.insert(m);\n  }\n  vector<i64> ret;\n\
-    \  for (auto& x : s) ret.push_back(x);\n  sort(begin(ret), end(ret));\n  return\
-    \ ret;\n}\n\n// [0.0, 1.0)\ndouble rnd() { return rng() * 5.42101086242752217004e-20;\
-    \ }\n// [l, r)\ndouble rnd(double l, double r) {\n  assert(l < r);\n  return l\
-    \ + rnd() * (r - l);\n}\n\ntemplate <typename T>\nvoid randshf(vector<T>& v) {\n\
-    \  int n = v.size();\n  for (int i = 1; i < n; i++) swap(v[i], v[randint(0, i\
-    \ + 1)]);\n}\n\n}  // namespace my_rand\n\nusing my_rand::randint;\nusing my_rand::randset;\n\
-    using my_rand::randshf;\nusing my_rand::rnd;\nusing my_rand::rng;\n#line 6 \"\
-    verify/verify-unit-test/primitive-root.test.cpp\"\n//\n#line 1 \"atcoder/internal_math.hpp\"\
-    \n\n\n\n#line 5 \"atcoder/internal_math.hpp\"\n\n#ifdef _MSC_VER\n#include <intrin.h>\n\
-    #endif\n\nnamespace atcoder {\n\nnamespace internal {\n\n// @param m `1 <= m`\n\
-    // @return x mod m\nconstexpr long long safe_mod(long long x, long long m) {\n\
-    \    x %= m;\n    if (x < 0) x += m;\n    return x;\n}\n\n// Fast modular multiplication\
-    \ by barrett reduction\n// Reference: https://en.wikipedia.org/wiki/Barrett_reduction\n\
-    // NOTE: reconsider after Ice Lake\nstruct barrett {\n    unsigned int _m;\n \
-    \   unsigned long long im;\n\n    // @param m `1 <= m < 2^31`\n    barrett(unsigned\
-    \ int m) : _m(m), im((unsigned long long)(-1) / m + 1) {}\n\n    // @return m\n\
-    \    unsigned int umod() const { return _m; }\n\n    // @param a `0 <= a < m`\n\
-    \    // @param b `0 <= b < m`\n    // @return `a * b % m`\n    unsigned int mul(unsigned\
-    \ int a, unsigned int b) const {\n        // [1] m = 1\n        // a = b = im\
-    \ = 0, so okay\n\n        // [2] m >= 2\n        // im = ceil(2^64 / m)\n    \
-    \    // -> im * m = 2^64 + r (0 <= r < m)\n        // let z = a*b = c*m + d (0\
-    \ <= c, d < m)\n        // a*b * im = (c*m + d) * im = c*(im*m) + d*im = c*2^64\
-    \ + c*r + d*im\n        // c*r + d*im < m * m + m * im < m * m + 2^64 + m <= 2^64\
-    \ + m * (m + 1) < 2^64 * 2\n        // ((ab * im) >> 64) == c or c + 1\n     \
-    \   unsigned long long z = a;\n        z *= b;\n#ifdef _MSC_VER\n        unsigned\
-    \ long long x;\n        _umul128(z, im, &x);\n#else\n        unsigned long long\
-    \ x =\n            (unsigned long long)(((unsigned __int128)(z)*im) >> 64);\n\
-    #endif\n        unsigned int v = (unsigned int)(z - x * _m);\n        if (_m <=\
-    \ v) v += _m;\n        return v;\n    }\n};\n\n// @param n `0 <= n`\n// @param\
-    \ m `1 <= m`\n// @return `(x ** n) % m`\nconstexpr long long pow_mod_constexpr(long\
-    \ long x, long long n, int m) {\n    if (m == 1) return 0;\n    unsigned int _m\
-    \ = (unsigned int)(m);\n    unsigned long long r = 1;\n    unsigned long long\
-    \ y = safe_mod(x, m);\n    while (n) {\n        if (n & 1) r = (r * y) % _m;\n\
-    \        y = (y * y) % _m;\n        n >>= 1;\n    }\n    return r;\n}\n\n// Reference:\n\
-    // M. Forisek and J. Jancina,\n// Fast Primality Testing for Integers That Fit\
-    \ into a Machine Word\n// @param n `0 <= n`\nconstexpr bool is_prime_constexpr(int\
+    \n\n#line 7 \"misc/rng.hpp\"\nusing namespace std;\n\n#line 2 \"internal/internal-seed.hpp\"\
+    \n\n#line 4 \"internal/internal-seed.hpp\"\nusing namespace std;\n\nnamespace\
+    \ internal {\nunsigned long long non_deterministic_seed() {\n  unsigned long long\
+    \ m =\n      chrono::duration_cast<chrono::nanoseconds>(\n          chrono::high_resolution_clock::now().time_since_epoch())\n\
+    \          .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >>\
+    \ 31, m ^= m << 35;\n  return m;\n}\nunsigned long long deterministic_seed() {\
+    \ return 88172645463325252UL; }\n\n// 64 bit \u306E seed \u5024\u3092\u751F\u6210\
+    \ (\u624B\u5143\u3067\u306F seed \u56FA\u5B9A)\n// \u9023\u7D9A\u3067\u547C\u3073\
+    \u51FA\u3059\u3068\u540C\u3058\u5024\u304C\u4F55\u5EA6\u3082\u8FD4\u3063\u3066\
+    \u304F\u308B\u306E\u3067\u6CE8\u610F\n// #define RANDOMIZED_SEED \u3059\u308B\u3068\
+    \u30B7\u30FC\u30C9\u304C\u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long\
+    \ long seed() {\n#if defined(NyaanLocal) && !defined(RANDOMIZED_SEED)\n  return\
+    \ deterministic_seed();\n#else\n  return non_deterministic_seed();\n#endif\n}\n\
+    \n}  // namespace internal\n#line 10 \"misc/rng.hpp\"\n\nnamespace my_rand {\n\
+    using i64 = long long;\nusing u64 = unsigned long long;\n\n// [0, 2^64 - 1)\n\
+    u64 rng() {\n  static u64 _x = internal::seed();\n  return _x ^= _x << 7, _x ^=\
+    \ _x >> 9;\n}\n\n// [l, r]\ni64 rng(i64 l, i64 r) {\n  assert(l <= r);\n  return\
+    \ l + rng() % u64(r - l + 1);\n}\n\n// [l, r)\ni64 randint(i64 l, i64 r) {\n \
+    \ assert(l < r);\n  return l + rng() % u64(r - l);\n}\n\n// choose n numbers from\
+    \ [l, r) without overlapping\nvector<i64> randset(i64 l, i64 r, i64 n) {\n  assert(l\
+    \ <= r && n <= r - l);\n  unordered_set<i64> s;\n  for (i64 i = n; i; --i) {\n\
+    \    i64 m = randint(l, r + 1 - i);\n    if (s.find(m) != s.end()) m = r - i;\n\
+    \    s.insert(m);\n  }\n  vector<i64> ret;\n  for (auto& x : s) ret.push_back(x);\n\
+    \  sort(begin(ret), end(ret));\n  return ret;\n}\n\n// [0.0, 1.0)\ndouble rnd()\
+    \ { return rng() * 5.42101086242752217004e-20; }\n// [l, r)\ndouble rnd(double\
+    \ l, double r) {\n  assert(l < r);\n  return l + rnd() * (r - l);\n}\n\ntemplate\
+    \ <typename T>\nvoid randshf(vector<T>& v) {\n  int n = v.size();\n  for (int\
+    \ i = 1; i < n; i++) swap(v[i], v[randint(0, i + 1)]);\n}\n\n}  // namespace my_rand\n\
+    \nusing my_rand::randint;\nusing my_rand::randset;\nusing my_rand::randshf;\n\
+    using my_rand::rnd;\nusing my_rand::rng;\n#line 6 \"verify/verify-unit-test/primitive-root.test.cpp\"\
+    \n//\n#line 1 \"atcoder/internal_math.hpp\"\n\n\n\n#line 5 \"atcoder/internal_math.hpp\"\
+    \n\n#ifdef _MSC_VER\n#include <intrin.h>\n#endif\n\nnamespace atcoder {\n\nnamespace\
+    \ internal {\n\n// @param m `1 <= m`\n// @return x mod m\nconstexpr long long\
+    \ safe_mod(long long x, long long m) {\n    x %= m;\n    if (x < 0) x += m;\n\
+    \    return x;\n}\n\n// Fast modular multiplication by barrett reduction\n// Reference:\
+    \ https://en.wikipedia.org/wiki/Barrett_reduction\n// NOTE: reconsider after Ice\
+    \ Lake\nstruct barrett {\n    unsigned int _m;\n    unsigned long long im;\n\n\
+    \    // @param m `1 <= m < 2^31`\n    barrett(unsigned int m) : _m(m), im((unsigned\
+    \ long long)(-1) / m + 1) {}\n\n    // @return m\n    unsigned int umod() const\
+    \ { return _m; }\n\n    // @param a `0 <= a < m`\n    // @param b `0 <= b < m`\n\
+    \    // @return `a * b % m`\n    unsigned int mul(unsigned int a, unsigned int\
+    \ b) const {\n        // [1] m = 1\n        // a = b = im = 0, so okay\n\n   \
+    \     // [2] m >= 2\n        // im = ceil(2^64 / m)\n        // -> im * m = 2^64\
+    \ + r (0 <= r < m)\n        // let z = a*b = c*m + d (0 <= c, d < m)\n       \
+    \ // a*b * im = (c*m + d) * im = c*(im*m) + d*im = c*2^64 + c*r + d*im\n     \
+    \   // c*r + d*im < m * m + m * im < m * m + 2^64 + m <= 2^64 + m * (m + 1) <\
+    \ 2^64 * 2\n        // ((ab * im) >> 64) == c or c + 1\n        unsigned long\
+    \ long z = a;\n        z *= b;\n#ifdef _MSC_VER\n        unsigned long long x;\n\
+    \        _umul128(z, im, &x);\n#else\n        unsigned long long x =\n       \
+    \     (unsigned long long)(((unsigned __int128)(z)*im) >> 64);\n#endif\n     \
+    \   unsigned int v = (unsigned int)(z - x * _m);\n        if (_m <= v) v += _m;\n\
+    \        return v;\n    }\n};\n\n// @param n `0 <= n`\n// @param m `1 <= m`\n\
+    // @return `(x ** n) % m`\nconstexpr long long pow_mod_constexpr(long long x,\
+    \ long long n, int m) {\n    if (m == 1) return 0;\n    unsigned int _m = (unsigned\
+    \ int)(m);\n    unsigned long long r = 1;\n    unsigned long long y = safe_mod(x,\
+    \ m);\n    while (n) {\n        if (n & 1) r = (r * y) % _m;\n        y = (y *\
+    \ y) % _m;\n        n >>= 1;\n    }\n    return r;\n}\n\n// Reference:\n// M.\
+    \ Forisek and J. Jancina,\n// Fast Primality Testing for Integers That Fit into\
+    \ a Machine Word\n// @param n `0 <= n`\nconstexpr bool is_prime_constexpr(int\
     \ n) {\n    if (n <= 1) return false;\n    if (n == 2 || n == 7 || n == 61) return\
     \ true;\n    if (n % 2 == 0) return false;\n    long long d = n - 1;\n    while\
     \ (d % 2 == 0) d /= 2;\n    constexpr long long bases[3] = {2, 7, 61};\n    for\
@@ -417,7 +418,7 @@ data:
     \          \\\n  struct has_##var<T, void_t<decltype(T::var)>> : true_type {};\
     \ \\\n  template <class T>                                            \\\n  constexpr\
     \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace internal\n#line\
-    \ 4 \"internal/internal-math.hpp\"\n\nnamespace internal {\n\n#line 10 \"internal/internal-math.hpp\"\
+    \ 4 \"internal/internal-math.hpp\"\n\nnamespace internal {\n\n#line 9 \"internal/internal-math.hpp\"\
     \nusing namespace std;\n\n// a mod p\ntemplate <typename T>\nT safe_mod(T a, T\
     \ p) {\n  a %= p;\n  if constexpr (is_broadly_signed_v<T>) {\n    if (a < 0) a\
     \ += p;\n  }\n  return a;\n}\n\n// \u8FD4\u308A\u5024\uFF1Apair(g, x)\n// s.t.\
@@ -542,16 +543,17 @@ data:
     \nusing fast_factorize::divisors;\nusing fast_factorize::factor_count;\nusing\
     \ fast_factorize::factorize;\n\n/**\n * @brief \u9AD8\u901F\u7D20\u56E0\u6570\u5206\
     \u89E3(Miller Rabin/Pollard's Rho)\n * @docs docs/prime/fast-factorize.md\n */\n\
-    #line 2 \"prime/prime-enumerate.hpp\"\n\n// Prime Sieve {2, 3, 5, 7, 11, 13, 17,\
-    \ ...}\nvector<int> prime_enumerate(int N) {\n  vector<bool> sieve(N / 3 + 1,\
-    \ 1);\n  for (int p = 5, d = 4, i = 1, sqn = sqrt(N); p <= sqn; p += d = 6 - d,\
-    \ i++) {\n    if (!sieve[i]) continue;\n    for (int q = p * p / 3, r = d * p\
-    \ / 3 + (d * p % 3 == 2), s = 2 * p,\n             qe = sieve.size();\n      \
-    \   q < qe; q += r = s - r)\n      sieve[q] = 0;\n  }\n  vector<int> ret{2, 3};\n\
-    \  for (int p = 5, d = 4, i = 1; p <= N; p += d = 6 - d, i++)\n    if (sieve[i])\
-    \ ret.push_back(p);\n  while (!ret.empty() && ret.back() > N) ret.pop_back();\n\
-    \  return ret;\n}\n#line 12 \"verify/verify-unit-test/primitive-root.test.cpp\"\
-    \n\nusing namespace Nyaan;\n\nvoid test(unsigned int mod) {\n  int pr1 = atcoder::internal::primitive_root_constexpr(mod);\n\
+    #line 2 \"prime/prime-enumerate.hpp\"\n\n#line 5 \"prime/prime-enumerate.hpp\"\
+    \nusing namespace std;\n\n// Prime Sieve {2, 3, 5, 7, 11, 13, 17, ...}\nvector<int>\
+    \ prime_enumerate(int N) {\n  vector<bool> sieve(N / 3 + 1, 1);\n  for (int p\
+    \ = 5, d = 4, i = 1, sqn = sqrt(N); p <= sqn; p += d = 6 - d, i++) {\n    if (!sieve[i])\
+    \ continue;\n    for (int q = p * p / 3, r = d * p / 3 + (d * p % 3 == 2), s =\
+    \ 2 * p,\n             qe = sieve.size();\n         q < qe; q += r = s - r)\n\
+    \      sieve[q] = 0;\n  }\n  vector<int> ret{2, 3};\n  for (int p = 5, d = 4,\
+    \ i = 1; p <= N; p += d = 6 - d, i++)\n    if (sieve[i]) ret.push_back(p);\n \
+    \ while (!ret.empty() && ret.back() > N) ret.pop_back();\n  return ret;\n}\n#line\
+    \ 12 \"verify/verify-unit-test/primitive-root.test.cpp\"\n\nusing namespace Nyaan;\n\
+    \nvoid test(unsigned int mod) {\n  int pr1 = atcoder::internal::primitive_root_constexpr(mod);\n\
     \  int pr2 = constexpr_primitive_root(mod);\n  int pr3 = PrimitiveRoot(mod);\n\
     \n  if (pr1 != pr2 or pr2 != pr3) {\n    cerr << pr1 << \" \" << pr2 << \" \"\
     \ << pr3 << endl;\n  }\n}\n\nvoid Nyaan::solve() {\n  auto ps = prime_enumerate(20000);\n\
@@ -592,7 +594,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/primitive-root.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/primitive-root.test.cpp

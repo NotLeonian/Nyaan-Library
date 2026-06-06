@@ -243,7 +243,7 @@ data:
     \ <= lim; j++) {\n      rec(rec, j, 1, p[j], lim / p[j], cur);\n    }\n  };\n\n\
     \  for (int i = 0; i < (int)p.size(); i++) dfs(dfs, i, 1, p[i], N / p[i], 1);\n\
     \  return ans;\n}\n\n/**\n * @brief \u30C8\u30FC\u30B7\u30A7\u30F3\u30C8\u95A2\
-    \u6570\u306E\u548C\n */\n#line 2 \"modint/montgomery-modint.hpp\"\n\n#line 4 \"\
+    \u6570\u306E\u548C\n */\n#line 2 \"modint/montgomery-modint.hpp\"\n\n#line 5 \"\
     modint/montgomery-modint.hpp\"\n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt\
     \ {\n  using mint = LazyMontgomeryModInt;\n  using i32 = int32_t;\n  using u32\
     \ = uint32_t;\n  using u64 = uint64_t;\n\n  static constexpr u32 get_r() {\n \
@@ -274,13 +274,14 @@ data:
     \ ret;\n  }\n\n  constexpr mint inverse() const {\n    int x = get(), y = mod,\
     \ u = 1, v = 0, t = 0, tmp = 0;\n    while (y > 0) {\n      t = x / y;\n     \
     \ x -= t * y, u -= t * v;\n      tmp = x, x = y, y = tmp;\n      tmp = u, u =\
-    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend ostream &operator<<(ostream\
-    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend istream &operator>>(istream\
-    \ &is, mint &b) {\n    int64_t t;\n    is >> t;\n    b = LazyMontgomeryModInt<mod>(t);\n\
-    \    return (is);\n  }\n\n  constexpr u32 get() const {\n    u32 ret = reduce(a);\n\
-    \    return ret >= mod ? ret - mod : ret;\n  }\n\n  static constexpr u32 get_mod()\
-    \ { return mod; }\n};\n#line 6 \"verify/verify-yosupo-math/yosupo-sum-of-totient.test.cpp\"\
-    \n\nusing namespace Nyaan; void Nyaan::solve() {\n  using mint = LazyMontgomeryModInt<998244353>;\n\
+    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend std::ostream &operator<<(std::ostream\
+    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend std::istream\
+    \ &operator>>(std::istream &is, mint &b) {\n    int64_t t;\n    is >> t;\n   \
+    \ b = LazyMontgomeryModInt<mod>(t);\n    return (is);\n  }\n\n  constexpr u32\
+    \ get() const {\n    u32 ret = reduce(a);\n    return ret >= mod ? ret - mod :\
+    \ ret;\n  }\n\n  static constexpr u32 get_mod() { return mod; }\n};\n#line 6 \"\
+    verify/verify-yosupo-math/yosupo-sum-of-totient.test.cpp\"\n\nusing namespace\
+    \ Nyaan; void Nyaan::solve() {\n  using mint = LazyMontgomeryModInt<998244353>;\n\
     \  long long N;\n  in(N);\n  out(sum_of_totient<mint>(N));\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/sum_of_totient_function\"\
     \n\n#include \"../../template/template.hpp\"\n#include \"../../multiplicative-function/sum-of-totient.hpp\"\
@@ -299,7 +300,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-math/yosupo-sum-of-totient.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-math/yosupo-sum-of-totient.test.cpp

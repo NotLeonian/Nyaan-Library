@@ -78,23 +78,24 @@ data:
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
-  bundledCode: "#line 2 \"prime/prime-enumerate.hpp\"\n\n// Prime Sieve {2, 3, 5,\
-    \ 7, 11, 13, 17, ...}\nvector<int> prime_enumerate(int N) {\n  vector<bool> sieve(N\
-    \ / 3 + 1, 1);\n  for (int p = 5, d = 4, i = 1, sqn = sqrt(N); p <= sqn; p +=\
-    \ d = 6 - d, i++) {\n    if (!sieve[i]) continue;\n    for (int q = p * p / 3,\
-    \ r = d * p / 3 + (d * p % 3 == 2), s = 2 * p,\n             qe = sieve.size();\n\
-    \         q < qe; q += r = s - r)\n      sieve[q] = 0;\n  }\n  vector<int> ret{2,\
-    \ 3};\n  for (int p = 5, d = 4, i = 1; p <= N; p += d = 6 - d, i++)\n    if (sieve[i])\
-    \ ret.push_back(p);\n  while (!ret.empty() && ret.back() > N) ret.pop_back();\n\
-    \  return ret;\n}\n"
-  code: "#pragma once\n\n// Prime Sieve {2, 3, 5, 7, 11, 13, 17, ...}\nvector<int>\
-    \ prime_enumerate(int N) {\n  vector<bool> sieve(N / 3 + 1, 1);\n  for (int p\
-    \ = 5, d = 4, i = 1, sqn = sqrt(N); p <= sqn; p += d = 6 - d, i++) {\n    if (!sieve[i])\
-    \ continue;\n    for (int q = p * p / 3, r = d * p / 3 + (d * p % 3 == 2), s =\
-    \ 2 * p,\n             qe = sieve.size();\n         q < qe; q += r = s - r)\n\
-    \      sieve[q] = 0;\n  }\n  vector<int> ret{2, 3};\n  for (int p = 5, d = 4,\
-    \ i = 1; p <= N; p += d = 6 - d, i++)\n    if (sieve[i]) ret.push_back(p);\n \
-    \ while (!ret.empty() && ret.back() > N) ret.pop_back();\n  return ret;\n}\n"
+  bundledCode: "#line 2 \"prime/prime-enumerate.hpp\"\n\n#include <cmath>\n#include\
+    \ <vector>\nusing namespace std;\n\n// Prime Sieve {2, 3, 5, 7, 11, 13, 17, ...}\n\
+    vector<int> prime_enumerate(int N) {\n  vector<bool> sieve(N / 3 + 1, 1);\n  for\
+    \ (int p = 5, d = 4, i = 1, sqn = sqrt(N); p <= sqn; p += d = 6 - d, i++) {\n\
+    \    if (!sieve[i]) continue;\n    for (int q = p * p / 3, r = d * p / 3 + (d\
+    \ * p % 3 == 2), s = 2 * p,\n             qe = sieve.size();\n         q < qe;\
+    \ q += r = s - r)\n      sieve[q] = 0;\n  }\n  vector<int> ret{2, 3};\n  for (int\
+    \ p = 5, d = 4, i = 1; p <= N; p += d = 6 - d, i++)\n    if (sieve[i]) ret.push_back(p);\n\
+    \  while (!ret.empty() && ret.back() > N) ret.pop_back();\n  return ret;\n}\n"
+  code: "#pragma once\n\n#include <cmath>\n#include <vector>\nusing namespace std;\n\
+    \n// Prime Sieve {2, 3, 5, 7, 11, 13, 17, ...}\nvector<int> prime_enumerate(int\
+    \ N) {\n  vector<bool> sieve(N / 3 + 1, 1);\n  for (int p = 5, d = 4, i = 1, sqn\
+    \ = sqrt(N); p <= sqn; p += d = 6 - d, i++) {\n    if (!sieve[i]) continue;\n\
+    \    for (int q = p * p / 3, r = d * p / 3 + (d * p % 3 == 2), s = 2 * p,\n  \
+    \           qe = sieve.size();\n         q < qe; q += r = s - r)\n      sieve[q]\
+    \ = 0;\n  }\n  vector<int> ret{2, 3};\n  for (int p = 5, d = 4, i = 1; p <= N;\
+    \ p += d = 6 - d, i++)\n    if (sieve[i]) ret.push_back(p);\n  while (!ret.empty()\
+    \ && ret.back() > N) ret.pop_back();\n  return ret;\n}\n"
   dependsOn: []
   isVerificationFile: false
   path: prime/prime-enumerate.hpp
@@ -106,7 +107,7 @@ data:
   - multiplicative-function/divisor-multiple-transform.hpp
   - multiplicative-function/gcd-convolution.hpp
   - multiplicative-function/enamurate-multiplicative-function.hpp
-  timestamp: '2020-12-05 08:35:39+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-math/yosupo-sum-of-totient-2.test.cpp

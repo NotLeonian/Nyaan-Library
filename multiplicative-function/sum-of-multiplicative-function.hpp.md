@@ -23,27 +23,28 @@ data:
     document_title: "\u4E57\u6CD5\u7684\u95A2\u6570\u306Eprefix sum"
     links: []
   bundledCode: "#line 2 \"multiplicative-function/sum-of-multiplicative-function.hpp\"\
-    \n\n#line 2 \"prime/prime-enumerate.hpp\"\n\n// Prime Sieve {2, 3, 5, 7, 11, 13,\
-    \ 17, ...}\nvector<int> prime_enumerate(int N) {\n  vector<bool> sieve(N / 3 +\
-    \ 1, 1);\n  for (int p = 5, d = 4, i = 1, sqn = sqrt(N); p <= sqn; p += d = 6\
-    \ - d, i++) {\n    if (!sieve[i]) continue;\n    for (int q = p * p / 3, r = d\
-    \ * p / 3 + (d * p % 3 == 2), s = 2 * p,\n             qe = sieve.size();\n  \
-    \       q < qe; q += r = s - r)\n      sieve[q] = 0;\n  }\n  vector<int> ret{2,\
-    \ 3};\n  for (int p = 5, d = 4, i = 1; p <= N; p += d = 6 - d, i++)\n    if (sieve[i])\
-    \ ret.push_back(p);\n  while (!ret.empty() && ret.back() > N) ret.pop_back();\n\
-    \  return ret;\n}\n#line 4 \"multiplicative-function/sum-of-multiplicative-function.hpp\"\
-    \n\n// f(p, c) : f(p^c) \u306E\u5024\u3092\u8FD4\u3059\ntemplate <typename T,\
-    \ T (*f)(long long, long long)>\nstruct mf_prefix_sum {\n  using i64 = long long;\n\
-    \n  i64 M, sq, s;\n  vector<int> p;\n  int ps;\n  vector<T> buf;\n  T ans;\n\n\
-    \  mf_prefix_sum(i64 m) : M(m) {\n    assert(m <= 1e15);\n    sq = sqrt(M);\n\
-    \    while (sq * sq > M) sq--;\n    while ((sq + 1) * (sq + 1) <= M) sq++;\n\n\
-    \    if (M != 0) {\n      i64 hls = quo(M, sq);\n      while (hls != 1 && quo(M,\
-    \ hls - 1) == sq) hls--;\n      s = hls + sq;\n\n      p = prime_enumerate(sq);\n\
-    \      ps = p.size();\n      ans = T{};\n    }\n  }\n\n  // \u7D20\u6570\u306E\
-    \u500B\u6570\u95A2\u6570\u306B\u95A2\u3059\u308B\u30C6\u30FC\u30D6\u30EB\n  vector<T>\
-    \ pi_table() {\n    if (M == 0) return {};\n    i64 hls = s - sq;\n    vector<i64>\
-    \ hl(hls);\n    for (int i = 1; i < hls; i++) hl[i] = quo(M, i) - 1;\n\n    vector<int>\
-    \ hs(sq + 1);\n    iota(begin(hs), end(hs), -1);\n\n    int pi = 0;\n    for (auto&\
+    \n\n#line 2 \"prime/prime-enumerate.hpp\"\n\n#include <cmath>\n#include <vector>\n\
+    using namespace std;\n\n// Prime Sieve {2, 3, 5, 7, 11, 13, 17, ...}\nvector<int>\
+    \ prime_enumerate(int N) {\n  vector<bool> sieve(N / 3 + 1, 1);\n  for (int p\
+    \ = 5, d = 4, i = 1, sqn = sqrt(N); p <= sqn; p += d = 6 - d, i++) {\n    if (!sieve[i])\
+    \ continue;\n    for (int q = p * p / 3, r = d * p / 3 + (d * p % 3 == 2), s =\
+    \ 2 * p,\n             qe = sieve.size();\n         q < qe; q += r = s - r)\n\
+    \      sieve[q] = 0;\n  }\n  vector<int> ret{2, 3};\n  for (int p = 5, d = 4,\
+    \ i = 1; p <= N; p += d = 6 - d, i++)\n    if (sieve[i]) ret.push_back(p);\n \
+    \ while (!ret.empty() && ret.back() > N) ret.pop_back();\n  return ret;\n}\n#line\
+    \ 4 \"multiplicative-function/sum-of-multiplicative-function.hpp\"\n\n// f(p,\
+    \ c) : f(p^c) \u306E\u5024\u3092\u8FD4\u3059\ntemplate <typename T, T (*f)(long\
+    \ long, long long)>\nstruct mf_prefix_sum {\n  using i64 = long long;\n\n  i64\
+    \ M, sq, s;\n  vector<int> p;\n  int ps;\n  vector<T> buf;\n  T ans;\n\n  mf_prefix_sum(i64\
+    \ m) : M(m) {\n    assert(m <= 1e15);\n    sq = sqrt(M);\n    while (sq * sq >\
+    \ M) sq--;\n    while ((sq + 1) * (sq + 1) <= M) sq++;\n\n    if (M != 0) {\n\
+    \      i64 hls = quo(M, sq);\n      while (hls != 1 && quo(M, hls - 1) == sq)\
+    \ hls--;\n      s = hls + sq;\n\n      p = prime_enumerate(sq);\n      ps = p.size();\n\
+    \      ans = T{};\n    }\n  }\n\n  // \u7D20\u6570\u306E\u500B\u6570\u95A2\u6570\
+    \u306B\u95A2\u3059\u308B\u30C6\u30FC\u30D6\u30EB\n  vector<T> pi_table() {\n \
+    \   if (M == 0) return {};\n    i64 hls = s - sq;\n    vector<i64> hl(hls);\n\
+    \    for (int i = 1; i < hls; i++) hl[i] = quo(M, i) - 1;\n\n    vector<int> hs(sq\
+    \ + 1);\n    iota(begin(hs), end(hs), -1);\n\n    int pi = 0;\n    for (auto&\
     \ x : p) {\n      i64 x2 = i64(x) * x;\n      i64 imax = min<i64>(hls, quo(M,\
     \ x2) + 1);\n      for (i64 i = 1, ix = x; i < imax; ++i, ix += x) {\n       \
     \ hl[i] -= (ix < hls ? hl[ix] : hs[quo(M, ix)]) - pi;\n      }\n      for (int\
@@ -152,7 +153,7 @@ data:
   isVerificationFile: false
   path: multiplicative-function/sum-of-multiplicative-function.hpp
   requiredBy: []
-  timestamp: '2024-09-22 00:16:26+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-math/yosupo-sum-of-totient-2.test.cpp

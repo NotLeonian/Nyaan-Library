@@ -9,14 +9,29 @@ data:
     path: fps/fast-multieval.hpp
     title: "Multipoint Evaluation(\u9AD8\u901F\u5316\u7248)"
   - icon: ':heavy_check_mark:'
-    path: fps/fps-circular.hpp
-    title: "\u4E09\u89D2\u95A2\u6570"
+    path: fps/find-p-recursive.hpp
+    title: "P-recursive\u306E\u9AD8\u901F\u8A08\u7B97"
   - icon: ':heavy_check_mark:'
     path: fps/fps-composition-fast-old.hpp
     title: "\u95A2\u6570\u306E\u5408\u6210( $\\mathrm{O}(N^2)$ )"
   - icon: ':heavy_check_mark:'
+    path: fps/kitamasa.hpp
+    title: "\u7DDA\u5F62\u6F38\u5316\u5F0F\u306E\u9AD8\u901F\u8A08\u7B97"
+  - icon: ':heavy_check_mark:'
+    path: fps/mod-pow.hpp
+    title: Mod-Pow ($f(x)^k \mod g(x)$)
+  - icon: ':heavy_check_mark:'
+    path: fps/nth-term.hpp
+    title: "\u7DDA\u5F62\u56DE\u5E30\u6570\u5217\u306E\u9AD8\u901F\u8A08\u7B97(Berlekamp-Massey/Bostan-Mori)"
+  - icon: ':heavy_check_mark:'
     path: fps/online-fps.hpp
     title: fps/online-fps.hpp
+  - icon: ':heavy_check_mark:'
+    path: fps/root-finding.hpp
+    title: fps/root-finding.hpp
+  - icon: ':heavy_check_mark:'
+    path: fps/sample-point-shift.hpp
+    title: fps/sample-point-shift.hpp
   - icon: ':warning:'
     path: math/bigint-all.hpp
     title: math/bigint-all.hpp
@@ -39,14 +54,20 @@ data:
     path: math/bigint.hpp
     title: "\u591A\u500D\u9577\u6574\u6570"
   - icon: ':heavy_check_mark:'
+    path: matrix/black-box-linear-algebra.hpp
+    title: Black Box Linear Algebra
+  - icon: ':heavy_check_mark:'
+    path: matrix/polynomial-matrix-prefix-prod.hpp
+    title: "\u591A\u9805\u5F0F\u884C\u5217\u306Eprefix product"
+  - icon: ':heavy_check_mark:'
+    path: modulo/factorial.hpp
+    title: "\u968E\u4E57 $\\mod p$"
+  - icon: ':heavy_check_mark:'
     path: modulo/strassen.hpp
     title: modulo/strassen.hpp
   - icon: ':heavy_check_mark:'
     path: ntt/arbitrary-ntt.hpp
     title: ntt/arbitrary-ntt.hpp
-  - icon: ':heavy_check_mark:'
-    path: ntt/chirp-z.hpp
-    title: Chirp Z-transform(Bluestein's algorithm)
   - icon: ':heavy_check_mark:'
     path: ntt/cooley-tukey-ntt.hpp
     title: Cooley-Tukey FFT Algorithm
@@ -59,9 +80,6 @@ data:
   - icon: ':heavy_check_mark:'
     path: string/wildcard-pattern-matching.hpp
     title: Wildcard Pattern Matching
-  - icon: ':heavy_check_mark:'
-    path: tree/frequency-table-of-tree-distance.hpp
-    title: "\u9802\u70B9\u9593\u306E\u8DDD\u96E2\u306E\u5EA6\u6570\u5206\u5E03"
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: verify/verify-aoj-ntl/aoj-ntl-2-a.test.cpp
@@ -400,9 +418,6 @@ data:
     path: verify/verify-yosupo-graph/yosupo-exp-of-set-power-series.test.cpp
     title: verify/verify-yosupo-graph/yosupo-exp-of-set-power-series.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/verify-yosupo-graph/yosupo-frequency-table-of-tree-distance.test.cpp
-    title: verify/verify-yosupo-graph/yosupo-frequency-table-of-tree-distance.test.cpp
-  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-graph/yosupo-log-of-set-power-series.test.cpp
     title: verify/verify-yosupo-graph/yosupo-log-of-set-power-series.test.cpp
   - icon: ':heavy_check_mark:'
@@ -671,8 +686,45 @@ data:
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
-  bundledCode: "#line 2 \"modint/montgomery-modint.hpp\"\n\n#include <cstdint>\n\n\
-    template <uint32_t mod>\nstruct LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n\
+  bundledCode: "#line 2 \"modint/montgomery-modint.hpp\"\n\n#include <cstdint>\n#include\
+    \ <iostream>\n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt {\n  using\
+    \ mint = LazyMontgomeryModInt;\n  using i32 = int32_t;\n  using u32 = uint32_t;\n\
+    \  using u64 = uint64_t;\n\n  static constexpr u32 get_r() {\n    u32 ret = mod;\n\
+    \    for (i32 i = 0; i < 4; ++i) ret *= 2 - mod * ret;\n    return ret;\n  }\n\
+    \n  static constexpr u32 r = get_r();\n  static constexpr u32 n2 = -u64(mod) %\
+    \ mod;\n  static_assert(mod < (1 << 30), \"invalid, mod >= 2 ^ 30\");\n  static_assert((mod\
+    \ & 1) == 1, \"invalid, mod % 2 == 0\");\n  static_assert(r * mod == 1, \"this\
+    \ code has bugs.\");\n\n  u32 a;\n\n  constexpr LazyMontgomeryModInt() : a(0)\
+    \ {}\n  constexpr LazyMontgomeryModInt(const int64_t &b)\n      : a(reduce(u64(b\
+    \ % mod + mod) * n2)){};\n\n  static constexpr u32 reduce(const u64 &b) {\n  \
+    \  return (b + u64(u32(b) * u32(-r)) * mod) >> 32;\n  }\n\n  constexpr mint &operator+=(const\
+    \ mint &b) {\n    if (i32(a += b.a - 2 * mod) < 0) a += 2 * mod;\n    return *this;\n\
+    \  }\n\n  constexpr mint &operator-=(const mint &b) {\n    if (i32(a -= b.a) <\
+    \ 0) a += 2 * mod;\n    return *this;\n  }\n\n  constexpr mint &operator*=(const\
+    \ mint &b) {\n    a = reduce(u64(a) * b.a);\n    return *this;\n  }\n\n  constexpr\
+    \ mint &operator/=(const mint &b) {\n    *this *= b.inverse();\n    return *this;\n\
+    \  }\n\n  constexpr mint operator+(const mint &b) const { return mint(*this) +=\
+    \ b; }\n  constexpr mint operator-(const mint &b) const { return mint(*this) -=\
+    \ b; }\n  constexpr mint operator*(const mint &b) const { return mint(*this) *=\
+    \ b; }\n  constexpr mint operator/(const mint &b) const { return mint(*this) /=\
+    \ b; }\n  constexpr bool operator==(const mint &b) const {\n    return (a >= mod\
+    \ ? a - mod : a) == (b.a >= mod ? b.a - mod : b.a);\n  }\n  constexpr bool operator!=(const\
+    \ mint &b) const {\n    return (a >= mod ? a - mod : a) != (b.a >= mod ? b.a -\
+    \ mod : b.a);\n  }\n  constexpr mint operator-() const { return mint() - mint(*this);\
+    \ }\n  constexpr mint operator+() const { return mint(*this); }\n\n  constexpr\
+    \ mint pow(u64 n) const {\n    mint ret(1), mul(*this);\n    while (n > 0) {\n\
+    \      if (n & 1) ret *= mul;\n      mul *= mul;\n      n >>= 1;\n    }\n    return\
+    \ ret;\n  }\n\n  constexpr mint inverse() const {\n    int x = get(), y = mod,\
+    \ u = 1, v = 0, t = 0, tmp = 0;\n    while (y > 0) {\n      t = x / y;\n     \
+    \ x -= t * y, u -= t * v;\n      tmp = x, x = y, y = tmp;\n      tmp = u, u =\
+    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend std::ostream &operator<<(std::ostream\
+    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend std::istream\
+    \ &operator>>(std::istream &is, mint &b) {\n    int64_t t;\n    is >> t;\n   \
+    \ b = LazyMontgomeryModInt<mod>(t);\n    return (is);\n  }\n\n  constexpr u32\
+    \ get() const {\n    u32 ret = reduce(a);\n    return ret >= mod ? ret - mod :\
+    \ ret;\n  }\n\n  static constexpr u32 get_mod() { return mod; }\n};\n"
+  code: "#pragma once\n\n#include <cstdint>\n#include <iostream>\n\ntemplate <uint32_t\
+    \ mod>\nstruct LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n\
     \  using i32 = int32_t;\n  using u32 = uint32_t;\n  using u64 = uint64_t;\n\n\
     \  static constexpr u32 get_r() {\n    u32 ret = mod;\n    for (i32 i = 0; i <\
     \ 4; ++i) ret *= 2 - mod * ret;\n    return ret;\n  }\n\n  static constexpr u32\
@@ -702,57 +754,26 @@ data:
     \ ret;\n  }\n\n  constexpr mint inverse() const {\n    int x = get(), y = mod,\
     \ u = 1, v = 0, t = 0, tmp = 0;\n    while (y > 0) {\n      t = x / y;\n     \
     \ x -= t * y, u -= t * v;\n      tmp = x, x = y, y = tmp;\n      tmp = u, u =\
-    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend ostream &operator<<(ostream\
-    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend istream &operator>>(istream\
-    \ &is, mint &b) {\n    int64_t t;\n    is >> t;\n    b = LazyMontgomeryModInt<mod>(t);\n\
-    \    return (is);\n  }\n\n  constexpr u32 get() const {\n    u32 ret = reduce(a);\n\
-    \    return ret >= mod ? ret - mod : ret;\n  }\n\n  static constexpr u32 get_mod()\
-    \ { return mod; }\n};\n"
-  code: "#pragma once\n\n#include <cstdint>\n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt\
-    \ {\n  using mint = LazyMontgomeryModInt;\n  using i32 = int32_t;\n  using u32\
-    \ = uint32_t;\n  using u64 = uint64_t;\n\n  static constexpr u32 get_r() {\n \
-    \   u32 ret = mod;\n    for (i32 i = 0; i < 4; ++i) ret *= 2 - mod * ret;\n  \
-    \  return ret;\n  }\n\n  static constexpr u32 r = get_r();\n  static constexpr\
-    \ u32 n2 = -u64(mod) % mod;\n  static_assert(mod < (1 << 30), \"invalid, mod >=\
-    \ 2 ^ 30\");\n  static_assert((mod & 1) == 1, \"invalid, mod % 2 == 0\");\n  static_assert(r\
-    \ * mod == 1, \"this code has bugs.\");\n\n  u32 a;\n\n  constexpr LazyMontgomeryModInt()\
-    \ : a(0) {}\n  constexpr LazyMontgomeryModInt(const int64_t &b)\n      : a(reduce(u64(b\
-    \ % mod + mod) * n2)){};\n\n  static constexpr u32 reduce(const u64 &b) {\n  \
-    \  return (b + u64(u32(b) * u32(-r)) * mod) >> 32;\n  }\n\n  constexpr mint &operator+=(const\
-    \ mint &b) {\n    if (i32(a += b.a - 2 * mod) < 0) a += 2 * mod;\n    return *this;\n\
-    \  }\n\n  constexpr mint &operator-=(const mint &b) {\n    if (i32(a -= b.a) <\
-    \ 0) a += 2 * mod;\n    return *this;\n  }\n\n  constexpr mint &operator*=(const\
-    \ mint &b) {\n    a = reduce(u64(a) * b.a);\n    return *this;\n  }\n\n  constexpr\
-    \ mint &operator/=(const mint &b) {\n    *this *= b.inverse();\n    return *this;\n\
-    \  }\n\n  constexpr mint operator+(const mint &b) const { return mint(*this) +=\
-    \ b; }\n  constexpr mint operator-(const mint &b) const { return mint(*this) -=\
-    \ b; }\n  constexpr mint operator*(const mint &b) const { return mint(*this) *=\
-    \ b; }\n  constexpr mint operator/(const mint &b) const { return mint(*this) /=\
-    \ b; }\n  constexpr bool operator==(const mint &b) const {\n    return (a >= mod\
-    \ ? a - mod : a) == (b.a >= mod ? b.a - mod : b.a);\n  }\n  constexpr bool operator!=(const\
-    \ mint &b) const {\n    return (a >= mod ? a - mod : a) != (b.a >= mod ? b.a -\
-    \ mod : b.a);\n  }\n  constexpr mint operator-() const { return mint() - mint(*this);\
-    \ }\n  constexpr mint operator+() const { return mint(*this); }\n\n  constexpr\
-    \ mint pow(u64 n) const {\n    mint ret(1), mul(*this);\n    while (n > 0) {\n\
-    \      if (n & 1) ret *= mul;\n      mul *= mul;\n      n >>= 1;\n    }\n    return\
-    \ ret;\n  }\n\n  constexpr mint inverse() const {\n    int x = get(), y = mod,\
-    \ u = 1, v = 0, t = 0, tmp = 0;\n    while (y > 0) {\n      t = x / y;\n     \
-    \ x -= t * y, u -= t * v;\n      tmp = x, x = y, y = tmp;\n      tmp = u, u =\
-    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend ostream &operator<<(ostream\
-    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend istream &operator>>(istream\
-    \ &is, mint &b) {\n    int64_t t;\n    is >> t;\n    b = LazyMontgomeryModInt<mod>(t);\n\
-    \    return (is);\n  }\n\n  constexpr u32 get() const {\n    u32 ret = reduce(a);\n\
-    \    return ret >= mod ? ret - mod : ret;\n  }\n\n  static constexpr u32 get_mod()\
-    \ { return mod; }\n};\n"
+    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend std::ostream &operator<<(std::ostream\
+    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend std::istream\
+    \ &operator>>(std::istream &is, mint &b) {\n    int64_t t;\n    is >> t;\n   \
+    \ b = LazyMontgomeryModInt<mod>(t);\n    return (is);\n  }\n\n  constexpr u32\
+    \ get() const {\n    u32 ret = reduce(a);\n    return ret >= mod ? ret - mod :\
+    \ ret;\n  }\n\n  static constexpr u32 get_mod() { return mod; }\n};\n"
   dependsOn: []
   isVerificationFile: false
   path: modint/montgomery-modint.hpp
   requiredBy:
   - fps/fast-multieval.hpp
-  - fps/fps-circular.hpp
+  - fps/find-p-recursive.hpp
+  - fps/root-finding.hpp
   - fps/online-fps.hpp
   - fps/fps-composition-fast-old.hpp
+  - fps/kitamasa.hpp
+  - fps/nth-term.hpp
   - fps/arbitrary-fps.hpp
+  - fps/mod-pow.hpp
+  - fps/sample-point-shift.hpp
   - math/bigint-to-hex.hpp
   - math/bigint-binary.hpp
   - math/bigint.hpp
@@ -763,12 +784,13 @@ data:
   - ntt/rader-ntt.hpp
   - ntt/arbitrary-ntt.hpp
   - ntt/multivariate-circular-convolution.hpp
-  - ntt/chirp-z.hpp
   - ntt/cooley-tukey-ntt.hpp
+  - matrix/black-box-linear-algebra.hpp
+  - matrix/polynomial-matrix-prefix-prod.hpp
   - string/wildcard-pattern-matching.hpp
   - modulo/strassen.hpp
-  - tree/frequency-table-of-tree-distance.hpp
-  timestamp: '2026-05-21 18:07:01+09:00'
+  - modulo/factorial.hpp
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-graph/yosupo-log-of-set-power-series.test.cpp
@@ -777,7 +799,6 @@ data:
   - verify/verify-yosupo-graph/yosupo-exp-of-set-power-series.test.cpp
   - verify/verify-yosupo-graph/yosupo-point-set-tree-path-composite-sum.test.cpp
   - verify/verify-yosupo-graph/yosupo-point-set-tree-path-composite-sum-fixed-root.test.cpp
-  - verify/verify-yosupo-graph/yosupo-frequency-table-of-tree-distance.test.cpp
   - verify/verify-yosupo-ntt/yosupo-convolution-schoenhage-radix2.test.cpp
   - verify/verify-yosupo-ntt/yosupo-convolution-large.test.cpp
   - verify/verify-yosupo-ntt/yosupo-convolution-arbitraryntt-arbitraryprimemodint.test.cpp

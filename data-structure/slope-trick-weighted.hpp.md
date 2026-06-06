@@ -19,18 +19,18 @@ data:
     document_title: Weighted Slope Trick
     links: []
   bundledCode: "#line 2 \"data-structure/slope-trick-weighted.hpp\"\n\n#include <cassert>\n\
-    #include <iostream>\n#include <type_traits>\nusing namespace std;\n\n#line 2 \"\
-    segment-tree/rbst-segment-tree.hpp\"\n\n#include <functional>\n#line 5 \"segment-tree/rbst-segment-tree.hpp\"\
-    \n\n#line 2 \"internal/internal-type-traits.hpp\"\n\n#line 4 \"internal/internal-type-traits.hpp\"\
-    \nusing namespace std;\n\nnamespace internal {\ntemplate <typename T>\nusing is_broadly_integral\
-    \ =\n    typename conditional_t<is_integral_v<T> || is_same_v<T, __int128_t> ||\n\
-    \                               is_same_v<T, __uint128_t>,\n                 \
-    \          true_type, false_type>::type;\n\ntemplate <typename T>\nusing is_broadly_signed\
-    \ =\n    typename conditional_t<is_signed_v<T> || is_same_v<T, __int128_t>,\n\
-    \                           true_type, false_type>::type;\n\ntemplate <typename\
-    \ T>\nusing is_broadly_unsigned =\n    typename conditional_t<is_unsigned_v<T>\
-    \ || is_same_v<T, __uint128_t>,\n                           true_type, false_type>::type;\n\
-    \n#define ENABLE_VALUE(x) \\\n  template <typename T> \\\n  constexpr bool x##_v\
+    #include <iostream>\nusing namespace std;\n\n#line 2 \"segment-tree/rbst-segment-tree.hpp\"\
+    \n\n#include <functional>\n#include <type_traits>\n\n#line 2 \"internal/internal-type-traits.hpp\"\
+    \n\n#line 4 \"internal/internal-type-traits.hpp\"\nusing namespace std;\n\nnamespace\
+    \ internal {\ntemplate <typename T>\nusing is_broadly_integral =\n    typename\
+    \ conditional_t<is_integral_v<T> || is_same_v<T, __int128_t> ||\n            \
+    \                   is_same_v<T, __uint128_t>,\n                           true_type,\
+    \ false_type>::type;\n\ntemplate <typename T>\nusing is_broadly_signed =\n   \
+    \ typename conditional_t<is_signed_v<T> || is_same_v<T, __int128_t>,\n       \
+    \                    true_type, false_type>::type;\n\ntemplate <typename T>\n\
+    using is_broadly_unsigned =\n    typename conditional_t<is_unsigned_v<T> || is_same_v<T,\
+    \ __uint128_t>,\n                           true_type, false_type>::type;\n\n\
+    #define ENABLE_VALUE(x) \\\n  template <typename T> \\\n  constexpr bool x##_v\
     \ = x<T>::value;\n\nENABLE_VALUE(is_broadly_integral);\nENABLE_VALUE(is_broadly_signed);\n\
     ENABLE_VALUE(is_broadly_unsigned);\n#undef ENABLE_VALUE\n\n#define ENABLE_HAS_TYPE(var)\
     \                                   \\\n  template <class, class = void>     \
@@ -340,7 +340,7 @@ data:
     \                             nullptr, nullptr, ti, _ei>;\n\n}  // namespace RBSTSegmentTreeImpl\n\
     \nusing RBSTSegmentTreeImpl::RBSTLazySegmentTree;\nusing RBSTSegmentTreeImpl::RBSTSegmentTree;\n\
     using RBSTSegmentTreeImpl::RBSTShiftableLazySegmentTree;\n\n/**\n * @brief RBST-based\
-    \ Dynamic Lazy Segment Tree\n */\n#line 9 \"data-structure/slope-trick-weighted.hpp\"\
+    \ Dynamic Lazy Segment Tree\n */\n#line 8 \"data-structure/slope-trick-weighted.hpp\"\
     \n\nnamespace SlopeTrickImpl {\n\ntemplate <typename Int>\nusing T = pair<Int,\
     \ Int>;\ntemplate <typename Int>\nusing E = Int;\ntemplate <typename Int>\nT<Int>\
     \ f(T<Int> a, T<Int> b) {\n  return {a.first + b.first, a.second + b.second};\n\
@@ -413,18 +413,18 @@ data:
     \ c_sum * x - xc_sum;\n      R = _unite(R1, R2);\n    }\n    return res;\n  }\n\
     \n  void clear() { L.clear(), R.clear(), min_y = 0; }\n};\n\nusing SlopeTrick\
     \ = WeightedSlopeTrick<__int128_t>;\n\n/**\n * @brief Weighted Slope Trick\n */\n"
-  code: "#pragma once\n\n#include <cassert>\n#include <iostream>\n#include <type_traits>\n\
-    using namespace std;\n\n#include \"../segment-tree/rbst-segment-tree.hpp\"\n\n\
-    namespace SlopeTrickImpl {\n\ntemplate <typename Int>\nusing T = pair<Int, Int>;\n\
-    template <typename Int>\nusing E = Int;\ntemplate <typename Int>\nT<Int> f(T<Int>\
-    \ a, T<Int> b) {\n  return {a.first + b.first, a.second + b.second};\n}\ntemplate\
-    \ <typename Int>\nT<Int> g(T<Int> a, E<Int> b) {\n  return {a.first, a.second\
-    \ + a.first * b};\n}\ntemplate <typename Int>\nE<Int> h(E<Int> a, E<Int> b) {\n\
-    \  return a + b;\n}\ntemplate <typename Int>\nT<Int> ti() {\n  return {};\n}\n\
-    template <typename Int>\nE<Int> ei() {\n  return {};\n}\ntemplate <typename Int>\n\
-    using SegTree = RBSTShiftableLazySegmentTree<Int, T<Int>, E<Int>, f<Int>,\n  \
-    \                                           g<Int>, h<Int>, ti<Int>, ei<Int>>;\n\
-    }  // namespace SlopeTrickImpl\n\ntemplate <typename I>\nstruct WeightedSlopeTrick\
+  code: "#pragma once\n\n#include <cassert>\n#include <iostream>\nusing namespace\
+    \ std;\n\n#include \"../segment-tree/rbst-segment-tree.hpp\"\n\nnamespace SlopeTrickImpl\
+    \ {\n\ntemplate <typename Int>\nusing T = pair<Int, Int>;\ntemplate <typename\
+    \ Int>\nusing E = Int;\ntemplate <typename Int>\nT<Int> f(T<Int> a, T<Int> b)\
+    \ {\n  return {a.first + b.first, a.second + b.second};\n}\ntemplate <typename\
+    \ Int>\nT<Int> g(T<Int> a, E<Int> b) {\n  return {a.first, a.second + a.first\
+    \ * b};\n}\ntemplate <typename Int>\nE<Int> h(E<Int> a, E<Int> b) {\n  return\
+    \ a + b;\n}\ntemplate <typename Int>\nT<Int> ti() {\n  return {};\n}\ntemplate\
+    \ <typename Int>\nE<Int> ei() {\n  return {};\n}\ntemplate <typename Int>\nusing\
+    \ SegTree = RBSTShiftableLazySegmentTree<Int, T<Int>, E<Int>, f<Int>,\n      \
+    \                                       g<Int>, h<Int>, ti<Int>, ei<Int>>;\n}\
+    \  // namespace SlopeTrickImpl\n\ntemplate <typename I>\nstruct WeightedSlopeTrick\
     \ {\n  static constexpr I inf = (I{1} << (sizeof(I) * 8 - 2)) - 1;\n  using Seg\
     \ = typename SlopeTrickImpl::SegTree<I>;\n  using T = SlopeTrickImpl::T<I>;\n\
     \  using E = SlopeTrickImpl::E<I>;\n\n  // x : \u5EA7\u6A19, c : \u50BE\u304D\u306E\
@@ -493,7 +493,7 @@ data:
   isVerificationFile: false
   path: data-structure/slope-trick-weighted.hpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yuki/yuki-1467-weighted.test.cpp

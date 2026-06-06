@@ -226,16 +226,17 @@ data:
     \n  }\n#define die(...)             \\\n  do {                       \\\n    Nyaan::out(__VA_ARGS__);\
     \ \\\n    return;                  \\\n  } while (0)\n#line 70 \"template/template.hpp\"\
     \n\nnamespace Nyaan {\nvoid solve();\n}\nint main() { Nyaan::solve(); }\n#line\
-    \ 2 \"prime/prime-enumerate.hpp\"\n\n// Prime Sieve {2, 3, 5, 7, 11, 13, 17, ...}\n\
-    vector<int> prime_enumerate(int N) {\n  vector<bool> sieve(N / 3 + 1, 1);\n  for\
-    \ (int p = 5, d = 4, i = 1, sqn = sqrt(N); p <= sqn; p += d = 6 - d, i++) {\n\
-    \    if (!sieve[i]) continue;\n    for (int q = p * p / 3, r = d * p / 3 + (d\
-    \ * p % 3 == 2), s = 2 * p,\n             qe = sieve.size();\n         q < qe;\
-    \ q += r = s - r)\n      sieve[q] = 0;\n  }\n  vector<int> ret{2, 3};\n  for (int\
-    \ p = 5, d = 4, i = 1; p <= N; p += d = 6 - d, i++)\n    if (sieve[i]) ret.push_back(p);\n\
-    \  while (!ret.empty() && ret.back() > N) ret.pop_back();\n  return ret;\n}\n\
-    #line 2 \"misc/fastio.hpp\"\n\n#line 8 \"misc/fastio.hpp\"\n\nusing namespace\
-    \ std;\n\n#line 2 \"internal/internal-type-traits.hpp\"\n\n#line 4 \"internal/internal-type-traits.hpp\"\
+    \ 2 \"prime/prime-enumerate.hpp\"\n\n#line 5 \"prime/prime-enumerate.hpp\"\nusing\
+    \ namespace std;\n\n// Prime Sieve {2, 3, 5, 7, 11, 13, 17, ...}\nvector<int>\
+    \ prime_enumerate(int N) {\n  vector<bool> sieve(N / 3 + 1, 1);\n  for (int p\
+    \ = 5, d = 4, i = 1, sqn = sqrt(N); p <= sqn; p += d = 6 - d, i++) {\n    if (!sieve[i])\
+    \ continue;\n    for (int q = p * p / 3, r = d * p / 3 + (d * p % 3 == 2), s =\
+    \ 2 * p,\n             qe = sieve.size();\n         q < qe; q += r = s - r)\n\
+    \      sieve[q] = 0;\n  }\n  vector<int> ret{2, 3};\n  for (int p = 5, d = 4,\
+    \ i = 1; p <= N; p += d = 6 - d, i++)\n    if (sieve[i]) ret.push_back(p);\n \
+    \ while (!ret.empty() && ret.back() > N) ret.pop_back();\n  return ret;\n}\n#line\
+    \ 2 \"misc/fastio.hpp\"\n\n#line 9 \"misc/fastio.hpp\"\n\nusing namespace std;\n\
+    \n#line 2 \"internal/internal-type-traits.hpp\"\n\n#line 4 \"internal/internal-type-traits.hpp\"\
     \nusing namespace std;\n\nnamespace internal {\ntemplate <typename T>\nusing is_broadly_integral\
     \ =\n    typename conditional_t<is_integral_v<T> || is_same_v<T, __int128_t> ||\n\
     \                               is_same_v<T, __uint128_t>,\n                 \
@@ -259,7 +260,7 @@ data:
     \          \\\n  struct has_##var<T, void_t<decltype(T::var)>> : true_type {};\
     \ \\\n  template <class T>                                            \\\n  constexpr\
     \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace internal\n#line\
-    \ 12 \"misc/fastio.hpp\"\n\nnamespace fastio {\nstatic constexpr int SZ = 1 <<\
+    \ 13 \"misc/fastio.hpp\"\n\nnamespace fastio {\nstatic constexpr int SZ = 1 <<\
     \ 17;\nstatic constexpr int offset = 64;\nchar inbuf[SZ], outbuf[SZ];\nint in_left\
     \ = 0, in_right = 0, out_right = 0;\n\nstruct Pre {\n  char num[40000];\n  constexpr\
     \ Pre() : num() {\n    for (int i = 0; i < 10000; i++) {\n      int n = i;\n \
@@ -332,7 +333,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-math/yosupo-prime-table.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-math/yosupo-prime-table.test.cpp

@@ -298,7 +298,7 @@ data:
     \ x);\n    t->sum = g(t->sum, x);\n  }\n};\n\n/**\n * @brief \u9045\u5EF6\u4F1D\
     \u642C\u53CD\u8EE2\u53EF\u80FD\u4E71\u629E\u5E73\u8861\u4E8C\u5206\u6728\n * @docs\
     \ docs/rbst/lazy-reversible-rbst.md\n */\n#line 7 \"verify/verify-yosupo-ds/yosupo-dynamic-sequence-range-affine-range-sum.test.cpp\"\
-    \n//\n#line 2 \"modint/montgomery-modint.hpp\"\n\n#line 4 \"modint/montgomery-modint.hpp\"\
+    \n//\n#line 2 \"modint/montgomery-modint.hpp\"\n\n#line 5 \"modint/montgomery-modint.hpp\"\
     \n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n\
     \  using i32 = int32_t;\n  using u32 = uint32_t;\n  using u64 = uint64_t;\n\n\
     \  static constexpr u32 get_r() {\n    u32 ret = mod;\n    for (i32 i = 0; i <\
@@ -329,12 +329,13 @@ data:
     \ ret;\n  }\n\n  constexpr mint inverse() const {\n    int x = get(), y = mod,\
     \ u = 1, v = 0, t = 0, tmp = 0;\n    while (y > 0) {\n      t = x / y;\n     \
     \ x -= t * y, u -= t * v;\n      tmp = x, x = y, y = tmp;\n      tmp = u, u =\
-    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend ostream &operator<<(ostream\
-    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend istream &operator>>(istream\
-    \ &is, mint &b) {\n    int64_t t;\n    is >> t;\n    b = LazyMontgomeryModInt<mod>(t);\n\
-    \    return (is);\n  }\n\n  constexpr u32 get() const {\n    u32 ret = reduce(a);\n\
-    \    return ret >= mod ? ret - mod : ret;\n  }\n\n  static constexpr u32 get_mod()\
-    \ { return mod; }\n};\n#line 9 \"verify/verify-yosupo-ds/yosupo-dynamic-sequence-range-affine-range-sum.test.cpp\"\
+    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend std::ostream &operator<<(std::ostream\
+    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend std::istream\
+    \ &operator>>(std::istream &is, mint &b) {\n    int64_t t;\n    is >> t;\n   \
+    \ b = LazyMontgomeryModInt<mod>(t);\n    return (is);\n  }\n\n  constexpr u32\
+    \ get() const {\n    u32 ret = reduce(a);\n    return ret >= mod ? ret - mod :\
+    \ ret;\n  }\n\n  static constexpr u32 get_mod() { return mod; }\n};\n#line 9 \"\
+    verify/verify-yosupo-ds/yosupo-dynamic-sequence-range-affine-range-sum.test.cpp\"\
     \nusing mint = LazyMontgomeryModInt<998244353>;\nusing vm = vector<mint>;\nusing\
     \ vvm = vector<vm>;\n#line 2 \"math/affine-transformation.hpp\"\n\ntemplate <typename\
     \ mint>\nstruct Affine {\n  mint a, b;\n  constexpr Affine() : a(1), b(0) {}\n\
@@ -346,7 +347,7 @@ data:
     \ bool operator!=(const Affine& r) const { return a != r.a || b != r.b; }\n  friend\
     \ ostream& operator<<(ostream& os, const Affine& r) {\n    os << \"( \" << r.a\
     \ << \", \" << r.b << \" )\";\n    return os;\n  }\n};\n\n/**\n * @brief \u30A2\
-    \u30D5\u30A3\u30F3\u5909\u63DB\n */\n#line 2 \"misc/fastio.hpp\"\n\n#line 8 \"\
+    \u30D5\u30A3\u30F3\u5909\u63DB\n */\n#line 2 \"misc/fastio.hpp\"\n\n#line 9 \"\
     misc/fastio.hpp\"\n\nusing namespace std;\n\n#line 2 \"internal/internal-type-traits.hpp\"\
     \n\n#line 4 \"internal/internal-type-traits.hpp\"\nusing namespace std;\n\nnamespace\
     \ internal {\ntemplate <typename T>\nusing is_broadly_integral =\n    typename\
@@ -372,7 +373,7 @@ data:
     \          \\\n  struct has_##var<T, void_t<decltype(T::var)>> : true_type {};\
     \ \\\n  template <class T>                                            \\\n  constexpr\
     \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace internal\n#line\
-    \ 12 \"misc/fastio.hpp\"\n\nnamespace fastio {\nstatic constexpr int SZ = 1 <<\
+    \ 13 \"misc/fastio.hpp\"\n\nnamespace fastio {\nstatic constexpr int SZ = 1 <<\
     \ 17;\nstatic constexpr int offset = 64;\nchar inbuf[SZ], outbuf[SZ];\nint in_left\
     \ = 0, in_right = 0, out_right = 0;\n\nstruct Pre {\n  char num[40000];\n  constexpr\
     \ Pre() : num() {\n    for (int i = 0; i < 10000; i++) {\n      int n = i;\n \
@@ -470,7 +471,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-ds/yosupo-dynamic-sequence-range-affine-range-sum.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-ds/yosupo-dynamic-sequence-range-affine-range-sum.test.cpp

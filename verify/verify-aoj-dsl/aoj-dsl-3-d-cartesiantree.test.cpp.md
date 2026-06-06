@@ -227,15 +227,24 @@ data:
     \ \\\n    return;                  \\\n  } while (0)\n#line 70 \"template/template.hpp\"\
     \n\nnamespace Nyaan {\nvoid solve();\n}\nint main() { Nyaan::solve(); }\n#line\
     \ 2 \"tree/cartesian-tree.hpp\"\n\n#line 5 \"tree/cartesian-tree.hpp\"\nusing\
-    \ namespace std;\n\n#line 2 \"graph/graph-template.hpp\"\n\ntemplate <typename\
-    \ T>\nstruct edge {\n  int src, to;\n  T cost;\n\n  edge(int _to, T _cost) : src(-1),\
-    \ to(_to), cost(_cost) {}\n  edge(int _src, int _to, T _cost) : src(_src), to(_to),\
-    \ cost(_cost) {}\n\n  edge &operator=(const int &x) {\n    to = x;\n    return\
-    \ *this;\n  }\n\n  operator int() const { return to; }\n};\ntemplate <typename\
-    \ T>\nusing Edges = vector<edge<T>>;\ntemplate <typename T>\nusing WeightedGraph\
-    \ = vector<Edges<T>>;\nusing UnweightedGraph = vector<vector<int>>;\n\n// Input\
-    \ of (Unweighted) Graph\nUnweightedGraph graph(int N, int M = -1, bool is_directed\
-    \ = false,\n                      bool is_1origin = true) {\n  UnweightedGraph\
+    \ namespace std;\n\n// return value : pair<graph, root>\ntemplate <typename T>\n\
+    pair<vector<vector<int>>, int> CartesianTree(vector<T> &a) {\n  int N = (int)a.size();\n\
+    \  vector<vector<int>> g(N);\n  vector<int> p(N, -1), st;\n  st.reserve(N);\n\
+    \  for (int i = 0; i < N; i++) {\n    int prv = -1;\n    while (!st.empty() &&\
+    \ a[i] < a[st.back()]) {\n      prv = st.back();\n      st.pop_back();\n    }\n\
+    \    if (prv != -1) p[prv] = i;\n    if (!st.empty()) p[i] = st.back();\n    st.push_back(i);\n\
+    \  }\n  int root = -1;\n  for (int i = 0; i < N; i++) {\n    if (p[i] != -1)\n\
+    \      g[p[i]].push_back(i);\n    else\n      root = i;\n  }\n  return make_pair(g,\
+    \ root);\n}\n\n/**\n * @brief Cartesian Tree\n * @docs docs/tree/cartesian-tree.md\n\
+    \ */\n#line 2 \"tree/heavy-light-decomposition.hpp\"\n\n#line 2 \"graph/graph-template.hpp\"\
+    \n\ntemplate <typename T>\nstruct edge {\n  int src, to;\n  T cost;\n\n  edge(int\
+    \ _to, T _cost) : src(-1), to(_to), cost(_cost) {}\n  edge(int _src, int _to,\
+    \ T _cost) : src(_src), to(_to), cost(_cost) {}\n\n  edge &operator=(const int\
+    \ &x) {\n    to = x;\n    return *this;\n  }\n\n  operator int() const { return\
+    \ to; }\n};\ntemplate <typename T>\nusing Edges = vector<edge<T>>;\ntemplate <typename\
+    \ T>\nusing WeightedGraph = vector<Edges<T>>;\nusing UnweightedGraph = vector<vector<int>>;\n\
+    \n// Input of (Unweighted) Graph\nUnweightedGraph graph(int N, int M = -1, bool\
+    \ is_directed = false,\n                      bool is_1origin = true) {\n  UnweightedGraph\
     \ g(N);\n  if (M == -1) M = N - 1;\n  for (int _ = 0; _ < M; _++) {\n    int x,\
     \ y;\n    cin >> x >> y;\n    if (is_1origin) x--, y--;\n    g[x].push_back(y);\n\
     \    if (!is_directed) g[y].push_back(x);\n  }\n  return g;\n}\n\n// Input of\
@@ -257,17 +266,7 @@ data:
     \ cin >> c;\n    else\n      c = 1;\n    if (is_1origin) x--, y--;\n    d[x][y]\
     \ = c;\n    if (!is_directed) d[y][x] = c;\n  }\n  return d;\n}\n\n/**\n * @brief\
     \ \u30B0\u30E9\u30D5\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\n * @docs docs/graph/graph-template.md\n\
-    \ */\n#line 8 \"tree/cartesian-tree.hpp\"\n\n// return value : pair<graph, root>\n\
-    template <typename T>\npair<vector<vector<int>>, int> CartesianTree(vector<T>\
-    \ &a) {\n  int N = (int)a.size();\n  vector<vector<int>> g(N);\n  vector<int>\
-    \ p(N, -1), st;\n  st.reserve(N);\n  for (int i = 0; i < N; i++) {\n    int prv\
-    \ = -1;\n    while (!st.empty() && a[i] < a[st.back()]) {\n      prv = st.back();\n\
-    \      st.pop_back();\n    }\n    if (prv != -1) p[prv] = i;\n    if (!st.empty())\
-    \ p[i] = st.back();\n    st.push_back(i);\n  }\n  int root = -1;\n  for (int i\
-    \ = 0; i < N; i++) {\n    if (p[i] != -1)\n      g[p[i]].push_back(i);\n    else\n\
-    \      root = i;\n  }\n  return make_pair(g, root);\n}\n\n/**\n * @brief Cartesian\
-    \ Tree\n * @docs docs/tree/cartesian-tree.md\n */\n#line 2 \"tree/heavy-light-decomposition.hpp\"\
-    \n\n#line 4 \"tree/heavy-light-decomposition.hpp\"\n\ntemplate <typename G>\n\
+    \ */\n#line 4 \"tree/heavy-light-decomposition.hpp\"\n\ntemplate <typename G>\n\
     struct HeavyLightDecomposition {\n private:\n  void dfs_sz(int cur) {\n    size[cur]\
     \ = 1;\n    for (auto& dst : g[cur]) {\n      if (dst == par[cur]) {\n       \
     \ if (g[cur].size() >= 2 && int(dst) == int(g[cur][0]))\n          swap(g[cur][0],\
@@ -325,12 +324,12 @@ data:
   - template/debug.hpp
   - template/macro.hpp
   - tree/cartesian-tree.hpp
-  - graph/graph-template.hpp
   - tree/heavy-light-decomposition.hpp
+  - graph/graph-template.hpp
   isVerificationFile: true
   path: verify/verify-aoj-dsl/aoj-dsl-3-d-cartesiantree.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-aoj-dsl/aoj-dsl-3-d-cartesiantree.test.cpp

@@ -40,92 +40,29 @@ data:
     - https://judge.yosupo.jp/problem/bipartitematching
   bundledCode: "#line 1 \"verify/verify-yosupo-graph/yosupo-matching-on-bipartite-graph.test.cpp\"\
     \n#define PROBLEM \"https://judge.yosupo.jp/problem/bipartitematching\"\n\n#line\
-    \ 1 \"atcoder/maxflow.hpp\"\n\n\n\n#include <algorithm>\n#include <cassert>\n\
-    #include <limits>\n#include <queue>\n#include <vector>\n\n#line 1 \"atcoder/internal_queue.hpp\"\
-    \n\n\n\n#line 5 \"atcoder/internal_queue.hpp\"\n\nnamespace atcoder {\n\nnamespace\
-    \ internal {\n\ntemplate <class T> struct simple_queue {\n    std::vector<T> payload;\n\
-    \    int pos = 0;\n    void reserve(int n) { payload.reserve(n); }\n    int size()\
-    \ const { return int(payload.size()) - pos; }\n    bool empty() const { return\
-    \ pos == int(payload.size()); }\n    void push(const T& t) { payload.push_back(t);\
-    \ }\n    T& front() { return payload[pos]; }\n    void clear() {\n        payload.clear();\n\
-    \        pos = 0;\n    }\n    void pop() { pos++; }\n};\n\n}  // namespace internal\n\
-    \n}  // namespace atcoder\n\n\n#line 11 \"atcoder/maxflow.hpp\"\n\nnamespace atcoder\
-    \ {\n\ntemplate <class Cap> struct mf_graph {\n  public:\n    mf_graph() : _n(0)\
-    \ {}\n    mf_graph(int n) : _n(n), g(n) {}\n\n    virtual int add_edge(int from,\
-    \ int to, Cap cap) {\n        assert(0 <= from && from < _n);\n        assert(0\
-    \ <= to && to < _n);\n        assert(0 <= cap);\n        int m = int(pos.size());\n\
-    \        pos.push_back({from, int(g[from].size())});\n        int from_id = int(g[from].size());\n\
-    \        int to_id = int(g[to].size());\n        if (from == to) to_id++;\n  \
-    \      g[from].push_back(_edge{to, to_id, cap});\n        g[to].push_back(_edge{from,\
-    \ from_id, 0});\n        return m;\n    }\n\n    struct edge {\n        int from,\
-    \ to;\n        Cap cap, flow;\n    };\n\n    edge get_edge(int i) {\n        int\
-    \ m = int(pos.size());\n        assert(0 <= i && i < m);\n        auto _e = g[pos[i].first][pos[i].second];\n\
-    \        auto _re = g[_e.to][_e.rev];\n        return edge{pos[i].first, _e.to,\
-    \ _e.cap + _re.cap, _re.cap};\n    }\n    std::vector<edge> edges() {\n      \
-    \  int m = int(pos.size());\n        std::vector<edge> result;\n        for (int\
-    \ i = 0; i < m; i++) {\n            result.push_back(get_edge(i));\n        }\n\
-    \        return result;\n    }\n    void change_edge(int i, Cap new_cap, Cap new_flow)\
-    \ {\n        int m = int(pos.size());\n        assert(0 <= i && i < m);\n    \
-    \    assert(0 <= new_flow && new_flow <= new_cap);\n        auto& _e = g[pos[i].first][pos[i].second];\n\
-    \        auto& _re = g[_e.to][_e.rev];\n        _e.cap = new_cap - new_flow;\n\
-    \        _re.cap = new_flow;\n    }\n\n    Cap flow(int s, int t) {\n        return\
-    \ flow(s, t, std::numeric_limits<Cap>::max());\n    }\n    Cap flow(int s, int\
-    \ t, Cap flow_limit) {\n        assert(0 <= s && s < _n);\n        assert(0 <=\
-    \ t && t < _n);\n        assert(s != t);\n\n        std::vector<int> level(_n),\
-    \ iter(_n);\n        internal::simple_queue<int> que;\n\n        auto bfs = [&]()\
-    \ {\n            std::fill(level.begin(), level.end(), -1);\n            level[s]\
-    \ = 0;\n            que.clear();\n            que.push(s);\n            while\
-    \ (!que.empty()) {\n                int v = que.front();\n                que.pop();\n\
-    \                for (auto e : g[v]) {\n                    if (e.cap == 0 ||\
-    \ level[e.to] >= 0) continue;\n                    level[e.to] = level[v] + 1;\n\
-    \                    if (e.to == t) return;\n                    que.push(e.to);\n\
-    \                }\n            }\n        };\n        auto dfs = [&](auto self,\
-    \ int v, Cap up) {\n            if (v == s) return up;\n            Cap res =\
-    \ 0;\n            int level_v = level[v];\n            for (int& i = iter[v];\
-    \ i < int(g[v].size()); i++) {\n                _edge& e = g[v][i];\n        \
-    \        if (level_v <= level[e.to] || g[e.to][e.rev].cap == 0) continue;\n  \
-    \              Cap d =\n                    self(self, e.to, std::min(up - res,\
-    \ g[e.to][e.rev].cap));\n                if (d <= 0) continue;\n             \
-    \   g[v][i].cap += d;\n                g[e.to][e.rev].cap -= d;\n            \
-    \    res += d;\n                if (res == up) return res;\n            }\n  \
-    \          level[v] = _n;\n            return res;\n        };\n\n        Cap\
-    \ flow = 0;\n        while (flow < flow_limit) {\n            bfs();\n       \
-    \     if (level[t] == -1) break;\n            std::fill(iter.begin(), iter.end(),\
-    \ 0);\n            Cap f = dfs(dfs, t, flow_limit - flow);\n            if (!f)\
-    \ break;\n            flow += f;\n        }\n        return flow;\n    }\n\n \
-    \   std::vector<bool> min_cut(int s) {\n        std::vector<bool> visited(_n);\n\
-    \        internal::simple_queue<int> que;\n        que.push(s);\n        while\
-    \ (!que.empty()) {\n            int p = que.front();\n            que.pop();\n\
-    \            visited[p] = true;\n            for (auto e : g[p]) {\n         \
-    \       if (e.cap && !visited[e.to]) {\n                    visited[e.to] = true;\n\
-    \                    que.push(e.to);\n                }\n            }\n     \
-    \   }\n        return visited;\n    }\n\n  private:\n    int _n;\n    struct _edge\
-    \ {\n        int to, rev;\n        Cap cap;\n    };\n    std::vector<std::pair<int,\
-    \ int>> pos;\n    std::vector<std::vector<_edge>> g;\n};\n\n}  // namespace atcoder\n\
-    \n\n#line 2 \"template/template.hpp\"\nusing namespace std;\n\n// intrinstic\n\
-    #include <immintrin.h>\n\n#line 8 \"template/template.hpp\"\n#include <array>\n\
-    #include <bitset>\n#line 11 \"template/template.hpp\"\n#include <cctype>\n#include\
-    \ <cfenv>\n#include <cfloat>\n#include <chrono>\n#include <cinttypes>\n#include\
-    \ <climits>\n#include <cmath>\n#include <complex>\n#include <cstdarg>\n#include\
-    \ <cstddef>\n#include <cstdint>\n#include <cstdio>\n#include <cstdlib>\n#include\
-    \ <cstring>\n#include <deque>\n#include <fstream>\n#include <functional>\n#include\
-    \ <initializer_list>\n#include <iomanip>\n#include <ios>\n#include <iostream>\n\
-    #include <istream>\n#include <iterator>\n#line 35 \"template/template.hpp\"\n\
-    #include <list>\n#include <map>\n#include <memory>\n#include <new>\n#include <numeric>\n\
-    #include <ostream>\n#line 42 \"template/template.hpp\"\n#include <random>\n#include\
-    \ <set>\n#include <sstream>\n#include <stack>\n#include <streambuf>\n#include\
+    \ 2 \"template/template.hpp\"\nusing namespace std;\n\n// intrinstic\n#include\
+    \ <immintrin.h>\n\n#include <algorithm>\n#include <array>\n#include <bitset>\n\
+    #include <cassert>\n#include <cctype>\n#include <cfenv>\n#include <cfloat>\n#include\
+    \ <chrono>\n#include <cinttypes>\n#include <climits>\n#include <cmath>\n#include\
+    \ <complex>\n#include <cstdarg>\n#include <cstddef>\n#include <cstdint>\n#include\
+    \ <cstdio>\n#include <cstdlib>\n#include <cstring>\n#include <deque>\n#include\
+    \ <fstream>\n#include <functional>\n#include <initializer_list>\n#include <iomanip>\n\
+    #include <ios>\n#include <iostream>\n#include <istream>\n#include <iterator>\n\
+    #include <limits>\n#include <list>\n#include <map>\n#include <memory>\n#include\
+    \ <new>\n#include <numeric>\n#include <ostream>\n#include <queue>\n#include <random>\n\
+    #include <set>\n#include <sstream>\n#include <stack>\n#include <streambuf>\n#include\
     \ <string>\n#include <tuple>\n#include <type_traits>\n#include <typeinfo>\n#include\
-    \ <unordered_map>\n#include <unordered_set>\n#include <utility>\n#line 55 \"template/template.hpp\"\
-    \n\n// utility\n#line 3 \"template/util.hpp\"\n\nnamespace Nyaan {\nusing ll =\
-    \ long long;\nusing i64 = long long;\nusing u64 = unsigned long long;\nusing i128\
-    \ = __int128_t;\nusing u128 = __uint128_t;\n\ntemplate <typename T>\nusing V =\
-    \ vector<T>;\ntemplate <typename T>\nusing VV = vector<vector<T>>;\nusing vi =\
-    \ vector<int>;\nusing vl = vector<long long>;\nusing vd = V<double>;\nusing vs\
-    \ = V<string>;\nusing vvi = vector<vector<int>>;\nusing vvl = vector<vector<long\
-    \ long>>;\ntemplate <typename T>\nusing minpq = priority_queue<T, vector<T>, greater<T>>;\n\
-    \ntemplate <typename T, typename U>\nstruct P : pair<T, U> {\n  template <typename...\
-    \ Args>\n  P(Args... args) : pair<T, U>(args...) {}\n\n  using pair<T, U>::first;\n\
-    \  using pair<T, U>::second;\n\n  P &operator+=(const P &r) {\n    first += r.first;\n\
+    \ <unordered_map>\n#include <unordered_set>\n#include <utility>\n#include <vector>\n\
+    \n// utility\n#line 3 \"template/util.hpp\"\n\nnamespace Nyaan {\nusing ll = long\
+    \ long;\nusing i64 = long long;\nusing u64 = unsigned long long;\nusing i128 =\
+    \ __int128_t;\nusing u128 = __uint128_t;\n\ntemplate <typename T>\nusing V = vector<T>;\n\
+    template <typename T>\nusing VV = vector<vector<T>>;\nusing vi = vector<int>;\n\
+    using vl = vector<long long>;\nusing vd = V<double>;\nusing vs = V<string>;\n\
+    using vvi = vector<vector<int>>;\nusing vvl = vector<vector<long long>>;\ntemplate\
+    \ <typename T>\nusing minpq = priority_queue<T, vector<T>, greater<T>>;\n\ntemplate\
+    \ <typename T, typename U>\nstruct P : pair<T, U> {\n  template <typename... Args>\n\
+    \  P(Args... args) : pair<T, U>(args...) {}\n\n  using pair<T, U>::first;\n  using\
+    \ pair<T, U>::second;\n\n  P &operator+=(const P &r) {\n    first += r.first;\n\
     \    second += r.second;\n    return *this;\n  }\n  P &operator-=(const P &r)\
     \ {\n    first -= r.first;\n    second -= r.second;\n    return *this;\n  }\n\
     \  P &operator*=(const P &r) {\n    first *= r.first;\n    second *= r.second;\n\
@@ -289,13 +226,75 @@ data:
     \n  }\n#define die(...)             \\\n  do {                       \\\n    Nyaan::out(__VA_ARGS__);\
     \ \\\n    return;                  \\\n  } while (0)\n#line 70 \"template/template.hpp\"\
     \n\nnamespace Nyaan {\nvoid solve();\n}\nint main() { Nyaan::solve(); }\n#line\
-    \ 2 \"flow/flow-on-bipartite-graph.hpp\"\n\n#line 4 \"flow/flow-on-bipartite-graph.hpp\"\
-    \n\nnamespace BipartiteGraphImpl {\nusing namespace atcoder;\nstruct BipartiteGraph\
-    \ : mf_graph<long long> {\n  int L, R, s, t;\n  bool is_flow;\n\n  explicit BipartiteGraph(int\
-    \ N, int M)\n      : mf_graph<long long>(N + M + 2),\n        L(N),\n        R(M),\n\
-    \        s(N + M),\n        t(N + M + 1),\n        is_flow(false) {\n    for (int\
-    \ i = 0; i < L; i++) mf_graph<long long>::add_edge(s, i, 1);\n    for (int i =\
-    \ 0; i < R; i++) mf_graph<long long>::add_edge(i + L, t, 1);\n  }\n\n  int add_edge(int\
+    \ 2 \"flow/flow-on-bipartite-graph.hpp\"\n\n#line 1 \"atcoder/maxflow.hpp\"\n\n\
+    \n\n#line 9 \"atcoder/maxflow.hpp\"\n\n#line 1 \"atcoder/internal_queue.hpp\"\n\
+    \n\n\n#line 5 \"atcoder/internal_queue.hpp\"\n\nnamespace atcoder {\n\nnamespace\
+    \ internal {\n\ntemplate <class T> struct simple_queue {\n    std::vector<T> payload;\n\
+    \    int pos = 0;\n    void reserve(int n) { payload.reserve(n); }\n    int size()\
+    \ const { return int(payload.size()) - pos; }\n    bool empty() const { return\
+    \ pos == int(payload.size()); }\n    void push(const T& t) { payload.push_back(t);\
+    \ }\n    T& front() { return payload[pos]; }\n    void clear() {\n        payload.clear();\n\
+    \        pos = 0;\n    }\n    void pop() { pos++; }\n};\n\n}  // namespace internal\n\
+    \n}  // namespace atcoder\n\n\n#line 11 \"atcoder/maxflow.hpp\"\n\nnamespace atcoder\
+    \ {\n\ntemplate <class Cap> struct mf_graph {\n  public:\n    mf_graph() : _n(0)\
+    \ {}\n    mf_graph(int n) : _n(n), g(n) {}\n\n    virtual int add_edge(int from,\
+    \ int to, Cap cap) {\n        assert(0 <= from && from < _n);\n        assert(0\
+    \ <= to && to < _n);\n        assert(0 <= cap);\n        int m = int(pos.size());\n\
+    \        pos.push_back({from, int(g[from].size())});\n        int from_id = int(g[from].size());\n\
+    \        int to_id = int(g[to].size());\n        if (from == to) to_id++;\n  \
+    \      g[from].push_back(_edge{to, to_id, cap});\n        g[to].push_back(_edge{from,\
+    \ from_id, 0});\n        return m;\n    }\n\n    struct edge {\n        int from,\
+    \ to;\n        Cap cap, flow;\n    };\n\n    edge get_edge(int i) {\n        int\
+    \ m = int(pos.size());\n        assert(0 <= i && i < m);\n        auto _e = g[pos[i].first][pos[i].second];\n\
+    \        auto _re = g[_e.to][_e.rev];\n        return edge{pos[i].first, _e.to,\
+    \ _e.cap + _re.cap, _re.cap};\n    }\n    std::vector<edge> edges() {\n      \
+    \  int m = int(pos.size());\n        std::vector<edge> result;\n        for (int\
+    \ i = 0; i < m; i++) {\n            result.push_back(get_edge(i));\n        }\n\
+    \        return result;\n    }\n    void change_edge(int i, Cap new_cap, Cap new_flow)\
+    \ {\n        int m = int(pos.size());\n        assert(0 <= i && i < m);\n    \
+    \    assert(0 <= new_flow && new_flow <= new_cap);\n        auto& _e = g[pos[i].first][pos[i].second];\n\
+    \        auto& _re = g[_e.to][_e.rev];\n        _e.cap = new_cap - new_flow;\n\
+    \        _re.cap = new_flow;\n    }\n\n    Cap flow(int s, int t) {\n        return\
+    \ flow(s, t, std::numeric_limits<Cap>::max());\n    }\n    Cap flow(int s, int\
+    \ t, Cap flow_limit) {\n        assert(0 <= s && s < _n);\n        assert(0 <=\
+    \ t && t < _n);\n        assert(s != t);\n\n        std::vector<int> level(_n),\
+    \ iter(_n);\n        internal::simple_queue<int> que;\n\n        auto bfs = [&]()\
+    \ {\n            std::fill(level.begin(), level.end(), -1);\n            level[s]\
+    \ = 0;\n            que.clear();\n            que.push(s);\n            while\
+    \ (!que.empty()) {\n                int v = que.front();\n                que.pop();\n\
+    \                for (auto e : g[v]) {\n                    if (e.cap == 0 ||\
+    \ level[e.to] >= 0) continue;\n                    level[e.to] = level[v] + 1;\n\
+    \                    if (e.to == t) return;\n                    que.push(e.to);\n\
+    \                }\n            }\n        };\n        auto dfs = [&](auto self,\
+    \ int v, Cap up) {\n            if (v == s) return up;\n            Cap res =\
+    \ 0;\n            int level_v = level[v];\n            for (int& i = iter[v];\
+    \ i < int(g[v].size()); i++) {\n                _edge& e = g[v][i];\n        \
+    \        if (level_v <= level[e.to] || g[e.to][e.rev].cap == 0) continue;\n  \
+    \              Cap d =\n                    self(self, e.to, std::min(up - res,\
+    \ g[e.to][e.rev].cap));\n                if (d <= 0) continue;\n             \
+    \   g[v][i].cap += d;\n                g[e.to][e.rev].cap -= d;\n            \
+    \    res += d;\n                if (res == up) return res;\n            }\n  \
+    \          level[v] = _n;\n            return res;\n        };\n\n        Cap\
+    \ flow = 0;\n        while (flow < flow_limit) {\n            bfs();\n       \
+    \     if (level[t] == -1) break;\n            std::fill(iter.begin(), iter.end(),\
+    \ 0);\n            Cap f = dfs(dfs, t, flow_limit - flow);\n            if (!f)\
+    \ break;\n            flow += f;\n        }\n        return flow;\n    }\n\n \
+    \   std::vector<bool> min_cut(int s) {\n        std::vector<bool> visited(_n);\n\
+    \        internal::simple_queue<int> que;\n        que.push(s);\n        while\
+    \ (!que.empty()) {\n            int p = que.front();\n            que.pop();\n\
+    \            visited[p] = true;\n            for (auto e : g[p]) {\n         \
+    \       if (e.cap && !visited[e.to]) {\n                    visited[e.to] = true;\n\
+    \                    que.push(e.to);\n                }\n            }\n     \
+    \   }\n        return visited;\n    }\n\n  private:\n    int _n;\n    struct _edge\
+    \ {\n        int to, rev;\n        Cap cap;\n    };\n    std::vector<std::pair<int,\
+    \ int>> pos;\n    std::vector<std::vector<_edge>> g;\n};\n\n}  // namespace atcoder\n\
+    \n\n#line 4 \"flow/flow-on-bipartite-graph.hpp\"\n\nnamespace BipartiteGraphImpl\
+    \ {\nusing namespace atcoder;\nstruct BipartiteGraph : mf_graph<long long> {\n\
+    \  int L, R, s, t;\n  bool is_flow;\n\n  explicit BipartiteGraph(int N, int M)\n\
+    \      : mf_graph<long long>(N + M + 2),\n        L(N),\n        R(M),\n     \
+    \   s(N + M),\n        t(N + M + 1),\n        is_flow(false) {\n    for (int i\
+    \ = 0; i < L; i++) mf_graph<long long>::add_edge(s, i, 1);\n    for (int i = 0;\
+    \ i < R; i++) mf_graph<long long>::add_edge(i + L, t, 1);\n  }\n\n  int add_edge(int\
     \ n, int m, long long cap = 1) override {\n    assert(0 <= n && n < L);\n    assert(0\
     \ <= m && m < R);\n    return mf_graph<long long>::add_edge(n, m + L, cap);\n\
     \  }\n\n  long long flow() {\n    is_flow = true;\n    return mf_graph<long long>::flow(s,\
@@ -330,7 +329,7 @@ data:
     \ = true, dfs(dfs, i);\n    return colored;\n  }\n};\n\n}  // namespace BipartiteGraphImpl\n\
     \nusing BipartiteGraphImpl::BipartiteGraph;\n\n/**\n * @brief \u4E8C\u90E8\u30B0\
     \u30E9\u30D5\u306E\u30D5\u30ED\u30FC\n * @docs docs/flow/flow-on-bipartite-graph.md\n\
-    \ */\n#line 2 \"misc/fastio.hpp\"\n\n#line 8 \"misc/fastio.hpp\"\n\nusing namespace\
+    \ */\n#line 2 \"misc/fastio.hpp\"\n\n#line 9 \"misc/fastio.hpp\"\n\nusing namespace\
     \ std;\n\n#line 2 \"internal/internal-type-traits.hpp\"\n\n#line 4 \"internal/internal-type-traits.hpp\"\
     \nusing namespace std;\n\nnamespace internal {\ntemplate <typename T>\nusing is_broadly_integral\
     \ =\n    typename conditional_t<is_integral_v<T> || is_same_v<T, __int128_t> ||\n\
@@ -355,7 +354,7 @@ data:
     \          \\\n  struct has_##var<T, void_t<decltype(T::var)>> : true_type {};\
     \ \\\n  template <class T>                                            \\\n  constexpr\
     \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace internal\n#line\
-    \ 12 \"misc/fastio.hpp\"\n\nnamespace fastio {\nstatic constexpr int SZ = 1 <<\
+    \ 13 \"misc/fastio.hpp\"\n\nnamespace fastio {\nstatic constexpr int SZ = 1 <<\
     \ 17;\nstatic constexpr int offset = 64;\nchar inbuf[SZ], outbuf[SZ];\nint in_left\
     \ = 0, in_right = 0, out_right = 0;\n\nstruct Pre {\n  char num[40000];\n  constexpr\
     \ Pre() : num() {\n    for (int i = 0; i < 10000; i++) {\n      int n = i;\n \
@@ -403,18 +402,18 @@ data:
     \ Tail>(tail)...);\n}\ntemplate <typename... Args>\nvoid wtn(const Args&... x)\
     \ {\n  wt(std::forward<const Args>(x)...);\n  wt('\\n');\n}\n\nstruct Dummy {\n\
     \  Dummy() { atexit(flush); }\n} dummy;\n\n}  // namespace fastio\nusing fastio::rd;\n\
-    using fastio::skip_space;\nusing fastio::wt;\nusing fastio::wtn;\n#line 7 \"verify/verify-yosupo-graph/yosupo-matching-on-bipartite-graph.test.cpp\"\
+    using fastio::skip_space;\nusing fastio::wt;\nusing fastio::wtn;\n#line 6 \"verify/verify-yosupo-graph/yosupo-matching-on-bipartite-graph.test.cpp\"\
     \n\nusing namespace Nyaan; void Nyaan::solve() {\n  int L, R, M;\n  rd(L, R, M);\n\
     \  BipartiteGraph graph(L, R);\n  rep(i, M) {\n    int u, v;\n    rd(u, v);\n\
     \    graph.add_edge(u, v);\n  }\n  wtn(graph.flow());\n  for (auto &e : graph.MaximumMatching())\
     \ {\n    wt(e.first, ' ', e.second, '\\n');\n  }\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/bipartitematching\"\n\n\
-    #include \"../../atcoder/maxflow.hpp\"\n#include \"../../template/template.hpp\"\
-    \n#include \"../../flow/flow-on-bipartite-graph.hpp\"\n#include \"../../misc/fastio.hpp\"\
-    \n\nusing namespace Nyaan; void Nyaan::solve() {\n  int L, R, M;\n  rd(L, R, M);\n\
-    \  BipartiteGraph graph(L, R);\n  rep(i, M) {\n    int u, v;\n    rd(u, v);\n\
-    \    graph.add_edge(u, v);\n  }\n  wtn(graph.flow());\n  for (auto &e : graph.MaximumMatching())\
-    \ {\n    wt(e.first, ' ', e.second, '\\n');\n  }\n}"
+    #include \"../../template/template.hpp\"\n#include \"../../flow/flow-on-bipartite-graph.hpp\"\
+    \n#include \"../../misc/fastio.hpp\"\n\nusing namespace Nyaan; void Nyaan::solve()\
+    \ {\n  int L, R, M;\n  rd(L, R, M);\n  BipartiteGraph graph(L, R);\n  rep(i, M)\
+    \ {\n    int u, v;\n    rd(u, v);\n    graph.add_edge(u, v);\n  }\n  wtn(graph.flow());\n\
+    \  for (auto &e : graph.MaximumMatching()) {\n    wt(e.first, ' ', e.second, '\\\
+    n');\n  }\n}"
   dependsOn:
   - template/template.hpp
   - template/util.hpp
@@ -428,7 +427,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-graph/yosupo-matching-on-bipartite-graph.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-graph/yosupo-matching-on-bipartite-graph.test.cpp

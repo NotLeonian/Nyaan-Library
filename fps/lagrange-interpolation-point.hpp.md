@@ -4,7 +4,10 @@ data:
   - icon: ':heavy_check_mark:'
     path: modulo/binomial.hpp
     title: modulo/binomial.hpp
-  _extendedRequiredBy: []
+  _extendedRequiredBy:
+  - icon: ':heavy_check_mark:'
+    path: fps/sum-of-exponential-times-poly.hpp
+    title: $\sum_{i}a^i f(i)$
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-sum-of-exp-poly-limit.test.cpp
@@ -73,7 +76,8 @@ data:
   - modulo/binomial.hpp
   isVerificationFile: false
   path: fps/lagrange-interpolation-point.hpp
-  requiredBy: []
+  requiredBy:
+  - fps/sum-of-exponential-times-poly.hpp
   timestamp: '2023-05-22 22:29:25+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:

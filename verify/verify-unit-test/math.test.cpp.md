@@ -238,7 +238,7 @@ data:
     \ 4 \"verify/verify-unit-test/math.test.cpp\"\n//\n#line 2 \"math/gray-code.hpp\"\
     \n\n\n\nvector<int> gray_code(int n) {\n  vector<int> ret(1 << n);\n  for (int\
     \ i = 0; i < (int)ret.size(); i++) ret[i] = i ^ (i >> 1);\n  return ret;\n};\n\
-    \n/**\n * @brief Gray code\n */ \n#line 2 \"math/inv-mod.hpp\"\n\n#line 5 \"math/inv-mod.hpp\"\
+    \n/**\n * @brief Gray code\n */ \n#line 2 \"math/inv-mod.hpp\"\n\n#line 4 \"math/inv-mod.hpp\"\
     \nusing namespace std;\n\n// gcd(a, m) != 1 \u306E\u3068\u304D 0 \u9664\u7B97\u3067\
     \ RE \u3059\u308B\ntemplate <typename T>\nT inv_mod(T a, T m) {\n  if (m == 1)\
     \ return 0;\n  if (a >= m) a %= m;\n  if (a < 0) a += m;\n  T b = m, s = 1, t\
@@ -258,58 +258,59 @@ data:
     \ m < yr, 0 <= x < xr\ntemplate <typename T>\nT mod_affine_range_counting(T a,\
     \ T b, T m, T xr, T yr) {\n  assert(0 <= yr && yr <= m);\n  return sum_of_floor(xr,\
     \ m, a, b + m) - sum_of_floor(xr, m, a, b + m - yr);\n}\n#line 2 \"misc/rng.hpp\"\
-    \n\n#line 2 \"internal/internal-seed.hpp\"\n\n#line 4 \"internal/internal-seed.hpp\"\
-    \nusing namespace std;\n\nnamespace internal {\nunsigned long long non_deterministic_seed()\
-    \ {\n  unsigned long long m =\n      chrono::duration_cast<chrono::nanoseconds>(\n\
-    \          chrono::high_resolution_clock::now().time_since_epoch())\n        \
-    \  .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >> 31, m\
-    \ ^= m << 35;\n  return m;\n}\nunsigned long long deterministic_seed() { return\
-    \ 88172645463325252UL; }\n\n// 64 bit \u306E seed \u5024\u3092\u751F\u6210 (\u624B\
-    \u5143\u3067\u306F seed \u56FA\u5B9A)\n// \u9023\u7D9A\u3067\u547C\u3073\u51FA\
-    \u3059\u3068\u540C\u3058\u5024\u304C\u4F55\u5EA6\u3082\u8FD4\u3063\u3066\u304F\
-    \u308B\u306E\u3067\u6CE8\u610F\n// #define RANDOMIZED_SEED \u3059\u308B\u3068\u30B7\
-    \u30FC\u30C9\u304C\u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long long\
-    \ seed() {\n#if defined(NyaanLocal) && !defined(RANDOMIZED_SEED)\n  return deterministic_seed();\n\
-    #else\n  return non_deterministic_seed();\n#endif\n}\n\n}  // namespace internal\n\
-    #line 4 \"misc/rng.hpp\"\n\nnamespace my_rand {\nusing i64 = long long;\nusing\
-    \ u64 = unsigned long long;\n\n// [0, 2^64 - 1)\nu64 rng() {\n  static u64 _x\
-    \ = internal::seed();\n  return _x ^= _x << 7, _x ^= _x >> 9;\n}\n\n// [l, r]\n\
-    i64 rng(i64 l, i64 r) {\n  assert(l <= r);\n  return l + rng() % u64(r - l + 1);\n\
-    }\n\n// [l, r)\ni64 randint(i64 l, i64 r) {\n  assert(l < r);\n  return l + rng()\
-    \ % u64(r - l);\n}\n\n// choose n numbers from [l, r) without overlapping\nvector<i64>\
-    \ randset(i64 l, i64 r, i64 n) {\n  assert(l <= r && n <= r - l);\n  unordered_set<i64>\
-    \ s;\n  for (i64 i = n; i; --i) {\n    i64 m = randint(l, r + 1 - i);\n    if\
-    \ (s.find(m) != s.end()) m = r - i;\n    s.insert(m);\n  }\n  vector<i64> ret;\n\
-    \  for (auto& x : s) ret.push_back(x);\n  sort(begin(ret), end(ret));\n  return\
-    \ ret;\n}\n\n// [0.0, 1.0)\ndouble rnd() { return rng() * 5.42101086242752217004e-20;\
-    \ }\n// [l, r)\ndouble rnd(double l, double r) {\n  assert(l < r);\n  return l\
-    \ + rnd() * (r - l);\n}\n\ntemplate <typename T>\nvoid randshf(vector<T>& v) {\n\
-    \  int n = v.size();\n  for (int i = 1; i < n; i++) swap(v[i], v[randint(0, i\
-    \ + 1)]);\n}\n\n}  // namespace my_rand\n\nusing my_rand::randint;\nusing my_rand::randset;\n\
-    using my_rand::randshf;\nusing my_rand::rnd;\nusing my_rand::rng;\n#line 10 \"\
-    verify/verify-unit-test/math.test.cpp\"\nusing namespace Nyaan;\n\nvoid gray_code_test()\
-    \ {\n  for (int i = 0; i < 20; i++) {\n    auto g = gray_code(i);\n    int s =\
-    \ (int)g.size();\n    for (int j = 0; j < s; j++) {\n      int d = g[j] ^ g[j\
-    \ ? j - 1 : s - 1];\n      assert(d == (d & -d));\n    }\n  }\n}\n\n// count x\
-    \ : ax + b mod m < yr, 0 <= x < xr\nvoid mod_affine_range_counting_test() {\n\
-    \  int M = 100000;\n  rep(_, 100) {\n    int a = randint(0, M);\n    int b = randint(0,\
-    \ M);\n    int m = randint(1, M + 1);\n    int xr = randint(100, 100 + M + 1);\n\
-    \    int yr = randint(0, m + 1);\n    int a1 = mod_affine_range_counting<long\
-    \ long>(a, b, m, xr, yr);\n    int a2 = 0;\n    rep(x, xr) {\n      int X = (a\
-    \ * x + b) % m;\n      a2 += X < yr;\n    }\n    assert(a1 == a2);\n  }\n}\n\n\
-    void isqrt_test() {\n  auto check = [&](long long x) -> void {\n    ll y = isqrt(x);\n\
-    \    assert(y * y <= x);\n    assert(x < (y + 1) * (y + 1));\n  };\n\n  rep(i,\
-    \ TEN(4)) check(i);\n  rep(_, 100) {\n    ll x = rng(100, 2e9);\n    x = x * x;\n\
-    \    reg(i, x - 50, x + 50) check(i);\n  }\n}\n\nvoid inv_mod_test() {\n  rep1(mod,\
-    \ 100) {\n    rep(a, mod * 10) {\n      if (gcd(a, mod) != 1) continue;\n    \
-    \  int b = inv_mod(a, mod);\n      assert(a * b % mod == 1 % mod);\n    }\n  }\n\
-    \n  rep(_, 1000) {\n    ll mod = rng(2, TEN(18));\n    ll x = 0;\n    do {\n \
-    \     x = rng(1, mod - 1);\n    } while (gcd(mod, x) != 1);\n    ll y = inv_mod(x,\
-    \ mod);\n    assert(i128(x) * y % mod == 1);\n  }\n}\n\nvoid Nyaan::solve() {\n\
-    \  gray_code_test();\n  cerr << \"OK gray code\" << endl;\n  mod_affine_range_counting_test();\n\
-    \  cerr << \"OK mod affine\" << endl;\n  isqrt_test();\n  cerr << \"OK isqrt\"\
-    \ << endl;\n  inv_mod_test();\n  cerr << \"OK inv mod\" << endl;\n\n  int a, b;\n\
-    \  cin >> a >> b;\n  cout << a + b << endl;\n}\n"
+    \n\n#line 7 \"misc/rng.hpp\"\nusing namespace std;\n\n#line 2 \"internal/internal-seed.hpp\"\
+    \n\n#line 4 \"internal/internal-seed.hpp\"\nusing namespace std;\n\nnamespace\
+    \ internal {\nunsigned long long non_deterministic_seed() {\n  unsigned long long\
+    \ m =\n      chrono::duration_cast<chrono::nanoseconds>(\n          chrono::high_resolution_clock::now().time_since_epoch())\n\
+    \          .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >>\
+    \ 31, m ^= m << 35;\n  return m;\n}\nunsigned long long deterministic_seed() {\
+    \ return 88172645463325252UL; }\n\n// 64 bit \u306E seed \u5024\u3092\u751F\u6210\
+    \ (\u624B\u5143\u3067\u306F seed \u56FA\u5B9A)\n// \u9023\u7D9A\u3067\u547C\u3073\
+    \u51FA\u3059\u3068\u540C\u3058\u5024\u304C\u4F55\u5EA6\u3082\u8FD4\u3063\u3066\
+    \u304F\u308B\u306E\u3067\u6CE8\u610F\n// #define RANDOMIZED_SEED \u3059\u308B\u3068\
+    \u30B7\u30FC\u30C9\u304C\u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long\
+    \ long seed() {\n#if defined(NyaanLocal) && !defined(RANDOMIZED_SEED)\n  return\
+    \ deterministic_seed();\n#else\n  return non_deterministic_seed();\n#endif\n}\n\
+    \n}  // namespace internal\n#line 10 \"misc/rng.hpp\"\n\nnamespace my_rand {\n\
+    using i64 = long long;\nusing u64 = unsigned long long;\n\n// [0, 2^64 - 1)\n\
+    u64 rng() {\n  static u64 _x = internal::seed();\n  return _x ^= _x << 7, _x ^=\
+    \ _x >> 9;\n}\n\n// [l, r]\ni64 rng(i64 l, i64 r) {\n  assert(l <= r);\n  return\
+    \ l + rng() % u64(r - l + 1);\n}\n\n// [l, r)\ni64 randint(i64 l, i64 r) {\n \
+    \ assert(l < r);\n  return l + rng() % u64(r - l);\n}\n\n// choose n numbers from\
+    \ [l, r) without overlapping\nvector<i64> randset(i64 l, i64 r, i64 n) {\n  assert(l\
+    \ <= r && n <= r - l);\n  unordered_set<i64> s;\n  for (i64 i = n; i; --i) {\n\
+    \    i64 m = randint(l, r + 1 - i);\n    if (s.find(m) != s.end()) m = r - i;\n\
+    \    s.insert(m);\n  }\n  vector<i64> ret;\n  for (auto& x : s) ret.push_back(x);\n\
+    \  sort(begin(ret), end(ret));\n  return ret;\n}\n\n// [0.0, 1.0)\ndouble rnd()\
+    \ { return rng() * 5.42101086242752217004e-20; }\n// [l, r)\ndouble rnd(double\
+    \ l, double r) {\n  assert(l < r);\n  return l + rnd() * (r - l);\n}\n\ntemplate\
+    \ <typename T>\nvoid randshf(vector<T>& v) {\n  int n = v.size();\n  for (int\
+    \ i = 1; i < n; i++) swap(v[i], v[randint(0, i + 1)]);\n}\n\n}  // namespace my_rand\n\
+    \nusing my_rand::randint;\nusing my_rand::randset;\nusing my_rand::randshf;\n\
+    using my_rand::rnd;\nusing my_rand::rng;\n#line 10 \"verify/verify-unit-test/math.test.cpp\"\
+    \nusing namespace Nyaan;\n\nvoid gray_code_test() {\n  for (int i = 0; i < 20;\
+    \ i++) {\n    auto g = gray_code(i);\n    int s = (int)g.size();\n    for (int\
+    \ j = 0; j < s; j++) {\n      int d = g[j] ^ g[j ? j - 1 : s - 1];\n      assert(d\
+    \ == (d & -d));\n    }\n  }\n}\n\n// count x : ax + b mod m < yr, 0 <= x < xr\n\
+    void mod_affine_range_counting_test() {\n  int M = 100000;\n  rep(_, 100) {\n\
+    \    int a = randint(0, M);\n    int b = randint(0, M);\n    int m = randint(1,\
+    \ M + 1);\n    int xr = randint(100, 100 + M + 1);\n    int yr = randint(0, m\
+    \ + 1);\n    int a1 = mod_affine_range_counting<long long>(a, b, m, xr, yr);\n\
+    \    int a2 = 0;\n    rep(x, xr) {\n      int X = (a * x + b) % m;\n      a2 +=\
+    \ X < yr;\n    }\n    assert(a1 == a2);\n  }\n}\n\nvoid isqrt_test() {\n  auto\
+    \ check = [&](long long x) -> void {\n    ll y = isqrt(x);\n    assert(y * y <=\
+    \ x);\n    assert(x < (y + 1) * (y + 1));\n  };\n\n  rep(i, TEN(4)) check(i);\n\
+    \  rep(_, 100) {\n    ll x = rng(100, 2e9);\n    x = x * x;\n    reg(i, x - 50,\
+    \ x + 50) check(i);\n  }\n}\n\nvoid inv_mod_test() {\n  rep1(mod, 100) {\n   \
+    \ rep(a, mod * 10) {\n      if (gcd(a, mod) != 1) continue;\n      int b = inv_mod(a,\
+    \ mod);\n      assert(a * b % mod == 1 % mod);\n    }\n  }\n\n  rep(_, 1000) {\n\
+    \    ll mod = rng(2, TEN(18));\n    ll x = 0;\n    do {\n      x = rng(1, mod\
+    \ - 1);\n    } while (gcd(mod, x) != 1);\n    ll y = inv_mod(x, mod);\n    assert(i128(x)\
+    \ * y % mod == 1);\n  }\n}\n\nvoid Nyaan::solve() {\n  gray_code_test();\n  cerr\
+    \ << \"OK gray code\" << endl;\n  mod_affine_range_counting_test();\n  cerr <<\
+    \ \"OK mod affine\" << endl;\n  isqrt_test();\n  cerr << \"OK isqrt\" << endl;\n\
+    \  inv_mod_test();\n  cerr << \"OK inv mod\" << endl;\n\n  int a, b;\n  cin >>\
+    \ a >> b;\n  cout << a + b << endl;\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/aplusb\"\n\n#include \"\
     ../../template/template.hpp\"\n//\n#include \"../../math/gray-code.hpp\"\n#include\
     \ \"../../math/inv-mod.hpp\"\n#include \"../../math/isqrt.hpp\"\n#include \"../../math/floor-sum.hpp\"\
@@ -352,7 +353,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/math.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/math.test.cpp

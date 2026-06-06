@@ -478,7 +478,7 @@ data:
     \ i++) {\n      rem.push_back(cs2[i].C(n, m));\n      d.push_back(M2[i]);\n  \
     \  }\n    return atcoder::crt(rem, d).first;\n  }\n};\n\n#undef PRIME_POWER_BINOMIAL_M_MAX\n\
     #undef PRIME_POWER_BINOMIAL_N_MAX\n#line 6 \"verify/verify-yosupo-math/yosupo-binomial-coefficient-large.test.cpp\"\
-    \n//\n#line 2 \"misc/fastio.hpp\"\n\n#line 8 \"misc/fastio.hpp\"\n\nusing namespace\
+    \n//\n#line 2 \"misc/fastio.hpp\"\n\n#line 9 \"misc/fastio.hpp\"\n\nusing namespace\
     \ std;\n\n#line 2 \"internal/internal-type-traits.hpp\"\n\n#line 4 \"internal/internal-type-traits.hpp\"\
     \nusing namespace std;\n\nnamespace internal {\ntemplate <typename T>\nusing is_broadly_integral\
     \ =\n    typename conditional_t<is_integral_v<T> || is_same_v<T, __int128_t> ||\n\
@@ -503,7 +503,7 @@ data:
     \          \\\n  struct has_##var<T, void_t<decltype(T::var)>> : true_type {};\
     \ \\\n  template <class T>                                            \\\n  constexpr\
     \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace internal\n#line\
-    \ 12 \"misc/fastio.hpp\"\n\nnamespace fastio {\nstatic constexpr int SZ = 1 <<\
+    \ 13 \"misc/fastio.hpp\"\n\nnamespace fastio {\nstatic constexpr int SZ = 1 <<\
     \ 17;\nstatic constexpr int offset = 64;\nchar inbuf[SZ], outbuf[SZ];\nint in_left\
     \ = 0, in_right = 0, out_right = 0;\n\nstruct Pre {\n  char num[40000];\n  constexpr\
     \ Pre() : num() {\n    for (int i = 0; i < 10000; i++) {\n      int n = i;\n \
@@ -586,7 +586,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-math/yosupo-binomial-coefficient-large.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-math/yosupo-binomial-coefficient-large.test.cpp

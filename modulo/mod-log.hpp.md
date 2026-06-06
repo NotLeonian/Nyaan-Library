@@ -170,10 +170,10 @@ data:
     \ \\\n  template <class T>                                            \\\n  constexpr\
     \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace internal\n#line\
     \ 4 \"internal/internal-math.hpp\"\n\nnamespace internal {\n\n#include <cassert>\n\
-    #include <utility>\n#include <vector>\nusing namespace std;\n\n// a mod p\ntemplate\
-    \ <typename T>\nT safe_mod(T a, T p) {\n  a %= p;\n  if constexpr (is_broadly_signed_v<T>)\
-    \ {\n    if (a < 0) a += p;\n  }\n  return a;\n}\n\n// \u8FD4\u308A\u5024\uFF1A\
-    pair(g, x)\n// s.t. g = gcd(a, b), xa = g (mod b), 0 <= x < b/g\ntemplate <typename\
+    #include <vector>\nusing namespace std;\n\n// a mod p\ntemplate <typename T>\n\
+    T safe_mod(T a, T p) {\n  a %= p;\n  if constexpr (is_broadly_signed_v<T>) {\n\
+    \    if (a < 0) a += p;\n  }\n  return a;\n}\n\n// \u8FD4\u308A\u5024\uFF1Apair(g,\
+    \ x)\n// s.t. g = gcd(a, b), xa = g (mod b), 0 <= x < b/g\ntemplate <typename\
     \ T>\npair<T, T> inv_gcd(T a, T p) {\n  static_assert(is_broadly_signed_v<T>);\n\
     \  a = safe_mod(a, p);\n  if (a == 0) return {p, 0};\n  T b = p, x = 1, y = 0;\n\
     \  while (a != 0) {\n    T q = b / a;\n    swap(a, b %= a);\n    swap(x, y -=\
@@ -228,7 +228,7 @@ data:
   isVerificationFile: false
   path: modulo/mod-log.hpp
   requiredBy: []
-  timestamp: '2024-08-10 13:03:16+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-math/yosupo-mod-log.test.cpp

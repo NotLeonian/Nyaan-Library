@@ -238,28 +238,29 @@ data:
     \n  }\n#define die(...)             \\\n  do {                       \\\n    Nyaan::out(__VA_ARGS__);\
     \ \\\n    return;                  \\\n  } while (0)\n#line 70 \"template/template.hpp\"\
     \n\nnamespace Nyaan {\nvoid solve();\n}\nint main() { Nyaan::solve(); }\n#line\
-    \ 4 \"verify/verify-unit-test/rerooting.test.cpp\"\n//\n#line 2 \"graph/graph-template.hpp\"\
-    \n\ntemplate <typename T>\nstruct edge {\n  int src, to;\n  T cost;\n\n  edge(int\
-    \ _to, T _cost) : src(-1), to(_to), cost(_cost) {}\n  edge(int _src, int _to,\
-    \ T _cost) : src(_src), to(_to), cost(_cost) {}\n\n  edge &operator=(const int\
-    \ &x) {\n    to = x;\n    return *this;\n  }\n\n  operator int() const { return\
-    \ to; }\n};\ntemplate <typename T>\nusing Edges = vector<edge<T>>;\ntemplate <typename\
-    \ T>\nusing WeightedGraph = vector<Edges<T>>;\nusing UnweightedGraph = vector<vector<int>>;\n\
-    \n// Input of (Unweighted) Graph\nUnweightedGraph graph(int N, int M = -1, bool\
-    \ is_directed = false,\n                      bool is_1origin = true) {\n  UnweightedGraph\
+    \ 4 \"verify/verify-unit-test/rerooting.test.cpp\"\n//\n#line 2 \"tree/rerooting.hpp\"\
+    \n\n#line 2 \"graph/graph-template.hpp\"\n\ntemplate <typename T>\nstruct edge\
+    \ {\n  int src, to;\n  T cost;\n\n  edge(int _to, T _cost) : src(-1), to(_to),\
+    \ cost(_cost) {}\n  edge(int _src, int _to, T _cost) : src(_src), to(_to), cost(_cost)\
+    \ {}\n\n  edge &operator=(const int &x) {\n    to = x;\n    return *this;\n  }\n\
+    \n  operator int() const { return to; }\n};\ntemplate <typename T>\nusing Edges\
+    \ = vector<edge<T>>;\ntemplate <typename T>\nusing WeightedGraph = vector<Edges<T>>;\n\
+    using UnweightedGraph = vector<vector<int>>;\n\n// Input of (Unweighted) Graph\n\
+    UnweightedGraph graph(int N, int M = -1, bool is_directed = false,\n         \
+    \             bool is_1origin = true) {\n  UnweightedGraph g(N);\n  if (M == -1)\
+    \ M = N - 1;\n  for (int _ = 0; _ < M; _++) {\n    int x, y;\n    cin >> x >>\
+    \ y;\n    if (is_1origin) x--, y--;\n    g[x].push_back(y);\n    if (!is_directed)\
+    \ g[y].push_back(x);\n  }\n  return g;\n}\n\n// Input of Weighted Graph\ntemplate\
+    \ <typename T>\nWeightedGraph<T> wgraph(int N, int M = -1, bool is_directed =\
+    \ false,\n                        bool is_1origin = true) {\n  WeightedGraph<T>\
     \ g(N);\n  if (M == -1) M = N - 1;\n  for (int _ = 0; _ < M; _++) {\n    int x,\
-    \ y;\n    cin >> x >> y;\n    if (is_1origin) x--, y--;\n    g[x].push_back(y);\n\
-    \    if (!is_directed) g[y].push_back(x);\n  }\n  return g;\n}\n\n// Input of\
-    \ Weighted Graph\ntemplate <typename T>\nWeightedGraph<T> wgraph(int N, int M\
-    \ = -1, bool is_directed = false,\n                        bool is_1origin = true)\
-    \ {\n  WeightedGraph<T> g(N);\n  if (M == -1) M = N - 1;\n  for (int _ = 0; _\
-    \ < M; _++) {\n    int x, y;\n    cin >> x >> y;\n    T c;\n    cin >> c;\n  \
-    \  if (is_1origin) x--, y--;\n    g[x].emplace_back(x, y, c);\n    if (!is_directed)\
-    \ g[y].emplace_back(y, x, c);\n  }\n  return g;\n}\n\n// Input of Edges\ntemplate\
-    \ <typename T>\nEdges<T> esgraph([[maybe_unused]] int N, int M, int is_weighted\
-    \ = true,\n                 bool is_1origin = true) {\n  Edges<T> es;\n  for (int\
-    \ _ = 0; _ < M; _++) {\n    int x, y;\n    cin >> x >> y;\n    T c;\n    if (is_weighted)\n\
-    \      cin >> c;\n    else\n      c = 1;\n    if (is_1origin) x--, y--;\n    es.emplace_back(x,\
+    \ y;\n    cin >> x >> y;\n    T c;\n    cin >> c;\n    if (is_1origin) x--, y--;\n\
+    \    g[x].emplace_back(x, y, c);\n    if (!is_directed) g[y].emplace_back(y, x,\
+    \ c);\n  }\n  return g;\n}\n\n// Input of Edges\ntemplate <typename T>\nEdges<T>\
+    \ esgraph([[maybe_unused]] int N, int M, int is_weighted = true,\n           \
+    \      bool is_1origin = true) {\n  Edges<T> es;\n  for (int _ = 0; _ < M; _++)\
+    \ {\n    int x, y;\n    cin >> x >> y;\n    T c;\n    if (is_weighted)\n     \
+    \ cin >> c;\n    else\n      c = 1;\n    if (is_1origin) x--, y--;\n    es.emplace_back(x,\
     \ y, c);\n  }\n  return es;\n}\n\n// Input of Adjacency Matrix\ntemplate <typename\
     \ T>\nvector<vector<T>> adjgraph(int N, int M, T INF, int is_weighted = true,\n\
     \                           bool is_directed = false, bool is_1origin = true)\
@@ -268,10 +269,9 @@ data:
     \ cin >> c;\n    else\n      c = 1;\n    if (is_1origin) x--, y--;\n    d[x][y]\
     \ = c;\n    if (!is_directed) d[y][x] = c;\n  }\n  return d;\n}\n\n/**\n * @brief\
     \ \u30B0\u30E9\u30D5\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\n * @docs docs/graph/graph-template.md\n\
-    \ */\n#line 6 \"verify/verify-unit-test/rerooting.test.cpp\"\n//\n#line 2 \"tree/rerooting.hpp\"\
-    \n\n#line 4 \"tree/rerooting.hpp\"\n\n// Rerooting\n// f1(c1, c2) ... merge value\
-    \ of child node\n// f2(memo[i], chd, par) ... return value from child node to\
-    \ parent node\n// memo[i] ... result of subtree rooted i\n// dp[i] ... result\
+    \ */\n#line 4 \"tree/rerooting.hpp\"\n\n// Rerooting\n// f1(c1, c2) ... merge\
+    \ value of child node\n// f2(memo[i], chd, par) ... return value from child node\
+    \ to parent node\n// memo[i] ... result of subtree rooted i\n// dp[i] ... result\
     \ of tree rooted i\ntemplate <typename T, typename G, typename F1, typename F2>\n\
     struct Rerooting {\n  const G &g;\n  const F1 f1;\n  const F2 f2;\n  vector<T>\
     \ memo, dp;\n  T leaf;\n\n  Rerooting(const G &_g, const F1 _f1, const F2 _f2,\
@@ -298,112 +298,113 @@ data:
     \ {\n        val = head[idx - 1];\n      } else {\n        val = f1(head[idx -\
     \ 1], tail[idx + 1]);\n      }\n      dfs2(dst, cur, f2(val, cur, dst));\n   \
     \   idx++;\n    }\n  }\n};\n\n/**\n * @brief Rerooting(\u5168\u65B9\u4F4D\u6728\
-    DP)\n * @docs docs/tree/rerooting.md\n */\n#line 8 \"verify/verify-unit-test/rerooting.test.cpp\"\
-    \n//\n#line 2 \"misc/rng.hpp\"\n\n#line 2 \"internal/internal-seed.hpp\"\n\n#line\
-    \ 4 \"internal/internal-seed.hpp\"\nusing namespace std;\n\nnamespace internal\
-    \ {\nunsigned long long non_deterministic_seed() {\n  unsigned long long m =\n\
-    \      chrono::duration_cast<chrono::nanoseconds>(\n          chrono::high_resolution_clock::now().time_since_epoch())\n\
-    \          .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >>\
-    \ 31, m ^= m << 35;\n  return m;\n}\nunsigned long long deterministic_seed() {\
-    \ return 88172645463325252UL; }\n\n// 64 bit \u306E seed \u5024\u3092\u751F\u6210\
-    \ (\u624B\u5143\u3067\u306F seed \u56FA\u5B9A)\n// \u9023\u7D9A\u3067\u547C\u3073\
-    \u51FA\u3059\u3068\u540C\u3058\u5024\u304C\u4F55\u5EA6\u3082\u8FD4\u3063\u3066\
-    \u304F\u308B\u306E\u3067\u6CE8\u610F\n// #define RANDOMIZED_SEED \u3059\u308B\u3068\
-    \u30B7\u30FC\u30C9\u304C\u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long\
-    \ long seed() {\n#if defined(NyaanLocal) && !defined(RANDOMIZED_SEED)\n  return\
-    \ deterministic_seed();\n#else\n  return non_deterministic_seed();\n#endif\n}\n\
-    \n}  // namespace internal\n#line 4 \"misc/rng.hpp\"\n\nnamespace my_rand {\n\
-    using i64 = long long;\nusing u64 = unsigned long long;\n\n// [0, 2^64 - 1)\n\
-    u64 rng() {\n  static u64 _x = internal::seed();\n  return _x ^= _x << 7, _x ^=\
-    \ _x >> 9;\n}\n\n// [l, r]\ni64 rng(i64 l, i64 r) {\n  assert(l <= r);\n  return\
-    \ l + rng() % u64(r - l + 1);\n}\n\n// [l, r)\ni64 randint(i64 l, i64 r) {\n \
-    \ assert(l < r);\n  return l + rng() % u64(r - l);\n}\n\n// choose n numbers from\
-    \ [l, r) without overlapping\nvector<i64> randset(i64 l, i64 r, i64 n) {\n  assert(l\
-    \ <= r && n <= r - l);\n  unordered_set<i64> s;\n  for (i64 i = n; i; --i) {\n\
-    \    i64 m = randint(l, r + 1 - i);\n    if (s.find(m) != s.end()) m = r - i;\n\
-    \    s.insert(m);\n  }\n  vector<i64> ret;\n  for (auto& x : s) ret.push_back(x);\n\
-    \  sort(begin(ret), end(ret));\n  return ret;\n}\n\n// [0.0, 1.0)\ndouble rnd()\
-    \ { return rng() * 5.42101086242752217004e-20; }\n// [l, r)\ndouble rnd(double\
-    \ l, double r) {\n  assert(l < r);\n  return l + rnd() * (r - l);\n}\n\ntemplate\
-    \ <typename T>\nvoid randshf(vector<T>& v) {\n  int n = v.size();\n  for (int\
-    \ i = 1; i < n; i++) swap(v[i], v[randint(0, i + 1)]);\n}\n\n}  // namespace my_rand\n\
-    \nusing my_rand::randint;\nusing my_rand::randset;\nusing my_rand::randshf;\n\
-    using my_rand::rnd;\nusing my_rand::rng;\n#line 2 \"tree/pruefer-code.hpp\"\n\n\
-    #line 4 \"tree/pruefer-code.hpp\"\n\n// input: [c \\in [0, n)] * (n-2), n>=3\n\
-    vector<vector<int>> pruefer_code(const vector<int>& code) {\n  int n = code.size()\
-    \ + 2;\n  assert(n > 2);\n  vector<vector<int>> g(n);\n  vector<int> deg(n, 1);\n\
-    \  int e = 0;\n  for (auto& x : code) deg[x]++;\n  set<int> ps;\n  for (int j\
-    \ = 0; j < n; j++) {\n    if (deg[j] == 1) ps.insert(j);\n  }\n  for (auto& i\
-    \ : code) {\n    if (ps.empty()) break;\n    int j = *begin(ps);\n    ps.erase(j);\n\
-    \    g[i].push_back(j);\n    g[j].push_back(i);\n    if (deg[i] == 1) ps.erase(i);\n\
-    \    deg[i]--, deg[j]--;\n    if (deg[i] == 1) ps.insert(i);\n    e++;\n  }\n\
-    \  int u = -1, v = -1;\n  for (int i = 0; i < n; i++) {\n    if (deg[i] == 1)\
-    \ (u == -1 ? u : v) = i;\n  }\n  assert(u != -1 and v != -1);\n  g[u].push_back(v);\n\
-    \  g[v].push_back(u);\n  e++;\n  assert(e == n - 1);\n  return g;\n}\n\nvector<vector<int>>\
-    \ random_tree(int n) {\n  if (n <= 2) {\n    vector<vector<int>> g(n);\n    if\
-    \ (n == 2) {\n      g[0].push_back(1);\n      g[1].push_back(0);\n    }\n    return\
-    \ g;\n  }\n  vector<int> pruefer(n - 2);\n  for (auto& x : pruefer) x = randint(0,\
-    \ n);\n  return pruefer_code(pruefer);\n}\n\n/**\n * @brief Pruefer Code\n */\n\
-    #line 11 \"verify/verify-unit-test/rerooting.test.cpp\"\nusing namespace Nyaan;\n\
-    \n#line 2 \"modint/montgomery-modint.hpp\"\n\n#line 4 \"modint/montgomery-modint.hpp\"\
-    \n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n\
-    \  using i32 = int32_t;\n  using u32 = uint32_t;\n  using u64 = uint64_t;\n\n\
-    \  static constexpr u32 get_r() {\n    u32 ret = mod;\n    for (i32 i = 0; i <\
-    \ 4; ++i) ret *= 2 - mod * ret;\n    return ret;\n  }\n\n  static constexpr u32\
-    \ r = get_r();\n  static constexpr u32 n2 = -u64(mod) % mod;\n  static_assert(mod\
-    \ < (1 << 30), \"invalid, mod >= 2 ^ 30\");\n  static_assert((mod & 1) == 1, \"\
-    invalid, mod % 2 == 0\");\n  static_assert(r * mod == 1, \"this code has bugs.\"\
-    );\n\n  u32 a;\n\n  constexpr LazyMontgomeryModInt() : a(0) {}\n  constexpr LazyMontgomeryModInt(const\
-    \ int64_t &b)\n      : a(reduce(u64(b % mod + mod) * n2)){};\n\n  static constexpr\
-    \ u32 reduce(const u64 &b) {\n    return (b + u64(u32(b) * u32(-r)) * mod) >>\
-    \ 32;\n  }\n\n  constexpr mint &operator+=(const mint &b) {\n    if (i32(a +=\
-    \ b.a - 2 * mod) < 0) a += 2 * mod;\n    return *this;\n  }\n\n  constexpr mint\
-    \ &operator-=(const mint &b) {\n    if (i32(a -= b.a) < 0) a += 2 * mod;\n   \
-    \ return *this;\n  }\n\n  constexpr mint &operator*=(const mint &b) {\n    a =\
-    \ reduce(u64(a) * b.a);\n    return *this;\n  }\n\n  constexpr mint &operator/=(const\
-    \ mint &b) {\n    *this *= b.inverse();\n    return *this;\n  }\n\n  constexpr\
-    \ mint operator+(const mint &b) const { return mint(*this) += b; }\n  constexpr\
-    \ mint operator-(const mint &b) const { return mint(*this) -= b; }\n  constexpr\
-    \ mint operator*(const mint &b) const { return mint(*this) *= b; }\n  constexpr\
-    \ mint operator/(const mint &b) const { return mint(*this) /= b; }\n  constexpr\
-    \ bool operator==(const mint &b) const {\n    return (a >= mod ? a - mod : a)\
-    \ == (b.a >= mod ? b.a - mod : b.a);\n  }\n  constexpr bool operator!=(const mint\
-    \ &b) const {\n    return (a >= mod ? a - mod : a) != (b.a >= mod ? b.a - mod\
-    \ : b.a);\n  }\n  constexpr mint operator-() const { return mint() - mint(*this);\
+    DP)\n * @docs docs/tree/rerooting.md\n */\n#line 6 \"verify/verify-unit-test/rerooting.test.cpp\"\
+    \n//\n#line 2 \"misc/rng.hpp\"\n\n#line 7 \"misc/rng.hpp\"\nusing namespace std;\n\
+    \n#line 2 \"internal/internal-seed.hpp\"\n\n#line 4 \"internal/internal-seed.hpp\"\
+    \nusing namespace std;\n\nnamespace internal {\nunsigned long long non_deterministic_seed()\
+    \ {\n  unsigned long long m =\n      chrono::duration_cast<chrono::nanoseconds>(\n\
+    \          chrono::high_resolution_clock::now().time_since_epoch())\n        \
+    \  .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >> 31, m\
+    \ ^= m << 35;\n  return m;\n}\nunsigned long long deterministic_seed() { return\
+    \ 88172645463325252UL; }\n\n// 64 bit \u306E seed \u5024\u3092\u751F\u6210 (\u624B\
+    \u5143\u3067\u306F seed \u56FA\u5B9A)\n// \u9023\u7D9A\u3067\u547C\u3073\u51FA\
+    \u3059\u3068\u540C\u3058\u5024\u304C\u4F55\u5EA6\u3082\u8FD4\u3063\u3066\u304F\
+    \u308B\u306E\u3067\u6CE8\u610F\n// #define RANDOMIZED_SEED \u3059\u308B\u3068\u30B7\
+    \u30FC\u30C9\u304C\u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long long\
+    \ seed() {\n#if defined(NyaanLocal) && !defined(RANDOMIZED_SEED)\n  return deterministic_seed();\n\
+    #else\n  return non_deterministic_seed();\n#endif\n}\n\n}  // namespace internal\n\
+    #line 10 \"misc/rng.hpp\"\n\nnamespace my_rand {\nusing i64 = long long;\nusing\
+    \ u64 = unsigned long long;\n\n// [0, 2^64 - 1)\nu64 rng() {\n  static u64 _x\
+    \ = internal::seed();\n  return _x ^= _x << 7, _x ^= _x >> 9;\n}\n\n// [l, r]\n\
+    i64 rng(i64 l, i64 r) {\n  assert(l <= r);\n  return l + rng() % u64(r - l + 1);\n\
+    }\n\n// [l, r)\ni64 randint(i64 l, i64 r) {\n  assert(l < r);\n  return l + rng()\
+    \ % u64(r - l);\n}\n\n// choose n numbers from [l, r) without overlapping\nvector<i64>\
+    \ randset(i64 l, i64 r, i64 n) {\n  assert(l <= r && n <= r - l);\n  unordered_set<i64>\
+    \ s;\n  for (i64 i = n; i; --i) {\n    i64 m = randint(l, r + 1 - i);\n    if\
+    \ (s.find(m) != s.end()) m = r - i;\n    s.insert(m);\n  }\n  vector<i64> ret;\n\
+    \  for (auto& x : s) ret.push_back(x);\n  sort(begin(ret), end(ret));\n  return\
+    \ ret;\n}\n\n// [0.0, 1.0)\ndouble rnd() { return rng() * 5.42101086242752217004e-20;\
+    \ }\n// [l, r)\ndouble rnd(double l, double r) {\n  assert(l < r);\n  return l\
+    \ + rnd() * (r - l);\n}\n\ntemplate <typename T>\nvoid randshf(vector<T>& v) {\n\
+    \  int n = v.size();\n  for (int i = 1; i < n; i++) swap(v[i], v[randint(0, i\
+    \ + 1)]);\n}\n\n}  // namespace my_rand\n\nusing my_rand::randint;\nusing my_rand::randset;\n\
+    using my_rand::randshf;\nusing my_rand::rnd;\nusing my_rand::rng;\n#line 2 \"\
+    tree/pruefer-code.hpp\"\n\n#line 4 \"tree/pruefer-code.hpp\"\n\n// input: [c \\\
+    in [0, n)] * (n-2), n>=3\nvector<vector<int>> pruefer_code(const vector<int>&\
+    \ code) {\n  int n = code.size() + 2;\n  assert(n > 2);\n  vector<vector<int>>\
+    \ g(n);\n  vector<int> deg(n, 1);\n  int e = 0;\n  for (auto& x : code) deg[x]++;\n\
+    \  set<int> ps;\n  for (int j = 0; j < n; j++) {\n    if (deg[j] == 1) ps.insert(j);\n\
+    \  }\n  for (auto& i : code) {\n    if (ps.empty()) break;\n    int j = *begin(ps);\n\
+    \    ps.erase(j);\n    g[i].push_back(j);\n    g[j].push_back(i);\n    if (deg[i]\
+    \ == 1) ps.erase(i);\n    deg[i]--, deg[j]--;\n    if (deg[i] == 1) ps.insert(i);\n\
+    \    e++;\n  }\n  int u = -1, v = -1;\n  for (int i = 0; i < n; i++) {\n    if\
+    \ (deg[i] == 1) (u == -1 ? u : v) = i;\n  }\n  assert(u != -1 and v != -1);\n\
+    \  g[u].push_back(v);\n  g[v].push_back(u);\n  e++;\n  assert(e == n - 1);\n \
+    \ return g;\n}\n\nvector<vector<int>> random_tree(int n) {\n  if (n <= 2) {\n\
+    \    vector<vector<int>> g(n);\n    if (n == 2) {\n      g[0].push_back(1);\n\
+    \      g[1].push_back(0);\n    }\n    return g;\n  }\n  vector<int> pruefer(n\
+    \ - 2);\n  for (auto& x : pruefer) x = randint(0, n);\n  return pruefer_code(pruefer);\n\
+    }\n\n/**\n * @brief Pruefer Code\n */\n#line 9 \"verify/verify-unit-test/rerooting.test.cpp\"\
+    \nusing namespace Nyaan;\n\n#line 2 \"modint/montgomery-modint.hpp\"\n\n#line\
+    \ 5 \"modint/montgomery-modint.hpp\"\n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt\
+    \ {\n  using mint = LazyMontgomeryModInt;\n  using i32 = int32_t;\n  using u32\
+    \ = uint32_t;\n  using u64 = uint64_t;\n\n  static constexpr u32 get_r() {\n \
+    \   u32 ret = mod;\n    for (i32 i = 0; i < 4; ++i) ret *= 2 - mod * ret;\n  \
+    \  return ret;\n  }\n\n  static constexpr u32 r = get_r();\n  static constexpr\
+    \ u32 n2 = -u64(mod) % mod;\n  static_assert(mod < (1 << 30), \"invalid, mod >=\
+    \ 2 ^ 30\");\n  static_assert((mod & 1) == 1, \"invalid, mod % 2 == 0\");\n  static_assert(r\
+    \ * mod == 1, \"this code has bugs.\");\n\n  u32 a;\n\n  constexpr LazyMontgomeryModInt()\
+    \ : a(0) {}\n  constexpr LazyMontgomeryModInt(const int64_t &b)\n      : a(reduce(u64(b\
+    \ % mod + mod) * n2)){};\n\n  static constexpr u32 reduce(const u64 &b) {\n  \
+    \  return (b + u64(u32(b) * u32(-r)) * mod) >> 32;\n  }\n\n  constexpr mint &operator+=(const\
+    \ mint &b) {\n    if (i32(a += b.a - 2 * mod) < 0) a += 2 * mod;\n    return *this;\n\
+    \  }\n\n  constexpr mint &operator-=(const mint &b) {\n    if (i32(a -= b.a) <\
+    \ 0) a += 2 * mod;\n    return *this;\n  }\n\n  constexpr mint &operator*=(const\
+    \ mint &b) {\n    a = reduce(u64(a) * b.a);\n    return *this;\n  }\n\n  constexpr\
+    \ mint &operator/=(const mint &b) {\n    *this *= b.inverse();\n    return *this;\n\
+    \  }\n\n  constexpr mint operator+(const mint &b) const { return mint(*this) +=\
+    \ b; }\n  constexpr mint operator-(const mint &b) const { return mint(*this) -=\
+    \ b; }\n  constexpr mint operator*(const mint &b) const { return mint(*this) *=\
+    \ b; }\n  constexpr mint operator/(const mint &b) const { return mint(*this) /=\
+    \ b; }\n  constexpr bool operator==(const mint &b) const {\n    return (a >= mod\
+    \ ? a - mod : a) == (b.a >= mod ? b.a - mod : b.a);\n  }\n  constexpr bool operator!=(const\
+    \ mint &b) const {\n    return (a >= mod ? a - mod : a) != (b.a >= mod ? b.a -\
+    \ mod : b.a);\n  }\n  constexpr mint operator-() const { return mint() - mint(*this);\
     \ }\n  constexpr mint operator+() const { return mint(*this); }\n\n  constexpr\
     \ mint pow(u64 n) const {\n    mint ret(1), mul(*this);\n    while (n > 0) {\n\
     \      if (n & 1) ret *= mul;\n      mul *= mul;\n      n >>= 1;\n    }\n    return\
     \ ret;\n  }\n\n  constexpr mint inverse() const {\n    int x = get(), y = mod,\
     \ u = 1, v = 0, t = 0, tmp = 0;\n    while (y > 0) {\n      t = x / y;\n     \
     \ x -= t * y, u -= t * v;\n      tmp = x, x = y, y = tmp;\n      tmp = u, u =\
-    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend ostream &operator<<(ostream\
-    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend istream &operator>>(istream\
-    \ &is, mint &b) {\n    int64_t t;\n    is >> t;\n    b = LazyMontgomeryModInt<mod>(t);\n\
-    \    return (is);\n  }\n\n  constexpr u32 get() const {\n    u32 ret = reduce(a);\n\
-    \    return ret >= mod ? ret - mod : ret;\n  }\n\n  static constexpr u32 get_mod()\
-    \ { return mod; }\n};\n#line 2 \"modulo/binomial.hpp\"\n\n#line 6 \"modulo/binomial.hpp\"\
-    \nusing namespace std;\n\n// \u30B3\u30F3\u30B9\u30C8\u30E9\u30AF\u30BF\u306E\
-    \ MAX \u306B \u300CC(n, r) \u3084 fac(n) \u3067\u30AF\u30A8\u30EA\u3092\u6295\u3052\
-    \u308B\u6700\u5927\u306E n \u300D\n// \u3092\u5165\u308C\u308B\u3068\u500D\u901F\
-    \u304F\u3089\u3044\u306B\u306A\u308B\n// mod \u3092\u8D85\u3048\u3066\u524D\u8A08\
-    \u7B97\u3057\u3066 0 \u5272\u308A\u3092\u8E0F\u3080\u30D0\u30B0\u306F\u5BFE\u7B56\
-    \u6E08\u307F\ntemplate <typename T>\nstruct Binomial {\n  vector<T> f, g, h;\n\
-    \  Binomial(int MAX = 0) {\n    assert(T::get_mod() != 0 && \"Binomial<mint>()\"\
-    );\n    f.resize(1, T{1});\n    g.resize(1, T{1});\n    h.resize(1, T{1});\n \
-    \   if (MAX > 0) extend(MAX + 1);\n  }\n\n  void extend(int m = -1) {\n    int\
-    \ n = f.size();\n    if (m == -1) m = n * 2;\n    m = min<int>(m, T::get_mod());\n\
-    \    if (n >= m) return;\n    f.resize(m);\n    g.resize(m);\n    h.resize(m);\n\
-    \    for (int i = n; i < m; i++) f[i] = f[i - 1] * T(i);\n    g[m - 1] = f[m -\
-    \ 1].inverse();\n    h[m - 1] = g[m - 1] * f[m - 2];\n    for (int i = m - 2;\
-    \ i >= n; i--) {\n      g[i] = g[i + 1] * T(i + 1);\n      h[i] = g[i] * f[i -\
-    \ 1];\n    }\n  }\n\n  T fac(int i) {\n    if (i < 0) return T(0);\n    while\
-    \ (i >= (int)f.size()) extend();\n    return f[i];\n  }\n\n  T finv(int i) {\n\
-    \    if (i < 0) return T(0);\n    while (i >= (int)g.size()) extend();\n    return\
-    \ g[i];\n  }\n\n  T inv(int i) {\n    if (i < 0) return -inv(-i);\n    while (i\
-    \ >= (int)h.size()) extend();\n    return h[i];\n  }\n\n  T C(int n, int r) {\n\
-    \    if (n < 0 || n < r || r < 0) return T(0);\n    return fac(n) * finv(n - r)\
-    \ * finv(r);\n  }\n\n  inline T operator()(int n, int r) { return C(n, r); }\n\
-    \n  template <typename I>\n  T multinomial(const vector<I>& r) {\n    static_assert(is_integral<I>::value\
+    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend std::ostream &operator<<(std::ostream\
+    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend std::istream\
+    \ &operator>>(std::istream &is, mint &b) {\n    int64_t t;\n    is >> t;\n   \
+    \ b = LazyMontgomeryModInt<mod>(t);\n    return (is);\n  }\n\n  constexpr u32\
+    \ get() const {\n    u32 ret = reduce(a);\n    return ret >= mod ? ret - mod :\
+    \ ret;\n  }\n\n  static constexpr u32 get_mod() { return mod; }\n};\n#line 2 \"\
+    modulo/binomial.hpp\"\n\n#line 6 \"modulo/binomial.hpp\"\nusing namespace std;\n\
+    \n// \u30B3\u30F3\u30B9\u30C8\u30E9\u30AF\u30BF\u306E MAX \u306B \u300CC(n, r)\
+    \ \u3084 fac(n) \u3067\u30AF\u30A8\u30EA\u3092\u6295\u3052\u308B\u6700\u5927\u306E\
+    \ n \u300D\n// \u3092\u5165\u308C\u308B\u3068\u500D\u901F\u304F\u3089\u3044\u306B\
+    \u306A\u308B\n// mod \u3092\u8D85\u3048\u3066\u524D\u8A08\u7B97\u3057\u3066 0\
+    \ \u5272\u308A\u3092\u8E0F\u3080\u30D0\u30B0\u306F\u5BFE\u7B56\u6E08\u307F\ntemplate\
+    \ <typename T>\nstruct Binomial {\n  vector<T> f, g, h;\n  Binomial(int MAX =\
+    \ 0) {\n    assert(T::get_mod() != 0 && \"Binomial<mint>()\");\n    f.resize(1,\
+    \ T{1});\n    g.resize(1, T{1});\n    h.resize(1, T{1});\n    if (MAX > 0) extend(MAX\
+    \ + 1);\n  }\n\n  void extend(int m = -1) {\n    int n = f.size();\n    if (m\
+    \ == -1) m = n * 2;\n    m = min<int>(m, T::get_mod());\n    if (n >= m) return;\n\
+    \    f.resize(m);\n    g.resize(m);\n    h.resize(m);\n    for (int i = n; i <\
+    \ m; i++) f[i] = f[i - 1] * T(i);\n    g[m - 1] = f[m - 1].inverse();\n    h[m\
+    \ - 1] = g[m - 1] * f[m - 2];\n    for (int i = m - 2; i >= n; i--) {\n      g[i]\
+    \ = g[i + 1] * T(i + 1);\n      h[i] = g[i] * f[i - 1];\n    }\n  }\n\n  T fac(int\
+    \ i) {\n    if (i < 0) return T(0);\n    while (i >= (int)f.size()) extend();\n\
+    \    return f[i];\n  }\n\n  T finv(int i) {\n    if (i < 0) return T(0);\n   \
+    \ while (i >= (int)g.size()) extend();\n    return g[i];\n  }\n\n  T inv(int i)\
+    \ {\n    if (i < 0) return -inv(-i);\n    while (i >= (int)h.size()) extend();\n\
+    \    return h[i];\n  }\n\n  T C(int n, int r) {\n    if (n < 0 || n < r || r <\
+    \ 0) return T(0);\n    return fac(n) * finv(n - r) * finv(r);\n  }\n\n  inline\
+    \ T operator()(int n, int r) { return C(n, r); }\n\n  template <typename I>\n\
+    \  T multinomial(const vector<I>& r) {\n    static_assert(is_integral<I>::value\
     \ == true);\n    int n = 0;\n    for (auto& x : r) {\n      if (x < 0) return\
     \ T(0);\n      n += x;\n    }\n    T res = fac(n);\n    for (auto& x : r) res\
     \ *= finv(x);\n    return res;\n  }\n\n  template <typename I>\n  T operator()(const\
@@ -413,7 +414,7 @@ data:
     \  return ret;\n  }\n\n  T P(int n, int r) {\n    if (n < 0 || n < r || r < 0)\
     \ return T(0);\n    return fac(n) * finv(n - r);\n  }\n\n  // [x^r] 1 / (1-x)^n\n\
     \  T H(int n, int r) {\n    if (n < 0 || r < 0) return T(0);\n    return r ==\
-    \ 0 ? 1 : C(n + r - 1, r);\n  }\n};\n#line 15 \"verify/verify-unit-test/rerooting.test.cpp\"\
+    \ 0 ? 1 : C(n + r - 1, r);\n  }\n};\n#line 13 \"verify/verify-unit-test/rerooting.test.cpp\"\
     \n//\nusing namespace Nyaan;\nusing mint = LazyMontgomeryModInt<998244353>;\n\
     // using mint = LazyMontgomeryModInt<1000000007>;\nusing vm = vector<mint>;\n\
     using vvm = vector<vm>;\nBinomial<mint> C;\n\nvm naive(int N, vvi g, vm A) {\n\
@@ -431,11 +432,10 @@ data:
     \ q() {\n  test();\n\n  int a, b;\n  cin >> a >> b;\n  cout << a + b << endl;\n\
     }\n\nvoid Nyaan::solve() {\n  int t = 1;\n  // in(t);\n  while (t--) q();\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/aplusb\"\n//\n#include\
-    \ \"../../template/template.hpp\"\n//\n#include \"../../graph/graph-template.hpp\"\
-    \n//\n#include \"../../tree/rerooting.hpp\"\n//\n#include \"../../misc/rng.hpp\"\
-    \n#include \"../../tree/pruefer-code.hpp\"\nusing namespace Nyaan;\n\n#include\
-    \ \"../../modint/montgomery-modint.hpp\"\n#include \"../../modulo/binomial.hpp\"\
-    \n//\nusing namespace Nyaan;\nusing mint = LazyMontgomeryModInt<998244353>;\n\
+    \ \"../../template/template.hpp\"\n//\n#include \"../../tree/rerooting.hpp\"\n\
+    //\n#include \"../../misc/rng.hpp\"\n#include \"../../tree/pruefer-code.hpp\"\n\
+    using namespace Nyaan;\n\n#include \"../../modint/montgomery-modint.hpp\"\n#include\
+    \ \"../../modulo/binomial.hpp\"\n//\nusing namespace Nyaan;\nusing mint = LazyMontgomeryModInt<998244353>;\n\
     // using mint = LazyMontgomeryModInt<1000000007>;\nusing vm = vector<mint>;\n\
     using vvm = vector<vm>;\nBinomial<mint> C;\n\nvm naive(int N, vvi g, vm A) {\n\
     \  auto dfs = [&](auto rc, int c, int p) -> mint {\n    vm chds;\n    each(d,\
@@ -458,8 +458,8 @@ data:
   - template/inout.hpp
   - template/debug.hpp
   - template/macro.hpp
-  - graph/graph-template.hpp
   - tree/rerooting.hpp
+  - graph/graph-template.hpp
   - misc/rng.hpp
   - internal/internal-seed.hpp
   - tree/pruefer-code.hpp
@@ -468,7 +468,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/rerooting.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/rerooting.test.cpp

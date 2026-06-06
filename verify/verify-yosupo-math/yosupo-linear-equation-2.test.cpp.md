@@ -233,25 +233,25 @@ data:
     \ \\\n    return;                  \\\n  } while (0)\n#line 70 \"template/template.hpp\"\
     \n\nnamespace Nyaan {\nvoid solve();\n}\nint main() { Nyaan::solve(); }\n#line\
     \ 4 \"verify/verify-yosupo-math/yosupo-linear-equation-2.test.cpp\"\n//\n#line\
-    \ 2 \"matrix/gauss-elimination.hpp\"\n\n#line 5 \"matrix/gauss-elimination.hpp\"\
-    \nusing namespace std;\n\n// {rank, det(\u975E\u6B63\u65B9\u884C\u5217\u306E\u5834\
-    \u5408\u306F\u672A\u5B9A\u7FA9)} \u3092\u8FD4\u3059\n// \u578B\u304C double \u3084\
-    \ Rational \u3067\u3082\u52D5\u304F\u306F\u305A\uFF1F(\u672A\u691C\u8A3C)\n//\n\
-    // pivot \u5019\u88DC : [0, pivot_end)\ntemplate <typename T>\nstd::pair<int,\
-    \ T> GaussElimination(vector<vector<T>> &a, int pivot_end = -1,\n            \
-    \                       bool diagonalize = false) {\n  if (a.empty()) return {0,\
-    \ 1};\n  int H = a.size(), W = a[0].size(), rank = 0;\n  if (pivot_end == -1)\
-    \ pivot_end = W;\n  T det = 1;\n  for (int j = 0; j < pivot_end; j++) {\n    int\
-    \ idx = -1;\n    for (int i = rank; i < H; i++) {\n      if (a[i][j] != T(0))\
-    \ {\n        idx = i;\n        break;\n      }\n    }\n    if (idx == -1) {\n\
-    \      det = 0;\n      continue;\n    }\n    if (rank != idx) det = -det, swap(a[rank],\
-    \ a[idx]);\n    det *= a[rank][j];\n    if (diagonalize && a[rank][j] != T(1))\
-    \ {\n      T coeff = T(1) / a[rank][j];\n      for (int k = j; k < W; k++) a[rank][k]\
-    \ *= coeff;\n    }\n    int is = diagonalize ? 0 : rank + 1;\n    for (int i =\
-    \ is; i < H; i++) {\n      if (i == rank) continue;\n      if (a[i][j] != T(0))\
-    \ {\n        T coeff = a[i][j] / a[rank][j];\n        for (int k = j; k < W; k++)\
-    \ a[i][k] -= a[rank][k] * coeff;\n      }\n    }\n    rank++;\n  }\n  return make_pair(rank,\
-    \ det);\n}\n#line 2 \"matrix/linear-equation.hpp\"\n\n#line 4 \"matrix/linear-equation.hpp\"\
+    \ 2 \"matrix/linear-equation.hpp\"\n\n#line 2 \"matrix/gauss-elimination.hpp\"\
+    \n\n#line 5 \"matrix/gauss-elimination.hpp\"\nusing namespace std;\n\n// {rank,\
+    \ det(\u975E\u6B63\u65B9\u884C\u5217\u306E\u5834\u5408\u306F\u672A\u5B9A\u7FA9\
+    )} \u3092\u8FD4\u3059\n// \u578B\u304C double \u3084 Rational \u3067\u3082\u52D5\
+    \u304F\u306F\u305A\uFF1F(\u672A\u691C\u8A3C)\n//\n// pivot \u5019\u88DC : [0,\
+    \ pivot_end)\ntemplate <typename T>\nstd::pair<int, T> GaussElimination(vector<vector<T>>\
+    \ &a, int pivot_end = -1,\n                                   bool diagonalize\
+    \ = false) {\n  if (a.empty()) return {0, 1};\n  int H = a.size(), W = a[0].size(),\
+    \ rank = 0;\n  if (pivot_end == -1) pivot_end = W;\n  T det = 1;\n  for (int j\
+    \ = 0; j < pivot_end; j++) {\n    int idx = -1;\n    for (int i = rank; i < H;\
+    \ i++) {\n      if (a[i][j] != T(0)) {\n        idx = i;\n        break;\n   \
+    \   }\n    }\n    if (idx == -1) {\n      det = 0;\n      continue;\n    }\n \
+    \   if (rank != idx) det = -det, swap(a[rank], a[idx]);\n    det *= a[rank][j];\n\
+    \    if (diagonalize && a[rank][j] != T(1)) {\n      T coeff = T(1) / a[rank][j];\n\
+    \      for (int k = j; k < W; k++) a[rank][k] *= coeff;\n    }\n    int is = diagonalize\
+    \ ? 0 : rank + 1;\n    for (int i = is; i < H; i++) {\n      if (i == rank) continue;\n\
+    \      if (a[i][j] != T(0)) {\n        T coeff = a[i][j] / a[rank][j];\n     \
+    \   for (int k = j; k < W; k++) a[i][k] -= a[rank][k] * coeff;\n      }\n    }\n\
+    \    rank++;\n  }\n  return make_pair(rank, det);\n}\n#line 4 \"matrix/linear-equation.hpp\"\
     \n\n// \u89E3\u304C\u5B58\u5728\u3059\u308B\u5834\u5408\u306F, \u89E3\u304C v\
     \ + C_1 w_1 + ... + C_k w_k \u3068\u8868\u305B\u308B\u3068\u3057\u3066\n// (v,\
     \ w_1, ..., w_k) \u3092\u8FD4\u3059\n// \u89E3\u304C\u5B58\u5728\u3057\u306A\u3044\
@@ -267,8 +267,8 @@ data:
     \ j = 0; j < W; ++j) {\n    if (pivot[j] == -1) {\n      vector<T> x(W);\n   \
     \   x[j] = 1;\n      for (int k = 0; k < j; ++k) {\n        if (pivot[k] != -1)\
     \ x[k] = -a[pivot[k]][j];\n      }\n      res.push_back(x);\n    }\n  }\n  return\
-    \ res;\n}\n#line 7 \"verify/verify-yosupo-math/yosupo-linear-equation-2.test.cpp\"\
-    \n//\n#line 2 \"misc/fastio.hpp\"\n\n#line 8 \"misc/fastio.hpp\"\n\nusing namespace\
+    \ res;\n}\n#line 6 \"verify/verify-yosupo-math/yosupo-linear-equation-2.test.cpp\"\
+    \n//\n#line 2 \"misc/fastio.hpp\"\n\n#line 9 \"misc/fastio.hpp\"\n\nusing namespace\
     \ std;\n\n#line 2 \"internal/internal-type-traits.hpp\"\n\n#line 4 \"internal/internal-type-traits.hpp\"\
     \nusing namespace std;\n\nnamespace internal {\ntemplate <typename T>\nusing is_broadly_integral\
     \ =\n    typename conditional_t<is_integral_v<T> || is_same_v<T, __int128_t> ||\n\
@@ -293,7 +293,7 @@ data:
     \          \\\n  struct has_##var<T, void_t<decltype(T::var)>> : true_type {};\
     \ \\\n  template <class T>                                            \\\n  constexpr\
     \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace internal\n#line\
-    \ 12 \"misc/fastio.hpp\"\n\nnamespace fastio {\nstatic constexpr int SZ = 1 <<\
+    \ 13 \"misc/fastio.hpp\"\n\nnamespace fastio {\nstatic constexpr int SZ = 1 <<\
     \ 17;\nstatic constexpr int offset = 64;\nchar inbuf[SZ], outbuf[SZ];\nint in_left\
     \ = 0, in_right = 0, out_right = 0;\n\nstruct Pre {\n  char num[40000];\n  constexpr\
     \ Pre() : num() {\n    for (int i = 0; i < 10000; i++) {\n      int n = i;\n \
@@ -342,7 +342,7 @@ data:
     \ {\n  wt(std::forward<const Args>(x)...);\n  wt('\\n');\n}\n\nstruct Dummy {\n\
     \  Dummy() { atexit(flush); }\n} dummy;\n\n}  // namespace fastio\nusing fastio::rd;\n\
     using fastio::skip_space;\nusing fastio::wt;\nusing fastio::wtn;\n#line 2 \"modint/montgomery-modint.hpp\"\
-    \n\n#line 4 \"modint/montgomery-modint.hpp\"\n\ntemplate <uint32_t mod>\nstruct\
+    \n\n#line 5 \"modint/montgomery-modint.hpp\"\n\ntemplate <uint32_t mod>\nstruct\
     \ LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n  using i32 =\
     \ int32_t;\n  using u32 = uint32_t;\n  using u64 = uint64_t;\n\n  static constexpr\
     \ u32 get_r() {\n    u32 ret = mod;\n    for (i32 i = 0; i < 4; ++i) ret *= 2\
@@ -373,12 +373,22 @@ data:
     \ ret;\n  }\n\n  constexpr mint inverse() const {\n    int x = get(), y = mod,\
     \ u = 1, v = 0, t = 0, tmp = 0;\n    while (y > 0) {\n      t = x / y;\n     \
     \ x -= t * y, u -= t * v;\n      tmp = x, x = y, y = tmp;\n      tmp = u, u =\
-    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend ostream &operator<<(ostream\
-    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend istream &operator>>(istream\
-    \ &is, mint &b) {\n    int64_t t;\n    is >> t;\n    b = LazyMontgomeryModInt<mod>(t);\n\
-    \    return (is);\n  }\n\n  constexpr u32 get() const {\n    u32 ret = reduce(a);\n\
-    \    return ret >= mod ? ret - mod : ret;\n  }\n\n  static constexpr u32 get_mod()\
-    \ { return mod; }\n};\n#line 10 \"verify/verify-yosupo-math/yosupo-linear-equation-2.test.cpp\"\
+    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend std::ostream &operator<<(std::ostream\
+    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend std::istream\
+    \ &operator>>(std::istream &is, mint &b) {\n    int64_t t;\n    is >> t;\n   \
+    \ b = LazyMontgomeryModInt<mod>(t);\n    return (is);\n  }\n\n  constexpr u32\
+    \ get() const {\n    u32 ret = reduce(a);\n    return ret >= mod ? ret - mod :\
+    \ ret;\n  }\n\n  static constexpr u32 get_mod() { return mod; }\n};\n#line 9 \"\
+    verify/verify-yosupo-math/yosupo-linear-equation-2.test.cpp\"\n\nusing namespace\
+    \ Nyaan;\n\nusing mint = LazyMontgomeryModInt<998244353>;\n\nvoid Nyaan::solve()\
+    \ {\n  int N, M;\n  rd(N);\n  rd(M);\n  V<V<mint>> A(N, V<mint>(M));\n  int buf;\n\
+    \  rep(i, N) rep(j, M) {\n    rd(buf);\n    A[i][j] = buf;\n  }\n  V<mint> B(N);\n\
+    \  rep(i, N) {\n    rd(buf);\n    B[i] = buf;\n  }\n  auto v = LinearEquation<mint>(A,\
+    \ B);\n  wt(sz(v) - 1);\n  wt('\\n');\n  each(x, v) {\n    rep(i, sz(x)) {\n \
+    \     if (i) wt(' ');\n      wt(x[i].get());\n    }\n    wt('\\n');\n  }\n}\n"
+  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/system_of_linear_equations\"\
+    \n//\n#include \"../../template/template.hpp\"\n//\n#include \"../../matrix/linear-equation.hpp\"\
+    \n//\n#include \"../../misc/fastio.hpp\"\n#include \"../../modint/montgomery-modint.hpp\"\
     \n\nusing namespace Nyaan;\n\nusing mint = LazyMontgomeryModInt<998244353>;\n\n\
     void Nyaan::solve() {\n  int N, M;\n  rd(N);\n  rd(M);\n  V<V<mint>> A(N, V<mint>(M));\n\
     \  int buf;\n  rep(i, N) rep(j, M) {\n    rd(buf);\n    A[i][j] = buf;\n  }\n\
@@ -386,16 +396,6 @@ data:
     \ = LinearEquation<mint>(A, B);\n  wt(sz(v) - 1);\n  wt('\\n');\n  each(x, v)\
     \ {\n    rep(i, sz(x)) {\n      if (i) wt(' ');\n      wt(x[i].get());\n    }\n\
     \    wt('\\n');\n  }\n}\n"
-  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/system_of_linear_equations\"\
-    \n//\n#include \"../../template/template.hpp\"\n//\n#include \"../../matrix/gauss-elimination.hpp\"\
-    \n#include \"../../matrix/linear-equation.hpp\"\n//\n#include \"../../misc/fastio.hpp\"\
-    \n#include \"../../modint/montgomery-modint.hpp\"\n\nusing namespace Nyaan;\n\n\
-    using mint = LazyMontgomeryModInt<998244353>;\n\nvoid Nyaan::solve() {\n  int\
-    \ N, M;\n  rd(N);\n  rd(M);\n  V<V<mint>> A(N, V<mint>(M));\n  int buf;\n  rep(i,\
-    \ N) rep(j, M) {\n    rd(buf);\n    A[i][j] = buf;\n  }\n  V<mint> B(N);\n  rep(i,\
-    \ N) {\n    rd(buf);\n    B[i] = buf;\n  }\n  auto v = LinearEquation<mint>(A,\
-    \ B);\n  wt(sz(v) - 1);\n  wt('\\n');\n  each(x, v) {\n    rep(i, sz(x)) {\n \
-    \     if (i) wt(' ');\n      wt(x[i].get());\n    }\n    wt('\\n');\n  }\n}\n"
   dependsOn:
   - template/template.hpp
   - template/util.hpp
@@ -403,15 +403,15 @@ data:
   - template/inout.hpp
   - template/debug.hpp
   - template/macro.hpp
-  - matrix/gauss-elimination.hpp
   - matrix/linear-equation.hpp
+  - matrix/gauss-elimination.hpp
   - misc/fastio.hpp
   - internal/internal-type-traits.hpp
   - modint/montgomery-modint.hpp
   isVerificationFile: true
   path: verify/verify-yosupo-math/yosupo-linear-equation-2.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-math/yosupo-linear-equation-2.test.cpp

@@ -256,7 +256,7 @@ data:
     \          \\\n  struct has_##var<T, void_t<decltype(T::var)>> : true_type {};\
     \ \\\n  template <class T>                                            \\\n  constexpr\
     \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace internal\n#line\
-    \ 4 \"internal/internal-math.hpp\"\n\nnamespace internal {\n\n#line 10 \"internal/internal-math.hpp\"\
+    \ 4 \"internal/internal-math.hpp\"\n\nnamespace internal {\n\n#line 9 \"internal/internal-math.hpp\"\
     \nusing namespace std;\n\n// a mod p\ntemplate <typename T>\nT safe_mod(T a, T\
     \ p) {\n  a %= p;\n  if constexpr (is_broadly_signed_v<T>) {\n    if (a < 0) a\
     \ += p;\n  }\n  return a;\n}\n\n// \u8FD4\u308A\u5024\uFF1Apair(g, x)\n// s.t.\
@@ -371,7 +371,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-math/yosupo-primality-test-u64.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-math/yosupo-primality-test-u64.test.cpp

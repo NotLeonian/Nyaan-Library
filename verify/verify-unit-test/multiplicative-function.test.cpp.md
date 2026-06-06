@@ -232,8 +232,9 @@ data:
     \n  }\n#define die(...)             \\\n  do {                       \\\n    Nyaan::out(__VA_ARGS__);\
     \ \\\n    return;                  \\\n  } while (0)\n#line 70 \"template/template.hpp\"\
     \n\nnamespace Nyaan {\nvoid solve();\n}\nint main() { Nyaan::solve(); }\n#line\
-    \ 2 \"misc/rng.hpp\"\n\n#line 2 \"internal/internal-seed.hpp\"\n\n#line 4 \"internal/internal-seed.hpp\"\
-    \nusing namespace std;\n\nnamespace internal {\nunsigned long long non_deterministic_seed()\
+    \ 2 \"misc/rng.hpp\"\n\n#line 7 \"misc/rng.hpp\"\nusing namespace std;\n\n#line\
+    \ 2 \"internal/internal-seed.hpp\"\n\n#line 4 \"internal/internal-seed.hpp\"\n\
+    using namespace std;\n\nnamespace internal {\nunsigned long long non_deterministic_seed()\
     \ {\n  unsigned long long m =\n      chrono::duration_cast<chrono::nanoseconds>(\n\
     \          chrono::high_resolution_clock::now().time_since_epoch())\n        \
     \  .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >> 31, m\
@@ -245,7 +246,7 @@ data:
     \u30FC\u30C9\u304C\u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long long\
     \ seed() {\n#if defined(NyaanLocal) && !defined(RANDOMIZED_SEED)\n  return deterministic_seed();\n\
     #else\n  return non_deterministic_seed();\n#endif\n}\n\n}  // namespace internal\n\
-    #line 4 \"misc/rng.hpp\"\n\nnamespace my_rand {\nusing i64 = long long;\nusing\
+    #line 10 \"misc/rng.hpp\"\n\nnamespace my_rand {\nusing i64 = long long;\nusing\
     \ u64 = unsigned long long;\n\n// [0, 2^64 - 1)\nu64 rng() {\n  static u64 _x\
     \ = internal::seed();\n  return _x ^= _x << 7, _x ^= _x >> 9;\n}\n\n// [l, r]\n\
     i64 rng(i64 l, i64 r) {\n  assert(l <= r);\n  return l + rng() % u64(r - l + 1);\n\
@@ -261,7 +262,7 @@ data:
     \  int n = v.size();\n  for (int i = 1; i < n; i++) swap(v[i], v[randint(0, i\
     \ + 1)]);\n}\n\n}  // namespace my_rand\n\nusing my_rand::randint;\nusing my_rand::randset;\n\
     using my_rand::randshf;\nusing my_rand::rnd;\nusing my_rand::rng;\n#line 2 \"\
-    modint/montgomery-modint.hpp\"\n\n#line 4 \"modint/montgomery-modint.hpp\"\n\n\
+    modint/montgomery-modint.hpp\"\n\n#line 5 \"modint/montgomery-modint.hpp\"\n\n\
     template <uint32_t mod>\nstruct LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n\
     \  using i32 = int32_t;\n  using u32 = uint32_t;\n  using u64 = uint64_t;\n\n\
     \  static constexpr u32 get_r() {\n    u32 ret = mod;\n    for (i32 i = 0; i <\
@@ -292,31 +293,32 @@ data:
     \ ret;\n  }\n\n  constexpr mint inverse() const {\n    int x = get(), y = mod,\
     \ u = 1, v = 0, t = 0, tmp = 0;\n    while (y > 0) {\n      t = x / y;\n     \
     \ x -= t * y, u -= t * v;\n      tmp = x, x = y, y = tmp;\n      tmp = u, u =\
-    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend ostream &operator<<(ostream\
-    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend istream &operator>>(istream\
-    \ &is, mint &b) {\n    int64_t t;\n    is >> t;\n    b = LazyMontgomeryModInt<mod>(t);\n\
-    \    return (is);\n  }\n\n  constexpr u32 get() const {\n    u32 ret = reduce(a);\n\
-    \    return ret >= mod ? ret - mod : ret;\n  }\n\n  static constexpr u32 get_mod()\
-    \ { return mod; }\n};\n#line 6 \"verify/verify-unit-test/multiplicative-function.test.cpp\"\
-    \nusing mint = LazyMontgomeryModInt<998244353>;\nusing vm = vector<mint>;\nusing\
-    \ vvm = vector<vm>;\n#line 2 \"multiplicative-function/divisor-multiple-transform.hpp\"\
+    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend std::ostream &operator<<(std::ostream\
+    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend std::istream\
+    \ &operator>>(std::istream &is, mint &b) {\n    int64_t t;\n    is >> t;\n   \
+    \ b = LazyMontgomeryModInt<mod>(t);\n    return (is);\n  }\n\n  constexpr u32\
+    \ get() const {\n    u32 ret = reduce(a);\n    return ret >= mod ? ret - mod :\
+    \ ret;\n  }\n\n  static constexpr u32 get_mod() { return mod; }\n};\n#line 6 \"\
+    verify/verify-unit-test/multiplicative-function.test.cpp\"\nusing mint = LazyMontgomeryModInt<998244353>;\n\
+    using vm = vector<mint>;\nusing vvm = vector<vm>;\n#line 2 \"multiplicative-function/divisor-multiple-transform.hpp\"\
     \n\n#line 5 \"multiplicative-function/divisor-multiple-transform.hpp\"\nusing\
-    \ namespace std;\n\n#line 2 \"prime/prime-enumerate.hpp\"\n\n// Prime Sieve {2,\
-    \ 3, 5, 7, 11, 13, 17, ...}\nvector<int> prime_enumerate(int N) {\n  vector<bool>\
-    \ sieve(N / 3 + 1, 1);\n  for (int p = 5, d = 4, i = 1, sqn = sqrt(N); p <= sqn;\
-    \ p += d = 6 - d, i++) {\n    if (!sieve[i]) continue;\n    for (int q = p * p\
-    \ / 3, r = d * p / 3 + (d * p % 3 == 2), s = 2 * p,\n             qe = sieve.size();\n\
-    \         q < qe; q += r = s - r)\n      sieve[q] = 0;\n  }\n  vector<int> ret{2,\
-    \ 3};\n  for (int p = 5, d = 4, i = 1; p <= N; p += d = 6 - d, i++)\n    if (sieve[i])\
-    \ ret.push_back(p);\n  while (!ret.empty() && ret.back() > N) ret.pop_back();\n\
-    \  return ret;\n}\n#line 8 \"multiplicative-function/divisor-multiple-transform.hpp\"\
-    \n\nstruct divisor_transform {\n  template <typename T>\n  static void zeta_transform(vector<T>\
-    \ &a) {\n    int N = a.size() - 1;\n    auto sieve = prime_enumerate(N);\n   \
-    \ for (auto &p : sieve)\n      for (int k = 1; k * p <= N; ++k) a[k * p] += a[k];\n\
-    \  }\n  template <typename T>\n  static void mobius_transform(vector<T> &a) {\n\
-    \    int N = a.size() - 1;\n    auto sieve = prime_enumerate(N);\n    for (auto\
-    \ &p : sieve)\n      for (int k = N / p; k > 0; --k) a[k * p] -= a[k];\n  }\n\n\
-    \  template <typename I, typename T>\n  static void zeta_transform(map<I, T> &a)\
+    \ namespace std;\n\n#line 2 \"prime/prime-enumerate.hpp\"\n\n#line 5 \"prime/prime-enumerate.hpp\"\
+    \nusing namespace std;\n\n// Prime Sieve {2, 3, 5, 7, 11, 13, 17, ...}\nvector<int>\
+    \ prime_enumerate(int N) {\n  vector<bool> sieve(N / 3 + 1, 1);\n  for (int p\
+    \ = 5, d = 4, i = 1, sqn = sqrt(N); p <= sqn; p += d = 6 - d, i++) {\n    if (!sieve[i])\
+    \ continue;\n    for (int q = p * p / 3, r = d * p / 3 + (d * p % 3 == 2), s =\
+    \ 2 * p,\n             qe = sieve.size();\n         q < qe; q += r = s - r)\n\
+    \      sieve[q] = 0;\n  }\n  vector<int> ret{2, 3};\n  for (int p = 5, d = 4,\
+    \ i = 1; p <= N; p += d = 6 - d, i++)\n    if (sieve[i]) ret.push_back(p);\n \
+    \ while (!ret.empty() && ret.back() > N) ret.pop_back();\n  return ret;\n}\n#line\
+    \ 8 \"multiplicative-function/divisor-multiple-transform.hpp\"\n\nstruct divisor_transform\
+    \ {\n  template <typename T>\n  static void zeta_transform(vector<T> &a) {\n \
+    \   int N = a.size() - 1;\n    auto sieve = prime_enumerate(N);\n    for (auto\
+    \ &p : sieve)\n      for (int k = 1; k * p <= N; ++k) a[k * p] += a[k];\n  }\n\
+    \  template <typename T>\n  static void mobius_transform(vector<T> &a) {\n   \
+    \ int N = a.size() - 1;\n    auto sieve = prime_enumerate(N);\n    for (auto &p\
+    \ : sieve)\n      for (int k = N / p; k > 0; --k) a[k * p] -= a[k];\n  }\n\n \
+    \ template <typename I, typename T>\n  static void zeta_transform(map<I, T> &a)\
     \ {\n    for (auto p = rbegin(a); p != rend(a); p++)\n      for (auto &x : a)\
     \ {\n        if (p->first == x.first) break;\n        if (p->first % x.first ==\
     \ 0) p->second += x.second;\n      }\n  }\n  template <typename I, typename T>\n\
@@ -379,7 +381,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/multiplicative-function.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/multiplicative-function.test.cpp

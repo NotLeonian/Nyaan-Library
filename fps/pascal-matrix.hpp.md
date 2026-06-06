@@ -55,8 +55,10 @@ data:
     \ return T(0);\n    return fac(n) * finv(n - r);\n  }\n\n  // [x^r] 1 / (1-x)^n\n\
     \  T H(int n, int r) {\n    if (n < 0 || r < 0) return T(0);\n    return r ==\
     \ 0 ? 1 : C(n + r - 1, r);\n  }\n};\n#line 2 \"fps/formal-power-series.hpp\"\n\
-    \ntemplate <typename mint>\nstruct FormalPowerSeries : vector<mint> {\n  using\
-    \ vector<mint>::vector;\n  using FPS = FormalPowerSeries;\n\n  FPS &operator+=(const\
+    \n#include <algorithm>\n#line 5 \"fps/formal-power-series.hpp\"\n#include <cstdint>\n\
+    #include <iterator>\n#line 8 \"fps/formal-power-series.hpp\"\nusing namespace\
+    \ std;\n\ntemplate <typename mint>\nstruct FormalPowerSeries : vector<mint> {\n\
+    \  using vector<mint>::vector;\n  using FPS = FormalPowerSeries;\n\n  FPS &operator+=(const\
     \ FPS &r) {\n    if (r.size() > this->size()) this->resize(r.size());\n    for\
     \ (int i = 0; i < (int)r.size(); i++) (*this)[i] += r[i];\n    return *this;\n\
     \  }\n\n  FPS &operator+=(const mint &r) {\n    if (this->empty()) this->resize(1);\n\
@@ -120,32 +122,48 @@ data:
     \ *ntt_ptr;\n  static void set_fft();\n  FPS &operator*=(const FPS &r);\n  void\
     \ ntt();\n  void intt();\n  void ntt_doubling();\n  static int ntt_pr();\n  FPS\
     \ inv(int deg = -1) const;\n  FPS exp(int deg = -1) const;\n};\ntemplate <typename\
-    \ mint>\nvoid *FormalPowerSeries<mint>::ntt_ptr = nullptr;\n\n/**\n * @brief \u591A\
-    \u9805\u5F0F/\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\
-    \n * @docs docs/fps/formal-power-series.md\n */\n#line 5 \"fps/pascal-matrix.hpp\"\
-    \n\n// P_{i, j} = binom(i, j) \u3092\u6E80\u305F\u3059\u884C\u5217 P \u3092\u7E26\
-    \u30D9\u30AF\u30C8\u30EB\u306B\u4F5C\u7528\ntemplate <typename mint>\nFormalPowerSeries<mint>\
-    \ pascal_matrix(FormalPowerSeries<mint> a,\n                                 \
-    \     int rev = false) {\n  using fps = FormalPowerSeries<mint>;\n  if (a.empty())\
-    \ return {};\n\n  int N = a.size();\n  Binomial<mint> binom(N + 10);\n  if (rev\
-    \ == false) {\n    fps e(N);\n    for (int i = 0; i < N; i++) {\n      a[i] *=\
-    \ binom.finv(i);\n      e[i] = binom.finv(i);\n    }\n    fps b = (a * e).pre(N);\n\
-    \    for (int i = 0; i < N; i++) b[i] *= binom.fac(i);\n    return b;\n  } else\
-    \ {\n    fps ie(N);\n    for (int i = 0; i < N; i++) {\n      a[i] *= binom.finv(i);\n\
-    \      ie[i] = binom.finv(i) * (i % 2 ? -1 : 1);\n    }\n    fps b = (a * ie).pre(N);\n\
-    \    for (int i = 0; i < N; i++) b[i] *= binom.fac(i);\n    return b;\n  }\n}\n\
-    \n// P_{i, j} = binom(j, i) \u3092\u6E80\u305F\u3059\u884C\u5217 P \u3092\u7E26\
-    \u30D9\u30AF\u30C8\u30EB\u306B\u4F5C\u7528\ntemplate <typename mint>\nFormalPowerSeries<mint>\
-    \ pascal_matrix_trans(FormalPowerSeries<mint> a,\n                           \
-    \                 int rev = false) {\n  using fps = FormalPowerSeries<mint>;\n\
-    \  if (a.empty()) return {};\n\n  int N = a.size();\n  Binomial<mint> binom(N\
-    \ + 10);\n  if (rev == false) {\n    fps e(N);\n    for (int i = 0; i < N; i++)\
-    \ {\n      a[i] *= binom.fac(i);\n      e[i] = binom.finv(i);\n    }\n    fps\
-    \ b = (a.rev() * e).pre(N).rev();\n    for (int i = 0; i < N; i++) b[i] *= binom.finv(i);\n\
+    \ mint>\nvoid *FormalPowerSeries<mint>::ntt_ptr = nullptr;\n\ntemplate <int N>\n\
+    struct FPSBackendPriority : FPSBackendPriority<N - 1> {};\ntemplate <>\nstruct\
+    \ FPSBackendPriority<0> {};\n\ntemplate <typename mint>\nvoid FormalPowerSeries<mint>::set_fft()\
+    \ {\n  fps_set_fft_impl((FormalPowerSeries<mint>*)nullptr, FPSBackendPriority<1>{});\n\
+    }\n\ntemplate <typename mint>\nFormalPowerSeries<mint>& FormalPowerSeries<mint>::operator*=(const\
+    \ FPS& r) {\n  if (this->empty() || r.empty()) {\n    this->clear();\n    return\
+    \ *this;\n  }\n  return fps_multiply_impl(*this, r, FPSBackendPriority<1>{});\n\
+    }\n\ntemplate <typename mint>\nvoid FormalPowerSeries<mint>::ntt() {\n  fps_ntt_impl(*this,\
+    \ FPSBackendPriority<1>{});\n}\n\ntemplate <typename mint>\nvoid FormalPowerSeries<mint>::intt()\
+    \ {\n  fps_intt_impl(*this, FPSBackendPriority<1>{});\n}\n\ntemplate <typename\
+    \ mint>\nvoid FormalPowerSeries<mint>::ntt_doubling() {\n  fps_ntt_doubling_impl(*this,\
+    \ FPSBackendPriority<1>{});\n}\n\ntemplate <typename mint>\nint FormalPowerSeries<mint>::ntt_pr()\
+    \ {\n  return fps_ntt_pr_impl((FormalPowerSeries<mint>*)nullptr,\n           \
+    \              FPSBackendPriority<1>{});\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>\
+    \ FormalPowerSeries<mint>::inv(int deg) const {\n  return fps_inv_impl(*this,\
+    \ deg, FPSBackendPriority<1>{});\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>\
+    \ FormalPowerSeries<mint>::exp(int deg) const {\n  return fps_exp_impl(*this,\
+    \ deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief \u591A\u9805\u5F0F/\u5F62\
+    \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n * @docs docs/fps/formal-power-series.md\n\
+    \ */\n#line 5 \"fps/pascal-matrix.hpp\"\n\n// P_{i, j} = binom(i, j) \u3092\u6E80\
+    \u305F\u3059\u884C\u5217 P \u3092\u7E26\u30D9\u30AF\u30C8\u30EB\u306B\u4F5C\u7528\
+    \ntemplate <typename mint>\nFormalPowerSeries<mint> pascal_matrix(FormalPowerSeries<mint>\
+    \ a,\n                                      int rev = false) {\n  using fps =\
+    \ FormalPowerSeries<mint>;\n  if (a.empty()) return {};\n\n  int N = a.size();\n\
+    \  Binomial<mint> binom(N + 10);\n  if (rev == false) {\n    fps e(N);\n    for\
+    \ (int i = 0; i < N; i++) {\n      a[i] *= binom.finv(i);\n      e[i] = binom.finv(i);\n\
+    \    }\n    fps b = (a * e).pre(N);\n    for (int i = 0; i < N; i++) b[i] *= binom.fac(i);\n\
     \    return b;\n  } else {\n    fps ie(N);\n    for (int i = 0; i < N; i++) {\n\
-    \      a[i] *= binom.fac(i);\n      ie[i] = binom.finv(i) * (i % 2 ? -1 : 1);\n\
-    \    }\n    fps b = (a.rev() * ie).pre(N).rev();\n    for (int i = 0; i < N; i++)\
-    \ b[i] *= binom.finv(i);\n    return b;\n  }\n}\n"
+    \      a[i] *= binom.finv(i);\n      ie[i] = binom.finv(i) * (i % 2 ? -1 : 1);\n\
+    \    }\n    fps b = (a * ie).pre(N);\n    for (int i = 0; i < N; i++) b[i] *=\
+    \ binom.fac(i);\n    return b;\n  }\n}\n\n// P_{i, j} = binom(j, i) \u3092\u6E80\
+    \u305F\u3059\u884C\u5217 P \u3092\u7E26\u30D9\u30AF\u30C8\u30EB\u306B\u4F5C\u7528\
+    \ntemplate <typename mint>\nFormalPowerSeries<mint> pascal_matrix_trans(FormalPowerSeries<mint>\
+    \ a,\n                                            int rev = false) {\n  using\
+    \ fps = FormalPowerSeries<mint>;\n  if (a.empty()) return {};\n\n  int N = a.size();\n\
+    \  Binomial<mint> binom(N + 10);\n  if (rev == false) {\n    fps e(N);\n    for\
+    \ (int i = 0; i < N; i++) {\n      a[i] *= binom.fac(i);\n      e[i] = binom.finv(i);\n\
+    \    }\n    fps b = (a.rev() * e).pre(N).rev();\n    for (int i = 0; i < N; i++)\
+    \ b[i] *= binom.finv(i);\n    return b;\n  } else {\n    fps ie(N);\n    for (int\
+    \ i = 0; i < N; i++) {\n      a[i] *= binom.fac(i);\n      ie[i] = binom.finv(i)\
+    \ * (i % 2 ? -1 : 1);\n    }\n    fps b = (a.rev() * ie).pre(N).rev();\n    for\
+    \ (int i = 0; i < N; i++) b[i] *= binom.finv(i);\n    return b;\n  }\n}\n"
   code: "#pragma once\n\n#include \"../modulo/binomial.hpp\"\n#include \"formal-power-series.hpp\"\
     \n\n// P_{i, j} = binom(i, j) \u3092\u6E80\u305F\u3059\u884C\u5217 P \u3092\u7E26\
     \u30D9\u30AF\u30C8\u30EB\u306B\u4F5C\u7528\ntemplate <typename mint>\nFormalPowerSeries<mint>\
@@ -177,7 +195,7 @@ data:
   path: fps/pascal-matrix.hpp
   requiredBy:
   - fps/stirling-matrix.hpp
-  timestamp: '2023-12-22 19:57:12+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-unit-test/stirling-matrix.test.cpp

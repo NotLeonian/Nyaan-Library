@@ -3,15 +3,6 @@ data:
   _extendedDependsOn: []
   _extendedRequiredBy:
   - icon: ':heavy_check_mark:'
-    path: multiplicative-function/count-square-free.hpp
-    title: "\u7121\u5E73\u65B9\u6570\u306E\u6570\u3048\u4E0A\u3052"
-  - icon: ':heavy_check_mark:'
-    path: multiplicative-function/enamurate-multiplicative-function.hpp
-    title: "\u4E57\u6CD5\u7684\u95A2\u6570\u306E\u5217\u6319"
-  - icon: ':heavy_check_mark:'
-    path: multiplicative-function/mf-famous-series.hpp
-    title: "\u6709\u540D\u306A\u4E57\u6CD5\u7684\u95A2\u6570"
-  - icon: ':heavy_check_mark:'
     path: set-function/and-convolution.hpp
     title: AND Convoluion
   - icon: ':heavy_check_mark:'
@@ -1595,9 +1586,6 @@ data:
   - set-function/and-convolution.hpp
   - set-function/xor-convolution.hpp
   - set-function/or-convolution.hpp
-  - multiplicative-function/count-square-free.hpp
-  - multiplicative-function/mf-famous-series.hpp
-  - multiplicative-function/enamurate-multiplicative-function.hpp
   timestamp: '2024-05-03 23:21:26+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:

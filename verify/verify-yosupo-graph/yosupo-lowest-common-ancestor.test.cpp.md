@@ -5,9 +5,6 @@ data:
     path: graph/graph-template.hpp
     title: "\u30B0\u30E9\u30D5\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8"
   - icon: ':heavy_check_mark:'
-    path: graph/graph-utility.hpp
-    title: "\u30B0\u30E9\u30D5\u30E6\u30FC\u30C6\u30A3\u30EA\u30C6\u30A3"
-  - icon: ':heavy_check_mark:'
     path: template/bitop.hpp
     title: template/bitop.hpp
   - icon: ':heavy_check_mark:'
@@ -227,8 +224,8 @@ data:
     \ \\\n    return;                  \\\n  } while (0)\n#line 70 \"template/template.hpp\"\
     \n\nnamespace Nyaan {\nvoid solve();\n}\nint main() { Nyaan::solve(); }\n#line\
     \ 4 \"verify/verify-yosupo-graph/yosupo-lowest-common-ancestor.test.cpp\"\n//\n\
-    #line 2 \"graph/graph-utility.hpp\"\n\n#line 2 \"graph/graph-template.hpp\"\n\n\
-    template <typename T>\nstruct edge {\n  int src, to;\n  T cost;\n\n  edge(int\
+    #line 2 \"tree/heavy-light-decomposition.hpp\"\n\n#line 2 \"graph/graph-template.hpp\"\
+    \n\ntemplate <typename T>\nstruct edge {\n  int src, to;\n  T cost;\n\n  edge(int\
     \ _to, T _cost) : src(-1), to(_to), cost(_cost) {}\n  edge(int _src, int _to,\
     \ T _cost) : src(_src), to(_to), cost(_cost) {}\n\n  edge &operator=(const int\
     \ &x) {\n    to = x;\n    return *this;\n  }\n\n  operator int() const { return\
@@ -257,36 +254,7 @@ data:
     \ cin >> c;\n    else\n      c = 1;\n    if (is_1origin) x--, y--;\n    d[x][y]\
     \ = c;\n    if (!is_directed) d[y][x] = c;\n  }\n  return d;\n}\n\n/**\n * @brief\
     \ \u30B0\u30E9\u30D5\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\n * @docs docs/graph/graph-template.md\n\
-    \ */\n#line 4 \"graph/graph-utility.hpp\"\n\n// \u4E00\u822C\u306E\u30B0\u30E9\
-    \u30D5\u306Est\u304B\u3089\u306E\u8DDD\u96E2\uFF01\uFF01\uFF01\uFF01\n// unvisited\
-    \ nodes : d = -1\nvector<int> Depth(const UnweightedGraph &g, int start = 0) {\n\
-    \  int n = g.size();\n  vector<int> ds(n, -1);\n  ds[start] = 0;\n  queue<int>\
-    \ q;\n  q.push(start);\n  while (!q.empty()) {\n    int c = q.front();\n    q.pop();\n\
-    \    int dc = ds[c];\n    for (auto &d : g[c]) {\n      if (ds[d] == -1) {\n \
-    \       ds[d] = dc + 1;\n        q.push(d);\n      }\n    }\n  }\n  return ds;\n\
-    }\n\n// Depth of Rooted Weighted Tree\n// unvisited nodes : d = -1\ntemplate <typename\
-    \ T>\nvector<T> Depth(const WeightedGraph<T> &g, int start = 0) {\n  vector<T>\
-    \ d(g.size(), -1);\n  auto dfs = [&](auto rec, int cur, T val, int par = -1) ->\
-    \ void {\n    d[cur] = val;\n    for (auto &dst : g[cur]) {\n      if (dst ==\
-    \ par) continue;\n      rec(rec, dst, val + dst.cost, cur);\n    }\n  };\n  dfs(dfs,\
-    \ start, 0);\n  return d;\n}\n\n// Diameter of Tree\n// return value : { {u, v},\
-    \ length }\npair<pair<int, int>, int> Diameter(const UnweightedGraph &g) {\n \
-    \ auto d = Depth(g, 0);\n  int u = max_element(begin(d), end(d)) - begin(d);\n\
-    \  d = Depth(g, u);\n  int v = max_element(begin(d), end(d)) - begin(d);\n  return\
-    \ make_pair(make_pair(u, v), d[v]);\n}\n\n// Diameter of Weighted Tree\n// return\
-    \ value : { {u, v}, length }\ntemplate <typename T>\npair<pair<int, int>, T> Diameter(const\
-    \ WeightedGraph<T> &g) {\n  auto d = Depth(g, 0);\n  int u = max_element(begin(d),\
-    \ end(d)) - begin(d);\n  d = Depth(g, u);\n  int v = max_element(begin(d), end(d))\
-    \ - begin(d);\n  return make_pair(make_pair(u, v), d[v]);\n}\n\n// nodes on the\
-    \ path u-v ( O(N) )\ntemplate <typename G>\nvector<int> Path(G &g, int u, int\
-    \ v) {\n  vector<int> ret;\n  int end = 0;\n  auto dfs = [&](auto rec, int cur,\
-    \ int par = -1) -> void {\n    ret.push_back(cur);\n    if (cur == v) {\n    \
-    \  end = 1;\n      return;\n    }\n    for (int dst : g[cur]) {\n      if (dst\
-    \ == par) continue;\n      rec(rec, dst, cur);\n      if (end) return;\n    }\n\
-    \    if (end) return;\n    ret.pop_back();\n  };\n  dfs(dfs, u);\n  return ret;\n\
-    }\n\n/**\n * @brief \u30B0\u30E9\u30D5\u30E6\u30FC\u30C6\u30A3\u30EA\u30C6\u30A3\
-    \n * @docs docs/graph/graph-utility.md\n */\n#line 2 \"tree/heavy-light-decomposition.hpp\"\
-    \n\n#line 4 \"tree/heavy-light-decomposition.hpp\"\n\ntemplate <typename G>\n\
+    \ */\n#line 4 \"tree/heavy-light-decomposition.hpp\"\n\ntemplate <typename G>\n\
     struct HeavyLightDecomposition {\n private:\n  void dfs_sz(int cur) {\n    size[cur]\
     \ = 1;\n    for (auto& dst : g[cur]) {\n      if (dst == par[cur]) {\n       \
     \ if (g[cur].size() >= 2 && int(dst) == int(g[cur][0]))\n          swap(g[cur][0],\
@@ -324,15 +292,15 @@ data:
     \ return depth[a] < depth[b] ? a : b;\n  }\n\n  int dist(int a, int b) { return\
     \ depth[a] + depth[b] - depth[lca(a, b)] * 2; }\n};\n\n/**\n * @brief Heavy Light\
     \ Decomposition(\u91CD\u8EFD\u5206\u89E3)\n * @docs docs/tree/heavy-light-decomposition.md\n\
-    \ */\n#line 7 \"verify/verify-yosupo-graph/yosupo-lowest-common-ancestor.test.cpp\"\
+    \ */\n#line 6 \"verify/verify-yosupo-graph/yosupo-lowest-common-ancestor.test.cpp\"\
     \n\nusing namespace Nyaan;\nvoid Nyaan::solve() {\n  ini(N, Q);\n  vvi g(N);\n\
     \  rep1(i, N - 1) {\n    ini(j);\n    g[j].push_back(i);\n  }\n  HeavyLightDecomposition<vvi>\
     \ hld(g);\n  rep(_, Q) {\n    ini(u, v);\n    out(hld.lca(u, v));\n  }\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/lca\"\n\n#include \"../../template/template.hpp\"\
-    \n//\n#include \"../../graph/graph-utility.hpp\"\n#include \"../../tree/heavy-light-decomposition.hpp\"\
-    \n\nusing namespace Nyaan;\nvoid Nyaan::solve() {\n  ini(N, Q);\n  vvi g(N);\n\
-    \  rep1(i, N - 1) {\n    ini(j);\n    g[j].push_back(i);\n  }\n  HeavyLightDecomposition<vvi>\
-    \ hld(g);\n  rep(_, Q) {\n    ini(u, v);\n    out(hld.lca(u, v));\n  }\n}"
+    \n//\n#include \"../../tree/heavy-light-decomposition.hpp\"\n\nusing namespace\
+    \ Nyaan;\nvoid Nyaan::solve() {\n  ini(N, Q);\n  vvi g(N);\n  rep1(i, N - 1) {\n\
+    \    ini(j);\n    g[j].push_back(i);\n  }\n  HeavyLightDecomposition<vvi> hld(g);\n\
+    \  rep(_, Q) {\n    ini(u, v);\n    out(hld.lca(u, v));\n  }\n}"
   dependsOn:
   - template/template.hpp
   - template/util.hpp
@@ -340,13 +308,12 @@ data:
   - template/inout.hpp
   - template/debug.hpp
   - template/macro.hpp
-  - graph/graph-utility.hpp
-  - graph/graph-template.hpp
   - tree/heavy-light-decomposition.hpp
+  - graph/graph-template.hpp
   isVerificationFile: true
   path: verify/verify-yosupo-graph/yosupo-lowest-common-ancestor.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-graph/yosupo-lowest-common-ancestor.test.cpp

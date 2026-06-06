@@ -242,7 +242,7 @@ data:
     \  void pop() {\n    if (a0.empty()) transfer();\n    a0.pop_back();\n    r0.pop_back();\n\
     \    f0 = r0.empty() ? I : r0.back();\n  }\n  T query() { return f(f0, f1); }\n\
     };\n\n/**\n * @brief Slide Window Aggrigation\n * @docs docs/data-structure/slide-window-aggregation.md\n\
-    \ */\n#line 2 \"misc/fastio.hpp\"\n\n#line 8 \"misc/fastio.hpp\"\n\nusing namespace\
+    \ */\n#line 2 \"misc/fastio.hpp\"\n\n#line 9 \"misc/fastio.hpp\"\n\nusing namespace\
     \ std;\n\n#line 2 \"internal/internal-type-traits.hpp\"\n\n#line 4 \"internal/internal-type-traits.hpp\"\
     \nusing namespace std;\n\nnamespace internal {\ntemplate <typename T>\nusing is_broadly_integral\
     \ =\n    typename conditional_t<is_integral_v<T> || is_same_v<T, __int128_t> ||\n\
@@ -267,7 +267,7 @@ data:
     \          \\\n  struct has_##var<T, void_t<decltype(T::var)>> : true_type {};\
     \ \\\n  template <class T>                                            \\\n  constexpr\
     \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace internal\n#line\
-    \ 12 \"misc/fastio.hpp\"\n\nnamespace fastio {\nstatic constexpr int SZ = 1 <<\
+    \ 13 \"misc/fastio.hpp\"\n\nnamespace fastio {\nstatic constexpr int SZ = 1 <<\
     \ 17;\nstatic constexpr int offset = 64;\nchar inbuf[SZ], outbuf[SZ];\nint in_left\
     \ = 0, in_right = 0, out_right = 0;\n\nstruct Pre {\n  char num[40000];\n  constexpr\
     \ Pre() : num() {\n    for (int i = 0; i < 10000; i++) {\n      int n = i;\n \
@@ -316,7 +316,7 @@ data:
     \ {\n  wt(std::forward<const Args>(x)...);\n  wt('\\n');\n}\n\nstruct Dummy {\n\
     \  Dummy() { atexit(flush); }\n} dummy;\n\n}  // namespace fastio\nusing fastio::rd;\n\
     using fastio::skip_space;\nusing fastio::wt;\nusing fastio::wtn;\n#line 2 \"modint/montgomery-modint.hpp\"\
-    \n\n#line 4 \"modint/montgomery-modint.hpp\"\n\ntemplate <uint32_t mod>\nstruct\
+    \n\n#line 5 \"modint/montgomery-modint.hpp\"\n\ntemplate <uint32_t mod>\nstruct\
     \ LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n  using i32 =\
     \ int32_t;\n  using u32 = uint32_t;\n  using u64 = uint64_t;\n\n  static constexpr\
     \ u32 get_r() {\n    u32 ret = mod;\n    for (i32 i = 0; i < 4; ++i) ret *= 2\
@@ -347,15 +347,16 @@ data:
     \ ret;\n  }\n\n  constexpr mint inverse() const {\n    int x = get(), y = mod,\
     \ u = 1, v = 0, t = 0, tmp = 0;\n    while (y > 0) {\n      t = x / y;\n     \
     \ x -= t * y, u -= t * v;\n      tmp = x, x = y, y = tmp;\n      tmp = u, u =\
-    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend ostream &operator<<(ostream\
-    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend istream &operator>>(istream\
-    \ &is, mint &b) {\n    int64_t t;\n    is >> t;\n    b = LazyMontgomeryModInt<mod>(t);\n\
-    \    return (is);\n  }\n\n  constexpr u32 get() const {\n    u32 ret = reduce(a);\n\
-    \    return ret >= mod ? ret - mod : ret;\n  }\n\n  static constexpr u32 get_mod()\
-    \ { return mod; }\n};\n#line 7 \"verify/verify-yosupo-ds/yosupo-swag.test.cpp\"\
-    \n\nusing namespace Nyaan; void Nyaan::solve() {\n  using mint = LazyMontgomeryModInt<998244353>;\n\
-    \  using p = pair<mint, mint>;\n  auto f = [](const p &a, const p &b) {\n    return\
-    \ p{a.first * b.first, a.second * b.first + b.second};\n  };\n  SlideWindowAggregation<p,\
+    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend std::ostream &operator<<(std::ostream\
+    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend std::istream\
+    \ &operator>>(std::istream &is, mint &b) {\n    int64_t t;\n    is >> t;\n   \
+    \ b = LazyMontgomeryModInt<mod>(t);\n    return (is);\n  }\n\n  constexpr u32\
+    \ get() const {\n    u32 ret = reduce(a);\n    return ret >= mod ? ret - mod :\
+    \ ret;\n  }\n\n  static constexpr u32 get_mod() { return mod; }\n};\n#line 7 \"\
+    verify/verify-yosupo-ds/yosupo-swag.test.cpp\"\n\nusing namespace Nyaan; void\
+    \ Nyaan::solve() {\n  using mint = LazyMontgomeryModInt<998244353>;\n  using p\
+    \ = pair<mint, mint>;\n  auto f = [](const p &a, const p &b) {\n    return p{a.first\
+    \ * b.first, a.second * b.first + b.second};\n  };\n  SlideWindowAggregation<p,\
     \ decltype(f)> swag(f, p{1, 0});\n  int Q;\n  rd(Q);\n  rep(_, Q) {\n    int cmd;\n\
     \    rd(cmd);\n    if (cmd == 0) {\n      int a, b;\n      rd(a, b);\n      swag.push(p{a,\
     \ b});\n    } else if (cmd == 1) {\n      swag.pop();\n    } else {\n      int\
@@ -386,7 +387,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-ds/yosupo-swag.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-ds/yosupo-swag.test.cpp

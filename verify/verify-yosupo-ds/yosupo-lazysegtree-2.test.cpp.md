@@ -225,7 +225,7 @@ data:
     \ \\\n    return;                  \\\n  } while (0)\n#line 70 \"template/template.hpp\"\
     \n\nnamespace Nyaan {\nvoid solve();\n}\nint main() { Nyaan::solve(); }\n#line\
     \ 4 \"verify/verify-yosupo-ds/yosupo-lazysegtree-2.test.cpp\"\n//\n#line 2 \"\
-    modint/montgomery-modint.hpp\"\n\n#line 4 \"modint/montgomery-modint.hpp\"\n\n\
+    modint/montgomery-modint.hpp\"\n\n#line 5 \"modint/montgomery-modint.hpp\"\n\n\
     template <uint32_t mod>\nstruct LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n\
     \  using i32 = int32_t;\n  using u32 = uint32_t;\n  using u64 = uint64_t;\n\n\
     \  static constexpr u32 get_r() {\n    u32 ret = mod;\n    for (i32 i = 0; i <\
@@ -256,53 +256,54 @@ data:
     \ ret;\n  }\n\n  constexpr mint inverse() const {\n    int x = get(), y = mod,\
     \ u = 1, v = 0, t = 0, tmp = 0;\n    while (y > 0) {\n      t = x / y;\n     \
     \ x -= t * y, u -= t * v;\n      tmp = x, x = y, y = tmp;\n      tmp = u, u =\
-    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend ostream &operator<<(ostream\
-    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend istream &operator>>(istream\
-    \ &is, mint &b) {\n    int64_t t;\n    is >> t;\n    b = LazyMontgomeryModInt<mod>(t);\n\
-    \    return (is);\n  }\n\n  constexpr u32 get() const {\n    u32 ret = reduce(a);\n\
-    \    return ret >= mod ? ret - mod : ret;\n  }\n\n  static constexpr u32 get_mod()\
-    \ { return mod; }\n};\n#line 2 \"segment-tree/lazy-segment-tree-utility.hpp\"\n\
-    \ntemplate <typename T, typename E, T (*f)(T, T), T (*g)(T, E), E (*h)(E, E),\n\
-    \          T (*ti)(), E (*ei)()>\nstruct LazySegmentTreeBase {\n  int n, log,\
-    \ s;\n  vector<T> val;\n  vector<E> laz;\n\n  explicit LazySegmentTreeBase() {}\n\
-    \  explicit LazySegmentTreeBase(const vector<T>& vc) { init(vc); }\n\n  void init(const\
-    \ vector<T>& vc) {\n    n = 1, log = 0, s = vc.size();\n    while (n < s) n <<=\
-    \ 1, log++;\n    val.resize(2 * n, ti());\n    laz.resize(n, ei());\n    for (int\
-    \ i = 0; i < s; ++i) val[i + n] = vc[i];\n    for (int i = n - 1; i; --i) _update(i);\n\
-    \  }\n\n  void update(int l, int r, const E& x) {\n    if (l == r) return;\n \
-    \   l += n, r += n;\n    for (int i = log; i >= 1; i--) {\n      if (((l >> i)\
-    \ << i) != l) _push(l >> i);\n      if (((r >> i) << i) != r) _push((r - 1) >>\
-    \ i);\n    }\n    {\n      int l2 = l, r2 = r;\n      while (l < r) {\n      \
-    \  if (l & 1) _apply(l++, x);\n        if (r & 1) _apply(--r, x);\n        l >>=\
-    \ 1;\n        r >>= 1;\n      }\n      l = l2;\n      r = r2;\n    }\n    for\
-    \ (int i = 1; i <= log; i++) {\n      if (((l >> i) << i) != l) _update(l >> i);\n\
-    \      if (((r >> i) << i) != r) _update((r - 1) >> i);\n    }\n  }\n\n  T query(int\
-    \ l, int r) {\n    if (l == r) return ti();\n    l += n, r += n;\n    T L = ti(),\
-    \ R = ti();\n    for (int i = log; i >= 1; i--) {\n      if (((l >> i) << i) !=\
-    \ l) _push(l >> i);\n      if (((r >> i) << i) != r) _push((r - 1) >> i);\n  \
-    \  }\n    while (l < r) {\n      if (l & 1) L = f(L, val[l++]);\n      if (r &\
-    \ 1) R = f(val[--r], R);\n      l >>= 1;\n      r >>= 1;\n    }\n    return f(L,\
-    \ R);\n  }\n\n  void set_val(int k, const T& x) {\n    k += n;\n    for (int i\
-    \ = log; i >= 1; i--) {\n      if (((k >> i) << i) != k || (((k + 1) >> i) <<\
-    \ i) != (k + 1))\n        _push(k >> i);\n    }\n    val[k] = x;\n    for (int\
-    \ i = 1; i <= log; i++) {\n      if (((k >> i) << i) != k || (((k + 1) >> i) <<\
-    \ i) != (k + 1))\n        _update(k >> i);\n    }\n  }\n\n  void update_val(int\
-    \ k, const E& x) {\n    k += n;\n    for (int i = log; i >= 1; i--) {\n      if\
-    \ (((k >> i) << i) != k || (((k + 1) >> i) << i) != (k + 1))\n        _push(k\
-    \ >> i);\n    }\n    val[k] = g(val[k], x);\n    for (int i = 1; i <= log; i++)\
+    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend std::ostream &operator<<(std::ostream\
+    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend std::istream\
+    \ &operator>>(std::istream &is, mint &b) {\n    int64_t t;\n    is >> t;\n   \
+    \ b = LazyMontgomeryModInt<mod>(t);\n    return (is);\n  }\n\n  constexpr u32\
+    \ get() const {\n    u32 ret = reduce(a);\n    return ret >= mod ? ret - mod :\
+    \ ret;\n  }\n\n  static constexpr u32 get_mod() { return mod; }\n};\n#line 2 \"\
+    segment-tree/lazy-segment-tree-utility.hpp\"\n\ntemplate <typename T, typename\
+    \ E, T (*f)(T, T), T (*g)(T, E), E (*h)(E, E),\n          T (*ti)(), E (*ei)()>\n\
+    struct LazySegmentTreeBase {\n  int n, log, s;\n  vector<T> val;\n  vector<E>\
+    \ laz;\n\n  explicit LazySegmentTreeBase() {}\n  explicit LazySegmentTreeBase(const\
+    \ vector<T>& vc) { init(vc); }\n\n  void init(const vector<T>& vc) {\n    n =\
+    \ 1, log = 0, s = vc.size();\n    while (n < s) n <<= 1, log++;\n    val.resize(2\
+    \ * n, ti());\n    laz.resize(n, ei());\n    for (int i = 0; i < s; ++i) val[i\
+    \ + n] = vc[i];\n    for (int i = n - 1; i; --i) _update(i);\n  }\n\n  void update(int\
+    \ l, int r, const E& x) {\n    if (l == r) return;\n    l += n, r += n;\n    for\
+    \ (int i = log; i >= 1; i--) {\n      if (((l >> i) << i) != l) _push(l >> i);\n\
+    \      if (((r >> i) << i) != r) _push((r - 1) >> i);\n    }\n    {\n      int\
+    \ l2 = l, r2 = r;\n      while (l < r) {\n        if (l & 1) _apply(l++, x);\n\
+    \        if (r & 1) _apply(--r, x);\n        l >>= 1;\n        r >>= 1;\n    \
+    \  }\n      l = l2;\n      r = r2;\n    }\n    for (int i = 1; i <= log; i++)\
+    \ {\n      if (((l >> i) << i) != l) _update(l >> i);\n      if (((r >> i) <<\
+    \ i) != r) _update((r - 1) >> i);\n    }\n  }\n\n  T query(int l, int r) {\n \
+    \   if (l == r) return ti();\n    l += n, r += n;\n    T L = ti(), R = ti();\n\
+    \    for (int i = log; i >= 1; i--) {\n      if (((l >> i) << i) != l) _push(l\
+    \ >> i);\n      if (((r >> i) << i) != r) _push((r - 1) >> i);\n    }\n    while\
+    \ (l < r) {\n      if (l & 1) L = f(L, val[l++]);\n      if (r & 1) R = f(val[--r],\
+    \ R);\n      l >>= 1;\n      r >>= 1;\n    }\n    return f(L, R);\n  }\n\n  void\
+    \ set_val(int k, const T& x) {\n    k += n;\n    for (int i = log; i >= 1; i--)\
     \ {\n      if (((k >> i) << i) != k || (((k + 1) >> i) << i) != (k + 1))\n   \
-    \     _update(k >> i);\n    }\n  }\n\n  T get_val(int k) {\n    k += n;\n    for\
-    \ (int i = log; i >= 1; i--) {\n      if (((k >> i) << i) != k || (((k + 1) >>\
-    \ i) << i) != (k + 1))\n        _push(k >> i);\n    }\n    return val[k];\n  }\n\
-    \n  template <class G>\n  int max_right(int l, G check) {\n    assert(0 <= l &&\
-    \ l <= s);\n    assert(check(ti()));\n    if (l == n) return n;\n    l += n;\n\
-    \    for (int i = log; i >= 1; i--) _push(l >> i);\n    T sm = ti();\n    do {\n\
-    \      while (l % 2 == 0) l >>= 1;\n      if (!check(f(sm, val[l]))) {\n     \
-    \   while (l < n) {\n          _push(l);\n          l = (2 * l);\n          if\
-    \ (check(f(sm, val[l]))) {\n            sm = f(sm, val[l]);\n            l++;\n\
-    \          }\n        }\n        return l - n;\n      }\n      sm = f(sm, val[l]);\n\
-    \      l++;\n    } while ((l & -l) != l);\n    return s;\n  }\n\n  template <class\
-    \ G>\n  int min_left(int r, G check) {\n    assert(0 <= r && r <= s);\n    assert(check(ti()));\n\
+    \     _push(k >> i);\n    }\n    val[k] = x;\n    for (int i = 1; i <= log; i++)\
+    \ {\n      if (((k >> i) << i) != k || (((k + 1) >> i) << i) != (k + 1))\n   \
+    \     _update(k >> i);\n    }\n  }\n\n  void update_val(int k, const E& x) {\n\
+    \    k += n;\n    for (int i = log; i >= 1; i--) {\n      if (((k >> i) << i)\
+    \ != k || (((k + 1) >> i) << i) != (k + 1))\n        _push(k >> i);\n    }\n \
+    \   val[k] = g(val[k], x);\n    for (int i = 1; i <= log; i++) {\n      if (((k\
+    \ >> i) << i) != k || (((k + 1) >> i) << i) != (k + 1))\n        _update(k >>\
+    \ i);\n    }\n  }\n\n  T get_val(int k) {\n    k += n;\n    for (int i = log;\
+    \ i >= 1; i--) {\n      if (((k >> i) << i) != k || (((k + 1) >> i) << i) != (k\
+    \ + 1))\n        _push(k >> i);\n    }\n    return val[k];\n  }\n\n  template\
+    \ <class G>\n  int max_right(int l, G check) {\n    assert(0 <= l && l <= s);\n\
+    \    assert(check(ti()));\n    if (l == n) return n;\n    l += n;\n    for (int\
+    \ i = log; i >= 1; i--) _push(l >> i);\n    T sm = ti();\n    do {\n      while\
+    \ (l % 2 == 0) l >>= 1;\n      if (!check(f(sm, val[l]))) {\n        while (l\
+    \ < n) {\n          _push(l);\n          l = (2 * l);\n          if (check(f(sm,\
+    \ val[l]))) {\n            sm = f(sm, val[l]);\n            l++;\n          }\n\
+    \        }\n        return l - n;\n      }\n      sm = f(sm, val[l]);\n      l++;\n\
+    \    } while ((l & -l) != l);\n    return s;\n  }\n\n  template <class G>\n  int\
+    \ min_left(int r, G check) {\n    assert(0 <= r && r <= s);\n    assert(check(ti()));\n\
     \    if (r == 0) return 0;\n    r += n;\n    for (int i = log; i >= 1; i--) _push((r\
     \ - 1) >> i);\n    T sm = ti();\n    do {\n      r--;\n      while (r > 1 && (r\
     \ % 2)) r >>= 1;\n      if (!check(f(val[r], sm))) {\n        while (r < n) {\n\
@@ -402,7 +403,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-ds/yosupo-lazysegtree-2.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-ds/yosupo-lazysegtree-2.test.cpp

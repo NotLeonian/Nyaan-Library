@@ -225,7 +225,7 @@ data:
     \n\nnamespace Nyaan {\nvoid solve();\n}\nint main() { Nyaan::solve(); }\n#line\
     \ 4 \"verify/verify-yosupo-ntt/yosupo-convolution-schoenhage-radix2.test.cpp\"\
     \n//\nusing namespace Nyaan;\n\n#line 2 \"modint/montgomery-modint.hpp\"\n\n#line\
-    \ 4 \"modint/montgomery-modint.hpp\"\n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt\
+    \ 5 \"modint/montgomery-modint.hpp\"\n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt\
     \ {\n  using mint = LazyMontgomeryModInt;\n  using i32 = int32_t;\n  using u32\
     \ = uint32_t;\n  using u64 = uint64_t;\n\n  static constexpr u32 get_r() {\n \
     \   u32 ret = mod;\n    for (i32 i = 0; i < 4; ++i) ret *= 2 - mod * ret;\n  \
@@ -255,33 +255,33 @@ data:
     \ ret;\n  }\n\n  constexpr mint inverse() const {\n    int x = get(), y = mod,\
     \ u = 1, v = 0, t = 0, tmp = 0;\n    while (y > 0) {\n      t = x / y;\n     \
     \ x -= t * y, u -= t * v;\n      tmp = x, x = y, y = tmp;\n      tmp = u, u =\
-    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend ostream &operator<<(ostream\
-    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend istream &operator>>(istream\
-    \ &is, mint &b) {\n    int64_t t;\n    is >> t;\n    b = LazyMontgomeryModInt<mod>(t);\n\
-    \    return (is);\n  }\n\n  constexpr u32 get() const {\n    u32 ret = reduce(a);\n\
-    \    return ret >= mod ? ret - mod : ret;\n  }\n\n  static constexpr u32 get_mod()\
-    \ { return mod; }\n};\n#line 2 \"ntt/schoenhage-strassen-radix2.hpp\"\n\ntemplate\
-    \ <typename T>\nstruct Schoenhage_Strassen_radix2 {\n  T* buf = nullptr;\n\n \
-    \ void rot(T* dst, T* src, int s, int d) {\n    assert(0 <= d and d < 2 * s);\n\
-    \    bool f = s <= d;\n    if (s <= d) d -= s;\n    int i = 0;\n    if (f) {\n\
-    \      for (; i < s - d; i++) dst[i + d] = -src[i];\n      for (; i < s; i++)\
-    \ dst[i + d - s] = src[i];\n    } else {\n      for (; i < s - d; i++) dst[i +\
-    \ d] = src[i];\n      for (; i < s; i++) dst[i + d - s] = -src[i];\n    }\n  }\n\
-    \n  void in_add(T* dst, T* src, int s) {\n    for (int i = 0; i < s; i++) dst[i]\
-    \ += src[i];\n  }\n  void in_sub(T* dst, T* src, int s) {\n    for (int i = 0;\
-    \ i < s; i++) dst[i] -= src[i];\n  }\n\n  void cp(T* dst, T* src, int s) { memcpy(dst,\
-    \ src, s * sizeof(T)); }\n  void reset(T* dst, int s) { fill(dst, dst + s, T());\
-    \ }\n\n  // R[x] / (1 + x^(2^m)) \u4E0A\u306E\u9577\u30552^L\u306EFFT\n  void\
-    \ fft(T* a, int l, int m) {\n    if (l == 0) return;\n    int L = 1 << l, M =\
-    \ 1 << m;\n    assert(M * 2 >= L);\n    assert(buf != nullptr);\n\n    vector<int>\
-    \ dw(l - 1);\n    for (int i = 0; i < l - 1; i++) {\n      dw[i] = (1 << (l -\
-    \ 2 - i)) + (1 << (l - 1 - i)) - (1 << (l - 1));\n      if (dw[i] < 0) dw[i] +=\
-    \ L;\n      if (L == M) dw[i] *= 2;\n      if (2 * L == M) dw[i] *= 4;\n    }\n\
-    \n    for (int d = L; d >>= 1;) {\n      int w = 0;\n      for (int s = 0, k =\
-    \ 0;;) {\n        for (int i = s, j = s + d; i < s + d; ++i, ++j) {\n        \
-    \  T *ai = a + i * M, *aj = a + j * M;\n          rot(buf, aj, M, w);\n      \
-    \    cp(aj, ai, M);\n          in_add(ai, buf, M);\n          in_sub(aj, buf,\
-    \ M);\n        }\n        if ((s += 2 * d) >= L) break;\n        w += dw[__builtin_ctz(++k)];\n\
+    \ v, v = tmp;\n    }\n    return mint{u};\n  }\n\n  friend std::ostream &operator<<(std::ostream\
+    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend std::istream\
+    \ &operator>>(std::istream &is, mint &b) {\n    int64_t t;\n    is >> t;\n   \
+    \ b = LazyMontgomeryModInt<mod>(t);\n    return (is);\n  }\n\n  constexpr u32\
+    \ get() const {\n    u32 ret = reduce(a);\n    return ret >= mod ? ret - mod :\
+    \ ret;\n  }\n\n  static constexpr u32 get_mod() { return mod; }\n};\n#line 2 \"\
+    ntt/schoenhage-strassen-radix2.hpp\"\n\ntemplate <typename T>\nstruct Schoenhage_Strassen_radix2\
+    \ {\n  T* buf = nullptr;\n\n  void rot(T* dst, T* src, int s, int d) {\n    assert(0\
+    \ <= d and d < 2 * s);\n    bool f = s <= d;\n    if (s <= d) d -= s;\n    int\
+    \ i = 0;\n    if (f) {\n      for (; i < s - d; i++) dst[i + d] = -src[i];\n \
+    \     for (; i < s; i++) dst[i + d - s] = src[i];\n    } else {\n      for (;\
+    \ i < s - d; i++) dst[i + d] = src[i];\n      for (; i < s; i++) dst[i + d - s]\
+    \ = -src[i];\n    }\n  }\n\n  void in_add(T* dst, T* src, int s) {\n    for (int\
+    \ i = 0; i < s; i++) dst[i] += src[i];\n  }\n  void in_sub(T* dst, T* src, int\
+    \ s) {\n    for (int i = 0; i < s; i++) dst[i] -= src[i];\n  }\n\n  void cp(T*\
+    \ dst, T* src, int s) { memcpy(dst, src, s * sizeof(T)); }\n  void reset(T* dst,\
+    \ int s) { fill(dst, dst + s, T()); }\n\n  // R[x] / (1 + x^(2^m)) \u4E0A\u306E\
+    \u9577\u30552^L\u306EFFT\n  void fft(T* a, int l, int m) {\n    if (l == 0) return;\n\
+    \    int L = 1 << l, M = 1 << m;\n    assert(M * 2 >= L);\n    assert(buf != nullptr);\n\
+    \n    vector<int> dw(l - 1);\n    for (int i = 0; i < l - 1; i++) {\n      dw[i]\
+    \ = (1 << (l - 2 - i)) + (1 << (l - 1 - i)) - (1 << (l - 1));\n      if (dw[i]\
+    \ < 0) dw[i] += L;\n      if (L == M) dw[i] *= 2;\n      if (2 * L == M) dw[i]\
+    \ *= 4;\n    }\n\n    for (int d = L; d >>= 1;) {\n      int w = 0;\n      for\
+    \ (int s = 0, k = 0;;) {\n        for (int i = s, j = s + d; i < s + d; ++i, ++j)\
+    \ {\n          T *ai = a + i * M, *aj = a + j * M;\n          rot(buf, aj, M,\
+    \ w);\n          cp(aj, ai, M);\n          in_add(ai, buf, M);\n          in_sub(aj,\
+    \ buf, M);\n        }\n        if ((s += 2 * d) >= L) break;\n        w += dw[__builtin_ctz(++k)];\n\
     \        if (w >= 2 * M) w -= 2 * M;\n      }\n    }\n  }\n\n  // R[x] / (1 +\
     \ x^(2^m)) \u4E0A\u306E\u9577\u30552^L\u306EIFFT\n  void ifft(T* a, int l, int\
     \ m) {\n    if (l == 0) return;\n    int L = 1 << l, M = 1 << m;\n    assert(M\
@@ -378,7 +378,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-ntt/yosupo-convolution-schoenhage-radix2.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-ntt/yosupo-convolution-schoenhage-radix2.test.cpp

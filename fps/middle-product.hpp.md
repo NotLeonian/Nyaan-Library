@@ -13,10 +13,11 @@ data:
   attributes:
     links: []
   bundledCode: "#line 2 \"fps/middle-product.hpp\"\n\n#line 2 \"fps/formal-power-series.hpp\"\
-    \n\ntemplate <typename mint>\nstruct FormalPowerSeries : vector<mint> {\n  using\
-    \ vector<mint>::vector;\n  using FPS = FormalPowerSeries;\n\n  FPS &operator+=(const\
-    \ FPS &r) {\n    if (r.size() > this->size()) this->resize(r.size());\n    for\
-    \ (int i = 0; i < (int)r.size(); i++) (*this)[i] += r[i];\n    return *this;\n\
+    \n\n#include <algorithm>\n#include <cassert>\n#include <cstdint>\n#include <iterator>\n\
+    #include <vector>\nusing namespace std;\n\ntemplate <typename mint>\nstruct FormalPowerSeries\
+    \ : vector<mint> {\n  using vector<mint>::vector;\n  using FPS = FormalPowerSeries;\n\
+    \n  FPS &operator+=(const FPS &r) {\n    if (r.size() > this->size()) this->resize(r.size());\n\
+    \    for (int i = 0; i < (int)r.size(); i++) (*this)[i] += r[i];\n    return *this;\n\
     \  }\n\n  FPS &operator+=(const mint &r) {\n    if (this->empty()) this->resize(1);\n\
     \    (*this)[0] += r;\n    return *this;\n  }\n\n  FPS &operator-=(const FPS &r)\
     \ {\n    if (r.size() > this->size()) this->resize(r.size());\n    for (int i\
@@ -78,16 +79,32 @@ data:
     \ *ntt_ptr;\n  static void set_fft();\n  FPS &operator*=(const FPS &r);\n  void\
     \ ntt();\n  void intt();\n  void ntt_doubling();\n  static int ntt_pr();\n  FPS\
     \ inv(int deg = -1) const;\n  FPS exp(int deg = -1) const;\n};\ntemplate <typename\
-    \ mint>\nvoid *FormalPowerSeries<mint>::ntt_ptr = nullptr;\n\n/**\n * @brief \u591A\
-    \u9805\u5F0F/\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\
-    \n * @docs docs/fps/formal-power-series.md\n */\n#line 4 \"fps/middle-product.hpp\"\
-    \n\n// b[i] = sum_k c[k] * a[k - i] \u3068\u306A\u308B b \u3092\u8A08\u7B97\n\
-    template <typename mint>\nFormalPowerSeries<mint> middle_product(FormalPowerSeries<mint>\
-    \ a,\n                                       FormalPowerSeries<mint> c) {\n  int\
-    \ s = a.size(), t = c.size();\n  assert(0 < s and s <= t);\n  int B = 1;\n  while\
-    \ (B < t) B *= 2;\n  a = a.rev();\n  a.resize(B), c.resize(B);\n  a.ntt(), c.ntt();\n\
-    \  for (int i = 0; i < B; i++) a[i] *= c[i];\n  a.intt();\n  return {begin(a)\
-    \ + s - 1, begin(a) + t};\n}\n"
+    \ mint>\nvoid *FormalPowerSeries<mint>::ntt_ptr = nullptr;\n\ntemplate <int N>\n\
+    struct FPSBackendPriority : FPSBackendPriority<N - 1> {};\ntemplate <>\nstruct\
+    \ FPSBackendPriority<0> {};\n\ntemplate <typename mint>\nvoid FormalPowerSeries<mint>::set_fft()\
+    \ {\n  fps_set_fft_impl((FormalPowerSeries<mint>*)nullptr, FPSBackendPriority<1>{});\n\
+    }\n\ntemplate <typename mint>\nFormalPowerSeries<mint>& FormalPowerSeries<mint>::operator*=(const\
+    \ FPS& r) {\n  if (this->empty() || r.empty()) {\n    this->clear();\n    return\
+    \ *this;\n  }\n  return fps_multiply_impl(*this, r, FPSBackendPriority<1>{});\n\
+    }\n\ntemplate <typename mint>\nvoid FormalPowerSeries<mint>::ntt() {\n  fps_ntt_impl(*this,\
+    \ FPSBackendPriority<1>{});\n}\n\ntemplate <typename mint>\nvoid FormalPowerSeries<mint>::intt()\
+    \ {\n  fps_intt_impl(*this, FPSBackendPriority<1>{});\n}\n\ntemplate <typename\
+    \ mint>\nvoid FormalPowerSeries<mint>::ntt_doubling() {\n  fps_ntt_doubling_impl(*this,\
+    \ FPSBackendPriority<1>{});\n}\n\ntemplate <typename mint>\nint FormalPowerSeries<mint>::ntt_pr()\
+    \ {\n  return fps_ntt_pr_impl((FormalPowerSeries<mint>*)nullptr,\n           \
+    \              FPSBackendPriority<1>{});\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>\
+    \ FormalPowerSeries<mint>::inv(int deg) const {\n  return fps_inv_impl(*this,\
+    \ deg, FPSBackendPriority<1>{});\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>\
+    \ FormalPowerSeries<mint>::exp(int deg) const {\n  return fps_exp_impl(*this,\
+    \ deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief \u591A\u9805\u5F0F/\u5F62\
+    \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n * @docs docs/fps/formal-power-series.md\n\
+    \ */\n#line 4 \"fps/middle-product.hpp\"\n\n// b[i] = sum_k c[k] * a[k - i] \u3068\
+    \u306A\u308B b \u3092\u8A08\u7B97\ntemplate <typename mint>\nFormalPowerSeries<mint>\
+    \ middle_product(FormalPowerSeries<mint> a,\n                                \
+    \       FormalPowerSeries<mint> c) {\n  int s = a.size(), t = c.size();\n  assert(0\
+    \ < s and s <= t);\n  int B = 1;\n  while (B < t) B *= 2;\n  a = a.rev();\n  a.resize(B),\
+    \ c.resize(B);\n  a.ntt(), c.ntt();\n  for (int i = 0; i < B; i++) a[i] *= c[i];\n\
+    \  a.intt();\n  return {begin(a) + s - 1, begin(a) + t};\n}\n"
   code: "#pragma once\n\n#include \"formal-power-series.hpp\"\n\n// b[i] = sum_k c[k]\
     \ * a[k - i] \u3068\u306A\u308B b \u3092\u8A08\u7B97\ntemplate <typename mint>\n\
     FormalPowerSeries<mint> middle_product(FormalPowerSeries<mint> a,\n          \
@@ -101,7 +118,7 @@ data:
   isVerificationFile: false
   path: fps/middle-product.hpp
   requiredBy: []
-  timestamp: '2024-03-23 07:28:36+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: fps/middle-product.hpp

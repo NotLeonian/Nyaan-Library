@@ -272,7 +272,7 @@ data:
     \ i < (int)g.size(); i++) {\n    if (vis[i]) continue;\n    dfs(dfs, i, i, -1);\n\
     \n    if (finish) {\n      reverse(begin(cycle), end(cycle));\n      return cycle;\n\
     \    }\n  }\n  return vector<pair<int, int>>{};\n}\n\n/**\n * @brief \u9589\u8DEF\
-    \u306E\u691C\u51FA\n */\n#line 7 \"verify/verify-yosupo-graph/yosupo-cycle-detection.test.cpp\"\
+    \u306E\u691C\u51FA\n */\n#line 6 \"verify/verify-yosupo-graph/yosupo-cycle-detection.test.cpp\"\
     \n\nusing namespace Nyaan;\nvoid Nyaan::solve() {\n  ini(N, M);\n  vvi g(N);\n\
     \  auto idx = [&](pl p) { return (p.first << 20) + p.second; };\n  map<ll, vector<int>>\
     \ m;\n  rep(_, M) {\n    ini(u, v);\n    m[idx(pl(u, v))].push_back(_);\n    g[u].push_back(v);\n\
@@ -281,12 +281,11 @@ data:
     \    out(v.back());\n    v.pop_back();\n  }\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/cycle_detection\"\n\n#include\
     \ \"../../template/template.hpp\"\n//\n#include \"../../graph/cycle-detection.hpp\"\
-    \n#include \"../../graph/graph-template.hpp\"\n\nusing namespace Nyaan;\nvoid\
-    \ Nyaan::solve() {\n  ini(N, M);\n  vvi g(N);\n  auto idx = [&](pl p) { return\
-    \ (p.first << 20) + p.second; };\n  map<ll, vector<int>> m;\n  rep(_, M) {\n \
-    \   ini(u, v);\n    m[idx(pl(u, v))].push_back(_);\n    g[u].push_back(v);\n \
-    \ }\n  auto cycle = CycleDetection<vvi>(g);\n  if (cycle.empty()) die(-1);\n \
-    \ out(sz(cycle));\n  each(p, cycle) {\n    auto& v = m[idx(pl(p.first, p.second))];\n\
+    \n\nusing namespace Nyaan;\nvoid Nyaan::solve() {\n  ini(N, M);\n  vvi g(N);\n\
+    \  auto idx = [&](pl p) { return (p.first << 20) + p.second; };\n  map<ll, vector<int>>\
+    \ m;\n  rep(_, M) {\n    ini(u, v);\n    m[idx(pl(u, v))].push_back(_);\n    g[u].push_back(v);\n\
+    \  }\n  auto cycle = CycleDetection<vvi>(g);\n  if (cycle.empty()) die(-1);\n\
+    \  out(sz(cycle));\n  each(p, cycle) {\n    auto& v = m[idx(pl(p.first, p.second))];\n\
     \    out(v.back());\n    v.pop_back();\n  }\n}\n"
   dependsOn:
   - template/template.hpp
@@ -300,7 +299,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-graph/yosupo-cycle-detection.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-graph/yosupo-cycle-detection.test.cpp
