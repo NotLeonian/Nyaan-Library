@@ -1,6 +1,9 @@
 #pragma once
 
-
+#include <cstdint>
+#include <utility>
+#include <vector>
+using namespace std;
 
 template <typename T, typename F>
 struct RandomizedBinarySearchTree {
