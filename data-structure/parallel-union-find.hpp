@@ -11,7 +11,7 @@ struct ParallelUnionFind {
   ParallelUnionFind(int _n) : n(_n), uf(n) {
     vector<int> init(n);
     for (int i = 0; i < n; i++) init[i] = i;
-    seg = {init};
+    seg = RollingHashonSegmentTree<vector<int>>(init);
   }
 
   // [l1, r1) と [l2, r2) を unite する
