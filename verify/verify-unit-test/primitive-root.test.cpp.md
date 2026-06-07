@@ -285,7 +285,7 @@ data:
     \    return x;\n}\n\n// Fast modular multiplication by barrett reduction\n// Reference:\
     \ https://en.wikipedia.org/wiki/Barrett_reduction\n// NOTE: reconsider after Ice\
     \ Lake\nstruct barrett {\n    unsigned int _m;\n    unsigned long long im;\n\n\
-    \    // @param m `1 <= m < 2^31`\n    barrett(unsigned int m) : _m(m), im((unsigned\
+    \    // @param m `1 <= m`\n    explicit barrett(unsigned int m) : _m(m), im((unsigned\
     \ long long)(-1) / m + 1) {}\n\n    // @return m\n    unsigned int umod() const\
     \ { return _m; }\n\n    // @param a `0 <= a < m`\n    // @param b `0 <= b < m`\n\
     \    // @return `a * b % m`\n    unsigned int mul(unsigned int a, unsigned int\
@@ -298,19 +298,19 @@ data:
     \ long z = a;\n        z *= b;\n#ifdef _MSC_VER\n        unsigned long long x;\n\
     \        _umul128(z, im, &x);\n#else\n        unsigned long long x =\n       \
     \     (unsigned long long)(((unsigned __int128)(z)*im) >> 64);\n#endif\n     \
-    \   unsigned int v = (unsigned int)(z - x * _m);\n        if (_m <= v) v += _m;\n\
-    \        return v;\n    }\n};\n\n// @param n `0 <= n`\n// @param m `1 <= m`\n\
-    // @return `(x ** n) % m`\nconstexpr long long pow_mod_constexpr(long long x,\
-    \ long long n, int m) {\n    if (m == 1) return 0;\n    unsigned int _m = (unsigned\
-    \ int)(m);\n    unsigned long long r = 1;\n    unsigned long long y = safe_mod(x,\
-    \ m);\n    while (n) {\n        if (n & 1) r = (r * y) % _m;\n        y = (y *\
-    \ y) % _m;\n        n >>= 1;\n    }\n    return r;\n}\n\n// Reference:\n// M.\
-    \ Forisek and J. Jancina,\n// Fast Primality Testing for Integers That Fit into\
-    \ a Machine Word\n// @param n `0 <= n`\nconstexpr bool is_prime_constexpr(int\
-    \ n) {\n    if (n <= 1) return false;\n    if (n == 2 || n == 7 || n == 61) return\
-    \ true;\n    if (n % 2 == 0) return false;\n    long long d = n - 1;\n    while\
-    \ (d % 2 == 0) d /= 2;\n    constexpr long long bases[3] = {2, 7, 61};\n    for\
-    \ (long long a : bases) {\n        long long t = d;\n        long long y = pow_mod_constexpr(a,\
+    \   unsigned long long y = x * _m;\n        return (unsigned int)(z - y + (z <\
+    \ y ? _m : 0));\n    }\n};\n\n// @param n `0 <= n`\n// @param m `1 <= m`\n// @return\
+    \ `(x ** n) % m`\nconstexpr long long pow_mod_constexpr(long long x, long long\
+    \ n, int m) {\n    if (m == 1) return 0;\n    unsigned int _m = (unsigned int)(m);\n\
+    \    unsigned long long r = 1;\n    unsigned long long y = safe_mod(x, m);\n \
+    \   while (n) {\n        if (n & 1) r = (r * y) % _m;\n        y = (y * y) % _m;\n\
+    \        n >>= 1;\n    }\n    return r;\n}\n\n// Reference:\n// M. Forisek and\
+    \ J. Jancina,\n// Fast Primality Testing for Integers That Fit into a Machine\
+    \ Word\n// @param n `0 <= n`\nconstexpr bool is_prime_constexpr(int n) {\n   \
+    \ if (n <= 1) return false;\n    if (n == 2 || n == 7 || n == 61) return true;\n\
+    \    if (n % 2 == 0) return false;\n    long long d = n - 1;\n    while (d % 2\
+    \ == 0) d /= 2;\n    constexpr long long bases[3] = {2, 7, 61};\n    for (long\
+    \ long a : bases) {\n        long long t = d;\n        long long y = pow_mod_constexpr(a,\
     \ t, n);\n        while (t != n - 1 && y != 1 && y != n - 1) {\n            y\
     \ = y * y % n;\n            t <<= 1;\n        }\n        if (y != n - 1 && t %\
     \ 2 == 0) {\n            return false;\n        }\n    }\n    return true;\n}\n\
@@ -340,17 +340,28 @@ data:
     \ {\n            if (pow_mod_constexpr(g, (m - 1) / divs[i], m) == 1) {\n    \
     \            ok = false;\n                break;\n            }\n        }\n \
     \       if (ok) return g;\n    }\n}\ntemplate <int m> constexpr int primitive_root\
-    \ = primitive_root_constexpr(m);\n\n}  // namespace internal\n\n}  // namespace\
-    \ atcoder\n\n\n#line 2 \"math/constexpr-primitive-root.hpp\"\n\nconstexpr unsigned\
-    \ int constexpr_primitive_root(unsigned int mod) {\n  using u32 = unsigned int;\n\
-    \  using u64 = unsigned long long;\n  if(mod == 2) return 1;\n  u64 m = mod -\
-    \ 1, ds[32] = {}, idx = 0;\n  for (u64 i = 2; i * i <= m; ++i) {\n    if (m %\
-    \ i == 0) {\n      ds[idx++] = i;\n      while (m % i == 0) m /= i;\n    }\n \
-    \ }\n  if (m != 1) ds[idx++] = m;\n  for (u32 _pr = 2, flg = true;; _pr++, flg\
-    \ = true) {\n    for (u32 i = 0; i < idx && flg; ++i) {\n      u64 a = _pr, b\
-    \ = (mod - 1) / ds[i], r = 1;\n      for (; b; a = a * a % mod, b >>= 1)\n   \
-    \     if (b & 1) r = r * a % mod;\n      if (r == 1) flg = false;\n    }\n   \
-    \ if (flg == true) return _pr;\n  }\n}\n\n#line 2 \"math/elementary-function.hpp\"\
+    \ = primitive_root_constexpr(m);\n\n// @param n `n < 2^32`\n// @param m `1 <=\
+    \ m < 2^32`\n// @return sum_{i=0}^{n-1} floor((ai + b) / m) (mod 2^64)\nunsigned\
+    \ long long floor_sum_unsigned(unsigned long long n,\n                       \
+    \               unsigned long long m,\n                                      unsigned\
+    \ long long a,\n                                      unsigned long long b) {\n\
+    \    unsigned long long ans = 0;\n    while (true) {\n        if (a >= m) {\n\
+    \            ans += n * (n - 1) / 2 * (a / m);\n            a %= m;\n        }\n\
+    \        if (b >= m) {\n            ans += n * (b / m);\n            b %= m;\n\
+    \        }\n\n        unsigned long long y_max = a * n + b;\n        if (y_max\
+    \ < m) break;\n        // y_max < m * (n + 1)\n        // floor(y_max / m) <=\
+    \ n\n        n = (unsigned long long)(y_max / m);\n        b = (unsigned long\
+    \ long)(y_max % m);\n        std::swap(m, a);\n    }\n    return ans;\n}\n\n}\
+    \  // namespace internal\n\n}  // namespace atcoder\n\n\n#line 2 \"math/constexpr-primitive-root.hpp\"\
+    \n\nconstexpr unsigned int constexpr_primitive_root(unsigned int mod) {\n  using\
+    \ u32 = unsigned int;\n  using u64 = unsigned long long;\n  if(mod == 2) return\
+    \ 1;\n  u64 m = mod - 1, ds[32] = {}, idx = 0;\n  for (u64 i = 2; i * i <= m;\
+    \ ++i) {\n    if (m % i == 0) {\n      ds[idx++] = i;\n      while (m % i == 0)\
+    \ m /= i;\n    }\n  }\n  if (m != 1) ds[idx++] = m;\n  for (u32 _pr = 2, flg =\
+    \ true;; _pr++, flg = true) {\n    for (u32 i = 0; i < idx && flg; ++i) {\n  \
+    \    u64 a = _pr, b = (mod - 1) / ds[i], r = 1;\n      for (; b; a = a * a % mod,\
+    \ b >>= 1)\n        if (b & 1) r = r * a % mod;\n      if (r == 1) flg = false;\n\
+    \    }\n    if (flg == true) return _pr;\n  }\n}\n\n#line 2 \"math/elementary-function.hpp\"\
     \n\n// totient function \u03C6(N)=(1 ~ N , gcd(i,N) = 1)\n// {0, 1, 1, 2, 4, 2,\
     \ 6, 4, ... }\nvector<int> EulersTotientFunction(int N) {\n  vector<int> ret(N\
     \ + 1, 0);\n  for (int i = 0; i <= N; i++) ret[i] = i;\n  for (int i = 2; i <=\
@@ -594,7 +605,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/primitive-root.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 02:23:45+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/primitive-root.test.cpp

@@ -96,9 +96,10 @@ data:
     \ T. Kasai, G. Lee, H. Arimura, S. Arikawa, and K. Park,\n// Linear-Time Longest-Common-Prefix\
     \ Computation in Suffix Arrays and Its\n// Applications\ntemplate <class T>\n\
     std::vector<int> lcp_array(const std::vector<T>& s,\n                        \
-    \   const std::vector<int>& sa) {\n    int n = int(s.size());\n    assert(n >=\
-    \ 1);\n    std::vector<int> rnk(n);\n    for (int i = 0; i < n; i++) {\n     \
-    \   rnk[sa[i]] = i;\n    }\n    std::vector<int> lcp(n - 1);\n    int h = 0;\n\
+    \   const std::vector<int>& sa) {\n    assert(s.size() == sa.size());\n    int\
+    \ n = int(s.size());\n    assert(n >= 1);\n    std::vector<int> rnk(n);\n    for\
+    \ (int i = 0; i < n; i++) {\n        assert(0 <= sa[i] && sa[i] < n);\n      \
+    \  rnk[sa[i]] = i;\n    }\n    std::vector<int> lcp(n - 1);\n    int h = 0;\n\
     \    for (int i = 0; i < n; i++) {\n        if (h > 0) h--;\n        if (rnk[i]\
     \ == 0) continue;\n        int j = sa[rnk[i] - 1];\n        for (; j + h < n &&\
     \ i + h < n; h++) {\n            if (s[j + h] != s[i + h]) break;\n        }\n\
@@ -181,7 +182,7 @@ data:
   isVerificationFile: false
   path: string/string-search.hpp
   requiredBy: []
-  timestamp: '2023-02-24 23:55:26+09:00'
+  timestamp: '2026-06-08 02:23:45+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yuki/yuki-2231.test.cpp

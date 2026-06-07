@@ -240,72 +240,79 @@ data:
     \n\nnamespace Nyaan {\nvoid solve();\n}\nint main() { Nyaan::solve(); }\n#line\
     \ 4 \"verify/verify-unit-test/parallel-union-find.test.cpp\"\n//\n#line 2 \"data-structure/parallel-union-find.hpp\"\
     \n\n#line 2 \"string/rolling-hash-on-segment-tree.hpp\"\n\n#line 4 \"string/rolling-hash-on-segment-tree.hpp\"\
-    \nusing namespace std;\n\n#line 1 \"atcoder/segtree.hpp\"\n\n\n\n#line 7 \"atcoder/segtree.hpp\"\
+    \nusing namespace std;\n\n#line 1 \"atcoder/segtree.hpp\"\n\n\n\n#line 8 \"atcoder/segtree.hpp\"\
     \n\n#line 1 \"atcoder/internal_bit.hpp\"\n\n\n\n#ifdef _MSC_VER\n#include <intrin.h>\n\
-    #endif\n\nnamespace atcoder {\n\nnamespace internal {\n\n// @param n `0 <= n`\n\
-    // @return minimum non-negative `x` s.t. `n <= 2**x`\nint ceil_pow2(int n) {\n\
-    \    int x = 0;\n    while ((1U << x) < (unsigned int)(n)) x++;\n    return x;\n\
-    }\n\n// @param n `1 <= n`\n// @return minimum non-negative `x` s.t. `(n & (1 <<\
-    \ x)) != 0`\nconstexpr int bsf_constexpr(unsigned int n) {\n    int x = 0;\n \
-    \   while (!(n & (1 << x))) x++;\n    return x;\n}\n\n// @param n `1 <= n`\n//\
-    \ @return minimum non-negative `x` s.t. `(n & (1 << x)) != 0`\nint bsf(unsigned\
-    \ int n) {\n#ifdef _MSC_VER\n    unsigned long index;\n    _BitScanForward(&index,\
-    \ n);\n    return index;\n#else\n    return __builtin_ctz(n);\n#endif\n}\n\n}\
-    \  // namespace internal\n\n}  // namespace atcoder\n\n\n#line 9 \"atcoder/segtree.hpp\"\
-    \n\nnamespace atcoder {\n\ntemplate <class S, S (*op)(S, S), S (*e)()> struct\
-    \ segtree {\n  public:\n    segtree() : segtree(0) {}\n    segtree(int n) : segtree(std::vector<S>(n,\
-    \ e())) {}\n    segtree(const std::vector<S>& v) : _n(int(v.size())) {\n     \
-    \   log = internal::ceil_pow2(_n);\n        size = 1 << log;\n        d = std::vector<S>(2\
-    \ * size, e());\n        for (int i = 0; i < _n; i++) d[size + i] = v[i];\n  \
-    \      for (int i = size - 1; i >= 1; i--) {\n            update(i);\n       \
-    \ }\n    }\n\n    void set(int p, S x) {\n        assert(0 <= p && p < _n);\n\
-    \        p += size;\n        d[p] = x;\n        for (int i = 1; i <= log; i++)\
-    \ update(p >> i);\n    }\n\n    S get(int p) {\n        assert(0 <= p && p < _n);\n\
-    \        return d[p + size];\n    }\n\n    S prod(int l, int r) {\n        assert(0\
-    \ <= l && l <= r && r <= _n);\n        S sml = e(), smr = e();\n        l += size;\n\
-    \        r += size;\n\n        while (l < r) {\n            if (l & 1) sml = op(sml,\
-    \ d[l++]);\n            if (r & 1) smr = op(d[--r], smr);\n            l >>= 1;\n\
-    \            r >>= 1;\n        }\n        return op(sml, smr);\n    }\n\n    S\
-    \ all_prod() { return d[1]; }\n\n    template <bool (*f)(S)> int max_right(int\
-    \ l) {\n        return max_right(l, [](S x) { return f(x); });\n    }\n    template\
-    \ <class F> int max_right(int l, F f) {\n        assert(0 <= l && l <= _n);\n\
-    \        assert(f(e()));\n        if (l == _n) return _n;\n        l += size;\n\
-    \        S sm = e();\n        do {\n            while (l % 2 == 0) l >>= 1;\n\
-    \            if (!f(op(sm, d[l]))) {\n                while (l < size) {\n   \
-    \                 l = (2 * l);\n                    if (f(op(sm, d[l]))) {\n \
-    \                       sm = op(sm, d[l]);\n                        l++;\n   \
-    \                 }\n                }\n                return l - size;\n   \
-    \         }\n            sm = op(sm, d[l]);\n            l++;\n        } while\
-    \ ((l & -l) != l);\n        return _n;\n    }\n\n    template <bool (*f)(S)> int\
-    \ min_left(int r) {\n        return min_left(r, [](S x) { return f(x); });\n \
-    \   }\n    template <class F> int min_left(int r, F f) {\n        assert(0 <=\
-    \ r && r <= _n);\n        assert(f(e()));\n        if (r == 0) return 0;\n   \
-    \     r += size;\n        S sm = e();\n        do {\n            r--;\n      \
-    \      while (r > 1 && (r % 2)) r >>= 1;\n            if (!f(op(d[r], sm))) {\n\
-    \                while (r < size) {\n                    r = (2 * r + 1);\n  \
-    \                  if (f(op(d[r], sm))) {\n                        sm = op(d[r],\
-    \ sm);\n                        r--;\n                    }\n                }\n\
-    \                return r + 1 - size;\n            }\n            sm = op(d[r],\
-    \ sm);\n        } while ((r & -r) != r);\n        return 0;\n    }\n\n  private:\n\
-    \    int _n, size, log;\n    std::vector<S> d;\n\n    void update(int k) { d[k]\
-    \ = op(d[2 * k], d[2 * k + 1]); }\n};\n\n}  // namespace atcoder\n\n\n#line 2\
-    \ \"internal/internal-hash.hpp\"\n\nnamespace internal {\nusing i64 = long long;\n\
-    using u64 = unsigned long long;\nusing u128 = __uint128_t;\n\ntemplate <int BASE_NUM\
-    \ = 2>\nstruct Hash : array<u64, BASE_NUM> {\n  using array<u64, BASE_NUM>::operator[];\n\
-    \  static constexpr int n = BASE_NUM;\n\n  Hash() : array<u64, BASE_NUM>() {}\n\
-    \n  static constexpr u64 md = (1ull << 61) - 1;\n\n  constexpr static Hash set(const\
-    \ i64 &a) {\n    Hash res;\n    fill(begin(res), end(res), cast(a));\n    return\
-    \ res;\n  }\n  Hash &operator+=(const Hash &r) {\n    for (int i = 0; i < n; i++)\n\
-    \      if (((*this)[i] += r[i]) >= md) (*this)[i] -= md;\n    return *this;\n\
-    \  }\n  Hash &operator+=(const i64 &r) {\n    u64 s = cast(r);\n    for (int i\
-    \ = 0; i < n; i++)\n      if (((*this)[i] += s) >= md) (*this)[i] -= md;\n   \
-    \ return *this;\n  }\n  Hash &operator-=(const Hash &r) {\n    for (int i = 0;\
-    \ i < n; i++)\n      if (((*this)[i] += md - r[i]) >= md) (*this)[i] -= md;\n\
-    \    return *this;\n  }\n  Hash &operator-=(const i64 &r) {\n    u64 s = cast(r);\n\
-    \    for (int i = 0; i < n; i++)\n      if (((*this)[i] += md - s) >= md) (*this)[i]\
-    \ -= md;\n    return *this;\n  }\n  Hash &operator*=(const Hash &r) {\n    for\
-    \ (int i = 0; i < n; i++) (*this)[i] = modmul((*this)[i], r[i]);\n    return *this;\n\
-    \  }\n  Hash &operator*=(const i64 &r) {\n    u64 s = cast(r);\n    for (int i\
+    #endif\n\n#if __cplusplus >= 202002L\n#include <bit>\n#endif\n\nnamespace atcoder\
+    \ {\n\nnamespace internal {\n\n#if __cplusplus >= 202002L\n\nusing std::bit_ceil;\n\
+    \n#else\n\n// @return same with std::bit::bit_ceil\nunsigned int bit_ceil(unsigned\
+    \ int n) {\n    unsigned int x = 1;\n    while (x < (unsigned int)(n)) x *= 2;\n\
+    \    return x;\n}\n\n#endif\n\n// @param n `1 <= n`\n// @return same with std::bit::countr_zero\n\
+    int countr_zero(unsigned int n) {\n#ifdef _MSC_VER\n    unsigned long index;\n\
+    \    _BitScanForward(&index, n);\n    return index;\n#else\n    return __builtin_ctz(n);\n\
+    #endif\n}\n\n// @param n `1 <= n`\n// @return same with std::bit::countr_zero\n\
+    constexpr int countr_zero_constexpr(unsigned int n) {\n    int x = 0;\n    while\
+    \ (!(n & (1 << x))) x++;\n    return x;\n}\n\n}  // namespace internal\n\n}  //\
+    \ namespace atcoder\n\n\n#line 10 \"atcoder/segtree.hpp\"\n\nnamespace atcoder\
+    \ {\n\n#if __cplusplus >= 201703L\n\ntemplate <class S, auto op, auto e> struct\
+    \ segtree {\n    static_assert(std::is_convertible_v<decltype(op), std::function<S(S,\
+    \ S)>>,\n                  \"op must work as S(S, S)\");\n    static_assert(std::is_convertible_v<decltype(e),\
+    \ std::function<S()>>,\n                  \"e must work as S()\");\n\n#else\n\n\
+    template <class S, S (*op)(S, S), S (*e)()> struct segtree {\n\n#endif\n\n  public:\n\
+    \    segtree() : segtree(0) {}\n    explicit segtree(int n) : segtree(std::vector<S>(n,\
+    \ e())) {}\n    explicit segtree(const std::vector<S>& v) : _n(int(v.size()))\
+    \ {\n        size = (int)internal::bit_ceil((unsigned int)(_n));\n        log\
+    \ = internal::countr_zero((unsigned int)size);\n        d = std::vector<S>(2 *\
+    \ size, e());\n        for (int i = 0; i < _n; i++) d[size + i] = v[i];\n    \
+    \    for (int i = size - 1; i >= 1; i--) {\n            update(i);\n        }\n\
+    \    }\n\n    void set(int p, S x) {\n        assert(0 <= p && p < _n);\n    \
+    \    p += size;\n        d[p] = x;\n        for (int i = 1; i <= log; i++) update(p\
+    \ >> i);\n    }\n\n    S get(int p) const {\n        assert(0 <= p && p < _n);\n\
+    \        return d[p + size];\n    }\n\n    S prod(int l, int r) const {\n    \
+    \    assert(0 <= l && l <= r && r <= _n);\n        S sml = e(), smr = e();\n \
+    \       l += size;\n        r += size;\n\n        while (l < r) {\n          \
+    \  if (l & 1) sml = op(sml, d[l++]);\n            if (r & 1) smr = op(d[--r],\
+    \ smr);\n            l >>= 1;\n            r >>= 1;\n        }\n        return\
+    \ op(sml, smr);\n    }\n\n    S all_prod() const { return d[1]; }\n\n    template\
+    \ <bool (*f)(S)> int max_right(int l) const {\n        return max_right(l, [](S\
+    \ x) { return f(x); });\n    }\n    template <class F> int max_right(int l, F\
+    \ f) const {\n        assert(0 <= l && l <= _n);\n        assert(f(e()));\n  \
+    \      if (l == _n) return _n;\n        l += size;\n        S sm = e();\n    \
+    \    do {\n            while (l % 2 == 0) l >>= 1;\n            if (!f(op(sm,\
+    \ d[l]))) {\n                while (l < size) {\n                    l = (2 *\
+    \ l);\n                    if (f(op(sm, d[l]))) {\n                        sm\
+    \ = op(sm, d[l]);\n                        l++;\n                    }\n     \
+    \           }\n                return l - size;\n            }\n            sm\
+    \ = op(sm, d[l]);\n            l++;\n        } while ((l & -l) != l);\n      \
+    \  return _n;\n    }\n\n    template <bool (*f)(S)> int min_left(int r) const\
+    \ {\n        return min_left(r, [](S x) { return f(x); });\n    }\n    template\
+    \ <class F> int min_left(int r, F f) const {\n        assert(0 <= r && r <= _n);\n\
+    \        assert(f(e()));\n        if (r == 0) return 0;\n        r += size;\n\
+    \        S sm = e();\n        do {\n            r--;\n            while (r > 1\
+    \ && (r % 2)) r >>= 1;\n            if (!f(op(d[r], sm))) {\n                while\
+    \ (r < size) {\n                    r = (2 * r + 1);\n                    if (f(op(d[r],\
+    \ sm))) {\n                        sm = op(d[r], sm);\n                      \
+    \  r--;\n                    }\n                }\n                return r +\
+    \ 1 - size;\n            }\n            sm = op(d[r], sm);\n        } while ((r\
+    \ & -r) != r);\n        return 0;\n    }\n\n  private:\n    int _n, size, log;\n\
+    \    std::vector<S> d;\n\n    void update(int k) { d[k] = op(d[2 * k], d[2 * k\
+    \ + 1]); }\n};\n\n}  // namespace atcoder\n\n\n#line 2 \"internal/internal-hash.hpp\"\
+    \n\nnamespace internal {\nusing i64 = long long;\nusing u64 = unsigned long long;\n\
+    using u128 = __uint128_t;\n\ntemplate <int BASE_NUM = 2>\nstruct Hash : array<u64,\
+    \ BASE_NUM> {\n  using array<u64, BASE_NUM>::operator[];\n  static constexpr int\
+    \ n = BASE_NUM;\n\n  Hash() : array<u64, BASE_NUM>() {}\n\n  static constexpr\
+    \ u64 md = (1ull << 61) - 1;\n\n  constexpr static Hash set(const i64 &a) {\n\
+    \    Hash res;\n    fill(begin(res), end(res), cast(a));\n    return res;\n  }\n\
+    \  Hash &operator+=(const Hash &r) {\n    for (int i = 0; i < n; i++)\n      if\
+    \ (((*this)[i] += r[i]) >= md) (*this)[i] -= md;\n    return *this;\n  }\n  Hash\
+    \ &operator+=(const i64 &r) {\n    u64 s = cast(r);\n    for (int i = 0; i < n;\
+    \ i++)\n      if (((*this)[i] += s) >= md) (*this)[i] -= md;\n    return *this;\n\
+    \  }\n  Hash &operator-=(const Hash &r) {\n    for (int i = 0; i < n; i++)\n \
+    \     if (((*this)[i] += md - r[i]) >= md) (*this)[i] -= md;\n    return *this;\n\
+    \  }\n  Hash &operator-=(const i64 &r) {\n    u64 s = cast(r);\n    for (int i\
+    \ = 0; i < n; i++)\n      if (((*this)[i] += md - s) >= md) (*this)[i] -= md;\n\
+    \    return *this;\n  }\n  Hash &operator*=(const Hash &r) {\n    for (int i =\
+    \ 0; i < n; i++) (*this)[i] = modmul((*this)[i], r[i]);\n    return *this;\n \
+    \ }\n  Hash &operator*=(const i64 &r) {\n    u64 s = cast(r);\n    for (int i\
     \ = 0; i < n; i++) (*this)[i] = modmul((*this)[i], s);\n    return *this;\n  }\n\
     \n  Hash operator+(const Hash &r) { return Hash(*this) += r; }\n  Hash operator+(const\
     \ i64 &r) { return Hash(*this) += r; }\n  Hash operator-(const Hash &r) { return\
@@ -348,14 +355,14 @@ data:
     \ Value = typename Str::value_type;\n  int n;\n  atcoder::segtree<T, op, e> seg;\n\
     \n  RollingHashonSegmentTree() : n(0) {}\n\n  RollingHashonSegmentTree(const Str&\
     \ S) : n(S.size()) {\n    vector<T> init(n);\n    for (int i = 0; i < n; i++)\
-    \ {\n      init[i] = make_pair(Hash::set(S[i]), 1);\n    }\n    seg = {init};\n\
-    \  }\n\n  void update(int i, const Value& v) {\n    assert(0 <= i and i < n);\n\
-    \    seg.set(i, make_pair(Hash::set(v), 1));\n  }\n\n  // [l1, r1) \u3068 [l2,\
-    \ r2) \u304C\u4E00\u81F4\u3059\u308B\u304B\u3092\u5224\u5B9A\n  bool same(int\
-    \ l1, int r1, int l2, int r2) {\n    assert(0 <= l1 and l1 <= r1 and r1 <= n);\n\
-    \    assert(0 <= l2 and l2 <= r2 and r2 <= n);\n    if (r1 - l1 != r2 - l2) return\
-    \ false;\n    return seg.prod(l1, r1) == seg.prod(l2, r2);\n  }\n};\n}  // namespace\
-    \ RollingHashonSegmentTreeImpl\n\nusing RollingHashonSegmentTreeImpl::RollingHashonSegmentTree;\n\
+    \ {\n      init[i] = make_pair(Hash::set(S[i]), 1);\n    }\n    seg = atcoder::segtree<T,\
+    \ op, e>(init);\n  }\n\n  void update(int i, const Value& v) {\n    assert(0 <=\
+    \ i and i < n);\n    seg.set(i, make_pair(Hash::set(v), 1));\n  }\n\n  // [l1,\
+    \ r1) \u3068 [l2, r2) \u304C\u4E00\u81F4\u3059\u308B\u304B\u3092\u5224\u5B9A\n\
+    \  bool same(int l1, int r1, int l2, int r2) {\n    assert(0 <= l1 and l1 <= r1\
+    \ and r1 <= n);\n    assert(0 <= l2 and l2 <= r2 and r2 <= n);\n    if (r1 - l1\
+    \ != r2 - l2) return false;\n    return seg.prod(l1, r1) == seg.prod(l2, r2);\n\
+    \  }\n};\n}  // namespace RollingHashonSegmentTreeImpl\n\nusing RollingHashonSegmentTreeImpl::RollingHashonSegmentTree;\n\
     #line 2 \"data-structure/union-find-enumerate.hpp\"\n\n#line 4 \"data-structure/union-find-enumerate.hpp\"\
     \nusing namespace std;\n\nstruct UnionFindEnumerate {\n  vector<int> data, nxt;\n\
     \  UnionFindEnumerate(int N) : data(N, -1), nxt(N) {\n    for (int i = 0; i <\
@@ -373,13 +380,13 @@ data:
     \  return res;\n  }\n};\n#line 5 \"data-structure/parallel-union-find.hpp\"\n\n\
     struct ParallelUnionFind {\n  int n;\n  UnionFindEnumerate uf;\n  RollingHashonSegmentTree<vector<int>>\
     \ seg;\n\n  ParallelUnionFind(int _n) : n(_n), uf(n) {\n    vector<int> init(n);\n\
-    \    for (int i = 0; i < n; i++) init[i] = i;\n    seg = {init};\n  }\n\n  //\
-    \ [l1, r1) \u3068 [l2, r2) \u3092 unite \u3059\u308B\n  void unite(int l1, int\
-    \ r1, int l2, int r2) {\n    assert(0 <= l1 and l1 <= r1 and r1 <= n);\n    assert(0\
-    \ <= l2 and l2 <= r2 and r2 <= n);\n    assert(r1 - l1 == r2 - l2);\n    while\
-    \ (1) {\n      if (seg.same(l1, r1, l2, r2)) break;\n      int ok = 0, ng = r1\
-    \ - l1;\n      while (ok + 1 < ng) {\n        int m = (ok + ng) / 2;\n       \
-    \ (seg.same(l1, l1 + m, l2, l2 + m) ? ok : ng) = m;\n      }\n      uf.unite(l1\
+    \    for (int i = 0; i < n; i++) init[i] = i;\n    seg = RollingHashonSegmentTree<vector<int>>(init);\n\
+    \  }\n\n  // [l1, r1) \u3068 [l2, r2) \u3092 unite \u3059\u308B\n  void unite(int\
+    \ l1, int r1, int l2, int r2) {\n    assert(0 <= l1 and l1 <= r1 and r1 <= n);\n\
+    \    assert(0 <= l2 and l2 <= r2 and r2 <= n);\n    assert(r1 - l1 == r2 - l2);\n\
+    \    while (1) {\n      if (seg.same(l1, r1, l2, r2)) break;\n      int ok = 0,\
+    \ ng = r1 - l1;\n      while (ok + 1 < ng) {\n        int m = (ok + ng) / 2;\n\
+    \        (seg.same(l1, l1 + m, l2, l2 + m) ? ok : ng) = m;\n      }\n      uf.unite(l1\
     \ + ok, l2 + ok, [&](int x, int y) {\n        for (int z : uf.enumerate(y)) seg.update(z,\
     \ x);\n      });\n    }\n  }\n  // [l1, r1) \u3068 [l2, r2) \u3092 unite \u3059\
     \u308B\n  // f(x, y) : x \u306B y \u3092\u30DE\u30FC\u30B8\n  template <typename\
@@ -471,7 +478,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/parallel-union-find.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 02:23:45+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/parallel-union-find.test.cpp

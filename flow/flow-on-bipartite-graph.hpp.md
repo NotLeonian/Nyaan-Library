@@ -25,7 +25,7 @@ data:
     \        pos = 0;\n    }\n    void pop() { pos++; }\n};\n\n}  // namespace internal\n\
     \n}  // namespace atcoder\n\n\n#line 11 \"atcoder/maxflow.hpp\"\n\nnamespace atcoder\
     \ {\n\ntemplate <class Cap> struct mf_graph {\n  public:\n    mf_graph() : _n(0)\
-    \ {}\n    mf_graph(int n) : _n(n), g(n) {}\n\n    virtual int add_edge(int from,\
+    \ {}\n    explicit mf_graph(int n) : _n(n), g(n) {}\n\n    int add_edge(int from,\
     \ int to, Cap cap) {\n        assert(0 <= from && from < _n);\n        assert(0\
     \ <= to && to < _n);\n        assert(0 <= cap);\n        int m = int(pos.size());\n\
     \        pos.push_back({from, int(g[from].size())});\n        int from_id = int(g[from].size());\n\
@@ -77,15 +77,15 @@ data:
     \ {\n        int to, rev;\n        Cap cap;\n    };\n    std::vector<std::pair<int,\
     \ int>> pos;\n    std::vector<std::vector<_edge>> g;\n};\n\n}  // namespace atcoder\n\
     \n\n#line 4 \"flow/flow-on-bipartite-graph.hpp\"\n\nnamespace BipartiteGraphImpl\
-    \ {\nusing namespace atcoder;\nstruct BipartiteGraph : mf_graph<long long> {\n\
-    \  int L, R, s, t;\n  bool is_flow;\n\n  explicit BipartiteGraph(int N, int M)\n\
-    \      : mf_graph<long long>(N + M + 2),\n        L(N),\n        R(M),\n     \
-    \   s(N + M),\n        t(N + M + 1),\n        is_flow(false) {\n    for (int i\
-    \ = 0; i < L; i++) mf_graph<long long>::add_edge(s, i, 1);\n    for (int i = 0;\
-    \ i < R; i++) mf_graph<long long>::add_edge(i + L, t, 1);\n  }\n\n  int add_edge(int\
-    \ n, int m, long long cap = 1) override {\n    assert(0 <= n && n < L);\n    assert(0\
-    \ <= m && m < R);\n    return mf_graph<long long>::add_edge(n, m + L, cap);\n\
-    \  }\n\n  long long flow() {\n    is_flow = true;\n    return mf_graph<long long>::flow(s,\
+    \ {\nusing namespace atcoder;\nstruct BipartiteGraph : private mf_graph<long long>\
+    \ {\n  int L, R, s, t;\n  bool is_flow;\n\n  explicit BipartiteGraph(int N, int\
+    \ M)\n      : mf_graph<long long>(N + M + 2),\n        L(N),\n        R(M),\n\
+    \        s(N + M),\n        t(N + M + 1),\n        is_flow(false) {\n    for (int\
+    \ i = 0; i < L; i++) mf_graph<long long>::add_edge(s, i, 1);\n    for (int i =\
+    \ 0; i < R; i++) mf_graph<long long>::add_edge(i + L, t, 1);\n  }\n\n  int add_edge(int\
+    \ n, int m, long long cap = 1) {\n    assert(0 <= n && n < L);\n    assert(0 <=\
+    \ m && m < R);\n    return mf_graph<long long>::add_edge(n, m + L, cap);\n  }\n\
+    \n  long long flow() {\n    is_flow = true;\n    return mf_graph<long long>::flow(s,\
     \ t);\n  }\n\n  vector<pair<int, int>> MaximumMatching() {\n    if (!is_flow)\
     \ flow();\n    auto es = mf_graph<long long>::edges();\n    vector<pair<int, int>>\
     \ ret;\n    for (auto &e : es) {\n      if (e.flow > 0 && e.from != s && e.to\
@@ -119,15 +119,15 @@ data:
     \u30E9\u30D5\u306E\u30D5\u30ED\u30FC\n * @docs docs/flow/flow-on-bipartite-graph.md\n\
     \ */\n"
   code: "#pragma once\n\n#include \"../atcoder/maxflow.hpp\"\n\nnamespace BipartiteGraphImpl\
-    \ {\nusing namespace atcoder;\nstruct BipartiteGraph : mf_graph<long long> {\n\
-    \  int L, R, s, t;\n  bool is_flow;\n\n  explicit BipartiteGraph(int N, int M)\n\
-    \      : mf_graph<long long>(N + M + 2),\n        L(N),\n        R(M),\n     \
-    \   s(N + M),\n        t(N + M + 1),\n        is_flow(false) {\n    for (int i\
-    \ = 0; i < L; i++) mf_graph<long long>::add_edge(s, i, 1);\n    for (int i = 0;\
-    \ i < R; i++) mf_graph<long long>::add_edge(i + L, t, 1);\n  }\n\n  int add_edge(int\
-    \ n, int m, long long cap = 1) override {\n    assert(0 <= n && n < L);\n    assert(0\
-    \ <= m && m < R);\n    return mf_graph<long long>::add_edge(n, m + L, cap);\n\
-    \  }\n\n  long long flow() {\n    is_flow = true;\n    return mf_graph<long long>::flow(s,\
+    \ {\nusing namespace atcoder;\nstruct BipartiteGraph : private mf_graph<long long>\
+    \ {\n  int L, R, s, t;\n  bool is_flow;\n\n  explicit BipartiteGraph(int N, int\
+    \ M)\n      : mf_graph<long long>(N + M + 2),\n        L(N),\n        R(M),\n\
+    \        s(N + M),\n        t(N + M + 1),\n        is_flow(false) {\n    for (int\
+    \ i = 0; i < L; i++) mf_graph<long long>::add_edge(s, i, 1);\n    for (int i =\
+    \ 0; i < R; i++) mf_graph<long long>::add_edge(i + L, t, 1);\n  }\n\n  int add_edge(int\
+    \ n, int m, long long cap = 1) {\n    assert(0 <= n && n < L);\n    assert(0 <=\
+    \ m && m < R);\n    return mf_graph<long long>::add_edge(n, m + L, cap);\n  }\n\
+    \n  long long flow() {\n    is_flow = true;\n    return mf_graph<long long>::flow(s,\
     \ t);\n  }\n\n  vector<pair<int, int>> MaximumMatching() {\n    if (!is_flow)\
     \ flow();\n    auto es = mf_graph<long long>::edges();\n    vector<pair<int, int>>\
     \ ret;\n    for (auto &e : es) {\n      if (e.flow > 0 && e.from != s && e.to\
@@ -164,7 +164,7 @@ data:
   isVerificationFile: false
   path: flow/flow-on-bipartite-graph.hpp
   requiredBy: []
-  timestamp: '2021-08-10 23:14:36+09:00'
+  timestamp: '2026-06-08 02:23:45+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-graph/yosupo-matching-on-bipartite-graph.test.cpp

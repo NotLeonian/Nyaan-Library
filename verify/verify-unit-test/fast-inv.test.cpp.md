@@ -276,7 +276,7 @@ data:
     \    return x;\n}\n\n// Fast modular multiplication by barrett reduction\n// Reference:\
     \ https://en.wikipedia.org/wiki/Barrett_reduction\n// NOTE: reconsider after Ice\
     \ Lake\nstruct barrett {\n    unsigned int _m;\n    unsigned long long im;\n\n\
-    \    // @param m `1 <= m < 2^31`\n    barrett(unsigned int m) : _m(m), im((unsigned\
+    \    // @param m `1 <= m`\n    explicit barrett(unsigned int m) : _m(m), im((unsigned\
     \ long long)(-1) / m + 1) {}\n\n    // @return m\n    unsigned int umod() const\
     \ { return _m; }\n\n    // @param a `0 <= a < m`\n    // @param b `0 <= b < m`\n\
     \    // @return `a * b % m`\n    unsigned int mul(unsigned int a, unsigned int\
@@ -289,19 +289,19 @@ data:
     \ long z = a;\n        z *= b;\n#ifdef _MSC_VER\n        unsigned long long x;\n\
     \        _umul128(z, im, &x);\n#else\n        unsigned long long x =\n       \
     \     (unsigned long long)(((unsigned __int128)(z)*im) >> 64);\n#endif\n     \
-    \   unsigned int v = (unsigned int)(z - x * _m);\n        if (_m <= v) v += _m;\n\
-    \        return v;\n    }\n};\n\n// @param n `0 <= n`\n// @param m `1 <= m`\n\
-    // @return `(x ** n) % m`\nconstexpr long long pow_mod_constexpr(long long x,\
-    \ long long n, int m) {\n    if (m == 1) return 0;\n    unsigned int _m = (unsigned\
-    \ int)(m);\n    unsigned long long r = 1;\n    unsigned long long y = safe_mod(x,\
-    \ m);\n    while (n) {\n        if (n & 1) r = (r * y) % _m;\n        y = (y *\
-    \ y) % _m;\n        n >>= 1;\n    }\n    return r;\n}\n\n// Reference:\n// M.\
-    \ Forisek and J. Jancina,\n// Fast Primality Testing for Integers That Fit into\
-    \ a Machine Word\n// @param n `0 <= n`\nconstexpr bool is_prime_constexpr(int\
-    \ n) {\n    if (n <= 1) return false;\n    if (n == 2 || n == 7 || n == 61) return\
-    \ true;\n    if (n % 2 == 0) return false;\n    long long d = n - 1;\n    while\
-    \ (d % 2 == 0) d /= 2;\n    constexpr long long bases[3] = {2, 7, 61};\n    for\
-    \ (long long a : bases) {\n        long long t = d;\n        long long y = pow_mod_constexpr(a,\
+    \   unsigned long long y = x * _m;\n        return (unsigned int)(z - y + (z <\
+    \ y ? _m : 0));\n    }\n};\n\n// @param n `0 <= n`\n// @param m `1 <= m`\n// @return\
+    \ `(x ** n) % m`\nconstexpr long long pow_mod_constexpr(long long x, long long\
+    \ n, int m) {\n    if (m == 1) return 0;\n    unsigned int _m = (unsigned int)(m);\n\
+    \    unsigned long long r = 1;\n    unsigned long long y = safe_mod(x, m);\n \
+    \   while (n) {\n        if (n & 1) r = (r * y) % _m;\n        y = (y * y) % _m;\n\
+    \        n >>= 1;\n    }\n    return r;\n}\n\n// Reference:\n// M. Forisek and\
+    \ J. Jancina,\n// Fast Primality Testing for Integers That Fit into a Machine\
+    \ Word\n// @param n `0 <= n`\nconstexpr bool is_prime_constexpr(int n) {\n   \
+    \ if (n <= 1) return false;\n    if (n == 2 || n == 7 || n == 61) return true;\n\
+    \    if (n % 2 == 0) return false;\n    long long d = n - 1;\n    while (d % 2\
+    \ == 0) d /= 2;\n    constexpr long long bases[3] = {2, 7, 61};\n    for (long\
+    \ long a : bases) {\n        long long t = d;\n        long long y = pow_mod_constexpr(a,\
     \ t, n);\n        while (t != n - 1 && y != 1 && y != n - 1) {\n            y\
     \ = y * y % n;\n            t <<= 1;\n        }\n        if (y != n - 1 && t %\
     \ 2 == 0) {\n            return false;\n        }\n    }\n    return true;\n}\n\
@@ -331,63 +331,74 @@ data:
     \ {\n            if (pow_mod_constexpr(g, (m - 1) / divs[i], m) == 1) {\n    \
     \            ok = false;\n                break;\n            }\n        }\n \
     \       if (ok) return g;\n    }\n}\ntemplate <int m> constexpr int primitive_root\
-    \ = primitive_root_constexpr(m);\n\n}  // namespace internal\n\n}  // namespace\
-    \ atcoder\n\n\n#line 10 \"atcoder/math.hpp\"\n\nnamespace atcoder {\n\nlong long\
-    \ pow_mod(long long x, long long n, int m) {\n  assert(0 <= n && 1 <= m);\n  if\
-    \ (m == 1) return 0;\n  internal::barrett bt((unsigned int)(m));\n  unsigned int\
-    \ r = 1, y = (unsigned int)(internal::safe_mod(x, m));\n  while (n) {\n    if\
-    \ (n & 1) r = bt.mul(r, y);\n    y = bt.mul(y, y);\n    n >>= 1;\n  }\n  return\
-    \ r;\n}\n\nlong long inv_mod(long long x, long long m) {\n  assert(1 <= m);\n\
-    \  auto z = internal::inv_gcd(x, m);\n  assert(z.first == 1);\n  return z.second;\n\
-    }\n\n// (rem, mod)\nstd::pair<long long, long long> crt(const std::vector<long\
-    \ long>& r,\n                                    const std::vector<long long>&\
-    \ m) {\n  assert(r.size() == m.size());\n  int n = int(r.size());\n  // Contracts:\
-    \ 0 <= r0 < m0\n  long long r0 = 0, m0 = 1;\n  for (int i = 0; i < n; i++) {\n\
-    \    assert(1 <= m[i]);\n    long long r1 = internal::safe_mod(r[i], m[i]), m1\
-    \ = m[i];\n    if (m0 < m1) {\n      std::swap(r0, r1);\n      std::swap(m0, m1);\n\
-    \    }\n    if (m0 % m1 == 0) {\n      if (r0 % m1 != r1) return {0, 0};\n   \
-    \   continue;\n    }\n    // assume: m0 > m1, lcm(m0, m1) >= 2 * max(m0, m1)\n\
-    \n    // (r0, m0), (r1, m1) -> (r2, m2 = lcm(m0, m1));\n    // r2 % m0 = r0\n\
-    \    // r2 % m1 = r1\n    // -> (r0 + x*m0) % m1 = r1\n    // -> x*u0*g % (u1*g)\
-    \ = (r1 - r0) (u0*g = m0, u1*g = m1)\n    // -> x = (r1 - r0) / g * inv(u0) (mod\
-    \ u1)\n\n    // im = inv(u0) (mod u1) (0 <= im < u1)\n    long long g, im;\n \
-    \   std::tie(g, im) = internal::inv_gcd(m0, m1);\n\n    long long u1 = (m1 / g);\n\
-    \    // |r1 - r0| < (m0 + m1) <= lcm(m0, m1)\n    if ((r1 - r0) % g) return {0,\
-    \ 0};\n\n    // u1 * u1 <= m1 * m1 / g / g <= m0 * m1 / g = lcm(m0, m1)\n    long\
-    \ long x = (r1 - r0) / g % u1 * im % u1;\n\n    // |r0| + |m0 * x|\n    // < m0\
-    \ + m0 * (u1 - 1)\n    // = m0 + m0 * m1 / g - m0\n    // = lcm(m0, m1)\n    r0\
-    \ += x * m0;\n    m0 *= u1;  // -> lcm(m0, m1)\n    if (r0 < 0) r0 += m0;\n  }\n\
-    \  return {r0, m0};\n}\n\nlong long floor_sum(long long n, long long m, long long\
-    \ a, long long b) {\n  long long ans = 0;\n  if (a < 0) {\n    unsigned long long\
-    \ a2 = internal::safe_mod(a, m);\n    ans -= 1ULL * n * (n - 1) / 2 * ((a2 - a)\
-    \ / m);\n    a = a2;\n  }\n  if (b < 0) {\n    unsigned long long b2 = internal::safe_mod(b,\
-    \ m);\n    ans -= 1ULL * n * ((b2 - b) / m);\n    b = b2;\n  }\n  if (a >= m)\
-    \ {\n    ans += (n - 1) * n * (a / m) / 2;\n    a %= m;\n  }\n  if (b >= m) {\n\
-    \    ans += n * (b / m);\n    b %= m;\n  }\n  long long y_max = (a * n + b) /\
-    \ m, x_max = (y_max * m - b);\n  if (y_max == 0) return ans;\n  ans += (n - (x_max\
-    \ + a - 1) / a) * y_max;\n  ans += floor_sum(y_max, a, m, (a - x_max % a) % a);\n\
-    \  return ans;\n}\n\n}  // namespace atcoder\n\n\n#line 1 \"atcoder/modint.hpp\"\
-    \n\n\n\n#line 7 \"atcoder/modint.hpp\"\n\n#ifdef _MSC_VER\n#include <intrin.h>\n\
-    #endif\n\n#line 1 \"atcoder/internal_type_traits.hpp\"\n\n\n\n#line 7 \"atcoder/internal_type_traits.hpp\"\
-    \n\nnamespace atcoder {\n\nnamespace internal {\n\n#ifndef _MSC_VER\ntemplate\
-    \ <class T>\nusing is_signed_int128 =\n    typename std::conditional<std::is_same<T,\
-    \ __int128_t>::value ||\n                                  std::is_same<T, __int128>::value,\n\
-    \                              std::true_type,\n                             \
-    \ std::false_type>::type;\n\ntemplate <class T>\nusing is_unsigned_int128 =\n\
-    \    typename std::conditional<std::is_same<T, __uint128_t>::value ||\n      \
-    \                            std::is_same<T, unsigned __int128>::value,\n    \
-    \                          std::true_type,\n                              std::false_type>::type;\n\
-    \ntemplate <class T>\nusing make_unsigned_int128 =\n    typename std::conditional<std::is_same<T,\
-    \ __int128_t>::value,\n                              __uint128_t,\n          \
-    \                    unsigned __int128>;\n\ntemplate <class T>\nusing is_integral\
-    \ = typename std::conditional<std::is_integral<T>::value ||\n                \
-    \                                  is_signed_int128<T>::value ||\n           \
-    \                                       is_unsigned_int128<T>::value,\n      \
-    \                                        std::true_type,\n                   \
-    \                           std::false_type>::type;\n\ntemplate <class T>\nusing\
-    \ is_signed_int = typename std::conditional<(is_integral<T>::value &&\n      \
-    \                                           std::is_signed<T>::value) ||\n   \
-    \                                                 is_signed_int128<T>::value,\n\
+    \ = primitive_root_constexpr(m);\n\n// @param n `n < 2^32`\n// @param m `1 <=\
+    \ m < 2^32`\n// @return sum_{i=0}^{n-1} floor((ai + b) / m) (mod 2^64)\nunsigned\
+    \ long long floor_sum_unsigned(unsigned long long n,\n                       \
+    \               unsigned long long m,\n                                      unsigned\
+    \ long long a,\n                                      unsigned long long b) {\n\
+    \    unsigned long long ans = 0;\n    while (true) {\n        if (a >= m) {\n\
+    \            ans += n * (n - 1) / 2 * (a / m);\n            a %= m;\n        }\n\
+    \        if (b >= m) {\n            ans += n * (b / m);\n            b %= m;\n\
+    \        }\n\n        unsigned long long y_max = a * n + b;\n        if (y_max\
+    \ < m) break;\n        // y_max < m * (n + 1)\n        // floor(y_max / m) <=\
+    \ n\n        n = (unsigned long long)(y_max / m);\n        b = (unsigned long\
+    \ long)(y_max % m);\n        std::swap(m, a);\n    }\n    return ans;\n}\n\n}\
+    \  // namespace internal\n\n}  // namespace atcoder\n\n\n#line 10 \"atcoder/math.hpp\"\
+    \n\nnamespace atcoder {\n\nlong long pow_mod(long long x, long long n, int m)\
+    \ {\n    assert(0 <= n && 1 <= m);\n    if (m == 1) return 0;\n    internal::barrett\
+    \ bt((unsigned int)(m));\n    unsigned int r = 1, y = (unsigned int)(internal::safe_mod(x,\
+    \ m));\n    while (n) {\n        if (n & 1) r = bt.mul(r, y);\n        y = bt.mul(y,\
+    \ y);\n        n >>= 1;\n    }\n    return r;\n}\n\nlong long inv_mod(long long\
+    \ x, long long m) {\n    assert(1 <= m);\n    auto z = internal::inv_gcd(x, m);\n\
+    \    assert(z.first == 1);\n    return z.second;\n}\n\n// (rem, mod)\nstd::pair<long\
+    \ long, long long> crt(const std::vector<long long>& r,\n                    \
+    \                const std::vector<long long>& m) {\n    assert(r.size() == m.size());\n\
+    \    int n = int(r.size());\n    // Contracts: 0 <= r0 < m0\n    long long r0\
+    \ = 0, m0 = 1;\n    for (int i = 0; i < n; i++) {\n        assert(1 <= m[i]);\n\
+    \        long long r1 = internal::safe_mod(r[i], m[i]), m1 = m[i];\n        if\
+    \ (m0 < m1) {\n            std::swap(r0, r1);\n            std::swap(m0, m1);\n\
+    \        }\n        if (m0 % m1 == 0) {\n            if (r0 % m1 != r1) return\
+    \ {0, 0};\n            continue;\n        }\n        // assume: m0 > m1, lcm(m0,\
+    \ m1) >= 2 * max(m0, m1)\n\n        // (r0, m0), (r1, m1) -> (r2, m2 = lcm(m0,\
+    \ m1));\n        // r2 % m0 = r0\n        // r2 % m1 = r1\n        // -> (r0 +\
+    \ x*m0) % m1 = r1\n        // -> x*u0*g = r1-r0 (mod u1*g) (u0*g = m0, u1*g =\
+    \ m1)\n        // -> x = (r1 - r0) / g * inv(u0) (mod u1)\n\n        // im = inv(u0)\
+    \ (mod u1) (0 <= im < u1)\n        long long g, im;\n        std::tie(g, im) =\
+    \ internal::inv_gcd(m0, m1);\n\n        long long u1 = (m1 / g);\n        // |r1\
+    \ - r0| < (m0 + m1) <= lcm(m0, m1)\n        if ((r1 - r0) % g) return {0, 0};\n\
+    \n        // u1 * u1 <= m1 * m1 / g / g <= m0 * m1 / g = lcm(m0, m1)\n       \
+    \ long long x = (r1 - r0) / g % u1 * im % u1;\n\n        // |r0| + |m0 * x|\n\
+    \        // < m0 + m0 * (u1 - 1)\n        // = m0 + m0 * m1 / g - m0\n       \
+    \ // = lcm(m0, m1)\n        r0 += x * m0;\n        m0 *= u1;  // -> lcm(m0, m1)\n\
+    \        if (r0 < 0) r0 += m0;\n    }\n    return {r0, m0};\n}\n\nlong long floor_sum(long\
+    \ long n, long long m, long long a, long long b) {\n    assert(0 <= n && n < (1LL\
+    \ << 32));\n    assert(1 <= m && m < (1LL << 32));\n    unsigned long long ans\
+    \ = 0;\n    if (a < 0) {\n        unsigned long long a2 = internal::safe_mod(a,\
+    \ m);\n        ans -= 1ULL * n * (n - 1) / 2 * ((a2 - a) / m);\n        a = a2;\n\
+    \    }\n    if (b < 0) {\n        unsigned long long b2 = internal::safe_mod(b,\
+    \ m);\n        ans -= 1ULL * n * ((b2 - b) / m);\n        b = b2;\n    }\n   \
+    \ return ans + internal::floor_sum_unsigned(n, m, a, b);\n}\n\n}  // namespace\
+    \ atcoder\n\n\n#line 1 \"atcoder/modint.hpp\"\n\n\n\n#line 7 \"atcoder/modint.hpp\"\
+    \n\n#ifdef _MSC_VER\n#include <intrin.h>\n#endif\n\n#line 1 \"atcoder/internal_type_traits.hpp\"\
+    \n\n\n\n#line 7 \"atcoder/internal_type_traits.hpp\"\n\nnamespace atcoder {\n\n\
+    namespace internal {\n\n#ifndef _MSC_VER\ntemplate <class T>\nusing is_signed_int128\
+    \ =\n    typename std::conditional<std::is_same<T, __int128_t>::value ||\n   \
+    \                               std::is_same<T, __int128>::value,\n          \
+    \                    std::true_type,\n                              std::false_type>::type;\n\
+    \ntemplate <class T>\nusing is_unsigned_int128 =\n    typename std::conditional<std::is_same<T,\
+    \ __uint128_t>::value ||\n                                  std::is_same<T, unsigned\
+    \ __int128>::value,\n                              std::true_type,\n         \
+    \                     std::false_type>::type;\n\ntemplate <class T>\nusing make_unsigned_int128\
+    \ =\n    typename std::conditional<std::is_same<T, __int128_t>::value,\n     \
+    \                         __uint128_t,\n                              unsigned\
+    \ __int128>;\n\ntemplate <class T>\nusing is_integral = typename std::conditional<std::is_integral<T>::value\
+    \ ||\n                                                  is_signed_int128<T>::value\
+    \ ||\n                                                  is_unsigned_int128<T>::value,\n\
+    \                                              std::true_type,\n             \
+    \                                 std::false_type>::type;\n\ntemplate <class T>\n\
+    using is_signed_int = typename std::conditional<(is_integral<T>::value &&\n  \
+    \                                               std::is_signed<T>::value) ||\n\
+    \                                                    is_signed_int128<T>::value,\n\
     \                                                std::true_type,\n           \
     \                                     std::false_type>::type;\n\ntemplate <class\
     \ T>\nusing is_unsigned_int =\n    typename std::conditional<(is_integral<T>::value\
@@ -423,11 +434,11 @@ data:
     \    static_modint(T v) {\n        long long x = (long long)(v % (long long)(umod()));\n\
     \        if (x < 0) x += umod();\n        _v = (unsigned int)(x);\n    }\n   \
     \ template <class T, internal::is_unsigned_int_t<T>* = nullptr>\n    static_modint(T\
-    \ v) {\n        _v = (unsigned int)(v % umod());\n    }\n\n    unsigned int val()\
-    \ const { return _v; }\n\n    mint& operator++() {\n        _v++;\n        if\
-    \ (_v == umod()) _v = 0;\n        return *this;\n    }\n    mint& operator--()\
-    \ {\n        if (_v == 0) _v = umod();\n        _v--;\n        return *this;\n\
-    \    }\n    mint operator++(int) {\n        mint result = *this;\n        ++*this;\n\
+    \ v) {\n        _v = (unsigned int)(v % umod());\n    }\n\n    int val() const\
+    \ { return _v; }\n\n    mint& operator++() {\n        _v++;\n        if (_v ==\
+    \ umod()) _v = 0;\n        return *this;\n    }\n    mint& operator--() {\n  \
+    \      if (_v == 0) _v = umod();\n        _v--;\n        return *this;\n    }\n\
+    \    mint operator++(int) {\n        mint result = *this;\n        ++*this;\n\
     \        return result;\n    }\n    mint operator--(int) {\n        mint result\
     \ = *this;\n        --*this;\n        return result;\n    }\n\n    mint& operator+=(const\
     \ mint& rhs) {\n        _v += rhs._v;\n        if (_v >= umod()) _v -= umod();\n\
@@ -463,9 +474,9 @@ data:
     \     long long x = (long long)(v % (long long)(mod()));\n        if (x < 0) x\
     \ += mod();\n        _v = (unsigned int)(x);\n    }\n    template <class T, internal::is_unsigned_int_t<T>*\
     \ = nullptr>\n    dynamic_modint(T v) {\n        _v = (unsigned int)(v % mod());\n\
-    \    }\n\n    unsigned int val() const { return _v; }\n\n    mint& operator++()\
-    \ {\n        _v++;\n        if (_v == umod()) _v = 0;\n        return *this;\n\
-    \    }\n    mint& operator--() {\n        if (_v == 0) _v = umod();\n        _v--;\n\
+    \    }\n\n    int val() const { return _v; }\n\n    mint& operator++() {\n   \
+    \     _v++;\n        if (_v == umod()) _v = 0;\n        return *this;\n    }\n\
+    \    mint& operator--() {\n        if (_v == 0) _v = umod();\n        _v--;\n\
     \        return *this;\n    }\n    mint operator++(int) {\n        mint result\
     \ = *this;\n        ++*this;\n        return result;\n    }\n    mint operator--(int)\
     \ {\n        mint result = *this;\n        --*this;\n        return result;\n\
@@ -491,7 +502,7 @@ data:
     \ mint& lhs, const mint& rhs) {\n        return lhs._v != rhs._v;\n    }\n\n \
     \ private:\n    unsigned int _v;\n    static internal::barrett bt;\n    static\
     \ unsigned int umod() { return bt.umod(); }\n};\ntemplate <int id> internal::barrett\
-    \ dynamic_modint<id>::bt = 998244353;\n\nusing modint998244353 = static_modint<998244353>;\n\
+    \ dynamic_modint<id>::bt(998244353);\n\nusing modint998244353 = static_modint<998244353>;\n\
     using modint1000000007 = static_modint<1000000007>;\nusing modint = dynamic_modint<-1>;\n\
     \nnamespace internal {\n\ntemplate <class T>\nusing is_static_modint = std::is_base_of<internal::static_modint_base,\
     \ T>;\n\ntemplate <class T>\nusing is_static_modint_t = std::enable_if_t<is_static_modint<T>::value>;\n\
@@ -657,7 +668,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/fast-inv.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 02:23:45+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/fast-inv.test.cpp

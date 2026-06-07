@@ -233,7 +233,7 @@ data:
     \    return x;\n}\n\n// Fast modular multiplication by barrett reduction\n// Reference:\
     \ https://en.wikipedia.org/wiki/Barrett_reduction\n// NOTE: reconsider after Ice\
     \ Lake\nstruct barrett {\n    unsigned int _m;\n    unsigned long long im;\n\n\
-    \    // @param m `1 <= m < 2^31`\n    barrett(unsigned int m) : _m(m), im((unsigned\
+    \    // @param m `1 <= m`\n    explicit barrett(unsigned int m) : _m(m), im((unsigned\
     \ long long)(-1) / m + 1) {}\n\n    // @return m\n    unsigned int umod() const\
     \ { return _m; }\n\n    // @param a `0 <= a < m`\n    // @param b `0 <= b < m`\n\
     \    // @return `a * b % m`\n    unsigned int mul(unsigned int a, unsigned int\
@@ -246,19 +246,19 @@ data:
     \ long z = a;\n        z *= b;\n#ifdef _MSC_VER\n        unsigned long long x;\n\
     \        _umul128(z, im, &x);\n#else\n        unsigned long long x =\n       \
     \     (unsigned long long)(((unsigned __int128)(z)*im) >> 64);\n#endif\n     \
-    \   unsigned int v = (unsigned int)(z - x * _m);\n        if (_m <= v) v += _m;\n\
-    \        return v;\n    }\n};\n\n// @param n `0 <= n`\n// @param m `1 <= m`\n\
-    // @return `(x ** n) % m`\nconstexpr long long pow_mod_constexpr(long long x,\
-    \ long long n, int m) {\n    if (m == 1) return 0;\n    unsigned int _m = (unsigned\
-    \ int)(m);\n    unsigned long long r = 1;\n    unsigned long long y = safe_mod(x,\
-    \ m);\n    while (n) {\n        if (n & 1) r = (r * y) % _m;\n        y = (y *\
-    \ y) % _m;\n        n >>= 1;\n    }\n    return r;\n}\n\n// Reference:\n// M.\
-    \ Forisek and J. Jancina,\n// Fast Primality Testing for Integers That Fit into\
-    \ a Machine Word\n// @param n `0 <= n`\nconstexpr bool is_prime_constexpr(int\
-    \ n) {\n    if (n <= 1) return false;\n    if (n == 2 || n == 7 || n == 61) return\
-    \ true;\n    if (n % 2 == 0) return false;\n    long long d = n - 1;\n    while\
-    \ (d % 2 == 0) d /= 2;\n    constexpr long long bases[3] = {2, 7, 61};\n    for\
-    \ (long long a : bases) {\n        long long t = d;\n        long long y = pow_mod_constexpr(a,\
+    \   unsigned long long y = x * _m;\n        return (unsigned int)(z - y + (z <\
+    \ y ? _m : 0));\n    }\n};\n\n// @param n `0 <= n`\n// @param m `1 <= m`\n// @return\
+    \ `(x ** n) % m`\nconstexpr long long pow_mod_constexpr(long long x, long long\
+    \ n, int m) {\n    if (m == 1) return 0;\n    unsigned int _m = (unsigned int)(m);\n\
+    \    unsigned long long r = 1;\n    unsigned long long y = safe_mod(x, m);\n \
+    \   while (n) {\n        if (n & 1) r = (r * y) % _m;\n        y = (y * y) % _m;\n\
+    \        n >>= 1;\n    }\n    return r;\n}\n\n// Reference:\n// M. Forisek and\
+    \ J. Jancina,\n// Fast Primality Testing for Integers That Fit into a Machine\
+    \ Word\n// @param n `0 <= n`\nconstexpr bool is_prime_constexpr(int n) {\n   \
+    \ if (n <= 1) return false;\n    if (n == 2 || n == 7 || n == 61) return true;\n\
+    \    if (n % 2 == 0) return false;\n    long long d = n - 1;\n    while (d % 2\
+    \ == 0) d /= 2;\n    constexpr long long bases[3] = {2, 7, 61};\n    for (long\
+    \ long a : bases) {\n        long long t = d;\n        long long y = pow_mod_constexpr(a,\
     \ t, n);\n        while (t != n - 1 && y != 1 && y != n - 1) {\n            y\
     \ = y * y % n;\n            t <<= 1;\n        }\n        if (y != n - 1 && t %\
     \ 2 == 0) {\n            return false;\n        }\n    }\n    return true;\n}\n\
@@ -288,103 +288,115 @@ data:
     \ {\n            if (pow_mod_constexpr(g, (m - 1) / divs[i], m) == 1) {\n    \
     \            ok = false;\n                break;\n            }\n        }\n \
     \       if (ok) return g;\n    }\n}\ntemplate <int m> constexpr int primitive_root\
-    \ = primitive_root_constexpr(m);\n\n}  // namespace internal\n\n}  // namespace\
-    \ atcoder\n\n\n#line 10 \"atcoder/math.hpp\"\n\nnamespace atcoder {\n\nlong long\
-    \ pow_mod(long long x, long long n, int m) {\n  assert(0 <= n && 1 <= m);\n  if\
-    \ (m == 1) return 0;\n  internal::barrett bt((unsigned int)(m));\n  unsigned int\
-    \ r = 1, y = (unsigned int)(internal::safe_mod(x, m));\n  while (n) {\n    if\
-    \ (n & 1) r = bt.mul(r, y);\n    y = bt.mul(y, y);\n    n >>= 1;\n  }\n  return\
-    \ r;\n}\n\nlong long inv_mod(long long x, long long m) {\n  assert(1 <= m);\n\
-    \  auto z = internal::inv_gcd(x, m);\n  assert(z.first == 1);\n  return z.second;\n\
-    }\n\n// (rem, mod)\nstd::pair<long long, long long> crt(const std::vector<long\
-    \ long>& r,\n                                    const std::vector<long long>&\
-    \ m) {\n  assert(r.size() == m.size());\n  int n = int(r.size());\n  // Contracts:\
-    \ 0 <= r0 < m0\n  long long r0 = 0, m0 = 1;\n  for (int i = 0; i < n; i++) {\n\
-    \    assert(1 <= m[i]);\n    long long r1 = internal::safe_mod(r[i], m[i]), m1\
-    \ = m[i];\n    if (m0 < m1) {\n      std::swap(r0, r1);\n      std::swap(m0, m1);\n\
-    \    }\n    if (m0 % m1 == 0) {\n      if (r0 % m1 != r1) return {0, 0};\n   \
-    \   continue;\n    }\n    // assume: m0 > m1, lcm(m0, m1) >= 2 * max(m0, m1)\n\
-    \n    // (r0, m0), (r1, m1) -> (r2, m2 = lcm(m0, m1));\n    // r2 % m0 = r0\n\
-    \    // r2 % m1 = r1\n    // -> (r0 + x*m0) % m1 = r1\n    // -> x*u0*g % (u1*g)\
-    \ = (r1 - r0) (u0*g = m0, u1*g = m1)\n    // -> x = (r1 - r0) / g * inv(u0) (mod\
-    \ u1)\n\n    // im = inv(u0) (mod u1) (0 <= im < u1)\n    long long g, im;\n \
-    \   std::tie(g, im) = internal::inv_gcd(m0, m1);\n\n    long long u1 = (m1 / g);\n\
-    \    // |r1 - r0| < (m0 + m1) <= lcm(m0, m1)\n    if ((r1 - r0) % g) return {0,\
-    \ 0};\n\n    // u1 * u1 <= m1 * m1 / g / g <= m0 * m1 / g = lcm(m0, m1)\n    long\
-    \ long x = (r1 - r0) / g % u1 * im % u1;\n\n    // |r0| + |m0 * x|\n    // < m0\
-    \ + m0 * (u1 - 1)\n    // = m0 + m0 * m1 / g - m0\n    // = lcm(m0, m1)\n    r0\
-    \ += x * m0;\n    m0 *= u1;  // -> lcm(m0, m1)\n    if (r0 < 0) r0 += m0;\n  }\n\
-    \  return {r0, m0};\n}\n\nlong long floor_sum(long long n, long long m, long long\
-    \ a, long long b) {\n  long long ans = 0;\n  if (a < 0) {\n    unsigned long long\
-    \ a2 = internal::safe_mod(a, m);\n    ans -= 1ULL * n * (n - 1) / 2 * ((a2 - a)\
-    \ / m);\n    a = a2;\n  }\n  if (b < 0) {\n    unsigned long long b2 = internal::safe_mod(b,\
-    \ m);\n    ans -= 1ULL * n * ((b2 - b) / m);\n    b = b2;\n  }\n  if (a >= m)\
-    \ {\n    ans += (n - 1) * n * (a / m) / 2;\n    a %= m;\n  }\n  if (b >= m) {\n\
-    \    ans += n * (b / m);\n    b %= m;\n  }\n  long long y_max = (a * n + b) /\
-    \ m, x_max = (y_max * m - b);\n  if (y_max == 0) return ans;\n  ans += (n - (x_max\
-    \ + a - 1) / a) * y_max;\n  ans += floor_sum(y_max, a, m, (a - x_max % a) % a);\n\
-    \  return ans;\n}\n\n}  // namespace atcoder\n\n\n#line 2 \"modint/barrett-reduction.hpp\"\
-    \n\n#line 4 \"modint/barrett-reduction.hpp\"\nusing namespace std;\n\nstruct Barrett\
-    \ {\n  using u32 = unsigned int;\n  using i64 = long long;\n  using u64 = unsigned\
-    \ long long;\n  u32 m;\n  u64 im;\n  Barrett() : m(), im() {}\n  Barrett(int n)\
-    \ : m(n), im(u64(-1) / m + 1) {}\n  constexpr inline i64 quo(u64 n) {\n    u64\
-    \ x = u64((__uint128_t(n) * im) >> 64);\n    u32 r = n - x * m;\n    return m\
-    \ <= r ? x - 1 : x;\n  }\n  constexpr inline i64 rem(u64 n) {\n    u64 x = u64((__uint128_t(n)\
-    \ * im) >> 64);\n    u32 r = n - x * m;\n    return m <= r ? r + m : r;\n  }\n\
-    \  constexpr inline pair<i64, int> quorem(u64 n) {\n    u64 x = u64((__uint128_t(n)\
-    \ * im) >> 64);\n    u32 r = n - x * m;\n    if (m <= r) return {x - 1, r + m};\n\
-    \    return {x, r};\n  }\n  constexpr inline i64 pow(u64 n, i64 p) {\n    u32\
-    \ a = rem(n), r = m == 1 ? 0 : 1;\n    while (p) {\n      if (p & 1) r = rem(u64(r)\
-    \ * a);\n      a = rem(u64(a) * a);\n      p >>= 1;\n    }\n    return r;\n  }\n\
-    };\n#line 7 \"modulo/arbitrary-mod-binomial.hpp\"\n\nusing namespace std;\n\n\
-    #define PRIME_POWER_BINOMIAL_M_MAX ((1LL << 30) - 1)\n#define PRIME_POWER_BINOMIAL_N_MAX\
-    \ 20000000\n\nstruct prime_power_binomial {\n  int p, q, M;\n  vector<int> fac,\
-    \ ifac, inv;\n  int delta;\n  Barrett bm, bp;\n\n  prime_power_binomial(int _p,\
-    \ int _q) : p(_p), q(_q) {\n    assert(1 < p && p <= PRIME_POWER_BINOMIAL_M_MAX);\n\
-    \    assert(_q > 0);\n    long long m = 1;\n    while (_q--) {\n      m *= p;\n\
-    \      assert(m <= PRIME_POWER_BINOMIAL_M_MAX);\n    }\n    M = m;\n    bm = Barrett(M),\
-    \ bp = Barrett(p);\n    enumerate();\n    delta = (p == 2 && q >= 3) ? 1 : M -\
-    \ 1;\n  }\n\n  void enumerate() {\n    int MX = min<int>(M, PRIME_POWER_BINOMIAL_N_MAX\
-    \ + 10);\n    fac.resize(MX);\n    ifac.resize(MX);\n    inv.resize(MX);\n   \
-    \ fac[0] = ifac[0] = inv[0] = 1;\n    fac[1] = ifac[1] = inv[1] = 1;\n    for\
-    \ (int i = 2; i < MX; i++) {\n      if (i % p == 0) {\n        fac[i] = fac[i\
-    \ - 1];\n        fac[i + 1] = bm.rem(1LL * fac[i - 1] * (i + 1));\n        i++;\n\
-    \      } else {\n        fac[i] = bm.rem(1LL * fac[i - 1] * i);\n      }\n   \
-    \ }\n    ifac[MX - 1] = bm.pow(fac[MX - 1], M / p * (p - 1) - 1);\n    for (int\
-    \ i = MX - 2; i > 1; --i) {\n      if (i % p == 0) {\n        ifac[i] = bm.rem(1LL\
-    \ * ifac[i + 1] * (i + 1));\n        ifac[i - 1] = ifac[i];\n        i--;\n  \
-    \    } else {\n        ifac[i] = bm.rem(1LL * ifac[i + 1] * (i + 1));\n      }\n\
-    \    }\n  }\n\n  long long Lucas(long long n, long long m) {\n    int res = 1;\n\
-    \    while (n) {\n      int n0, m0;\n      tie(n, n0) = bp.quorem(n);\n      tie(m,\
-    \ m0) = bp.quorem(m);\n      if (n0 < m0) return 0;\n      res = bm.rem(1LL *\
-    \ res * fac[n0]);\n      int buf = bm.rem(1LL * ifac[n0 - m0] * ifac[m0]);\n \
-    \     res = bm.rem(1LL * res * buf);\n    }\n    return res;\n  }\n\n  long long\
-    \ C(long long n, long long m) {\n    if (n < m || n < 0 || m < 0) return 0;\n\
-    \    if (q == 1) return Lucas(n, m);\n    long long r = n - m;\n    int e0 = 0,\
-    \ eq = 0, i = 0;\n    int res = 1;\n    while (n) {\n      res = bm.rem(1LL *\
-    \ res * fac[bm.rem(n)]);\n      res = bm.rem(1LL * res * ifac[bm.rem(m)]);\n \
-    \     res = bm.rem(1LL * res * ifac[bm.rem(r)]);\n      n = bp.quo(n);\n     \
-    \ m = bp.quo(m);\n      r = bp.quo(r);\n      int eps = n - m - r;\n      e0 +=\
-    \ eps;\n      if (e0 >= q) return 0;\n      if (++i >= q) eq += eps;\n    }\n\
-    \    if (eq & 1) res = bm.rem(1LL * res * delta);\n    res = bm.rem(1LL * res\
-    \ * bm.pow(p, e0));\n    return res;\n  }\n};\n\n// constraints:\n// (M <= 1e7\
-    \ and max(N) <= 1e18) or (M < 2^30 and max(N) <= 2e7)\nstruct arbitrary_mod_binomial\
-    \ {\n  int mod;\n  vector<int> M;\n  vector<prime_power_binomial> cs;\n\n  arbitrary_mod_binomial(long\
-    \ long md) : mod(md) {\n    assert(1 <= md);\n    assert(md <= PRIME_POWER_BINOMIAL_M_MAX);\n\
-    \    for (int i = 2; i * i <= md; i++) {\n      if (md % i == 0) {\n        int\
-    \ j = 0, k = 1;\n        while (md % i == 0) md /= i, j++, k *= i;\n        M.push_back(k);\n\
-    \        cs.emplace_back(i, j);\n        assert(M.back() == cs.back().M);\n  \
-    \    }\n    }\n    if (md != 1) {\n      M.push_back(md);\n      cs.emplace_back(md,\
-    \ 1);\n    }\n    assert(M.size() == cs.size());\n  }\n\n  long long C(long long\
-    \ n, long long m) {\n    if (mod == 1) return 0;\n    vector<long long> rem, d;\n\
-    \    for (int i = 0; i < (int)cs.size(); i++) {\n      rem.push_back(cs[i].C(n,\
-    \ m));\n      d.push_back(M[i]);\n    }\n    return atcoder::crt(rem, d).first;\n\
-    \  }\n};\n\n#undef PRIME_POWER_BINOMIAL_M_MAX\n#undef PRIME_POWER_BINOMIAL_N_MAX\n\
-    \n/**\n * @brief \u4EFB\u610Fmod\u4E8C\u9805\u4FC2\u6570\n * @docs docs/modulo/arbitrary-mod-binomial.md\n\
-    \ */\n#line 6 \"verify/verify-yosupo-math/yosupo-binomial-coefficient.test.cpp\"\
-    \n\nusing namespace Nyaan;\n\nvoid Nyaan::solve() {\n  int T, M;\n  cin >> T >>\
-    \ M;\n  arbitrary_mod_binomial C(M);\n  while (T--) {\n    long long n, k;\n \
-    \   cin >> n >> k;\n    cout << C.C(n, k) << '\\n';\n  }\n}\n"
+    \ = primitive_root_constexpr(m);\n\n// @param n `n < 2^32`\n// @param m `1 <=\
+    \ m < 2^32`\n// @return sum_{i=0}^{n-1} floor((ai + b) / m) (mod 2^64)\nunsigned\
+    \ long long floor_sum_unsigned(unsigned long long n,\n                       \
+    \               unsigned long long m,\n                                      unsigned\
+    \ long long a,\n                                      unsigned long long b) {\n\
+    \    unsigned long long ans = 0;\n    while (true) {\n        if (a >= m) {\n\
+    \            ans += n * (n - 1) / 2 * (a / m);\n            a %= m;\n        }\n\
+    \        if (b >= m) {\n            ans += n * (b / m);\n            b %= m;\n\
+    \        }\n\n        unsigned long long y_max = a * n + b;\n        if (y_max\
+    \ < m) break;\n        // y_max < m * (n + 1)\n        // floor(y_max / m) <=\
+    \ n\n        n = (unsigned long long)(y_max / m);\n        b = (unsigned long\
+    \ long)(y_max % m);\n        std::swap(m, a);\n    }\n    return ans;\n}\n\n}\
+    \  // namespace internal\n\n}  // namespace atcoder\n\n\n#line 10 \"atcoder/math.hpp\"\
+    \n\nnamespace atcoder {\n\nlong long pow_mod(long long x, long long n, int m)\
+    \ {\n    assert(0 <= n && 1 <= m);\n    if (m == 1) return 0;\n    internal::barrett\
+    \ bt((unsigned int)(m));\n    unsigned int r = 1, y = (unsigned int)(internal::safe_mod(x,\
+    \ m));\n    while (n) {\n        if (n & 1) r = bt.mul(r, y);\n        y = bt.mul(y,\
+    \ y);\n        n >>= 1;\n    }\n    return r;\n}\n\nlong long inv_mod(long long\
+    \ x, long long m) {\n    assert(1 <= m);\n    auto z = internal::inv_gcd(x, m);\n\
+    \    assert(z.first == 1);\n    return z.second;\n}\n\n// (rem, mod)\nstd::pair<long\
+    \ long, long long> crt(const std::vector<long long>& r,\n                    \
+    \                const std::vector<long long>& m) {\n    assert(r.size() == m.size());\n\
+    \    int n = int(r.size());\n    // Contracts: 0 <= r0 < m0\n    long long r0\
+    \ = 0, m0 = 1;\n    for (int i = 0; i < n; i++) {\n        assert(1 <= m[i]);\n\
+    \        long long r1 = internal::safe_mod(r[i], m[i]), m1 = m[i];\n        if\
+    \ (m0 < m1) {\n            std::swap(r0, r1);\n            std::swap(m0, m1);\n\
+    \        }\n        if (m0 % m1 == 0) {\n            if (r0 % m1 != r1) return\
+    \ {0, 0};\n            continue;\n        }\n        // assume: m0 > m1, lcm(m0,\
+    \ m1) >= 2 * max(m0, m1)\n\n        // (r0, m0), (r1, m1) -> (r2, m2 = lcm(m0,\
+    \ m1));\n        // r2 % m0 = r0\n        // r2 % m1 = r1\n        // -> (r0 +\
+    \ x*m0) % m1 = r1\n        // -> x*u0*g = r1-r0 (mod u1*g) (u0*g = m0, u1*g =\
+    \ m1)\n        // -> x = (r1 - r0) / g * inv(u0) (mod u1)\n\n        // im = inv(u0)\
+    \ (mod u1) (0 <= im < u1)\n        long long g, im;\n        std::tie(g, im) =\
+    \ internal::inv_gcd(m0, m1);\n\n        long long u1 = (m1 / g);\n        // |r1\
+    \ - r0| < (m0 + m1) <= lcm(m0, m1)\n        if ((r1 - r0) % g) return {0, 0};\n\
+    \n        // u1 * u1 <= m1 * m1 / g / g <= m0 * m1 / g = lcm(m0, m1)\n       \
+    \ long long x = (r1 - r0) / g % u1 * im % u1;\n\n        // |r0| + |m0 * x|\n\
+    \        // < m0 + m0 * (u1 - 1)\n        // = m0 + m0 * m1 / g - m0\n       \
+    \ // = lcm(m0, m1)\n        r0 += x * m0;\n        m0 *= u1;  // -> lcm(m0, m1)\n\
+    \        if (r0 < 0) r0 += m0;\n    }\n    return {r0, m0};\n}\n\nlong long floor_sum(long\
+    \ long n, long long m, long long a, long long b) {\n    assert(0 <= n && n < (1LL\
+    \ << 32));\n    assert(1 <= m && m < (1LL << 32));\n    unsigned long long ans\
+    \ = 0;\n    if (a < 0) {\n        unsigned long long a2 = internal::safe_mod(a,\
+    \ m);\n        ans -= 1ULL * n * (n - 1) / 2 * ((a2 - a) / m);\n        a = a2;\n\
+    \    }\n    if (b < 0) {\n        unsigned long long b2 = internal::safe_mod(b,\
+    \ m);\n        ans -= 1ULL * n * ((b2 - b) / m);\n        b = b2;\n    }\n   \
+    \ return ans + internal::floor_sum_unsigned(n, m, a, b);\n}\n\n}  // namespace\
+    \ atcoder\n\n\n#line 2 \"modint/barrett-reduction.hpp\"\n\n#line 4 \"modint/barrett-reduction.hpp\"\
+    \nusing namespace std;\n\nstruct Barrett {\n  using u32 = unsigned int;\n  using\
+    \ i64 = long long;\n  using u64 = unsigned long long;\n  u32 m;\n  u64 im;\n \
+    \ Barrett() : m(), im() {}\n  Barrett(int n) : m(n), im(u64(-1) / m + 1) {}\n\
+    \  constexpr inline i64 quo(u64 n) {\n    u64 x = u64((__uint128_t(n) * im) >>\
+    \ 64);\n    u32 r = n - x * m;\n    return m <= r ? x - 1 : x;\n  }\n  constexpr\
+    \ inline i64 rem(u64 n) {\n    u64 x = u64((__uint128_t(n) * im) >> 64);\n   \
+    \ u32 r = n - x * m;\n    return m <= r ? r + m : r;\n  }\n  constexpr inline\
+    \ pair<i64, int> quorem(u64 n) {\n    u64 x = u64((__uint128_t(n) * im) >> 64);\n\
+    \    u32 r = n - x * m;\n    if (m <= r) return {x - 1, r + m};\n    return {x,\
+    \ r};\n  }\n  constexpr inline i64 pow(u64 n, i64 p) {\n    u32 a = rem(n), r\
+    \ = m == 1 ? 0 : 1;\n    while (p) {\n      if (p & 1) r = rem(u64(r) * a);\n\
+    \      a = rem(u64(a) * a);\n      p >>= 1;\n    }\n    return r;\n  }\n};\n#line\
+    \ 7 \"modulo/arbitrary-mod-binomial.hpp\"\n\nusing namespace std;\n\n#define PRIME_POWER_BINOMIAL_M_MAX\
+    \ ((1LL << 30) - 1)\n#define PRIME_POWER_BINOMIAL_N_MAX 20000000\n\nstruct prime_power_binomial\
+    \ {\n  int p, q, M;\n  vector<int> fac, ifac, inv;\n  int delta;\n  Barrett bm,\
+    \ bp;\n\n  prime_power_binomial(int _p, int _q) : p(_p), q(_q) {\n    assert(1\
+    \ < p && p <= PRIME_POWER_BINOMIAL_M_MAX);\n    assert(_q > 0);\n    long long\
+    \ m = 1;\n    while (_q--) {\n      m *= p;\n      assert(m <= PRIME_POWER_BINOMIAL_M_MAX);\n\
+    \    }\n    M = m;\n    bm = Barrett(M), bp = Barrett(p);\n    enumerate();\n\
+    \    delta = (p == 2 && q >= 3) ? 1 : M - 1;\n  }\n\n  void enumerate() {\n  \
+    \  int MX = min<int>(M, PRIME_POWER_BINOMIAL_N_MAX + 10);\n    fac.resize(MX);\n\
+    \    ifac.resize(MX);\n    inv.resize(MX);\n    fac[0] = ifac[0] = inv[0] = 1;\n\
+    \    fac[1] = ifac[1] = inv[1] = 1;\n    for (int i = 2; i < MX; i++) {\n    \
+    \  if (i % p == 0) {\n        fac[i] = fac[i - 1];\n        fac[i + 1] = bm.rem(1LL\
+    \ * fac[i - 1] * (i + 1));\n        i++;\n      } else {\n        fac[i] = bm.rem(1LL\
+    \ * fac[i - 1] * i);\n      }\n    }\n    ifac[MX - 1] = bm.pow(fac[MX - 1], M\
+    \ / p * (p - 1) - 1);\n    for (int i = MX - 2; i > 1; --i) {\n      if (i % p\
+    \ == 0) {\n        ifac[i] = bm.rem(1LL * ifac[i + 1] * (i + 1));\n        ifac[i\
+    \ - 1] = ifac[i];\n        i--;\n      } else {\n        ifac[i] = bm.rem(1LL\
+    \ * ifac[i + 1] * (i + 1));\n      }\n    }\n  }\n\n  long long Lucas(long long\
+    \ n, long long m) {\n    int res = 1;\n    while (n) {\n      int n0, m0;\n  \
+    \    tie(n, n0) = bp.quorem(n);\n      tie(m, m0) = bp.quorem(m);\n      if (n0\
+    \ < m0) return 0;\n      res = bm.rem(1LL * res * fac[n0]);\n      int buf = bm.rem(1LL\
+    \ * ifac[n0 - m0] * ifac[m0]);\n      res = bm.rem(1LL * res * buf);\n    }\n\
+    \    return res;\n  }\n\n  long long C(long long n, long long m) {\n    if (n\
+    \ < m || n < 0 || m < 0) return 0;\n    if (q == 1) return Lucas(n, m);\n    long\
+    \ long r = n - m;\n    int e0 = 0, eq = 0, i = 0;\n    int res = 1;\n    while\
+    \ (n) {\n      res = bm.rem(1LL * res * fac[bm.rem(n)]);\n      res = bm.rem(1LL\
+    \ * res * ifac[bm.rem(m)]);\n      res = bm.rem(1LL * res * ifac[bm.rem(r)]);\n\
+    \      n = bp.quo(n);\n      m = bp.quo(m);\n      r = bp.quo(r);\n      int eps\
+    \ = n - m - r;\n      e0 += eps;\n      if (e0 >= q) return 0;\n      if (++i\
+    \ >= q) eq += eps;\n    }\n    if (eq & 1) res = bm.rem(1LL * res * delta);\n\
+    \    res = bm.rem(1LL * res * bm.pow(p, e0));\n    return res;\n  }\n};\n\n//\
+    \ constraints:\n// (M <= 1e7 and max(N) <= 1e18) or (M < 2^30 and max(N) <= 2e7)\n\
+    struct arbitrary_mod_binomial {\n  int mod;\n  vector<int> M;\n  vector<prime_power_binomial>\
+    \ cs;\n\n  arbitrary_mod_binomial(long long md) : mod(md) {\n    assert(1 <= md);\n\
+    \    assert(md <= PRIME_POWER_BINOMIAL_M_MAX);\n    for (int i = 2; i * i <= md;\
+    \ i++) {\n      if (md % i == 0) {\n        int j = 0, k = 1;\n        while (md\
+    \ % i == 0) md /= i, j++, k *= i;\n        M.push_back(k);\n        cs.emplace_back(i,\
+    \ j);\n        assert(M.back() == cs.back().M);\n      }\n    }\n    if (md !=\
+    \ 1) {\n      M.push_back(md);\n      cs.emplace_back(md, 1);\n    }\n    assert(M.size()\
+    \ == cs.size());\n  }\n\n  long long C(long long n, long long m) {\n    if (mod\
+    \ == 1) return 0;\n    vector<long long> rem, d;\n    for (int i = 0; i < (int)cs.size();\
+    \ i++) {\n      rem.push_back(cs[i].C(n, m));\n      d.push_back(M[i]);\n    }\n\
+    \    return atcoder::crt(rem, d).first;\n  }\n};\n\n#undef PRIME_POWER_BINOMIAL_M_MAX\n\
+    #undef PRIME_POWER_BINOMIAL_N_MAX\n\n/**\n * @brief \u4EFB\u610Fmod\u4E8C\u9805\
+    \u4FC2\u6570\n * @docs docs/modulo/arbitrary-mod-binomial.md\n */\n#line 6 \"\
+    verify/verify-yosupo-math/yosupo-binomial-coefficient.test.cpp\"\n\nusing namespace\
+    \ Nyaan;\n\nvoid Nyaan::solve() {\n  int T, M;\n  cin >> T >> M;\n  arbitrary_mod_binomial\
+    \ C(M);\n  while (T--) {\n    long long n, k;\n    cin >> n >> k;\n    cout <<\
+    \ C.C(n, k) << '\\n';\n  }\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/binomial_coefficient\"\n\
     //\n#include \"../../template/template.hpp\"\n//\n#include \"../../modulo/arbitrary-mod-binomial.hpp\"\
     \n\nusing namespace Nyaan;\n\nvoid Nyaan::solve() {\n  int T, M;\n  cin >> T >>\
@@ -402,7 +414,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-math/yosupo-binomial-coefficient.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-08 02:23:45+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-math/yosupo-binomial-coefficient.test.cpp

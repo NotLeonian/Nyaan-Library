@@ -222,22 +222,22 @@ data:
     \n\n\n\n#line 7 \"atcoder/internal_scc.hpp\"\n\n#line 1 \"atcoder/internal_csr.hpp\"\
     \n\n\n\n#line 7 \"atcoder/internal_csr.hpp\"\n\nnamespace atcoder {\nnamespace\
     \ internal {\n\ntemplate <class E> struct csr {\n    std::vector<int> start;\n\
-    \    std::vector<E> elist;\n    csr(int n, const std::vector<std::pair<int, E>>&\
-    \ edges)\n        : start(n + 1), elist(edges.size()) {\n        for (auto e :\
-    \ edges) {\n            start[e.first + 1]++;\n        }\n        for (int i =\
-    \ 1; i <= n; i++) {\n            start[i] += start[i - 1];\n        }\n      \
-    \  auto counter = start;\n        for (auto e : edges) {\n            elist[counter[e.first]++]\
+    \    std::vector<E> elist;\n    explicit csr(int n, const std::vector<std::pair<int,\
+    \ E>>& edges)\n        : start(n + 1), elist(edges.size()) {\n        for (auto\
+    \ e : edges) {\n            start[e.first + 1]++;\n        }\n        for (int\
+    \ i = 1; i <= n; i++) {\n            start[i] += start[i - 1];\n        }\n  \
+    \      auto counter = start;\n        for (auto e : edges) {\n            elist[counter[e.first]++]\
     \ = e.second;\n        }\n    }\n};\n\n}  // namespace internal\n\n}  // namespace\
     \ atcoder\n\n\n#line 9 \"atcoder/internal_scc.hpp\"\n\nnamespace atcoder {\nnamespace\
     \ internal {\n\n// Reference:\n// R. Tarjan,\n// Depth-First Search and Linear\
-    \ Graph Algorithms\nstruct scc_graph {\n  public:\n    scc_graph(int n) : _n(n)\
-    \ {}\n\n    int num_vertices() { return _n; }\n\n    void add_edge(int from, int\
-    \ to) { edges.push_back({from, {to}}); }\n\n    // @return pair of (# of scc,\
-    \ scc id)\n    std::pair<int, std::vector<int>> scc_ids() {\n        auto g =\
-    \ csr<edge>(_n, edges);\n        int now_ord = 0, group_num = 0;\n        std::vector<int>\
-    \ visited, low(_n), ord(_n, -1), ids(_n);\n        visited.reserve(_n);\n    \
-    \    auto dfs = [&](auto self, int v) -> void {\n            low[v] = ord[v] =\
-    \ now_ord++;\n            visited.push_back(v);\n            for (int i = g.start[v];\
+    \ Graph Algorithms\nstruct scc_graph {\n  public:\n    explicit scc_graph(int\
+    \ n) : _n(n) {}\n\n    int num_vertices() { return _n; }\n\n    void add_edge(int\
+    \ from, int to) { edges.push_back({from, {to}}); }\n\n    // @return pair of (#\
+    \ of scc, scc id)\n    std::pair<int, std::vector<int>> scc_ids() {\n        auto\
+    \ g = csr<edge>(_n, edges);\n        int now_ord = 0, group_num = 0;\n       \
+    \ std::vector<int> visited, low(_n), ord(_n, -1), ids(_n);\n        visited.reserve(_n);\n\
+    \        auto dfs = [&](auto self, int v) -> void {\n            low[v] = ord[v]\
+    \ = now_ord++;\n            visited.push_back(v);\n            for (int i = g.start[v];\
     \ i < g.start[v + 1]; i++) {\n                auto to = g.elist[i].to;\n     \
     \           if (ord[to] == -1) {\n                    self(self, to);\n      \
     \              low[v] = std::min(low[v], low[to]);\n                } else {\n\
@@ -259,9 +259,9 @@ data:
     \  int to;\n    };\n    std::vector<std::pair<int, edge>> edges;\n};\n\n}  //\
     \ namespace internal\n\n}  // namespace atcoder\n\n\n#line 9 \"atcoder/scc.hpp\"\
     \n\nnamespace atcoder {\n\nstruct scc_graph {\n  public:\n    scc_graph() : internal(0)\
-    \ {}\n    scc_graph(int n) : internal(n) {}\n\n    void add_edge(int from, int\
-    \ to) {\n        int n = internal.num_vertices();\n        assert(0 <= from &&\
-    \ from < n);\n        assert(0 <= to && to < n);\n        internal.add_edge(from,\
+    \ {}\n    explicit scc_graph(int n) : internal(n) {}\n\n    void add_edge(int\
+    \ from, int to) {\n        int n = internal.num_vertices();\n        assert(0\
+    \ <= from && from < n);\n        assert(0 <= to && to < n);\n        internal.add_edge(from,\
     \ to);\n    }\n\n    std::vector<std::vector<int>> scc() { return internal.scc();\
     \ }\n\n  private:\n    internal::scc_graph internal;\n};\n\n}  // namespace atcoder\n\
     \n\n#line 6 \"verify/verify-yosupo-graph/yosupo-scc-atcoder.test.cpp\"\n\nusing\
@@ -285,7 +285,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-graph/yosupo-scc-atcoder.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-08 02:23:45+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-graph/yosupo-scc-atcoder.test.cpp

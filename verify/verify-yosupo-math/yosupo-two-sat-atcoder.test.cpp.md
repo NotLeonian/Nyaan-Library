@@ -35,8 +35,8 @@ data:
     \n\n\n\n#include <algorithm>\n#include <utility>\n#line 7 \"atcoder/internal_scc.hpp\"\
     \n\n#line 1 \"atcoder/internal_csr.hpp\"\n\n\n\n#line 7 \"atcoder/internal_csr.hpp\"\
     \n\nnamespace atcoder {\nnamespace internal {\n\ntemplate <class E> struct csr\
-    \ {\n    std::vector<int> start;\n    std::vector<E> elist;\n    csr(int n, const\
-    \ std::vector<std::pair<int, E>>& edges)\n        : start(n + 1), elist(edges.size())\
+    \ {\n    std::vector<int> start;\n    std::vector<E> elist;\n    explicit csr(int\
+    \ n, const std::vector<std::pair<int, E>>& edges)\n        : start(n + 1), elist(edges.size())\
     \ {\n        for (auto e : edges) {\n            start[e.first + 1]++;\n     \
     \   }\n        for (int i = 1; i <= n; i++) {\n            start[i] += start[i\
     \ - 1];\n        }\n        auto counter = start;\n        for (auto e : edges)\
@@ -44,9 +44,9 @@ data:
     \n}  // namespace internal\n\n}  // namespace atcoder\n\n\n#line 9 \"atcoder/internal_scc.hpp\"\
     \n\nnamespace atcoder {\nnamespace internal {\n\n// Reference:\n// R. Tarjan,\n\
     // Depth-First Search and Linear Graph Algorithms\nstruct scc_graph {\n  public:\n\
-    \    scc_graph(int n) : _n(n) {}\n\n    int num_vertices() { return _n; }\n\n\
-    \    void add_edge(int from, int to) { edges.push_back({from, {to}}); }\n\n  \
-    \  // @return pair of (# of scc, scc id)\n    std::pair<int, std::vector<int>>\
+    \    explicit scc_graph(int n) : _n(n) {}\n\n    int num_vertices() { return _n;\
+    \ }\n\n    void add_edge(int from, int to) { edges.push_back({from, {to}}); }\n\
+    \n    // @return pair of (# of scc, scc id)\n    std::pair<int, std::vector<int>>\
     \ scc_ids() {\n        auto g = csr<edge>(_n, edges);\n        int now_ord = 0,\
     \ group_num = 0;\n        std::vector<int> visited, low(_n), ord(_n, -1), ids(_n);\n\
     \        visited.reserve(_n);\n        auto dfs = [&](auto self, int v) -> void\
@@ -74,7 +74,7 @@ data:
     \n\nnamespace atcoder {\n\n// Reference:\n// B. Aspvall, M. Plass, and R. Tarjan,\n\
     // A Linear-Time Algorithm for Testing the Truth of Certain Quantified Boolean\n\
     // Formulas\nstruct two_sat {\n  public:\n    two_sat() : _n(0), scc(0) {}\n \
-    \   two_sat(int n) : _n(n), _answer(n), scc(2 * n) {}\n\n    void add_clause(int\
+    \   explicit two_sat(int n) : _n(n), _answer(n), scc(2 * n) {}\n\n    void add_clause(int\
     \ i, bool f, int j, bool g) {\n        assert(0 <= i && i < _n);\n        assert(0\
     \ <= j && j < _n);\n        scc.add_edge(2 * i + (f ? 0 : 1), 2 * j + (g ? 1 :\
     \ 0));\n        scc.add_edge(2 * j + (g ? 0 : 1), 2 * i + (f ? 1 : 0));\n    }\n\
@@ -294,7 +294,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-math/yosupo-two-sat-atcoder.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-08 02:23:45+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-math/yosupo-two-sat-atcoder.test.cpp
