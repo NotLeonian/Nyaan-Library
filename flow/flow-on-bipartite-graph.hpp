@@ -19,7 +19,7 @@ struct BipartiteGraph : mf_graph<long long> {
     for (int i = 0; i < R; i++) mf_graph<long long>::add_edge(i + L, t, 1);
   }
 
-  int add_edge(int n, int m, long long cap = 1) override {
+  int add_edge(int n, int m, long long cap = 1) {
     assert(0 <= n && n < L);
     assert(0 <= m && m < R);
     return mf_graph<long long>::add_edge(n, m + L, cap);
