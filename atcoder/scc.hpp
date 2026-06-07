@@ -5,14 +5,14 @@
 #include <cassert>
 #include <vector>
 
-#include "internal_scc.hpp"
+#include "atcoder/internal_scc"
 
 namespace atcoder {
 
 struct scc_graph {
   public:
     scc_graph() : internal(0) {}
-    scc_graph(int n) : internal(n) {}
+    explicit scc_graph(int n) : internal(n) {}
 
     void add_edge(int from, int to) {
         int n = internal.num_vertices();

@@ -7,15 +7,15 @@
 #include <queue>
 #include <vector>
 
-#include "internal_csr.hpp"
-#include "internal_queue.hpp"
+#include "atcoder/internal_csr"
+#include "atcoder/internal_queue"
 
 namespace atcoder {
 
 template <class Cap, class Cost> struct mcf_graph {
   public:
     mcf_graph() {}
-    mcf_graph(int n) : _n(n) {}
+    explicit mcf_graph(int n) : _n(n) {}
 
     int add_edge(int from, int to, Cap cap, Cost cost) {
         assert(0 <= from && from < _n);

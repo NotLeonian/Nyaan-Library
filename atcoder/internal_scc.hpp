@@ -5,7 +5,7 @@
 #include <utility>
 #include <vector>
 
-#include "internal_csr.hpp"
+#include "atcoder/internal_csr"
 
 namespace atcoder {
 namespace internal {
@@ -15,7 +15,7 @@ namespace internal {
 // Depth-First Search and Linear Graph Algorithms
 struct scc_graph {
   public:
-    scc_graph(int n) : _n(n) {}
+    explicit scc_graph(int n) : _n(n) {}
 
     int num_vertices() { return _n; }
 
