@@ -40,7 +40,7 @@ struct RollingHashonSegmentTree {
     for (int i = 0; i < n; i++) {
       init[i] = make_pair(Hash::set(S[i]), 1);
     }
-    seg = {init};
+    seg = atcoder::segtree<T, op, e>(init);
   }
 
   void update(int i, const Value& v) {
