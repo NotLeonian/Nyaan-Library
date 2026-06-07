@@ -4,7 +4,7 @@
 
 namespace BipartiteGraphImpl {
 using namespace atcoder;
-struct BipartiteGraph : mf_graph<long long> {
+struct BipartiteGraph : private mf_graph<long long> {
   int L, R, s, t;
   bool is_flow;
 
