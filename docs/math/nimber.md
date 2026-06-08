@@ -1,6 +1,6 @@
 ---
 title: Nim Product
-documentation_of: math/nimber.hpp
+documentation_of: //math/nimber.hpp
 ---
 
 ## Nim Product

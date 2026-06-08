@@ -1,6 +1,6 @@
 ---
 title: 平行移動
-documentation_of: fps/taylor-shift.hpp
+documentation_of: //fps/taylor-shift.hpp
 ---
 
 ## fps-平行移動

@@ -1,6 +1,6 @@
 ---
 title: mod sqrt(Tonelli-Shanks algorithm)
-documentation_of: modulo/mod-sqrt.hpp
+documentation_of: //modulo/mod-sqrt.hpp
 ---
 
 ## mod sqrt(Tonelli-Shanks algorithm)

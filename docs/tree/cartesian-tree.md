@@ -1,6 +1,6 @@
 ---
 title: Cartesian Tree
-documentation_of: tree/cartesian-tree.hpp
+documentation_of: //tree/cartesian-tree.hpp
 ---
 
 ## Cartesian Tree

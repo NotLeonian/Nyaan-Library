@@ -1,6 +1,6 @@
 ---
 title: 平方根
-documentation_of: fps/fps-sqrt.hpp
+documentation_of: //fps/fps-sqrt.hpp
 ---
 
 ## fps-平方根

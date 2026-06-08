@@ -1,6 +1,6 @@
 ---
 title: ハッシュ構造体
-documentation_of: internal/internal-hash.hpp
+documentation_of: //internal/internal-hash.hpp
 ---
 
 ## ハッシュ構造体

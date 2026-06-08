@@ -1,6 +1,6 @@
 ---
 title: 階乗 $\mod p$
-documentation_of: modulo/factorial.hpp
+documentation_of: //modulo/factorial.hpp
 ---
 
 ## 階乗 $\mod p$

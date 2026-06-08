@@ -1,6 +1,6 @@
 ---
 title: 動的Binary Indexed Tree
-documentation_of: data-structure/dynamic-binary-indexed-tree.hpp
+documentation_of: //data-structure/dynamic-binary-indexed-tree.hpp
 ---
 
 ## 動的Binary Indexed Tree

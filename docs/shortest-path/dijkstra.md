@@ -1,6 +1,6 @@
 ---
 title: ダイクストラ法
-documentation_of: shortest-path/dijkstra.hpp
+documentation_of: //shortest-path/dijkstra.hpp
 ---
 
 ## ダイクストラ法

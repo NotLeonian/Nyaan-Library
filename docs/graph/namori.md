@@ -1,6 +1,6 @@
 ---
 title: Functional Graph(なもりグラフ)の分解
-documentation_of: graph/namori.hpp
+documentation_of: //graph/namori.hpp
 ---
 
 ## Functional Graph(なもりグラフ)

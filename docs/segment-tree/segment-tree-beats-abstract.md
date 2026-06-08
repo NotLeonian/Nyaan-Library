@@ -1,6 +1,6 @@
 ---
 title: 抽象化Segment Tree Beats!
-documentation_of: segment-tree/segment-tree-beats-abstract.hpp
+documentation_of: //segment-tree/segment-tree-beats-abstract.hpp
 ---
 
 ## 抽象化Segment Tree Beats

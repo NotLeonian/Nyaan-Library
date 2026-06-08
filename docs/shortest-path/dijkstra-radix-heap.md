@@ -1,6 +1,6 @@
 ---
 title: ダイクストラ法(Radix Heap)
-documentation_of: shortest-path/dijkstra-radix-heap.hpp
+documentation_of: //shortest-path/dijkstra-radix-heap.hpp
 ---
 
 ## ダイクストラ法(Radix Heap)

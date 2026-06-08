@@ -1,6 +1,6 @@
 ---
 title: Binary Indexed Tree(Fenwick Tree)
-documentation_of: data-structure/binary-indexed-tree.hpp
+documentation_of: //data-structure/binary-indexed-tree.hpp
 ---
 
 ## Binary Indexed Tree

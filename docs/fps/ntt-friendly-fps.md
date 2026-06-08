@@ -1,6 +1,6 @@
 ---
 title: NTT mod用FPSライブラリ
-documentation_of: fps/ntt-friendly-fps.hpp
+documentation_of: //fps/ntt-friendly-fps.hpp
 ---
 
 ## NTT mod専用の形式的冪級数ライブラリ

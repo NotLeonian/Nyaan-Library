@@ -1,6 +1,6 @@
 ---
 title: Link/Cut Tree(base)
-documentation_of: lct/link-cut-base.hpp
+documentation_of: //lct/link-cut-base.hpp
 ---
 
 ## Link/Cut Tree

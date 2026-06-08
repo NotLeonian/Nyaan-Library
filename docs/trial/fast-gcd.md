@@ -1,6 +1,6 @@
 ---
 title: 高速GCD
-documentation_of: unused/old/trial/fast-gcd.hpp
+documentation_of: //unused/old/trial/fast-gcd.hpp
 ---
 
 ## Binary GCD

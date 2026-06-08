@@ -1,6 +1,6 @@
 ---
 title: 平方分割
-documentation_of: data-structure/square-root-decomposition.hpp
+documentation_of: //data-structure/square-root-decomposition.hpp
 ---
 
 ## 平方分割

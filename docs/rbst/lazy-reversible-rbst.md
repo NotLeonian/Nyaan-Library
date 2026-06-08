@@ -1,6 +1,6 @@
 ---
 title: 遅延伝搬反転可能乱択平衡二分木
-documentation_of: rbst/lazy-reversible-rbst.hpp
+documentation_of: //rbst/lazy-reversible-rbst.hpp
 ---
 
 ## 遅延伝搬反転可能乱択平衡二分木

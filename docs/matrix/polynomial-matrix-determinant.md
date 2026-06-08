@@ -1,6 +1,6 @@
 ---
 title: 多項式行列の行列式
-documentation_of: matrix/polynomial-matrix-determinant.hpp
+documentation_of: //matrix/polynomial-matrix-determinant.hpp
 ---
 
 ## 多項式行列の行列式

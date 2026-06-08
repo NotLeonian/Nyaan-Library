@@ -1,6 +1,6 @@
 ---
 title: Static Graph
-documentation_of: graph/static-graph.hpp
+documentation_of: //graph/static-graph.hpp
 ---
 
 ## Static Graph

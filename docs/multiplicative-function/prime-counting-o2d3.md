@@ -1,6 +1,6 @@
 ---
 title: 素数カウント( $\mathrm{O}(N^{\frac{2}{3}})$ )
-documentation_of: multiplicative-function/prime-counting-o2d3.hpp
+documentation_of: //multiplicative-function/prime-counting-o2d3.hpp
 ---
 
 [Min_25氏の記事およびツイート](https://twitter.com/min_25_/status/1247483565933121537)を参考にした素数カウントの$\mathrm{O}(N^{\frac{2}{3}})$での実装。実装の詳細はコメントに記した。

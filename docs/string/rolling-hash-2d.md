@@ -1,6 +1,6 @@
 ---
 title: 二次元Rolling Hash
-documentation_of: string/rolling-hash-2d.hpp
+documentation_of: //string/rolling-hash-2d.hpp
 ---
 
 ## 二次元Rolling Hash

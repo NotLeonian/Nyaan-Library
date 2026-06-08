@@ -1,6 +1,6 @@
 ---
 title: グラフテンプレート
-documentation_of: graph/graph-template.hpp
+documentation_of: //graph/graph-template.hpp
 ---
 
 ## グラフテンプレート

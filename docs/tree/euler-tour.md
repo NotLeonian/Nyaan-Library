@@ -1,6 +1,6 @@
 ---
 title: オイラーツアー
-documentation_of: tree/euler-tour.hpp
+documentation_of: //tree/euler-tour.hpp
 ---
 
 ## Euler Tour

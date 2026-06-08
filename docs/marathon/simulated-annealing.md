@@ -1,6 +1,6 @@
 ---
 title: Simulated Annealing
-documentation_of: marathon/simulated-annealing.hpp
+documentation_of: //marathon/simulated-annealing.hpp
 ---
 
 #### テンプレート

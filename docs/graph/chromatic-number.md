@@ -1,6 +1,6 @@
 ---
 title: 彩色数
-documentation_of: graph/chromatic-number.hpp
+documentation_of: //graph/chromatic-number.hpp
 ---
 
 ## 彩色数

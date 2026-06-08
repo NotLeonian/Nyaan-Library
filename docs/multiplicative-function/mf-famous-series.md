@@ -1,6 +1,6 @@
 ---
 title: 有名な乗法的関数
-documentation_of: multiplicative-function/mf-famous-series.hpp
+documentation_of: //multiplicative-function/mf-famous-series.hpp
 ---
 
 ## 有名な乗法的関数

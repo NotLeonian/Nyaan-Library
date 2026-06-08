@@ -1,6 +1,6 @@
 ---
 title: Multipoint Simulated Annealing
-documentation_of: marathon/sa-manager.hpp
+documentation_of: //marathon/sa-manager.hpp
 ---
 
 ## 焼きなまし法

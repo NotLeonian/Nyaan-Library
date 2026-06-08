@@ -1,6 +1,6 @@
 ---
 title: ダイクストラ法(Skew Heap)
-documentation_of: shortest-path/dijkstra-skew-heap.hpp
+documentation_of: //shortest-path/dijkstra-skew-heap.hpp
 ---
 
 ## ダイクストラ法(Skew Heap)

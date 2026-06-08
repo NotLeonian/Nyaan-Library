@@ -1,6 +1,6 @@
 ---
 title: 多項式/形式的冪級数ライブラリ
-documentation_of: fps/formal-power-series.hpp
+documentation_of: //fps/formal-power-series.hpp
 ---
 
 # 形式的冪級数

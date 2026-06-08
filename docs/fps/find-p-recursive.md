@@ -1,6 +1,6 @@
 ---
 title: P-recursiveの高速計算
-documentation_of: fps/find-p-recursive.hpp
+documentation_of: //fps/find-p-recursive.hpp
 ---
 
 ## P-recursiveの高速計算

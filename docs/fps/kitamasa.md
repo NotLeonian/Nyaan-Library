@@ -1,6 +1,6 @@
 ---
 title: 線形漸化式の高速計算
-documentation_of: fps/kitamasa.hpp
+documentation_of: //fps/kitamasa.hpp
 ---
 
 ## 線形漸化式の高速計算

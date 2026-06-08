@@ -1,6 +1,6 @@
 ---
 title: 線形回帰数列の高速計算(Berlekamp-Massey/Bostan-Mori)
-documentation_of: fps/nth-term.hpp
+documentation_of: //fps/nth-term.hpp
 ---
 
 ## 線形回帰数列の高速計算(Berlekamp-Massey/Bostan-Mori)

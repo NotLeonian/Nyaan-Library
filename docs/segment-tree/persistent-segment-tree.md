@@ -1,6 +1,6 @@
 ---
 title: 永続セグメント木
-documentation_of: segment-tree/persistent-segment-tree.hpp
+documentation_of: //segment-tree/persistent-segment-tree.hpp
 ---
 
 ## 永続セグメント木(Persistent Segment Tree)

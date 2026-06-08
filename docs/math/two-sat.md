@@ -1,6 +1,6 @@
 ---
 title: 2-SAT
-documentation_of: math/two-sat.hpp
+documentation_of: //math/two-sat.hpp
 ---
 
 ## 2-SAT

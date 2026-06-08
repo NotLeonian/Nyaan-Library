@@ -1,6 +1,6 @@
 ---
 title: グラフユーティリティ
-documentation_of: graph/graph-utility.hpp
+documentation_of: //graph/graph-utility.hpp
 ---
 
 ## グラフユーティリティ

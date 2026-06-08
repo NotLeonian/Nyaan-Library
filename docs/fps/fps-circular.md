@@ -1,6 +1,6 @@
 ---
 title: 三角関数
-documentation_of: fps/fps-circular.hpp
+documentation_of: //fps/fps-circular.hpp
 ---
 
 ## fps-三角関数

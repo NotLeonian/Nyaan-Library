@@ -1,6 +1,6 @@
 ---
 title: 倍数変換・約数変換
-documentation_of: multiplicative-function/divisor-multiple-transform.hpp
+documentation_of: //multiplicative-function/divisor-multiple-transform.hpp
 ---
 
 ## 倍数変換/約数変換

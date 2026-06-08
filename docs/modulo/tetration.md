@@ -1,6 +1,6 @@
 ---
 title: tetration
-documentation_of: modulo/tetration.hpp
+documentation_of: //modulo/tetration.hpp
 ---
 
 ## Tetration

@@ -1,6 +1,6 @@
 ---
 title: Binary Lifting(ダブリング)
-documentation_of: misc/doubling.hpp
+documentation_of: //misc/doubling.hpp
 ---
 
 ## Binary Lifting(ダブリング)

@@ -1,6 +1,6 @@
 ---
 title: Skew Heap
-documentation_of: data-structure/skew-heap.hpp
+documentation_of: //data-structure/skew-heap.hpp
 ---
 
 ## Skew Heap

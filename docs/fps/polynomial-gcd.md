@@ -1,6 +1,6 @@
 ---
 title: 多項式GCD
-documentation_of: fps/polynomial-gcd.hpp
+documentation_of: //fps/polynomial-gcd.hpp
 ---
 
 ## 多項式GCD

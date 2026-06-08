@@ -1,6 +1,6 @@
 ---
 title: Hash Map(開番地法)
-documentation_of: unused/old/hashmap-open-address.hpp
+documentation_of: //unused/old/hashmap-open-address.hpp
 ---
 
 ## Hash Map

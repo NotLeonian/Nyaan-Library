@@ -1,6 +1,6 @@
 ---
 title: 頂点間の距離の度数分布
-documentation_of: tree/frequency-table-of-tree-distance.hpp
+documentation_of: //tree/frequency-table-of-tree-distance.hpp
 ---
 
 ## 頂点間の距離の度数分布

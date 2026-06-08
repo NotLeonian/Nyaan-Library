@@ -1,6 +1,6 @@
 ---
 title: Hash Map(連鎖法)
-documentation_of: unused/old/hashmap-chain.hpp
+documentation_of: //unused/old/hashmap-chain.hpp
 ---
 
 ## Hash Map

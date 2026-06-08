@@ -1,6 +1,6 @@
 ---
 title: 常微分方程式
-documentation_of: fps/differential-equation.hpp
+documentation_of: //fps/differential-equation.hpp
 ---
 
 ## 常微分方程式

@@ -1,6 +1,6 @@
 ---
 title: Rolling Hash
-documentation_of: string/rolling-hash.hpp
+documentation_of: //string/rolling-hash.hpp
 ---
 
 ## Rolling Hash

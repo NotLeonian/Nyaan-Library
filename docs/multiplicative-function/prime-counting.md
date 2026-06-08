@@ -1,6 +1,6 @@
 ---
 title: 素数カウント( $\mathrm{O}(\frac{N^{\frac{3}{4}}}{\log N})$ )
-documentation_of: multiplicative-function/prime-counting.hpp
+documentation_of: //multiplicative-function/prime-counting.hpp
 ---
 
 ## 素数の個数$\pi(N)$の高速計算

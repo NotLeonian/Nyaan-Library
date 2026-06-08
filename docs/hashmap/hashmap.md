@@ -1,6 +1,6 @@
 ---
 title: ハッシュマップ(連想配列)
-documentation_of: hashmap/hashmap.hpp
+documentation_of: //hashmap/hashmap.hpp
 ---
 
 ## HashMap(連想配列)

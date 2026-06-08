@@ -1,6 +1,6 @@
 ---
 title: Multivariate Multiplication
-documentation_of: ntt/multivariate-multiplication.hpp
+documentation_of: //ntt/multivariate-multiplication.hpp
 ---
 
 

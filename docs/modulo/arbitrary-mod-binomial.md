@@ -1,6 +1,6 @@
 ---
 title: 任意mod二項係数
-documentation_of: modulo/arbitrary-mod-binomial.hpp
+documentation_of: //modulo/arbitrary-mod-binomial.hpp
 ---
 
 ## 任意mod二項係数

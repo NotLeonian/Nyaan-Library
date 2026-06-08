@@ -1,6 +1,6 @@
 ---
 title: Rerooting(全方位木DP)
-documentation_of: tree/rerooting.hpp
+documentation_of: //tree/rerooting.hpp
 ---
 
 ## 全方位木DP

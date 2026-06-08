@@ -1,6 +1,6 @@
 ---
 title: 高速素因数分解(Miller Rabin/Pollard's Rho)
-documentation_of: prime/fast-factorize.hpp
+documentation_of: //prime/fast-factorize.hpp
 ---
 
 ## 高速な素因数分解
