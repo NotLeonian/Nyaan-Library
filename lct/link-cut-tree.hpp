@@ -10,5 +10,4 @@ struct LinkCutTree : LinkCutBase<ReversibleSplayTree<T, f, ts>> {};
 
 /**
  * @brief Link/Cut Tree
- * @docs docs/lct/link-cut-tree.md
  */

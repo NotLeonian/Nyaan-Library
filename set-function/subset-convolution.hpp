@@ -83,5 +83,4 @@ struct SubsetConvolution {
 
 /**
  * @brief Subset Convolution
- * @docs docs/set-function/subset-convolution.md
  */

@@ -27,5 +27,4 @@ auto DifferentialEquation(G&& g, GPrime&& gprime, mint f0, int deg)
 
 /**
  * @brief 常微分方程式
- * @docs docs/fps/differential-equation.md
  */

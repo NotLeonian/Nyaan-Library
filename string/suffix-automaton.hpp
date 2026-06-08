@@ -142,5 +142,4 @@ struct SuffixAutomaton {
 
 /**
  * @brief Suffix Automaton
- * @docs docs/string/suffix-automaton.md
  */

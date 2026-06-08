@@ -1,3 +1,8 @@
+---
+title: 線形漸化式の高速計算
+documentation_of: fps/kitamasa.hpp
+---
+
 ## 線形漸化式の高速計算
 
 分子分母が高々 $k$ 次の多項式で表される分数 $\frac{P(x)}{Q(x)}$ が与えられたときに、$[x^N]\frac{P(x)}{Q(x)}$ を $\mathrm{O}(k \log k \log N)$ で計算するライブラリ。

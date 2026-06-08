@@ -1,3 +1,8 @@
+---
+title: オイラーツアー
+documentation_of: tree/euler-tour.hpp
+---
+
 ## Euler Tour
 
 無向森が与えられたときにそれぞれの木に対してEuler Tourを構築するライブラリ。

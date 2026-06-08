@@ -86,5 +86,4 @@ vector<int> Path(G &g, int u, int v) {
 
 /**
  * @brief グラフユーティリティ
- * @docs docs/graph/graph-utility.md
  */

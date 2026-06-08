@@ -98,5 +98,4 @@ struct Tree {
 
 /**
  * @brief 木に対する一般的なクエリ
- * @docs docs/tree/tree-query.md
  */

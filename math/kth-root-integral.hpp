@@ -19,5 +19,4 @@ uint64_t kth_root_integral(uint64_t a, uint64_t k) {
 
 /**
  * @brief $\mathrm{floor}(a^{\frac{1}{k}})$
- * @docs docs/math/kth-root-integral.md
  */

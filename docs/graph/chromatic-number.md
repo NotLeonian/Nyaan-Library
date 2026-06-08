@@ -1,3 +1,8 @@
+---
+title: 彩色数
+documentation_of: graph/chromatic-number.hpp
+---
+
 ## 彩色数
 
 頂点数$n$のグラフの彩色数を$\mathrm{O}(2^n n)$で求めるライブラリ。

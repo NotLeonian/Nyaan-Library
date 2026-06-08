@@ -1,3 +1,8 @@
+---
+title: 二次元Rolling Hash
+documentation_of: string/rolling-hash-2d.hpp
+---
+
 ## 二次元Rolling Hash
 
 二次元の列の一致判定を前計算$\mathrm{O}(n)$クエリ$\mathrm{O}(1)$で処理するライブラリ。

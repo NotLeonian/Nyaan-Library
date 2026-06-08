@@ -1,3 +1,8 @@
+---
+title: Binary Trie
+documentation_of: data-structure/binary-trie.hpp
+---
+
 ## Binary Trie
 
 トライ木の辺に対応する文字を0/1に限定することで非負整数を管理できるようにしたデータ構造。

@@ -62,5 +62,4 @@ struct FrequencyTableOfTreeDistance : CentroidDecomposition<G> {
 
 /**
  * @brief 頂点間の距離の度数分布
- * @docs docs/tree/frequency-table-of-tree-distance.md
  */

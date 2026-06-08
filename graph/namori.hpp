@@ -159,5 +159,4 @@ struct Namori {
 
 /**
  * @brief Functional Graph(なもりグラフ)の分解
- * @docs docs/graph/namori.md
  */

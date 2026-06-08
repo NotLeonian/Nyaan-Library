@@ -150,5 +150,4 @@ struct WaveletMatrix {
 
 /*
  * @brief Wavelet Matrix
- * @docs docs/data-structure-2d/wavelet-matrix.md
  */

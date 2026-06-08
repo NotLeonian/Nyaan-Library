@@ -1,3 +1,8 @@
+---
+title: Nim Product
+documentation_of: math/nimber.hpp
+---
+
 ## Nim Product
 
 $$a \oplus b =\mathrm{mex}(\lbrace a' \oplus b \mid a' \lt a \rbrace\cup\lbrace a \oplus b' \mid b' \lt b \rbrace)$$

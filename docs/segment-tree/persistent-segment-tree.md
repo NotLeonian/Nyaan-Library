@@ -1,3 +1,8 @@
+---
+title: 永続セグメント木
+documentation_of: segment-tree/persistent-segment-tree.hpp
+---
+
 ## 永続セグメント木(Persistent Segment Tree)
 
 永続セグメント木とはセグメント木を完全永続化したデータ構造である。完全永続化とは、更新をする時に更新前のデータを残したり、最新でないデータを元として更新したりできるようにすることである。

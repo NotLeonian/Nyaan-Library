@@ -1,3 +1,8 @@
+---
+title: Slide Window Aggrigation
+documentation_of: data-structure/slide-window-aggregation.hpp
+---
+
 ## Slide Window Aggrigation
 
 #### 概要

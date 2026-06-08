@@ -174,5 +174,4 @@ struct SA_manager {
 
 /**
  * @brief Multipoint Simulated Annealing
- * @docs docs/marathon/sa-manager.md
  */

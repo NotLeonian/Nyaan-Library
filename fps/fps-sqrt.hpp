@@ -34,5 +34,4 @@ FormalPowerSeries<mint> sqrt(const FormalPowerSeries<mint> &f, int deg = -1) {
 
 /**
  * @brief 平方根
- * @docs docs/fps/fps-sqrt.md
  */

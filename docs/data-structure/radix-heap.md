@@ -1,3 +1,8 @@
+---
+title: Radix Heap
+documentation_of: data-structure/radix-heap.hpp
+---
+
 ## Radix Heap
 
 #### 概要

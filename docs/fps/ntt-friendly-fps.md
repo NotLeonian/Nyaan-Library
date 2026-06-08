@@ -1,3 +1,8 @@
+---
+title: NTT mod用FPSライブラリ
+documentation_of: fps/ntt-friendly-fps.hpp
+---
+
 ## NTT mod専用の形式的冪級数ライブラリ
 
 modがNTT modの時に高速に動作する実装を行ったFPSライブラリ。(現在はinvとexpのみ実装している。)

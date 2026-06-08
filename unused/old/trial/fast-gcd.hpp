@@ -130,5 +130,4 @@ void unit_test() {
 
 /**
  * @brief 高速GCD
- * @docs docs/trial/fast-gcd.md
  */

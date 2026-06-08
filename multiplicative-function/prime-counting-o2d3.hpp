@@ -118,5 +118,4 @@ int64_t prime_counting(long long N) {
 
 /**
  * @brief 素数カウント( $\mathrm{O}(N^{\frac{2}{3}})$ )
- * @docs docs/multiplicative-function/prime-counting-o2d3.md
  */

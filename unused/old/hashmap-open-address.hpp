@@ -43,5 +43,4 @@ struct HashMap {
 
 /**
  * @brief Hash Map(開番地法)
- * @docs docs/hashmap/hashmap-open-address.md
  */

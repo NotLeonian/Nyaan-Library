@@ -1,3 +1,8 @@
+---
+title: 倍数変換・約数変換
+documentation_of: multiplicative-function/divisor-multiple-transform.hpp
+---
+
 ## 倍数変換/約数変換
 
 (約数/倍数)(ゼータ/メビウス)変換を$\mathrm{O}(N\log \log N)$で行うライブラリ。

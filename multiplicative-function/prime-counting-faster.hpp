@@ -38,5 +38,4 @@ prime_counting(i64 N) {
 
 /**
  * @brief 素数カウント( $\mathrm{O}(\frac{N^{\frac{3}{4}}}{\log N})$・高速化版)
- * @docs docs/multiplicative-function/prime-counting-faster.md
  */

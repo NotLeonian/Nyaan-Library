@@ -1,3 +1,8 @@
+---
+title: グラフテンプレート
+documentation_of: graph/graph-template.hpp
+---
+
 ## グラフテンプレート
 
 ### 構造体・型エイリアス

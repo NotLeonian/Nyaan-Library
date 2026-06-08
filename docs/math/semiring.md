@@ -1,3 +1,8 @@
+---
+title: 半環ライブラリ
+documentation_of: math/semiring.hpp
+---
+
 ## 半環ライブラリ
 
 #### 概要

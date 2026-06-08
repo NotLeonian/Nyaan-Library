@@ -89,5 +89,4 @@ struct Mat {
 
 /**
  * @brief 半環ライブラリ
- * @docs docs/math/semiring.md
  */

@@ -1,3 +1,8 @@
+---
+title: 頂点間の距離の度数分布
+documentation_of: tree/frequency-table-of-tree-distance.hpp
+---
+
 ## 頂点間の距離の度数分布
 
 頂点間の距離の度数分布を$\mathrm{O}(n \log^2 n)$で計算するライブラリ。

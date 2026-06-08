@@ -98,5 +98,4 @@ struct HashMap {
 
 /**
  * @brief Hash Map(可変長版)
- * @docs docs/data-structure/hash-map-variable-length.md
  */

@@ -1,3 +1,8 @@
+---
+title: 有名な乗法的関数
+documentation_of: multiplicative-function/mf-famous-series.hpp
+---
+
 ## 有名な乗法的関数
 
 来るべきDGF(ディリクレ母関数)の流行に備えて(本当に流行るのか？)、自分が理解していることをメモしておく…

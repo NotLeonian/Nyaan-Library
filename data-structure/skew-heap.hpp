@@ -57,5 +57,4 @@ struct SkewHeap {
 
 /**
  * @brief Skew Heap
- * @docs docs/data-structure/skew-heap.md
  */

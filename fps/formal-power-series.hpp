@@ -243,5 +243,4 @@ FormalPowerSeries<mint> FormalPowerSeries<mint>::exp(int deg) const {
 
 /**
  * @brief 多項式/形式的冪級数ライブラリ
- * @docs docs/fps/formal-power-series.md
  */

@@ -66,5 +66,4 @@ using roriha2d = RollingHash2D<string, 1>;
 
 /**
  * @brief 二次元Rolling Hash
- * @docs docs/string/rolling-hash-2d.md
  */

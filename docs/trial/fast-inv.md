@@ -1,3 +1,8 @@
+---
+title: 高速modulo逆元
+documentation_of: unused/old/trial/fast-inv.hpp
+---
+
 ## 高速modulo逆元
 
 高速なmodulo逆元の実装に関する実験。

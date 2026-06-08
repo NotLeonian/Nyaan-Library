@@ -137,5 +137,4 @@ using poly_gcd::PolyInv;
 
 /**
  * @brief 多項式GCD
- * @docs docs/fps/polynomial-gcd.md
  */

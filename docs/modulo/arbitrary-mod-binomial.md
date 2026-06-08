@@ -1,3 +1,8 @@
+---
+title: 任意mod二項係数
+documentation_of: modulo/arbitrary-mod-binomial.hpp
+---
+
 ## 任意mod二項係数
 
 $\binom{n}{m} \mod M$を前計算$\mathrm{O}(\min(\frac{n\log M}{\log \log M},M))$、クエリ$\mathrm{O}(\frac{\log n \log M}{\log \log M})$で計算するライブラリ。

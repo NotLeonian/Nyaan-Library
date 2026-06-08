@@ -62,5 +62,4 @@ T tetration(uint64_t a, uint64_t b, uint64_t m) {
 
 /**
  * @brief tetration
- * @docs docs/modulo/tetration.md
  */

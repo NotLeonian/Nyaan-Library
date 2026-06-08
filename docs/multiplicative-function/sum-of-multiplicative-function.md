@@ -1,3 +1,8 @@
+---
+title: 乗法的関数のprefix sum
+documentation_of: multiplicative-function/sum-of-multiplicative-function.hpp
+---
+
 
 ## 乗法的関数の和
 

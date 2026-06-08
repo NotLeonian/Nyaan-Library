@@ -51,5 +51,4 @@ static constexpr vector<T> totient(int n) {
 
 /**
  * @brief 有名な乗法的関数
- * @docs docs/multiplicative-function/mf-famous-series.md
  */

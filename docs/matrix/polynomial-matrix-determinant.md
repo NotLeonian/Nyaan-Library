@@ -1,3 +1,8 @@
+---
+title: 多項式行列の行列式
+documentation_of: matrix/polynomial-matrix-determinant.hpp
+---
+
 ## 多項式行列の行列式
 
 TODO : 清書・使い方を書く

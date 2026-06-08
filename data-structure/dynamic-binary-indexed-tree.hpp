@@ -44,5 +44,4 @@ struct DynamicFenwickTree {
 
 /**
  * @brief 動的Binary Indexed Tree
- * @docs docs/data-structure/dynamic-binary-indexed-tree.md
  */

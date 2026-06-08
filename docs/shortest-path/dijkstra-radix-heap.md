@@ -1,3 +1,8 @@
+---
+title: ダイクストラ法(Radix Heap)
+documentation_of: shortest-path/dijkstra-radix-heap.hpp
+---
+
 ## ダイクストラ法(Radix Heap)
 
 ダイクストラ法の定数倍高速化ライブラリ。

@@ -1,3 +1,8 @@
+---
+title: 2-SAT
+documentation_of: math/two-sat.hpp
+---
+
 ## 2-SAT
 
 2-SATを$\mathrm{O}(N + M)$($N$は論理変数の個数、$M$は節の個数)で計算するライブラリ。

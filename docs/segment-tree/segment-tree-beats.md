@@ -1,3 +1,8 @@
+---
+title: Range Chmin Chmax Add Update Range Min Max Sum Segment Tree Beats!
+documentation_of: segment-tree/segment-tree-beats.hpp
+---
+
 ## Range Chmin Chmax Add Update Range Min Max Sum Segment Tree Beats
 
 Range (Chmin Chmax Add Update)クエリとRange (Min Max Sum)クエリに対応したSegment Tree Beatsのライブラリ。

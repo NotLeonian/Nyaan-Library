@@ -1,3 +1,8 @@
+---
+title: 三角関数
+documentation_of: fps/fps-circular.hpp
+---
+
 ## fps-三角関数
 
 $N$次の形式的冪級数 $f(x)$ に対して $g(x) \equiv \cos(f(x)), h(x) \equiv \sin(f(x)) \mod x^N$ を満たす $g(x)$ を $\mathrm{O}(N \log N)$ で計算するライブラリ。

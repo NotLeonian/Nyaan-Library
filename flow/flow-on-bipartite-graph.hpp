@@ -115,5 +115,4 @@ using BipartiteGraphImpl::BipartiteGraph;
 
 /**
  * @brief 二部グラフのフロー
- * @docs docs/flow/flow-on-bipartite-graph.md
  */

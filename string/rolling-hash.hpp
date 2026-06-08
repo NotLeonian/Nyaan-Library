@@ -84,5 +84,4 @@ using roriha = RollingHash<string, 2>;
 
 /**
  * @brief Rolling Hash
- * @docs docs/string/rolling-hash.md
  */

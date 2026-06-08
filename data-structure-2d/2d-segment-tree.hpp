@@ -78,5 +78,4 @@ struct SegmentTree2D {
 
 /**
  * @brief 二次元セグメント木
- * @docs docs/data-structure-2d/2d-segment-tree.md
  */

@@ -113,5 +113,4 @@ mint kth_term_of_p_recursive(vector<mint>& a, long long k) {
 
 /**
  * @brief P-recursiveの高速計算
- * @docs docs/fps/find-p-recursive.md
  */

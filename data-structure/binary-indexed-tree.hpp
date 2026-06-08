@@ -68,5 +68,4 @@ struct BinaryIndexedTree {
 
 /**
  * @brief Binary Indexed Tree(Fenwick Tree)
- * @docs docs/data-structure/binary-indexed-tree.md
  */

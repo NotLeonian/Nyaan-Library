@@ -1,3 +1,8 @@
+---
+title: Binary Lifting(ダブリング)
+documentation_of: misc/doubling.hpp
+---
+
 ## Binary Lifting(ダブリング)
 
 辺の重みがモノイドであり、各頂点の出次数が高々1のグラフが存在したとき、$i$を始点として$t$回グラフを移動したときの終点$j$とパス$(i,j)$の重みの和を前計算$\mathrm{O}(N \log \max(t))$、クエリ$\mathrm{O}(\log t)$計算するライブラリ。

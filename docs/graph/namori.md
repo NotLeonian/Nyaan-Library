@@ -1,3 +1,8 @@
+---
+title: Functional Graph(なもりグラフ)の分解
+documentation_of: graph/namori.hpp
+---
+
 ## Functional Graph(なもりグラフ)
 
 頂点数$n$のなもりグラフを$\mathrm{O}(n\alpha (n))$で分解するライブラリ。

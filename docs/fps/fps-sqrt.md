@@ -1,3 +1,8 @@
+---
+title: 平方根
+documentation_of: fps/fps-sqrt.hpp
+---
+
 ## fps-平方根
 
 $N$次の形式的冪級数$ f(x)$ に対して$g(x) \equiv \sqrt{f(x)} \pmod{x^N}$ を満たす $g(x)$ を $\mathrm{O}(N \log N)$ で計算するライブラリ。  

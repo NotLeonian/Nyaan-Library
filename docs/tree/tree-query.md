@@ -1,3 +1,8 @@
+---
+title: 木に対する一般的なクエリ
+documentation_of: tree/tree-query.hpp
+---
+
 ## 木に対する一般的なクエリ
 
 #### 概要

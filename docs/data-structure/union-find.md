@@ -1,3 +1,8 @@
+---
+title: Union Find(Disjoint Set Union)
+documentation_of: data-structure/union-find.hpp
+---
+
 ## Union-Find Tree(Disjoint Set Union)
 
 #### 概要

@@ -33,5 +33,4 @@ int64_t mod_sqrt(const int64_t &a, const int64_t &p) {
 
 /**
  * @brief mod sqrt(Tonelli-Shanks algorithm)
- * @docs docs/modulo/mod-sqrt.md
  */

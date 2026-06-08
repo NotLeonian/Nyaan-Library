@@ -126,5 +126,4 @@ struct Hash : array<u64, BASE_NUM> {
 
 /**
  * @brief ハッシュ構造体
- * @docs docs/internal/internal-hash.md
  */
