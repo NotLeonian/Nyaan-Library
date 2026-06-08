@@ -133,16 +133,25 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GH_PAT: ${{ secrets.GH_PAT }}
+      shell: bash
       run: |
         set -euo pipefail
 
+        wrapper_dir="bin-for-oj-bundle"
         wrapper_basename="g++-for-oj-bundle"
-        wrapper="${RUNNER_TEMP}/${wrapper_basename}"
+        wrapper="${wrapper_dir}/${wrapper_basename}"
         real_gxx="$(command -v g++)"
+
+        mkdir -p "${wrapper_dir}"
 
         {
           printf '%s\n' '#!/usr/bin/env bash'
           printf '%s\n' 'set -euo pipefail'
+          printf '%s\n' ''
+          printf '%s\n' 'if [[ -z "${REAL_GXX:-}" ]]; then'
+          printf '%s\n' '  echo "REAL_GXX is not set" >&2'
+          printf '%s\n' '  exit 127'
+          printf '%s\n' 'fi'
           printf '%s\n' ''
           printf '%s\n' 'has_fpreprocessed=0'
           printf '%s\n' 'has_dD=0'
@@ -164,4 +173,4 @@ jobs:
         } > "${wrapper}"
 
         chmod +x "${wrapper}"
-        REAL_GXX="${real_gxx}" CXX="${wrapper}" oj-verify docs
+        PATH="${wrapper_dir}:${PATH}" REAL_GXX="${real_gxx}" CXX="${wrapper}" oj-verify docs
