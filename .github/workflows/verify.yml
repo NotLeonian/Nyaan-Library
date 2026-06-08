@@ -133,4 +133,44 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GH_PAT: ${{ secrets.GH_PAT }}
-      run: oj-verify docs
+      shell: bash
+      run: |
+        set -euo pipefail
+
+        wrapper_dir="${RUNNER_TEMP}/bin-for-oj-bundle"
+        wrapper_basename="g++"
+        wrapper="${wrapper_dir}/${wrapper_basename}"
+        real_gxx="$(command -v g++)"
+
+        mkdir -p "${wrapper_dir}"
+
+        {
+          printf '%s\n' '#!/usr/bin/env bash'
+          printf '%s\n' 'set -euo pipefail'
+          printf '%s\n' ''
+          printf '%s\n' 'if [[ -z "${REAL_GXX:-}" ]]; then'
+          printf '%s\n' '  echo "REAL_GXX is not set" >&2'
+          printf '%s\n' '  exit 127'
+          printf '%s\n' 'fi'
+          printf '%s\n' ''
+          printf '%s\n' 'has_fpreprocessed=0'
+          printf '%s\n' 'has_dD=0'
+          printf '%s\n' 'has_E=0'
+          printf '%s\n' ''
+          printf '%s\n' 'for arg in "$@"; do'
+          printf '%s\n' '  case "$arg" in'
+          printf '%s\n' '    -fpreprocessed) has_fpreprocessed=1 ;;'
+          printf '%s\n' '    -dD) has_dD=1 ;;'
+          printf '%s\n' '    -E) has_E=1 ;;'
+          printf '%s\n' '  esac'
+          printf '%s\n' 'done'
+          printf '%s\n' ''
+          printf '%s\n' 'if [[ "${has_fpreprocessed}${has_dD}${has_E}" == "111" ]]; then'
+          printf '%s\n' '  exec "${REAL_GXX}" -w "$@"'
+          printf '%s\n' 'else'
+          printf '%s\n' '  exec "${REAL_GXX}" "$@"'
+          printf '%s\n' 'fi'
+        } > "${wrapper}"
+
+        chmod +x "${wrapper}"
+        PATH="${wrapper_dir}:${PATH}" REAL_GXX="${real_gxx}" CXX="${wrapper}" oj-verify docs
