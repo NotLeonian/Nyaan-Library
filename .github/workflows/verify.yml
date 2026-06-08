@@ -137,7 +137,7 @@ jobs:
       run: |
         set -euo pipefail
 
-        wrapper_dir="bin-for-oj-bundle"
+        wrapper_dir="${RUNNER_TEMP}/bin-for-oj-bundle"
         wrapper_basename="g++-for-oj-bundle"
         wrapper="${wrapper_dir}/${wrapper_basename}"
         real_gxx="$(command -v g++)"
