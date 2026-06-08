@@ -1,3 +1,8 @@
+---
+title: 多項式GCD
+documentation_of: //fps/polynomial-gcd.hpp
+---
+
 ## 多項式GCD
 
 多項式GCDを$\mathrm{O}(N \log ^ 2 N)$($N$は多項式の次数)で求めるライブラリ。

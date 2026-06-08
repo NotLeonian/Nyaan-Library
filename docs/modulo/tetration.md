@@ -1,3 +1,8 @@
+---
+title: tetration
+documentation_of: //modulo/tetration.hpp
+---
+
 ## Tetration
 
 $a \uparrow \uparrow b \mod m$を$\mathrm{O}(\sqrt{M})$で計算するライブラリ。$a \uparrow \uparrow b$とは、

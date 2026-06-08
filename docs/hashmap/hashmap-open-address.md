@@ -1,3 +1,8 @@
+---
+title: Hash Map(開番地法)
+documentation_of: //unused/old/hashmap-open-address.hpp
+---
+
 ## Hash Map
 
 ハッシュマップとは、$\mathrm{O}(1)$で一点更新・一点取得を行うことのできるデータ構造である。

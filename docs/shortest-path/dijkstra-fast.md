@@ -1,3 +1,8 @@
+---
+title: ダイクストラ法(定数倍高速化)
+documentation_of: //shortest-path/dijkstra-fast.hpp
+---
+
 ## 定数倍高速化ダイクストラ法
 
 ダイクストラ法の定数倍高速化ライブラリ。

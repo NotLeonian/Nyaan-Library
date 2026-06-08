@@ -1,3 +1,8 @@
+---
+title: DSU on Tree(Guni)
+documentation_of: //tree/dsu-on-tree.hpp
+---
+
 ## DSU on Tree
 
 DSU on Treeとは、全ての部分木に対するクエリを高速に処理するアルゴリズムである。

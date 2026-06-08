@@ -1,3 +1,8 @@
+---
+title: ダイクストラ法(Skew Heap)
+documentation_of: //shortest-path/dijkstra-skew-heap.hpp
+---
+
 ## ダイクストラ法(Skew Heap)
 
 ダイクストラ法の定数倍高速化ライブラリ。

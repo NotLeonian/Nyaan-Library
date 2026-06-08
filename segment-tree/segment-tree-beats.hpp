@@ -195,5 +195,4 @@ struct AngelBeats {
 
 /**
  * @brief Range Chmin Chmax Add Update Range Min Max Sum Segment Tree Beats!
- * @docs docs/segment-tree/segment-tree-beats.md
  */

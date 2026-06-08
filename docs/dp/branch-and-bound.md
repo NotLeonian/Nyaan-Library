@@ -1,3 +1,8 @@
+---
+title: 0-1ナップサック問題の分枝限定法による解法
+documentation_of: //dp/branch-and-bound.hpp
+---
+
 ## 0-1ナップサック問題の、分枝限定法による解法
 
 ### 概要

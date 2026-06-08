@@ -144,5 +144,4 @@ FormalPowerSeries<mint> fps_exp_impl(const FormalPowerSeries<mint>& f, int deg,
 
 /**
  * @brief NTT mod用FPSライブラリ
- * @docs docs/fps/ntt-friendly-fps.md
  */

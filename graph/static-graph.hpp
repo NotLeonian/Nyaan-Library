@@ -72,5 +72,4 @@ using StaticGraphImpl::StaticGraph;
 
 /**
  * @brief Static Graph
- * @docs docs/graph/static-graph.md
  */

@@ -1,3 +1,8 @@
+---
+title: ハッシュ構造体
+documentation_of: //internal/internal-hash.hpp
+---
+
 ## ハッシュ構造体
 
 $2^{61}-1$ を法とするハッシュのライブラリ。

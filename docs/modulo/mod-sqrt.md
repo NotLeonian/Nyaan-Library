@@ -1,3 +1,8 @@
+---
+title: mod sqrt(Tonelli-Shanks algorithm)
+documentation_of: //modulo/mod-sqrt.hpp
+---
+
 ## mod sqrt(Tonelli-Shanks algorithm)
 
 整数$a$、素数$p$に対して$x^2 \equiv a \mod p$を満たす$x$を$\mathrm{O}(\log ^2 p)$で計算するライブラリ。

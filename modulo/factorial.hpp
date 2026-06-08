@@ -30,5 +30,4 @@ mint factorial(int n) {
 
 /**
  * @brief 階乗 $\mod p$
- * @docs docs/modulo/factorial.md
  */

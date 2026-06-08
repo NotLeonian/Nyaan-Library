@@ -68,5 +68,4 @@ vector<pair<T, int>> dijkstra_restore(StaticGraph<T>& g, int start = 0) {
 }
 /*
  * @brief ダイクストラ法(Skew Heap)
- * @docs docs/shortest-path/dijkstra-skew-heap.md
 **/

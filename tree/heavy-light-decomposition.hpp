@@ -114,5 +114,4 @@ struct HeavyLightDecomposition {
 
 /**
  * @brief Heavy Light Decomposition(重軽分解)
- * @docs docs/tree/heavy-light-decomposition.md
  */

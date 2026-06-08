@@ -1,3 +1,8 @@
+---
+title: 円および 2 円の交点の存在判定
+documentation_of: //geometry/circle.hpp
+---
+
 ## 円および 2 円の交点の存在判定
 
 #### 使い方

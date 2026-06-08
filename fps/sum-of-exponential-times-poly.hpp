@@ -89,5 +89,4 @@ mint sum_of_exp_limit2(int d, mint r, Binomial<mint>& C) {
 
 /**
  * @brief $\sum_{i}a^i f(i)$
- * @docs docs/fps/sum-of-exponential-times-poly.md
  */

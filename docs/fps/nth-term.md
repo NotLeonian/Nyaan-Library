@@ -1,3 +1,8 @@
+---
+title: 線形回帰数列の高速計算(Berlekamp-Massey/Bostan-Mori)
+documentation_of: //fps/nth-term.hpp
+---
+
 ## 線形回帰数列の高速計算(Berlekamp-Massey/Bostan-Mori)
 
 線形回帰数列の前$k$項が与えられたときに第$n$項を$\mathrm{O}(k^2+k \log k\log n)$で計算するライブラリ。

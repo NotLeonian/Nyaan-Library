@@ -1,3 +1,8 @@
+---
+title: 常微分方程式
+documentation_of: //fps/differential-equation.hpp
+---
+
 ## 常微分方程式
 
 $$\frac{d}{dx}f \equiv F(f) \mod x^n,\ f(0) = f_0$$

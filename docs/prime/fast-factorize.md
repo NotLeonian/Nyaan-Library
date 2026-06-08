@@ -1,3 +1,8 @@
+---
+title: 高速素因数分解(Miller Rabin/Pollard's Rho)
+documentation_of: //prime/fast-factorize.hpp
+---
+
 ## 高速な素因数分解
 
 ミラーラビン素数判定法とポラード・ロー素因数分解法を組み合わせることで$\mathrm{O}(N^{\frac{1}{4}})$で素因数分解を行うライブラリ。

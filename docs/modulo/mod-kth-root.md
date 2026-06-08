@@ -1,3 +1,8 @@
+---
+title: kth root(Tonelli-Shanks algorithm)
+documentation_of: //modulo/mod-kth-root.hpp
+---
+
 
 ## kth root
 

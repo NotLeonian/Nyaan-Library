@@ -138,5 +138,4 @@ struct arbitrary_mod_binomial {
 
 /**
  * @brief 任意mod二項係数
- * @docs docs/modulo/arbitrary-mod-binomial.md
  */

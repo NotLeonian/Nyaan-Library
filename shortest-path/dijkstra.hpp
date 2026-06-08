@@ -28,5 +28,4 @@ vector<T> dijkstra(WeightedGraph<T> &g, int start = 0) {
 
 /**
  * @brief ダイクストラ法
- * @docs docs/shortest-path/dijkstra.md
  */

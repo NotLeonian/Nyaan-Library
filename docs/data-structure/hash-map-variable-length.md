@@ -1,3 +1,8 @@
+---
+title: Hash Map(可変長版)
+documentation_of: //data-structure/hash-map-variable-length.hpp
+---
+
 ## Hash Map
 
 ハッシュマップとは、$\mathrm{O}(1)$で一点更新・一点取得を行うことのできるデータ構造である。

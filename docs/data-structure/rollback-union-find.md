@@ -1,3 +1,8 @@
+---
+title: RollbackつきUnion Find
+documentation_of: //data-structure/rollback-union-find.hpp
+---
+
 ## rollbackつきUnion-Find
 
 #### 概要

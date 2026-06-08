@@ -1,3 +1,8 @@
+---
+title: Skew Heap
+documentation_of: //data-structure/skew-heap.hpp
+---
+
 ## Skew Heap
 
 Skew Heapを実装したライブラリ。

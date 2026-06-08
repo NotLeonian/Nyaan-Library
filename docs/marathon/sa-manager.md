@@ -1,3 +1,8 @@
+---
+title: Multipoint Simulated Annealing
+documentation_of: //marathon/sa-manager.hpp
+---
+
 ## 焼きなまし法
 
 焼きなまし法のライブラリを自分が使いやすいように改良したもの。

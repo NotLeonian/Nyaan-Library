@@ -9,5 +9,4 @@ struct HashSet : HashMapImpl::HashMapBase<Key, Key> {
 
 /* 
  * @brief ハッシュセット(集合)
- * @docs docs/hashmap/hashset.md
 **/

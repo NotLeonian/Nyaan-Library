@@ -1,3 +1,8 @@
+---
+title: Static Graph
+documentation_of: //graph/static-graph.hpp
+---
+
 ## Static Graph
 
 静的なグラフライブラリ。通常のグラフライブラリと同様に隣接リストで辺を保存しているが、全ての辺を連続領域に保存することでアクセス時のキャッシュミスを減らし高速化している。

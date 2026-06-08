@@ -1,3 +1,8 @@
+---
+title: ハッシュセット(集合)
+documentation_of: //hashmap/hashset.hpp
+---
+
 ## HashSet(集合)
 
 ## 概要

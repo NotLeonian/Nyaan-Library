@@ -1,3 +1,8 @@
+---
+title: 動的Union Find
+documentation_of: //data-structure/dynamic-union-find.hpp
+---
+
 ## 動的Union Find
 
 #### 概要

@@ -126,5 +126,4 @@ using kth_root_mod::kth_root;
 
 /**
  * @brief kth root(Tonelli-Shanks algorithm)
- * @docs docs/modulo/mod-kth-root.md
  */

@@ -1,3 +1,8 @@
+---
+title: 平方分割
+documentation_of: //data-structure/square-root-decomposition.hpp
+---
+
 ## 平方分割
 
 要素数$N$の列を$\mathrm{O}(\sqrt{N})$個のバケットに分割して管理することで列上のクエリを高速に答えるアルゴリズムを平方分割と呼ぶ。

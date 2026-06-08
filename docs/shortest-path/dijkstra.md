@@ -1,3 +1,8 @@
+---
+title: ダイクストラ法
+documentation_of: //shortest-path/dijkstra.hpp
+---
+
 ## ダイクストラ法
 
 ダイクストラ法を$\mathrm{O}(E \log V)$で行うライブラリ。

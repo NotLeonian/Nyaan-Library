@@ -1,3 +1,8 @@
+---
+title: $\sum_{i}a^i f(i)$
+documentation_of: //fps/sum-of-exponential-times-poly.hpp
+---
+
 
 ## $\sum_{i}a^i f(i)$
 

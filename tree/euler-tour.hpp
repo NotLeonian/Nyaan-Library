@@ -107,5 +107,4 @@ struct EulerTour {
 
 /**
  * @brief オイラーツアー
- * @docs docs/tree/euler-tour.md
  */

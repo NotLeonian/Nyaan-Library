@@ -1,3 +1,8 @@
+---
+title: Wavelet Matrix
+documentation_of: //data-structure-2d/wavelet-matrix.hpp
+---
+
 ## Wavelet Matrix
 
 #### 概要

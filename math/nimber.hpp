@@ -203,5 +203,4 @@ using Nimber = Nimber64;
 
 /**
  * @brief Nim Product
- * @docs docs/math/nimber.md
  */

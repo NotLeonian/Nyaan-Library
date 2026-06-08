@@ -1,3 +1,8 @@
+---
+title: 0-1ナップサック問題
+documentation_of: //dp/knapsack01.hpp
+---
+
 ## 0-1ナップサック問題
 
 ### 概要

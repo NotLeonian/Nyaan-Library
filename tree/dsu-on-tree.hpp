@@ -74,5 +74,4 @@ struct DSUonTree {
 
 /**
  * @brief DSU on Tree(Guni)
- * @docs docs/tree/dsu-on-tree.md
  */

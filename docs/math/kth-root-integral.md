@@ -1,3 +1,8 @@
+---
+title: $\mathrm{floor}(a^{\frac{1}{k}})$
+documentation_of: //math/kth-root-integral.hpp
+---
+
 ## $\mathrm{floor}(a^{\frac{1}{k}})$
 
 #### 概要

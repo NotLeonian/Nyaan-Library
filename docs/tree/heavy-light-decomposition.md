@@ -1,3 +1,8 @@
+---
+title: Heavy Light Decomposition(重軽分解)
+documentation_of: //tree/heavy-light-decomposition.hpp
+---
+
 ## Heavy Light Decomposition(重軽分解)
 
 #### 概要

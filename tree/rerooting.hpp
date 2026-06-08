@@ -83,5 +83,4 @@ struct Rerooting {
 
 /**
  * @brief Rerooting(全方位木DP)
- * @docs docs/tree/rerooting.md
  */

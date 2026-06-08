@@ -54,5 +54,4 @@ struct CentroidDecomposition {
 
 /**
  * @brief Centroid Decomposition
- * @docs docs/tree/centroid-decomposition.md
  */

@@ -1,3 +1,8 @@
+---
+title: 最大長方形
+documentation_of: //dp/maximal-rectangle.hpp
+---
+
 ## 最大長方形
 
 ### 概要

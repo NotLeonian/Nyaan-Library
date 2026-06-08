@@ -27,5 +27,4 @@ long long MaximalRectangle(vector<long long> buf) {
 
 /**
  * @brief 最大長方形
- * @docs docs/dp/maximal-rectangle.md
  */

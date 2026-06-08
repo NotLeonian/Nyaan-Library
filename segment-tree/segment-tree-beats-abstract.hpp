@@ -72,5 +72,4 @@ struct Beats {
 
 /**
  * @brief 抽象化Segment Tree Beats!
- * @docs docs/segment-tree/segment-tree-beats-abstract.md
  */

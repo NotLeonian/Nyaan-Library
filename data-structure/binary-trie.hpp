@@ -136,5 +136,4 @@ struct BinaryTrie {
 
 /**
  * @brief Binary Trie
- * @docs docs/data-structure/binary-trie.md
  */

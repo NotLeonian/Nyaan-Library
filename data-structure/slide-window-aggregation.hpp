@@ -49,5 +49,4 @@ struct SlideWindowAggregation {
 
 /**
  * @brief Slide Window Aggrigation
- * @docs docs/data-structure/slide-window-aggregation.md
  */

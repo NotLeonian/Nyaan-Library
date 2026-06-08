@@ -1,3 +1,8 @@
+---
+title: Multivariate Multiplication
+documentation_of: //ntt/multivariate-multiplication.hpp
+---
+
 
 ## Multivariate Multiplication
 

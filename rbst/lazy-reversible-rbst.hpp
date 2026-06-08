@@ -88,5 +88,4 @@ struct LazyReversibleRBST : RBSTBase<LazyReversibleRBSTNode<T, E>> {
 
 /**
  * @brief 遅延伝搬反転可能乱択平衡二分木
- * @docs docs/rbst/lazy-reversible-rbst.md
  */

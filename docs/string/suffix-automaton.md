@@ -1,3 +1,8 @@
+---
+title: Suffix Automaton
+documentation_of: //string/suffix-automaton.hpp
+---
+
 ## Suffix Automaton
 
 #### 概要

@@ -1,3 +1,8 @@
+---
+title: Rolling Hash
+documentation_of: //string/rolling-hash.hpp
+---
+
 ## Rolling Hash
 
 列の一致判定を前計算$\mathrm{O}(n)$クエリ$\mathrm{O}(1)$で処理するライブラリ。

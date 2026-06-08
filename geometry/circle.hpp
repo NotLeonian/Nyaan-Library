@@ -35,5 +35,4 @@ pair<Point, Point> crosspoint(const Circle& c1, const Circle& c2) {
 
 /**
  * @brief 円および 2 円の交点の存在判定
- * @docs docs/geometry/circle.md
  */

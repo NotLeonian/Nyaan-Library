@@ -61,5 +61,4 @@ long long knapsack01(const vector<long long>& v, const vector<long long>& w,
 
 /**
  * @brief 0-1ナップサック問題
- * @docs docs/dp/knapsack01.md
  */

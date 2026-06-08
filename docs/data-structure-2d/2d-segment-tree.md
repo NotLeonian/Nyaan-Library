@@ -1,3 +1,8 @@
+---
+title: 二次元セグメント木
+documentation_of: //data-structure-2d/2d-segment-tree.hpp
+---
+
 ## 二次元セグメント木
 
 #### 概要

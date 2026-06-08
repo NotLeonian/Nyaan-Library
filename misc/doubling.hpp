@@ -84,5 +84,4 @@ using Doubling = BinaryLifting<T>;
 
 /**
  * @brief Binary Lifting(ダブリング)
- * @docs docs/misc/doubling.md
  */

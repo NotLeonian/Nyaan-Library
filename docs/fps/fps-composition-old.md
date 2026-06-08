@@ -1,3 +1,8 @@
+---
+title: 関数の合成( $\mathrm{O}\left((N \log N)^{\frac{3}{2}}\right)$ )
+documentation_of: //fps/fps-composition-old.hpp
+---
+
 
 ## 関数の合成
 

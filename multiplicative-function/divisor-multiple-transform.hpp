@@ -73,5 +73,4 @@ struct multiple_transform {
 
 /**
  * @brief 倍数変換・約数変換
- * @docs docs/multiplicative-function/divisor-multiple-transform.md
  */

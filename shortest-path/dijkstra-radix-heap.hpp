@@ -29,5 +29,4 @@ vector<T> dijkstra_radix_heap(WeightedGraph<T> &g, int start = 0) {
 
 /*
  * @brief ダイクストラ法(Radix Heap)
- * @docs docs/shortest-path/dijkstra-radix-heap.md
 **/

@@ -1,3 +1,8 @@
+---
+title: Subset Convolution
+documentation_of: //set-function/subset-convolution.hpp
+---
+
 
 ## Subset Convolution
 

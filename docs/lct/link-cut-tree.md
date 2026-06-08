@@ -1,3 +1,8 @@
+---
+title: Link/Cut Tree
+documentation_of: //lct/link-cut-tree.hpp
+---
+
 ## Link/Cut Tree
 
 木の回転・辺の削除・辺の追加などを$\mathrm{O}(\log n)$で行うライブラリ。

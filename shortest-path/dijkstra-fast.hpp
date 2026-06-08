@@ -69,5 +69,4 @@ vector<pair<T, int>> dijkstra_restore(StaticGraph<T>& g, int start = 0) {
 
 /*
  * @brief ダイクストラ法(定数倍高速化)
- * @docs docs/shortest-path/dijkstra-fast.md
  **/

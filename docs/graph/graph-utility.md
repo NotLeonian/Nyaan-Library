@@ -1,3 +1,8 @@
+---
+title: グラフユーティリティ
+documentation_of: //graph/graph-utility.hpp
+---
+
 ## グラフユーティリティ
 
 ### 概要

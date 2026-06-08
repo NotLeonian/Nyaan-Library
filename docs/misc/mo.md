@@ -1,3 +1,8 @@
+---
+title: Mo's algorithm
+documentation_of: //misc/mo.hpp
+---
+
 ## Mo's algorithm
 
 $[0,N)$上の区間に対する$Q$個のクエリを$\mathrm{O}(\alpha N \sqrt{Q})$で計算するライブラリ。(ただし区間の幅を$1$変化させる伸縮が$\mathrm{O}(\alpha)$で行えるとする。)

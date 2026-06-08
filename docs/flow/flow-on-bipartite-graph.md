@@ -1,3 +1,8 @@
+---
+title: 二部グラフのフロー
+documentation_of: //flow/flow-on-bipartite-graph.hpp
+---
+
 ## 二部グラフのフロー
 
 #### 使い方

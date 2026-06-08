@@ -1,3 +1,8 @@
+---
+title: 平行移動
+documentation_of: //fps/taylor-shift.hpp
+---
+
 ## fps-平行移動
 
 $N$次の多項式 $f(x)$ に対して $g(x) = f(x+a)$ を満たす $g(x)$ を $\mathrm{O}(N \log N)$ で計算するライブラリ。

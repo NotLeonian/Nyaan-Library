@@ -46,5 +46,4 @@ struct DynamicUnionFind {
 
 /**
  * @brief 動的Union Find
- * @docs docs/data-structure/dynamic-union-find.md
  */

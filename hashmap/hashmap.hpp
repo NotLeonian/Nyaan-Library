@@ -42,5 +42,4 @@ struct HashMap : HashMapImpl::HashMapBase<Key, pair<Key, Val>> {
 
 /*
  * @brief ハッシュマップ(連想配列)
- * @docs docs/hashmap/hashmap.md
  **/

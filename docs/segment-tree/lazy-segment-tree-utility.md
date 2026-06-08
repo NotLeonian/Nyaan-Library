@@ -1,3 +1,8 @@
+---
+title: 使用頻度の高い遅延セグメント木
+documentation_of: //segment-tree/lazy-segment-tree-utility.hpp
+---
+
 ## 使用頻度の高い遅延セグメント木
 
 使用頻度の高い遅延セグメント木を特殊化してライブラリ化したもの。

@@ -33,5 +33,4 @@ pair<vector<vector<int>>, int> CartesianTree(vector<T> &a) {
 
 /**
  * @brief Cartesian Tree
- * @docs docs/tree/cartesian-tree.md
  */

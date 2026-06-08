@@ -173,5 +173,4 @@ void unit_test() {
 
 /**
  * @brief 高速modulo逆元
- * @docs docs/trial/fast-inv.md
  */

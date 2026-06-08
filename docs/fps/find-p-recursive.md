@@ -1,3 +1,8 @@
+---
+title: P-recursiveの高速計算
+documentation_of: //fps/find-p-recursive.hpp
+---
+
 ## P-recursiveの高速計算
 
 P-recursiveの第$k$項を$\mathrm{O}(\sqrt{k} \log k)$で計算出来たり出来なかったりするライブラリ。

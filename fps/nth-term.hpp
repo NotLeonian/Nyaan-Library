@@ -12,5 +12,4 @@ mint nth_term(long long n, const vector<mint> &s) {
 
 /**
  * @brief 線形回帰数列の高速計算(Berlekamp-Massey/Bostan-Mori)
- * @docs docs/fps/nth-term.md
  */

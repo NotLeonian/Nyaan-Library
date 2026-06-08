@@ -109,5 +109,4 @@ using fast_factorize::factorize;
 
 /**
  * @brief 高速素因数分解(Miller Rabin/Pollard's Rho)
- * @docs docs/prime/fast-factorize.md
  */

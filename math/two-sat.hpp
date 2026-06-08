@@ -169,5 +169,4 @@ using TwoSatImpl::two_sat;
 
 /**
  * @brief 2-SAT
- * @docs docs/math/two-sat.md
  */

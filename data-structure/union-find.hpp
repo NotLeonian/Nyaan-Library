@@ -32,5 +32,4 @@ struct UnionFind {
 
 /**
  * @brief Union Find(Disjoint Set Union)
- * @docs docs/data-structure/union-find.md
  */
