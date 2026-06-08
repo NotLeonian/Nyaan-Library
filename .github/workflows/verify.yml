@@ -133,4 +133,39 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GH_PAT: ${{ secrets.GH_PAT }}
-      run: oj-verify docs
+      run: |
+        set -euo pipefail
+
+        wrapper_dir="${RUNNER_TEMP}/my-g++-wrapper"
+        wrapper_basename="g++-for-oj-bundle"
+        wrapper="${wrapper_dir}/${wrapper_basename}"
+        real_gxx="$(command -v g++)"
+
+        mkdir -p "${wrapper_dir}"
+        cat > "${wrapper}" <<EOF
+#!/usr/bin/env bash
+set -euo pipefail
+
+real_gxx="${real_gxx}"
+
+has_fpreprocessed=0
+has_dD=0
+has_E=0
+
+for arg in "\$@"; do
+  case "\$arg" in
+    -fpreprocessed) has_fpreprocessed=1 ;;
+    -dD) has_dD=1 ;;
+    -E) has_E=1 ;;
+  esac
+done
+
+if [[ "\${has_fpreprocessed}\${has_dD}\${has_E}" == "111" ]]; then
+  exec "\${real_gxx}" -w "\$@"
+else
+  exec "\${real_gxx}" "\$@"
+fi
+EOF
+
+          chmod +x "${wrapper}"
+          PATH="${wrapper_dir}:${PATH}" CXX="${wrapper_basename}" oj-verify docs
