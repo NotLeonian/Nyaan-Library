@@ -136,36 +136,36 @@ jobs:
       run: |
         set -euo pipefail
 
-        wrapper_dir="${RUNNER_TEMP}/my-g++-wrapper"
+        wrapper_dir="${RUNNER_TEMP}"
         wrapper_basename="g++-for-oj-bundle"
         wrapper="${wrapper_dir}/${wrapper_basename}"
         real_gxx="$(command -v g++)"
 
         mkdir -p "${wrapper_dir}"
         cat > "${wrapper}" <<EOF
-#!/usr/bin/env bash
-set -euo pipefail
 
-real_gxx="${real_gxx}"
+        {
+          printf '%s\n' '#!/usr/bin/env bash'
+          printf '%s\n' 'set -euo pipefail'
+          printf '%s\n' ''
+          printf '%s\n' 'has_fpreprocessed=0'
+          printf '%s\n' 'has_dD=0'
+          printf '%s\n' 'has_E=0'
+          printf '%s\n' ''
+          printf '%s\n' 'for arg in "$@"; do'
+          printf '%s\n' '  case "$arg" in'
+          printf '%s\n' '    -fpreprocessed) has_fpreprocessed=1 ;;'
+          printf '%s\n' '    -dD) has_dD=1 ;;'
+          printf '%s\n' '    -E) has_E=1 ;;'
+          printf '%s\n' '  esac'
+          printf '%s\n' 'done'
+          printf '%s\n' ''
+          printf '%s\n' 'if [[ "${has_fpreprocessed}${has_dD}${has_E}" == "111" ]]; then'
+          printf '%s\n' '  exec "${REAL_GXX}" -w "$@"'
+          printf '%s\n' 'else'
+          printf '%s\n' '  exec "${REAL_GXX}" "$@"'
+          printf '%s\n' 'fi'
+        } > "${wrapper}"
 
-has_fpreprocessed=0
-has_dD=0
-has_E=0
-
-for arg in "\$@"; do
-  case "\$arg" in
-    -fpreprocessed) has_fpreprocessed=1 ;;
-    -dD) has_dD=1 ;;
-    -E) has_E=1 ;;
-  esac
-done
-
-if [[ "\${has_fpreprocessed}\${has_dD}\${has_E}" == "111" ]]; then
-  exec "\${real_gxx}" -w "\$@"
-else
-  exec "\${real_gxx}" "\$@"
-fi
-EOF
-
-          chmod +x "${wrapper}"
-          PATH="${wrapper_dir}:${PATH}" CXX="${wrapper_basename}" oj-verify docs
+        chmod +x "${wrapper}"
+        REAL_GXX="${real_gxx}" CXX="${wrapper}" oj-verify docs
