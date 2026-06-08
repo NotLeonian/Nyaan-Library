@@ -13,7 +13,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/modulo/arbitrary-mod-binomial.md
     document_title: "\u4EFB\u610Fmod\u4E8C\u9805\u4FC2\u6570"
     links: []
   bundledCode: "#line 2 \"modulo/arbitrary-mod-binomial.hpp\"\n\n#include <vector>\n\
@@ -184,7 +183,7 @@ data:
     \ i++) {\n      rem.push_back(cs[i].C(n, m));\n      d.push_back(M[i]);\n    }\n\
     \    return atcoder::crt(rem, d).first;\n  }\n};\n\n#undef PRIME_POWER_BINOMIAL_M_MAX\n\
     #undef PRIME_POWER_BINOMIAL_N_MAX\n\n/**\n * @brief \u4EFB\u610Fmod\u4E8C\u9805\
-    \u4FC2\u6570\n * @docs docs/modulo/arbitrary-mod-binomial.md\n */\n"
+    \u4FC2\u6570\n */\n"
   code: "#pragma once\n\n#include <vector>\n\n#include \"../atcoder/math.hpp\"\n#include\
     \ \"../modint/barrett-reduction.hpp\"\n\nusing namespace std;\n\n#define PRIME_POWER_BINOMIAL_M_MAX\
     \ ((1LL << 30) - 1)\n#define PRIME_POWER_BINOMIAL_N_MAX 20000000\n\nstruct prime_power_binomial\
@@ -230,23 +229,21 @@ data:
     \ i++) {\n      rem.push_back(cs[i].C(n, m));\n      d.push_back(M[i]);\n    }\n\
     \    return atcoder::crt(rem, d).first;\n  }\n};\n\n#undef PRIME_POWER_BINOMIAL_M_MAX\n\
     #undef PRIME_POWER_BINOMIAL_N_MAX\n\n/**\n * @brief \u4EFB\u610Fmod\u4E8C\u9805\
-    \u4FC2\u6570\n * @docs docs/modulo/arbitrary-mod-binomial.md\n */\n"
+    \u4FC2\u6570\n */\n"
   dependsOn:
   - modint/barrett-reduction.hpp
   isVerificationFile: false
   path: modulo/arbitrary-mod-binomial.hpp
   requiredBy: []
-  timestamp: '2026-06-08 02:23:45+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-math/yosupo-binomial-coefficient.test.cpp
 documentation_of: modulo/arbitrary-mod-binomial.hpp
 layout: document
-redirect_from:
-- /library/modulo/arbitrary-mod-binomial.hpp
-- /library/modulo/arbitrary-mod-binomial.hpp.html
 title: "\u4EFB\u610Fmod\u4E8C\u9805\u4FC2\u6570"
 ---
+
 ## 任意mod二項係数
 
 $\binom{n}{m} \mod M$を前計算$\mathrm{O}(\min(\frac{n\log M}{\log \log M},M))$、クエリ$\mathrm{O}(\frac{\log n \log M}{\log \log M})$で計算するライブラリ。

@@ -247,9 +247,9 @@ data:
     \  long long ans = 0, id = -1;\n  for (auto& [t, s] : a) {\n    while (t + b[id\
     \ + 1].first <= W) ++id;\n    if (id != -1) ans = max(ans, s + b[id].second);\n\
     \  }\n  return ans;\n}\n\n/**\n * @brief 0-1\u30CA\u30C3\u30D7\u30B5\u30C3\u30AF\
-    \u554F\u984C\n * @docs docs/dp/knapsack01.md\n */\n#line 7 \"verify/verify-aoj-dpl/aoj-dpl-1-f.test.cpp\"\
-    \n\nusing namespace Nyaan;\n\nvoid Nyaan::solve() {\n  inl(N, W);\n  vl v(N),\
-    \ w(N);\n  in2(v, w);\n  out(knapsack01(v, w, W));\n}\n"
+    \u554F\u984C\n */\n#line 7 \"verify/verify-aoj-dpl/aoj-dpl-1-f.test.cpp\"\n\n\
+    using namespace Nyaan;\n\nvoid Nyaan::solve() {\n  inl(N, W);\n  vl v(N), w(N);\n\
+    \  in2(v, w);\n  out(knapsack01(v, w, W));\n}\n"
   code: "\n#define PROBLEM \"http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DPL_1_F\"\
     \n//\n#include \"../../template/template.hpp\"\n//\n#include \"../../dp/knapsack01.hpp\"\
     \n\nusing namespace Nyaan;\n\nvoid Nyaan::solve() {\n  inl(N, W);\n  vl v(N),\
@@ -265,7 +265,7 @@ data:
   isVerificationFile: true
   path: verify/verify-aoj-dpl/aoj-dpl-1-f.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-aoj-dpl/aoj-dpl-1-f.test.cpp

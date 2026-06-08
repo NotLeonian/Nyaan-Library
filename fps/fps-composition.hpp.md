@@ -106,12 +106,12 @@ data:
     \ deg, FPSBackendPriority<1>{});\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>\
     \ FormalPowerSeries<mint>::exp(int deg) const {\n  return fps_exp_impl(*this,\
     \ deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief \u591A\u9805\u5F0F/\u5F62\
-    \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n * @docs docs/fps/formal-power-series.md\n\
-    \ */\n#line 8 \"fps/fps-composition.hpp\"\n\n// g(f(x)) \u3092\u8A08\u7B97\ntemplate\
-    \ <typename mint>\nFormalPowerSeries<mint> composition(FormalPowerSeries<mint>\
-    \ f,\n                                    FormalPowerSeries<mint> g, int deg =\
-    \ -1) {\n  using fps = FormalPowerSeries<mint>;\n\n  auto dfs = [&](auto rc, fps\
-    \ Q, int n, int h, int k) -> fps {\n    if (n == 0) {\n      fps T{begin(Q), begin(Q)\
+    \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n */\n#line 8 \"\
+    fps/fps-composition.hpp\"\n\n// g(f(x)) \u3092\u8A08\u7B97\ntemplate <typename\
+    \ mint>\nFormalPowerSeries<mint> composition(FormalPowerSeries<mint> f,\n    \
+    \                                FormalPowerSeries<mint> g, int deg = -1) {\n\
+    \  using fps = FormalPowerSeries<mint>;\n\n  auto dfs = [&](auto rc, fps Q, int\
+    \ n, int h, int k) -> fps {\n    if (n == 0) {\n      fps T{begin(Q), begin(Q)\
     \ + k};\n      T.push_back(1);\n      fps u = g * T.rev().inv().rev();\n     \
     \ fps P(h * k);\n      for (int i = 0; i < (int)g.size(); i++) P[k - 1 - i] =\
     \ u[i + k];\n      return P;\n    }\n    fps nQ(4 * h * k), nR(2 * h * k);\n \
@@ -167,7 +167,7 @@ data:
   isVerificationFile: false
   path: fps/fps-composition.hpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-fps/yosupo-composition-large.test.cpp

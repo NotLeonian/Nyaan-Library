@@ -64,15 +64,14 @@ data:
     \  while (y != 1) {\n    int64_t j = 0;\n    Mint t = y;\n    while (t != one)\
     \ {\n      j += 1;\n      t *= t;\n    }\n    z = z.pow(int64_t(1) << (e - j -\
     \ 1));\n    x *= z;\n    z *= z;\n    y *= z;\n    e = j;\n  }\n  return x.get();\n\
-    }\n\n/**\n * @brief mod sqrt(Tonelli-Shanks algorithm)\n * @docs docs/modulo/mod-sqrt.md\n\
-    \ */\n#line 4 \"modulo/quadratic-equation.hpp\"\n\ntemplate <typename mint>\n\
-    vector<mint> QuadraticEquation(mint a, mint b, mint c) {\n  assert(mint::get_mod()\
-    \ % 2 != 0);\n  if (a == mint()) {\n    if(b == mint()) {\n      assert(c != mint());\n\
-    \      return {};\n    }\n    return vector<mint>{-c * b.inverse()};\n  }\n  mint\
-    \ ia = a.inverse(), inv2 = mint(2).inverse();\n  b *= ia, c *= ia;\n  auto D =\
-    \ mod_sqrt(((b * inv2).pow(2) - c).get(), mint::get_mod());\n  if(D == -1) return\
-    \ {};\n  if(D <= 1) return vector<mint>{-b * inv2 + D};\n  return vector<mint>{-b\
-    \ * inv2 + D, -b * inv2 - D};\n}\n"
+    }\n\n/**\n * @brief mod sqrt(Tonelli-Shanks algorithm)\n */\n#line 4 \"modulo/quadratic-equation.hpp\"\
+    \n\ntemplate <typename mint>\nvector<mint> QuadraticEquation(mint a, mint b, mint\
+    \ c) {\n  assert(mint::get_mod() % 2 != 0);\n  if (a == mint()) {\n    if(b ==\
+    \ mint()) {\n      assert(c != mint());\n      return {};\n    }\n    return vector<mint>{-c\
+    \ * b.inverse()};\n  }\n  mint ia = a.inverse(), inv2 = mint(2).inverse();\n \
+    \ b *= ia, c *= ia;\n  auto D = mod_sqrt(((b * inv2).pow(2) - c).get(), mint::get_mod());\n\
+    \  if(D == -1) return {};\n  if(D <= 1) return vector<mint>{-b * inv2 + D};\n\
+    \  return vector<mint>{-b * inv2 + D, -b * inv2 - D};\n}\n"
   code: "#pragma once\n\n#include \"mod-sqrt.hpp\"\n\ntemplate <typename mint>\nvector<mint>\
     \ QuadraticEquation(mint a, mint b, mint c) {\n  assert(mint::get_mod() % 2 !=\
     \ 0);\n  if (a == mint()) {\n    if(b == mint()) {\n      assert(c != mint());\n\
@@ -87,7 +86,7 @@ data:
   isVerificationFile: false
   path: modulo/quadratic-equation.hpp
   requiredBy: []
-  timestamp: '2023-05-29 20:16:02+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: modulo/quadratic-equation.hpp

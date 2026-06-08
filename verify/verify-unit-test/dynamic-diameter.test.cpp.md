@@ -273,12 +273,12 @@ data:
     \   cin >> x >> y;\n    T c;\n    if (is_weighted)\n      cin >> c;\n    else\n\
     \      c = 1;\n    if (is_1origin) x--, y--;\n    d[x][y] = c;\n    if (!is_directed)\
     \ d[y][x] = c;\n  }\n  return d;\n}\n\n/**\n * @brief \u30B0\u30E9\u30D5\u30C6\
-    \u30F3\u30D7\u30EC\u30FC\u30C8\n * @docs docs/graph/graph-template.md\n */\n#line\
-    \ 2 \"tree/static-top-tree-vertex-based.hpp\"\n\n#line 7 \"tree/static-top-tree-vertex-based.hpp\"\
-    \nusing namespace std;\n\n#line 2 \"tree/convert-tree.hpp\"\n\n#line 4 \"tree/convert-tree.hpp\"\
-    \n\ntemplate <typename T>\nstruct has_cost {\n private:\n  template <typename\
-    \ U>\n  static auto confirm(U u) -> decltype(u.cost, std::true_type());\n  static\
-    \ auto confirm(...) -> std::false_type;\n\n public:\n  enum : bool { value = decltype(confirm(std::declval<T>()))::value\
+    \u30F3\u30D7\u30EC\u30FC\u30C8\n */\n#line 2 \"tree/static-top-tree-vertex-based.hpp\"\
+    \n\n#line 7 \"tree/static-top-tree-vertex-based.hpp\"\nusing namespace std;\n\n\
+    #line 2 \"tree/convert-tree.hpp\"\n\n#line 4 \"tree/convert-tree.hpp\"\n\ntemplate\
+    \ <typename T>\nstruct has_cost {\n private:\n  template <typename U>\n  static\
+    \ auto confirm(U u) -> decltype(u.cost, std::true_type());\n  static auto confirm(...)\
+    \ -> std::false_type;\n\n public:\n  enum : bool { value = decltype(confirm(std::declval<T>()))::value\
     \ };\n};\n\ntemplate <typename T>\nvector<vector<T>> inverse_tree(const vector<vector<T>>&\
     \ g) {\n  int N = (int)g.size();\n  vector<vector<T>> rg(N);\n  for (int i = 0;\
     \ i < N; i++) {\n    for (auto& e : g[i]) {\n      if constexpr (is_same<T, int>::value)\
@@ -329,44 +329,44 @@ data:
     \      if (down[a] < down[b]) swap(a, b);\n      a = par[nxt[a]];\n    }\n   \
     \ return depth[a] < depth[b] ? a : b;\n  }\n\n  int dist(int a, int b) { return\
     \ depth[a] + depth[b] - depth[lca(a, b)] * 2; }\n};\n\n/**\n * @brief Heavy Light\
-    \ Decomposition(\u91CD\u8EFD\u5206\u89E3)\n * @docs docs/tree/heavy-light-decomposition.md\n\
-    \ */\n#line 11 \"tree/static-top-tree-vertex-based.hpp\"\n\nnamespace StaticTopTreeVertexBasedImpl\
-    \ {\n\nenum Type { Vertex, Compress, Rake, Add_Edge, Add_Vertex };\n\ntemplate\
-    \ <typename G>\nstruct StaticTopTreeVertexBased {\n  const HeavyLightDecomposition<G>&\
-    \ hld;\n  vector<vector<int>> g;\n  int root;     // \u5143\u306E\u6728\u306E\
-    \ root\n  int tt_root;  // top tree \u306E root\n  vector<int> P, L, R;\n  vector<Type>\
-    \ T;\n\n  StaticTopTreeVertexBased(const HeavyLightDecomposition<G>& _hld) : hld(_hld)\
-    \ {\n    root = hld.root;\n    g = rooted_tree(hld.g, root);\n    int n = g.size();\n\
-    \    P.resize(n, -1), L.resize(n, -1), R.resize(n, -1);\n    T.resize(n, Type::Vertex);\n\
-    \    build();\n  }\n\n private:\n  int add(int l, int r, Type t) {\n    if (t\
-    \ == Type::Compress or t == Type::Rake) {\n      assert(l != -1 and r != -1);\n\
-    \    }\n    if (t == Type::Add_Edge) {\n      assert(l != -1 and r == -1);\n \
-    \   }\n    assert(t != Type::Vertex and t != Type::Add_Vertex);\n    int k = P.size();\n\
-    \    P.push_back(-1), L.push_back(l), R.push_back(r), T.push_back(t);\n    if\
-    \ (l != -1) P[l] = k;\n    if (r != -1) P[r] = k;\n    return k;\n  }\n  int add2(int\
-    \ k, int l, int r, Type t) {\n    assert(k < (int)g.size());\n    assert(t ==\
-    \ Type::Vertex or t == Type::Add_Vertex);\n    if (t == Type::Vertex) {\n    \
-    \  assert(l == -1 and r == -1);\n    } else {\n      assert(l != -1 and r == -1);\n\
-    \    }\n    P[k] = -1, L[k] = l, R[k] = r, T[k] = t;\n    if (l != -1) P[l] =\
-    \ k;\n    if (r != -1) P[r] = k;\n    return k;\n  }\n  pair<int, int> merge(const\
-    \ vector<pair<int, int>>& a, Type t) {\n    assert(!a.empty());\n    if (a.size()\
-    \ == 1) return a[0];\n    int sum_s = 0;\n    for (auto& [_, s] : a) sum_s +=\
-    \ s;\n    vector<pair<int, int>> b, c;\n    for (auto& [i, s] : a) {\n      (sum_s\
-    \ > s ? b : c).emplace_back(i, s);\n      sum_s -= s * 2;\n    }\n    auto [i,\
-    \ si] = merge(b, t);\n    auto [j, sj] = merge(c, t);\n    return {add(i, j, t),\
-    \ si + sj};\n  }\n  pair<int, int> compress(int i) {\n    vector<pair<int, int>>\
-    \ chs;\n    while (true) {\n      chs.push_back(add_vertex(i));\n      if (g[i].empty())\
-    \ break;\n      i = g[i][0];\n    }\n    return merge(chs, Type::Compress);\n\
-    \  }\n  pair<int, int> rake(int i) {\n    vector<pair<int, int>> chs;\n    for\
-    \ (int j = 1; j < (int)g[i].size(); j++) chs.push_back(add_edge(g[i][j]));\n \
-    \   if (chs.empty()) return {-1, 0};\n    return merge(chs, Type::Rake);\n  }\n\
-    \  pair<int, int> add_edge(int i) {\n    auto [j, sj] = compress(i);\n    return\
-    \ {add(j, -1, Type::Add_Edge), sj};\n  }\n  pair<int, int> add_vertex(int i) {\n\
-    \    auto [j, sj] = rake(i);\n    return {add2(i, j, -1, j == -1 ? Type::Vertex\
-    \ : Type::Add_Vertex), sj + 1};\n  }\n  void build() {\n    auto [i, n] = compress(root);\n\
-    \    assert((int)g.size() == n);\n    tt_root = i;\n  }\n};\n\ntemplate <typename\
-    \ G, typename Path, typename Point, typename Vertex,\n          typename Compress,\
-    \ typename Rake, typename Add_edge,\n          typename Add_vertex>\nstruct DPonStaticTopTreeVertexBased\
+    \ Decomposition(\u91CD\u8EFD\u5206\u89E3)\n */\n#line 11 \"tree/static-top-tree-vertex-based.hpp\"\
+    \n\nnamespace StaticTopTreeVertexBasedImpl {\n\nenum Type { Vertex, Compress,\
+    \ Rake, Add_Edge, Add_Vertex };\n\ntemplate <typename G>\nstruct StaticTopTreeVertexBased\
+    \ {\n  const HeavyLightDecomposition<G>& hld;\n  vector<vector<int>> g;\n  int\
+    \ root;     // \u5143\u306E\u6728\u306E root\n  int tt_root;  // top tree \u306E\
+    \ root\n  vector<int> P, L, R;\n  vector<Type> T;\n\n  StaticTopTreeVertexBased(const\
+    \ HeavyLightDecomposition<G>& _hld) : hld(_hld) {\n    root = hld.root;\n    g\
+    \ = rooted_tree(hld.g, root);\n    int n = g.size();\n    P.resize(n, -1), L.resize(n,\
+    \ -1), R.resize(n, -1);\n    T.resize(n, Type::Vertex);\n    build();\n  }\n\n\
+    \ private:\n  int add(int l, int r, Type t) {\n    if (t == Type::Compress or\
+    \ t == Type::Rake) {\n      assert(l != -1 and r != -1);\n    }\n    if (t ==\
+    \ Type::Add_Edge) {\n      assert(l != -1 and r == -1);\n    }\n    assert(t !=\
+    \ Type::Vertex and t != Type::Add_Vertex);\n    int k = P.size();\n    P.push_back(-1),\
+    \ L.push_back(l), R.push_back(r), T.push_back(t);\n    if (l != -1) P[l] = k;\n\
+    \    if (r != -1) P[r] = k;\n    return k;\n  }\n  int add2(int k, int l, int\
+    \ r, Type t) {\n    assert(k < (int)g.size());\n    assert(t == Type::Vertex or\
+    \ t == Type::Add_Vertex);\n    if (t == Type::Vertex) {\n      assert(l == -1\
+    \ and r == -1);\n    } else {\n      assert(l != -1 and r == -1);\n    }\n   \
+    \ P[k] = -1, L[k] = l, R[k] = r, T[k] = t;\n    if (l != -1) P[l] = k;\n    if\
+    \ (r != -1) P[r] = k;\n    return k;\n  }\n  pair<int, int> merge(const vector<pair<int,\
+    \ int>>& a, Type t) {\n    assert(!a.empty());\n    if (a.size() == 1) return\
+    \ a[0];\n    int sum_s = 0;\n    for (auto& [_, s] : a) sum_s += s;\n    vector<pair<int,\
+    \ int>> b, c;\n    for (auto& [i, s] : a) {\n      (sum_s > s ? b : c).emplace_back(i,\
+    \ s);\n      sum_s -= s * 2;\n    }\n    auto [i, si] = merge(b, t);\n    auto\
+    \ [j, sj] = merge(c, t);\n    return {add(i, j, t), si + sj};\n  }\n  pair<int,\
+    \ int> compress(int i) {\n    vector<pair<int, int>> chs;\n    while (true) {\n\
+    \      chs.push_back(add_vertex(i));\n      if (g[i].empty()) break;\n      i\
+    \ = g[i][0];\n    }\n    return merge(chs, Type::Compress);\n  }\n  pair<int,\
+    \ int> rake(int i) {\n    vector<pair<int, int>> chs;\n    for (int j = 1; j <\
+    \ (int)g[i].size(); j++) chs.push_back(add_edge(g[i][j]));\n    if (chs.empty())\
+    \ return {-1, 0};\n    return merge(chs, Type::Rake);\n  }\n  pair<int, int> add_edge(int\
+    \ i) {\n    auto [j, sj] = compress(i);\n    return {add(j, -1, Type::Add_Edge),\
+    \ sj};\n  }\n  pair<int, int> add_vertex(int i) {\n    auto [j, sj] = rake(i);\n\
+    \    return {add2(i, j, -1, j == -1 ? Type::Vertex : Type::Add_Vertex), sj + 1};\n\
+    \  }\n  void build() {\n    auto [i, n] = compress(root);\n    assert((int)g.size()\
+    \ == n);\n    tt_root = i;\n  }\n};\n\ntemplate <typename G, typename Path, typename\
+    \ Point, typename Vertex,\n          typename Compress, typename Rake, typename\
+    \ Add_edge,\n          typename Add_vertex>\nstruct DPonStaticTopTreeVertexBased\
     \ {\n  const StaticTopTreeVertexBased<G> tt;\n  vector<Path> path;\n  vector<Point>\
     \ point;\n  Vertex vertex;\n  Compress compress;\n  Rake rake;\n  Add_edge add_edge;\n\
     \  Add_vertex add_vertex;\n\n  DPonStaticTopTreeVertexBased(const HeavyLightDecomposition<G>&\
@@ -461,57 +461,56 @@ data:
     \   for (auto dst : g[cur]) {\n      if (d[dst] == T(-1) || d[cur] + dst.cost\
     \ < d[dst]) {\n        d[dst] = d[cur] + dst.cost;\n        Q.emplace(d[dst],\
     \ dst);\n      }\n    }\n  }\n  return d;\n}\n\n/**\n * @brief \u30C0\u30A4\u30AF\
-    \u30B9\u30C8\u30E9\u6CD5\n * @docs docs/shortest-path/dijkstra.md\n */\n#line\
-    \ 9 \"verify/verify-unit-test/dynamic-diameter.test.cpp\"\n//\n#line 2 \"misc/rng.hpp\"\
-    \n\n#line 7 \"misc/rng.hpp\"\nusing namespace std;\n\n#line 2 \"internal/internal-seed.hpp\"\
-    \n\n#line 4 \"internal/internal-seed.hpp\"\nusing namespace std;\n\nnamespace\
-    \ internal {\nunsigned long long non_deterministic_seed() {\n  unsigned long long\
-    \ m =\n      chrono::duration_cast<chrono::nanoseconds>(\n          chrono::high_resolution_clock::now().time_since_epoch())\n\
-    \          .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >>\
-    \ 31, m ^= m << 35;\n  return m;\n}\nunsigned long long deterministic_seed() {\
-    \ return 88172645463325252UL; }\n\n// 64 bit \u306E seed \u5024\u3092\u751F\u6210\
-    \ (\u624B\u5143\u3067\u306F seed \u56FA\u5B9A)\n// \u9023\u7D9A\u3067\u547C\u3073\
-    \u51FA\u3059\u3068\u540C\u3058\u5024\u304C\u4F55\u5EA6\u3082\u8FD4\u3063\u3066\
-    \u304F\u308B\u306E\u3067\u6CE8\u610F\n// #define RANDOMIZED_SEED \u3059\u308B\u3068\
-    \u30B7\u30FC\u30C9\u304C\u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long\
-    \ long seed() {\n#if defined(NyaanLocal) && !defined(RANDOMIZED_SEED)\n  return\
-    \ deterministic_seed();\n#else\n  return non_deterministic_seed();\n#endif\n}\n\
-    \n}  // namespace internal\n#line 10 \"misc/rng.hpp\"\n\nnamespace my_rand {\n\
-    using i64 = long long;\nusing u64 = unsigned long long;\n\n// [0, 2^64 - 1)\n\
-    u64 rng() {\n  static u64 _x = internal::seed();\n  return _x ^= _x << 7, _x ^=\
-    \ _x >> 9;\n}\n\n// [l, r]\ni64 rng(i64 l, i64 r) {\n  assert(l <= r);\n  return\
-    \ l + rng() % u64(r - l + 1);\n}\n\n// [l, r)\ni64 randint(i64 l, i64 r) {\n \
-    \ assert(l < r);\n  return l + rng() % u64(r - l);\n}\n\n// choose n numbers from\
-    \ [l, r) without overlapping\nvector<i64> randset(i64 l, i64 r, i64 n) {\n  assert(l\
-    \ <= r && n <= r - l);\n  unordered_set<i64> s;\n  for (i64 i = n; i; --i) {\n\
-    \    i64 m = randint(l, r + 1 - i);\n    if (s.find(m) != s.end()) m = r - i;\n\
-    \    s.insert(m);\n  }\n  vector<i64> ret;\n  for (auto& x : s) ret.push_back(x);\n\
-    \  sort(begin(ret), end(ret));\n  return ret;\n}\n\n// [0.0, 1.0)\ndouble rnd()\
-    \ { return rng() * 5.42101086242752217004e-20; }\n// [l, r)\ndouble rnd(double\
-    \ l, double r) {\n  assert(l < r);\n  return l + rnd() * (r - l);\n}\n\ntemplate\
-    \ <typename T>\nvoid randshf(vector<T>& v) {\n  int n = v.size();\n  for (int\
-    \ i = 1; i < n; i++) swap(v[i], v[randint(0, i + 1)]);\n}\n\n}  // namespace my_rand\n\
-    \nusing my_rand::randint;\nusing my_rand::randset;\nusing my_rand::randshf;\n\
-    using my_rand::rnd;\nusing my_rand::rng;\n#line 11 \"verify/verify-unit-test/dynamic-diameter.test.cpp\"\
-    \n\nvoid test() {\n  ll wmax = TEN(9);\n\n  rep1(N, 50) {\n    rep(_, 100) {\n\
-    \      WeightedGraph<ll> g;\n      Edges<ll> es;\n      rep1(i, N - 1) {\n   \
-    \     int j = rng(0, i - 1);\n        es.emplace_back(j, i, rng(0, wmax));\n \
-    \     }\n\n      auto gen = [&]() {\n        g.clear();\n        g.resize(N);\n\
-    \        each(e, es) {\n          g[e.src].emplace_back(e.src, e.to, e.cost);\n\
-    \          g[e.to].emplace_back(e.to, e.src, e.cost);\n        }\n      };\n \
-    \     gen();\n\n      auto DP = DynamicDiameter(g);\n\n      rep(t, 100) {\n \
-    \       // check\n        auto [d, uv] = DP.get();\n\n        ll d2 = -1;\n  \
-    \      {\n          int u = 0;\n          auto du = dijkstra(g, u);\n        \
-    \  int v = max_element(all(du)) - begin(du);\n          auto dv = dijkstra(g,\
-    \ v);\n          int w = max_element(all(dv)) - begin(dv);\n          d2 = dv[w];\n\
-    \        }\n        assert(uv.first != -1 and uv.second != -1);\n        assert(d\
-    \ == d2);\n        assert(d == dijkstra(g, uv.first)[uv.second]);\n\n        if\
-    \ (N >= 2) {\n          // update\n          int e_num = rng(0, N - 2);\n    \
-    \      int u = es[e_num].src, v = es[e_num].to;\n          ll x = rng(0, wmax);\n\
-    \n          DP.update(u, v, x);\n          es[e_num].cost = x;\n          gen();\n\
-    \        }\n      }\n    }\n  }\n  trc2(\"OK\");\n}\n\nvoid q() {\n  test();\n\
-    \n  int a, b;\n  cin >> a >> b;\n  cout << a + b << endl;\n}\n\nvoid Nyaan::solve()\
-    \ {\n  int t = 1;\n  // in(t);\n  while (t--) q();\n}\n"
+    \u30B9\u30C8\u30E9\u6CD5\n */\n#line 9 \"verify/verify-unit-test/dynamic-diameter.test.cpp\"\
+    \n//\n#line 2 \"misc/rng.hpp\"\n\n#line 7 \"misc/rng.hpp\"\nusing namespace std;\n\
+    \n#line 2 \"internal/internal-seed.hpp\"\n\n#line 4 \"internal/internal-seed.hpp\"\
+    \nusing namespace std;\n\nnamespace internal {\nunsigned long long non_deterministic_seed()\
+    \ {\n  unsigned long long m =\n      chrono::duration_cast<chrono::nanoseconds>(\n\
+    \          chrono::high_resolution_clock::now().time_since_epoch())\n        \
+    \  .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >> 31, m\
+    \ ^= m << 35;\n  return m;\n}\nunsigned long long deterministic_seed() { return\
+    \ 88172645463325252UL; }\n\n// 64 bit \u306E seed \u5024\u3092\u751F\u6210 (\u624B\
+    \u5143\u3067\u306F seed \u56FA\u5B9A)\n// \u9023\u7D9A\u3067\u547C\u3073\u51FA\
+    \u3059\u3068\u540C\u3058\u5024\u304C\u4F55\u5EA6\u3082\u8FD4\u3063\u3066\u304F\
+    \u308B\u306E\u3067\u6CE8\u610F\n// #define RANDOMIZED_SEED \u3059\u308B\u3068\u30B7\
+    \u30FC\u30C9\u304C\u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long long\
+    \ seed() {\n#if defined(NyaanLocal) && !defined(RANDOMIZED_SEED)\n  return deterministic_seed();\n\
+    #else\n  return non_deterministic_seed();\n#endif\n}\n\n}  // namespace internal\n\
+    #line 10 \"misc/rng.hpp\"\n\nnamespace my_rand {\nusing i64 = long long;\nusing\
+    \ u64 = unsigned long long;\n\n// [0, 2^64 - 1)\nu64 rng() {\n  static u64 _x\
+    \ = internal::seed();\n  return _x ^= _x << 7, _x ^= _x >> 9;\n}\n\n// [l, r]\n\
+    i64 rng(i64 l, i64 r) {\n  assert(l <= r);\n  return l + rng() % u64(r - l + 1);\n\
+    }\n\n// [l, r)\ni64 randint(i64 l, i64 r) {\n  assert(l < r);\n  return l + rng()\
+    \ % u64(r - l);\n}\n\n// choose n numbers from [l, r) without overlapping\nvector<i64>\
+    \ randset(i64 l, i64 r, i64 n) {\n  assert(l <= r && n <= r - l);\n  unordered_set<i64>\
+    \ s;\n  for (i64 i = n; i; --i) {\n    i64 m = randint(l, r + 1 - i);\n    if\
+    \ (s.find(m) != s.end()) m = r - i;\n    s.insert(m);\n  }\n  vector<i64> ret;\n\
+    \  for (auto& x : s) ret.push_back(x);\n  sort(begin(ret), end(ret));\n  return\
+    \ ret;\n}\n\n// [0.0, 1.0)\ndouble rnd() { return rng() * 5.42101086242752217004e-20;\
+    \ }\n// [l, r)\ndouble rnd(double l, double r) {\n  assert(l < r);\n  return l\
+    \ + rnd() * (r - l);\n}\n\ntemplate <typename T>\nvoid randshf(vector<T>& v) {\n\
+    \  int n = v.size();\n  for (int i = 1; i < n; i++) swap(v[i], v[randint(0, i\
+    \ + 1)]);\n}\n\n}  // namespace my_rand\n\nusing my_rand::randint;\nusing my_rand::randset;\n\
+    using my_rand::randshf;\nusing my_rand::rnd;\nusing my_rand::rng;\n#line 11 \"\
+    verify/verify-unit-test/dynamic-diameter.test.cpp\"\n\nvoid test() {\n  ll wmax\
+    \ = TEN(9);\n\n  rep1(N, 50) {\n    rep(_, 100) {\n      WeightedGraph<ll> g;\n\
+    \      Edges<ll> es;\n      rep1(i, N - 1) {\n        int j = rng(0, i - 1);\n\
+    \        es.emplace_back(j, i, rng(0, wmax));\n      }\n\n      auto gen = [&]()\
+    \ {\n        g.clear();\n        g.resize(N);\n        each(e, es) {\n       \
+    \   g[e.src].emplace_back(e.src, e.to, e.cost);\n          g[e.to].emplace_back(e.to,\
+    \ e.src, e.cost);\n        }\n      };\n      gen();\n\n      auto DP = DynamicDiameter(g);\n\
+    \n      rep(t, 100) {\n        // check\n        auto [d, uv] = DP.get();\n\n\
+    \        ll d2 = -1;\n        {\n          int u = 0;\n          auto du = dijkstra(g,\
+    \ u);\n          int v = max_element(all(du)) - begin(du);\n          auto dv\
+    \ = dijkstra(g, v);\n          int w = max_element(all(dv)) - begin(dv);\n   \
+    \       d2 = dv[w];\n        }\n        assert(uv.first != -1 and uv.second !=\
+    \ -1);\n        assert(d == d2);\n        assert(d == dijkstra(g, uv.first)[uv.second]);\n\
+    \n        if (N >= 2) {\n          // update\n          int e_num = rng(0, N -\
+    \ 2);\n          int u = es[e_num].src, v = es[e_num].to;\n          ll x = rng(0,\
+    \ wmax);\n\n          DP.update(u, v, x);\n          es[e_num].cost = x;\n   \
+    \       gen();\n        }\n      }\n    }\n  }\n  trc2(\"OK\");\n}\n\nvoid q()\
+    \ {\n  test();\n\n  int a, b;\n  cin >> a >> b;\n  cout << a + b << endl;\n}\n\
+    \nvoid Nyaan::solve() {\n  int t = 1;\n  // in(t);\n  while (t--) q();\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/aplusb\"\n//\n#include\
     \ \"../../template/template.hpp\"\n//\n#include \"../../tree/dynamic-diameter.hpp\"\
     \nusing namespace Nyaan;\n//\n#include \"../../shortest-path/dijkstra.hpp\"\n\
@@ -552,7 +551,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/dynamic-diameter.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/dynamic-diameter.test.cpp

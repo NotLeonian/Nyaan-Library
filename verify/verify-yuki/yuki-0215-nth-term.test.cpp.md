@@ -486,11 +486,10 @@ data:
     \ mint>\nFormalPowerSeries<mint> FormalPowerSeries<mint>::exp(int deg) const {\n\
     \  return fps_exp_impl(*this, deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief\
     \ \u591A\u9805\u5F0F/\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\
-    \u30EA\n * @docs docs/fps/formal-power-series.md\n */\n#line 7 \"fps/arbitrary-fps.hpp\"\
-    \n\ntemplate <typename mint>\nvoid fps_set_fft_impl(FormalPowerSeries<mint>*,\
-    \ FPSBackendPriority<0>) {\n  FormalPowerSeries<mint>::ntt_ptr = nullptr;\n}\n\
-    \ntemplate <typename mint>\nvoid fps_ntt_impl(FormalPowerSeries<mint>&, FPSBackendPriority<0>)\
-    \ {\n  exit(1);\n}\n\ntemplate <typename mint>\nvoid fps_intt_impl(FormalPowerSeries<mint>&,\
+    \u30EA\n */\n#line 7 \"fps/arbitrary-fps.hpp\"\n\ntemplate <typename mint>\nvoid\
+    \ fps_set_fft_impl(FormalPowerSeries<mint>*, FPSBackendPriority<0>) {\n  FormalPowerSeries<mint>::ntt_ptr\
+    \ = nullptr;\n}\n\ntemplate <typename mint>\nvoid fps_ntt_impl(FormalPowerSeries<mint>&,\
+    \ FPSBackendPriority<0>) {\n  exit(1);\n}\n\ntemplate <typename mint>\nvoid fps_intt_impl(FormalPowerSeries<mint>&,\
     \ FPSBackendPriority<0>) {\n  exit(1);\n}\n\ntemplate <typename mint>\nvoid fps_ntt_doubling_impl(FormalPowerSeries<mint>&,\
     \ FPSBackendPriority<0>) {\n  exit(1);\n}\n\ntemplate <typename mint>\nint fps_ntt_pr_impl(FormalPowerSeries<mint>*,\
     \ FPSBackendPriority<0>) {\n  exit(1);\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>&\
@@ -559,22 +558,21 @@ data:
     \ != 0);\n  if (N < (int)a.size()) return a[N];\n  assert((int)a.size() >= int(Q.size())\
     \ - 1);\n  auto P = a.pre((int)Q.size() - 1) * Q;\n  P.resize(Q.size() - 1);\n\
     \  return LinearRecurrence<mint>(N, Q, P);\n}\n\n/**\n * @brief \u7DDA\u5F62\u6F38\
-    \u5316\u5F0F\u306E\u9AD8\u901F\u8A08\u7B97\n * @docs docs/fps/kitamasa.md\n */\n\
-    #line 5 \"fps/nth-term.hpp\"\n\ntemplate <typename mint>\nmint nth_term(long long\
-    \ n, const vector<mint> &s) {\n  using fps = FormalPowerSeries<mint>;\n  auto\
-    \ bm = BerlekampMassey<mint>(s);\n  return kitamasa(n, fps{begin(bm), end(bm)},\
-    \ fps{begin(s), end(s)});\n}\n\n/**\n * @brief \u7DDA\u5F62\u56DE\u5E30\u6570\u5217\
-    \u306E\u9AD8\u901F\u8A08\u7B97(Berlekamp-Massey/Bostan-Mori)\n * @docs docs/fps/nth-term.md\n\
-    \ */\n#line 13 \"verify/verify-yuki/yuki-0215-nth-term.test.cpp\"\n\nusing namespace\
-    \ Nyaan; void Nyaan::solve() {\n  inl(N, P, C);\n  vl s{2, 3, 5, 7, 11, 13};\n\
-    \  vl t{4, 6, 8, 9, 10, 12};\n\n  auto calc = [](vl d, ll n) -> fps {\n    ll\
-    \ mx = d.back() * n;\n    vvm dp(n + 2, vm(mx + 20));\n    dp[0][0] = 1;\n   \
-    \ each(x, d) rep(i, n) rep(j, mx) dp[i + 1][j + x] += dp[i][j];\n    return fps{begin(dp[n]),\
-    \ end(dp[n])};\n  };\n\n  fps f1 = calc(s, P);\n  fps f2 = calc(t, C);\n  fps\
-    \ f = f1 * f2;\n  f.shrink();\n\n  int d = sz(f) + 10;\n\n  vm a(d * 2);\n  vm\
-    \ dp(d * 3 + 10);\n  dp[0] = 1;\n  rep(i, 2 * d) {\n    reg(j, i, sz(dp)) a[i]\
-    \ += dp[j];\n    rep(j, sz(f)) dp[i + j] += dp[i] * f[j];\n  }\n  a.erase(begin(a));\n\
-    \  out(nth_term(N - 1, a));\n}\n"
+    \u5316\u5F0F\u306E\u9AD8\u901F\u8A08\u7B97\n */\n#line 5 \"fps/nth-term.hpp\"\n\
+    \ntemplate <typename mint>\nmint nth_term(long long n, const vector<mint> &s)\
+    \ {\n  using fps = FormalPowerSeries<mint>;\n  auto bm = BerlekampMassey<mint>(s);\n\
+    \  return kitamasa(n, fps{begin(bm), end(bm)}, fps{begin(s), end(s)});\n}\n\n\
+    /**\n * @brief \u7DDA\u5F62\u56DE\u5E30\u6570\u5217\u306E\u9AD8\u901F\u8A08\u7B97\
+    (Berlekamp-Massey/Bostan-Mori)\n */\n#line 13 \"verify/verify-yuki/yuki-0215-nth-term.test.cpp\"\
+    \n\nusing namespace Nyaan; void Nyaan::solve() {\n  inl(N, P, C);\n  vl s{2, 3,\
+    \ 5, 7, 11, 13};\n  vl t{4, 6, 8, 9, 10, 12};\n\n  auto calc = [](vl d, ll n)\
+    \ -> fps {\n    ll mx = d.back() * n;\n    vvm dp(n + 2, vm(mx + 20));\n    dp[0][0]\
+    \ = 1;\n    each(x, d) rep(i, n) rep(j, mx) dp[i + 1][j + x] += dp[i][j];\n  \
+    \  return fps{begin(dp[n]), end(dp[n])};\n  };\n\n  fps f1 = calc(s, P);\n  fps\
+    \ f2 = calc(t, C);\n  fps f = f1 * f2;\n  f.shrink();\n\n  int d = sz(f) + 10;\n\
+    \n  vm a(d * 2);\n  vm dp(d * 3 + 10);\n  dp[0] = 1;\n  rep(i, 2 * d) {\n    reg(j,\
+    \ i, sz(dp)) a[i] += dp[j];\n    rep(j, sz(f)) dp[i + j] += dp[i] * f[j];\n  }\n\
+    \  a.erase(begin(a));\n  out(nth_term(N - 1, a));\n}\n"
   code: "#define PROBLEM \"https://yukicoder.me/problems/no/215\"\n\n#include \"../../template/template.hpp\"\
     \n//\n#include \"../../fps/arbitrary-fps.hpp\"\n#include \"../../modint/montgomery-modint.hpp\"\
     \nusing mint = LazyMontgomeryModInt<1000000007>;\nusing vm = vector<mint>;\nusing\
@@ -606,7 +604,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yuki/yuki-0215-nth-term.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yuki/yuki-0215-nth-term.test.cpp

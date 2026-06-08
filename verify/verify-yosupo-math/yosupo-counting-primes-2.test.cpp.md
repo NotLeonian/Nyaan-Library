@@ -273,9 +273,9 @@ data:
     \ prime[pidx];\n    i64 p2 = i64(p) * p;\n    for (i64 i = 1, n = ns[i]; i < nsz\
     \ && n >= p2; n = ns[++i])\n      h[i] -= h[i * p <= N2 ? i * p : nsz - my_div(n,\
     \ p)] - pi;\n    ++pidx;\n    ++pi;\n  }\n\n  return h[1];\n}\n\n/**\n * @brief\
-    \ \u7D20\u6570\u30AB\u30A6\u30F3\u30C8( $\\mathrm{O}(N^{\\frac{2}{3}})$ )\n *\
-    \ @docs docs/multiplicative-function/prime-counting-o2d3.md\n */\n#line 5 \"verify/verify-yosupo-math/yosupo-counting-primes-2.test.cpp\"\
-    \n\nusing namespace Nyaan; void Nyaan::solve() {\n  inl(N);\n  out(prime_counting(N));\n\
+    \ \u7D20\u6570\u30AB\u30A6\u30F3\u30C8( $\\mathrm{O}(N^{\\frac{2}{3}})$ )\n */\n\
+    #line 5 \"verify/verify-yosupo-math/yosupo-counting-primes-2.test.cpp\"\n\nusing\
+    \ namespace Nyaan; void Nyaan::solve() {\n  inl(N);\n  out(prime_counting(N));\n\
     }\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/counting_primes\"\n\n#include\
     \ \"../../template/template.hpp\"\n#include \"../../multiplicative-function/prime-counting-o2d3.hpp\"\
@@ -293,7 +293,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-math/yosupo-counting-primes-2.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-math/yosupo-counting-primes-2.test.cpp

@@ -46,21 +46,20 @@ data:
     \ {\n    int x, y;\n    cin >> x >> y;\n    T c;\n    if (is_weighted)\n     \
     \ cin >> c;\n    else\n      c = 1;\n    if (is_1origin) x--, y--;\n    d[x][y]\
     \ = c;\n    if (!is_directed) d[y][x] = c;\n  }\n  return d;\n}\n\n/**\n * @brief\
-    \ \u30B0\u30E9\u30D5\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\n * @docs docs/graph/graph-template.md\n\
-    \ */\n#line 2 \"data-structure/union-find.hpp\"\n\nstruct UnionFind {\n  vector<int>\
-    \ data;\n  UnionFind(int N) : data(N, -1) {}\n\n  int find(int k) { return data[k]\
-    \ < 0 ? k : data[k] = find(data[k]); }\n\n  int unite(int x, int y) {\n    if\
-    \ ((x = find(x)) == (y = find(y))) return false;\n    if (data[x] > data[y]) swap(x,\
-    \ y);\n    data[x] += data[y];\n    data[y] = x;\n    return true;\n  }\n\n  //\
-    \ f(x, y) : x \u306B y \u3092\u30DE\u30FC\u30B8\n  template<typename F>\n  int\
-    \ unite(int x, int y,const F &f) {\n    if ((x = find(x)) == (y = find(y))) return\
+    \ \u30B0\u30E9\u30D5\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\n */\n#line 2 \"data-structure/union-find.hpp\"\
+    \n\nstruct UnionFind {\n  vector<int> data;\n  UnionFind(int N) : data(N, -1)\
+    \ {}\n\n  int find(int k) { return data[k] < 0 ? k : data[k] = find(data[k]);\
+    \ }\n\n  int unite(int x, int y) {\n    if ((x = find(x)) == (y = find(y))) return\
     \ false;\n    if (data[x] > data[y]) swap(x, y);\n    data[x] += data[y];\n  \
-    \  data[y] = x;\n    f(x, y);\n    return true;\n  }\n\n  int size(int k) { return\
-    \ -data[find(k)]; }\n\n  int same(int x, int y) { return find(x) == find(y); }\n\
-    };\n\n/**\n * @brief Union Find(Disjoint Set Union)\n * @docs docs/data-structure/union-find.md\n\
-    \ */\n#line 5 \"graph/kruskal.hpp\"\n\ntemplate <typename T>\nT kruskal(int N,\
-    \ Edges<T> &es) {\n  sort(begin(es), end(es),\n       [&](edge<T> a, edge<T> b)\
-    \ { return a.cost < b.cost; });\n  UnionFind uf(N);\n  T ret = 0;\n  for (edge<T>\
+    \  data[y] = x;\n    return true;\n  }\n\n  // f(x, y) : x \u306B y \u3092\u30DE\
+    \u30FC\u30B8\n  template<typename F>\n  int unite(int x, int y,const F &f) {\n\
+    \    if ((x = find(x)) == (y = find(y))) return false;\n    if (data[x] > data[y])\
+    \ swap(x, y);\n    data[x] += data[y];\n    data[y] = x;\n    f(x, y);\n    return\
+    \ true;\n  }\n\n  int size(int k) { return -data[find(k)]; }\n\n  int same(int\
+    \ x, int y) { return find(x) == find(y); }\n};\n\n/**\n * @brief Union Find(Disjoint\
+    \ Set Union)\n */\n#line 5 \"graph/kruskal.hpp\"\n\ntemplate <typename T>\nT kruskal(int\
+    \ N, Edges<T> &es) {\n  sort(begin(es), end(es),\n       [&](edge<T> a, edge<T>\
+    \ b) { return a.cost < b.cost; });\n  UnionFind uf(N);\n  T ret = 0;\n  for (edge<T>\
     \ &e : es) {\n    if (uf.same(e.src, e.to)) continue;\n    ret += e.cost;\n  \
     \  uf.unite(e.src, e.to);\n  }\n  return ret;\n}\n"
   code: "#pragma once\n\n#include \"./graph-template.hpp\"\n#include \"../data-structure/union-find.hpp\"\
@@ -75,7 +74,7 @@ data:
   isVerificationFile: false
   path: graph/kruskal.hpp
   requiredBy: []
-  timestamp: '2024-08-10 13:03:16+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-aoj-grl/aoj-grl-2-a.test.cpp

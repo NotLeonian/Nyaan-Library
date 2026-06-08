@@ -16,7 +16,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/dp/knapsack01.md
     document_title: "0-1\u30CA\u30C3\u30D7\u30B5\u30C3\u30AF\u554F\u984C"
     links: []
   bundledCode: "#line 2 \"dp/knapsack01.hpp\"\n\nlong long knapsack01(const vector<long\
@@ -45,7 +44,7 @@ data:
     \  b.emplace_back(inf, inf);\n  long long ans = 0, id = -1;\n  for (auto& [t,\
     \ s] : a) {\n    while (t + b[id + 1].first <= W) ++id;\n    if (id != -1) ans\
     \ = max(ans, s + b[id].second);\n  }\n  return ans;\n}\n\n/**\n * @brief 0-1\u30CA\
-    \u30C3\u30D7\u30B5\u30C3\u30AF\u554F\u984C\n * @docs docs/dp/knapsack01.md\n */\n"
+    \u30C3\u30D7\u30B5\u30C3\u30AF\u554F\u984C\n */\n"
   code: "#pragma once\n\nlong long knapsack01(const vector<long long>& v, const vector<long\
     \ long>& w,\n                     long long W) {\n  double v_sum = 0;\n  for (auto&\
     \ x : v) v_sum += x;\n  double cond1 = log2(double(W) * (v.size() + 1));\n  double\
@@ -72,12 +71,12 @@ data:
     \  long long ans = 0, id = -1;\n  for (auto& [t, s] : a) {\n    while (t + b[id\
     \ + 1].first <= W) ++id;\n    if (id != -1) ans = max(ans, s + b[id].second);\n\
     \  }\n  return ans;\n}\n\n/**\n * @brief 0-1\u30CA\u30C3\u30D7\u30B5\u30C3\u30AF\
-    \u554F\u984C\n * @docs docs/dp/knapsack01.md\n */\n"
+    \u554F\u984C\n */\n"
   dependsOn: []
   isVerificationFile: false
   path: dp/knapsack01.hpp
   requiredBy: []
-  timestamp: '2021-11-17 23:54:43+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-aoj-dpl/aoj-dpl-1-b.test.cpp
@@ -85,11 +84,9 @@ data:
   - verify/verify-aoj-dpl/aoj-dpl-1-h.test.cpp
 documentation_of: dp/knapsack01.hpp
 layout: document
-redirect_from:
-- /library/dp/knapsack01.hpp
-- /library/dp/knapsack01.hpp.html
 title: "0-1\u30CA\u30C3\u30D7\u30B5\u30C3\u30AF\u554F\u984C"
 ---
+
 ## 0-1ナップサック問題
 
 ### 概要

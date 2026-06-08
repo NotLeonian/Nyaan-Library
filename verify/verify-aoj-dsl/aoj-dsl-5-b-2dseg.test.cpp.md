@@ -248,15 +248,14 @@ data:
     \ for (; h1 < h2; h1 >>= 1, h2 >>= 1) {\n      if (h1 & 1) res = f(res, _inner_query(h1,\
     \ w1, w2)), h1++;\n      if (h2 & 1) --h2, res = f(res, _inner_query(h2, w1, w2));\n\
     \    }\n    return res;\n  }\n};\n\n/**\n * @brief \u4E8C\u6B21\u5143\u30BB\u30B0\
-    \u30E1\u30F3\u30C8\u6728\n * @docs docs/data-structure-2d/2d-segment-tree.md\n\
-    \ */\n#line 7 \"verify/verify-aoj-dsl/aoj-dsl-5-b-2dseg.test.cpp\"\n//\nusing\
-    \ namespace Nyaan;\n\nvoid q() {\n  int MAX = TEN(3) + 3;\n  SegmentTree2D seg(\n\
-    \      MAX, MAX, [](int a, int b) { return a + b; }, 0);\n\n  ini(N);\n  rep(i,\
-    \ N) {\n    ini(a, b, c, d);\n    seg.update(a, b, seg.get(a, b) + 1);\n    seg.update(a,\
-    \ d, seg.get(a, d) - 1);\n    seg.update(c, b, seg.get(c, b) - 1);\n    seg.update(c,\
-    \ d, seg.get(c, d) + 1);\n  }\n  int ans = 0;\n  rep(i, MAX) rep(j, MAX) amax(ans,\
-    \ seg.query(0, 0, i + 1, j + 1));\n  out(ans);\n}\n\nvoid Nyaan::solve() {\n \
-    \ int t = 1;\n  // in(t);\n  while (t--) q();\n}\n"
+    \u30E1\u30F3\u30C8\u6728\n */\n#line 7 \"verify/verify-aoj-dsl/aoj-dsl-5-b-2dseg.test.cpp\"\
+    \n//\nusing namespace Nyaan;\n\nvoid q() {\n  int MAX = TEN(3) + 3;\n  SegmentTree2D\
+    \ seg(\n      MAX, MAX, [](int a, int b) { return a + b; }, 0);\n\n  ini(N);\n\
+    \  rep(i, N) {\n    ini(a, b, c, d);\n    seg.update(a, b, seg.get(a, b) + 1);\n\
+    \    seg.update(a, d, seg.get(a, d) - 1);\n    seg.update(c, b, seg.get(c, b)\
+    \ - 1);\n    seg.update(c, d, seg.get(c, d) + 1);\n  }\n  int ans = 0;\n  rep(i,\
+    \ MAX) rep(j, MAX) amax(ans, seg.query(0, 0, i + 1, j + 1));\n  out(ans);\n}\n\
+    \nvoid Nyaan::solve() {\n  int t = 1;\n  // in(t);\n  while (t--) q();\n}\n"
   code: "#define PROBLEM \\\n  \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_5_B\"\
     \n//\n#include \"../../template/template.hpp\"\n//\n#include \"../../data-structure-2d/2d-segment-tree.hpp\"\
     \n//\nusing namespace Nyaan;\n\nvoid q() {\n  int MAX = TEN(3) + 3;\n  SegmentTree2D\
@@ -277,7 +276,7 @@ data:
   isVerificationFile: true
   path: verify/verify-aoj-dsl/aoj-dsl-5-b-2dseg.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-aoj-dsl/aoj-dsl-5-b-2dseg.test.cpp

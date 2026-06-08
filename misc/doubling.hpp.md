@@ -10,7 +10,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/misc/doubling.md
     document_title: "Binary Lifting(\u30C0\u30D6\u30EA\u30F3\u30B0)"
     links: []
   bundledCode: "#line 2 \"misc/doubling.hpp\"\n\ntemplate <typename T>\nstruct BinaryLifting\
@@ -44,7 +43,7 @@ data:
     \        thres = nxt;\n        times += 1LL << k;\n      }\n    }\n    return\
     \ make_pair(times, Data(thres, d));\n  }\n};\n\ntemplate <typename T>\nusing Doubling\
     \ = BinaryLifting<T>;\n\n/**\n * @brief Binary Lifting(\u30C0\u30D6\u30EA\u30F3\
-    \u30B0)\n * @docs docs/misc/doubling.md\n */\n"
+    \u30B0)\n */\n"
   code: "#pragma once\n\ntemplate <typename T>\nstruct BinaryLifting {\n  using Data\
     \ = pair<int, T>;\n\n  const int N, LOG;\n  vector<vector<Data>> table;\n  T I;\n\
     \n  BinaryLifting(int n, uint64_t lim, const T I_ = T())\n      : N(n), LOG(__lg(max<uint64_t>(lim,\
@@ -75,22 +74,20 @@ data:
     \        thres = nxt;\n        times += 1LL << k;\n      }\n    }\n    return\
     \ make_pair(times, Data(thres, d));\n  }\n};\n\ntemplate <typename T>\nusing Doubling\
     \ = BinaryLifting<T>;\n\n/**\n * @brief Binary Lifting(\u30C0\u30D6\u30EA\u30F3\
-    \u30B0)\n * @docs docs/misc/doubling.md\n */\n"
+    \u30B0)\n */\n"
   dependsOn: []
   isVerificationFile: false
   path: misc/doubling.hpp
   requiredBy: []
-  timestamp: '2024-09-14 20:40:02+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-graph/yosupo-lowest-common-ancestor-doubling.test.cpp
 documentation_of: misc/doubling.hpp
 layout: document
-redirect_from:
-- /library/misc/doubling.hpp
-- /library/misc/doubling.hpp.html
 title: "Binary Lifting(\u30C0\u30D6\u30EA\u30F3\u30B0)"
 ---
+
 ## Binary Lifting(ダブリング)
 
 辺の重みがモノイドであり、各頂点の出次数が高々1のグラフが存在したとき、$i$を始点として$t$回グラフを移動したときの終点$j$とパス$(i,j)$の重みの和を前計算$\mathrm{O}(N \log \max(t))$、クエリ$\mathrm{O}(\log t)$計算するライブラリ。

@@ -243,18 +243,17 @@ data:
     \        ms[b] = min(p.first, ms[b]);\n      }\n      vs[idx].clear();\n     \
     \ ms[idx] = uint(-1);\n    }\n    --s;\n    auto res = vs[0].back();\n    vs[0].pop_back();\n\
     \    if (vs[0].empty()) ms[0] = uint(-1);\n    return res;\n  }\n};\n\n/**\n *\
-    \ @brief Radix Heap\n * @docs docs/data-structure/radix-heap.md\n */\n#line 2\
-    \ \"graph/static-graph.hpp\"\n\nnamespace StaticGraphImpl {\n\ntemplate <typename\
-    \ T, bool Cond = is_void<T>::value>\nstruct E;\ntemplate <typename T>\nstruct\
-    \ E<T, false> {\n  int to;\n  T cost;\n  E() {}\n  E(const int& v, const T& c)\
-    \ : to(v), cost(c) {}\n  operator int() const { return to; }\n};\ntemplate <typename\
-    \ T>\nstruct E<T, true> {\n  int to;\n  E() {}\n  E(const int& v) : to(v) {}\n\
-    \  operator int() const { return to; }\n};\n\ntemplate <typename T = void>\nstruct\
-    \ StaticGraph {\n private:\n  template <typename It>\n  struct Es {\n    It b,\
-    \ e;\n    It begin() const { return b; }\n    It end() const { return e; }\n \
-    \   int size() const { return int(e - b); }\n    auto&& operator[](int i) const\
-    \ { return b[i]; }\n  };\n  \n  int N, M, ec;\n  vector<int> head;\n  vector<pair<int,\
-    \ E<T>>> buf;\n  vector<E<T>> es;\n\n  void build() {\n    partial_sum(begin(head),\
+    \ @brief Radix Heap\n */\n#line 2 \"graph/static-graph.hpp\"\n\nnamespace StaticGraphImpl\
+    \ {\n\ntemplate <typename T, bool Cond = is_void<T>::value>\nstruct E;\ntemplate\
+    \ <typename T>\nstruct E<T, false> {\n  int to;\n  T cost;\n  E() {}\n  E(const\
+    \ int& v, const T& c) : to(v), cost(c) {}\n  operator int() const { return to;\
+    \ }\n};\ntemplate <typename T>\nstruct E<T, true> {\n  int to;\n  E() {}\n  E(const\
+    \ int& v) : to(v) {}\n  operator int() const { return to; }\n};\n\ntemplate <typename\
+    \ T = void>\nstruct StaticGraph {\n private:\n  template <typename It>\n  struct\
+    \ Es {\n    It b, e;\n    It begin() const { return b; }\n    It end() const {\
+    \ return e; }\n    int size() const { return int(e - b); }\n    auto&& operator[](int\
+    \ i) const { return b[i]; }\n  };\n  \n  int N, M, ec;\n  vector<int> head;\n\
+    \  vector<pair<int, E<T>>> buf;\n  vector<E<T>> es;\n\n  void build() {\n    partial_sum(begin(head),\
     \ end(head), begin(head));\n    es.resize(M);\n    for (auto&& [u, e] : buf) es[--head[u]]\
     \ = e;\n  }\n\n public:\n  StaticGraph(int _n, int _m) : N(_n), M(_m), ec(0),\
     \ head(N + 1, 0) {\n    buf.reserve(M);\n  }\n\n  template <typename... Args>\n\
@@ -265,16 +264,15 @@ data:
     \ {begin(es) + head[u], begin(es) + head[u + 1]};\n  }\n  const Es<typename vector<E<T>>::const_iterator>\
     \ operator[](int u) const {\n    return {begin(es) + head[u], begin(es) + head[u\
     \ + 1]};\n  }\n  int size() const { return N; }\n};\n\n}  // namespace StaticGraphImpl\n\
-    \nusing StaticGraphImpl::StaticGraph;\n\n/**\n * @brief Static Graph\n * @docs\
-    \ docs/graph/static-graph.md\n */\n#line 5 \"shortest-path/dijkstra-fast.hpp\"\
-    \n\ntemplate <typename T>\nvector<T> dijkstra(StaticGraph<T>& g, int start = 0)\
-    \ {\n  vector<T> d(g.size(), T(-1));\n  RadixHeap<T, int> Q;\n  d[start] = 0;\n\
-    \  Q.push(0, start);\n  while (!Q.empty()) {\n    auto p = Q.pop();\n    int u\
-    \ = p.second;\n    if (d[u] < T(p.first)) continue;\n    T du = d[u];\n    for\
-    \ (auto&& [v, c] : g[u]) {\n      if (d[v] == T(-1) || du + c < d[v]) {\n    \
-    \    d[v] = du + c;\n        Q.push(d[v], v);\n      }\n    }\n  }\n  return d;\n\
-    }\n\ntemplate <typename T>\nT dijkstra_point(StaticGraph<T>& g, int start, int\
-    \ goal) {\n  vector<T> d(g.size(), T(-1));\n  RadixHeap<T, int> Q;\n  d[start]\
+    \nusing StaticGraphImpl::StaticGraph;\n\n/**\n * @brief Static Graph\n */\n#line\
+    \ 5 \"shortest-path/dijkstra-fast.hpp\"\n\ntemplate <typename T>\nvector<T> dijkstra(StaticGraph<T>&\
+    \ g, int start = 0) {\n  vector<T> d(g.size(), T(-1));\n  RadixHeap<T, int> Q;\n\
+    \  d[start] = 0;\n  Q.push(0, start);\n  while (!Q.empty()) {\n    auto p = Q.pop();\n\
+    \    int u = p.second;\n    if (d[u] < T(p.first)) continue;\n    T du = d[u];\n\
+    \    for (auto&& [v, c] : g[u]) {\n      if (d[v] == T(-1) || du + c < d[v]) {\n\
+    \        d[v] = du + c;\n        Q.push(d[v], v);\n      }\n    }\n  }\n  return\
+    \ d;\n}\n\ntemplate <typename T>\nT dijkstra_point(StaticGraph<T>& g, int start,\
+    \ int goal) {\n  vector<T> d(g.size(), T(-1));\n  RadixHeap<T, int> Q;\n  d[start]\
     \ = 0;\n  Q.push(0, start);\n  while (!Q.empty()) {\n    auto p = Q.pop();\n \
     \   int u = p.second;\n    if(u == goal) return d[u];\n    if (d[u] < T(p.first))\
     \ continue;\n    T du = d[u];\n    for (auto&& [v, c] : g[u]) {\n      if (d[v]\
@@ -287,9 +285,8 @@ data:
     \    for (auto&& [v, c] : g[u]) {\n      if (d[v].first == T(-1) || du + c < d[v].first)\
     \ {\n        d[v] = {du + c, u};\n        Q.push(du + c, v);\n      }\n    }\n\
     \  }\n  return d;\n}\n\n/*\n * @brief \u30C0\u30A4\u30AF\u30B9\u30C8\u30E9\u6CD5\
-    (\u5B9A\u6570\u500D\u9AD8\u901F\u5316)\n * @docs docs/shortest-path/dijkstra-fast.md\n\
-    \ **/\n#line 6 \"verify/verify-aoj-grl/aoj-grl-1-a-fast-dijkstra.test.cpp\"\n\n\
-    using namespace Nyaan; void Nyaan::solve() {\n  ini(N, E, S);\n  StaticGraph<int>\
+    (\u5B9A\u6570\u500D\u9AD8\u901F\u5316)\n **/\n#line 6 \"verify/verify-aoj-grl/aoj-grl-1-a-fast-dijkstra.test.cpp\"\
+    \n\nusing namespace Nyaan; void Nyaan::solve() {\n  ini(N, E, S);\n  StaticGraph<int>\
     \ g(N, E);\n  rep(i, E) {\n    ini(s, t, d);\n    g.add_edge(s, t, d);\n  }\n\
     \  auto d = dijkstra(g, S);\n  d.resize(N);\n  each(x, d) {\n    if (x == -1)\n\
     \      out(\"INF\");\n    else\n      out(x);\n  }\n}\n"
@@ -312,7 +309,7 @@ data:
   isVerificationFile: true
   path: verify/verify-aoj-grl/aoj-grl-1-a-fast-dijkstra.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-aoj-grl/aoj-grl-1-a-fast-dijkstra.test.cpp

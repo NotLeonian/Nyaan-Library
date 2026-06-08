@@ -381,11 +381,10 @@ data:
     \ T> &a) {\n    for (auto p1 = rbegin(a); p1 != rend(a); p1++)\n      for (auto\
     \ p2 = rbegin(a); p2 != p1; p2++)\n        if (p2->first % p1->first == 0) p1->second\
     \ -= p2->second;\n  }\n};\n\n/**\n * @brief \u500D\u6570\u5909\u63DB\u30FB\u7D04\
-    \u6570\u5909\u63DB\n * @docs docs/multiplicative-function/divisor-multiple-transform.md\n\
-    \ */\n#line 8 \"verify/verify-yosupo-math/yosupo-lcm-convolution.test.cpp\"\n\n\
-    using namespace Nyaan;\nusing mint = LazyMontgomeryModInt<998244353>;\nusing vm\
-    \ = vector<mint>;\n\nvoid Nyaan::solve() {\n  int N, x;\n  rd(N);\n  vm a(N +\
-    \ 1), b(N + 1);\n  rep1(i, N) rd(x), a[i] = x;\n  rep1(i, N) rd(x), b[i] = x;\n\
+    \u6570\u5909\u63DB\n */\n#line 8 \"verify/verify-yosupo-math/yosupo-lcm-convolution.test.cpp\"\
+    \n\nusing namespace Nyaan;\nusing mint = LazyMontgomeryModInt<998244353>;\nusing\
+    \ vm = vector<mint>;\n\nvoid Nyaan::solve() {\n  int N, x;\n  rd(N);\n  vm a(N\
+    \ + 1), b(N + 1);\n  rep1(i, N) rd(x), a[i] = x;\n  rep1(i, N) rd(x), b[i] = x;\n\
     \  divisor_transform::zeta_transform(a);\n  divisor_transform::zeta_transform(b);\n\
     \  rep1(i, N) a[i] *= b[i];\n  divisor_transform::mobius_transform(a);\n  rep1(i,\
     \ N) wt(a[i].get()), wt(\" \\n\"[i == N]);\n}\n"
@@ -413,7 +412,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-math/yosupo-lcm-convolution.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-math/yosupo-lcm-convolution.test.cpp

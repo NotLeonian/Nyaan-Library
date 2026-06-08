@@ -325,12 +325,12 @@ data:
     using SegmentTreeUtil::AddSum_LazySegmentTree;\nusing SegmentTreeUtil::UpdateMax_LazySegmentTree;\n\
     using SegmentTreeUtil::UpdateMin_LazySegmentTree;\nusing SegmentTreeUtil::UpdateSum_LazySegmentTree;\n\
     \n/**\n * @brief \u4F7F\u7528\u983B\u5EA6\u306E\u9AD8\u3044\u9045\u5EF6\u30BB\u30B0\
-    \u30E1\u30F3\u30C8\u6728\n * @docs docs/segment-tree/lazy-segment-tree-utility.md\n\
-    \ */\n#line 7 \"verify/verify-aoj-dsl/aoj-dsl-2-e.test.cpp\"\n\nusing namespace\
-    \ Nyaan;\nvoid Nyaan::solve() {\n  ini(N, Q);\n  int I = 0;\n  AddSum_LazySegmentTree<int>\
-    \ seg(vi(N, I));\n  rep(_, Q) {\n    ini(c);\n    if (c == 0) {\n      ini(s,\
-    \ t, x);\n      s--;\n      seg.update(s, t, x);\n    } else {\n      ini(i);\n\
-    \      i--;\n      out(seg.query(i, i + 1));\n    }\n  }\n}\n"
+    \u30E1\u30F3\u30C8\u6728\n */\n#line 7 \"verify/verify-aoj-dsl/aoj-dsl-2-e.test.cpp\"\
+    \n\nusing namespace Nyaan;\nvoid Nyaan::solve() {\n  ini(N, Q);\n  int I = 0;\n\
+    \  AddSum_LazySegmentTree<int> seg(vi(N, I));\n  rep(_, Q) {\n    ini(c);\n  \
+    \  if (c == 0) {\n      ini(s, t, x);\n      s--;\n      seg.update(s, t, x);\n\
+    \    } else {\n      ini(i);\n      i--;\n      out(seg.query(i, i + 1));\n  \
+    \  }\n  }\n}\n"
   code: "#define PROBLEM \\\n  \"http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_2_E\"\
     \n\n#include \"../../template/template.hpp\"\n//\n#include \"../../segment-tree/lazy-segment-tree-utility.hpp\"\
     \n\nusing namespace Nyaan;\nvoid Nyaan::solve() {\n  ini(N, Q);\n  int I = 0;\n\
@@ -349,7 +349,7 @@ data:
   isVerificationFile: true
   path: verify/verify-aoj-dsl/aoj-dsl-2-e.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-aoj-dsl/aoj-dsl-2-e.test.cpp

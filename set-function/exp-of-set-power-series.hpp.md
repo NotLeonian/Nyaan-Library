@@ -42,15 +42,14 @@ data:
     \ * B[i][k];\n        }\n      }\n      A[i].swap(c);\n    }\n  }\n\n  vector<mint>\
     \ multiply(const vector<mint>& a, const vector<mint>& b) {\n    vector<fps> A\
     \ = lift(a), B = lift(b);\n    zeta(A), zeta(B);\n    prod(A, B);\n    mobius(A);\n\
-    \    return unlift(A);\n  }\n};\n\n/**\n * @brief Subset Convolution\n * @docs\
-    \ docs/set-function/subset-convolution.md\n */\n#line 8 \"set-function/exp-of-set-power-series.hpp\"\
-    \n\ntemplate <typename mint, int MAX = 21>\nvector<mint> exp_of_set_power_series(int\
-    \ n, vector<mint> g) {\n  assert(0 <= n && n <= MAX);\n  static SubsetConvolution<mint,\
-    \ MAX> ss;\n  g.resize(1 << n);\n  assert(g[0] == 0);\n\n  vector<mint> h{1};\n\
-    \  for (int k = 1; k <= n; k++) {\n    auto a = ss.multiply(h, {begin(g) + (1\
-    \ << (k - 1)), begin(g) + (1 << k)});\n    copy(begin(a), end(a), back_inserter(h));\n\
-    \  }\n  return h;\n}\n\n/**\n * @brief \u96C6\u5408\u51AA\u7D1A\u6570\u306E exp\n\
-    \ */\n"
+    \    return unlift(A);\n  }\n};\n\n/**\n * @brief Subset Convolution\n */\n#line\
+    \ 8 \"set-function/exp-of-set-power-series.hpp\"\n\ntemplate <typename mint, int\
+    \ MAX = 21>\nvector<mint> exp_of_set_power_series(int n, vector<mint> g) {\n \
+    \ assert(0 <= n && n <= MAX);\n  static SubsetConvolution<mint, MAX> ss;\n  g.resize(1\
+    \ << n);\n  assert(g[0] == 0);\n\n  vector<mint> h{1};\n  for (int k = 1; k <=\
+    \ n; k++) {\n    auto a = ss.multiply(h, {begin(g) + (1 << (k - 1)), begin(g)\
+    \ + (1 << k)});\n    copy(begin(a), end(a), back_inserter(h));\n  }\n  return\
+    \ h;\n}\n\n/**\n * @brief \u96C6\u5408\u51AA\u7D1A\u6570\u306E exp\n */\n"
   code: "#pragma once\n\n#include <cassert>\n#include <vector>\nusing namespace std;\n\
     \n#include \"subset-convolution.hpp\"\n\ntemplate <typename mint, int MAX = 21>\n\
     vector<mint> exp_of_set_power_series(int n, vector<mint> g) {\n  assert(0 <= n\
@@ -64,7 +63,7 @@ data:
   isVerificationFile: false
   path: set-function/exp-of-set-power-series.hpp
   requiredBy: []
-  timestamp: '2023-05-27 23:17:31+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-graph/yosupo-exp-of-set-power-series.test.cpp

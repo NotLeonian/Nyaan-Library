@@ -255,36 +255,35 @@ data:
     \ {\n    int x, y;\n    cin >> x >> y;\n    T c;\n    if (is_weighted)\n     \
     \ cin >> c;\n    else\n      c = 1;\n    if (is_1origin) x--, y--;\n    d[x][y]\
     \ = c;\n    if (!is_directed) d[y][x] = c;\n  }\n  return d;\n}\n\n/**\n * @brief\
-    \ \u30B0\u30E9\u30D5\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\n * @docs docs/graph/graph-template.md\n\
-    \ */\n#line 2 \"data-structure/radix-heap.hpp\"\n\ntemplate <typename Key, typename\
-    \ Val>\nstruct RadixHeap {\n  using uint = typename make_unsigned<Key>::type;\n\
-    \  static constexpr int bit = sizeof(Key) * 8;\n  array<vector<pair<uint, Val>\
-    \ >, bit + 1> vs;\n  array<uint, bit + 1> ms;\n\n  int s;\n  uint last;\n\n  RadixHeap()\
-    \ : s(0), last(0) { fill(begin(ms), end(ms), uint(-1)); }\n\n  bool empty() const\
-    \ { return s == 0; }\n\n  int size() const { return s; }\n\n  __attribute__((target(\"\
-    lzcnt\"))) inline uint64_t getbit(uint a) const {\n    return 64 - _lzcnt_u64(a);\n\
-    \  }\n\n  void push(const uint &key, const Val &val) {\n    s++;\n    uint64_t\
-    \ b = getbit(key ^ last);\n    vs[b].emplace_back(key, val);\n    ms[b] = min(key,\
-    \ ms[b]);\n  }\n\n  pair<uint, Val> pop() {\n    if (ms[0] == uint(-1)) {\n  \
-    \    int idx = 1;\n      while (ms[idx] == uint(-1)) idx++;\n      last = ms[idx];\n\
-    \      for (auto &p : vs[idx]) {\n        uint64_t b = getbit(p.first ^ last);\n\
-    \        vs[b].emplace_back(p);\n        ms[b] = min(p.first, ms[b]);\n      }\n\
-    \      vs[idx].clear();\n      ms[idx] = uint(-1);\n    }\n    --s;\n    auto\
-    \ res = vs[0].back();\n    vs[0].pop_back();\n    if (vs[0].empty()) ms[0] = uint(-1);\n\
-    \    return res;\n  }\n};\n\n/**\n * @brief Radix Heap\n * @docs docs/data-structure/radix-heap.md\n\
-    \ */\n#line 7 \"shortest-path/dijkstra-radix-heap.hpp\"\n\n// unreachable -> -1\n\
-    template <typename T>\nvector<T> dijkstra_radix_heap(WeightedGraph<T> &g, int\
-    \ start = 0) {\n  int N = (int)g.size();\n  vector<T> d(N, T(-1));\n  RadixHeap<T,\
-    \ int> Q;\n  d[start] = 0;\n  Q.push(0, start);\n  while (!Q.empty()) {\n    auto\
-    \ p = Q.pop();\n    int cur = p.second;\n    if (d[cur] < T(p.first)) continue;\n\
-    \    for (auto dst : g[cur]) {\n      if (d[dst] == T(-1) || d[cur] + dst.cost\
-    \ < d[dst]) {\n        d[dst] = d[cur] + dst.cost;\n        Q.push(d[dst], dst);\n\
-    \      }\n    }\n  }\n  return d;\n}\n\n/*\n * @brief \u30C0\u30A4\u30AF\u30B9\
-    \u30C8\u30E9\u6CD5(Radix Heap)\n * @docs docs/shortest-path/dijkstra-radix-heap.md\n\
-    **/\n#line 6 \"verify/verify-aoj-grl/aoj-grl-1-a-radix-heap.test.cpp\"\n\nusing\
-    \ namespace Nyaan; void Nyaan::solve() {\n  ini(N, E, S);\n  auto g = wgraph<int>(N,\
-    \ E, true, false);\n  auto d = dijkstra_radix_heap<int>(g, S);\n  each(x, d) {\n\
-    \    if (x == -1)\n      out(\"INF\");\n    else\n      out(x);\n  }\n}\n"
+    \ \u30B0\u30E9\u30D5\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\n */\n#line 2 \"data-structure/radix-heap.hpp\"\
+    \n\ntemplate <typename Key, typename Val>\nstruct RadixHeap {\n  using uint =\
+    \ typename make_unsigned<Key>::type;\n  static constexpr int bit = sizeof(Key)\
+    \ * 8;\n  array<vector<pair<uint, Val> >, bit + 1> vs;\n  array<uint, bit + 1>\
+    \ ms;\n\n  int s;\n  uint last;\n\n  RadixHeap() : s(0), last(0) { fill(begin(ms),\
+    \ end(ms), uint(-1)); }\n\n  bool empty() const { return s == 0; }\n\n  int size()\
+    \ const { return s; }\n\n  __attribute__((target(\"lzcnt\"))) inline uint64_t\
+    \ getbit(uint a) const {\n    return 64 - _lzcnt_u64(a);\n  }\n\n  void push(const\
+    \ uint &key, const Val &val) {\n    s++;\n    uint64_t b = getbit(key ^ last);\n\
+    \    vs[b].emplace_back(key, val);\n    ms[b] = min(key, ms[b]);\n  }\n\n  pair<uint,\
+    \ Val> pop() {\n    if (ms[0] == uint(-1)) {\n      int idx = 1;\n      while\
+    \ (ms[idx] == uint(-1)) idx++;\n      last = ms[idx];\n      for (auto &p : vs[idx])\
+    \ {\n        uint64_t b = getbit(p.first ^ last);\n        vs[b].emplace_back(p);\n\
+    \        ms[b] = min(p.first, ms[b]);\n      }\n      vs[idx].clear();\n     \
+    \ ms[idx] = uint(-1);\n    }\n    --s;\n    auto res = vs[0].back();\n    vs[0].pop_back();\n\
+    \    if (vs[0].empty()) ms[0] = uint(-1);\n    return res;\n  }\n};\n\n/**\n *\
+    \ @brief Radix Heap\n */\n#line 7 \"shortest-path/dijkstra-radix-heap.hpp\"\n\n\
+    // unreachable -> -1\ntemplate <typename T>\nvector<T> dijkstra_radix_heap(WeightedGraph<T>\
+    \ &g, int start = 0) {\n  int N = (int)g.size();\n  vector<T> d(N, T(-1));\n \
+    \ RadixHeap<T, int> Q;\n  d[start] = 0;\n  Q.push(0, start);\n  while (!Q.empty())\
+    \ {\n    auto p = Q.pop();\n    int cur = p.second;\n    if (d[cur] < T(p.first))\
+    \ continue;\n    for (auto dst : g[cur]) {\n      if (d[dst] == T(-1) || d[cur]\
+    \ + dst.cost < d[dst]) {\n        d[dst] = d[cur] + dst.cost;\n        Q.push(d[dst],\
+    \ dst);\n      }\n    }\n  }\n  return d;\n}\n\n/*\n * @brief \u30C0\u30A4\u30AF\
+    \u30B9\u30C8\u30E9\u6CD5(Radix Heap)\n**/\n#line 6 \"verify/verify-aoj-grl/aoj-grl-1-a-radix-heap.test.cpp\"\
+    \n\nusing namespace Nyaan; void Nyaan::solve() {\n  ini(N, E, S);\n  auto g =\
+    \ wgraph<int>(N, E, true, false);\n  auto d = dijkstra_radix_heap<int>(g, S);\n\
+    \  each(x, d) {\n    if (x == -1)\n      out(\"INF\");\n    else\n      out(x);\n\
+    \  }\n}\n"
   code: "#define PROBLEM \\\n  \"http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_1_A\"\
     \n\n#include \"../../template/template.hpp\"\n#include \"../../shortest-path/dijkstra-radix-heap.hpp\"\
     \n\nusing namespace Nyaan; void Nyaan::solve() {\n  ini(N, E, S);\n  auto g =\
@@ -304,7 +303,7 @@ data:
   isVerificationFile: true
   path: verify/verify-aoj-grl/aoj-grl-1-a-radix-heap.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-aoj-grl/aoj-grl-1-a-radix-heap.test.cpp

@@ -14,7 +14,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/fps/differential-equation.md
     document_title: "\u5E38\u5FAE\u5206\u65B9\u7A0B\u5F0F"
     links: []
   bundledCode: "#line 2 \"fps/differential-equation.hpp\"\n\n#include <functional>\n\
@@ -103,19 +102,19 @@ data:
     \ deg, FPSBackendPriority<1>{});\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>\
     \ FormalPowerSeries<mint>::exp(int deg) const {\n  return fps_exp_impl(*this,\
     \ deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief \u591A\u9805\u5F0F/\u5F62\
-    \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n * @docs docs/fps/formal-power-series.md\n\
-    \ */\n#line 7 \"fps/differential-equation.hpp\"\n\n// find f, saitsfying equation\
-    \ f' = g(f) mod x ^ deg\ntemplate <typename mint, typename G, typename GPrime>\n\
-    auto DifferentialEquation(G&& g, GPrime&& gprime, mint f0, int deg)\n    -> std::enable_if_t<\n\
-    \        std::is_invocable_r_v<FormalPowerSeries<mint>, G&,\n                \
-    \              FormalPowerSeries<mint>, int> &&\n            std::is_invocable_r_v<FormalPowerSeries<mint>,\
-    \ GPrime&,\n                                  FormalPowerSeries<mint>, int>,\n\
-    \        FormalPowerSeries<mint>> {\n  using fps = FormalPowerSeries<mint>;\n\
-    \  fps f{f0};\n  for (int i = 1; i < deg; i <<= 1) {\n    fps gp = std::invoke(gprime,\
-    \ f, i << 1);\n    fps r = (-gp).integral().exp(i << 1);\n    fps h = ((std::invoke(g,\
-    \ f, i << 1) - gp * f) * r).pre(i << 1).integral();\n    f = ((h + f0) * r.inv(i\
-    \ << 1)).pre(i << 1);\n  }\n  return f.pre(deg);\n}\n\n/**\n * @brief \u5E38\u5FAE\
-    \u5206\u65B9\u7A0B\u5F0F\n * @docs docs/fps/differential-equation.md\n */\n"
+    \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n */\n#line 7 \"\
+    fps/differential-equation.hpp\"\n\n// find f, saitsfying equation f' = g(f) mod\
+    \ x ^ deg\ntemplate <typename mint, typename G, typename GPrime>\nauto DifferentialEquation(G&&\
+    \ g, GPrime&& gprime, mint f0, int deg)\n    -> std::enable_if_t<\n        std::is_invocable_r_v<FormalPowerSeries<mint>,\
+    \ G&,\n                              FormalPowerSeries<mint>, int> &&\n      \
+    \      std::is_invocable_r_v<FormalPowerSeries<mint>, GPrime&,\n             \
+    \                     FormalPowerSeries<mint>, int>,\n        FormalPowerSeries<mint>>\
+    \ {\n  using fps = FormalPowerSeries<mint>;\n  fps f{f0};\n  for (int i = 1; i\
+    \ < deg; i <<= 1) {\n    fps gp = std::invoke(gprime, f, i << 1);\n    fps r =\
+    \ (-gp).integral().exp(i << 1);\n    fps h = ((std::invoke(g, f, i << 1) - gp\
+    \ * f) * r).pre(i << 1).integral();\n    f = ((h + f0) * r.inv(i << 1)).pre(i\
+    \ << 1);\n  }\n  return f.pre(deg);\n}\n\n/**\n * @brief \u5E38\u5FAE\u5206\u65B9\
+    \u7A0B\u5F0F\n */\n"
   code: "#pragma once\n\n#include <functional>\n#include <type_traits>\n\n#include\
     \ \"formal-power-series.hpp\"\n\n// find f, saitsfying equation f' = g(f) mod\
     \ x ^ deg\ntemplate <typename mint, typename G, typename GPrime>\nauto DifferentialEquation(G&&\
@@ -128,23 +127,21 @@ data:
     \ (-gp).integral().exp(i << 1);\n    fps h = ((std::invoke(g, f, i << 1) - gp\
     \ * f) * r).pre(i << 1).integral();\n    f = ((h + f0) * r.inv(i << 1)).pre(i\
     \ << 1);\n  }\n  return f.pre(deg);\n}\n\n/**\n * @brief \u5E38\u5FAE\u5206\u65B9\
-    \u7A0B\u5F0F\n * @docs docs/fps/differential-equation.md\n */\n"
+    \u7A0B\u5F0F\n */\n"
   dependsOn:
   - fps/formal-power-series.hpp
   isVerificationFile: false
   path: fps/differential-equation.hpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yuki/yuki-0963.test.cpp
 documentation_of: fps/differential-equation.hpp
 layout: document
-redirect_from:
-- /library/fps/differential-equation.hpp
-- /library/fps/differential-equation.hpp.html
 title: "\u5E38\u5FAE\u5206\u65B9\u7A0B\u5F0F"
 ---
+
 ## 常微分方程式
 
 $$\frac{d}{dx}f \equiv F(f) \mod x^n,\ f(0) = f_0$$

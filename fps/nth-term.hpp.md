@@ -32,7 +32,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/fps/nth-term.md
     document_title: "\u7DDA\u5F62\u56DE\u5E30\u6570\u5217\u306E\u9AD8\u901F\u8A08\u7B97\
       (Berlekamp-Massey/Bostan-Mori)"
     links: []
@@ -294,11 +293,10 @@ data:
     \ mint>\nFormalPowerSeries<mint> FormalPowerSeries<mint>::exp(int deg) const {\n\
     \  return fps_exp_impl(*this, deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief\
     \ \u591A\u9805\u5F0F/\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\
-    \u30EA\n * @docs docs/fps/formal-power-series.md\n */\n#line 7 \"fps/arbitrary-fps.hpp\"\
-    \n\ntemplate <typename mint>\nvoid fps_set_fft_impl(FormalPowerSeries<mint>*,\
-    \ FPSBackendPriority<0>) {\n  FormalPowerSeries<mint>::ntt_ptr = nullptr;\n}\n\
-    \ntemplate <typename mint>\nvoid fps_ntt_impl(FormalPowerSeries<mint>&, FPSBackendPriority<0>)\
-    \ {\n  exit(1);\n}\n\ntemplate <typename mint>\nvoid fps_intt_impl(FormalPowerSeries<mint>&,\
+    \u30EA\n */\n#line 7 \"fps/arbitrary-fps.hpp\"\n\ntemplate <typename mint>\nvoid\
+    \ fps_set_fft_impl(FormalPowerSeries<mint>*, FPSBackendPriority<0>) {\n  FormalPowerSeries<mint>::ntt_ptr\
+    \ = nullptr;\n}\n\ntemplate <typename mint>\nvoid fps_ntt_impl(FormalPowerSeries<mint>&,\
+    \ FPSBackendPriority<0>) {\n  exit(1);\n}\n\ntemplate <typename mint>\nvoid fps_intt_impl(FormalPowerSeries<mint>&,\
     \ FPSBackendPriority<0>) {\n  exit(1);\n}\n\ntemplate <typename mint>\nvoid fps_ntt_doubling_impl(FormalPowerSeries<mint>&,\
     \ FPSBackendPriority<0>) {\n  exit(1);\n}\n\ntemplate <typename mint>\nint fps_ntt_pr_impl(FormalPowerSeries<mint>*,\
     \ FPSBackendPriority<0>) {\n  exit(1);\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>&\
@@ -352,19 +350,18 @@ data:
     \ != 0);\n  if (N < (int)a.size()) return a[N];\n  assert((int)a.size() >= int(Q.size())\
     \ - 1);\n  auto P = a.pre((int)Q.size() - 1) * Q;\n  P.resize(Q.size() - 1);\n\
     \  return LinearRecurrence<mint>(N, Q, P);\n}\n\n/**\n * @brief \u7DDA\u5F62\u6F38\
-    \u5316\u5F0F\u306E\u9AD8\u901F\u8A08\u7B97\n * @docs docs/fps/kitamasa.md\n */\n\
-    #line 5 \"fps/nth-term.hpp\"\n\ntemplate <typename mint>\nmint nth_term(long long\
-    \ n, const vector<mint> &s) {\n  using fps = FormalPowerSeries<mint>;\n  auto\
-    \ bm = BerlekampMassey<mint>(s);\n  return kitamasa(n, fps{begin(bm), end(bm)},\
-    \ fps{begin(s), end(s)});\n}\n\n/**\n * @brief \u7DDA\u5F62\u56DE\u5E30\u6570\u5217\
-    \u306E\u9AD8\u901F\u8A08\u7B97(Berlekamp-Massey/Bostan-Mori)\n * @docs docs/fps/nth-term.md\n\
-    \ */\n"
+    \u5316\u5F0F\u306E\u9AD8\u901F\u8A08\u7B97\n */\n#line 5 \"fps/nth-term.hpp\"\n\
+    \ntemplate <typename mint>\nmint nth_term(long long n, const vector<mint> &s)\
+    \ {\n  using fps = FormalPowerSeries<mint>;\n  auto bm = BerlekampMassey<mint>(s);\n\
+    \  return kitamasa(n, fps{begin(bm), end(bm)}, fps{begin(s), end(s)});\n}\n\n\
+    /**\n * @brief \u7DDA\u5F62\u56DE\u5E30\u6570\u5217\u306E\u9AD8\u901F\u8A08\u7B97\
+    (Berlekamp-Massey/Bostan-Mori)\n */\n"
   code: "#pragma once\n\n#include \"berlekamp-massey.hpp\"\n#include \"kitamasa.hpp\"\
     \n\ntemplate <typename mint>\nmint nth_term(long long n, const vector<mint> &s)\
     \ {\n  using fps = FormalPowerSeries<mint>;\n  auto bm = BerlekampMassey<mint>(s);\n\
     \  return kitamasa(n, fps{begin(bm), end(bm)}, fps{begin(s), end(s)});\n}\n\n\
     /**\n * @brief \u7DDA\u5F62\u56DE\u5E30\u6570\u5217\u306E\u9AD8\u901F\u8A08\u7B97\
-    (Berlekamp-Massey/Bostan-Mori)\n * @docs docs/fps/nth-term.md\n */\n"
+    (Berlekamp-Massey/Bostan-Mori)\n */\n"
   dependsOn:
   - fps/berlekamp-massey.hpp
   - fps/kitamasa.hpp
@@ -376,17 +373,15 @@ data:
   isVerificationFile: false
   path: fps/nth-term.hpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yuki/yuki-0215-nth-term.test.cpp
 documentation_of: fps/nth-term.hpp
 layout: document
-redirect_from:
-- /library/fps/nth-term.hpp
-- /library/fps/nth-term.hpp.html
 title: "\u7DDA\u5F62\u56DE\u5E30\u6570\u5217\u306E\u9AD8\u901F\u8A08\u7B97(Berlekamp-Massey/Bostan-Mori)"
 ---
+
 ## 線形回帰数列の高速計算(Berlekamp-Massey/Bostan-Mori)
 
 線形回帰数列の前$k$項が与えられたときに第$n$項を$\mathrm{O}(k^2+k \log k\log n)$で計算するライブラリ。

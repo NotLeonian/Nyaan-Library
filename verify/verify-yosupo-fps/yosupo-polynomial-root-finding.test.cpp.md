@@ -415,9 +415,9 @@ data:
     \ mint>\nFormalPowerSeries<mint> FormalPowerSeries<mint>::exp(int deg) const {\n\
     \  return fps_exp_impl(*this, deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief\
     \ \u591A\u9805\u5F0F/\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\
-    \u30EA\n * @docs docs/fps/formal-power-series.md\n */\n#line 5 \"fps/ntt-friendly-fps.hpp\"\
-    \n\ntemplate <typename mint>\nvoid fps_set_fft_impl(FormalPowerSeries<mint>*,\
-    \ FPSBackendPriority<1>) {\n  if (!FormalPowerSeries<mint>::ntt_ptr) {\n    FormalPowerSeries<mint>::ntt_ptr\
+    \u30EA\n */\n#line 5 \"fps/ntt-friendly-fps.hpp\"\n\ntemplate <typename mint>\n\
+    void fps_set_fft_impl(FormalPowerSeries<mint>*, FPSBackendPriority<1>) {\n  if\
+    \ (!FormalPowerSeries<mint>::ntt_ptr) {\n    FormalPowerSeries<mint>::ntt_ptr\
     \ = new NTT<mint>;\n  }\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>&\
     \ fps_multiply_impl(FormalPowerSeries<mint>& f,\n                            \
     \               const FormalPowerSeries<mint>& r,\n                          \
@@ -469,36 +469,35 @@ data:
     \ begin(x) + m, mint(0));\n    x.ntt();\n    for (int i = 0; i < 2 * m; ++i) x[i]\
     \ *= y[i];\n    x.intt();\n    b.insert(end(b), begin(x) + m, end(x));\n  }\n\
     \  return fps{begin(b), begin(b) + deg};\n}\n\n/**\n * @brief NTT mod\u7528FPS\u30E9\
-    \u30A4\u30D6\u30E9\u30EA\n * @docs docs/fps/ntt-friendly-fps.md\n */\n#line 2\
-    \ \"fps/root-finding.hpp\"\n\n#line 5 \"fps/root-finding.hpp\"\nusing namespace\
-    \ std;\n\n#line 2 \"fps/mod-pow.hpp\"\n\n#line 4 \"fps/mod-pow.hpp\"\n\n#line\
-    \ 2 \"fps/arbitrary-fps.hpp\"\n\n#line 4 \"fps/arbitrary-fps.hpp\"\n\n#line 2\
-    \ \"ntt/arbitrary-ntt.hpp\"\n\n#line 6 \"ntt/arbitrary-ntt.hpp\"\nusing namespace\
-    \ std;\n\n#line 2 \"modint/montgomery-modint.hpp\"\n\n#line 5 \"modint/montgomery-modint.hpp\"\
-    \n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n\
-    \  using i32 = int32_t;\n  using u32 = uint32_t;\n  using u64 = uint64_t;\n\n\
-    \  static constexpr u32 get_r() {\n    u32 ret = mod;\n    for (i32 i = 0; i <\
-    \ 4; ++i) ret *= 2 - mod * ret;\n    return ret;\n  }\n\n  static constexpr u32\
-    \ r = get_r();\n  static constexpr u32 n2 = -u64(mod) % mod;\n  static_assert(mod\
-    \ < (1 << 30), \"invalid, mod >= 2 ^ 30\");\n  static_assert((mod & 1) == 1, \"\
-    invalid, mod % 2 == 0\");\n  static_assert(r * mod == 1, \"this code has bugs.\"\
-    );\n\n  u32 a;\n\n  constexpr LazyMontgomeryModInt() : a(0) {}\n  constexpr LazyMontgomeryModInt(const\
-    \ int64_t &b)\n      : a(reduce(u64(b % mod + mod) * n2)){};\n\n  static constexpr\
-    \ u32 reduce(const u64 &b) {\n    return (b + u64(u32(b) * u32(-r)) * mod) >>\
-    \ 32;\n  }\n\n  constexpr mint &operator+=(const mint &b) {\n    if (i32(a +=\
-    \ b.a - 2 * mod) < 0) a += 2 * mod;\n    return *this;\n  }\n\n  constexpr mint\
-    \ &operator-=(const mint &b) {\n    if (i32(a -= b.a) < 0) a += 2 * mod;\n   \
-    \ return *this;\n  }\n\n  constexpr mint &operator*=(const mint &b) {\n    a =\
-    \ reduce(u64(a) * b.a);\n    return *this;\n  }\n\n  constexpr mint &operator/=(const\
-    \ mint &b) {\n    *this *= b.inverse();\n    return *this;\n  }\n\n  constexpr\
-    \ mint operator+(const mint &b) const { return mint(*this) += b; }\n  constexpr\
-    \ mint operator-(const mint &b) const { return mint(*this) -= b; }\n  constexpr\
-    \ mint operator*(const mint &b) const { return mint(*this) *= b; }\n  constexpr\
-    \ mint operator/(const mint &b) const { return mint(*this) /= b; }\n  constexpr\
-    \ bool operator==(const mint &b) const {\n    return (a >= mod ? a - mod : a)\
-    \ == (b.a >= mod ? b.a - mod : b.a);\n  }\n  constexpr bool operator!=(const mint\
-    \ &b) const {\n    return (a >= mod ? a - mod : a) != (b.a >= mod ? b.a - mod\
-    \ : b.a);\n  }\n  constexpr mint operator-() const { return mint() - mint(*this);\
+    \u30A4\u30D6\u30E9\u30EA\n */\n#line 2 \"fps/root-finding.hpp\"\n\n#line 5 \"\
+    fps/root-finding.hpp\"\nusing namespace std;\n\n#line 2 \"fps/mod-pow.hpp\"\n\n\
+    #line 4 \"fps/mod-pow.hpp\"\n\n#line 2 \"fps/arbitrary-fps.hpp\"\n\n#line 4 \"\
+    fps/arbitrary-fps.hpp\"\n\n#line 2 \"ntt/arbitrary-ntt.hpp\"\n\n#line 6 \"ntt/arbitrary-ntt.hpp\"\
+    \nusing namespace std;\n\n#line 2 \"modint/montgomery-modint.hpp\"\n\n#line 5\
+    \ \"modint/montgomery-modint.hpp\"\n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt\
+    \ {\n  using mint = LazyMontgomeryModInt;\n  using i32 = int32_t;\n  using u32\
+    \ = uint32_t;\n  using u64 = uint64_t;\n\n  static constexpr u32 get_r() {\n \
+    \   u32 ret = mod;\n    for (i32 i = 0; i < 4; ++i) ret *= 2 - mod * ret;\n  \
+    \  return ret;\n  }\n\n  static constexpr u32 r = get_r();\n  static constexpr\
+    \ u32 n2 = -u64(mod) % mod;\n  static_assert(mod < (1 << 30), \"invalid, mod >=\
+    \ 2 ^ 30\");\n  static_assert((mod & 1) == 1, \"invalid, mod % 2 == 0\");\n  static_assert(r\
+    \ * mod == 1, \"this code has bugs.\");\n\n  u32 a;\n\n  constexpr LazyMontgomeryModInt()\
+    \ : a(0) {}\n  constexpr LazyMontgomeryModInt(const int64_t &b)\n      : a(reduce(u64(b\
+    \ % mod + mod) * n2)){};\n\n  static constexpr u32 reduce(const u64 &b) {\n  \
+    \  return (b + u64(u32(b) * u32(-r)) * mod) >> 32;\n  }\n\n  constexpr mint &operator+=(const\
+    \ mint &b) {\n    if (i32(a += b.a - 2 * mod) < 0) a += 2 * mod;\n    return *this;\n\
+    \  }\n\n  constexpr mint &operator-=(const mint &b) {\n    if (i32(a -= b.a) <\
+    \ 0) a += 2 * mod;\n    return *this;\n  }\n\n  constexpr mint &operator*=(const\
+    \ mint &b) {\n    a = reduce(u64(a) * b.a);\n    return *this;\n  }\n\n  constexpr\
+    \ mint &operator/=(const mint &b) {\n    *this *= b.inverse();\n    return *this;\n\
+    \  }\n\n  constexpr mint operator+(const mint &b) const { return mint(*this) +=\
+    \ b; }\n  constexpr mint operator-(const mint &b) const { return mint(*this) -=\
+    \ b; }\n  constexpr mint operator*(const mint &b) const { return mint(*this) *=\
+    \ b; }\n  constexpr mint operator/(const mint &b) const { return mint(*this) /=\
+    \ b; }\n  constexpr bool operator==(const mint &b) const {\n    return (a >= mod\
+    \ ? a - mod : a) == (b.a >= mod ? b.a - mod : b.a);\n  }\n  constexpr bool operator!=(const\
+    \ mint &b) const {\n    return (a >= mod ? a - mod : a) != (b.a >= mod ? b.a -\
+    \ mod : b.a);\n  }\n  constexpr mint operator-() const { return mint() - mint(*this);\
     \ }\n  constexpr mint operator+() const { return mint(*this); }\n\n  constexpr\
     \ mint pow(u64 n) const {\n    mint ret(1), mul(*this);\n    while (n > 0) {\n\
     \      if (n & 1) ret *= mul;\n      mul *= mul;\n      n >>= 1;\n    }\n    return\
@@ -627,25 +626,24 @@ data:
     \ g);\n  fps gcd_ = (m * p).first;\n  if (gcd_.size() != 1) return {false, fps()};\n\
     \  pair<fps, fps> x(fps{mint(1)}, g);\n  return {true, ((m * x).first % g) * gcd_[0].inverse()};\n\
     }\n\n}  // namespace poly_gcd\nusing poly_gcd::PolyGCD;\nusing poly_gcd::PolyInv;\n\
-    \n/**\n * @brief \u591A\u9805\u5F0FGCD\n * @docs docs/fps/polynomial-gcd.md\n\
-    \ */\n#line 10 \"fps/root-finding.hpp\"\n\ntemplate <typename mint>\nvector<mint>\
-    \ root_finding(const FormalPowerSeries<mint>& f) {\n  using fps = FormalPowerSeries<mint>;\n\
-    \  long long p = mint::get_mod();\n  vector<mint> ans;\n  if (p == 2) {\n    for\
-    \ (int i = 0; i < 2; i++) {\n      if (f.eval(i) == 0) ans.push_back(i);\n   \
-    \ }\n    return ans;\n  }\n  vector<fps> fs;\n  fs.push_back(PolyGCD(mod_pow(p,\
-    \ fps{0, 1}, f) - fps{0, 1}, f));\n  mt19937_64 rng(58);\n  while (!fs.empty())\
-    \ {\n    auto g = fs.back();\n    fs.pop_back();\n    if (g.size() == 2) ans.push_back(-g[0]);\n\
-    \    if (g.size() <= 2) continue;\n    fps s = fps{(long long)(rng() % p), 1};\n\
-    \    fps t = PolyGCD(mod_pow((p - 1) / 2, s, g) - fps{1}, g);\n    fs.push_back(t);\n\
-    \    if (g.size() != t.size()) fs.push_back(g / t);\n  }\n  return ans;\n}\n#line\
-    \ 7 \"verify/verify-yosupo-fps/yosupo-polynomial-root-finding.test.cpp\"\n//\n\
-    #line 2 \"modulo/binomial.hpp\"\n\n#line 6 \"modulo/binomial.hpp\"\nusing namespace\
-    \ std;\n\n// \u30B3\u30F3\u30B9\u30C8\u30E9\u30AF\u30BF\u306E MAX \u306B \u300C\
-    C(n, r) \u3084 fac(n) \u3067\u30AF\u30A8\u30EA\u3092\u6295\u3052\u308B\u6700\u5927\
-    \u306E n \u300D\n// \u3092\u5165\u308C\u308B\u3068\u500D\u901F\u304F\u3089\u3044\
-    \u306B\u306A\u308B\n// mod \u3092\u8D85\u3048\u3066\u524D\u8A08\u7B97\u3057\u3066\
-    \ 0 \u5272\u308A\u3092\u8E0F\u3080\u30D0\u30B0\u306F\u5BFE\u7B56\u6E08\u307F\n\
-    template <typename T>\nstruct Binomial {\n  vector<T> f, g, h;\n  Binomial(int\
+    \n/**\n * @brief \u591A\u9805\u5F0FGCD\n */\n#line 10 \"fps/root-finding.hpp\"\
+    \n\ntemplate <typename mint>\nvector<mint> root_finding(const FormalPowerSeries<mint>&\
+    \ f) {\n  using fps = FormalPowerSeries<mint>;\n  long long p = mint::get_mod();\n\
+    \  vector<mint> ans;\n  if (p == 2) {\n    for (int i = 0; i < 2; i++) {\n   \
+    \   if (f.eval(i) == 0) ans.push_back(i);\n    }\n    return ans;\n  }\n  vector<fps>\
+    \ fs;\n  fs.push_back(PolyGCD(mod_pow(p, fps{0, 1}, f) - fps{0, 1}, f));\n  mt19937_64\
+    \ rng(58);\n  while (!fs.empty()) {\n    auto g = fs.back();\n    fs.pop_back();\n\
+    \    if (g.size() == 2) ans.push_back(-g[0]);\n    if (g.size() <= 2) continue;\n\
+    \    fps s = fps{(long long)(rng() % p), 1};\n    fps t = PolyGCD(mod_pow((p -\
+    \ 1) / 2, s, g) - fps{1}, g);\n    fs.push_back(t);\n    if (g.size() != t.size())\
+    \ fs.push_back(g / t);\n  }\n  return ans;\n}\n#line 7 \"verify/verify-yosupo-fps/yosupo-polynomial-root-finding.test.cpp\"\
+    \n//\n#line 2 \"modulo/binomial.hpp\"\n\n#line 6 \"modulo/binomial.hpp\"\nusing\
+    \ namespace std;\n\n// \u30B3\u30F3\u30B9\u30C8\u30E9\u30AF\u30BF\u306E MAX \u306B\
+    \ \u300CC(n, r) \u3084 fac(n) \u3067\u30AF\u30A8\u30EA\u3092\u6295\u3052\u308B\
+    \u6700\u5927\u306E n \u300D\n// \u3092\u5165\u308C\u308B\u3068\u500D\u901F\u304F\
+    \u3089\u3044\u306B\u306A\u308B\n// mod \u3092\u8D85\u3048\u3066\u524D\u8A08\u7B97\
+    \u3057\u3066 0 \u5272\u308A\u3092\u8E0F\u3080\u30D0\u30B0\u306F\u5BFE\u7B56\u6E08\
+    \u307F\ntemplate <typename T>\nstruct Binomial {\n  vector<T> f, g, h;\n  Binomial(int\
     \ MAX = 0) {\n    assert(T::get_mod() != 0 && \"Binomial<mint>()\");\n    f.resize(1,\
     \ T{1});\n    g.resize(1, T{1});\n    h.resize(1, T{1});\n    if (MAX > 0) extend(MAX\
     \ + 1);\n  }\n\n  void extend(int m = -1) {\n    int n = f.size();\n    if (m\
@@ -708,7 +706,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-fps/yosupo-polynomial-root-finding.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-fps/yosupo-polynomial-root-finding.test.cpp

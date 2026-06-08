@@ -271,9 +271,8 @@ data:
     \ == 0 ? T(-1) : kth_smallest(l, r, cnt - 1);\n  }\n\n  // min v[i] s.t. (l <=\
     \ i < r) && (lower <= v[i])\n  T next_value(int l, int r, T lower) {\n    int\
     \ cnt = range_freq(l, r, lower);\n    return cnt == r - l ? T(-1) : kth_smallest(l,\
-    \ r, cnt);\n  }\n};\n\n/*\n * @brief Wavelet Matrix\n * @docs docs/data-structure-2d/wavelet-matrix.md\n\
-    \ */\n#line 5 \"verify/verify-unit-test/wavelet-matrix.test.cpp\"\n\nuint64_t\
-    \ rng() {\n  static uint64_t x_ =\n      chrono::duration_cast<chrono::nanoseconds>(\n\
+    \ r, cnt);\n  }\n};\n\n/*\n * @brief Wavelet Matrix\n */\n#line 5 \"verify/verify-unit-test/wavelet-matrix.test.cpp\"\
+    \n\nuint64_t rng() {\n  static uint64_t x_ =\n      chrono::duration_cast<chrono::nanoseconds>(\n\
     \          chrono::high_resolution_clock::now().time_since_epoch())\n        \
     \  .count();\n  return x_ ^= (x_ << 7), x_ ^= (x_ >> 9);\n}\n\nint randint(int\
     \ l, int r) {\n  assert(l < r);\n  return rng() % (r - l) + l;\n}\n\nvoid test(int\
@@ -360,7 +359,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/wavelet-matrix.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/wavelet-matrix.test.cpp

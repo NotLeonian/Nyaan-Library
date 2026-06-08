@@ -520,11 +520,10 @@ data:
     \ mint>\nFormalPowerSeries<mint> FormalPowerSeries<mint>::exp(int deg) const {\n\
     \  return fps_exp_impl(*this, deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief\
     \ \u591A\u9805\u5F0F/\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\
-    \u30EA\n * @docs docs/fps/formal-power-series.md\n */\n#line 7 \"fps/arbitrary-fps.hpp\"\
-    \n\ntemplate <typename mint>\nvoid fps_set_fft_impl(FormalPowerSeries<mint>*,\
-    \ FPSBackendPriority<0>) {\n  FormalPowerSeries<mint>::ntt_ptr = nullptr;\n}\n\
-    \ntemplate <typename mint>\nvoid fps_ntt_impl(FormalPowerSeries<mint>&, FPSBackendPriority<0>)\
-    \ {\n  exit(1);\n}\n\ntemplate <typename mint>\nvoid fps_intt_impl(FormalPowerSeries<mint>&,\
+    \u30EA\n */\n#line 7 \"fps/arbitrary-fps.hpp\"\n\ntemplate <typename mint>\nvoid\
+    \ fps_set_fft_impl(FormalPowerSeries<mint>*, FPSBackendPriority<0>) {\n  FormalPowerSeries<mint>::ntt_ptr\
+    \ = nullptr;\n}\n\ntemplate <typename mint>\nvoid fps_ntt_impl(FormalPowerSeries<mint>&,\
+    \ FPSBackendPriority<0>) {\n  exit(1);\n}\n\ntemplate <typename mint>\nvoid fps_intt_impl(FormalPowerSeries<mint>&,\
     \ FPSBackendPriority<0>) {\n  exit(1);\n}\n\ntemplate <typename mint>\nvoid fps_ntt_doubling_impl(FormalPowerSeries<mint>&,\
     \ FPSBackendPriority<0>) {\n  exit(1);\n}\n\ntemplate <typename mint>\nint fps_ntt_pr_impl(FormalPowerSeries<mint>*,\
     \ FPSBackendPriority<0>) {\n  exit(1);\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>&\
@@ -780,37 +779,37 @@ data:
     \ 1);\n  sort(begin(ret), end(ret));\n  return ret;\n}\n\n}  // namespace fast_factorize\n\
     \nusing fast_factorize::divisors;\nusing fast_factorize::factor_count;\nusing\
     \ fast_factorize::factorize;\n\n/**\n * @brief \u9AD8\u901F\u7D20\u56E0\u6570\u5206\
-    \u89E3(Miller Rabin/Pollard's Rho)\n * @docs docs/prime/fast-factorize.md\n */\n\
-    #line 2 \"ntt/chirp-z.hpp\"\n\n// f(A W^0), f(A W^1), ..., f(A W^{N-1}) \u3092\
-    \u8FD4\u3059\ntemplate <typename fps>\nfps ChirpZ(fps f, typename fps::value_type\
-    \ W, int N = -1,\n           typename fps::value_type A = 1) {\n  using mint =\
-    \ typename fps::value_type;\n  if (N == -1) N = f.size();\n  if (f.empty() or\
-    \ N == 0) return fps(N, mint{});\n  int M = f.size();\n  if (A != 1) {\n    mint\
-    \ x = 1;\n    for (int i = 0; i < M; i++) f[i] *= x, x *= A;\n  }\n  if (W ==\
-    \ 0) {\n    fps F(N, f[0]);\n    for (int i = 1; i < M; i++) F[0] += f[i];\n \
-    \   return F;\n  }\n  fps wc(N + M), iwc(max(N, M));\n  mint ws = 1, iW = W.inverse(),\
-    \ iws = 1;\n  wc[0] = 1, iwc[0] = 1;\n  for (int i = 1; i < N + M; i++) wc[i]\
-    \ = ws * wc[i - 1], ws *= W;\n  for (int i = 1; i < max(N, M); i++) iwc[i] = iws\
-    \ * iwc[i - 1], iws *= iW;\n  for (int i = 0; i < M; i++) f[i] *= iwc[i];\n  reverse(begin(f),\
-    \ end(f));\n  fps g = f * wc;\n  fps F{begin(g) + M - 1, begin(g) + M + N - 1};\n\
-    \  for (int i = 0; i < N; i++) F[i] *= iwc[i];\n  return F;\n}\n\n/**\n * @brief\
-    \ Chirp Z-transform(Bluestein's algorithm)\n */\n#line 2 \"ntt/multidimensional-ntt.hpp\"\
-    \n\n#line 7 \"ntt/multidimensional-ntt.hpp\"\nusing namespace std;\n\n#line 2\
-    \ \"internal/internal-function.hpp\"\n\n#line 8 \"internal/internal-function.hpp\"\
-    \n\nnamespace internal {\n\ntemplate <class>\nclass function_ref;\n\ntemplate\
-    \ <class R, class... Args>\nclass function_ref<R(Args...)> {\n  void* obj_ = nullptr;\n\
-    \  R (*call_obj_)(void*, Args...) = nullptr;\n  R (*func_)(Args...) = nullptr;\n\
-    \n public:\n  function_ref() noexcept = default;\n  function_ref(std::nullptr_t)\
-    \ noexcept {}\n  function_ref(R (*f)(Args...)) noexcept : func_(f) {}\n\n  template\
-    \ <\n      class F, class Fn = std::remove_reference_t<F>,\n      class = std::enable_if_t<\n\
-    \          std::is_lvalue_reference_v<F&&> &&\n          !std::is_same_v<std::decay_t<F>,\
-    \ function_ref> &&\n          !std::is_pointer_v<std::decay_t<F>> && !std::is_function_v<Fn>\
-    \ &&\n          std::is_invocable_r_v<R, Fn&, Args...>>>\n  function_ref(F&& f)\
-    \ noexcept {\n    obj_ = const_cast<void*>(static_cast<const void*>(std::addressof(f)));\n\
-    \    call_obj_ = [](void* p, Args... args) -> R {\n      return std::invoke(*static_cast<Fn*>(p),\
-    \ std::forward<Args>(args)...);\n    };\n  }\n\n  R operator()(Args... args) const\
-    \ {\n    if (call_obj_) {\n      return call_obj_(obj_, std::forward<Args>(args)...);\n\
-    \    }\n    if (!func_) throw std::bad_function_call();\n    return func_(std::forward<Args>(args)...);\n\
+    \u89E3(Miller Rabin/Pollard's Rho)\n */\n#line 2 \"ntt/chirp-z.hpp\"\n\n// f(A\
+    \ W^0), f(A W^1), ..., f(A W^{N-1}) \u3092\u8FD4\u3059\ntemplate <typename fps>\n\
+    fps ChirpZ(fps f, typename fps::value_type W, int N = -1,\n           typename\
+    \ fps::value_type A = 1) {\n  using mint = typename fps::value_type;\n  if (N\
+    \ == -1) N = f.size();\n  if (f.empty() or N == 0) return fps(N, mint{});\n  int\
+    \ M = f.size();\n  if (A != 1) {\n    mint x = 1;\n    for (int i = 0; i < M;\
+    \ i++) f[i] *= x, x *= A;\n  }\n  if (W == 0) {\n    fps F(N, f[0]);\n    for\
+    \ (int i = 1; i < M; i++) F[0] += f[i];\n    return F;\n  }\n  fps wc(N + M),\
+    \ iwc(max(N, M));\n  mint ws = 1, iW = W.inverse(), iws = 1;\n  wc[0] = 1, iwc[0]\
+    \ = 1;\n  for (int i = 1; i < N + M; i++) wc[i] = ws * wc[i - 1], ws *= W;\n \
+    \ for (int i = 1; i < max(N, M); i++) iwc[i] = iws * iwc[i - 1], iws *= iW;\n\
+    \  for (int i = 0; i < M; i++) f[i] *= iwc[i];\n  reverse(begin(f), end(f));\n\
+    \  fps g = f * wc;\n  fps F{begin(g) + M - 1, begin(g) + M + N - 1};\n  for (int\
+    \ i = 0; i < N; i++) F[i] *= iwc[i];\n  return F;\n}\n\n/**\n * @brief Chirp Z-transform(Bluestein's\
+    \ algorithm)\n */\n#line 2 \"ntt/multidimensional-ntt.hpp\"\n\n#line 7 \"ntt/multidimensional-ntt.hpp\"\
+    \nusing namespace std;\n\n#line 2 \"internal/internal-function.hpp\"\n\n#line\
+    \ 8 \"internal/internal-function.hpp\"\n\nnamespace internal {\n\ntemplate <class>\n\
+    class function_ref;\n\ntemplate <class R, class... Args>\nclass function_ref<R(Args...)>\
+    \ {\n  void* obj_ = nullptr;\n  R (*call_obj_)(void*, Args...) = nullptr;\n  R\
+    \ (*func_)(Args...) = nullptr;\n\n public:\n  function_ref() noexcept = default;\n\
+    \  function_ref(std::nullptr_t) noexcept {}\n  function_ref(R (*f)(Args...)) noexcept\
+    \ : func_(f) {}\n\n  template <\n      class F, class Fn = std::remove_reference_t<F>,\n\
+    \      class = std::enable_if_t<\n          std::is_lvalue_reference_v<F&&> &&\n\
+    \          !std::is_same_v<std::decay_t<F>, function_ref> &&\n          !std::is_pointer_v<std::decay_t<F>>\
+    \ && !std::is_function_v<Fn> &&\n          std::is_invocable_r_v<R, Fn&, Args...>>>\n\
+    \  function_ref(F&& f) noexcept {\n    obj_ = const_cast<void*>(static_cast<const\
+    \ void*>(std::addressof(f)));\n    call_obj_ = [](void* p, Args... args) -> R\
+    \ {\n      return std::invoke(*static_cast<Fn*>(p), std::forward<Args>(args)...);\n\
+    \    };\n  }\n\n  R operator()(Args... args) const {\n    if (call_obj_) {\n \
+    \     return call_obj_(obj_, std::forward<Args>(args)...);\n    }\n    if (!func_)\
+    \ throw std::bad_function_call();\n    return func_(std::forward<Args>(args)...);\n\
     \  }\n\n  explicit operator bool() const noexcept {\n    return call_obj_ != nullptr\
     \ || func_ != nullptr;\n  }\n};\n\ntemplate <class, std::size_t Capacity = 32,\n\
     \          std::size_t Align = alignof(std::max_align_t)>\nclass inplace_function;\n\
@@ -960,7 +959,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-ntt/yosupo-multivariate-circular-convolution.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-ntt/yosupo-multivariate-circular-convolution.test.cpp

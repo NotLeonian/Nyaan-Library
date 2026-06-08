@@ -260,18 +260,17 @@ data:
     \ x = 0;\n    for (int k = 1 << __lg(N); k; k >>= 1) {\n      if (x + k <= N -\
     \ 1 && data[x + k] <= w) {\n        w -= data[x + k];\n        x += k;\n     \
     \ }\n    }\n    return x;\n  }\n};\n\n/**\n * @brief Binary Indexed Tree(Fenwick\
-    \ Tree)\n * @docs docs/data-structure/binary-indexed-tree.md\n */\n#line 2 \"\
-    graph/static-graph.hpp\"\n\nnamespace StaticGraphImpl {\n\ntemplate <typename\
-    \ T, bool Cond = is_void<T>::value>\nstruct E;\ntemplate <typename T>\nstruct\
-    \ E<T, false> {\n  int to;\n  T cost;\n  E() {}\n  E(const int& v, const T& c)\
-    \ : to(v), cost(c) {}\n  operator int() const { return to; }\n};\ntemplate <typename\
-    \ T>\nstruct E<T, true> {\n  int to;\n  E() {}\n  E(const int& v) : to(v) {}\n\
-    \  operator int() const { return to; }\n};\n\ntemplate <typename T = void>\nstruct\
-    \ StaticGraph {\n private:\n  template <typename It>\n  struct Es {\n    It b,\
-    \ e;\n    It begin() const { return b; }\n    It end() const { return e; }\n \
-    \   int size() const { return int(e - b); }\n    auto&& operator[](int i) const\
-    \ { return b[i]; }\n  };\n  \n  int N, M, ec;\n  vector<int> head;\n  vector<pair<int,\
-    \ E<T>>> buf;\n  vector<E<T>> es;\n\n  void build() {\n    partial_sum(begin(head),\
+    \ Tree)\n */\n#line 2 \"graph/static-graph.hpp\"\n\nnamespace StaticGraphImpl\
+    \ {\n\ntemplate <typename T, bool Cond = is_void<T>::value>\nstruct E;\ntemplate\
+    \ <typename T>\nstruct E<T, false> {\n  int to;\n  T cost;\n  E() {}\n  E(const\
+    \ int& v, const T& c) : to(v), cost(c) {}\n  operator int() const { return to;\
+    \ }\n};\ntemplate <typename T>\nstruct E<T, true> {\n  int to;\n  E() {}\n  E(const\
+    \ int& v) : to(v) {}\n  operator int() const { return to; }\n};\n\ntemplate <typename\
+    \ T = void>\nstruct StaticGraph {\n private:\n  template <typename It>\n  struct\
+    \ Es {\n    It b, e;\n    It begin() const { return b; }\n    It end() const {\
+    \ return e; }\n    int size() const { return int(e - b); }\n    auto&& operator[](int\
+    \ i) const { return b[i]; }\n  };\n  \n  int N, M, ec;\n  vector<int> head;\n\
+    \  vector<pair<int, E<T>>> buf;\n  vector<E<T>> es;\n\n  void build() {\n    partial_sum(begin(head),\
     \ end(head), begin(head));\n    es.resize(M);\n    for (auto&& [u, e] : buf) es[--head[u]]\
     \ = e;\n  }\n\n public:\n  StaticGraph(int _n, int _m) : N(_n), M(_m), ec(0),\
     \ head(N + 1, 0) {\n    buf.reserve(M);\n  }\n\n  template <typename... Args>\n\
@@ -282,19 +281,18 @@ data:
     \ {begin(es) + head[u], begin(es) + head[u + 1]};\n  }\n  const Es<typename vector<E<T>>::const_iterator>\
     \ operator[](int u) const {\n    return {begin(es) + head[u], begin(es) + head[u\
     \ + 1]};\n  }\n  int size() const { return N; }\n};\n\n}  // namespace StaticGraphImpl\n\
-    \nusing StaticGraphImpl::StaticGraph;\n\n/**\n * @brief Static Graph\n * @docs\
-    \ docs/graph/static-graph.md\n */\n#line 2 \"misc/fastio.hpp\"\n\n#line 9 \"misc/fastio.hpp\"\
-    \n\nusing namespace std;\n\n#line 2 \"internal/internal-type-traits.hpp\"\n\n\
-    #line 4 \"internal/internal-type-traits.hpp\"\nusing namespace std;\n\nnamespace\
-    \ internal {\ntemplate <typename T>\nusing is_broadly_integral =\n    typename\
-    \ conditional_t<is_integral_v<T> || is_same_v<T, __int128_t> ||\n            \
-    \                   is_same_v<T, __uint128_t>,\n                           true_type,\
-    \ false_type>::type;\n\ntemplate <typename T>\nusing is_broadly_signed =\n   \
-    \ typename conditional_t<is_signed_v<T> || is_same_v<T, __int128_t>,\n       \
-    \                    true_type, false_type>::type;\n\ntemplate <typename T>\n\
-    using is_broadly_unsigned =\n    typename conditional_t<is_unsigned_v<T> || is_same_v<T,\
-    \ __uint128_t>,\n                           true_type, false_type>::type;\n\n\
-    #define ENABLE_VALUE(x) \\\n  template <typename T> \\\n  constexpr bool x##_v\
+    \nusing StaticGraphImpl::StaticGraph;\n\n/**\n * @brief Static Graph\n */\n#line\
+    \ 2 \"misc/fastio.hpp\"\n\n#line 9 \"misc/fastio.hpp\"\n\nusing namespace std;\n\
+    \n#line 2 \"internal/internal-type-traits.hpp\"\n\n#line 4 \"internal/internal-type-traits.hpp\"\
+    \nusing namespace std;\n\nnamespace internal {\ntemplate <typename T>\nusing is_broadly_integral\
+    \ =\n    typename conditional_t<is_integral_v<T> || is_same_v<T, __int128_t> ||\n\
+    \                               is_same_v<T, __uint128_t>,\n                 \
+    \          true_type, false_type>::type;\n\ntemplate <typename T>\nusing is_broadly_signed\
+    \ =\n    typename conditional_t<is_signed_v<T> || is_same_v<T, __int128_t>,\n\
+    \                           true_type, false_type>::type;\n\ntemplate <typename\
+    \ T>\nusing is_broadly_unsigned =\n    typename conditional_t<is_unsigned_v<T>\
+    \ || is_same_v<T, __uint128_t>,\n                           true_type, false_type>::type;\n\
+    \n#define ENABLE_VALUE(x) \\\n  template <typename T> \\\n  constexpr bool x##_v\
     \ = x<T>::value;\n\nENABLE_VALUE(is_broadly_integral);\nENABLE_VALUE(is_broadly_signed);\n\
     ENABLE_VALUE(is_broadly_unsigned);\n#undef ENABLE_VALUE\n\n#define ENABLE_HAS_TYPE(var)\
     \                                   \\\n  template <class, class = void>     \
@@ -417,39 +415,38 @@ data:
     \ {\n    int x, y;\n    cin >> x >> y;\n    T c;\n    if (is_weighted)\n     \
     \ cin >> c;\n    else\n      c = 1;\n    if (is_1origin) x--, y--;\n    d[x][y]\
     \ = c;\n    if (!is_directed) d[y][x] = c;\n  }\n  return d;\n}\n\n/**\n * @brief\
-    \ \u30B0\u30E9\u30D5\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\n * @docs docs/graph/graph-template.md\n\
-    \ */\n#line 6 \"tree/euler-tour.hpp\"\n\ntemplate <typename G>\nstruct EulerTour\
-    \ {\n private:\n  struct RMQ {\n    int n, s;\n    using P = pair<int, int>;\n\
-    \    vector<P> seg;\n    P UNIT = P(1 << 30, -1);\n\n    RMQ(int N) : n(N), s(1)\
-    \ {\n      while (s < N) s <<= 1;\n      seg.assign(2 * s, UNIT);\n    }\n\n \
-    \   void set(int k, P x) { seg[k + s] = x; }\n\n    P operator[](int k) const\
-    \ { return seg[k + s]; }\n\n    void build() {\n      for (int k = s - 1; k >\
-    \ 0; k--) {\n        seg[k] = min(seg[2 * k], seg[2 * k + 1]);\n      }\n    }\n\
-    \n    P query(int a, int b) const {\n      P R = UNIT;\n      for (a += s, b +=\
-    \ s; a < b; a >>= 1, b >>= 1) {\n        if (a & 1) R = min(R, seg[a++]);\n  \
-    \      if (b & 1) R = min(R, seg[--b]);\n      }\n      return R;\n    }\n\n \
-    \   int size() const { return n; }\n  };\n\n  vector<int> down, up;\n  int id;\n\
-    \  RMQ rmq;\n\n  void init(G &g, int root) {\n    dfs(g, root, -1, 0);\n    if\
-    \ (id < rmq.size()) rmq.set(id++, {-1, -1});\n    for (int i = 0; i < (int)g.size();\
-    \ i++) {\n      if (down[i] == -1) {\n        rmq.set(id++, {-1, -1});\n     \
-    \   dfs(g, i, -1, 0);\n        if (id < rmq.size()) rmq.set(id++, {-1, -1});\n\
-    \      }\n    }\n    rmq.build();\n  }\n\n  void dfs(G &g, int c, int p, int dp)\
-    \ {\n    down[c] = id;\n    rmq.set(id++, {dp, c});\n    for (auto &d : g[c])\
-    \ {\n      if (d == p) continue;\n      dfs(g, d, c, dp + 1);\n    }\n    up[c]\
-    \ = id;\n    if (p != -1) rmq.set(id++, {dp - 1, p});\n  }\n\n public:\n  // remind\
-    \ : because of additional node,\n  // DS on tour should reserve 2 * n nodes.\n\
-    \  EulerTour(G &g, int root = 0)\n      : down(g.size(), -1), up(g.size(), -1),\
-    \ id(0), rmq(2 * g.size()) {\n    init(g, root);\n  }\n\n  pair<int, int> idx(int\
-    \ i) const { return {down[i], up[i]}; }\n\n  int lca(int a, int b) const {\n \
-    \   if (down[a] > down[b]) swap(a, b);\n    return rmq.query(down[a], down[b]\
-    \ + 1).second;\n  }\n\n  template <typename F>\n  void node_query(int a, int b,\
-    \ const F &f) {\n    int l = lca(a, b);\n    f(down[l], down[a] + 1);\n    f(down[l]\
-    \ + 1, down[b] + 1);\n  }\n\n  template <typename F>\n  void edge_query(int a,\
-    \ int b, const F &f) {\n    int l = lca(a, b);\n    f(down[l] + 1, down[a] + 1);\n\
-    \    f(down[l] + 1, down[b] + 1);\n  }\n\n  template <typename F>\n  void subtree_query(int\
-    \ a, const F &f) {\n    f(down[a], up[a]);\n  }\n\n  int size() const { return\
-    \ int(rmq.size()); }\n};\n\n/**\n * @brief \u30AA\u30A4\u30E9\u30FC\u30C4\u30A2\
-    \u30FC\n * @docs docs/tree/euler-tour.md\n */\n#line 9 \"verify/verify-yosupo-ds/yosupo-vertex-add-path-sum-euler-tour.test.cpp\"\
+    \ \u30B0\u30E9\u30D5\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\n */\n#line 6 \"tree/euler-tour.hpp\"\
+    \n\ntemplate <typename G>\nstruct EulerTour {\n private:\n  struct RMQ {\n   \
+    \ int n, s;\n    using P = pair<int, int>;\n    vector<P> seg;\n    P UNIT = P(1\
+    \ << 30, -1);\n\n    RMQ(int N) : n(N), s(1) {\n      while (s < N) s <<= 1;\n\
+    \      seg.assign(2 * s, UNIT);\n    }\n\n    void set(int k, P x) { seg[k + s]\
+    \ = x; }\n\n    P operator[](int k) const { return seg[k + s]; }\n\n    void build()\
+    \ {\n      for (int k = s - 1; k > 0; k--) {\n        seg[k] = min(seg[2 * k],\
+    \ seg[2 * k + 1]);\n      }\n    }\n\n    P query(int a, int b) const {\n    \
+    \  P R = UNIT;\n      for (a += s, b += s; a < b; a >>= 1, b >>= 1) {\n      \
+    \  if (a & 1) R = min(R, seg[a++]);\n        if (b & 1) R = min(R, seg[--b]);\n\
+    \      }\n      return R;\n    }\n\n    int size() const { return n; }\n  };\n\
+    \n  vector<int> down, up;\n  int id;\n  RMQ rmq;\n\n  void init(G &g, int root)\
+    \ {\n    dfs(g, root, -1, 0);\n    if (id < rmq.size()) rmq.set(id++, {-1, -1});\n\
+    \    for (int i = 0; i < (int)g.size(); i++) {\n      if (down[i] == -1) {\n \
+    \       rmq.set(id++, {-1, -1});\n        dfs(g, i, -1, 0);\n        if (id <\
+    \ rmq.size()) rmq.set(id++, {-1, -1});\n      }\n    }\n    rmq.build();\n  }\n\
+    \n  void dfs(G &g, int c, int p, int dp) {\n    down[c] = id;\n    rmq.set(id++,\
+    \ {dp, c});\n    for (auto &d : g[c]) {\n      if (d == p) continue;\n      dfs(g,\
+    \ d, c, dp + 1);\n    }\n    up[c] = id;\n    if (p != -1) rmq.set(id++, {dp -\
+    \ 1, p});\n  }\n\n public:\n  // remind : because of additional node,\n  // DS\
+    \ on tour should reserve 2 * n nodes.\n  EulerTour(G &g, int root = 0)\n     \
+    \ : down(g.size(), -1), up(g.size(), -1), id(0), rmq(2 * g.size()) {\n    init(g,\
+    \ root);\n  }\n\n  pair<int, int> idx(int i) const { return {down[i], up[i]};\
+    \ }\n\n  int lca(int a, int b) const {\n    if (down[a] > down[b]) swap(a, b);\n\
+    \    return rmq.query(down[a], down[b] + 1).second;\n  }\n\n  template <typename\
+    \ F>\n  void node_query(int a, int b, const F &f) {\n    int l = lca(a, b);\n\
+    \    f(down[l], down[a] + 1);\n    f(down[l] + 1, down[b] + 1);\n  }\n\n  template\
+    \ <typename F>\n  void edge_query(int a, int b, const F &f) {\n    int l = lca(a,\
+    \ b);\n    f(down[l] + 1, down[a] + 1);\n    f(down[l] + 1, down[b] + 1);\n  }\n\
+    \n  template <typename F>\n  void subtree_query(int a, const F &f) {\n    f(down[a],\
+    \ up[a]);\n  }\n\n  int size() const { return int(rmq.size()); }\n};\n\n/**\n\
+    \ * @brief \u30AA\u30A4\u30E9\u30FC\u30C4\u30A2\u30FC\n */\n#line 9 \"verify/verify-yosupo-ds/yosupo-vertex-add-path-sum-euler-tour.test.cpp\"\
     \n\nusing namespace Nyaan; void Nyaan::solve() {\n  int N, Q;\n  rd(N, Q);\n \
     \ vector<int> a(N);\n  rep(i, N) rd(a[i]);\n\n  StaticGraph<void> g(N, 2 * N -\
     \ 2);\n  rep(i, N - 1) {\n    int u, v;\n    rd(u, v);\n    g.add_edge(u, v);\n\
@@ -492,7 +489,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-ds/yosupo-vertex-add-path-sum-euler-tour.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-ds/yosupo-vertex-add-path-sum-euler-tour.test.cpp

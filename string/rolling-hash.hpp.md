@@ -19,7 +19,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/string/rolling-hash.md
     document_title: Rolling Hash
     links: []
   bundledCode: "#line 2 \"string/rolling-hash.hpp\"\n\n#include <string>\n#include\
@@ -71,10 +70,9 @@ data:
     \ u64 modfma(const u64 &a, const u64 &b, const u64 &c) {\n    u128 d = u128(a)\
     \ * b + c;\n    u64 ret = (d >> 61) + (u64(d) & md);\n    return ret >= md ? ret\
     \ - md : ret;\n  }\n};\n\n}  // namespace internal\n\n/**\n * @brief \u30CF\u30C3\
-    \u30B7\u30E5\u69CB\u9020\u4F53\n * @docs docs/internal/internal-hash.md\n */\n\
-    #line 8 \"string/rolling-hash.hpp\"\n\ntemplate <typename Str, int BASE_NUM =\
-    \ 2>\nstruct RollingHash {\n  using Hash = internal::Hash<BASE_NUM>;\n  Str data;\n\
-    \  vector<Hash> hs, pw;\n  int s;\n  static Hash basis;\n\n  RollingHash(const\
+    \u30B7\u30E5\u69CB\u9020\u4F53\n */\n#line 8 \"string/rolling-hash.hpp\"\n\ntemplate\
+    \ <typename Str, int BASE_NUM = 2>\nstruct RollingHash {\n  using Hash = internal::Hash<BASE_NUM>;\n\
+    \  Str data;\n  vector<Hash> hs, pw;\n  int s;\n  static Hash basis;\n\n  RollingHash(const\
     \ Str &S = Str()) { build(S); }\n\n  void build(const Str &S) {\n    data = S;\n\
     \    s = S.size();\n    hs.resize(s + 1);\n    pw.resize(s + 1);\n    pw[0] =\
     \ Hash::set(1);\n    hs[0] = Hash::set(0);\n    for (int i = 1; i <= s; i++) {\n\
@@ -101,8 +99,7 @@ data:
     \                    : 1;\n  }\n\n  int size() const { return s; }\n};\n\ntemplate\
     \ <typename Str, int BASE_NUM>\ntypename RollingHash<Str, BASE_NUM>::Hash RollingHash<Str,\
     \ BASE_NUM>::basis =\n    internal::Hash<BASE_NUM>::get_basis();\nusing roriha\
-    \ = RollingHash<string, 2>;\n\n/**\n * @brief Rolling Hash\n * @docs docs/string/rolling-hash.md\n\
-    \ */\n"
+    \ = RollingHash<string, 2>;\n\n/**\n * @brief Rolling Hash\n */\n"
   code: "#pragma once\n\n#include <string>\n#include <vector>\nusing namespace std;\n\
     \n#include \"../internal/internal-hash.hpp\"\n\ntemplate <typename Str, int BASE_NUM\
     \ = 2>\nstruct RollingHash {\n  using Hash = internal::Hash<BASE_NUM>;\n  Str\
@@ -133,14 +130,13 @@ data:
     \                    : 1;\n  }\n\n  int size() const { return s; }\n};\n\ntemplate\
     \ <typename Str, int BASE_NUM>\ntypename RollingHash<Str, BASE_NUM>::Hash RollingHash<Str,\
     \ BASE_NUM>::basis =\n    internal::Hash<BASE_NUM>::get_basis();\nusing roriha\
-    \ = RollingHash<string, 2>;\n\n/**\n * @brief Rolling Hash\n * @docs docs/string/rolling-hash.md\n\
-    \ */\n"
+    \ = RollingHash<string, 2>;\n\n/**\n * @brief Rolling Hash\n */\n"
   dependsOn:
   - internal/internal-hash.hpp
   isVerificationFile: false
   path: string/rolling-hash.hpp
   requiredBy: []
-  timestamp: '2023-08-10 13:25:59+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-string/yosupo-enumerate-palindromes-roriha.test.cpp
@@ -148,11 +144,9 @@ data:
   - verify/verify-unit-test/string-search.test.cpp
 documentation_of: string/rolling-hash.hpp
 layout: document
-redirect_from:
-- /library/string/rolling-hash.hpp
-- /library/string/rolling-hash.hpp.html
 title: Rolling Hash
 ---
+
 ## Rolling Hash
 
 列の一致判定を前計算$\mathrm{O}(n)$クエリ$\mathrm{O}(1)$で処理するライブラリ。

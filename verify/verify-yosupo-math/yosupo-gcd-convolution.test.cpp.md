@@ -385,18 +385,17 @@ data:
     \ T> &a) {\n    for (auto p1 = rbegin(a); p1 != rend(a); p1++)\n      for (auto\
     \ p2 = rbegin(a); p2 != p1; p2++)\n        if (p2->first % p1->first == 0) p1->second\
     \ -= p2->second;\n  }\n};\n\n/**\n * @brief \u500D\u6570\u5909\u63DB\u30FB\u7D04\
-    \u6570\u5909\u63DB\n * @docs docs/multiplicative-function/divisor-multiple-transform.md\n\
-    \ */\n#line 6 \"multiplicative-function/gcd-convolution.hpp\"\n\ntemplate <typename\
-    \ mint>\nvector<mint> gcd_convolution(const vector<mint>& a, const vector<mint>&\
-    \ b) {\n  assert(a.size() == b.size());\n  auto s = a, t = b;\n  multiple_transform::zeta_transform(s);\n\
-    \  multiple_transform::zeta_transform(t);\n  for (int i = 0; i < (int)a.size();\
-    \ i++) s[i] *= t[i];\n  multiple_transform::mobius_transform(s);\n  return s;\n\
-    }\n\n/**\n * @brief GCD\u7573\u307F\u8FBC\u307F\n */\n#line 8 \"verify/verify-yosupo-math/yosupo-gcd-convolution.test.cpp\"\
-    \n//\nusing namespace Nyaan;\nusing mint = LazyMontgomeryModInt<998244353>;\n\
-    using vm = vector<mint>;\n\nvoid Nyaan::solve() {\n  int N, x;\n  rd(N);\n  vm\
-    \ a(N + 1), b(N + 1);\n  rep1(i, N) rd(x), a[i] = x;\n  rep1(i, N) rd(x), b[i]\
-    \ = x;\n  auto c = gcd_convolution(a, b);\n  rep1(i, N) wt(c[i].get()), wt(\"\
-    \ \\n\"[i == N]);\n}\n"
+    \u6570\u5909\u63DB\n */\n#line 6 \"multiplicative-function/gcd-convolution.hpp\"\
+    \n\ntemplate <typename mint>\nvector<mint> gcd_convolution(const vector<mint>&\
+    \ a, const vector<mint>& b) {\n  assert(a.size() == b.size());\n  auto s = a,\
+    \ t = b;\n  multiple_transform::zeta_transform(s);\n  multiple_transform::zeta_transform(t);\n\
+    \  for (int i = 0; i < (int)a.size(); i++) s[i] *= t[i];\n  multiple_transform::mobius_transform(s);\n\
+    \  return s;\n}\n\n/**\n * @brief GCD\u7573\u307F\u8FBC\u307F\n */\n#line 8 \"\
+    verify/verify-yosupo-math/yosupo-gcd-convolution.test.cpp\"\n//\nusing namespace\
+    \ Nyaan;\nusing mint = LazyMontgomeryModInt<998244353>;\nusing vm = vector<mint>;\n\
+    \nvoid Nyaan::solve() {\n  int N, x;\n  rd(N);\n  vm a(N + 1), b(N + 1);\n  rep1(i,\
+    \ N) rd(x), a[i] = x;\n  rep1(i, N) rd(x), b[i] = x;\n  auto c = gcd_convolution(a,\
+    \ b);\n  rep1(i, N) wt(c[i].get()), wt(\" \\n\"[i == N]);\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/gcd_convolution\"\n//\n\
     #include \"../../template/template.hpp\"\n//\n#include \"../../misc/fastio.hpp\"\
     \n#include \"../../modint/montgomery-modint.hpp\"\n#include \"../../multiplicative-function/gcd-convolution.hpp\"\
@@ -421,7 +420,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-math/yosupo-gcd-convolution.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-math/yosupo-gcd-convolution.test.cpp

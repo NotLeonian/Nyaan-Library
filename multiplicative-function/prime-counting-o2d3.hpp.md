@@ -13,7 +13,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/multiplicative-function/prime-counting-o2d3.md
     document_title: "\u7D20\u6570\u30AB\u30A6\u30F3\u30C8( $\\mathrm{O}(N^{\\frac{2}{3}})$\
       \ )"
     links: []
@@ -67,8 +66,7 @@ data:
     \ = 1, n = ns[i]; i < nsz && n >= p2; n = ns[++i])\n      h[i] -= h[i * p <= N2\
     \ ? i * p : nsz - my_div(n, p)] - pi;\n    ++pidx;\n    ++pi;\n  }\n\n  return\
     \ h[1];\n}\n\n/**\n * @brief \u7D20\u6570\u30AB\u30A6\u30F3\u30C8( $\\mathrm{O}(N^{\\\
-    frac{2}{3}})$ )\n * @docs docs/multiplicative-function/prime-counting-o2d3.md\n\
-    \ */\n"
+    frac{2}{3}})$ )\n */\n"
   code: "#pragma once\n\n\n\n#include \"../prime/prime-enumerate.hpp\"\n\ninline int64_t\
     \ my_div(int64_t n, int64_t p) { return double(n) / p; };\n\nint64_t prime_counting(long\
     \ long N) {\n  if(N < 2) return 0;\n\n  using i64 = long long;\n\n  i64 N6, N3,\
@@ -109,24 +107,21 @@ data:
     \ = 1, n = ns[i]; i < nsz && n >= p2; n = ns[++i])\n      h[i] -= h[i * p <= N2\
     \ ? i * p : nsz - my_div(n, p)] - pi;\n    ++pidx;\n    ++pi;\n  }\n\n  return\
     \ h[1];\n}\n\n/**\n * @brief \u7D20\u6570\u30AB\u30A6\u30F3\u30C8( $\\mathrm{O}(N^{\\\
-    frac{2}{3}})$ )\n * @docs docs/multiplicative-function/prime-counting-o2d3.md\n\
-    \ */\n"
+    frac{2}{3}})$ )\n */\n"
   dependsOn:
   - prime/prime-enumerate.hpp
   isVerificationFile: false
   path: multiplicative-function/prime-counting-o2d3.hpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-math/yosupo-counting-primes-2.test.cpp
 documentation_of: multiplicative-function/prime-counting-o2d3.hpp
 layout: document
-redirect_from:
-- /library/multiplicative-function/prime-counting-o2d3.hpp
-- /library/multiplicative-function/prime-counting-o2d3.hpp.html
 title: "\u7D20\u6570\u30AB\u30A6\u30F3\u30C8( $\\mathrm{O}(N^{\\frac{2}{3}})$ )"
 ---
+
 [Min_25氏の記事およびツイート](https://twitter.com/min_25_/status/1247483565933121537)を参考にした素数カウントの$\mathrm{O}(N^{\frac{2}{3}})$での実装。実装の詳細はコメントに記した。
 
 計算量は改善されているが、競プロの制約($N \leq 10^{11}$)では[シンプルな実装](https://nyaannyaan.github.io/library/library/multiplicative-function/prime-counting.hpp.html)と実行速度に大きな差が出ないようだ。

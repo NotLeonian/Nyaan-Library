@@ -13,7 +13,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/string/suffix-automaton.md
     document_title: Suffix Automaton
     links: []
   bundledCode: "#line 2 \"string/suffix-automaton.hpp\"\n\n#include <immintrin.h>\n\
@@ -62,8 +61,7 @@ data:
     \ = i;\n    for (int i = 0; i < n; i++) {\n      state &s = st[i];\n      sort(begin(s.nxt),\
     \ end(s.nxt));\n      for (auto &[_, y] : s.nxt) y = inv[y];\n      if (s.link\
     \ != -1) s.link = inv[s.link];\n      if (s.origin != -1) s.origin = inv[s.origin];\n\
-    \    }\n    sorted = true;\n  }\n};\n\n/**\n * @brief Suffix Automaton\n * @docs\
-    \ docs/string/suffix-automaton.md\n */\n"
+    \    }\n    sorted = true;\n  }\n};\n\n/**\n * @brief Suffix Automaton\n */\n"
   code: "#pragma once\n\n#include <immintrin.h>\n\ntemplate <int margin = 'a'>\nstruct\
     \ SuffixAutomaton {\n  struct state {\n    vector<pair<char, int>> nxt;\n    uint64_t\
     \ hit;\n    int len, link, origin;\n    char key;\n\n    state() : hit(0), len(0),\
@@ -110,24 +108,21 @@ data:
     \ = i;\n    for (int i = 0; i < n; i++) {\n      state &s = st[i];\n      sort(begin(s.nxt),\
     \ end(s.nxt));\n      for (auto &[_, y] : s.nxt) y = inv[y];\n      if (s.link\
     \ != -1) s.link = inv[s.link];\n      if (s.origin != -1) s.origin = inv[s.origin];\n\
-    \    }\n    sorted = true;\n  }\n};\n\n/**\n * @brief Suffix Automaton\n * @docs\
-    \ docs/string/suffix-automaton.md\n */\n"
+    \    }\n    sorted = true;\n  }\n};\n\n/**\n * @brief Suffix Automaton\n */\n"
   dependsOn: []
   isVerificationFile: false
   path: string/suffix-automaton.hpp
   requiredBy: []
-  timestamp: '2026-05-22 11:18:25+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-string/yosupo-number-of-substrings-suffixautomaton.test.cpp
   - verify/verify-unit-test/suffix-automaton.test.cpp
 documentation_of: string/suffix-automaton.hpp
 layout: document
-redirect_from:
-- /library/string/suffix-automaton.hpp
-- /library/string/suffix-automaton.hpp.html
 title: Suffix Automaton
 ---
+
 ## Suffix Automaton
 
 #### 概要

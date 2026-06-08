@@ -331,24 +331,24 @@ data:
     \ mint>\nFormalPowerSeries<mint> FormalPowerSeries<mint>::exp(int deg) const {\n\
     \  return fps_exp_impl(*this, deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief\
     \ \u591A\u9805\u5F0F/\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\
-    \u30EA\n * @docs docs/fps/formal-power-series.md\n */\n#line 9 \"fps/composite-exp.hpp\"\
-    \n\n// \u591A\u9805\u5F0F f \u306B exp(cx) \u4EE3\u5165\n// \u6B21\u6570 : mod\
-    \ x^{deg} \u307E\u3067\u8A08\u7B97, \u6307\u5B9A\u304C\u306A\u3044\u5834\u5408\
-    \ f \u3068\u540C\u3058\u9577\u3055\u8A08\u7B97\ntemplate <typename mint>\nFormalPowerSeries<mint>\
-    \ composite_exp(FormalPowerSeries<mint> f, mint c = 1,\n                     \
-    \                 int deg = -1) {\n  using fps = FormalPowerSeries<mint>;\n  assert(c\
-    \ != 0);\n  if (deg == -1) deg = f.size();\n\n  if (f.empty()) return {};\n  int\
-    \ N = f.size();\n  vector<pair<fps, fps>> fs;\n  for (int i = 0; i < N; i++) fs.emplace_back(fps{f[i]},\
-    \ fps{1, -c * i});\n  while (fs.size() > 1u) {\n    vector<pair<fps, fps>> nx;\n\
-    \    for (int i = 0; i + 1 < (int)fs.size(); i += 2) {\n      pair<fps, fps>&\
-    \ f0 = fs[i];\n      pair<fps, fps>& f1 = fs[i + 1];\n      fps s = f0.first *\
-    \ f1.second + f1.first * f0.second;\n      fps t = f0.second * f1.second;\n  \
-    \    nx.emplace_back(s, t);\n    }\n    if (fs.size() % 2) nx.push_back(fs.back());\n\
-    \    fs = nx;\n  }\n  fps g = (fs[0].first * fs[0].second.inv(deg)).pre(deg);\n\
-    \  mint b = 1;\n  for (int i = 0; i < deg; i++) g[i] *= b, b /= i + 1;\n  return\
-    \ g;\n}\n\n// \u5165\u529B f(x) = sum_{0 <= k < N} a_i exp(ckx) \u3092\u6E80\u305F\
-    \u3059 g(x) (mod x^N)\n// \u51FA\u529B a(x) = sum_{0 <= k < N} a_i x^i\ntemplate\
-    \ <typename mint>\nFormalPowerSeries<mint> inverse_of_composite_exp(FormalPowerSeries<mint>\
+    \u30EA\n */\n#line 9 \"fps/composite-exp.hpp\"\n\n// \u591A\u9805\u5F0F f \u306B\
+    \ exp(cx) \u4EE3\u5165\n// \u6B21\u6570 : mod x^{deg} \u307E\u3067\u8A08\u7B97\
+    , \u6307\u5B9A\u304C\u306A\u3044\u5834\u5408 f \u3068\u540C\u3058\u9577\u3055\u8A08\
+    \u7B97\ntemplate <typename mint>\nFormalPowerSeries<mint> composite_exp(FormalPowerSeries<mint>\
+    \ f, mint c = 1,\n                                      int deg = -1) {\n  using\
+    \ fps = FormalPowerSeries<mint>;\n  assert(c != 0);\n  if (deg == -1) deg = f.size();\n\
+    \n  if (f.empty()) return {};\n  int N = f.size();\n  vector<pair<fps, fps>> fs;\n\
+    \  for (int i = 0; i < N; i++) fs.emplace_back(fps{f[i]}, fps{1, -c * i});\n \
+    \ while (fs.size() > 1u) {\n    vector<pair<fps, fps>> nx;\n    for (int i = 0;\
+    \ i + 1 < (int)fs.size(); i += 2) {\n      pair<fps, fps>& f0 = fs[i];\n     \
+    \ pair<fps, fps>& f1 = fs[i + 1];\n      fps s = f0.first * f1.second + f1.first\
+    \ * f0.second;\n      fps t = f0.second * f1.second;\n      nx.emplace_back(s,\
+    \ t);\n    }\n    if (fs.size() % 2) nx.push_back(fs.back());\n    fs = nx;\n\
+    \  }\n  fps g = (fs[0].first * fs[0].second.inv(deg)).pre(deg);\n  mint b = 1;\n\
+    \  for (int i = 0; i < deg; i++) g[i] *= b, b /= i + 1;\n  return g;\n}\n\n//\
+    \ \u5165\u529B f(x) = sum_{0 <= k < N} a_i exp(ckx) \u3092\u6E80\u305F\u3059 g(x)\
+    \ (mod x^N)\n// \u51FA\u529B a(x) = sum_{0 <= k < N} a_i x^i\ntemplate <typename\
+    \ mint>\nFormalPowerSeries<mint> inverse_of_composite_exp(FormalPowerSeries<mint>\
     \ f,\n                                                 mint c = 1) {\n  using\
     \ fps = FormalPowerSeries<mint>;\n  if (f.empty()) return {};\n  int N = f.size();\n\
     \  mint b = 1;\n  for (int i = 0; i < N; i++) f[i] *= b, b *= i + 1;\n\n  int\
@@ -535,32 +535,31 @@ data:
     \ begin(x) + m, mint(0));\n    x.ntt();\n    for (int i = 0; i < 2 * m; ++i) x[i]\
     \ *= y[i];\n    x.intt();\n    b.insert(end(b), begin(x) + m, end(x));\n  }\n\
     \  return fps{begin(b), begin(b) + deg};\n}\n\n/**\n * @brief NTT mod\u7528FPS\u30E9\
-    \u30A4\u30D6\u30E9\u30EA\n * @docs docs/fps/ntt-friendly-fps.md\n */\n#line 2\
-    \ \"modint/montgomery-modint.hpp\"\n\n#line 5 \"modint/montgomery-modint.hpp\"\
-    \n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n\
-    \  using i32 = int32_t;\n  using u32 = uint32_t;\n  using u64 = uint64_t;\n\n\
-    \  static constexpr u32 get_r() {\n    u32 ret = mod;\n    for (i32 i = 0; i <\
-    \ 4; ++i) ret *= 2 - mod * ret;\n    return ret;\n  }\n\n  static constexpr u32\
-    \ r = get_r();\n  static constexpr u32 n2 = -u64(mod) % mod;\n  static_assert(mod\
-    \ < (1 << 30), \"invalid, mod >= 2 ^ 30\");\n  static_assert((mod & 1) == 1, \"\
-    invalid, mod % 2 == 0\");\n  static_assert(r * mod == 1, \"this code has bugs.\"\
-    );\n\n  u32 a;\n\n  constexpr LazyMontgomeryModInt() : a(0) {}\n  constexpr LazyMontgomeryModInt(const\
-    \ int64_t &b)\n      : a(reduce(u64(b % mod + mod) * n2)){};\n\n  static constexpr\
-    \ u32 reduce(const u64 &b) {\n    return (b + u64(u32(b) * u32(-r)) * mod) >>\
-    \ 32;\n  }\n\n  constexpr mint &operator+=(const mint &b) {\n    if (i32(a +=\
-    \ b.a - 2 * mod) < 0) a += 2 * mod;\n    return *this;\n  }\n\n  constexpr mint\
-    \ &operator-=(const mint &b) {\n    if (i32(a -= b.a) < 0) a += 2 * mod;\n   \
-    \ return *this;\n  }\n\n  constexpr mint &operator*=(const mint &b) {\n    a =\
-    \ reduce(u64(a) * b.a);\n    return *this;\n  }\n\n  constexpr mint &operator/=(const\
-    \ mint &b) {\n    *this *= b.inverse();\n    return *this;\n  }\n\n  constexpr\
-    \ mint operator+(const mint &b) const { return mint(*this) += b; }\n  constexpr\
-    \ mint operator-(const mint &b) const { return mint(*this) -= b; }\n  constexpr\
-    \ mint operator*(const mint &b) const { return mint(*this) *= b; }\n  constexpr\
-    \ mint operator/(const mint &b) const { return mint(*this) /= b; }\n  constexpr\
-    \ bool operator==(const mint &b) const {\n    return (a >= mod ? a - mod : a)\
-    \ == (b.a >= mod ? b.a - mod : b.a);\n  }\n  constexpr bool operator!=(const mint\
-    \ &b) const {\n    return (a >= mod ? a - mod : a) != (b.a >= mod ? b.a - mod\
-    \ : b.a);\n  }\n  constexpr mint operator-() const { return mint() - mint(*this);\
+    \u30A4\u30D6\u30E9\u30EA\n */\n#line 2 \"modint/montgomery-modint.hpp\"\n\n#line\
+    \ 5 \"modint/montgomery-modint.hpp\"\n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt\
+    \ {\n  using mint = LazyMontgomeryModInt;\n  using i32 = int32_t;\n  using u32\
+    \ = uint32_t;\n  using u64 = uint64_t;\n\n  static constexpr u32 get_r() {\n \
+    \   u32 ret = mod;\n    for (i32 i = 0; i < 4; ++i) ret *= 2 - mod * ret;\n  \
+    \  return ret;\n  }\n\n  static constexpr u32 r = get_r();\n  static constexpr\
+    \ u32 n2 = -u64(mod) % mod;\n  static_assert(mod < (1 << 30), \"invalid, mod >=\
+    \ 2 ^ 30\");\n  static_assert((mod & 1) == 1, \"invalid, mod % 2 == 0\");\n  static_assert(r\
+    \ * mod == 1, \"this code has bugs.\");\n\n  u32 a;\n\n  constexpr LazyMontgomeryModInt()\
+    \ : a(0) {}\n  constexpr LazyMontgomeryModInt(const int64_t &b)\n      : a(reduce(u64(b\
+    \ % mod + mod) * n2)){};\n\n  static constexpr u32 reduce(const u64 &b) {\n  \
+    \  return (b + u64(u32(b) * u32(-r)) * mod) >> 32;\n  }\n\n  constexpr mint &operator+=(const\
+    \ mint &b) {\n    if (i32(a += b.a - 2 * mod) < 0) a += 2 * mod;\n    return *this;\n\
+    \  }\n\n  constexpr mint &operator-=(const mint &b) {\n    if (i32(a -= b.a) <\
+    \ 0) a += 2 * mod;\n    return *this;\n  }\n\n  constexpr mint &operator*=(const\
+    \ mint &b) {\n    a = reduce(u64(a) * b.a);\n    return *this;\n  }\n\n  constexpr\
+    \ mint &operator/=(const mint &b) {\n    *this *= b.inverse();\n    return *this;\n\
+    \  }\n\n  constexpr mint operator+(const mint &b) const { return mint(*this) +=\
+    \ b; }\n  constexpr mint operator-(const mint &b) const { return mint(*this) -=\
+    \ b; }\n  constexpr mint operator*(const mint &b) const { return mint(*this) *=\
+    \ b; }\n  constexpr mint operator/(const mint &b) const { return mint(*this) /=\
+    \ b; }\n  constexpr bool operator==(const mint &b) const {\n    return (a >= mod\
+    \ ? a - mod : a) == (b.a >= mod ? b.a - mod : b.a);\n  }\n  constexpr bool operator!=(const\
+    \ mint &b) const {\n    return (a >= mod ? a - mod : a) != (b.a >= mod ? b.a -\
+    \ mod : b.a);\n  }\n  constexpr mint operator-() const { return mint() - mint(*this);\
     \ }\n  constexpr mint operator+() const { return mint(*this); }\n\n  constexpr\
     \ mint pow(u64 n) const {\n    mint ret(1), mul(*this);\n    while (n > 0) {\n\
     \      if (n & 1) ret *= mul;\n      mul *= mul;\n      n >>= 1;\n    }\n    return\
@@ -660,7 +659,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/composite-exp.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/composite-exp.test.cpp

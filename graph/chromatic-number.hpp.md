@@ -10,7 +10,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/graph/chromatic-number.md
     document_title: "\u5F69\u8272\u6570"
     links: []
   bundledCode: "#line 2 \"graph/chromatic-number.hpp\"\n\n#include <cstdint>\n#include\
@@ -28,7 +27,7 @@ data:
     \ ? -1 : 1;\n  vector<pair<int, int>> hist;\n  for (int i = 1; i <= (1 << n);\
     \ i++)\n    if (memo[i]) hist.emplace_back(i, memo[i]);\n  return min(ChromaticNumberImpl::calc<1000000021>(n,\
     \ hist),\n             ChromaticNumberImpl::calc<1000000033>(n, hist));\n}\n\n\
-    /**\n * @brief \u5F69\u8272\u6570\n * @docs docs/graph/chromatic-number.md\n */\n"
+    /**\n * @brief \u5F69\u8272\u6570\n */\n"
   code: "#pragma once\n\n#include <cstdint>\n#include <utility>\n#include <vector>\n\
     using namespace std;\n\nnamespace ChromaticNumberImpl {\nusing i64 = int64_t;\n\
     template <uint32_t mod>\nint calc(int n, vector<pair<int, int>> hist) {\n  for\
@@ -44,22 +43,20 @@ data:
     \  vector<pair<int, int>> hist;\n  for (int i = 1; i <= (1 << n); i++)\n    if\
     \ (memo[i]) hist.emplace_back(i, memo[i]);\n  return min(ChromaticNumberImpl::calc<1000000021>(n,\
     \ hist),\n             ChromaticNumberImpl::calc<1000000033>(n, hist));\n}\n\n\
-    /**\n * @brief \u5F69\u8272\u6570\n * @docs docs/graph/chromatic-number.md\n */\n"
+    /**\n * @brief \u5F69\u8272\u6570\n */\n"
   dependsOn: []
   isVerificationFile: false
   path: graph/chromatic-number.hpp
   requiredBy: []
-  timestamp: '2021-01-15 18:15:31+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-graph/yosupo-chromatic-number.test.cpp
 documentation_of: graph/chromatic-number.hpp
 layout: document
-redirect_from:
-- /library/graph/chromatic-number.hpp
-- /library/graph/chromatic-number.hpp.html
 title: "\u5F69\u8272\u6570"
 ---
+
 ## 彩色数
 
 頂点数$n$のグラフの彩色数を$\mathrm{O}(2^n n)$で求めるライブラリ。

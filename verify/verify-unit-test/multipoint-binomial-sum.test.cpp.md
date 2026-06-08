@@ -464,9 +464,9 @@ data:
     \ mint>\nFormalPowerSeries<mint> FormalPowerSeries<mint>::exp(int deg) const {\n\
     \  return fps_exp_impl(*this, deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief\
     \ \u591A\u9805\u5F0F/\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\
-    \u30EA\n * @docs docs/fps/formal-power-series.md\n */\n#line 5 \"fps/ntt-friendly-fps.hpp\"\
-    \n\ntemplate <typename mint>\nvoid fps_set_fft_impl(FormalPowerSeries<mint>*,\
-    \ FPSBackendPriority<1>) {\n  if (!FormalPowerSeries<mint>::ntt_ptr) {\n    FormalPowerSeries<mint>::ntt_ptr\
+    \u30EA\n */\n#line 5 \"fps/ntt-friendly-fps.hpp\"\n\ntemplate <typename mint>\n\
+    void fps_set_fft_impl(FormalPowerSeries<mint>*, FPSBackendPriority<1>) {\n  if\
+    \ (!FormalPowerSeries<mint>::ntt_ptr) {\n    FormalPowerSeries<mint>::ntt_ptr\
     \ = new NTT<mint>;\n  }\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>&\
     \ fps_multiply_impl(FormalPowerSeries<mint>& f,\n                            \
     \               const FormalPowerSeries<mint>& r,\n                          \
@@ -518,12 +518,12 @@ data:
     \ begin(x) + m, mint(0));\n    x.ntt();\n    for (int i = 0; i < 2 * m; ++i) x[i]\
     \ *= y[i];\n    x.intt();\n    b.insert(end(b), begin(x) + m, end(x));\n  }\n\
     \  return fps{begin(b), begin(b) + deg};\n}\n\n/**\n * @brief NTT mod\u7528FPS\u30E9\
-    \u30A4\u30D6\u30E9\u30EA\n * @docs docs/fps/ntt-friendly-fps.md\n */\n#line 4\
-    \ \"fps/fast-multieval.hpp\"\n\ntemplate <typename mint>\nvector<mint> FastMultiEval(const\
-    \ FormalPowerSeries<mint> &f,\n                           const vector<mint> &xs)\
-    \ {\n  using fps = FormalPowerSeries<mint>;\n  int s = (int)xs.size();\n  if(f.empty()\
-    \ || xs.empty()) return vector<mint>(s, mint(0));\n  if (s == 1) return vector<mint>{f.eval(xs[0])};\n\
-    \  int N = 1 << (32 - __builtin_clz((int)xs.size() - 1));\n  vector<FormalPowerSeries<mint>>\
+    \u30A4\u30D6\u30E9\u30EA\n */\n#line 4 \"fps/fast-multieval.hpp\"\n\ntemplate\
+    \ <typename mint>\nvector<mint> FastMultiEval(const FormalPowerSeries<mint> &f,\n\
+    \                           const vector<mint> &xs) {\n  using fps = FormalPowerSeries<mint>;\n\
+    \  int s = (int)xs.size();\n  if(f.empty() || xs.empty()) return vector<mint>(s,\
+    \ mint(0));\n  if (s == 1) return vector<mint>{f.eval(xs[0])};\n  int N = 1 <<\
+    \ (32 - __builtin_clz((int)xs.size() - 1));\n  vector<FormalPowerSeries<mint>>\
     \ buf(2 * N);\n  for (int i = 0; i < N; i++) {\n    mint n = mint{i < s ? -xs[i]\
     \ : mint(0)};\n    buf[i + N] = fps{n + 1, n - 1};\n  }\n  for (int i = N - 1;\
     \ i > 0; i--) {\n    fps &g(buf[(i << 1) | 0]), &h(buf[(i << 1) | 1]);\n    int\
@@ -661,11 +661,11 @@ data:
     \    int nl = 0, nr = 0;\n    for (auto idx : order) {\n      while (nl > left[idx])\
     \ add_left(--nl);\n      while (nr < right[idx]) add_right(nr++);\n      while\
     \ (nl < left[idx]) delete_left(nl++);\n      while (nr > right[idx]) delete_right(--nr);\n\
-    \      rem(idx);\n    }\n  }\n};\n\n/**\n * @brief Mo's algorithm\n * @docs docs/misc/mo.md\n\
-    \ */\n#line 5 \"modulo/multipoint-binomial-sum.hpp\"\n\ntemplate <typename mint>\n\
-    vector<mint> multipoint_binomial_sum(const vector<pair<int, int>>& qs) {\n  int\
-    \ N = 2;\n  for (auto& p : qs) N = max(N, p.first);\n  Binomial<mint> b(N + 1);\n\
-    \  int Q = qs.size();\n  Mo mo(N, Q);\n  for (auto& p : qs) {\n    assert(p.second\
+    \      rem(idx);\n    }\n  }\n};\n\n/**\n * @brief Mo's algorithm\n */\n#line\
+    \ 5 \"modulo/multipoint-binomial-sum.hpp\"\n\ntemplate <typename mint>\nvector<mint>\
+    \ multipoint_binomial_sum(const vector<pair<int, int>>& qs) {\n  int N = 2;\n\
+    \  for (auto& p : qs) N = max(N, p.first);\n  Binomial<mint> b(N + 1);\n  int\
+    \ Q = qs.size();\n  Mo mo(N, Q);\n  for (auto& p : qs) {\n    assert(p.second\
     \ <= p.first);\n    assert(p.first <= N);\n    mo.insert(p.second, p.first);\n\
     \  }\n  vector<mint> ans(Q);\n  mint cur = 1;\n  int n = 0, m = 0;\n  auto al\
     \ = [&](int) { cur -= b.C(n, m--); };\n  auto ar = [&](int) { cur += cur - b.C(n++,\
@@ -835,7 +835,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/multipoint-binomial-sum.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/multipoint-binomial-sum.test.cpp

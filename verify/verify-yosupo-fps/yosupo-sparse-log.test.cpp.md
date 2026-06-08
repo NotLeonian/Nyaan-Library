@@ -322,36 +322,35 @@ data:
     \ mint>\nFormalPowerSeries<mint> FormalPowerSeries<mint>::exp(int deg) const {\n\
     \  return fps_exp_impl(*this, deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief\
     \ \u591A\u9805\u5F0F/\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\
-    \u30EA\n * @docs docs/fps/formal-power-series.md\n */\n#line 8 \"fps/sparse-fps.hpp\"\
-    \n\n// g \u304C sparse \u3092\u4EEE\u5B9A, f * g.inv() \u3092\u8A08\u7B97\ntemplate\
-    \ <typename mint>\nFormalPowerSeries<mint> sparse_div(const FormalPowerSeries<mint>&\
-    \ f,\n                                   const FormalPowerSeries<mint>& g,\n \
-    \                                  int deg = -1) {\n  assert(g.empty() == false\
-    \ && g[0] != mint(0));\n  if (deg == -1) deg = f.size();\n  mint ig0 = g[0].inverse();\n\
-    \  FormalPowerSeries<mint> s = f * ig0;\n  s.resize(deg);\n  vector<pair<int,\
-    \ mint>> gs;\n  for (int i = 1; i < (int)g.size(); i++) {\n    if (g[i] != 0)\
-    \ gs.emplace_back(i, g[i] * ig0);\n  }\n  for (int i = 0; i < deg; i++) {\n  \
-    \  for (auto& [j, g_j] : gs) {\n      if (i + j >= deg) break;\n      s[i + j]\
-    \ -= s[i] * g_j;\n    }\n  }\n  return s;\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>\
-    \ sparse_inv(const FormalPowerSeries<mint>& f,\n                             \
-    \      int deg = -1) {\n  assert(f.empty() == false && f[0] != mint(0));\n  if\
-    \ (deg == -1) deg = f.size();\n  vector<pair<int, mint>> fs;\n  for (int i = 1;\
-    \ i < (int)f.size(); i++) {\n    if (f[i] != 0) fs.emplace_back(i, f[i]);\n  }\n\
-    \  FormalPowerSeries<mint> g(deg);\n  mint if0 = f[0].inverse();\n  if (0 < deg)\
-    \ g[0] = if0;\n  for (int k = 1; k < deg; k++) {\n    for (auto& [j, fj] : fs)\
-    \ {\n      if (k < j) break;\n      g[k] += g[k - j] * fj;\n    }\n    g[k] *=\
-    \ -if0;\n  }\n  return g;\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>\
-    \ sparse_log(const FormalPowerSeries<mint>& f,\n                             \
-    \      int deg = -1) {\n  assert(f.empty() == false && f[0] == 1);\n  if (deg\
-    \ == -1) deg = f.size();\n  vector<pair<int, mint>> fs;\n  for (int i = 1; i <\
-    \ (int)f.size(); i++) {\n    if (f[i] != 0) fs.emplace_back(i, f[i]);\n  }\n\n\
-    \  int mod = mint::get_mod();\n  static vector<mint> invs{1, 1};\n  while ((int)invs.size()\
-    \ <= deg) {\n    int i = invs.size();\n    invs.push_back((-invs[mod % i]) * (mod\
-    \ / i));\n  }\n\n  FormalPowerSeries<mint> g(deg);\n  for (int k = 0; k < deg\
-    \ - 1; k++) {\n    for (auto& [j, fj] : fs) {\n      if (k < j) break;\n     \
-    \ int i = k - j;\n      g[k + 1] -= g[i + 1] * fj * (i + 1);\n    }\n    g[k +\
-    \ 1] *= invs[k + 1];\n    if (k + 1 < (int)f.size()) g[k + 1] += f[k + 1];\n \
-    \ }\n  return g;\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint> sparse_exp(const\
+    \u30EA\n */\n#line 8 \"fps/sparse-fps.hpp\"\n\n// g \u304C sparse \u3092\u4EEE\
+    \u5B9A, f * g.inv() \u3092\u8A08\u7B97\ntemplate <typename mint>\nFormalPowerSeries<mint>\
+    \ sparse_div(const FormalPowerSeries<mint>& f,\n                             \
+    \      const FormalPowerSeries<mint>& g,\n                                   int\
+    \ deg = -1) {\n  assert(g.empty() == false && g[0] != mint(0));\n  if (deg ==\
+    \ -1) deg = f.size();\n  mint ig0 = g[0].inverse();\n  FormalPowerSeries<mint>\
+    \ s = f * ig0;\n  s.resize(deg);\n  vector<pair<int, mint>> gs;\n  for (int i\
+    \ = 1; i < (int)g.size(); i++) {\n    if (g[i] != 0) gs.emplace_back(i, g[i] *\
+    \ ig0);\n  }\n  for (int i = 0; i < deg; i++) {\n    for (auto& [j, g_j] : gs)\
+    \ {\n      if (i + j >= deg) break;\n      s[i + j] -= s[i] * g_j;\n    }\n  }\n\
+    \  return s;\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint> sparse_inv(const\
+    \ FormalPowerSeries<mint>& f,\n                                   int deg = -1)\
+    \ {\n  assert(f.empty() == false && f[0] != mint(0));\n  if (deg == -1) deg =\
+    \ f.size();\n  vector<pair<int, mint>> fs;\n  for (int i = 1; i < (int)f.size();\
+    \ i++) {\n    if (f[i] != 0) fs.emplace_back(i, f[i]);\n  }\n  FormalPowerSeries<mint>\
+    \ g(deg);\n  mint if0 = f[0].inverse();\n  if (0 < deg) g[0] = if0;\n  for (int\
+    \ k = 1; k < deg; k++) {\n    for (auto& [j, fj] : fs) {\n      if (k < j) break;\n\
+    \      g[k] += g[k - j] * fj;\n    }\n    g[k] *= -if0;\n  }\n  return g;\n}\n\
+    \ntemplate <typename mint>\nFormalPowerSeries<mint> sparse_log(const FormalPowerSeries<mint>&\
+    \ f,\n                                   int deg = -1) {\n  assert(f.empty() ==\
+    \ false && f[0] == 1);\n  if (deg == -1) deg = f.size();\n  vector<pair<int, mint>>\
+    \ fs;\n  for (int i = 1; i < (int)f.size(); i++) {\n    if (f[i] != 0) fs.emplace_back(i,\
+    \ f[i]);\n  }\n\n  int mod = mint::get_mod();\n  static vector<mint> invs{1, 1};\n\
+    \  while ((int)invs.size() <= deg) {\n    int i = invs.size();\n    invs.push_back((-invs[mod\
+    \ % i]) * (mod / i));\n  }\n\n  FormalPowerSeries<mint> g(deg);\n  for (int k\
+    \ = 0; k < deg - 1; k++) {\n    for (auto& [j, fj] : fs) {\n      if (k < j) break;\n\
+    \      int i = k - j;\n      g[k + 1] -= g[i + 1] * fj * (i + 1);\n    }\n   \
+    \ g[k + 1] *= invs[k + 1];\n    if (k + 1 < (int)f.size()) g[k + 1] += f[k + 1];\n\
+    \  }\n  return g;\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint> sparse_exp(const\
     \ FormalPowerSeries<mint>& f,\n                                   int deg = -1)\
     \ {\n  assert(f.empty() or f[0] == 0);\n  if (deg == -1) deg = f.size();\n  vector<pair<int,\
     \ mint>> fs;\n  for (int i = 1; i < (int)f.size(); i++) {\n    if (f[i] != 0)\
@@ -515,32 +514,31 @@ data:
     \ begin(x) + m, mint(0));\n    x.ntt();\n    for (int i = 0; i < 2 * m; ++i) x[i]\
     \ *= y[i];\n    x.intt();\n    b.insert(end(b), begin(x) + m, end(x));\n  }\n\
     \  return fps{begin(b), begin(b) + deg};\n}\n\n/**\n * @brief NTT mod\u7528FPS\u30E9\
-    \u30A4\u30D6\u30E9\u30EA\n * @docs docs/fps/ntt-friendly-fps.md\n */\n#line 2\
-    \ \"modint/montgomery-modint.hpp\"\n\n#line 5 \"modint/montgomery-modint.hpp\"\
-    \n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n\
-    \  using i32 = int32_t;\n  using u32 = uint32_t;\n  using u64 = uint64_t;\n\n\
-    \  static constexpr u32 get_r() {\n    u32 ret = mod;\n    for (i32 i = 0; i <\
-    \ 4; ++i) ret *= 2 - mod * ret;\n    return ret;\n  }\n\n  static constexpr u32\
-    \ r = get_r();\n  static constexpr u32 n2 = -u64(mod) % mod;\n  static_assert(mod\
-    \ < (1 << 30), \"invalid, mod >= 2 ^ 30\");\n  static_assert((mod & 1) == 1, \"\
-    invalid, mod % 2 == 0\");\n  static_assert(r * mod == 1, \"this code has bugs.\"\
-    );\n\n  u32 a;\n\n  constexpr LazyMontgomeryModInt() : a(0) {}\n  constexpr LazyMontgomeryModInt(const\
-    \ int64_t &b)\n      : a(reduce(u64(b % mod + mod) * n2)){};\n\n  static constexpr\
-    \ u32 reduce(const u64 &b) {\n    return (b + u64(u32(b) * u32(-r)) * mod) >>\
-    \ 32;\n  }\n\n  constexpr mint &operator+=(const mint &b) {\n    if (i32(a +=\
-    \ b.a - 2 * mod) < 0) a += 2 * mod;\n    return *this;\n  }\n\n  constexpr mint\
-    \ &operator-=(const mint &b) {\n    if (i32(a -= b.a) < 0) a += 2 * mod;\n   \
-    \ return *this;\n  }\n\n  constexpr mint &operator*=(const mint &b) {\n    a =\
-    \ reduce(u64(a) * b.a);\n    return *this;\n  }\n\n  constexpr mint &operator/=(const\
-    \ mint &b) {\n    *this *= b.inverse();\n    return *this;\n  }\n\n  constexpr\
-    \ mint operator+(const mint &b) const { return mint(*this) += b; }\n  constexpr\
-    \ mint operator-(const mint &b) const { return mint(*this) -= b; }\n  constexpr\
-    \ mint operator*(const mint &b) const { return mint(*this) *= b; }\n  constexpr\
-    \ mint operator/(const mint &b) const { return mint(*this) /= b; }\n  constexpr\
-    \ bool operator==(const mint &b) const {\n    return (a >= mod ? a - mod : a)\
-    \ == (b.a >= mod ? b.a - mod : b.a);\n  }\n  constexpr bool operator!=(const mint\
-    \ &b) const {\n    return (a >= mod ? a - mod : a) != (b.a >= mod ? b.a - mod\
-    \ : b.a);\n  }\n  constexpr mint operator-() const { return mint() - mint(*this);\
+    \u30A4\u30D6\u30E9\u30EA\n */\n#line 2 \"modint/montgomery-modint.hpp\"\n\n#line\
+    \ 5 \"modint/montgomery-modint.hpp\"\n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt\
+    \ {\n  using mint = LazyMontgomeryModInt;\n  using i32 = int32_t;\n  using u32\
+    \ = uint32_t;\n  using u64 = uint64_t;\n\n  static constexpr u32 get_r() {\n \
+    \   u32 ret = mod;\n    for (i32 i = 0; i < 4; ++i) ret *= 2 - mod * ret;\n  \
+    \  return ret;\n  }\n\n  static constexpr u32 r = get_r();\n  static constexpr\
+    \ u32 n2 = -u64(mod) % mod;\n  static_assert(mod < (1 << 30), \"invalid, mod >=\
+    \ 2 ^ 30\");\n  static_assert((mod & 1) == 1, \"invalid, mod % 2 == 0\");\n  static_assert(r\
+    \ * mod == 1, \"this code has bugs.\");\n\n  u32 a;\n\n  constexpr LazyMontgomeryModInt()\
+    \ : a(0) {}\n  constexpr LazyMontgomeryModInt(const int64_t &b)\n      : a(reduce(u64(b\
+    \ % mod + mod) * n2)){};\n\n  static constexpr u32 reduce(const u64 &b) {\n  \
+    \  return (b + u64(u32(b) * u32(-r)) * mod) >> 32;\n  }\n\n  constexpr mint &operator+=(const\
+    \ mint &b) {\n    if (i32(a += b.a - 2 * mod) < 0) a += 2 * mod;\n    return *this;\n\
+    \  }\n\n  constexpr mint &operator-=(const mint &b) {\n    if (i32(a -= b.a) <\
+    \ 0) a += 2 * mod;\n    return *this;\n  }\n\n  constexpr mint &operator*=(const\
+    \ mint &b) {\n    a = reduce(u64(a) * b.a);\n    return *this;\n  }\n\n  constexpr\
+    \ mint &operator/=(const mint &b) {\n    *this *= b.inverse();\n    return *this;\n\
+    \  }\n\n  constexpr mint operator+(const mint &b) const { return mint(*this) +=\
+    \ b; }\n  constexpr mint operator-(const mint &b) const { return mint(*this) -=\
+    \ b; }\n  constexpr mint operator*(const mint &b) const { return mint(*this) *=\
+    \ b; }\n  constexpr mint operator/(const mint &b) const { return mint(*this) /=\
+    \ b; }\n  constexpr bool operator==(const mint &b) const {\n    return (a >= mod\
+    \ ? a - mod : a) == (b.a >= mod ? b.a - mod : b.a);\n  }\n  constexpr bool operator!=(const\
+    \ mint &b) const {\n    return (a >= mod ? a - mod : a) != (b.a >= mod ? b.a -\
+    \ mod : b.a);\n  }\n  constexpr mint operator-() const { return mint() - mint(*this);\
     \ }\n  constexpr mint operator+() const { return mint(*this); }\n\n  constexpr\
     \ mint pow(u64 n) const {\n    mint ret(1), mul(*this);\n    while (n > 0) {\n\
     \      if (n & 1) ret *= mul;\n      mul *= mul;\n      n >>= 1;\n    }\n    return\
@@ -617,7 +615,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-fps/yosupo-sparse-log.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-fps/yosupo-sparse-log.test.cpp

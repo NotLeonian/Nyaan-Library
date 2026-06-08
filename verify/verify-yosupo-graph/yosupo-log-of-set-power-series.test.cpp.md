@@ -407,14 +407,13 @@ data:
     \    }\n  }\n\n  vector<mint> multiply(const vector<mint>& a, const vector<mint>&\
     \ b) {\n    vector<fps> A = lift(a), B = lift(b);\n    zeta(A), zeta(B);\n   \
     \ prod(A, B);\n    mobius(A);\n    return unlift(A);\n  }\n};\n\n/**\n * @brief\
-    \ Subset Convolution\n * @docs docs/set-function/subset-convolution.md\n */\n\
-    #line 8 \"set-function/log-of-set-power-series.hpp\"\n\ntemplate <typename mint,\
-    \ int MAX = 21>\nvector<mint> log_of_set_power_series(int n, vector<mint> h) {\n\
-    \  assert(0 <= n && n <= MAX);\n  static SubsetConvolution<mint, MAX> ss;\n  h.resize(1\
-    \ << n);\n  assert(h[0] == 1);\n\n  vector<mint> g{0}, inv{1};\n  for (int k =\
-    \ 1; k <= n; k++) {\n    auto a = ss.multiply(inv, {begin(h) + (1 << (k - 1)),\
-    \ begin(h) + (1 << k)});\n    copy(begin(a), end(a), back_inserter(g));\n\n  \
-    \  auto b = ss.multiply(a, inv);\n    for (auto& x : b) x = -x;\n    copy(begin(b),\
+    \ Subset Convolution\n */\n#line 8 \"set-function/log-of-set-power-series.hpp\"\
+    \n\ntemplate <typename mint, int MAX = 21>\nvector<mint> log_of_set_power_series(int\
+    \ n, vector<mint> h) {\n  assert(0 <= n && n <= MAX);\n  static SubsetConvolution<mint,\
+    \ MAX> ss;\n  h.resize(1 << n);\n  assert(h[0] == 1);\n\n  vector<mint> g{0},\
+    \ inv{1};\n  for (int k = 1; k <= n; k++) {\n    auto a = ss.multiply(inv, {begin(h)\
+    \ + (1 << (k - 1)), begin(h) + (1 << k)});\n    copy(begin(a), end(a), back_inserter(g));\n\
+    \n    auto b = ss.multiply(a, inv);\n    for (auto& x : b) x = -x;\n    copy(begin(b),\
     \ end(b), back_inserter(inv));\n  }\n  return g;\n}\n\n/**\n * @brief \u96C6\u5408\
     \u51AA\u7D1A\u6570\u306E log\n */\n#line 10 \"verify/verify-yosupo-graph/yosupo-log-of-set-power-series.test.cpp\"\
     \n//\nusing namespace Nyaan;\nusing mint = LazyMontgomeryModInt<998244353>;\n\
@@ -450,7 +449,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-graph/yosupo-log-of-set-power-series.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-graph/yosupo-log-of-set-power-series.test.cpp

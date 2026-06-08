@@ -344,12 +344,12 @@ data:
     \ (base::cap - 1);\n    }\n  }\n\n  typename base::itr emplace(const Key& key,\
     \ const Val& val) {\n    return base::insert(Data(key, val));\n  }\n};\n\n/*\n\
     \ * @brief \u30CF\u30C3\u30B7\u30E5\u30DE\u30C3\u30D7(\u9023\u60F3\u914D\u5217\
-    )\n * @docs docs/hashmap/hashmap.md\n **/\n#line 6 \"verify/verify-unit-test/hashmap.test.cpp\"\
-    \n\nnamespace HashMapTest {\n\nuint64_t rng() {\n  static uint64_t x_ =\n    \
-    \  chrono::duration_cast<chrono::nanoseconds>(\n          chrono::high_resolution_clock::now().time_since_epoch())\n\
-    \          .count();\n  return x_ ^= (x_ << 7), x_ ^= (x_ >> 9);\n}\n// [l, r)\n\
-    int64_t randint(int64_t l, int64_t r) {\n  assert(l < r);\n  return l + rng()\
-    \ % (r - l);\n}\n\ntemplate <typename K, enable_if_t<is_integral<K>::value, nullptr_t>\
+    )\n **/\n#line 6 \"verify/verify-unit-test/hashmap.test.cpp\"\n\nnamespace HashMapTest\
+    \ {\n\nuint64_t rng() {\n  static uint64_t x_ =\n      chrono::duration_cast<chrono::nanoseconds>(\n\
+    \          chrono::high_resolution_clock::now().time_since_epoch())\n        \
+    \  .count();\n  return x_ ^= (x_ << 7), x_ ^= (x_ >> 9);\n}\n// [l, r)\nint64_t\
+    \ randint(int64_t l, int64_t r) {\n  assert(l < r);\n  return l + rng() % (r -\
+    \ l);\n}\n\ntemplate <typename K, enable_if_t<is_integral<K>::value, nullptr_t>\
     \ = nullptr>\nK random_key(int mx) {\n  return K{K(randint(0, mx))};\n}\ntemplate\
     \ <typename K, enable_if_t<is_integral<decltype(K::first)>::value,\n         \
     \                         nullptr_t> = nullptr>\nK random_key(int mx) {\n  return\
@@ -481,7 +481,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/hashmap.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/hashmap.test.cpp

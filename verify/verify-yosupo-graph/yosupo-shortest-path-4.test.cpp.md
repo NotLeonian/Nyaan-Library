@@ -252,30 +252,29 @@ data:
     \ begin(es) + head[u + 1]};\n  }\n  const Es<typename vector<E<T>>::const_iterator>\
     \ operator[](int u) const {\n    return {begin(es) + head[u], begin(es) + head[u\
     \ + 1]};\n  }\n  int size() const { return N; }\n};\n\n}  // namespace StaticGraphImpl\n\
-    \nusing StaticGraphImpl::StaticGraph;\n\n/**\n * @brief Static Graph\n * @docs\
-    \ docs/graph/static-graph.md\n */\n#line 4 \"shortest-path/dijkstra-skew-heap.hpp\"\
-    \n\ntemplate <typename T>\nstruct SkewHeap {\n  struct alignas(32) Node {\n  \
-    \  T key;\n    int p, l, r;\n    Node(const T& k = T()) : key(k), p(-1), l(-1),\
-    \ r(-1) {}\n  };\n\n  vector<Node> v;\n  int rt = -1;\n\n  SkewHeap(int n) : v(n)\
-    \ {}\n\n  int meld(int x, int y) {\n    if (x == -1 || y == -1) return x == -1\
-    \ ? y : x;\n    if (v[x].key > v[y].key) swap(x, y);\n    v[x].r = meld(v[x].r,\
-    \ y);\n    v[v[x].r].p = x;\n    swap(v[x].l, v[x].r);\n    return x;\n  }\n\n\
-    \  void pop() { rt = meld(v[rt].l, v[rt].r); }\n\n  void update(int x, const T&\
-    \ k) {\n    Node& n = v[x];\n    v[x].key = k;\n    if (x == rt) return;\n   \
-    \ Node& p = v[n.p];\n    if (p.key <= k) return;\n    (p.l == x ? p.l : p.r) =\
-    \ -1;\n    n.p = -1;\n    rt = meld(rt, x);\n  }\n\n  bool empty() { return rt\
-    \ == -1; }\n};\n\ntemplate <typename T>\nvector<pair<T, int>> dijkstra_restore(StaticGraph<T>&\
-    \ g, int start = 0) {\n  int N = (int)g.size();\n  using P = pair<T, int>;\n \
-    \ vector<P> d(N, P{-1, -1});\n  SkewHeap<T> Q(N);\n  d[start].first = 0;\n  Q.v[start].key\
-    \ = 0;\n  Q.rt = start;\n  while (!Q.empty()) {\n    T dc = Q.v[Q.rt].key;\n \
-    \   int cur = Q.rt;\n    Q.pop();\n    for (auto dst : g[cur]) {\n      if (d[dst].first\
-    \ == T(-1)) {\n        d[dst] = P{dc + dst.cost, cur};\n        Q.v[dst].key =\
-    \ dc + dst.cost;\n        Q.rt = Q.meld(Q.rt, dst);\n      } else if (dc + dst.cost\
-    \ < d[dst].first) {\n        d[dst] = P{dc + dst.cost, cur};\n        Q.update(dst,\
-    \ dc + dst.cost);\n      }\n    }\n  }\n  return d;\n}\n/*\n * @brief \u30C0\u30A4\
-    \u30AF\u30B9\u30C8\u30E9\u6CD5(Skew Heap)\n * @docs docs/shortest-path/dijkstra-skew-heap.md\n\
-    **/\n#line 6 \"verify/verify-yosupo-graph/yosupo-shortest-path-4.test.cpp\"\n\
-    //\n#line 2 \"misc/fastio.hpp\"\n\n#line 9 \"misc/fastio.hpp\"\n\nusing namespace\
+    \nusing StaticGraphImpl::StaticGraph;\n\n/**\n * @brief Static Graph\n */\n#line\
+    \ 4 \"shortest-path/dijkstra-skew-heap.hpp\"\n\ntemplate <typename T>\nstruct\
+    \ SkewHeap {\n  struct alignas(32) Node {\n    T key;\n    int p, l, r;\n    Node(const\
+    \ T& k = T()) : key(k), p(-1), l(-1), r(-1) {}\n  };\n\n  vector<Node> v;\n  int\
+    \ rt = -1;\n\n  SkewHeap(int n) : v(n) {}\n\n  int meld(int x, int y) {\n    if\
+    \ (x == -1 || y == -1) return x == -1 ? y : x;\n    if (v[x].key > v[y].key) swap(x,\
+    \ y);\n    v[x].r = meld(v[x].r, y);\n    v[v[x].r].p = x;\n    swap(v[x].l, v[x].r);\n\
+    \    return x;\n  }\n\n  void pop() { rt = meld(v[rt].l, v[rt].r); }\n\n  void\
+    \ update(int x, const T& k) {\n    Node& n = v[x];\n    v[x].key = k;\n    if\
+    \ (x == rt) return;\n    Node& p = v[n.p];\n    if (p.key <= k) return;\n    (p.l\
+    \ == x ? p.l : p.r) = -1;\n    n.p = -1;\n    rt = meld(rt, x);\n  }\n\n  bool\
+    \ empty() { return rt == -1; }\n};\n\ntemplate <typename T>\nvector<pair<T, int>>\
+    \ dijkstra_restore(StaticGraph<T>& g, int start = 0) {\n  int N = (int)g.size();\n\
+    \  using P = pair<T, int>;\n  vector<P> d(N, P{-1, -1});\n  SkewHeap<T> Q(N);\n\
+    \  d[start].first = 0;\n  Q.v[start].key = 0;\n  Q.rt = start;\n  while (!Q.empty())\
+    \ {\n    T dc = Q.v[Q.rt].key;\n    int cur = Q.rt;\n    Q.pop();\n    for (auto\
+    \ dst : g[cur]) {\n      if (d[dst].first == T(-1)) {\n        d[dst] = P{dc +\
+    \ dst.cost, cur};\n        Q.v[dst].key = dc + dst.cost;\n        Q.rt = Q.meld(Q.rt,\
+    \ dst);\n      } else if (dc + dst.cost < d[dst].first) {\n        d[dst] = P{dc\
+    \ + dst.cost, cur};\n        Q.update(dst, dc + dst.cost);\n      }\n    }\n \
+    \ }\n  return d;\n}\n/*\n * @brief \u30C0\u30A4\u30AF\u30B9\u30C8\u30E9\u6CD5\
+    (Skew Heap)\n**/\n#line 6 \"verify/verify-yosupo-graph/yosupo-shortest-path-4.test.cpp\"\
+    \n//\n#line 2 \"misc/fastio.hpp\"\n\n#line 9 \"misc/fastio.hpp\"\n\nusing namespace\
     \ std;\n\n#line 2 \"internal/internal-type-traits.hpp\"\n\n#line 4 \"internal/internal-type-traits.hpp\"\
     \nusing namespace std;\n\nnamespace internal {\ntemplate <typename T>\nusing is_broadly_integral\
     \ =\n    typename conditional_t<is_integral_v<T> || is_same_v<T, __int128_t> ||\n\
@@ -378,7 +377,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-graph/yosupo-shortest-path-4.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-graph/yosupo-shortest-path-4.test.cpp

@@ -6,6 +6,7 @@ exclude:
 - competitive-template.hpp
 - compress.py
 - unused
+- docs/unused
 - modulo/arbitrary-mod-binomial-large.hpp
 - auto_submit.py
 - simple_template.hpp

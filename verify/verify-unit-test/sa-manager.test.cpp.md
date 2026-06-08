@@ -342,64 +342,64 @@ data:
     \        start_temp(_start_temp),\n        diff_temp(_start_temp - _end_temp),\n\
     \        cur_temp(_start_temp),\n        state_max(_state_max),\n        state_size(_state_max)\
     \ {\n    assert(_start_temp >= _end_temp);\n    assert(_state_max > 0);\n  }\n\
-    };\n\n#undef debug\n\n/**\n * @brief Multipoint Simulated Annealing\n * @docs\
-    \ docs/marathon/sa-manager.md\n */\n#line 6 \"verify/verify-unit-test/sa-manager.test.cpp\"\
-    \n//\nusing namespace Nyaan;\n\nint N;\nint x[110], y[110];\n\n// \u72B6\u614B\
-    \u3092\u6301\u3064\u578B\nusing state_t = V<i128>;\n// \u30B9\u30B3\u30A2\u3092\
-    \u6301\u3064\u578B\nusing score_t = double;\nusing pair_t = pair<state_t, score_t>;\n\
-    \n// \u713C\u304D\u306A\u307E\u3057\u306E\u521D\u671F\u89E3\u3092\u5165\u308C\u308B\
-    \u95A2\u6570\npair_t get_init_state() {\n  state_t ans;\n  score_t score;\n  //\
-    \ ans, score \u306B\u521D\u671F\u89E3\u3092\u5165\u308C\u308B\u3002\n  // \u591A\
-    \u70B9\u713C\u304D\u306A\u307E\u3057\u3092\u884C\u3046\u5834\u5408\u306F\u521D\
-    \u671F\u89E3\u306B\u591A\u69D8\u6027\u304C\u751F\u307E\u308C\u308B\u3088\u3046\
-    \u306B\u3059\u308B\u3002\n  ans.resize(3, 0);\n  rep(i, N) {\n    if (rng() &\
-    \ 1) {\n      ans[0] |= i128(1) << i, ans[1] += x[i], ans[2] += y[i];\n    }\n\
-    \  }\n  score = hypot<double, double>(ans[1], ans[2]);\n\n  return {ans, score};\n\
-    }\n\n//\u3000\u72B6\u614B\u3092\u66F4\u65B0\u3059\u308B\u95A2\u6570\nvoid update_state(state_t&\
-    \ ans, score_t& score, double th) {\n  // \u9077\u79FB\u3092\u4F5C\u308B\n  //\
-    \ \u57FA\u672C\u7684\u306B\u306F\u4EE5\u4E0B\u306E\u3088\u3046\u306B\u5024\u3092\
-    \u8907\u88FD\u3057\u3066\u9077\u79FB\u5148\u3092\u4F5C\u3063\u3066\u3044\u3044\
-    \n  // (\u5DEE\u5206\u66F4\u65B0\u3057\u305F\u3044\u5834\u5408\u306F\u9069\u5B9C\
-    \u9811\u5F35\u308B)\n  state_t nxt{ans};\n  score_t nxt_score{score};\n\n  int\
-    \ d = rng() % 2 + 1;\n  rep(t, d) {\n    int i = rng() % N;\n    if ((nxt[0] >>\
-    \ i) & 1) {\n      nxt[1] -= x[i], nxt[2] -= y[i];\n    } else {\n      nxt[1]\
-    \ += x[i], nxt[2] += y[i];\n    }\n    nxt[0] ^= i128(1) << i;\n  }\n  nxt_score\
-    \ = hypot<double, double>(nxt[1], nxt[2]);\n\n  // \u30B9\u30B3\u30A2\u306E\u4F38\
-    \u3073\u3092\u5909\u6570 diff \u306B\u683C\u7D0D\u3057\u3066\u5024\u3092\u5143\
-    \u306B\u9077\u79FB\u3092\u63A1\u7528\u3059\u308B\u304B\u6C7A\u3081\u308B\u3002\
-    \n  double diff = nxt_score - score;\n  if (diff > th) {\n    // \u9077\u79FB\u3092\
-    \u63A1\u7528\u3057\u3066 ans, score \u3092\u66F4\u65B0 or \u5DEE\u5206\u66F4\u65B0\
-    \u3059\u308B\u3002\n    ans = nxt, score = nxt_score;\n  } else {\n    // (\u5FC5\
-    \u8981\u304C\u3042\u308C\u3070)\u5143\u306B\u623B\u3059\u3002\n  }\n}\n\nint sa_size\
-    \ = 1;\nint endt = 1900;\npair_t sa(Timer& t) {\n  SA_manager<state_t, score_t>\
-    \ sa(t, 2000, -2000, endt, sa_size);\n  return sa.run<get_init_state, update_state>();\n\
-    }\n\nint N_circle = 90;\nint x_circle[] = {0,       63926,   127540,  190533,\
-    \  252597,  313431,  372738,\n                  430229,  485624,  538653,  589058,\
-    \  636593,  681026,  722142,\n                  759739,  793635,  823665,  849681,\
-    \  871559,  889190,  902489,\n                  911391,  915853,  915853,  911391,\
-    \  902489,  889190,  871559,\n                  849681,  823665,  793635,  759739,\
-    \  722142,  681026,  636593,\n                  589058,  538653,  485624,  430229,\
-    \  372738,  313431,  252597,\n                  190533,  127540,  63926,   0,\
-    \       -63926,  -127540, -190533,\n                  -252597, -313431, -372738,\
-    \ -430229, -485624, -538653, -589058,\n                  -636593, -681026, -722142,\
-    \ -759739, -793635, -823665, -849681,\n                  -871559, -889190, -902489,\
-    \ -911391, -915853, -915853, -911391,\n                  -902489, -889190, -871559,\
-    \ -849681, -823665, -793635, -759739,\n                  -722142, -681026, -636593,\
-    \ -589058, -538653, -485624, -430229,\n                  -372738, -313431, -252597,\
-    \ -190533, -127540, -63926};\nint y_circle[] = {916411,  914179,  907493,  896385,\
-    \  880911,  861145,  837183,\n                  809143,  777161,  741392,  702012,\
-    \  659211,  613199,  564199,\n                  512451,  458205,  401728,  343294,\
-    \  283187,  221700,  159133,\n                  95791,   31982,   -31982,  -95791,\
-    \  -159133, -221700, -283187,\n                  -343294, -401728, -458206, -512451,\
-    \ -564199, -613199, -659211,\n                  -702012, -741392, -777161, -809143,\
-    \ -837183, -861145, -880911,\n                  -896385, -907493, -914179, -916411,\
-    \ -914179, -907493, -896385,\n                  -880911, -861145, -837183, -809143,\
-    \ -777161, -741392, -702012,\n                  -659211, -613199, -564199, -512451,\
-    \ -458205, -401728, -343294,\n                  -283187, -221700, -159133, -95791,\
-    \  -31982,  31982,   95791,\n                  159133,  221700,  283187,  343294,\
-    \  401728,  458206,  512451,\n                  564199,  613199,  659211,  702012,\
-    \  741392,  777161,  809143,\n                  837183,  861145,  880911,  896385,\
-    \  907493,  914179};\ndouble ans_circle = 26258581.001626496877294216848735127029515732503186465405;\n\
+    };\n\n#undef debug\n\n/**\n * @brief Multipoint Simulated Annealing\n */\n#line\
+    \ 6 \"verify/verify-unit-test/sa-manager.test.cpp\"\n//\nusing namespace Nyaan;\n\
+    \nint N;\nint x[110], y[110];\n\n// \u72B6\u614B\u3092\u6301\u3064\u578B\nusing\
+    \ state_t = V<i128>;\n// \u30B9\u30B3\u30A2\u3092\u6301\u3064\u578B\nusing score_t\
+    \ = double;\nusing pair_t = pair<state_t, score_t>;\n\n// \u713C\u304D\u306A\u307E\
+    \u3057\u306E\u521D\u671F\u89E3\u3092\u5165\u308C\u308B\u95A2\u6570\npair_t get_init_state()\
+    \ {\n  state_t ans;\n  score_t score;\n  // ans, score \u306B\u521D\u671F\u89E3\
+    \u3092\u5165\u308C\u308B\u3002\n  // \u591A\u70B9\u713C\u304D\u306A\u307E\u3057\
+    \u3092\u884C\u3046\u5834\u5408\u306F\u521D\u671F\u89E3\u306B\u591A\u69D8\u6027\
+    \u304C\u751F\u307E\u308C\u308B\u3088\u3046\u306B\u3059\u308B\u3002\n  ans.resize(3,\
+    \ 0);\n  rep(i, N) {\n    if (rng() & 1) {\n      ans[0] |= i128(1) << i, ans[1]\
+    \ += x[i], ans[2] += y[i];\n    }\n  }\n  score = hypot<double, double>(ans[1],\
+    \ ans[2]);\n\n  return {ans, score};\n}\n\n//\u3000\u72B6\u614B\u3092\u66F4\u65B0\
+    \u3059\u308B\u95A2\u6570\nvoid update_state(state_t& ans, score_t& score, double\
+    \ th) {\n  // \u9077\u79FB\u3092\u4F5C\u308B\n  // \u57FA\u672C\u7684\u306B\u306F\
+    \u4EE5\u4E0B\u306E\u3088\u3046\u306B\u5024\u3092\u8907\u88FD\u3057\u3066\u9077\
+    \u79FB\u5148\u3092\u4F5C\u3063\u3066\u3044\u3044\n  // (\u5DEE\u5206\u66F4\u65B0\
+    \u3057\u305F\u3044\u5834\u5408\u306F\u9069\u5B9C\u9811\u5F35\u308B)\n  state_t\
+    \ nxt{ans};\n  score_t nxt_score{score};\n\n  int d = rng() % 2 + 1;\n  rep(t,\
+    \ d) {\n    int i = rng() % N;\n    if ((nxt[0] >> i) & 1) {\n      nxt[1] -=\
+    \ x[i], nxt[2] -= y[i];\n    } else {\n      nxt[1] += x[i], nxt[2] += y[i];\n\
+    \    }\n    nxt[0] ^= i128(1) << i;\n  }\n  nxt_score = hypot<double, double>(nxt[1],\
+    \ nxt[2]);\n\n  // \u30B9\u30B3\u30A2\u306E\u4F38\u3073\u3092\u5909\u6570 diff\
+    \ \u306B\u683C\u7D0D\u3057\u3066\u5024\u3092\u5143\u306B\u9077\u79FB\u3092\u63A1\
+    \u7528\u3059\u308B\u304B\u6C7A\u3081\u308B\u3002\n  double diff = nxt_score -\
+    \ score;\n  if (diff > th) {\n    // \u9077\u79FB\u3092\u63A1\u7528\u3057\u3066\
+    \ ans, score \u3092\u66F4\u65B0 or \u5DEE\u5206\u66F4\u65B0\u3059\u308B\u3002\n\
+    \    ans = nxt, score = nxt_score;\n  } else {\n    // (\u5FC5\u8981\u304C\u3042\
+    \u308C\u3070)\u5143\u306B\u623B\u3059\u3002\n  }\n}\n\nint sa_size = 1;\nint endt\
+    \ = 1900;\npair_t sa(Timer& t) {\n  SA_manager<state_t, score_t> sa(t, 2000, -2000,\
+    \ endt, sa_size);\n  return sa.run<get_init_state, update_state>();\n}\n\nint\
+    \ N_circle = 90;\nint x_circle[] = {0,       63926,   127540,  190533,  252597,\
+    \  313431,  372738,\n                  430229,  485624,  538653,  589058,  636593,\
+    \  681026,  722142,\n                  759739,  793635,  823665,  849681,  871559,\
+    \  889190,  902489,\n                  911391,  915853,  915853,  911391,  902489,\
+    \  889190,  871559,\n                  849681,  823665,  793635,  759739,  722142,\
+    \  681026,  636593,\n                  589058,  538653,  485624,  430229,  372738,\
+    \  313431,  252597,\n                  190533,  127540,  63926,   0,       -63926,\
+    \  -127540, -190533,\n                  -252597, -313431, -372738, -430229, -485624,\
+    \ -538653, -589058,\n                  -636593, -681026, -722142, -759739, -793635,\
+    \ -823665, -849681,\n                  -871559, -889190, -902489, -911391, -915853,\
+    \ -915853, -911391,\n                  -902489, -889190, -871559, -849681, -823665,\
+    \ -793635, -759739,\n                  -722142, -681026, -636593, -589058, -538653,\
+    \ -485624, -430229,\n                  -372738, -313431, -252597, -190533, -127540,\
+    \ -63926};\nint y_circle[] = {916411,  914179,  907493,  896385,  880911,  861145,\
+    \  837183,\n                  809143,  777161,  741392,  702012,  659211,  613199,\
+    \  564199,\n                  512451,  458205,  401728,  343294,  283187,  221700,\
+    \  159133,\n                  95791,   31982,   -31982,  -95791,  -159133, -221700,\
+    \ -283187,\n                  -343294, -401728, -458206, -512451, -564199, -613199,\
+    \ -659211,\n                  -702012, -741392, -777161, -809143, -837183, -861145,\
+    \ -880911,\n                  -896385, -907493, -914179, -916411, -914179, -907493,\
+    \ -896385,\n                  -880911, -861145, -837183, -809143, -777161, -741392,\
+    \ -702012,\n                  -659211, -613199, -564199, -512451, -458205, -401728,\
+    \ -343294,\n                  -283187, -221700, -159133, -95791,  -31982,  31982,\
+    \   95791,\n                  159133,  221700,  283187,  343294,  401728,  458206,\
+    \  512451,\n                  564199,  613199,  659211,  702012,  741392,  777161,\
+    \  809143,\n                  837183,  861145,  880911,  896385,  907493,  914179};\n\
+    double ans_circle = 26258581.001626496877294216848735127029515732503186465405;\n\
     \ntemplate <int LOOP_TIME>\nvoid test() {\n  Timer timer;\n  N = N_circle;\n \
     \ rep(i, N) {\n    x[i] = x_circle[i];\n    y[i] = y_circle[i];\n  }\n  vp kekka;\n\
     \  for (auto s : vi{10}) {\n    sa_size = 10;\n    endt = 1900;\n    int cnt =\
@@ -495,7 +495,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/sa-manager.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/sa-manager.test.cpp

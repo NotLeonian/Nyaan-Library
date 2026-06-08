@@ -239,12 +239,11 @@ data:
     \ x = 0;\n    for (int k = 1 << __lg(N); k; k >>= 1) {\n      if (x + k <= N -\
     \ 1 && data[x + k] <= w) {\n        w -= data[x + k];\n        x += k;\n     \
     \ }\n    }\n    return x;\n  }\n};\n\n/**\n * @brief Binary Indexed Tree(Fenwick\
-    \ Tree)\n * @docs docs/data-structure/binary-indexed-tree.md\n */\n#line 5 \"\
-    verify/verify-yosupo-ds/yosupo-point-add-range-sum.test.cpp\"\n\nusing namespace\
-    \ Nyaan; void Nyaan::solve() {\n  ini(N, Q);\n  vl a(N);\n  in(a);\n  BinaryIndexedTree<ll>\
-    \ bit(N);\n  rep(i, N) bit.add(i, a[i]);\n  rep(_, Q) {\n    inl(c, x, y);\n \
-    \   if (c)\n      out(bit.sum(x, y - 1));\n    else\n      bit.add(x, y);\n  }\n\
-    }\n"
+    \ Tree)\n */\n#line 5 \"verify/verify-yosupo-ds/yosupo-point-add-range-sum.test.cpp\"\
+    \n\nusing namespace Nyaan; void Nyaan::solve() {\n  ini(N, Q);\n  vl a(N);\n \
+    \ in(a);\n  BinaryIndexedTree<ll> bit(N);\n  rep(i, N) bit.add(i, a[i]);\n  rep(_,\
+    \ Q) {\n    inl(c, x, y);\n    if (c)\n      out(bit.sum(x, y - 1));\n    else\n\
+    \      bit.add(x, y);\n  }\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/point_add_range_sum\"\n\
     \n#include \"../../template/template.hpp\"\n#include \"../../data-structure/binary-indexed-tree.hpp\"\
     \n\nusing namespace Nyaan; void Nyaan::solve() {\n  ini(N, Q);\n  vl a(N);\n \
@@ -262,7 +261,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-ds/yosupo-point-add-range-sum.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-ds/yosupo-point-add-range-sum.test.cpp

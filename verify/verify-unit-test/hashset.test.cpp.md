@@ -331,7 +331,7 @@ data:
     )\n */\n#line 4 \"hashmap/hashset.hpp\"\n\ntemplate <typename Key>\nstruct HashSet\
     \ : HashMapImpl::HashMapBase<Key, Key> {\n  using HashMapImpl::HashMapBase<Key,\
     \ Key>::HashMapBase;\n};\n\n/* \n * @brief \u30CF\u30C3\u30B7\u30E5\u30BB\u30C3\
-    \u30C8(\u96C6\u5408)\n * @docs docs/hashmap/hashset.md\n**/\n#line 6 \"verify/verify-unit-test/hashset.test.cpp\"\
+    \u30C8(\u96C6\u5408)\n**/\n#line 6 \"verify/verify-unit-test/hashset.test.cpp\"\
     \n\nuint64_t rng() {\n  static uint64_t x_ = 10150724397891781847ULL;\n  return\
     \ x_ ^= (x_ << 7), x_ ^= (x_ >> 9);\n}\n// [l, r)\nint64_t randint(int64_t l,\
     \ int64_t r) {\n  assert(l < r);\n  return l + rng() % (r - l);\n}\n\nnamespace\
@@ -496,7 +496,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/hashset.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/hashset.test.cpp

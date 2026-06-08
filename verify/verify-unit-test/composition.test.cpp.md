@@ -370,27 +370,27 @@ data:
     \ mint>\nFormalPowerSeries<mint> FormalPowerSeries<mint>::exp(int deg) const {\n\
     \  return fps_exp_impl(*this, deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief\
     \ \u591A\u9805\u5F0F/\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\
-    \u30EA\n * @docs docs/fps/formal-power-series.md\n */\n#line 5 \"fps/fps-composition-old.hpp\"\
-    \n\n// find Q(P(x)) mod x ^ min(deg(P), deg(Q))\ntemplate <typename mint>\nFormalPowerSeries<mint>\
-    \ Composition(FormalPowerSeries<mint> P,\n                                   \
-    \ FormalPowerSeries<mint> Q,\n                                    Binomial<mint>&\
-    \ C, int deg = -1) {\n  using fps = FormalPowerSeries<mint>;\n  int N = (deg ==\
-    \ -1) ? min(P.size(), Q.size()) : deg;\n  if (N == 0) return fps{};\n  P.shrink();\n\
-    \  if (P.size() == 0) {\n    fps R(N, mint(0));\n    R[0] = Q.empty() ? mint(0)\
-    \ : Q[0];\n    return R;\n  }\n  if (N == 1) return fps{Q.eval(P[0])};\n\n  P.resize(N,\
-    \ mint(0));\n  Q.resize(N, mint(0));\n  int M = max<int>(2, sqrt(N / log2(N)));\n\
-    \  int L = (N + M - 1) / M;\n  fps Pm = fps{begin(P), begin(P) + M};\n  fps Pr\
-    \ = fps{begin(P) + M, end(P)};\n\n  int J = 31 - __builtin_clz(N - 1) + 1;\n \
-    \ vector<fps> pms(J);\n  pms[0] = Pm;\n  for (int i = 1; i < J; i++) pms[i] =\
-    \ (pms[i - 1] * pms[i - 1]).pre(N);\n\n  auto comp = [&](auto rec, int left, int\
-    \ j) -> fps {\n    if (j == 1) {\n      mint Q1 = left + 0 < (int)Q.size() ? Q[left\
-    \ + 0] : mint(0);\n      mint Q2 = left + 1 < (int)Q.size() ? Q[left + 1] : mint(0);\n\
-    \      return (pms[0].pre(N) * Q2 + Q1).pre(N);\n    }\n    if (N <= left) return\
-    \ fps{};\n    fps Q1 = rec(rec, left, j - 1);\n    fps Q2 = rec(rec, left + (1\
-    \ << (j - 1)), j - 1);\n    return (Q1 + pms[j - 1].pre(N) * Q2).pre(N);\n  };\n\
-    \n  fps QPm = comp(comp, 0, J);\n  fps R = QPm;\n  fps pw_Pr{mint(1)};\n  fps\
-    \ dPm = Pm.diff();\n  dPm.shrink();\n  // if dPm[0] == 0, dPm.inv() is undefined\n\
-    \  int deg_dPm = 0;\n  while (deg_dPm != (int)dPm.size() && dPm[deg_dPm] == mint(0))\
+    \u30EA\n */\n#line 5 \"fps/fps-composition-old.hpp\"\n\n// find Q(P(x)) mod x\
+    \ ^ min(deg(P), deg(Q))\ntemplate <typename mint>\nFormalPowerSeries<mint> Composition(FormalPowerSeries<mint>\
+    \ P,\n                                    FormalPowerSeries<mint> Q,\n       \
+    \                             Binomial<mint>& C, int deg = -1) {\n  using fps\
+    \ = FormalPowerSeries<mint>;\n  int N = (deg == -1) ? min(P.size(), Q.size())\
+    \ : deg;\n  if (N == 0) return fps{};\n  P.shrink();\n  if (P.size() == 0) {\n\
+    \    fps R(N, mint(0));\n    R[0] = Q.empty() ? mint(0) : Q[0];\n    return R;\n\
+    \  }\n  if (N == 1) return fps{Q.eval(P[0])};\n\n  P.resize(N, mint(0));\n  Q.resize(N,\
+    \ mint(0));\n  int M = max<int>(2, sqrt(N / log2(N)));\n  int L = (N + M - 1)\
+    \ / M;\n  fps Pm = fps{begin(P), begin(P) + M};\n  fps Pr = fps{begin(P) + M,\
+    \ end(P)};\n\n  int J = 31 - __builtin_clz(N - 1) + 1;\n  vector<fps> pms(J);\n\
+    \  pms[0] = Pm;\n  for (int i = 1; i < J; i++) pms[i] = (pms[i - 1] * pms[i -\
+    \ 1]).pre(N);\n\n  auto comp = [&](auto rec, int left, int j) -> fps {\n    if\
+    \ (j == 1) {\n      mint Q1 = left + 0 < (int)Q.size() ? Q[left + 0] : mint(0);\n\
+    \      mint Q2 = left + 1 < (int)Q.size() ? Q[left + 1] : mint(0);\n      return\
+    \ (pms[0].pre(N) * Q2 + Q1).pre(N);\n    }\n    if (N <= left) return fps{};\n\
+    \    fps Q1 = rec(rec, left, j - 1);\n    fps Q2 = rec(rec, left + (1 << (j -\
+    \ 1)), j - 1);\n    return (Q1 + pms[j - 1].pre(N) * Q2).pre(N);\n  };\n\n  fps\
+    \ QPm = comp(comp, 0, J);\n  fps R = QPm;\n  fps pw_Pr{mint(1)};\n  fps dPm =\
+    \ Pm.diff();\n  dPm.shrink();\n  // if dPm[0] == 0, dPm.inv() is undefined\n \
+    \ int deg_dPm = 0;\n  while (deg_dPm != (int)dPm.size() && dPm[deg_dPm] == mint(0))\
     \ deg_dPm++;\n  fps idPm = dPm.empty() ? fps{} : (dPm >> deg_dPm).inv(N);\n\n\
     \  for (int l = 1, d = M; l <= L && d < N; l++, d += M) {\n    pw_Pr = (pw_Pr\
     \ * Pr).pre(N - d);\n    if (dPm.empty()) {\n      R += (pw_Pr * Q[l]) << d;\n\
@@ -398,39 +398,39 @@ data:
     \ * idPm).pre(N - d);\n      R += ((QPm * pw_Pr).pre(N - d) * C.finv(l)) << d;\n\
     \    };\n  }\n  R.resize(N, mint(0));\n  return R;\n}\n\n/**\n * @brief \u95A2\
     \u6570\u306E\u5408\u6210( $\\mathrm{O}\\left((N \\log N)^{\\frac{3}{2}}\\right)$\
-    \ )\n * @docs docs/fps/fps-composition-old.md\n */\n#line 2 \"fps/fps-composition.hpp\"\
-    \n\n#line 5 \"fps/fps-composition.hpp\"\nusing namespace std;\n\n#line 8 \"fps/fps-composition.hpp\"\
-    \n\n// g(f(x)) \u3092\u8A08\u7B97\ntemplate <typename mint>\nFormalPowerSeries<mint>\
-    \ composition(FormalPowerSeries<mint> f,\n                                   \
-    \ FormalPowerSeries<mint> g, int deg = -1) {\n  using fps = FormalPowerSeries<mint>;\n\
-    \n  auto dfs = [&](auto rc, fps Q, int n, int h, int k) -> fps {\n    if (n ==\
-    \ 0) {\n      fps T{begin(Q), begin(Q) + k};\n      T.push_back(1);\n      fps\
-    \ u = g * T.rev().inv().rev();\n      fps P(h * k);\n      for (int i = 0; i <\
-    \ (int)g.size(); i++) P[k - 1 - i] = u[i + k];\n      return P;\n    }\n    fps\
-    \ nQ(4 * h * k), nR(2 * h * k);\n    for (int i = 0; i < k; i++) {\n      copy(begin(Q)\
-    \ + i * h, begin(Q) + i * h + n + 1, begin(nQ) + i * 2 * h);\n    }\n    nQ[k\
-    \ * 2 * h] += 1;\n    nQ.ntt();\n    for (int i = 0; i < 4 * h * k; i += 2) swap(nQ[i],\
-    \ nQ[i + 1]);\n    for (int i = 0; i < 2 * h * k; i++) nR[i] = nQ[i * 2] * nQ[i\
-    \ * 2 + 1];\n    nR.intt();\n    nR[0] -= 1;\n    Q.assign(h * k, 0);\n    for\
-    \ (int i = 0; i < 2 * k; i++) {\n      for (int j = 0; j <= n / 2; j++) {\n  \
-    \      Q[i * h / 2 + j] = nR[i * h + j];\n      }\n    }\n    auto P = rc(rc,\
-    \ Q, n / 2, h / 2, k * 2);\n    fps nP(4 * h * k);\n    for (int i = 0; i < 2\
-    \ * k; i++) {\n      for (int j = 0; j <= n / 2; j++) {\n        nP[i * 2 * h\
-    \ + j * 2 + n % 2] = P[i * h / 2 + j];\n      }\n    }\n    nP.ntt();\n    for\
-    \ (int i = 1; i < 4 * h * k; i *= 2) {\n      reverse(begin(nQ) + i, begin(nQ)\
-    \ + i * 2);\n    }\n    for (int i = 0; i < 4 * h * k; i++) nP[i] *= nQ[i];\n\
-    \    nP.intt();\n    P.assign(h * k, 0);\n    for (int i = 0; i < k; i++) {\n\
-    \      copy(begin(nP) + i * 2 * h, begin(nP) + i * 2 * h + n + 1,\n          \
-    \ begin(P) + i * h);\n    }\n    return P;\n  };\n\n  if (deg == -1) deg = max(f.size(),\
-    \ g.size());\n  f.resize(deg), g.resize(deg);\n  int n = f.size() - 1, k = 1;\n\
-    \  int h = 1;\n  while (h < n + 1) h *= 2;\n  fps Q(h * k);\n  for (int i = 0;\
-    \ i <= n; i++) Q[i] = -f[i];\n  fps P = dfs(dfs, Q, n, h, k);\n  return P.pre(n\
-    \ + 1).rev();\n}\n\n/**\n * @brief \u95A2\u6570\u306E\u5408\u6210( $\\mathrm{O}(N\
-    \ \\log^2 N)$ )\n */\n#line 2 \"fps/fps-compositional-inverse.hpp\"\n\n#line 6\
-    \ \"fps/fps-compositional-inverse.hpp\"\nusing namespace std;\n\n#line 2 \"fps/pow-enumerate.hpp\"\
-    \n\n#line 5 \"fps/pow-enumerate.hpp\"\nusing namespace std;\n\n#line 8 \"fps/pow-enumerate.hpp\"\
-    \n\n// [x^n] f(x)^i g(x) \u3092 i=0,1,...,m \u3067\u5217\u6319\n// n = (f \u306E\
-    \u6B21\u6570) - 1\ntemplate <typename mint>\nFormalPowerSeries<mint> pow_enumerate(FormalPowerSeries<mint>\
+    \ )\n */\n#line 2 \"fps/fps-composition.hpp\"\n\n#line 5 \"fps/fps-composition.hpp\"\
+    \nusing namespace std;\n\n#line 8 \"fps/fps-composition.hpp\"\n\n// g(f(x)) \u3092\
+    \u8A08\u7B97\ntemplate <typename mint>\nFormalPowerSeries<mint> composition(FormalPowerSeries<mint>\
+    \ f,\n                                    FormalPowerSeries<mint> g, int deg =\
+    \ -1) {\n  using fps = FormalPowerSeries<mint>;\n\n  auto dfs = [&](auto rc, fps\
+    \ Q, int n, int h, int k) -> fps {\n    if (n == 0) {\n      fps T{begin(Q), begin(Q)\
+    \ + k};\n      T.push_back(1);\n      fps u = g * T.rev().inv().rev();\n     \
+    \ fps P(h * k);\n      for (int i = 0; i < (int)g.size(); i++) P[k - 1 - i] =\
+    \ u[i + k];\n      return P;\n    }\n    fps nQ(4 * h * k), nR(2 * h * k);\n \
+    \   for (int i = 0; i < k; i++) {\n      copy(begin(Q) + i * h, begin(Q) + i *\
+    \ h + n + 1, begin(nQ) + i * 2 * h);\n    }\n    nQ[k * 2 * h] += 1;\n    nQ.ntt();\n\
+    \    for (int i = 0; i < 4 * h * k; i += 2) swap(nQ[i], nQ[i + 1]);\n    for (int\
+    \ i = 0; i < 2 * h * k; i++) nR[i] = nQ[i * 2] * nQ[i * 2 + 1];\n    nR.intt();\n\
+    \    nR[0] -= 1;\n    Q.assign(h * k, 0);\n    for (int i = 0; i < 2 * k; i++)\
+    \ {\n      for (int j = 0; j <= n / 2; j++) {\n        Q[i * h / 2 + j] = nR[i\
+    \ * h + j];\n      }\n    }\n    auto P = rc(rc, Q, n / 2, h / 2, k * 2);\n  \
+    \  fps nP(4 * h * k);\n    for (int i = 0; i < 2 * k; i++) {\n      for (int j\
+    \ = 0; j <= n / 2; j++) {\n        nP[i * 2 * h + j * 2 + n % 2] = P[i * h / 2\
+    \ + j];\n      }\n    }\n    nP.ntt();\n    for (int i = 1; i < 4 * h * k; i *=\
+    \ 2) {\n      reverse(begin(nQ) + i, begin(nQ) + i * 2);\n    }\n    for (int\
+    \ i = 0; i < 4 * h * k; i++) nP[i] *= nQ[i];\n    nP.intt();\n    P.assign(h *\
+    \ k, 0);\n    for (int i = 0; i < k; i++) {\n      copy(begin(nP) + i * 2 * h,\
+    \ begin(nP) + i * 2 * h + n + 1,\n           begin(P) + i * h);\n    }\n    return\
+    \ P;\n  };\n\n  if (deg == -1) deg = max(f.size(), g.size());\n  f.resize(deg),\
+    \ g.resize(deg);\n  int n = f.size() - 1, k = 1;\n  int h = 1;\n  while (h < n\
+    \ + 1) h *= 2;\n  fps Q(h * k);\n  for (int i = 0; i <= n; i++) Q[i] = -f[i];\n\
+    \  fps P = dfs(dfs, Q, n, h, k);\n  return P.pre(n + 1).rev();\n}\n\n/**\n * @brief\
+    \ \u95A2\u6570\u306E\u5408\u6210( $\\mathrm{O}(N \\log^2 N)$ )\n */\n#line 2 \"\
+    fps/fps-compositional-inverse.hpp\"\n\n#line 6 \"fps/fps-compositional-inverse.hpp\"\
+    \nusing namespace std;\n\n#line 2 \"fps/pow-enumerate.hpp\"\n\n#line 5 \"fps/pow-enumerate.hpp\"\
+    \nusing namespace std;\n\n#line 8 \"fps/pow-enumerate.hpp\"\n\n// [x^n] f(x)^i\
+    \ g(x) \u3092 i=0,1,...,m \u3067\u5217\u6319\n// n = (f \u306E\u6B21\u6570) -\
+    \ 1\ntemplate <typename mint>\nFormalPowerSeries<mint> pow_enumerate(FormalPowerSeries<mint>\
     \ f,\n                                      FormalPowerSeries<mint> g = {1},\n\
     \                                      int m = -1) {\n  using fps = FormalPowerSeries<mint>;\n\
     \  int n = f.size() - 1, k = 1;\n  g.resize(n + 1);\n  if (m == -1) m = n;\n \
@@ -682,32 +682,31 @@ data:
     \ begin(x) + m, mint(0));\n    x.ntt();\n    for (int i = 0; i < 2 * m; ++i) x[i]\
     \ *= y[i];\n    x.intt();\n    b.insert(end(b), begin(x) + m, end(x));\n  }\n\
     \  return fps{begin(b), begin(b) + deg};\n}\n\n/**\n * @brief NTT mod\u7528FPS\u30E9\
-    \u30A4\u30D6\u30E9\u30EA\n * @docs docs/fps/ntt-friendly-fps.md\n */\n#line 2\
-    \ \"modint/montgomery-modint.hpp\"\n\n#line 5 \"modint/montgomery-modint.hpp\"\
-    \n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n\
-    \  using i32 = int32_t;\n  using u32 = uint32_t;\n  using u64 = uint64_t;\n\n\
-    \  static constexpr u32 get_r() {\n    u32 ret = mod;\n    for (i32 i = 0; i <\
-    \ 4; ++i) ret *= 2 - mod * ret;\n    return ret;\n  }\n\n  static constexpr u32\
-    \ r = get_r();\n  static constexpr u32 n2 = -u64(mod) % mod;\n  static_assert(mod\
-    \ < (1 << 30), \"invalid, mod >= 2 ^ 30\");\n  static_assert((mod & 1) == 1, \"\
-    invalid, mod % 2 == 0\");\n  static_assert(r * mod == 1, \"this code has bugs.\"\
-    );\n\n  u32 a;\n\n  constexpr LazyMontgomeryModInt() : a(0) {}\n  constexpr LazyMontgomeryModInt(const\
-    \ int64_t &b)\n      : a(reduce(u64(b % mod + mod) * n2)){};\n\n  static constexpr\
-    \ u32 reduce(const u64 &b) {\n    return (b + u64(u32(b) * u32(-r)) * mod) >>\
-    \ 32;\n  }\n\n  constexpr mint &operator+=(const mint &b) {\n    if (i32(a +=\
-    \ b.a - 2 * mod) < 0) a += 2 * mod;\n    return *this;\n  }\n\n  constexpr mint\
-    \ &operator-=(const mint &b) {\n    if (i32(a -= b.a) < 0) a += 2 * mod;\n   \
-    \ return *this;\n  }\n\n  constexpr mint &operator*=(const mint &b) {\n    a =\
-    \ reduce(u64(a) * b.a);\n    return *this;\n  }\n\n  constexpr mint &operator/=(const\
-    \ mint &b) {\n    *this *= b.inverse();\n    return *this;\n  }\n\n  constexpr\
-    \ mint operator+(const mint &b) const { return mint(*this) += b; }\n  constexpr\
-    \ mint operator-(const mint &b) const { return mint(*this) -= b; }\n  constexpr\
-    \ mint operator*(const mint &b) const { return mint(*this) *= b; }\n  constexpr\
-    \ mint operator/(const mint &b) const { return mint(*this) /= b; }\n  constexpr\
-    \ bool operator==(const mint &b) const {\n    return (a >= mod ? a - mod : a)\
-    \ == (b.a >= mod ? b.a - mod : b.a);\n  }\n  constexpr bool operator!=(const mint\
-    \ &b) const {\n    return (a >= mod ? a - mod : a) != (b.a >= mod ? b.a - mod\
-    \ : b.a);\n  }\n  constexpr mint operator-() const { return mint() - mint(*this);\
+    \u30A4\u30D6\u30E9\u30EA\n */\n#line 2 \"modint/montgomery-modint.hpp\"\n\n#line\
+    \ 5 \"modint/montgomery-modint.hpp\"\n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt\
+    \ {\n  using mint = LazyMontgomeryModInt;\n  using i32 = int32_t;\n  using u32\
+    \ = uint32_t;\n  using u64 = uint64_t;\n\n  static constexpr u32 get_r() {\n \
+    \   u32 ret = mod;\n    for (i32 i = 0; i < 4; ++i) ret *= 2 - mod * ret;\n  \
+    \  return ret;\n  }\n\n  static constexpr u32 r = get_r();\n  static constexpr\
+    \ u32 n2 = -u64(mod) % mod;\n  static_assert(mod < (1 << 30), \"invalid, mod >=\
+    \ 2 ^ 30\");\n  static_assert((mod & 1) == 1, \"invalid, mod % 2 == 0\");\n  static_assert(r\
+    \ * mod == 1, \"this code has bugs.\");\n\n  u32 a;\n\n  constexpr LazyMontgomeryModInt()\
+    \ : a(0) {}\n  constexpr LazyMontgomeryModInt(const int64_t &b)\n      : a(reduce(u64(b\
+    \ % mod + mod) * n2)){};\n\n  static constexpr u32 reduce(const u64 &b) {\n  \
+    \  return (b + u64(u32(b) * u32(-r)) * mod) >> 32;\n  }\n\n  constexpr mint &operator+=(const\
+    \ mint &b) {\n    if (i32(a += b.a - 2 * mod) < 0) a += 2 * mod;\n    return *this;\n\
+    \  }\n\n  constexpr mint &operator-=(const mint &b) {\n    if (i32(a -= b.a) <\
+    \ 0) a += 2 * mod;\n    return *this;\n  }\n\n  constexpr mint &operator*=(const\
+    \ mint &b) {\n    a = reduce(u64(a) * b.a);\n    return *this;\n  }\n\n  constexpr\
+    \ mint &operator/=(const mint &b) {\n    *this *= b.inverse();\n    return *this;\n\
+    \  }\n\n  constexpr mint operator+(const mint &b) const { return mint(*this) +=\
+    \ b; }\n  constexpr mint operator-(const mint &b) const { return mint(*this) -=\
+    \ b; }\n  constexpr mint operator*(const mint &b) const { return mint(*this) *=\
+    \ b; }\n  constexpr mint operator/(const mint &b) const { return mint(*this) /=\
+    \ b; }\n  constexpr bool operator==(const mint &b) const {\n    return (a >= mod\
+    \ ? a - mod : a) == (b.a >= mod ? b.a - mod : b.a);\n  }\n  constexpr bool operator!=(const\
+    \ mint &b) const {\n    return (a >= mod ? a - mod : a) != (b.a >= mod ? b.a -\
+    \ mod : b.a);\n  }\n  constexpr mint operator-() const { return mint() - mint(*this);\
     \ }\n  constexpr mint operator+() const { return mint(*this); }\n\n  constexpr\
     \ mint pow(u64 n) const {\n    mint ret(1), mul(*this);\n    while (n > 0) {\n\
     \      if (n & 1) ret *= mul;\n      mul *= mul;\n      n >>= 1;\n    }\n    return\
@@ -777,7 +776,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/composition.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/composition.test.cpp

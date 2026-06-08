@@ -408,9 +408,9 @@ data:
     \ mint>\nFormalPowerSeries<mint> FormalPowerSeries<mint>::exp(int deg) const {\n\
     \  return fps_exp_impl(*this, deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief\
     \ \u591A\u9805\u5F0F/\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\
-    \u30EA\n * @docs docs/fps/formal-power-series.md\n */\n#line 5 \"fps/ntt-friendly-fps.hpp\"\
-    \n\ntemplate <typename mint>\nvoid fps_set_fft_impl(FormalPowerSeries<mint>*,\
-    \ FPSBackendPriority<1>) {\n  if (!FormalPowerSeries<mint>::ntt_ptr) {\n    FormalPowerSeries<mint>::ntt_ptr\
+    \u30EA\n */\n#line 5 \"fps/ntt-friendly-fps.hpp\"\n\ntemplate <typename mint>\n\
+    void fps_set_fft_impl(FormalPowerSeries<mint>*, FPSBackendPriority<1>) {\n  if\
+    \ (!FormalPowerSeries<mint>::ntt_ptr) {\n    FormalPowerSeries<mint>::ntt_ptr\
     \ = new NTT<mint>;\n  }\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>&\
     \ fps_multiply_impl(FormalPowerSeries<mint>& f,\n                            \
     \               const FormalPowerSeries<mint>& r,\n                          \
@@ -462,18 +462,18 @@ data:
     \ begin(x) + m, mint(0));\n    x.ntt();\n    for (int i = 0; i < 2 * m; ++i) x[i]\
     \ *= y[i];\n    x.intt();\n    b.insert(end(b), begin(x) + m, end(x));\n  }\n\
     \  return fps{begin(b), begin(b) + deg};\n}\n\n/**\n * @brief NTT mod\u7528FPS\u30E9\
-    \u30A4\u30D6\u30E9\u30EA\n * @docs docs/fps/ntt-friendly-fps.md\n */\n#line 2\
-    \ \"misc/fastio.hpp\"\n\n#line 9 \"misc/fastio.hpp\"\n\nusing namespace std;\n\
-    \n#line 2 \"internal/internal-type-traits.hpp\"\n\n#line 4 \"internal/internal-type-traits.hpp\"\
-    \nusing namespace std;\n\nnamespace internal {\ntemplate <typename T>\nusing is_broadly_integral\
-    \ =\n    typename conditional_t<is_integral_v<T> || is_same_v<T, __int128_t> ||\n\
-    \                               is_same_v<T, __uint128_t>,\n                 \
-    \          true_type, false_type>::type;\n\ntemplate <typename T>\nusing is_broadly_signed\
-    \ =\n    typename conditional_t<is_signed_v<T> || is_same_v<T, __int128_t>,\n\
-    \                           true_type, false_type>::type;\n\ntemplate <typename\
-    \ T>\nusing is_broadly_unsigned =\n    typename conditional_t<is_unsigned_v<T>\
-    \ || is_same_v<T, __uint128_t>,\n                           true_type, false_type>::type;\n\
-    \n#define ENABLE_VALUE(x) \\\n  template <typename T> \\\n  constexpr bool x##_v\
+    \u30A4\u30D6\u30E9\u30EA\n */\n#line 2 \"misc/fastio.hpp\"\n\n#line 9 \"misc/fastio.hpp\"\
+    \n\nusing namespace std;\n\n#line 2 \"internal/internal-type-traits.hpp\"\n\n\
+    #line 4 \"internal/internal-type-traits.hpp\"\nusing namespace std;\n\nnamespace\
+    \ internal {\ntemplate <typename T>\nusing is_broadly_integral =\n    typename\
+    \ conditional_t<is_integral_v<T> || is_same_v<T, __int128_t> ||\n            \
+    \                   is_same_v<T, __uint128_t>,\n                           true_type,\
+    \ false_type>::type;\n\ntemplate <typename T>\nusing is_broadly_signed =\n   \
+    \ typename conditional_t<is_signed_v<T> || is_same_v<T, __int128_t>,\n       \
+    \                    true_type, false_type>::type;\n\ntemplate <typename T>\n\
+    using is_broadly_unsigned =\n    typename conditional_t<is_unsigned_v<T> || is_same_v<T,\
+    \ __uint128_t>,\n                           true_type, false_type>::type;\n\n\
+    #define ENABLE_VALUE(x) \\\n  template <typename T> \\\n  constexpr bool x##_v\
     \ = x<T>::value;\n\nENABLE_VALUE(is_broadly_integral);\nENABLE_VALUE(is_broadly_signed);\n\
     ENABLE_VALUE(is_broadly_unsigned);\n#undef ENABLE_VALUE\n\n#define ENABLE_HAS_TYPE(var)\
     \                                   \\\n  template <class, class = void>     \
@@ -613,14 +613,13 @@ data:
     \ i++) f[i] *= C.fac(i);\n  reverse(begin(f), end(f));\n  fps g(N, mint(1));\n\
     \  for (int i = 1; i < N; i++) g[i] = g[i - 1] * a * C.inv(i);\n  f = (f * g).pre(N);\n\
     \  reverse(begin(f), end(f));\n  for (int i = 0; i < N; i++) f[i] *= C.finv(i);\n\
-    \  return f;\n}\n\n/**\n * @brief \u5E73\u884C\u79FB\u52D5\n * @docs docs/fps/taylor-shift.md\n\
-    \ */\n#line 9 \"verify/verify-yosupo-fps/yosupo-taylor-shift.test.cpp\"\n\nconstexpr\
-    \ int MOD9 = 998244353;\nconstexpr int MOD1 = 1000000007;\nusing mint = LazyMontgomeryModInt<MOD9>;\n\
-    Binomial<mint> C(530000);\nusing fps = FormalPowerSeries<mint>;\n\nusing namespace\
-    \ Nyaan; void Nyaan::solve() {\n  int N, c;\n  rd(N);\n  rd(c);\n  fps f(N);\n\
-    \  rep(i, N) {\n    int buf;\n    rd(buf);\n    f[i] = buf;\n  }\n  fps g = TaylorShift(f,\
-    \ mint(c), C);\n  rep(i,N){\n    if(i)wt(' ');\n    wt(g[i].get());\n  }\n  wt('\\\
-    n');\n}\n"
+    \  return f;\n}\n\n/**\n * @brief \u5E73\u884C\u79FB\u52D5\n */\n#line 9 \"verify/verify-yosupo-fps/yosupo-taylor-shift.test.cpp\"\
+    \n\nconstexpr int MOD9 = 998244353;\nconstexpr int MOD1 = 1000000007;\nusing mint\
+    \ = LazyMontgomeryModInt<MOD9>;\nBinomial<mint> C(530000);\nusing fps = FormalPowerSeries<mint>;\n\
+    \nusing namespace Nyaan; void Nyaan::solve() {\n  int N, c;\n  rd(N);\n  rd(c);\n\
+    \  fps f(N);\n  rep(i, N) {\n    int buf;\n    rd(buf);\n    f[i] = buf;\n  }\n\
+    \  fps g = TaylorShift(f, mint(c), C);\n  rep(i,N){\n    if(i)wt(' ');\n    wt(g[i].get());\n\
+    \  }\n  wt('\\n');\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/polynomial_taylor_shift\"\
     \n\n#include \"../../template/template.hpp\"\n#include \"../../fps/ntt-friendly-fps.hpp\"\
     \n#include \"../../misc/fastio.hpp\"\n#include \"../../modint/montgomery-modint.hpp\"\
@@ -649,7 +648,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-fps/yosupo-taylor-shift.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-fps/yosupo-taylor-shift.test.cpp

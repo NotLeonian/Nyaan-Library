@@ -20,7 +20,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/data-structure/dynamic-union-find.md
     document_title: "\u52D5\u7684Union Find"
     links: []
   bundledCode: "#line 2 \"data-structure/dynamic-union-find.hpp\"\n\n#line 2 \"hashmap/hashmap.hpp\"\
@@ -143,22 +142,21 @@ data:
     \ (base::cap - 1);\n    }\n  }\n\n  typename base::itr emplace(const Key& key,\
     \ const Val& val) {\n    return base::insert(Data(key, val));\n  }\n};\n\n/*\n\
     \ * @brief \u30CF\u30C3\u30B7\u30E5\u30DE\u30C3\u30D7(\u9023\u60F3\u914D\u5217\
-    )\n * @docs docs/hashmap/hashmap.md\n **/\n#line 4 \"data-structure/dynamic-union-find.hpp\"\
-    \n\nstruct DynamicUnionFind {\n  HashMap<int, int> m;\n  DynamicUnionFind() =\
-    \ default;\n\n  int data(int k) {\n    auto it = m.find(k);\n    return it ==\
-    \ m.end() ? m[k] = -1 : it->second;\n  }\n  int find(int k) {\n    int n = data(k);\n\
-    \    return n < 0 ? k : m[k] = find(n);\n  }\n\n  int unite(int x, int y) {\n\
-    \    x = find(x), y = find(y);\n    if (x == y) return false;\n    auto itx =\
-    \ m.find(x), ity = m.find(y);\n    if (itx->second > ity->second) swap(itx, ity),\
-    \ swap(x, y);\n    itx->second += ity->second;\n    ity->second = x;\n    return\
-    \ true;\n  }\n\n  template <typename F>\n  int unite(int x, int y, const F& f)\
-    \ {\n    x = find(x), y = find(y);\n    if (x == y) return false;\n    auto itx\
-    \ = m.find(x), ity = m.find(y);\n    if (itx->second > ity->second) swap(itx,\
-    \ ity), swap(x, y);\n    itx->second += ity->second;\n    ity->second = x;\n \
-    \   f(x, y);\n    return true;\n  }\n\n  int size(int k) { return -data(find(k));\
-    \ }\n\n  int same(int x, int y) { return find(x) == find(y); }\n\n  void clear()\
-    \ { m.clear(); }\n};\n\n/**\n * @brief \u52D5\u7684Union Find\n * @docs docs/data-structure/dynamic-union-find.md\n\
-    \ */\n"
+    )\n **/\n#line 4 \"data-structure/dynamic-union-find.hpp\"\n\nstruct DynamicUnionFind\
+    \ {\n  HashMap<int, int> m;\n  DynamicUnionFind() = default;\n\n  int data(int\
+    \ k) {\n    auto it = m.find(k);\n    return it == m.end() ? m[k] = -1 : it->second;\n\
+    \  }\n  int find(int k) {\n    int n = data(k);\n    return n < 0 ? k : m[k] =\
+    \ find(n);\n  }\n\n  int unite(int x, int y) {\n    x = find(x), y = find(y);\n\
+    \    if (x == y) return false;\n    auto itx = m.find(x), ity = m.find(y);\n \
+    \   if (itx->second > ity->second) swap(itx, ity), swap(x, y);\n    itx->second\
+    \ += ity->second;\n    ity->second = x;\n    return true;\n  }\n\n  template <typename\
+    \ F>\n  int unite(int x, int y, const F& f) {\n    x = find(x), y = find(y);\n\
+    \    if (x == y) return false;\n    auto itx = m.find(x), ity = m.find(y);\n \
+    \   if (itx->second > ity->second) swap(itx, ity), swap(x, y);\n    itx->second\
+    \ += ity->second;\n    ity->second = x;\n    f(x, y);\n    return true;\n  }\n\
+    \n  int size(int k) { return -data(find(k)); }\n\n  int same(int x, int y) { return\
+    \ find(x) == find(y); }\n\n  void clear() { m.clear(); }\n};\n\n/**\n * @brief\
+    \ \u52D5\u7684Union Find\n */\n"
   code: "#pragma once\n\n#include \"../hashmap/hashmap.hpp\"\n\nstruct DynamicUnionFind\
     \ {\n  HashMap<int, int> m;\n  DynamicUnionFind() = default;\n\n  int data(int\
     \ k) {\n    auto it = m.find(k);\n    return it == m.end() ? m[k] = -1 : it->second;\n\
@@ -173,26 +171,23 @@ data:
     \ += ity->second;\n    ity->second = x;\n    f(x, y);\n    return true;\n  }\n\
     \n  int size(int k) { return -data(find(k)); }\n\n  int same(int x, int y) { return\
     \ find(x) == find(y); }\n\n  void clear() { m.clear(); }\n};\n\n/**\n * @brief\
-    \ \u52D5\u7684Union Find\n * @docs docs/data-structure/dynamic-union-find.md\n\
-    \ */\n"
+    \ \u52D5\u7684Union Find\n */\n"
   dependsOn:
   - hashmap/hashmap.hpp
   - hashmap/hashmap-base.hpp
   isVerificationFile: false
   path: data-structure/dynamic-union-find.hpp
   requiredBy: []
-  timestamp: '2023-03-25 00:28:17+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-aoj-dsl/aoj-dsl-1-a-dynamic.test.cpp
   - verify/verify-aoj-other/aoj-2995-hashmap.test.cpp
 documentation_of: data-structure/dynamic-union-find.hpp
 layout: document
-redirect_from:
-- /library/data-structure/dynamic-union-find.hpp
-- /library/data-structure/dynamic-union-find.hpp.html
 title: "\u52D5\u7684Union Find"
 ---
+
 ## 動的Union Find
 
 #### 概要

@@ -13,7 +13,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/data-structure/skew-heap.md
     document_title: Skew Heap
     links: []
   bundledCode: "#line 2 \"data-structure/skew-heap.hpp\"\n\ntemplate <typename T,\
@@ -32,8 +31,7 @@ data:
     \    x->laz += laz;\n    propagate(x);\n  }\n\n private:\n  static inline bool\
     \ comp(Ptr x, Ptr y) {\n    if constexpr (isMin) {\n      return x->key + x->laz\
     \ < y->key + y->laz;\n    } else {\n      return x->key + x->laz > y->key + y->laz;\n\
-    \    }\n  }\n};\n\n/**\n * @brief Skew Heap\n * @docs docs/data-structure/skew-heap.md\n\
-    \ */\n"
+    \    }\n  }\n};\n\n/**\n * @brief Skew Heap\n */\n"
   code: "#pragma once\n\ntemplate <typename T, bool isMin = true>\nstruct SkewHeap\
     \ {\n  struct Node {\n    T key, laz;\n    Node *l, *r;\n    int idx;\n    Node()\
     \ = default;\n    Node(const T &k, int i = -1)\n        : key(k), laz(0), l(nullptr),\
@@ -50,23 +48,21 @@ data:
     \  }\n\n private:\n  static inline bool comp(Ptr x, Ptr y) {\n    if constexpr\
     \ (isMin) {\n      return x->key + x->laz < y->key + y->laz;\n    } else {\n \
     \     return x->key + x->laz > y->key + y->laz;\n    }\n  }\n};\n\n/**\n * @brief\
-    \ Skew Heap\n * @docs docs/data-structure/skew-heap.md\n */\n"
+    \ Skew Heap\n */\n"
   dependsOn: []
   isVerificationFile: false
   path: data-structure/skew-heap.hpp
   requiredBy:
   - graph/minimum-cost-arborescence.hpp
-  timestamp: '2021-02-04 22:39:44+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-graph/yosupo-directed-mst.test.cpp
 documentation_of: data-structure/skew-heap.hpp
 layout: document
-redirect_from:
-- /library/data-structure/skew-heap.hpp
-- /library/data-structure/skew-heap.hpp.html
 title: Skew Heap
 ---
+
 ## Skew Heap
 
 Skew Heapを実装したライブラリ。

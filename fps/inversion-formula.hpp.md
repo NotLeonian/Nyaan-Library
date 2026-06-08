@@ -97,8 +97,8 @@ data:
     \ deg, FPSBackendPriority<1>{});\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>\
     \ FormalPowerSeries<mint>::exp(int deg) const {\n  return fps_exp_impl(*this,\
     \ deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief \u591A\u9805\u5F0F/\u5F62\
-    \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n * @docs docs/fps/formal-power-series.md\n\
-    \ */\n#line 4 \"fps/inversion-formula.hpp\"\n\ntemplate <typename mint>\nFormalPowerSeries<mint>\
+    \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n */\n#line 4 \"\
+    fps/inversion-formula.hpp\"\n\ntemplate <typename mint>\nFormalPowerSeries<mint>\
     \ n2_inv(const FormalPowerSeries<mint>& f) {\n  assert(f.empty() == false && f[0]\
     \ != mint(0));\n  int n = f.size();\n  mint if0 = f[0].inverse();\n  FormalPowerSeries<mint>\
     \ g(n);\n  g[0] = if0;\n  for (int k = 1; k < n; k++) {\n    for (int i = 0; i\
@@ -152,7 +152,7 @@ data:
   isVerificationFile: false
   path: fps/inversion-formula.hpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: fps/inversion-formula.hpp

@@ -481,9 +481,9 @@ data:
     \ mint>\nFormalPowerSeries<mint> FormalPowerSeries<mint>::exp(int deg) const {\n\
     \  return fps_exp_impl(*this, deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief\
     \ \u591A\u9805\u5F0F/\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\
-    \u30EA\n * @docs docs/fps/formal-power-series.md\n */\n#line 5 \"fps/ntt-friendly-fps.hpp\"\
-    \n\ntemplate <typename mint>\nvoid fps_set_fft_impl(FormalPowerSeries<mint>*,\
-    \ FPSBackendPriority<1>) {\n  if (!FormalPowerSeries<mint>::ntt_ptr) {\n    FormalPowerSeries<mint>::ntt_ptr\
+    \u30EA\n */\n#line 5 \"fps/ntt-friendly-fps.hpp\"\n\ntemplate <typename mint>\n\
+    void fps_set_fft_impl(FormalPowerSeries<mint>*, FPSBackendPriority<1>) {\n  if\
+    \ (!FormalPowerSeries<mint>::ntt_ptr) {\n    FormalPowerSeries<mint>::ntt_ptr\
     \ = new NTT<mint>;\n  }\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>&\
     \ fps_multiply_impl(FormalPowerSeries<mint>& f,\n                            \
     \               const FormalPowerSeries<mint>& r,\n                          \
@@ -535,63 +535,62 @@ data:
     \ begin(x) + m, mint(0));\n    x.ntt();\n    for (int i = 0; i < 2 * m; ++i) x[i]\
     \ *= y[i];\n    x.intt();\n    b.insert(end(b), begin(x) + m, end(x));\n  }\n\
     \  return fps{begin(b), begin(b) + deg};\n}\n\n/**\n * @brief NTT mod\u7528FPS\u30E9\
-    \u30A4\u30D6\u30E9\u30EA\n * @docs docs/fps/ntt-friendly-fps.md\n */\n#line 2\
-    \ \"fps/polynomial-gcd.hpp\"\n\n#line 4 \"fps/polynomial-gcd.hpp\"\n\nnamespace\
-    \ poly_gcd {\n\ntemplate <typename mint>\nusing FPS = FormalPowerSeries<mint>;\n\
-    template <typename mint>\nusing Arr = pair<FPS<mint>, FPS<mint>>;\n\ntemplate\
-    \ <typename mint>\nstruct Mat {\n  using fps = FPS<mint>;\n  fps a00, a01, a10,\
-    \ a11;\n\n  Mat() = default;\n  Mat(const fps& a00_, const fps& a01_, const fps&\
-    \ a10_, const fps& a11_)\n      : a00(a00_), a01(a01_), a10(a10_), a11(a11_) {}\n\
-    \n  Mat& operator*=(const Mat& r) {\n    fps A00 = a00 * r.a00 + a01 * r.a10;\n\
-    \    fps A01 = a00 * r.a01 + a01 * r.a11;\n    fps A10 = a10 * r.a00 + a11 * r.a10;\n\
-    \    fps A11 = a10 * r.a01 + a11 * r.a11;\n    A00.shrink();\n    A01.shrink();\n\
-    \    A10.shrink();\n    A11.shrink();\n    swap(A00, a00);\n    swap(A01, a01);\n\
-    \    swap(A10, a10);\n    swap(A11, a11);\n    return *this;\n  }\n\n  static\
-    \ Mat I() { return Mat(fps{mint(1)}, fps(), fps(), fps{mint(1)}); }\n\n  Mat operator*(const\
-    \ Mat& r) const { return Mat(*this) *= r; }\n};\n\ntemplate <typename mint>\n\
-    Arr<mint> operator*(const Mat<mint>& m, const Arr<mint>& a) {\n  using fps = FPS<mint>;\n\
-    \  fps b0 = m.a00 * a.first + m.a01 * a.second;\n  fps b1 = m.a10 * a.first +\
-    \ m.a11 * a.second;\n  b0.shrink();\n  b1.shrink();\n  return {b0, b1};\n};\n\n\
-    template <typename mint>\nvoid InnerNaiveGCD(Mat<mint>& m, Arr<mint>& p) {\n \
-    \ using fps = FPS<mint>;\n  fps quo = p.first / p.second;\n  fps rem = p.first\
-    \ - p.second * quo;\n  fps b10 = m.a00 - m.a10 * quo;\n  fps b11 = m.a01 - m.a11\
-    \ * quo;\n  rem.shrink();\n  b10.shrink();\n  b11.shrink();\n  swap(b10, m.a10);\n\
-    \  swap(b11, m.a11);\n  swap(b10, m.a00);\n  swap(b11, m.a01);\n  p = {p.second,\
-    \ rem};\n}\n\ntemplate <typename mint>\nMat<mint> InnerHalfGCD(Arr<mint> p) {\n\
-    \  int n = p.first.size(), m = p.second.size();\n  int k = (n + 1) / 2;\n  if\
-    \ (m <= k) return Mat<mint>::I();\n  Mat<mint> m1 = InnerHalfGCD(make_pair(p.first\
-    \ >> k, p.second >> k));\n  p = m1 * p;\n  if ((int)p.second.size() <= k) return\
-    \ m1;\n  InnerNaiveGCD(m1, p);\n  if ((int)p.second.size() <= k) return m1;\n\
-    \  int l = (int)p.first.size() - 1;\n  int j = 2 * k - l;\n  p.first = p.first\
-    \ >> j;\n  p.second = p.second >> j;\n  return InnerHalfGCD(p) * m1;\n}\n\ntemplate\
-    \ <typename mint>\nMat<mint> InnerPolyGCD(const FPS<mint>& a, const FPS<mint>&\
-    \ b) {\n  Arr<mint> p{a, b};\n  p.first.shrink();\n  p.second.shrink();\n  int\
-    \ n = p.first.size(), m = p.second.size();\n  if (n < m) {\n    Mat<mint> mat\
-    \ = InnerPolyGCD(p.second, p.first);\n    swap(mat.a00, mat.a01);\n    swap(mat.a10,\
-    \ mat.a11);\n    return mat;\n  }\n\n  Mat<mint> res = Mat<mint>::I();\n  while\
-    \ (1) {\n    Mat<mint> m1 = InnerHalfGCD(p);\n    p = m1 * p;\n    if (p.second.empty())\
-    \ return m1 * res;\n    InnerNaiveGCD(m1, p);\n    if (p.second.empty()) return\
-    \ m1 * res;\n    res = m1 * res;\n  }\n}\n\n// \u591A\u9805\u5F0F GCD, \u975E\u96F6\
-    \u306E\u5834\u5408 monic \u306A\u3082\u306E\u3092\u8FD4\u3059\ntemplate <typename\
-    \ mint>\nFPS<mint> PolyGCD(const FPS<mint>& a, const FPS<mint>& b) {\n  Arr<mint>\
-    \ p(a, b);\n  Mat<mint> m = InnerPolyGCD(a, b);\n  p = m * p;\n  if (!p.first.empty())\
-    \ {\n    mint coeff = p.first.back().inverse();\n    for (auto& x : p.first) x\
-    \ *= coeff;\n  }\n  return p.first;\n}\n\ntemplate <typename mint>\npair<int,\
-    \ FPS<mint>> PolyInv(const FPS<mint>& f, const FPS<mint>& g) {\n  using fps =\
-    \ FPS<mint>;\n  pair<fps, fps> p(f, g);\n  Mat<mint> m = InnerPolyGCD(f, g);\n\
-    \  fps gcd_ = (m * p).first;\n  if (gcd_.size() != 1) return {false, fps()};\n\
+    \u30A4\u30D6\u30E9\u30EA\n */\n#line 2 \"fps/polynomial-gcd.hpp\"\n\n#line 4 \"\
+    fps/polynomial-gcd.hpp\"\n\nnamespace poly_gcd {\n\ntemplate <typename mint>\n\
+    using FPS = FormalPowerSeries<mint>;\ntemplate <typename mint>\nusing Arr = pair<FPS<mint>,\
+    \ FPS<mint>>;\n\ntemplate <typename mint>\nstruct Mat {\n  using fps = FPS<mint>;\n\
+    \  fps a00, a01, a10, a11;\n\n  Mat() = default;\n  Mat(const fps& a00_, const\
+    \ fps& a01_, const fps& a10_, const fps& a11_)\n      : a00(a00_), a01(a01_),\
+    \ a10(a10_), a11(a11_) {}\n\n  Mat& operator*=(const Mat& r) {\n    fps A00 =\
+    \ a00 * r.a00 + a01 * r.a10;\n    fps A01 = a00 * r.a01 + a01 * r.a11;\n    fps\
+    \ A10 = a10 * r.a00 + a11 * r.a10;\n    fps A11 = a10 * r.a01 + a11 * r.a11;\n\
+    \    A00.shrink();\n    A01.shrink();\n    A10.shrink();\n    A11.shrink();\n\
+    \    swap(A00, a00);\n    swap(A01, a01);\n    swap(A10, a10);\n    swap(A11,\
+    \ a11);\n    return *this;\n  }\n\n  static Mat I() { return Mat(fps{mint(1)},\
+    \ fps(), fps(), fps{mint(1)}); }\n\n  Mat operator*(const Mat& r) const { return\
+    \ Mat(*this) *= r; }\n};\n\ntemplate <typename mint>\nArr<mint> operator*(const\
+    \ Mat<mint>& m, const Arr<mint>& a) {\n  using fps = FPS<mint>;\n  fps b0 = m.a00\
+    \ * a.first + m.a01 * a.second;\n  fps b1 = m.a10 * a.first + m.a11 * a.second;\n\
+    \  b0.shrink();\n  b1.shrink();\n  return {b0, b1};\n};\n\ntemplate <typename\
+    \ mint>\nvoid InnerNaiveGCD(Mat<mint>& m, Arr<mint>& p) {\n  using fps = FPS<mint>;\n\
+    \  fps quo = p.first / p.second;\n  fps rem = p.first - p.second * quo;\n  fps\
+    \ b10 = m.a00 - m.a10 * quo;\n  fps b11 = m.a01 - m.a11 * quo;\n  rem.shrink();\n\
+    \  b10.shrink();\n  b11.shrink();\n  swap(b10, m.a10);\n  swap(b11, m.a11);\n\
+    \  swap(b10, m.a00);\n  swap(b11, m.a01);\n  p = {p.second, rem};\n}\n\ntemplate\
+    \ <typename mint>\nMat<mint> InnerHalfGCD(Arr<mint> p) {\n  int n = p.first.size(),\
+    \ m = p.second.size();\n  int k = (n + 1) / 2;\n  if (m <= k) return Mat<mint>::I();\n\
+    \  Mat<mint> m1 = InnerHalfGCD(make_pair(p.first >> k, p.second >> k));\n  p =\
+    \ m1 * p;\n  if ((int)p.second.size() <= k) return m1;\n  InnerNaiveGCD(m1, p);\n\
+    \  if ((int)p.second.size() <= k) return m1;\n  int l = (int)p.first.size() -\
+    \ 1;\n  int j = 2 * k - l;\n  p.first = p.first >> j;\n  p.second = p.second >>\
+    \ j;\n  return InnerHalfGCD(p) * m1;\n}\n\ntemplate <typename mint>\nMat<mint>\
+    \ InnerPolyGCD(const FPS<mint>& a, const FPS<mint>& b) {\n  Arr<mint> p{a, b};\n\
+    \  p.first.shrink();\n  p.second.shrink();\n  int n = p.first.size(), m = p.second.size();\n\
+    \  if (n < m) {\n    Mat<mint> mat = InnerPolyGCD(p.second, p.first);\n    swap(mat.a00,\
+    \ mat.a01);\n    swap(mat.a10, mat.a11);\n    return mat;\n  }\n\n  Mat<mint>\
+    \ res = Mat<mint>::I();\n  while (1) {\n    Mat<mint> m1 = InnerHalfGCD(p);\n\
+    \    p = m1 * p;\n    if (p.second.empty()) return m1 * res;\n    InnerNaiveGCD(m1,\
+    \ p);\n    if (p.second.empty()) return m1 * res;\n    res = m1 * res;\n  }\n\
+    }\n\n// \u591A\u9805\u5F0F GCD, \u975E\u96F6\u306E\u5834\u5408 monic \u306A\u3082\
+    \u306E\u3092\u8FD4\u3059\ntemplate <typename mint>\nFPS<mint> PolyGCD(const FPS<mint>&\
+    \ a, const FPS<mint>& b) {\n  Arr<mint> p(a, b);\n  Mat<mint> m = InnerPolyGCD(a,\
+    \ b);\n  p = m * p;\n  if (!p.first.empty()) {\n    mint coeff = p.first.back().inverse();\n\
+    \    for (auto& x : p.first) x *= coeff;\n  }\n  return p.first;\n}\n\ntemplate\
+    \ <typename mint>\npair<int, FPS<mint>> PolyInv(const FPS<mint>& f, const FPS<mint>&\
+    \ g) {\n  using fps = FPS<mint>;\n  pair<fps, fps> p(f, g);\n  Mat<mint> m = InnerPolyGCD(f,\
+    \ g);\n  fps gcd_ = (m * p).first;\n  if (gcd_.size() != 1) return {false, fps()};\n\
     \  pair<fps, fps> x(fps{mint(1)}, g);\n  return {true, ((m * x).first % g) * gcd_[0].inverse()};\n\
     }\n\n}  // namespace poly_gcd\nusing poly_gcd::PolyGCD;\nusing poly_gcd::PolyInv;\n\
-    \n/**\n * @brief \u591A\u9805\u5F0FGCD\n * @docs docs/fps/polynomial-gcd.md\n\
-    \ */\n#line 2 \"modint/montgomery-modint.hpp\"\n\n#line 5 \"modint/montgomery-modint.hpp\"\
-    \n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n\
-    \  using i32 = int32_t;\n  using u32 = uint32_t;\n  using u64 = uint64_t;\n\n\
-    \  static constexpr u32 get_r() {\n    u32 ret = mod;\n    for (i32 i = 0; i <\
-    \ 4; ++i) ret *= 2 - mod * ret;\n    return ret;\n  }\n\n  static constexpr u32\
-    \ r = get_r();\n  static constexpr u32 n2 = -u64(mod) % mod;\n  static_assert(mod\
-    \ < (1 << 30), \"invalid, mod >= 2 ^ 30\");\n  static_assert((mod & 1) == 1, \"\
-    invalid, mod % 2 == 0\");\n  static_assert(r * mod == 1, \"this code has bugs.\"\
-    );\n\n  u32 a;\n\n  constexpr LazyMontgomeryModInt() : a(0) {}\n  constexpr LazyMontgomeryModInt(const\
+    \n/**\n * @brief \u591A\u9805\u5F0FGCD\n */\n#line 2 \"modint/montgomery-modint.hpp\"\
+    \n\n#line 5 \"modint/montgomery-modint.hpp\"\n\ntemplate <uint32_t mod>\nstruct\
+    \ LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n  using i32 =\
+    \ int32_t;\n  using u32 = uint32_t;\n  using u64 = uint64_t;\n\n  static constexpr\
+    \ u32 get_r() {\n    u32 ret = mod;\n    for (i32 i = 0; i < 4; ++i) ret *= 2\
+    \ - mod * ret;\n    return ret;\n  }\n\n  static constexpr u32 r = get_r();\n\
+    \  static constexpr u32 n2 = -u64(mod) % mod;\n  static_assert(mod < (1 << 30),\
+    \ \"invalid, mod >= 2 ^ 30\");\n  static_assert((mod & 1) == 1, \"invalid, mod\
+    \ % 2 == 0\");\n  static_assert(r * mod == 1, \"this code has bugs.\");\n\n  u32\
+    \ a;\n\n  constexpr LazyMontgomeryModInt() : a(0) {}\n  constexpr LazyMontgomeryModInt(const\
     \ int64_t &b)\n      : a(reduce(u64(b % mod + mod) * n2)){};\n\n  static constexpr\
     \ u32 reduce(const u64 &b) {\n    return (b + u64(u32(b) * u32(-r)) * mod) >>\
     \ 32;\n  }\n\n  constexpr mint &operator+=(const mint &b) {\n    if (i32(a +=\
@@ -657,7 +656,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-fps/yosupo-inv-of-polynomials.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-fps/yosupo-inv-of-polynomials.test.cpp

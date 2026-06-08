@@ -398,7 +398,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/fps/formal-power-series.md
     document_title: "\u591A\u9805\u5F0F/\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\
       \u30A4\u30D6\u30E9\u30EA"
     links: []
@@ -487,8 +486,7 @@ data:
     \ deg, FPSBackendPriority<1>{});\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>\
     \ FormalPowerSeries<mint>::exp(int deg) const {\n  return fps_exp_impl(*this,\
     \ deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief \u591A\u9805\u5F0F/\u5F62\
-    \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n * @docs docs/fps/formal-power-series.md\n\
-    \ */\n"
+    \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n */\n"
   code: "#pragma once\n\n#include <algorithm>\n#include <cassert>\n#include <cstdint>\n\
     #include <iterator>\n#include <vector>\nusing namespace std;\n\ntemplate <typename\
     \ mint>\nstruct FormalPowerSeries : vector<mint> {\n  using vector<mint>::vector;\n\
@@ -574,7 +572,7 @@ data:
     \ mint>\nFormalPowerSeries<mint> FormalPowerSeries<mint>::exp(int deg) const {\n\
     \  return fps_exp_impl(*this, deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief\
     \ \u591A\u9805\u5F0F/\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\
-    \u30EA\n * @docs docs/fps/formal-power-series.md\n */\n"
+    \u30EA\n */\n"
   dependsOn: []
   isVerificationFile: false
   path: fps/formal-power-series.hpp
@@ -620,7 +618,7 @@ data:
   - matrix/polynomial-matrix-determinant.hpp
   - modulo/factorial.hpp
   - set-function/polynomial-composite-set-power-series.hpp
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ntt/yosupo-convolution-large.test.cpp
@@ -713,12 +711,10 @@ data:
   - verify/verify-unit-test/fps-sparse.test.cpp
 documentation_of: fps/formal-power-series.hpp
 layout: document
-redirect_from:
-- /library/fps/formal-power-series.hpp
-- /library/fps/formal-power-series.hpp.html
 title: "\u591A\u9805\u5F0F/\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\
   \u30EA"
 ---
+
 # 形式的冪級数
 
 多項式/形式的冪級数の基本操作を行うライブラリ。

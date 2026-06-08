@@ -10,7 +10,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/multiplicative-function/prime-counting-faster.md
     document_title: "\u7D20\u6570\u30AB\u30A6\u30F3\u30C8( $\\mathrm{O}(\\frac{N^{\\\
       frac{3}{4}}}{\\log N})$\u30FB\u9AD8\u901F\u5316\u7248)"
     links: []
@@ -27,8 +26,7 @@ data:
     \    }\n    for (int n = N2; n >= x2; n--) {\n      hs[n] -= hs[my_div(n, x)]\
     \ - pi;\n    }\n    ++pi;\n  }\n  return hl[1];\n}\n\n}  // namespace PrimeCounting\n\
     \n/**\n * @brief \u7D20\u6570\u30AB\u30A6\u30F3\u30C8( $\\mathrm{O}(\\frac{N^{\\\
-    frac{3}{4}}}{\\log N})$\u30FB\u9AD8\u901F\u5316\u7248)\n * @docs docs/multiplicative-function/prime-counting-faster.md\n\
-    \ */\n"
+    frac{3}{4}}}{\\log N})$\u30FB\u9AD8\u901F\u5316\u7248)\n */\n"
   code: "#pragma once\n\n\n\nnamespace PrimeCounting {\nusing i64 = long long;\nstatic\
     \ inline i64 my_div(i64 n, i64 p) { return double(n) / p; };\n\n__attribute__((target(\"\
     avx2\"), optimize(\"O3\", \"unroll-loops\"))) i64\nprime_counting(i64 N) {\n \
@@ -42,23 +40,21 @@ data:
     \ -= hs[my_div(n, x)] - pi;\n    }\n    ++pi;\n  }\n  return hl[1];\n}\n\n}  //\
     \ namespace PrimeCounting\n\n/**\n * @brief \u7D20\u6570\u30AB\u30A6\u30F3\u30C8\
     ( $\\mathrm{O}(\\frac{N^{\\frac{3}{4}}}{\\log N})$\u30FB\u9AD8\u901F\u5316\u7248\
-    )\n * @docs docs/multiplicative-function/prime-counting-faster.md\n */\n"
+    )\n */\n"
   dependsOn: []
   isVerificationFile: false
   path: multiplicative-function/prime-counting-faster.hpp
   requiredBy: []
-  timestamp: '2026-05-31 17:09:38+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-math/yosupo-counting-primes-3.test.cpp
 documentation_of: multiplicative-function/prime-counting-faster.hpp
 layout: document
-redirect_from:
-- /library/multiplicative-function/prime-counting-faster.hpp
-- /library/multiplicative-function/prime-counting-faster.hpp.html
 title: "\u7D20\u6570\u30AB\u30A6\u30F3\u30C8( $\\mathrm{O}(\\frac{N^{\\frac{3}{4}}}{\\\
   log N})$\u30FB\u9AD8\u901F\u5316\u7248)"
 ---
+
 ## 素数の個数$\pi(N)$の高速計算
 
 $\pi(N)$を$\mathrm{O}\left(\frac{N^{\frac{3}{4}}}{\log N}\right)$で計算するライブラリ。

@@ -53,7 +53,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/fps/find-p-recursive.md
     document_title: "P-recursive\u306E\u9AD8\u901F\u8A08\u7B97"
     links: []
   bundledCode: "#line 2 \"fps/find-p-recursive.hpp\"\n\n#line 2 \"matrix/linear-equation.hpp\"\
@@ -176,9 +175,9 @@ data:
     \ deg, FPSBackendPriority<1>{});\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>\
     \ FormalPowerSeries<mint>::exp(int deg) const {\n  return fps_exp_impl(*this,\
     \ deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief \u591A\u9805\u5F0F/\u5F62\
-    \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n * @docs docs/fps/formal-power-series.md\n\
-    \ */\n#line 2 \"fps/sample-point-shift.hpp\"\n\n#line 2 \"modulo/binomial.hpp\"\
-    \n\n#line 4 \"modulo/binomial.hpp\"\n#include <type_traits>\n#line 6 \"modulo/binomial.hpp\"\
+    \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n */\n#line 2 \"\
+    fps/sample-point-shift.hpp\"\n\n#line 2 \"modulo/binomial.hpp\"\n\n#line 4 \"\
+    modulo/binomial.hpp\"\n#include <type_traits>\n#line 6 \"modulo/binomial.hpp\"\
     \nusing namespace std;\n\n// \u30B3\u30F3\u30B9\u30C8\u30E9\u30AF\u30BF\u306E\
     \ MAX \u306B \u300CC(n, r) \u3084 fac(n) \u3067\u30AF\u30A8\u30EA\u3092\u6295\u3052\
     \u308B\u6700\u5927\u306E n \u300D\n// \u3092\u5165\u308C\u308B\u3068\u500D\u901F\
@@ -534,7 +533,7 @@ data:
     \ n, d) == a.back()) {\n#ifdef NyaanLocal\n      cerr << \"Found, d = \" << d\
     \ << endl;\n#endif\n      return kth_term_of_p_recursive(a, k, d);\n    }\n  }\n\
     \  cerr << \"Failed.\" << endl;\n  exit(1);\n}\n\n\n\n/**\n * @brief P-recursive\u306E\
-    \u9AD8\u901F\u8A08\u7B97\n * @docs docs/fps/find-p-recursive.md\n */\n"
+    \u9AD8\u901F\u8A08\u7B97\n */\n"
   code: "#pragma once\n\n#include \"../matrix/linear-equation.hpp\"\n#include \"../matrix/polynomial-matrix-prefix-prod.hpp\"\
     \n#include \"formal-power-series.hpp\"\n\n// return polynomial coefficient s.t.\
     \ sum_{j=k...0} f_j(i) a_{i+j} = 0\n// (In more details, read verification code.)\n\
@@ -579,7 +578,7 @@ data:
     \ n, d) == a.back()) {\n#ifdef NyaanLocal\n      cerr << \"Found, d = \" << d\
     \ << endl;\n#endif\n      return kth_term_of_p_recursive(a, k, d);\n    }\n  }\n\
     \  cerr << \"Failed.\" << endl;\n  exit(1);\n}\n\n\n\n/**\n * @brief P-recursive\u306E\
-    \u9AD8\u901F\u8A08\u7B97\n * @docs docs/fps/find-p-recursive.md\n */\n"
+    \u9AD8\u901F\u8A08\u7B97\n */\n"
   dependsOn:
   - matrix/linear-equation.hpp
   - matrix/gauss-elimination.hpp
@@ -596,7 +595,7 @@ data:
   isVerificationFile: false
   path: fps/find-p-recursive.hpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-fps/yosupo-factorial-p-recursive.test.cpp
@@ -604,11 +603,9 @@ data:
   - verify/verify-unit-test/p-recursive.test.cpp
 documentation_of: fps/find-p-recursive.hpp
 layout: document
-redirect_from:
-- /library/fps/find-p-recursive.hpp
-- /library/fps/find-p-recursive.hpp.html
 title: "P-recursive\u306E\u9AD8\u901F\u8A08\u7B97"
 ---
+
 ## P-recursiveの高速計算
 
 P-recursiveの第$k$項を$\mathrm{O}(\sqrt{k} \log k)$で計算出来たり出来なかったりするライブラリ。

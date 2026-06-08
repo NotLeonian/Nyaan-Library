@@ -338,10 +338,9 @@ data:
     \ T> &a) {\n    for (auto p1 = rbegin(a); p1 != rend(a); p1++)\n      for (auto\
     \ p2 = rbegin(a); p2 != p1; p2++)\n        if (p2->first % p1->first == 0) p1->second\
     \ -= p2->second;\n  }\n};\n\n/**\n * @brief \u500D\u6570\u5909\u63DB\u30FB\u7D04\
-    \u6570\u5909\u63DB\n * @docs docs/multiplicative-function/divisor-multiple-transform.md\n\
-    \ */\n#line 10 \"verify/verify-unit-test/multiplicative-function.test.cpp\"\n\n\
-    using namespace Nyaan;\nvoid test() {\n  // \u7D04\u6570\u30FB\u500D\u6570\u30BC\
-    \u30FC\u30BF/\u30E1\u30D3\u30A6\u30B9\u5909\u63DB\u306Everify\n  auto map_transform\
+    \u6570\u5909\u63DB\n */\n#line 10 \"verify/verify-unit-test/multiplicative-function.test.cpp\"\
+    \n\nusing namespace Nyaan;\nvoid test() {\n  // \u7D04\u6570\u30FB\u500D\u6570\
+    \u30BC\u30FC\u30BF/\u30E1\u30D3\u30A6\u30B9\u5909\u63DB\u306Everify\n  auto map_transform\
     \ = [](int n) {\n    map<ll, mint> a;\n    for (ll i = 1; i * i <= n; i++) {\n\
     \      if (n % i == 0) {\n        a[i] = rng();\n        a[n / i] = rng();\n \
     \     }\n    }\n    auto a1 = a;\n    divisor_transform::zeta_transform(a1);\n\
@@ -381,7 +380,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/multiplicative-function.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/multiplicative-function.test.cpp

@@ -46,12 +46,12 @@ data:
     \ {\n    int x, y;\n    cin >> x >> y;\n    T c;\n    if (is_weighted)\n     \
     \ cin >> c;\n    else\n      c = 1;\n    if (is_1origin) x--, y--;\n    d[x][y]\
     \ = c;\n    if (!is_directed) d[y][x] = c;\n  }\n  return d;\n}\n\n/**\n * @brief\
-    \ \u30B0\u30E9\u30D5\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\n * @docs docs/graph/graph-template.md\n\
-    \ */\n#line 6 \"shortest-path/warshall-floyd.hpp\"\n\n// i : d[i][i] < 0 exists\
-    \ -> negative cycle\ntemplate <typename T>\nvoid warshall_floyd(T& d) {\n  if((int)d.size()\
-    \ == 0) return;\n  int N = d[0].size();\n  for (int i = 0; i < N; i++) d[i][i]\
-    \ = 0;\n  for (int k = 0; k < N; k++)\n    for (int i = 0; i < N; i++)\n     \
-    \ for (int j = 0; j < N; j++) d[i][j] = min(d[i][j], d[i][k] + d[k][j]);\n}\n"
+    \ \u30B0\u30E9\u30D5\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\n */\n#line 6 \"shortest-path/warshall-floyd.hpp\"\
+    \n\n// i : d[i][i] < 0 exists -> negative cycle\ntemplate <typename T>\nvoid warshall_floyd(T&\
+    \ d) {\n  if((int)d.size() == 0) return;\n  int N = d[0].size();\n  for (int i\
+    \ = 0; i < N; i++) d[i][i] = 0;\n  for (int k = 0; k < N; k++)\n    for (int i\
+    \ = 0; i < N; i++)\n      for (int j = 0; j < N; j++) d[i][j] = min(d[i][j], d[i][k]\
+    \ + d[k][j]);\n}\n"
   code: "#pragma once\n\n\n\n#include \"../graph/graph-template.hpp\"\n\n// i : d[i][i]\
     \ < 0 exists -> negative cycle\ntemplate <typename T>\nvoid warshall_floyd(T&\
     \ d) {\n  if((int)d.size() == 0) return;\n  int N = d[0].size();\n  for (int i\
@@ -63,7 +63,7 @@ data:
   isVerificationFile: false
   path: shortest-path/warshall-floyd.hpp
   requiredBy: []
-  timestamp: '2024-05-03 23:21:26+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-unit-test/semiring.test.cpp

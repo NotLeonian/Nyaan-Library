@@ -28,7 +28,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/set-function/subset-convolution.md
     document_title: Subset Convolution
     links: []
   bundledCode: "#line 2 \"set-function/subset-convolution.hpp\"\n\n#include <array>\n\
@@ -57,8 +56,7 @@ data:
     \    }\n      A[i].swap(c);\n    }\n  }\n\n  vector<mint> multiply(const vector<mint>&\
     \ a, const vector<mint>& b) {\n    vector<fps> A = lift(a), B = lift(b);\n   \
     \ zeta(A), zeta(B);\n    prod(A, B);\n    mobius(A);\n    return unlift(A);\n\
-    \  }\n};\n\n/**\n * @brief Subset Convolution\n * @docs docs/set-function/subset-convolution.md\n\
-    \ */\n"
+    \  }\n};\n\n/**\n * @brief Subset Convolution\n */\n"
   code: "#pragma once\n\n#include <array>\n#include <vector>\nusing namespace std;\n\
     \ntemplate <typename mint, int _s>\nstruct SubsetConvolution {\n  using fps =\
     \ array<mint, _s + 1>;\n  static constexpr int s = _s;\n  vector<int> pc;\n\n\
@@ -84,8 +82,7 @@ data:
     \ * B[i][k];\n        }\n      }\n      A[i].swap(c);\n    }\n  }\n\n  vector<mint>\
     \ multiply(const vector<mint>& a, const vector<mint>& b) {\n    vector<fps> A\
     \ = lift(a), B = lift(b);\n    zeta(A), zeta(B);\n    prod(A, B);\n    mobius(A);\n\
-    \    return unlift(A);\n  }\n};\n\n/**\n * @brief Subset Convolution\n * @docs\
-    \ docs/set-function/subset-convolution.md\n */\n"
+    \    return unlift(A);\n  }\n};\n\n/**\n * @brief Subset Convolution\n */\n"
   dependsOn: []
   isVerificationFile: false
   path: set-function/subset-convolution.hpp
@@ -93,7 +90,7 @@ data:
   - set-function/log-of-set-power-series.hpp
   - set-function/exp-of-set-power-series.hpp
   - set-function/polynomial-composite-set-power-series.hpp
-  timestamp: '2023-05-27 23:17:31+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-graph/yosupo-log-of-set-power-series.test.cpp
@@ -102,11 +99,9 @@ data:
   - verify/verify-yosupo-math/yosupo-subset-convolution.test.cpp
 documentation_of: set-function/subset-convolution.hpp
 layout: document
-redirect_from:
-- /library/set-function/subset-convolution.hpp
-- /library/set-function/subset-convolution.hpp.html
 title: Subset Convolution
 ---
+
 
 ## Subset Convolution
 

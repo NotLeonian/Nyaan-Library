@@ -36,12 +36,11 @@ data:
     \ >> 1); }\n\n  int get_state() { return int(history.size() >> 1); }\n\n  void\
     \ rollback(int state = -1) {\n    if (state == -1) state = inner_snap;\n    state\
     \ <<= 1;\n    assert(state <= (int)history.size());\n    while (state < (int)history.size())\
-    \ undo();\n  }\n};\n\n/**\n * @brief Rollback\u3064\u304DUnion Find\n * @docs\
-    \ docs/data-structure/rollback-union-find.md\n */\n#line 2 \"hashmap/hashmap.hpp\"\
-    \n\n#line 2 \"hashmap/hashmap-base.hpp\"\n\n#include <cstdint>\nusing namespace\
-    \ std;\n\nnamespace HashMapImpl {\nusing u32 = uint32_t;\nusing u64 = uint64_t;\n\
-    \ntemplate <typename Key, typename Data>\nstruct HashMapBase;\n\ntemplate <typename\
-    \ Key, typename Data>\nstruct itrB\n    : iterator<bidirectional_iterator_tag,\
+    \ undo();\n  }\n};\n\n/**\n * @brief Rollback\u3064\u304DUnion Find\n */\n#line\
+    \ 2 \"hashmap/hashmap.hpp\"\n\n#line 2 \"hashmap/hashmap-base.hpp\"\n\n#include\
+    \ <cstdint>\nusing namespace std;\n\nnamespace HashMapImpl {\nusing u32 = uint32_t;\n\
+    using u64 = uint64_t;\n\ntemplate <typename Key, typename Data>\nstruct HashMapBase;\n\
+    \ntemplate <typename Key, typename Data>\nstruct itrB\n    : iterator<bidirectional_iterator_tag,\
     \ Data, ptrdiff_t, Data*, Data&> {\n  using base =\n      iterator<bidirectional_iterator_tag,\
     \ Data, ptrdiff_t, Data*, Data&>;\n  using ptr = typename base::pointer;\n  using\
     \ ref = typename base::reference;\n\n  u32 i;\n  HashMapBase<Key, Data>* p;\n\n\
@@ -157,15 +156,14 @@ data:
     \ (base::cap - 1);\n    }\n  }\n\n  typename base::itr emplace(const Key& key,\
     \ const Val& val) {\n    return base::insert(Data(key, val));\n  }\n};\n\n/*\n\
     \ * @brief \u30CF\u30C3\u30B7\u30E5\u30DE\u30C3\u30D7(\u9023\u60F3\u914D\u5217\
-    )\n * @docs docs/hashmap/hashmap.md\n **/\n#line 5 \"graph/offline-dynamic-connectivity.hpp\"\
-    \n\nstruct OffLineDynamicConnectivity {\n  int N, Q, segsz;\n  RollbackUnionFind\
-    \ uf;\n  vector<vector<pair<int, int>>> seg, qadd, qdel;\n  HashMap<pair<int,\
-    \ int>, pair<int, int>> cnt;\n\n  OffLineDynamicConnectivity(int n, int q)\n \
-    \     : N(n), Q(q), uf(n), qadd(q), qdel(q) {\n    segsz = 1;\n    while (segsz\
-    \ < Q) segsz *= 2;\n    seg.resize(segsz * 2);\n  }\n\n  void add_edge(int t,\
-    \ int u, int v) { qadd[t].emplace_back(u, v); }\n  void del_edge(int t, int u,\
-    \ int v) { qdel[t].emplace_back(u, v); }\n\n  void build() {\n    for (int i =\
-    \ 0; i < Q; i++) {\n      for (auto& e : qadd[i]) {\n        auto& dat = cnt[e];\n\
+    )\n **/\n#line 5 \"graph/offline-dynamic-connectivity.hpp\"\n\nstruct OffLineDynamicConnectivity\
+    \ {\n  int N, Q, segsz;\n  RollbackUnionFind uf;\n  vector<vector<pair<int, int>>>\
+    \ seg, qadd, qdel;\n  HashMap<pair<int, int>, pair<int, int>> cnt;\n\n  OffLineDynamicConnectivity(int\
+    \ n, int q)\n      : N(n), Q(q), uf(n), qadd(q), qdel(q) {\n    segsz = 1;\n \
+    \   while (segsz < Q) segsz *= 2;\n    seg.resize(segsz * 2);\n  }\n\n  void add_edge(int\
+    \ t, int u, int v) { qadd[t].emplace_back(u, v); }\n  void del_edge(int t, int\
+    \ u, int v) { qdel[t].emplace_back(u, v); }\n\n  void build() {\n    for (int\
+    \ i = 0; i < Q; i++) {\n      for (auto& e : qadd[i]) {\n        auto& dat = cnt[e];\n\
     \        if (dat.second++ == 0) dat.first = i;\n      }\n      for (auto& e :\
     \ qdel[i]) {\n        auto& dat = cnt[e];\n        if (--dat.second == 0) segment(e,\
     \ dat.first, i);\n      }\n    }\n    for (auto& [e, dat] : cnt) {\n      if (dat.second\
@@ -218,7 +216,7 @@ data:
   isVerificationFile: false
   path: graph/offline-dynamic-connectivity.hpp
   requiredBy: []
-  timestamp: '2023-03-25 00:28:17+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ds/yosupo-offline-dynamic-connectivity.test.cpp

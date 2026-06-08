@@ -10,7 +10,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/multiplicative-function/prime-counting.md
     document_title: "\u7D20\u6570\u30AB\u30A6\u30F3\u30C8( $\\mathrm{O}(\\frac{N^{\\\
       frac{3}{4}}}{\\log N})$ )"
     links: []
@@ -24,7 +23,7 @@ data:
     \ / x] - pi;\n  }\n  return {ns, h};\n}\n\nlong long prime_counting(long long\
     \ N) {\n  if (N < 2) return 0;\n  return pi_table(N).second[1];\n}\n\n/**\n *\
     \ @brief \u7D20\u6570\u30AB\u30A6\u30F3\u30C8( $\\mathrm{O}(\\frac{N^{\\frac{3}{4}}}{\\\
-    log N})$ )\n * @docs docs/multiplicative-function/prime-counting.md\n */\n"
+    log N})$ )\n */\n"
   code: "#pragma once\n\n\n\npair<vector<long long>, vector<long long>> pi_table(long\
     \ long N) {\n  using i64 = long long;\n  vector<i64> ns{0};\n  for (i64 i = N;\
     \ i > 0; i = N / (N / i + 1)) ns.push_back(i);\n  vector<i64> h(ns);\n  for (auto\
@@ -34,24 +33,21 @@ data:
     \      h[i] -= h[i * x <= sq ? i * x : nsz - n / x] - pi;\n  }\n  return {ns,\
     \ h};\n}\n\nlong long prime_counting(long long N) {\n  if (N < 2) return 0;\n\
     \  return pi_table(N).second[1];\n}\n\n/**\n * @brief \u7D20\u6570\u30AB\u30A6\
-    \u30F3\u30C8( $\\mathrm{O}(\\frac{N^{\\frac{3}{4}}}{\\log N})$ )\n * @docs docs/multiplicative-function/prime-counting.md\n\
-    \ */\n"
+    \u30F3\u30C8( $\\mathrm{O}(\\frac{N^{\\frac{3}{4}}}{\\log N})$ )\n */\n"
   dependsOn: []
   isVerificationFile: false
   path: multiplicative-function/prime-counting.hpp
   requiredBy: []
-  timestamp: '2020-12-05 07:59:51+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-math/yosupo-counting-primes.test.cpp
 documentation_of: multiplicative-function/prime-counting.hpp
 layout: document
-redirect_from:
-- /library/multiplicative-function/prime-counting.hpp
-- /library/multiplicative-function/prime-counting.hpp.html
 title: "\u7D20\u6570\u30AB\u30A6\u30F3\u30C8( $\\mathrm{O}(\\frac{N^{\\frac{3}{4}}}{\\\
   log N})$ )"
 ---
+
 ## 素数の個数$\pi(N)$の高速計算
 
 $\pi(N)$を$\mathrm{O}\left(\frac{N^{\frac{3}{4}}}{\log N}\right)$で計算するライブラリ。

@@ -25,7 +25,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/data-structure/hash-map-variable-length.md
     document_title: "Hash Map(\u53EF\u5909\u9577\u7248)"
     links: []
   bundledCode: "#line 2 \"data-structure/hash-map-variable-length.hpp\"\n\ntemplate\
@@ -58,8 +57,7 @@ data:
     \ < cap; ++i)\n      if (flag[i]) ret.emplace_back(keys[i], vals[i]);\n    return\
     \ ret;\n  }\n\n  int size() const { return s; }\n\n  // set default_value\n  void\
     \ set_default(const Val& val) { DefaultValue = val; }\n};\n\n/**\n * @brief Hash\
-    \ Map(\u53EF\u5909\u9577\u7248)\n * @docs docs/data-structure/hash-map-variable-length.md\n\
-    \ */\n"
+    \ Map(\u53EF\u5909\u9577\u7248)\n */\n"
   code: "#pragma once\n\ntemplate <typename Key, typename Val>\nstruct HashMap {\n\
     \  using u32 = uint32_t;\n  using u64 = uint64_t;\n\n  u32 cap, s;\n  vector<Key>\
     \ keys;\n  vector<Val> vals;\n  vector<bool> flag;\n  u64 r;\n  u32 shift;\n \
@@ -89,8 +87,7 @@ data:
     \ < cap; ++i)\n      if (flag[i]) ret.emplace_back(keys[i], vals[i]);\n    return\
     \ ret;\n  }\n\n  int size() const { return s; }\n\n  // set default_value\n  void\
     \ set_default(const Val& val) { DefaultValue = val; }\n};\n\n/**\n * @brief Hash\
-    \ Map(\u53EF\u5909\u9577\u7248)\n * @docs docs/data-structure/hash-map-variable-length.md\n\
-    \ */\n"
+    \ Map(\u53EF\u5909\u9577\u7248)\n */\n"
   dependsOn: []
   isVerificationFile: false
   path: data-structure/hash-map-variable-length.hpp
@@ -98,7 +95,7 @@ data:
   - segment-tree/dynamic-li-chao-tree.hpp
   - data-structure-2d/dynamic-binary-indexed-tree-2d.hpp
   - data-structure/dynamic-binary-indexed-tree.hpp
-  timestamp: '2026-05-31 17:09:38+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ds/yosupo-dynamic-li-chao-tree.test.cpp
@@ -106,11 +103,9 @@ data:
   - verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-bit2d.test.cpp
 documentation_of: data-structure/hash-map-variable-length.hpp
 layout: document
-redirect_from:
-- /library/data-structure/hash-map-variable-length.hpp
-- /library/data-structure/hash-map-variable-length.hpp.html
 title: "Hash Map(\u53EF\u5909\u9577\u7248)"
 ---
+
 ## Hash Map
 
 ハッシュマップとは、$\mathrm{O}(1)$で一点更新・一点取得を行うことのできるデータ構造である。

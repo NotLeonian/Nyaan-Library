@@ -16,7 +16,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/data-structure/dynamic-binary-indexed-tree.md
     document_title: "\u52D5\u7684Binary Indexed Tree"
     links: []
   bundledCode: "#line 2 \"data-structure/dynamic-binary-indexed-tree.hpp\"\n\n#line\
@@ -49,20 +48,19 @@ data:
     \ < cap; ++i)\n      if (flag[i]) ret.emplace_back(keys[i], vals[i]);\n    return\
     \ ret;\n  }\n\n  int size() const { return s; }\n\n  // set default_value\n  void\
     \ set_default(const Val& val) { DefaultValue = val; }\n};\n\n/**\n * @brief Hash\
-    \ Map(\u53EF\u5909\u9577\u7248)\n * @docs docs/data-structure/hash-map-variable-length.md\n\
-    \ */\n#line 4 \"data-structure/dynamic-binary-indexed-tree.hpp\"\n\ntemplate <typename\
-    \ S, typename T>\nstruct DynamicFenwickTree {\n  S N;\n  HashMap<S, T> data;\n\
-    \  explicit DynamicFenwickTree() = default;\n  explicit DynamicFenwickTree(S size)\
-    \ { N = size + 1; }\n\n  void add(S k, T x) {\n    for (++k; k < N; k += k & -k)\
-    \ data[k] += x;\n  }\n\n  // [0, k)\n  T sum(S k) const {\n    if (k < 0) return\
-    \ 0;\n    T ret = T();\n    for (; k > 0; k -= k & -k) {\n      const T* p = data.find(k);\n\
-    \      ret += p ? *p : T();\n    }\n    return ret;\n  }\n\n  // [a, b)\n  T sum(S\
-    \ a, S b) const { return sum(b) - sum(a); }\n\n  T operator[](S k) const { return\
-    \ sum(k + 1) - sum(k); }\n\n  S lower_bound(T w) {\n    if (w <= 0) return 0;\n\
-    \    S x = 0;\n    for (S k = 1 << __lg(N); k; k >>= 1) {\n      if (x + k <=\
-    \ N - 1 && data[x + k] < w) {\n        w -= data[x + k];\n        x += k;\n  \
-    \    }\n    }\n    return x;\n  }\n};\n\n/**\n * @brief \u52D5\u7684Binary Indexed\
-    \ Tree\n * @docs docs/data-structure/dynamic-binary-indexed-tree.md\n */\n"
+    \ Map(\u53EF\u5909\u9577\u7248)\n */\n#line 4 \"data-structure/dynamic-binary-indexed-tree.hpp\"\
+    \n\ntemplate <typename S, typename T>\nstruct DynamicFenwickTree {\n  S N;\n \
+    \ HashMap<S, T> data;\n  explicit DynamicFenwickTree() = default;\n  explicit\
+    \ DynamicFenwickTree(S size) { N = size + 1; }\n\n  void add(S k, T x) {\n   \
+    \ for (++k; k < N; k += k & -k) data[k] += x;\n  }\n\n  // [0, k)\n  T sum(S k)\
+    \ const {\n    if (k < 0) return 0;\n    T ret = T();\n    for (; k > 0; k -=\
+    \ k & -k) {\n      const T* p = data.find(k);\n      ret += p ? *p : T();\n  \
+    \  }\n    return ret;\n  }\n\n  // [a, b)\n  T sum(S a, S b) const { return sum(b)\
+    \ - sum(a); }\n\n  T operator[](S k) const { return sum(k + 1) - sum(k); }\n\n\
+    \  S lower_bound(T w) {\n    if (w <= 0) return 0;\n    S x = 0;\n    for (S k\
+    \ = 1 << __lg(N); k; k >>= 1) {\n      if (x + k <= N - 1 && data[x + k] < w)\
+    \ {\n        w -= data[x + k];\n        x += k;\n      }\n    }\n    return x;\n\
+    \  }\n};\n\n/**\n * @brief \u52D5\u7684Binary Indexed Tree\n */\n"
   code: "#pragma once\n\n#include \"hash-map-variable-length.hpp\"\n\ntemplate <typename\
     \ S, typename T>\nstruct DynamicFenwickTree {\n  S N;\n  HashMap<S, T> data;\n\
     \  explicit DynamicFenwickTree() = default;\n  explicit DynamicFenwickTree(S size)\
@@ -75,24 +73,22 @@ data:
     \    S x = 0;\n    for (S k = 1 << __lg(N); k; k >>= 1) {\n      if (x + k <=\
     \ N - 1 && data[x + k] < w) {\n        w -= data[x + k];\n        x += k;\n  \
     \    }\n    }\n    return x;\n  }\n};\n\n/**\n * @brief \u52D5\u7684Binary Indexed\
-    \ Tree\n * @docs docs/data-structure/dynamic-binary-indexed-tree.md\n */\n"
+    \ Tree\n */\n"
   dependsOn:
   - data-structure/hash-map-variable-length.hpp
   isVerificationFile: false
   path: data-structure/dynamic-binary-indexed-tree.hpp
   requiredBy:
   - data-structure-2d/dynamic-binary-indexed-tree-2d.hpp
-  timestamp: '2026-05-31 17:09:38+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-bit2d.test.cpp
 documentation_of: data-structure/dynamic-binary-indexed-tree.hpp
 layout: document
-redirect_from:
-- /library/data-structure/dynamic-binary-indexed-tree.hpp
-- /library/data-structure/dynamic-binary-indexed-tree.hpp.html
 title: "\u52D5\u7684Binary Indexed Tree"
 ---
+
 ## 動的Binary Indexed Tree
 
 #### 概要

@@ -1,3 +1,7 @@
+---
+title: "\u9AD8\u901FGCD"
+---
+
 ## Binary GCD
 
 高速なGCDの高速な実装に関する実験。

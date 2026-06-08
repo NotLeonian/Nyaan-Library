@@ -194,8 +194,8 @@ data:
     \ deg, FPSBackendPriority<1>{});\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>\
     \ FormalPowerSeries<mint>::exp(int deg) const {\n  return fps_exp_impl(*this,\
     \ deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief \u591A\u9805\u5F0F/\u5F62\
-    \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n * @docs docs/fps/formal-power-series.md\n\
-    \ */\n#line 2 \"fps/polynomial-interpolation.hpp\"\n\n#line 2 \"fps/multipoint-evaluation.hpp\"\
+    \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n */\n#line 2 \"\
+    fps/polynomial-interpolation.hpp\"\n\n#line 2 \"fps/multipoint-evaluation.hpp\"\
     \n\n#line 4 \"fps/multipoint-evaluation.hpp\"\n\ntemplate <typename mint>\nstruct\
     \ ProductTree {\n  using fps = FormalPowerSeries<mint>;\n  const vector<mint>\
     \ &xs;\n  vector<fps> buf;\n  int N, xsz;\n  vector<int> l, r;\n  ProductTree(const\
@@ -257,20 +257,20 @@ data:
     \ x = 0; x <= deg; x++) {\n    xs[x] = x;\n    for (int i = 0; i < N; ++i)\n \
     \     for (int j = 0; j < N; ++j) M[i][j] = m[i][j].eval(x);\n    ys[x] = M.determinant();\n\
     \  }\n  return PolynomialInterpolation<mint>(xs, ys);\n}\n\n/**\n * @brief \u591A\
-    \u9805\u5F0F\u884C\u5217\u306E\u884C\u5217\u5F0F\n * @docs docs/matrix/polynomial-matrix-determinant.md\n\
-    \ */\n#line 7 \"matrix/matrix-tree.hpp\"\n\ntemplate <typename T>\nstruct MatrixTree\
-    \ {\n  int n;\n  Matrix<T> m;\n  MatrixTree(int _n) : n(_n), m(_n) { assert(n\
-    \ > 0); }\n\n  void add(int i, int j, const T& x) {\n    if (i < n) m[i][i] +=\
-    \ x;\n    if (j < n) m[j][j] += x;\n    if (i < n and j < n) {\n      m[i][j]\
-    \ -= x;\n      m[j][i] -= x;\n    }\n  }\n\n  Matrix<T> get() const { return m;\
-    \ }\n\n  template <typename U, typename = void>\n  struct has_value_type : false_type\
-    \ {};\n  template <typename U>\n  struct has_value_type<\n      U, typename conditional<false,\
-    \ typename U::value_type, void>::type>\n      : true_type {};\n\n  template <typename\
-    \ U = T,\n            enable_if_t<has_value_type<U>::value, nullptr_t> = nullptr>\n\
-    \  T calc() {\n    return PolynomialMatrixDeterminant(m);\n  }\n  template <typename\
-    \ U = T,\n            enable_if_t<!has_value_type<U>::value, nullptr_t> = nullptr>\n\
-    \  T calc() {\n    return m.determinant();\n  }\n};\n\n/**\n * @brief \u884C\u5217\
-    \u6728\u5B9A\u7406(\u30E9\u30D7\u30E9\u30B7\u30A2\u30F3\u884C\u5217)\n */\n"
+    \u9805\u5F0F\u884C\u5217\u306E\u884C\u5217\u5F0F\n */\n#line 7 \"matrix/matrix-tree.hpp\"\
+    \n\ntemplate <typename T>\nstruct MatrixTree {\n  int n;\n  Matrix<T> m;\n  MatrixTree(int\
+    \ _n) : n(_n), m(_n) { assert(n > 0); }\n\n  void add(int i, int j, const T& x)\
+    \ {\n    if (i < n) m[i][i] += x;\n    if (j < n) m[j][j] += x;\n    if (i < n\
+    \ and j < n) {\n      m[i][j] -= x;\n      m[j][i] -= x;\n    }\n  }\n\n  Matrix<T>\
+    \ get() const { return m; }\n\n  template <typename U, typename = void>\n  struct\
+    \ has_value_type : false_type {};\n  template <typename U>\n  struct has_value_type<\n\
+    \      U, typename conditional<false, typename U::value_type, void>::type>\n \
+    \     : true_type {};\n\n  template <typename U = T,\n            enable_if_t<has_value_type<U>::value,\
+    \ nullptr_t> = nullptr>\n  T calc() {\n    return PolynomialMatrixDeterminant(m);\n\
+    \  }\n  template <typename U = T,\n            enable_if_t<!has_value_type<U>::value,\
+    \ nullptr_t> = nullptr>\n  T calc() {\n    return m.determinant();\n  }\n};\n\n\
+    /**\n * @brief \u884C\u5217\u6728\u5B9A\u7406(\u30E9\u30D7\u30E9\u30B7\u30A2\u30F3\
+    \u884C\u5217)\n */\n"
   code: "#pragma once\n\n\n\n#include \"matrix.hpp\"\n#include \"polynomial-matrix-determinant.hpp\"\
     \n\ntemplate <typename T>\nstruct MatrixTree {\n  int n;\n  Matrix<T> m;\n  MatrixTree(int\
     \ _n) : n(_n), m(_n) { assert(n > 0); }\n\n  void add(int i, int j, const T& x)\
@@ -296,7 +296,7 @@ data:
   isVerificationFile: false
   path: matrix/matrix-tree.hpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yuki/yuki-1303.test.cpp

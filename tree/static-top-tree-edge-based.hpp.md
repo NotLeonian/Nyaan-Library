@@ -49,12 +49,11 @@ data:
     \ {\n    int x, y;\n    cin >> x >> y;\n    T c;\n    if (is_weighted)\n     \
     \ cin >> c;\n    else\n      c = 1;\n    if (is_1origin) x--, y--;\n    d[x][y]\
     \ = c;\n    if (!is_directed) d[y][x] = c;\n  }\n  return d;\n}\n\n/**\n * @brief\
-    \ \u30B0\u30E9\u30D5\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\n * @docs docs/graph/graph-template.md\n\
-    \ */\n#line 4 \"tree/convert-tree.hpp\"\n\ntemplate <typename T>\nstruct has_cost\
-    \ {\n private:\n  template <typename U>\n  static auto confirm(U u) -> decltype(u.cost,\
-    \ std::true_type());\n  static auto confirm(...) -> std::false_type;\n\n public:\n\
-    \  enum : bool { value = decltype(confirm(std::declval<T>()))::value };\n};\n\n\
-    template <typename T>\nvector<vector<T>> inverse_tree(const vector<vector<T>>&\
+    \ \u30B0\u30E9\u30D5\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\n */\n#line 4 \"tree/convert-tree.hpp\"\
+    \n\ntemplate <typename T>\nstruct has_cost {\n private:\n  template <typename\
+    \ U>\n  static auto confirm(U u) -> decltype(u.cost, std::true_type());\n  static\
+    \ auto confirm(...) -> std::false_type;\n\n public:\n  enum : bool { value = decltype(confirm(std::declval<T>()))::value\
+    \ };\n};\n\ntemplate <typename T>\nvector<vector<T>> inverse_tree(const vector<vector<T>>&\
     \ g) {\n  int N = (int)g.size();\n  vector<vector<T>> rg(N);\n  for (int i = 0;\
     \ i < N; i++) {\n    for (auto& e : g[i]) {\n      if constexpr (is_same<T, int>::value)\
     \ {\n        rg[e].push_back(i);\n      } else if constexpr (has_cost<T>::value)\
@@ -104,27 +103,27 @@ data:
     \      if (down[a] < down[b]) swap(a, b);\n      a = par[nxt[a]];\n    }\n   \
     \ return depth[a] < depth[b] ? a : b;\n  }\n\n  int dist(int a, int b) { return\
     \ depth[a] + depth[b] - depth[lca(a, b)] * 2; }\n};\n\n/**\n * @brief Heavy Light\
-    \ Decomposition(\u91CD\u8EFD\u5206\u89E3)\n * @docs docs/tree/heavy-light-decomposition.md\n\
-    \ */\n#line 10 \"tree/static-top-tree-edge-based.hpp\"\n\nnamespace StaticTopTreeImpl\
-    \ {\n\nenum Type { Edge, Compress, Rake };\n\ntemplate <typename G>\nstruct StaticTopTree\
-    \ {\n  const HeavyLightDecomposition<G>& hld;\n  vector<vector<int>> g;\n  int\
-    \ root;     // \u5143\u306E\u6728\u306E root\n  int tt_root;  // top tree \u306E\
-    \ root\n  vector<int> P, L, R;\n  vector<Type> T;\n\n  StaticTopTree(const HeavyLightDecomposition<G>&\
-    \ _hld) : hld(_hld) {\n    root = hld.root;\n    g = rooted_tree(hld.g, root);\n\
-    \    int n = g.size();\n    P.resize(n, -1), L.resize(n, -1), R.resize(n, -1);\n\
-    \    T.resize(n, Type::Edge);\n    build();\n  }\n\n private:\n  int add(int l,\
-    \ int r, Type t) {\n    if (t == Type::Compress or t == Type::Rake) {\n      assert(l\
-    \ != -1 and r != -1);\n    }\n    assert(t != Type::Edge);\n    int k = P.size();\n\
-    \    P.push_back(-1), L.push_back(l), R.push_back(r), T.push_back(t);\n    if\
-    \ (l != -1) P[l] = k;\n    if (r != -1) P[r] = k;\n    return k;\n  }\n  pair<int,\
-    \ int> merge(const vector<pair<int, int>>& a, Type t) {\n    assert(!a.empty());\n\
-    \    if (a.size() == 1) return a[0];\n    int sum_s = 0;\n    for (auto& [_, s]\
-    \ : a) sum_s += s;\n    vector<pair<int, int>> b, c;\n    for (auto& [i, s] :\
-    \ a) {\n      (sum_s > s ? b : c).emplace_back(i, s);\n      sum_s -= s * 2;\n\
-    \    }\n    auto [i, si] = merge(b, t);\n    auto [j, sj] = merge(c, t);\n   \
-    \ return {add(i, j, t), si + sj};\n  }\n  pair<int, int> compress(int i) {\n \
-    \   vector<pair<int, int>> chs{{i, 1}};\n    while (!g[i].empty()) {\n      chs.push_back(rake(i));\n\
-    \      i = g[i][0];\n    }\n    return merge(chs, Type::Compress);\n  }\n  pair<int,\
+    \ Decomposition(\u91CD\u8EFD\u5206\u89E3)\n */\n#line 10 \"tree/static-top-tree-edge-based.hpp\"\
+    \n\nnamespace StaticTopTreeImpl {\n\nenum Type { Edge, Compress, Rake };\n\ntemplate\
+    \ <typename G>\nstruct StaticTopTree {\n  const HeavyLightDecomposition<G>& hld;\n\
+    \  vector<vector<int>> g;\n  int root;     // \u5143\u306E\u6728\u306E root\n\
+    \  int tt_root;  // top tree \u306E root\n  vector<int> P, L, R;\n  vector<Type>\
+    \ T;\n\n  StaticTopTree(const HeavyLightDecomposition<G>& _hld) : hld(_hld) {\n\
+    \    root = hld.root;\n    g = rooted_tree(hld.g, root);\n    int n = g.size();\n\
+    \    P.resize(n, -1), L.resize(n, -1), R.resize(n, -1);\n    T.resize(n, Type::Edge);\n\
+    \    build();\n  }\n\n private:\n  int add(int l, int r, Type t) {\n    if (t\
+    \ == Type::Compress or t == Type::Rake) {\n      assert(l != -1 and r != -1);\n\
+    \    }\n    assert(t != Type::Edge);\n    int k = P.size();\n    P.push_back(-1),\
+    \ L.push_back(l), R.push_back(r), T.push_back(t);\n    if (l != -1) P[l] = k;\n\
+    \    if (r != -1) P[r] = k;\n    return k;\n  }\n  pair<int, int> merge(const\
+    \ vector<pair<int, int>>& a, Type t) {\n    assert(!a.empty());\n    if (a.size()\
+    \ == 1) return a[0];\n    int sum_s = 0;\n    for (auto& [_, s] : a) sum_s +=\
+    \ s;\n    vector<pair<int, int>> b, c;\n    for (auto& [i, s] : a) {\n      (sum_s\
+    \ > s ? b : c).emplace_back(i, s);\n      sum_s -= s * 2;\n    }\n    auto [i,\
+    \ si] = merge(b, t);\n    auto [j, sj] = merge(c, t);\n    return {add(i, j, t),\
+    \ si + sj};\n  }\n  pair<int, int> compress(int i) {\n    vector<pair<int, int>>\
+    \ chs{{i, 1}};\n    while (!g[i].empty()) {\n      chs.push_back(rake(i));\n \
+    \     i = g[i][0];\n    }\n    return merge(chs, Type::Compress);\n  }\n  pair<int,\
     \ int> rake(int i) {\n    vector<pair<int, int>> chs{{g[i][0], 1}};\n    for (int\
     \ j = 1; j < (int)g[i].size(); j++) chs.push_back(compress(g[i][j]));\n    return\
     \ merge(chs, Type::Rake);\n  }\n  void build() {\n    auto [i, n] = compress(root);\n\
@@ -204,7 +203,7 @@ data:
   isVerificationFile: false
   path: tree/static-top-tree-edge-based.hpp
   requiredBy: []
-  timestamp: '2024-05-04 15:53:37+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: tree/static-top-tree-edge-based.hpp

@@ -10,7 +10,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/data-structure/slide-window-aggregation.md
     document_title: Slide Window Aggrigation
     links: []
   bundledCode: "#line 2 \"data-structure/slide-window-aggregation.hpp\"\n\n#include\
@@ -25,8 +24,7 @@ data:
     \  push_s0(x);\n      transfer();\n    } else {\n      push_s1(x);\n    }\n  }\n\
     \  void pop() {\n    if (a0.empty()) transfer();\n    a0.pop_back();\n    r0.pop_back();\n\
     \    f0 = r0.empty() ? I : r0.back();\n  }\n  T query() { return f(f0, f1); }\n\
-    };\n\n/**\n * @brief Slide Window Aggrigation\n * @docs docs/data-structure/slide-window-aggregation.md\n\
-    \ */\n"
+    };\n\n/**\n * @brief Slide Window Aggrigation\n */\n"
   code: "#pragma once\n\n#include <vector>\nusing namespace std;\n\ntemplate <typename\
     \ T, typename F>\nstruct SlideWindowAggregation {\n  vector<T> a0, a1, r0, r1;\n\
     \  F f;\n  T I, f0, f1;\n\n  SlideWindowAggregation(F _f, T _i) : f(_f), I(_i),\
@@ -39,22 +37,20 @@ data:
     \   push_s1(x);\n    }\n  }\n  void pop() {\n    if (a0.empty()) transfer();\n\
     \    a0.pop_back();\n    r0.pop_back();\n    f0 = r0.empty() ? I : r0.back();\n\
     \  }\n  T query() { return f(f0, f1); }\n};\n\n/**\n * @brief Slide Window Aggrigation\n\
-    \ * @docs docs/data-structure/slide-window-aggregation.md\n */\n"
+    \ */\n"
   dependsOn: []
   isVerificationFile: false
   path: data-structure/slide-window-aggregation.hpp
   requiredBy: []
-  timestamp: '2023-09-02 22:21:41+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ds/yosupo-swag.test.cpp
 documentation_of: data-structure/slide-window-aggregation.hpp
 layout: document
-redirect_from:
-- /library/data-structure/slide-window-aggregation.hpp
-- /library/data-structure/slide-window-aggregation.hpp.html
 title: Slide Window Aggrigation
 ---
+
 ## Slide Window Aggrigation
 
 #### 概要

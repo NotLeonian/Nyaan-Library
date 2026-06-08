@@ -251,10 +251,9 @@ data:
     \ x = 0;\n    for (int k = 1 << __lg(N); k; k >>= 1) {\n      if (x + k <= N -\
     \ 1 && data[x + k] <= w) {\n        w -= data[x + k];\n        x += k;\n     \
     \ }\n    }\n    return x;\n  }\n};\n\n/**\n * @brief Binary Indexed Tree(Fenwick\
-    \ Tree)\n * @docs docs/data-structure/binary-indexed-tree.md\n */\n#line 2 \"\
-    misc/compress.hpp\"\n\ntemplate <class T>\nstruct compress {\n  vector<T> xs;\n\
-    \  compress(const vector<T>& v) {\n    xs.reserve(v.size());\n    for (T x : v)\
-    \ xs.push_back(x);\n    sort(xs.begin(), xs.end());\n    xs.erase(unique(xs.begin(),\
+    \ Tree)\n */\n#line 2 \"misc/compress.hpp\"\n\ntemplate <class T>\nstruct compress\
+    \ {\n  vector<T> xs;\n  compress(const vector<T>& v) {\n    xs.reserve(v.size());\n\
+    \    for (T x : v) xs.push_back(x);\n    sort(xs.begin(), xs.end());\n    xs.erase(unique(xs.begin(),\
     \ xs.end()), xs.end());\n  }\n  int get(const T& x) const {\n    return lower_bound(xs.begin(),\
     \ xs.end(), x) - xs.begin();\n  }\n  inline int operator()(const T& x) const {\
     \ return get(x); }\n  T operator[](int i) { return xs[i]; }\n  int size() const\
@@ -347,11 +346,11 @@ data:
     \ 0;\n    for (auto idx : order) {\n      while (nl > left[idx]) add_left(--nl);\n\
     \      while (nr < right[idx]) add_right(nr++);\n      while (nl < left[idx])\
     \ delete_left(nl++);\n      while (nr > right[idx]) delete_right(--nr);\n    \
-    \  rem(idx);\n    }\n  }\n};\n\n/**\n * @brief Mo's algorithm\n * @docs docs/misc/mo.md\n\
-    \ */\n#line 8 \"verify/verify-yosupo-ds/yosupo-static-range-inversions-query.test.cpp\"\
-    \n\nusing namespace Nyaan; void Nyaan::solve() {\n  int N, Q;\n  rd(N);\n  rd(Q);\n\
-    \  vi a(N);\n  rep(i, N) rd(a[i]);\n  Mo mo(N, Q);\n  rep(i, Q) {\n    int l,\
-    \ r;\n    rd(l);\n    rd(r);\n    mo.insert(l, r);\n  }\n  compress<int> zip(a);\n\
+    \  rem(idx);\n    }\n  }\n};\n\n/**\n * @brief Mo's algorithm\n */\n#line 8 \"\
+    verify/verify-yosupo-ds/yosupo-static-range-inversions-query.test.cpp\"\n\nusing\
+    \ namespace Nyaan; void Nyaan::solve() {\n  int N, Q;\n  rd(N);\n  rd(Q);\n  vi\
+    \ a(N);\n  rep(i, N) rd(a[i]);\n  Mo mo(N, Q);\n  rep(i, Q) {\n    int l, r;\n\
+    \    rd(l);\n    rd(r);\n    mo.insert(l, r);\n  }\n  compress<int> zip(a);\n\
     \  BinaryIndexedTree<int> bit(zip.size() + 1);\n  rep(i, N) a[i] = zip.get(a[i]);\n\
     \n  ll cnt = 0;\n  vl ans(Q);\n  auto addleft = [&](int idx) {\n    cnt += bit.sum(0,\
     \ a[idx] - 1);\n    bit.add(a[idx], 1);\n  };\n  auto addright = [&](int idx)\
@@ -391,7 +390,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-ds/yosupo-static-range-inversions-query.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-ds/yosupo-static-range-inversions-query.test.cpp

@@ -387,26 +387,26 @@ data:
     \ u64 modfma(const u64 &a, const u64 &b, const u64 &c) {\n    u128 d = u128(a)\
     \ * b + c;\n    u64 ret = (d >> 61) + (u64(d) & md);\n    return ret >= md ? ret\
     \ - md : ret;\n  }\n};\n\n}  // namespace internal\n\n/**\n * @brief \u30CF\u30C3\
-    \u30B7\u30E5\u69CB\u9020\u4F53\n * @docs docs/internal/internal-hash.md\n */\n\
-    #line 10 \"tree/rooted-tree-hash.hpp\"\n\ntemplate <typename G>\nstruct RootedTreeHash\
-    \ {\n  using Hash = internal::Hash<1>;\n\n  const G& g;\n  int n;\n  vector<Hash>\
-    \ hash;\n  vector<int> depth;\n\n  static vector<Hash>& xs() {\n    static vector<Hash>\
-    \ _xs;\n    return _xs;\n  }\n\n  RootedTreeHash(const G& _g, int root = 0) :\
-    \ g(_g), n(g.size()) {\n    hash.resize(n);\n    depth.resize(n, 0);\n    while\
-    \ ((int)xs().size() <= n) xs().push_back(Hash::get_basis());\n    dfs(root, -1);\n\
-    \  }\n\n private:\n  int dfs(int c, int p) {\n    int dep = 0;\n    for (auto&\
-    \ d : g[c]) {\n      if (d != p) dep = max(dep, dfs(d, c) + 1);\n    }\n    Hash\
-    \ x = xs()[dep], h = Hash::set(1);\n    for (auto& d : g[c]) {\n      if (d !=\
-    \ p) h = h * (x + hash[d]);\n    }\n    hash[c] = h;\n    return depth[c] = dep;\n\
-    \  }\n};\n\n/**\n * @brief \u6839\u4ED8\u304D\u6728\u306E\u30CF\u30C3\u30B7\u30E5\
-    \n */\n#line 8 \"verify/verify-yosupo-graph/yosupo-tree-hash.test.cpp\"\nusing\
-    \ namespace Nyaan;\n\nvoid q() {\n  ini(N);\n  vvi g(N);\n  for (int i = 1; i\
-    \ < N; i++) {\n    ini(p);\n    g[p].push_back(i);\n  }\n  RootedTreeHash th{g};\n\
-    \  UnerasableHashMap<typename RootedTreeHash<vvi>::Hash, int> mp;\n  int K = 0;\n\
-    \  vi ans(N, -1);\n\n  rep(i, N) {\n    if (mp.count(th.hash[i]) == 0) {\n   \
-    \   mp[th.hash[i]] = ans[i] = K++;\n    } else {\n      ans[i] = mp[th.hash[i]];\n\
-    \    }\n  }\n  out(K);\n  rep(i, N) cout << ans[i] << \" \";\n}\n\nvoid Nyaan::solve()\
-    \ {\n  int t = 1;\n  // in(t);\n  while (t--) q();\n}\n"
+    \u30B7\u30E5\u69CB\u9020\u4F53\n */\n#line 10 \"tree/rooted-tree-hash.hpp\"\n\n\
+    template <typename G>\nstruct RootedTreeHash {\n  using Hash = internal::Hash<1>;\n\
+    \n  const G& g;\n  int n;\n  vector<Hash> hash;\n  vector<int> depth;\n\n  static\
+    \ vector<Hash>& xs() {\n    static vector<Hash> _xs;\n    return _xs;\n  }\n\n\
+    \  RootedTreeHash(const G& _g, int root = 0) : g(_g), n(g.size()) {\n    hash.resize(n);\n\
+    \    depth.resize(n, 0);\n    while ((int)xs().size() <= n) xs().push_back(Hash::get_basis());\n\
+    \    dfs(root, -1);\n  }\n\n private:\n  int dfs(int c, int p) {\n    int dep\
+    \ = 0;\n    for (auto& d : g[c]) {\n      if (d != p) dep = max(dep, dfs(d, c)\
+    \ + 1);\n    }\n    Hash x = xs()[dep], h = Hash::set(1);\n    for (auto& d :\
+    \ g[c]) {\n      if (d != p) h = h * (x + hash[d]);\n    }\n    hash[c] = h;\n\
+    \    return depth[c] = dep;\n  }\n};\n\n/**\n * @brief \u6839\u4ED8\u304D\u6728\
+    \u306E\u30CF\u30C3\u30B7\u30E5\n */\n#line 8 \"verify/verify-yosupo-graph/yosupo-tree-hash.test.cpp\"\
+    \nusing namespace Nyaan;\n\nvoid q() {\n  ini(N);\n  vvi g(N);\n  for (int i =\
+    \ 1; i < N; i++) {\n    ini(p);\n    g[p].push_back(i);\n  }\n  RootedTreeHash\
+    \ th{g};\n  UnerasableHashMap<typename RootedTreeHash<vvi>::Hash, int> mp;\n \
+    \ int K = 0;\n  vi ans(N, -1);\n\n  rep(i, N) {\n    if (mp.count(th.hash[i])\
+    \ == 0) {\n      mp[th.hash[i]] = ans[i] = K++;\n    } else {\n      ans[i] =\
+    \ mp[th.hash[i]];\n    }\n  }\n  out(K);\n  rep(i, N) cout << ans[i] << \" \"\
+    ;\n}\n\nvoid Nyaan::solve() {\n  int t = 1;\n  // in(t);\n  while (t--) q();\n\
+    }\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/rooted_tree_isomorphism_classification\"\
     \n//\n#include \"../../template/template.hpp\"\n//\n#include \"../../hashmap/hashmap-unerasable.hpp\"\
     \n//\n#include \"../../tree/rooted-tree-hash.hpp\"\nusing namespace Nyaan;\n\n\
@@ -433,7 +433,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-graph/yosupo-tree-hash.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-graph/yosupo-tree-hash.test.cpp

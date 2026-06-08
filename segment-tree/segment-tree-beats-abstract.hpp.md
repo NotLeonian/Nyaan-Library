@@ -13,7 +13,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/segment-tree/segment-tree-beats-abstract.md
     document_title: "\u62BD\u8C61\u5316Segment Tree Beats!"
     links: []
   bundledCode: "#line 2 \"segment-tree/segment-tree-beats-abstract.hpp\"\n\ntemplate\
@@ -39,8 +38,7 @@ data:
     \ v[2 * i + 1]); }\n  template <typename T>\n  void _apply(int i, T x) {\n   \
     \ bool res = v[i].apply(x);\n    if (i < n && res == false) {\n      _push(i);\n\
     \      _apply(i * 2 + 0, x);\n      _apply(i * 2 + 1, x);\n      _update(i);\n\
-    \    }\n  }\n};\n\n/**\n * @brief \u62BD\u8C61\u5316Segment Tree Beats!\n * @docs\
-    \ docs/segment-tree/segment-tree-beats-abstract.md\n */\n"
+    \    }\n  }\n};\n\n/**\n * @brief \u62BD\u8C61\u5316Segment Tree Beats!\n */\n"
   code: "#pragma once\n\ntemplate <typename Node>\nstruct Beats {\n  int n, log;\n\
     \  vector<Node> v;\n\n  template <typename T>\n  Beats(vector<T>& vc) {\n    n\
     \ = 1, log = 0;\n    while (n < (int)vc.size()) n <<= 1, log++;\n    v.resize(2\
@@ -63,24 +61,21 @@ data:
     \ v[2 * i + 1]); }\n  template <typename T>\n  void _apply(int i, T x) {\n   \
     \ bool res = v[i].apply(x);\n    if (i < n && res == false) {\n      _push(i);\n\
     \      _apply(i * 2 + 0, x);\n      _apply(i * 2 + 1, x);\n      _update(i);\n\
-    \    }\n  }\n};\n\n/**\n * @brief \u62BD\u8C61\u5316Segment Tree Beats!\n * @docs\
-    \ docs/segment-tree/segment-tree-beats-abstract.md\n */\n"
+    \    }\n  }\n};\n\n/**\n * @brief \u62BD\u8C61\u5316Segment Tree Beats!\n */\n"
   dependsOn: []
   isVerificationFile: false
   path: segment-tree/segment-tree-beats-abstract.hpp
   requiredBy: []
-  timestamp: '2021-02-10 23:32:16+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yuki/yuki-0879.test.cpp
   - verify/verify-yuki/yuki-0880.test.cpp
 documentation_of: segment-tree/segment-tree-beats-abstract.hpp
 layout: document
-redirect_from:
-- /library/segment-tree/segment-tree-beats-abstract.hpp
-- /library/segment-tree/segment-tree-beats-abstract.hpp.html
 title: "\u62BD\u8C61\u5316Segment Tree Beats!"
 ---
+
 ## 抽象化Segment Tree Beats
 
 Segment Tree Beatsの抽象化ライブラリ。

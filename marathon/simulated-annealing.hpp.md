@@ -16,7 +16,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/marathon/simulated-annealing.md
     document_title: Simulated Annealing
     links: []
   bundledCode: "#line 2 \"marathon/simulated-annealing.hpp\"\n\n#line 2 \"misc/timer.hpp\"\
@@ -51,8 +50,7 @@ data:
     \ scores = 0.0;\n    for (auto &filename : filenames) {\n      timer->reset();\n\
     \      ifstream is(filename);\n      cin.rdbuf(is.rdbuf());\n      Input input;\n\
     \      input.scan();\n      auto res = run(input);\n      scores += res.score();\n\
-    \    }\n    return scores;\n  }\n};\n\n/**\n * @brief Simulated Annealing\n *\
-    \ @docs docs/marathon/simulated-annealing.md\n */\n"
+    \    }\n    return scores;\n  }\n};\n\n/**\n * @brief Simulated Annealing\n */\n"
   code: "#pragma once\n\n#include \"../misc/timer.hpp\"\n#include \"log_table.hpp\"\
     \n\ntemplate <typename Input, typename State, typename Diff>\nstruct Simulated_Annealing\
     \ {\n private:\n  log_table rand_log;\n  double end_time, inv_time, cur_time;\n\
@@ -74,25 +72,22 @@ data:
     \ scores = 0.0;\n    for (auto &filename : filenames) {\n      timer->reset();\n\
     \      ifstream is(filename);\n      cin.rdbuf(is.rdbuf());\n      Input input;\n\
     \      input.scan();\n      auto res = run(input);\n      scores += res.score();\n\
-    \    }\n    return scores;\n  }\n};\n\n/**\n * @brief Simulated Annealing\n *\
-    \ @docs docs/marathon/simulated-annealing.md\n */"
+    \    }\n    return scores;\n  }\n};\n\n/**\n * @brief Simulated Annealing\n */"
   dependsOn:
   - misc/timer.hpp
   - marathon/log_table.hpp
   isVerificationFile: false
   path: marathon/simulated-annealing.hpp
   requiredBy: []
-  timestamp: '2023-08-10 13:25:59+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-unit-test/simulated-annealing.test.cpp
 documentation_of: marathon/simulated-annealing.hpp
 layout: document
-redirect_from:
-- /library/marathon/simulated-annealing.hpp
-- /library/marathon/simulated-annealing.hpp.html
 title: Simulated Annealing
 ---
+
 #### テンプレート
 
 ```

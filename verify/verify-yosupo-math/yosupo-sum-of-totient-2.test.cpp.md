@@ -365,12 +365,11 @@ data:
     \ 1; i < (int)ns.size(); i++) F[i] += 1;\n    return F;\n  }\n\n  i64 quo(i64\
     \ n, i64 d) { return double(n) / d; }\n  i64 idx(i64 n) { return n <= sq ? s -\
     \ n : quo(M, n); }\n};\n\n/**\n * @brief \u4E57\u6CD5\u7684\u95A2\u6570\u306E\
-    prefix sum\n * @docs docs/multiplicative-function/sum-of-multiplicative-function.md\n\
-    \ */\n#line 10 \"verify/verify-yosupo-math/yosupo-sum-of-totient-2.test.cpp\"\n\
-    //\nusing namespace Nyaan;\nusing mint = LazyMontgomeryModInt<998244353>;\n//\
-    \ using mint = LazyMontgomeryModInt<1000000007>;\nusing vm = vector<mint>;\nusing\
-    \ vvm = vector<vm>;\nBinomial<mint> C;\n\nmint f(ll p, ll c) {\n  ll res = 1;\n\
-    \  while (--c) res = res * p;\n  return res * (p - 1);\n}\n\nvoid Nyaan::solve()\
+    prefix sum\n */\n#line 10 \"verify/verify-yosupo-math/yosupo-sum-of-totient-2.test.cpp\"\
+    \n//\nusing namespace Nyaan;\nusing mint = LazyMontgomeryModInt<998244353>;\n\
+    // using mint = LazyMontgomeryModInt<1000000007>;\nusing vm = vector<mint>;\n\
+    using vvm = vector<vm>;\nBinomial<mint> C;\n\nmint f(ll p, ll c) {\n  ll res =\
+    \ 1;\n  while (--c) res = res * p;\n  return res * (p - 1);\n}\n\nvoid Nyaan::solve()\
     \ {\n  inl(N);\n  mf_prefix_sum<mint, f> mf(N);\n  auto h1 = mf.prime_sum_table();\n\
     \  auto h0 = mf.pi_table();\n  rep(i, sz(h1)) h1[i] -= h0[i];\n  out(mf.run(h1));\n\
     }\n"
@@ -399,7 +398,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-math/yosupo-sum-of-totient-2.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-math/yosupo-sum-of-totient-2.test.cpp

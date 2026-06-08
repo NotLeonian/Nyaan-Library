@@ -253,26 +253,25 @@ data:
     \ {\n    int x, y;\n    cin >> x >> y;\n    T c;\n    if (is_weighted)\n     \
     \ cin >> c;\n    else\n      c = 1;\n    if (is_1origin) x--, y--;\n    d[x][y]\
     \ = c;\n    if (!is_directed) d[y][x] = c;\n  }\n  return d;\n}\n\n/**\n * @brief\
-    \ \u30B0\u30E9\u30D5\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\n * @docs docs/graph/graph-template.md\n\
-    \ */\n#line 7 \"graph/lowlink.hpp\"\n\n// bridge ... \u6A4B (\u8FBA (u, v) \u304C\
-    \ u < v \u3068\u306A\u308B\u3088\u3046\u306B\u683C\u7D0D)\n// articulation point\
-    \ ... \u95A2\u7BC0\u70B9\ntemplate <typename G>\nstruct LowLink {\n  const G &g;\n\
-    \  int N;\n  vector<int> ord, low, articulation;\n  vector<pair<int, int> > bridge;\n\
-    \n  LowLink(const G &_g) : g(_g), N(g.size()), ord(N, -1), low(N, -1) {\n    for\
-    \ (int i = 0, k = 0; i < N; i++) {\n      if (ord[i] == -1) {\n        k = dfs(i,\
-    \ k, -1);\n      }\n    }\n  }\n\n  int dfs(int idx, int k, int par) {\n    low[idx]\
-    \ = (ord[idx] = k++);\n    int cnt = 0;\n    bool arti = false, second = false;\n\
-    \    for (auto &to : g[idx]) {\n      if (ord[to] == -1) {\n        cnt++;\n \
-    \       k = dfs(to, k, idx);\n        low[idx] = min(low[idx], low[to]);\n   \
-    \     arti |= (par != -1) && (low[to] >= ord[idx]);\n        if (ord[idx] < low[to])\
-    \ {\n          bridge.emplace_back(minmax(idx, (int)to));\n        }\n      }\
-    \ else if (to != par || second) {\n        low[idx] = min(low[idx], ord[to]);\n\
-    \      } else {\n        second = true;\n      }\n    }\n    arti |= par == -1\
-    \ && cnt > 1;\n    if (arti) articulation.push_back(idx);\n    return k;\n  }\n\
-    };\n#line 6 \"verify/verify-aoj-grl/aoj-grl-3-a.test.cpp\"\n\nusing namespace\
-    \ Nyaan; void Nyaan::solve() {\n  ini(N, E);\n  auto g = graph(N, E, false, false);\n\
-    \  LowLink<vvi> lowlink(g);\n  sort(all(lowlink.articulation));\n  each(x, lowlink.articulation)\
-    \ out(x);\n}\n"
+    \ \u30B0\u30E9\u30D5\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\n */\n#line 7 \"graph/lowlink.hpp\"\
+    \n\n// bridge ... \u6A4B (\u8FBA (u, v) \u304C u < v \u3068\u306A\u308B\u3088\u3046\
+    \u306B\u683C\u7D0D)\n// articulation point ... \u95A2\u7BC0\u70B9\ntemplate <typename\
+    \ G>\nstruct LowLink {\n  const G &g;\n  int N;\n  vector<int> ord, low, articulation;\n\
+    \  vector<pair<int, int> > bridge;\n\n  LowLink(const G &_g) : g(_g), N(g.size()),\
+    \ ord(N, -1), low(N, -1) {\n    for (int i = 0, k = 0; i < N; i++) {\n      if\
+    \ (ord[i] == -1) {\n        k = dfs(i, k, -1);\n      }\n    }\n  }\n\n  int dfs(int\
+    \ idx, int k, int par) {\n    low[idx] = (ord[idx] = k++);\n    int cnt = 0;\n\
+    \    bool arti = false, second = false;\n    for (auto &to : g[idx]) {\n     \
+    \ if (ord[to] == -1) {\n        cnt++;\n        k = dfs(to, k, idx);\n       \
+    \ low[idx] = min(low[idx], low[to]);\n        arti |= (par != -1) && (low[to]\
+    \ >= ord[idx]);\n        if (ord[idx] < low[to]) {\n          bridge.emplace_back(minmax(idx,\
+    \ (int)to));\n        }\n      } else if (to != par || second) {\n        low[idx]\
+    \ = min(low[idx], ord[to]);\n      } else {\n        second = true;\n      }\n\
+    \    }\n    arti |= par == -1 && cnt > 1;\n    if (arti) articulation.push_back(idx);\n\
+    \    return k;\n  }\n};\n#line 6 \"verify/verify-aoj-grl/aoj-grl-3-a.test.cpp\"\
+    \n\nusing namespace Nyaan; void Nyaan::solve() {\n  ini(N, E);\n  auto g = graph(N,\
+    \ E, false, false);\n  LowLink<vvi> lowlink(g);\n  sort(all(lowlink.articulation));\n\
+    \  each(x, lowlink.articulation) out(x);\n}\n"
   code: "#define PROBLEM \\\n  \"http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_3_A\"\
     \n\n#include \"../../template/template.hpp\"\n#include \"../../graph/lowlink.hpp\"\
     \n\nusing namespace Nyaan; void Nyaan::solve() {\n  ini(N, E);\n  auto g = graph(N,\
@@ -290,7 +289,7 @@ data:
   isVerificationFile: true
   path: verify/verify-aoj-grl/aoj-grl-3-a.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-aoj-grl/aoj-grl-3-a.test.cpp

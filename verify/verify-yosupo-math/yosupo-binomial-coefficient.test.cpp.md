@@ -392,11 +392,10 @@ data:
     \ i++) {\n      rem.push_back(cs[i].C(n, m));\n      d.push_back(M[i]);\n    }\n\
     \    return atcoder::crt(rem, d).first;\n  }\n};\n\n#undef PRIME_POWER_BINOMIAL_M_MAX\n\
     #undef PRIME_POWER_BINOMIAL_N_MAX\n\n/**\n * @brief \u4EFB\u610Fmod\u4E8C\u9805\
-    \u4FC2\u6570\n * @docs docs/modulo/arbitrary-mod-binomial.md\n */\n#line 6 \"\
-    verify/verify-yosupo-math/yosupo-binomial-coefficient.test.cpp\"\n\nusing namespace\
-    \ Nyaan;\n\nvoid Nyaan::solve() {\n  int T, M;\n  cin >> T >> M;\n  arbitrary_mod_binomial\
-    \ C(M);\n  while (T--) {\n    long long n, k;\n    cin >> n >> k;\n    cout <<\
-    \ C.C(n, k) << '\\n';\n  }\n}\n"
+    \u4FC2\u6570\n */\n#line 6 \"verify/verify-yosupo-math/yosupo-binomial-coefficient.test.cpp\"\
+    \n\nusing namespace Nyaan;\n\nvoid Nyaan::solve() {\n  int T, M;\n  cin >> T >>\
+    \ M;\n  arbitrary_mod_binomial C(M);\n  while (T--) {\n    long long n, k;\n \
+    \   cin >> n >> k;\n    cout << C.C(n, k) << '\\n';\n  }\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/binomial_coefficient\"\n\
     //\n#include \"../../template/template.hpp\"\n//\n#include \"../../modulo/arbitrary-mod-binomial.hpp\"\
     \n\nusing namespace Nyaan;\n\nvoid Nyaan::solve() {\n  int T, M;\n  cin >> T >>\
@@ -414,7 +413,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-math/yosupo-binomial-coefficient.test.cpp
   requiredBy: []
-  timestamp: '2026-06-08 02:23:45+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-math/yosupo-binomial-coefficient.test.cpp

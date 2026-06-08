@@ -151,24 +151,24 @@ data:
     \ mint>\nFormalPowerSeries<mint> FormalPowerSeries<mint>::exp(int deg) const {\n\
     \  return fps_exp_impl(*this, deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief\
     \ \u591A\u9805\u5F0F/\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\
-    \u30EA\n * @docs docs/fps/formal-power-series.md\n */\n#line 9 \"fps/composite-exp.hpp\"\
-    \n\n// \u591A\u9805\u5F0F f \u306B exp(cx) \u4EE3\u5165\n// \u6B21\u6570 : mod\
-    \ x^{deg} \u307E\u3067\u8A08\u7B97, \u6307\u5B9A\u304C\u306A\u3044\u5834\u5408\
-    \ f \u3068\u540C\u3058\u9577\u3055\u8A08\u7B97\ntemplate <typename mint>\nFormalPowerSeries<mint>\
-    \ composite_exp(FormalPowerSeries<mint> f, mint c = 1,\n                     \
-    \                 int deg = -1) {\n  using fps = FormalPowerSeries<mint>;\n  assert(c\
-    \ != 0);\n  if (deg == -1) deg = f.size();\n\n  if (f.empty()) return {};\n  int\
-    \ N = f.size();\n  vector<pair<fps, fps>> fs;\n  for (int i = 0; i < N; i++) fs.emplace_back(fps{f[i]},\
-    \ fps{1, -c * i});\n  while (fs.size() > 1u) {\n    vector<pair<fps, fps>> nx;\n\
-    \    for (int i = 0; i + 1 < (int)fs.size(); i += 2) {\n      pair<fps, fps>&\
-    \ f0 = fs[i];\n      pair<fps, fps>& f1 = fs[i + 1];\n      fps s = f0.first *\
-    \ f1.second + f1.first * f0.second;\n      fps t = f0.second * f1.second;\n  \
-    \    nx.emplace_back(s, t);\n    }\n    if (fs.size() % 2) nx.push_back(fs.back());\n\
-    \    fs = nx;\n  }\n  fps g = (fs[0].first * fs[0].second.inv(deg)).pre(deg);\n\
-    \  mint b = 1;\n  for (int i = 0; i < deg; i++) g[i] *= b, b /= i + 1;\n  return\
-    \ g;\n}\n\n// \u5165\u529B f(x) = sum_{0 <= k < N} a_i exp(ckx) \u3092\u6E80\u305F\
-    \u3059 g(x) (mod x^N)\n// \u51FA\u529B a(x) = sum_{0 <= k < N} a_i x^i\ntemplate\
-    \ <typename mint>\nFormalPowerSeries<mint> inverse_of_composite_exp(FormalPowerSeries<mint>\
+    \u30EA\n */\n#line 9 \"fps/composite-exp.hpp\"\n\n// \u591A\u9805\u5F0F f \u306B\
+    \ exp(cx) \u4EE3\u5165\n// \u6B21\u6570 : mod x^{deg} \u307E\u3067\u8A08\u7B97\
+    , \u6307\u5B9A\u304C\u306A\u3044\u5834\u5408 f \u3068\u540C\u3058\u9577\u3055\u8A08\
+    \u7B97\ntemplate <typename mint>\nFormalPowerSeries<mint> composite_exp(FormalPowerSeries<mint>\
+    \ f, mint c = 1,\n                                      int deg = -1) {\n  using\
+    \ fps = FormalPowerSeries<mint>;\n  assert(c != 0);\n  if (deg == -1) deg = f.size();\n\
+    \n  if (f.empty()) return {};\n  int N = f.size();\n  vector<pair<fps, fps>> fs;\n\
+    \  for (int i = 0; i < N; i++) fs.emplace_back(fps{f[i]}, fps{1, -c * i});\n \
+    \ while (fs.size() > 1u) {\n    vector<pair<fps, fps>> nx;\n    for (int i = 0;\
+    \ i + 1 < (int)fs.size(); i += 2) {\n      pair<fps, fps>& f0 = fs[i];\n     \
+    \ pair<fps, fps>& f1 = fs[i + 1];\n      fps s = f0.first * f1.second + f1.first\
+    \ * f0.second;\n      fps t = f0.second * f1.second;\n      nx.emplace_back(s,\
+    \ t);\n    }\n    if (fs.size() % 2) nx.push_back(fs.back());\n    fs = nx;\n\
+    \  }\n  fps g = (fs[0].first * fs[0].second.inv(deg)).pre(deg);\n  mint b = 1;\n\
+    \  for (int i = 0; i < deg; i++) g[i] *= b, b /= i + 1;\n  return g;\n}\n\n//\
+    \ \u5165\u529B f(x) = sum_{0 <= k < N} a_i exp(ckx) \u3092\u6E80\u305F\u3059 g(x)\
+    \ (mod x^N)\n// \u51FA\u529B a(x) = sum_{0 <= k < N} a_i x^i\ntemplate <typename\
+    \ mint>\nFormalPowerSeries<mint> inverse_of_composite_exp(FormalPowerSeries<mint>\
     \ f,\n                                                 mint c = 1) {\n  using\
     \ fps = FormalPowerSeries<mint>;\n  if (f.empty()) return {};\n  int N = f.size();\n\
     \  mint b = 1;\n  for (int i = 0; i < N; i++) f[i] *= b, b *= i + 1;\n\n  int\
@@ -317,7 +317,7 @@ data:
   isVerificationFile: false
   path: fps/stirling-matrix.hpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-unit-test/stirling-matrix.test.cpp

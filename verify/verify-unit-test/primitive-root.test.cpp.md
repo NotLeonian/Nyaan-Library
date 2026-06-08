@@ -553,18 +553,17 @@ data:
     \ 1);\n  sort(begin(ret), end(ret));\n  return ret;\n}\n\n}  // namespace fast_factorize\n\
     \nusing fast_factorize::divisors;\nusing fast_factorize::factor_count;\nusing\
     \ fast_factorize::factorize;\n\n/**\n * @brief \u9AD8\u901F\u7D20\u56E0\u6570\u5206\
-    \u89E3(Miller Rabin/Pollard's Rho)\n * @docs docs/prime/fast-factorize.md\n */\n\
-    #line 2 \"prime/prime-enumerate.hpp\"\n\n#line 5 \"prime/prime-enumerate.hpp\"\
-    \nusing namespace std;\n\n// Prime Sieve {2, 3, 5, 7, 11, 13, 17, ...}\nvector<int>\
-    \ prime_enumerate(int N) {\n  vector<bool> sieve(N / 3 + 1, 1);\n  for (int p\
-    \ = 5, d = 4, i = 1, sqn = sqrt(N); p <= sqn; p += d = 6 - d, i++) {\n    if (!sieve[i])\
-    \ continue;\n    for (int q = p * p / 3, r = d * p / 3 + (d * p % 3 == 2), s =\
-    \ 2 * p,\n             qe = sieve.size();\n         q < qe; q += r = s - r)\n\
-    \      sieve[q] = 0;\n  }\n  vector<int> ret{2, 3};\n  for (int p = 5, d = 4,\
-    \ i = 1; p <= N; p += d = 6 - d, i++)\n    if (sieve[i]) ret.push_back(p);\n \
-    \ while (!ret.empty() && ret.back() > N) ret.pop_back();\n  return ret;\n}\n#line\
-    \ 12 \"verify/verify-unit-test/primitive-root.test.cpp\"\n\nusing namespace Nyaan;\n\
-    \nvoid test(unsigned int mod) {\n  int pr1 = atcoder::internal::primitive_root_constexpr(mod);\n\
+    \u89E3(Miller Rabin/Pollard's Rho)\n */\n#line 2 \"prime/prime-enumerate.hpp\"\
+    \n\n#line 5 \"prime/prime-enumerate.hpp\"\nusing namespace std;\n\n// Prime Sieve\
+    \ {2, 3, 5, 7, 11, 13, 17, ...}\nvector<int> prime_enumerate(int N) {\n  vector<bool>\
+    \ sieve(N / 3 + 1, 1);\n  for (int p = 5, d = 4, i = 1, sqn = sqrt(N); p <= sqn;\
+    \ p += d = 6 - d, i++) {\n    if (!sieve[i]) continue;\n    for (int q = p * p\
+    \ / 3, r = d * p / 3 + (d * p % 3 == 2), s = 2 * p,\n             qe = sieve.size();\n\
+    \         q < qe; q += r = s - r)\n      sieve[q] = 0;\n  }\n  vector<int> ret{2,\
+    \ 3};\n  for (int p = 5, d = 4, i = 1; p <= N; p += d = 6 - d, i++)\n    if (sieve[i])\
+    \ ret.push_back(p);\n  while (!ret.empty() && ret.back() > N) ret.pop_back();\n\
+    \  return ret;\n}\n#line 12 \"verify/verify-unit-test/primitive-root.test.cpp\"\
+    \n\nusing namespace Nyaan;\n\nvoid test(unsigned int mod) {\n  int pr1 = atcoder::internal::primitive_root_constexpr(mod);\n\
     \  int pr2 = constexpr_primitive_root(mod);\n  int pr3 = PrimitiveRoot(mod);\n\
     \n  if (pr1 != pr2 or pr2 != pr3) {\n    cerr << pr1 << \" \" << pr2 << \" \"\
     \ << pr3 << endl;\n  }\n}\n\nvoid Nyaan::solve() {\n  auto ps = prime_enumerate(20000);\n\
@@ -605,7 +604,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/primitive-root.test.cpp
   requiredBy: []
-  timestamp: '2026-06-08 02:23:45+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/primitive-root.test.cpp

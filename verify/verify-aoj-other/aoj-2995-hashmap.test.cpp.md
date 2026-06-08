@@ -362,55 +362,54 @@ data:
     \ (base::cap - 1);\n    }\n  }\n\n  typename base::itr emplace(const Key& key,\
     \ const Val& val) {\n    return base::insert(Data(key, val));\n  }\n};\n\n/*\n\
     \ * @brief \u30CF\u30C3\u30B7\u30E5\u30DE\u30C3\u30D7(\u9023\u60F3\u914D\u5217\
-    )\n * @docs docs/hashmap/hashmap.md\n **/\n#line 4 \"data-structure/dynamic-union-find.hpp\"\
-    \n\nstruct DynamicUnionFind {\n  HashMap<int, int> m;\n  DynamicUnionFind() =\
-    \ default;\n\n  int data(int k) {\n    auto it = m.find(k);\n    return it ==\
-    \ m.end() ? m[k] = -1 : it->second;\n  }\n  int find(int k) {\n    int n = data(k);\n\
-    \    return n < 0 ? k : m[k] = find(n);\n  }\n\n  int unite(int x, int y) {\n\
-    \    x = find(x), y = find(y);\n    if (x == y) return false;\n    auto itx =\
-    \ m.find(x), ity = m.find(y);\n    if (itx->second > ity->second) swap(itx, ity),\
-    \ swap(x, y);\n    itx->second += ity->second;\n    ity->second = x;\n    return\
-    \ true;\n  }\n\n  template <typename F>\n  int unite(int x, int y, const F& f)\
-    \ {\n    x = find(x), y = find(y);\n    if (x == y) return false;\n    auto itx\
-    \ = m.find(x), ity = m.find(y);\n    if (itx->second > ity->second) swap(itx,\
-    \ ity), swap(x, y);\n    itx->second += ity->second;\n    ity->second = x;\n \
-    \   f(x, y);\n    return true;\n  }\n\n  int size(int k) { return -data(find(k));\
-    \ }\n\n  int same(int x, int y) { return find(x) == find(y); }\n\n  void clear()\
-    \ { m.clear(); }\n};\n\n/**\n * @brief \u52D5\u7684Union Find\n * @docs docs/data-structure/dynamic-union-find.md\n\
-    \ */\n#line 2 \"graph/static-graph.hpp\"\n\nnamespace StaticGraphImpl {\n\ntemplate\
-    \ <typename T, bool Cond = is_void<T>::value>\nstruct E;\ntemplate <typename T>\n\
-    struct E<T, false> {\n  int to;\n  T cost;\n  E() {}\n  E(const int& v, const\
-    \ T& c) : to(v), cost(c) {}\n  operator int() const { return to; }\n};\ntemplate\
-    \ <typename T>\nstruct E<T, true> {\n  int to;\n  E() {}\n  E(const int& v) :\
-    \ to(v) {}\n  operator int() const { return to; }\n};\n\ntemplate <typename T\
-    \ = void>\nstruct StaticGraph {\n private:\n  template <typename It>\n  struct\
-    \ Es {\n    It b, e;\n    It begin() const { return b; }\n    It end() const {\
-    \ return e; }\n    int size() const { return int(e - b); }\n    auto&& operator[](int\
-    \ i) const { return b[i]; }\n  };\n  \n  int N, M, ec;\n  vector<int> head;\n\
-    \  vector<pair<int, E<T>>> buf;\n  vector<E<T>> es;\n\n  void build() {\n    partial_sum(begin(head),\
-    \ end(head), begin(head));\n    es.resize(M);\n    for (auto&& [u, e] : buf) es[--head[u]]\
-    \ = e;\n  }\n\n public:\n  StaticGraph(int _n, int _m) : N(_n), M(_m), ec(0),\
-    \ head(N + 1, 0) {\n    buf.reserve(M);\n  }\n\n  template <typename... Args>\n\
-    \  void add_edge(int u, Args&&... args) {\n#pragma GCC diagnostic ignored \"-Wnarrowing\"\
-    \n    buf.emplace_back(u, E<T>{std::forward<Args>(args)...});\n#pragma GCC diagnostic\
-    \ warning \"-Wnarrowing\"\n    ++head[u];\n    if ((int)buf.size() == M) build();\n\
-    \  }\n\n  Es<typename vector<E<T>>::iterator> operator[](int u) {\n    return\
-    \ {begin(es) + head[u], begin(es) + head[u + 1]};\n  }\n  const Es<typename vector<E<T>>::const_iterator>\
+    )\n **/\n#line 4 \"data-structure/dynamic-union-find.hpp\"\n\nstruct DynamicUnionFind\
+    \ {\n  HashMap<int, int> m;\n  DynamicUnionFind() = default;\n\n  int data(int\
+    \ k) {\n    auto it = m.find(k);\n    return it == m.end() ? m[k] = -1 : it->second;\n\
+    \  }\n  int find(int k) {\n    int n = data(k);\n    return n < 0 ? k : m[k] =\
+    \ find(n);\n  }\n\n  int unite(int x, int y) {\n    x = find(x), y = find(y);\n\
+    \    if (x == y) return false;\n    auto itx = m.find(x), ity = m.find(y);\n \
+    \   if (itx->second > ity->second) swap(itx, ity), swap(x, y);\n    itx->second\
+    \ += ity->second;\n    ity->second = x;\n    return true;\n  }\n\n  template <typename\
+    \ F>\n  int unite(int x, int y, const F& f) {\n    x = find(x), y = find(y);\n\
+    \    if (x == y) return false;\n    auto itx = m.find(x), ity = m.find(y);\n \
+    \   if (itx->second > ity->second) swap(itx, ity), swap(x, y);\n    itx->second\
+    \ += ity->second;\n    ity->second = x;\n    f(x, y);\n    return true;\n  }\n\
+    \n  int size(int k) { return -data(find(k)); }\n\n  int same(int x, int y) { return\
+    \ find(x) == find(y); }\n\n  void clear() { m.clear(); }\n};\n\n/**\n * @brief\
+    \ \u52D5\u7684Union Find\n */\n#line 2 \"graph/static-graph.hpp\"\n\nnamespace\
+    \ StaticGraphImpl {\n\ntemplate <typename T, bool Cond = is_void<T>::value>\n\
+    struct E;\ntemplate <typename T>\nstruct E<T, false> {\n  int to;\n  T cost;\n\
+    \  E() {}\n  E(const int& v, const T& c) : to(v), cost(c) {}\n  operator int()\
+    \ const { return to; }\n};\ntemplate <typename T>\nstruct E<T, true> {\n  int\
+    \ to;\n  E() {}\n  E(const int& v) : to(v) {}\n  operator int() const { return\
+    \ to; }\n};\n\ntemplate <typename T = void>\nstruct StaticGraph {\n private:\n\
+    \  template <typename It>\n  struct Es {\n    It b, e;\n    It begin() const {\
+    \ return b; }\n    It end() const { return e; }\n    int size() const { return\
+    \ int(e - b); }\n    auto&& operator[](int i) const { return b[i]; }\n  };\n \
+    \ \n  int N, M, ec;\n  vector<int> head;\n  vector<pair<int, E<T>>> buf;\n  vector<E<T>>\
+    \ es;\n\n  void build() {\n    partial_sum(begin(head), end(head), begin(head));\n\
+    \    es.resize(M);\n    for (auto&& [u, e] : buf) es[--head[u]] = e;\n  }\n\n\
+    \ public:\n  StaticGraph(int _n, int _m) : N(_n), M(_m), ec(0), head(N + 1, 0)\
+    \ {\n    buf.reserve(M);\n  }\n\n  template <typename... Args>\n  void add_edge(int\
+    \ u, Args&&... args) {\n#pragma GCC diagnostic ignored \"-Wnarrowing\"\n    buf.emplace_back(u,\
+    \ E<T>{std::forward<Args>(args)...});\n#pragma GCC diagnostic warning \"-Wnarrowing\"\
+    \n    ++head[u];\n    if ((int)buf.size() == M) build();\n  }\n\n  Es<typename\
+    \ vector<E<T>>::iterator> operator[](int u) {\n    return {begin(es) + head[u],\
+    \ begin(es) + head[u + 1]};\n  }\n  const Es<typename vector<E<T>>::const_iterator>\
     \ operator[](int u) const {\n    return {begin(es) + head[u], begin(es) + head[u\
     \ + 1]};\n  }\n  int size() const { return N; }\n};\n\n}  // namespace StaticGraphImpl\n\
-    \nusing StaticGraphImpl::StaticGraph;\n\n/**\n * @brief Static Graph\n * @docs\
-    \ docs/graph/static-graph.md\n */\n#line 2 \"misc/fastio.hpp\"\n\n#line 9 \"misc/fastio.hpp\"\
-    \n\nusing namespace std;\n\n#line 2 \"internal/internal-type-traits.hpp\"\n\n\
-    #line 4 \"internal/internal-type-traits.hpp\"\nusing namespace std;\n\nnamespace\
-    \ internal {\ntemplate <typename T>\nusing is_broadly_integral =\n    typename\
-    \ conditional_t<is_integral_v<T> || is_same_v<T, __int128_t> ||\n            \
-    \                   is_same_v<T, __uint128_t>,\n                           true_type,\
-    \ false_type>::type;\n\ntemplate <typename T>\nusing is_broadly_signed =\n   \
-    \ typename conditional_t<is_signed_v<T> || is_same_v<T, __int128_t>,\n       \
-    \                    true_type, false_type>::type;\n\ntemplate <typename T>\n\
-    using is_broadly_unsigned =\n    typename conditional_t<is_unsigned_v<T> || is_same_v<T,\
-    \ __uint128_t>,\n                           true_type, false_type>::type;\n\n\
-    #define ENABLE_VALUE(x) \\\n  template <typename T> \\\n  constexpr bool x##_v\
+    \nusing StaticGraphImpl::StaticGraph;\n\n/**\n * @brief Static Graph\n */\n#line\
+    \ 2 \"misc/fastio.hpp\"\n\n#line 9 \"misc/fastio.hpp\"\n\nusing namespace std;\n\
+    \n#line 2 \"internal/internal-type-traits.hpp\"\n\n#line 4 \"internal/internal-type-traits.hpp\"\
+    \nusing namespace std;\n\nnamespace internal {\ntemplate <typename T>\nusing is_broadly_integral\
+    \ =\n    typename conditional_t<is_integral_v<T> || is_same_v<T, __int128_t> ||\n\
+    \                               is_same_v<T, __uint128_t>,\n                 \
+    \          true_type, false_type>::type;\n\ntemplate <typename T>\nusing is_broadly_signed\
+    \ =\n    typename conditional_t<is_signed_v<T> || is_same_v<T, __int128_t>,\n\
+    \                           true_type, false_type>::type;\n\ntemplate <typename\
+    \ T>\nusing is_broadly_unsigned =\n    typename conditional_t<is_unsigned_v<T>\
+    \ || is_same_v<T, __uint128_t>,\n                           true_type, false_type>::type;\n\
+    \n#define ENABLE_VALUE(x) \\\n  template <typename T> \\\n  constexpr bool x##_v\
     \ = x<T>::value;\n\nENABLE_VALUE(is_broadly_integral);\nENABLE_VALUE(is_broadly_signed);\n\
     ENABLE_VALUE(is_broadly_unsigned);\n#undef ENABLE_VALUE\n\n#define ENABLE_HAS_TYPE(var)\
     \                                   \\\n  template <class, class = void>     \
@@ -503,18 +502,18 @@ data:
     \ {\n    int x, y;\n    cin >> x >> y;\n    T c;\n    if (is_weighted)\n     \
     \ cin >> c;\n    else\n      c = 1;\n    if (is_1origin) x--, y--;\n    d[x][y]\
     \ = c;\n    if (!is_directed) d[y][x] = c;\n  }\n  return d;\n}\n\n/**\n * @brief\
-    \ \u30B0\u30E9\u30D5\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\n * @docs docs/graph/graph-template.md\n\
-    \ */\n#line 6 \"tree/dsu-on-tree.hpp\"\n\ntemplate <typename G>\nstruct DSUonTree\
-    \ {\n private:\n  G &g;\n  int N;\n  vector<int> sub_sz, euler, down, up;\n  int\
-    \ idx_;\n  int root;\n\n  int dfs1(int cur, int par = -1) {\n    sub_sz[cur] =\
-    \ 1;\n    if ((int)g[cur].size() >= 2 and g[cur][0] == par) {\n      swap(g[cur][0],\
-    \ g[cur][1]);\n    }\n    for (auto &dst : g[cur]) {\n      if (dst == par) continue;\n\
-    \      sub_sz[cur] += dfs1(dst, cur);\n      if (sub_sz[dst] > sub_sz[g[cur][0]])\
-    \ swap(dst, g[cur][0]);\n    }\n    return sub_sz[cur];\n  }\n\n  void dfs2(int\
-    \ cur, int par = -1) {\n    euler[idx_] = cur;\n    down[cur] = idx_++;\n    for\
-    \ (auto &dst : g[cur]) {\n      if (dst == par) continue;\n      dfs2(dst, cur);\n\
-    \    }\n    up[cur] = idx_;\n  }\n\n public:\n  DSUonTree(G &_g,int _root = 0)\n\
-    \      : g(_g),\n        N(_g.size()),\n        sub_sz(_g.size()),\n        euler(_g.size()),\n\
+    \ \u30B0\u30E9\u30D5\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\n */\n#line 6 \"tree/dsu-on-tree.hpp\"\
+    \n\ntemplate <typename G>\nstruct DSUonTree {\n private:\n  G &g;\n  int N;\n\
+    \  vector<int> sub_sz, euler, down, up;\n  int idx_;\n  int root;\n\n  int dfs1(int\
+    \ cur, int par = -1) {\n    sub_sz[cur] = 1;\n    if ((int)g[cur].size() >= 2\
+    \ and g[cur][0] == par) {\n      swap(g[cur][0], g[cur][1]);\n    }\n    for (auto\
+    \ &dst : g[cur]) {\n      if (dst == par) continue;\n      sub_sz[cur] += dfs1(dst,\
+    \ cur);\n      if (sub_sz[dst] > sub_sz[g[cur][0]]) swap(dst, g[cur][0]);\n  \
+    \  }\n    return sub_sz[cur];\n  }\n\n  void dfs2(int cur, int par = -1) {\n \
+    \   euler[idx_] = cur;\n    down[cur] = idx_++;\n    for (auto &dst : g[cur])\
+    \ {\n      if (dst == par) continue;\n      dfs2(dst, cur);\n    }\n    up[cur]\
+    \ = idx_;\n  }\n\n public:\n  DSUonTree(G &_g,int _root = 0)\n      : g(_g),\n\
+    \        N(_g.size()),\n        sub_sz(_g.size()),\n        euler(_g.size()),\n\
     \        down(_g.size()),\n        up(_g.size()),\n        idx_(0),\n        root(_root)\
     \ {\n    dfs1(root);\n    dfs2(root);\n  }\n\n  int idx(int u) const { return\
     \ down[u]; }\n\n  template <typename UPDATE, typename QUERY, typename CLEAR, typename\
@@ -526,15 +525,14 @@ data:
     \ i < up[cur]; i++) update(euler[i]);\n      update(cur);\n      query(cur);\n\
     \      if (!keep) {\n        for (int i = down[cur]; i < up[cur]; i++) clear(euler[i]);\n\
     \        reset();\n      }\n      return;\n    };\n    dsu(dsu, root);\n  }\n\
-    };\n\n/**\n * @brief DSU on Tree(Guni)\n * @docs docs/tree/dsu-on-tree.md\n */\n\
-    #line 8 \"verify/verify-aoj-other/aoj-2995-hashmap.test.cpp\"\n\nusing namespace\
-    \ Nyaan; void Nyaan::solve() {\n  int N, K;\n  rd(N, K);\n  StaticGraph<void>\
-    \ g(N, 2 * N - 2);\n  rep1(i, N - 1) {\n    int u, v;\n    rd(u, v);\n    --u,\
-    \ --v;\n    g.add_edge(u, v);\n    g.add_edge(v, u);\n  }\n\n  V<pair<int, int>>\
-    \ cl(N);\n  rep(i, N) rd(cl[i].first, cl[i].second);\n\n  DynamicUnionFind uf;\n\
-    \  int sm = 0;\n  vi ans(N);\n  HashMap<int, int> val;\n  // reflect data of node\
-    \ i\n  auto update = [&](int i) {\n    uf.unite(cl[i].first, cl[i].second,\n \
-    \            [&](int x, int y) { val[x] += val[y]; });\n    int p = uf.find(cl[i].first);\n\
+    };\n\n/**\n * @brief DSU on Tree(Guni)\n */\n#line 8 \"verify/verify-aoj-other/aoj-2995-hashmap.test.cpp\"\
+    \n\nusing namespace Nyaan; void Nyaan::solve() {\n  int N, K;\n  rd(N, K);\n \
+    \ StaticGraph<void> g(N, 2 * N - 2);\n  rep1(i, N - 1) {\n    int u, v;\n    rd(u,\
+    \ v);\n    --u, --v;\n    g.add_edge(u, v);\n    g.add_edge(v, u);\n  }\n\n  V<pair<int,\
+    \ int>> cl(N);\n  rep(i, N) rd(cl[i].first, cl[i].second);\n\n  DynamicUnionFind\
+    \ uf;\n  int sm = 0;\n  vi ans(N);\n  HashMap<int, int> val;\n  // reflect data\
+    \ of node i\n  auto update = [&](int i) {\n    uf.unite(cl[i].first, cl[i].second,\n\
+    \             [&](int x, int y) { val[x] += val[y]; });\n    int p = uf.find(cl[i].first);\n\
     \    if (uf.size(p) > val[p]) {\n      sm++;\n      val[p]++;\n    }\n  };\n \
     \ // answer queries of subtree i\n  auto query = [&](int i) { ans[i] = sm; };\n\
     \  // below two function are called if all data must be deleted\n  // delete data\
@@ -578,7 +576,7 @@ data:
   isVerificationFile: true
   path: verify/verify-aoj-other/aoj-2995-hashmap.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-aoj-other/aoj-2995-hashmap.test.cpp

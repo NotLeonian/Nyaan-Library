@@ -273,10 +273,9 @@ data:
     \ u64 modfma(const u64 &a, const u64 &b, const u64 &c) {\n    u128 d = u128(a)\
     \ * b + c;\n    u64 ret = (d >> 61) + (u64(d) & md);\n    return ret >= md ? ret\
     \ - md : ret;\n  }\n};\n\n}  // namespace internal\n\n/**\n * @brief \u30CF\u30C3\
-    \u30B7\u30E5\u69CB\u9020\u4F53\n * @docs docs/internal/internal-hash.md\n */\n\
-    #line 8 \"string/rolling-hash.hpp\"\n\ntemplate <typename Str, int BASE_NUM =\
-    \ 2>\nstruct RollingHash {\n  using Hash = internal::Hash<BASE_NUM>;\n  Str data;\n\
-    \  vector<Hash> hs, pw;\n  int s;\n  static Hash basis;\n\n  RollingHash(const\
+    \u30B7\u30E5\u69CB\u9020\u4F53\n */\n#line 8 \"string/rolling-hash.hpp\"\n\ntemplate\
+    \ <typename Str, int BASE_NUM = 2>\nstruct RollingHash {\n  using Hash = internal::Hash<BASE_NUM>;\n\
+    \  Str data;\n  vector<Hash> hs, pw;\n  int s;\n  static Hash basis;\n\n  RollingHash(const\
     \ Str &S = Str()) { build(S); }\n\n  void build(const Str &S) {\n    data = S;\n\
     \    s = S.size();\n    hs.resize(s + 1);\n    pw.resize(s + 1);\n    pw[0] =\
     \ Hash::set(1);\n    hs[0] = Hash::set(0);\n    for (int i = 1; i <= s; i++) {\n\
@@ -303,8 +302,7 @@ data:
     \                    : 1;\n  }\n\n  int size() const { return s; }\n};\n\ntemplate\
     \ <typename Str, int BASE_NUM>\ntypename RollingHash<Str, BASE_NUM>::Hash RollingHash<Str,\
     \ BASE_NUM>::basis =\n    internal::Hash<BASE_NUM>::get_basis();\nusing roriha\
-    \ = RollingHash<string, 2>;\n\n/**\n * @brief Rolling Hash\n * @docs docs/string/rolling-hash.md\n\
-    \ */\n#line 6 \"verify/verify-yosupo-string/yosupo-enumerate-palindromes-roriha.test.cpp\"\
+    \ = RollingHash<string, 2>;\n\n/**\n * @brief Rolling Hash\n */\n#line 6 \"verify/verify-yosupo-string/yosupo-enumerate-palindromes-roriha.test.cpp\"\
     \n//\nusing namespace Nyaan;\nvoid Nyaan::solve() {\n  string s;\n  in(s);\n \
     \ {\n    string b;\n    b.push_back('$');\n    rep(i, sz(s)) {\n      b.push_back(s[i]);\n\
     \      b.push_back('$');\n    }\n    swap(s, b);\n  }\n  auto t = s;\n  reverse(all(t));\n\
@@ -337,7 +335,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-string/yosupo-enumerate-palindromes-roriha.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-string/yosupo-enumerate-palindromes-roriha.test.cpp

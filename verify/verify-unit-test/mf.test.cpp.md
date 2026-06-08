@@ -310,9 +310,9 @@ data:
     \ T> &a) {\n    for (auto p1 = rbegin(a); p1 != rend(a); p1++)\n      for (auto\
     \ p2 = rbegin(a); p2 != p1; p2++)\n        if (p2->first % p1->first == 0) p1->second\
     \ -= p2->second;\n  }\n};\n\n/**\n * @brief \u500D\u6570\u5909\u63DB\u30FB\u7D04\
-    \u6570\u5909\u63DB\n * @docs docs/multiplicative-function/divisor-multiple-transform.md\n\
-    \ */\n#line 2 \"multiplicative-function/mf-famous-series.hpp\"\n\n#line 2 \"multiplicative-function/enamurate-multiplicative-function.hpp\"\
-    \n\n#line 4 \"multiplicative-function/enamurate-multiplicative-function.hpp\"\n\
+    \u6570\u5909\u63DB\n */\n#line 2 \"multiplicative-function/mf-famous-series.hpp\"\
+    \n\n#line 2 \"multiplicative-function/enamurate-multiplicative-function.hpp\"\n\
+    \n#line 4 \"multiplicative-function/enamurate-multiplicative-function.hpp\"\n\
     using namespace std;\n\n#line 7 \"multiplicative-function/enamurate-multiplicative-function.hpp\"\
     \n\n// f(n, p, c) : n = pow(p, c), f is multiplicative function\n\ntemplate <typename\
     \ T, T (*f)(int, int, int)>\nstruct enamurate_multiplicative_function {\n  enamurate_multiplicative_function(int\
@@ -338,8 +338,8 @@ data:
     \ multiplicative_function::sigma1<T>> em(\n      n);\n  return em.run();\n}\n\n\
     template <typename T>\nstatic constexpr vector<T> totient(int n) {\n  enamurate_multiplicative_function<T,\
     \ multiplicative_function::totient<T>> em(\n      n);\n  return em.run();\n}\n\
-    \n/**\n * @brief \u6709\u540D\u306A\u4E57\u6CD5\u7684\u95A2\u6570\n * @docs docs/multiplicative-function/mf-famous-series.md\n\
-    \ */\n#line 8 \"verify/verify-unit-test/mf.test.cpp\"\nusing mint = LazyMontgomeryModInt<998244353>;\n\
+    \n/**\n * @brief \u6709\u540D\u306A\u4E57\u6CD5\u7684\u95A2\u6570\n */\n#line\
+    \ 8 \"verify/verify-unit-test/mf.test.cpp\"\nusing mint = LazyMontgomeryModInt<998244353>;\n\
     \n#line 2 \"misc/timer.hpp\"\n\n#line 4 \"misc/timer.hpp\"\nusing namespace std;\n\
     \nstruct Timer {\n  chrono::high_resolution_clock::time_point st;\n\n  Timer()\
     \ { reset(); }\n  void reset() { st = chrono::high_resolution_clock::now(); }\n\
@@ -433,7 +433,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/mf.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/mf.test.cpp

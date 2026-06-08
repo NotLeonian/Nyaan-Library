@@ -34,14 +34,13 @@ data:
     \ x = 0;\n    for (int k = 1 << __lg(N); k; k >>= 1) {\n      if (x + k <= N -\
     \ 1 && data[x + k] <= w) {\n        w -= data[x + k];\n        x += k;\n     \
     \ }\n    }\n    return x;\n  }\n};\n\n/**\n * @brief Binary Indexed Tree(Fenwick\
-    \ Tree)\n * @docs docs/data-structure/binary-indexed-tree.md\n */\n#line 4 \"\
-    data-structure/range-sum-range-add-bit.hpp\"\n\ntemplate <typename T>\nstruct\
-    \ RangeAddRangeSumBIT {\n  BinaryIndexedTree<T> a, b;\n  RangeAddRangeSumBIT(int\
-    \ N) : a(N + 1), b(N + 1) {}\n\n  // add x to [l, r)\n  void add(int l, int r,\
-    \ T x) {\n    a.add(l, x);\n    a.add(r, -x);\n    b.add(l, x * (1 - l));\n  \
-    \  b.add(r, x * (r - 1));\n  }\n\n  // return sum of [l, r)\n  T sum(int l, int\
-    \ r) {\n    --r, --l;\n    return a.sum(r) * r + b.sum(r) - a.sum(l) * l - b.sum(l);\n\
-    \  }\n};\n"
+    \ Tree)\n */\n#line 4 \"data-structure/range-sum-range-add-bit.hpp\"\n\ntemplate\
+    \ <typename T>\nstruct RangeAddRangeSumBIT {\n  BinaryIndexedTree<T> a, b;\n \
+    \ RangeAddRangeSumBIT(int N) : a(N + 1), b(N + 1) {}\n\n  // add x to [l, r)\n\
+    \  void add(int l, int r, T x) {\n    a.add(l, x);\n    a.add(r, -x);\n    b.add(l,\
+    \ x * (1 - l));\n    b.add(r, x * (r - 1));\n  }\n\n  // return sum of [l, r)\n\
+    \  T sum(int l, int r) {\n    --r, --l;\n    return a.sum(r) * r + b.sum(r) -\
+    \ a.sum(l) * l - b.sum(l);\n  }\n};\n"
   code: "#pragma once\n\n#include \"binary-indexed-tree.hpp\"\n\ntemplate <typename\
     \ T>\nstruct RangeAddRangeSumBIT {\n  BinaryIndexedTree<T> a, b;\n  RangeAddRangeSumBIT(int\
     \ N) : a(N + 1), b(N + 1) {}\n\n  // add x to [l, r)\n  void add(int l, int r,\
@@ -54,7 +53,7 @@ data:
   isVerificationFile: false
   path: data-structure/range-sum-range-add-bit.hpp
   requiredBy: []
-  timestamp: '2021-12-20 22:10:59+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-aoj-dsl/aoj-dsl-2-g-bit.test.cpp

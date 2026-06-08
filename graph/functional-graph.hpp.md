@@ -35,14 +35,14 @@ data:
     \ swap(x, y);\n    data[x] += data[y];\n    data[y] = x;\n    f(x, y);\n    return\
     \ true;\n  }\n\n  int size(int k) { return -data[find(k)]; }\n\n  int same(int\
     \ x, int y) { return find(x) == find(y); }\n};\n\n/**\n * @brief Union Find(Disjoint\
-    \ Set Union)\n * @docs docs/data-structure/union-find.md\n */\n#line 2 \"internal/internal-type-traits.hpp\"\
-    \n\n#include <type_traits>\nusing namespace std;\n\nnamespace internal {\ntemplate\
-    \ <typename T>\nusing is_broadly_integral =\n    typename conditional_t<is_integral_v<T>\
-    \ || is_same_v<T, __int128_t> ||\n                               is_same_v<T,\
-    \ __uint128_t>,\n                           true_type, false_type>::type;\n\n\
-    template <typename T>\nusing is_broadly_signed =\n    typename conditional_t<is_signed_v<T>\
-    \ || is_same_v<T, __int128_t>,\n                           true_type, false_type>::type;\n\
-    \ntemplate <typename T>\nusing is_broadly_unsigned =\n    typename conditional_t<is_unsigned_v<T>\
+    \ Set Union)\n */\n#line 2 \"internal/internal-type-traits.hpp\"\n\n#include <type_traits>\n\
+    using namespace std;\n\nnamespace internal {\ntemplate <typename T>\nusing is_broadly_integral\
+    \ =\n    typename conditional_t<is_integral_v<T> || is_same_v<T, __int128_t> ||\n\
+    \                               is_same_v<T, __uint128_t>,\n                 \
+    \          true_type, false_type>::type;\n\ntemplate <typename T>\nusing is_broadly_signed\
+    \ =\n    typename conditional_t<is_signed_v<T> || is_same_v<T, __int128_t>,\n\
+    \                           true_type, false_type>::type;\n\ntemplate <typename\
+    \ T>\nusing is_broadly_unsigned =\n    typename conditional_t<is_unsigned_v<T>\
     \ || is_same_v<T, __uint128_t>,\n                           true_type, false_type>::type;\n\
     \n#define ENABLE_VALUE(x) \\\n  template <typename T> \\\n  constexpr bool x##_v\
     \ = x<T>::value;\n\nENABLE_VALUE(is_broadly_integral);\nENABLE_VALUE(is_broadly_signed);\n\
@@ -88,23 +88,22 @@ data:
     \ {\n    int x, y;\n    cin >> x >> y;\n    T c;\n    if (is_weighted)\n     \
     \ cin >> c;\n    else\n      c = 1;\n    if (is_1origin) x--, y--;\n    d[x][y]\
     \ = c;\n    if (!is_directed) d[y][x] = c;\n  }\n  return d;\n}\n\n/**\n * @brief\
-    \ \u30B0\u30E9\u30D5\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\n * @docs docs/graph/graph-template.md\n\
-    \ */\n#line 11 \"graph/functional-graph.hpp\"\n\nnamespace FunctionalGraphImpl\
-    \ {\n\nENABLE_HAS_VAR(cost)\n\n// \u5168\u3066\u306E\u9802\u70B9\u306E\u51FA\u6B21\
-    \u6570\u304C 1\ntemplate <typename T = int>\nstruct FunctionalGraph {\n  int N;\n\
-    \  WeightedGraph<T> g;\n  vector<int> to, represent;\n  vector<T> weight;\n\n\
-    \  FunctionalGraph() = default;\n\n  FunctionalGraph(int n, const vector<int>&\
-    \ adj,\n                  const vector<T>& w = vector<int>{})\n      : N(n), g(N\
-    \ + 1), to(N + 1, -1), represent(N + 1, -1), weight(N + 1) {\n    assert((int)adj.size()\
-    \ == N);\n    assert((int)w.size() == N or w.empty());\n    for (auto& x : adj)\
-    \ assert(0 <= x and x < N);\n\n    UnionFind uf(N);\n    for (int i = 0; i < N;\
-    \ i++) {\n      int j = adj[i];\n      to[i] = j, weight[i] = w.empty() ? T{1}\
-    \ : w[i];\n      if (uf.same(i, j)) {\n        g[N].emplace_back(N, i, weight[i]);\n\
-    \      } else {\n        uf.unite(i, j);\n        g[j].emplace_back(j, i, weight[i]);\n\
-    \      }\n    }\n    calc_represent(N, -1);\n  }\n\n  // _g \u306F\u7121\u5411\
-    \u30B0\u30E9\u30D5\n  template <typename G>\n  FunctionalGraph(int n, const G&\
-    \ _g)\n      : N(n), g(N + 1), to(N + 1, -1), represent(N + 1, -1), weight(N +\
-    \ 1) {\n    constexpr bool cost_flag = has_cost_v<typename G::value_type::value_type>;\n\
+    \ \u30B0\u30E9\u30D5\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\n */\n#line 11 \"graph/functional-graph.hpp\"\
+    \n\nnamespace FunctionalGraphImpl {\n\nENABLE_HAS_VAR(cost)\n\n// \u5168\u3066\
+    \u306E\u9802\u70B9\u306E\u51FA\u6B21\u6570\u304C 1\ntemplate <typename T = int>\n\
+    struct FunctionalGraph {\n  int N;\n  WeightedGraph<T> g;\n  vector<int> to, represent;\n\
+    \  vector<T> weight;\n\n  FunctionalGraph() = default;\n\n  FunctionalGraph(int\
+    \ n, const vector<int>& adj,\n                  const vector<T>& w = vector<int>{})\n\
+    \      : N(n), g(N + 1), to(N + 1, -1), represent(N + 1, -1), weight(N + 1) {\n\
+    \    assert((int)adj.size() == N);\n    assert((int)w.size() == N or w.empty());\n\
+    \    for (auto& x : adj) assert(0 <= x and x < N);\n\n    UnionFind uf(N);\n \
+    \   for (int i = 0; i < N; i++) {\n      int j = adj[i];\n      to[i] = j, weight[i]\
+    \ = w.empty() ? T{1} : w[i];\n      if (uf.same(i, j)) {\n        g[N].emplace_back(N,\
+    \ i, weight[i]);\n      } else {\n        uf.unite(i, j);\n        g[j].emplace_back(j,\
+    \ i, weight[i]);\n      }\n    }\n    calc_represent(N, -1);\n  }\n\n  // _g \u306F\
+    \u7121\u5411\u30B0\u30E9\u30D5\n  template <typename G>\n  FunctionalGraph(int\
+    \ n, const G& _g)\n      : N(n), g(N + 1), to(N + 1, -1), represent(N + 1, -1),\
+    \ weight(N + 1) {\n    constexpr bool cost_flag = has_cost_v<typename G::value_type::value_type>;\n\
     \    WeightedGraph<T> h(n);\n    UnionFind uf(N);\n    for (int i = 0; i < N;\
     \ i++) {\n      for (auto& j : _g[i]) {\n        if (i > j) continue;\n      \
     \  T cost;\n        if constexpr (cost_flag) {\n          cost = j.cost;\n   \
@@ -180,7 +179,7 @@ data:
   isVerificationFile: false
   path: graph/functional-graph.hpp
   requiredBy: []
-  timestamp: '2024-08-10 13:03:16+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-aoj-other/aoj-2891-2.test.cpp

@@ -418,9 +418,8 @@ data:
     \ 1);\n  sort(begin(ret), end(ret));\n  return ret;\n}\n\n}  // namespace fast_factorize\n\
     \nusing fast_factorize::divisors;\nusing fast_factorize::factor_count;\nusing\
     \ fast_factorize::factorize;\n\n/**\n * @brief \u9AD8\u901F\u7D20\u56E0\u6570\u5206\
-    \u89E3(Miller Rabin/Pollard's Rho)\n * @docs docs/prime/fast-factorize.md\n */\n\
-    #line 5 \"verify/verify-unit-test/factorize.test.cpp\"\n\nunsigned long long rng2()\
-    \ {\n  static unsigned long long x_ =\n      chrono::duration_cast<chrono::nanoseconds>(\n\
+    \u89E3(Miller Rabin/Pollard's Rho)\n */\n#line 5 \"verify/verify-unit-test/factorize.test.cpp\"\
+    \n\nunsigned long long rng2() {\n  static unsigned long long x_ =\n      chrono::duration_cast<chrono::nanoseconds>(\n\
     \          chrono::high_resolution_clock::now().time_since_epoch())\n        \
     \  .count();\n  x_ = x_ ^ (x_ << 7);\n  return x_ = x_ ^ (x_ >> 9);\n}\n\nusing\
     \ namespace Nyaan; void Nyaan::solve() {\n  int a, b;\n  cin >> a >> b;\n  cout\
@@ -467,7 +466,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/factorize.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/factorize.test.cpp

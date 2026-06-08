@@ -10,7 +10,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/modulo/tetration.md
     document_title: tetration
     links: []
   bundledCode: "#line 2 \"modulo/tetration.hpp\"\n\n\n\ntemplate <typename T = uint32_t,\
@@ -34,8 +33,7 @@ data:
     \ {a % m, a < m};\n    T phi_m = totient(m), pre, ret;\n    int flg1, flg2;\n\
     \    tie(pre, flg1) = rec(rec, a, b - 1, phi_m);\n    tie(ret, flg2) = mpow(a\
     \ % m, U(pre) + (flg1 ? 0 : phi_m), m);\n    return {ret, flg1 && flg2};\n  };\n\
-    \n  return calc(calc, a, b, m).first % m;\n}\n\n/**\n * @brief tetration\n * @docs\
-    \ docs/modulo/tetration.md\n */\n"
+    \n  return calc(calc, a, b, m).first % m;\n}\n\n/**\n * @brief tetration\n */\n"
   code: "#pragma once\n\n\n\ntemplate <typename T = uint32_t, typename U = uint64_t,\
     \ T MAX = 1000000000>\nT tetration(uint64_t a, uint64_t b, uint64_t m) {\n  auto\
     \ prime_table = [](T m) -> vector<int> {\n    T thres = sqrt(m) + 1;\n    vector<bool>\
@@ -57,22 +55,20 @@ data:
     \ pre, ret;\n    int flg1, flg2;\n    tie(pre, flg1) = rec(rec, a, b - 1, phi_m);\n\
     \    tie(ret, flg2) = mpow(a % m, U(pre) + (flg1 ? 0 : phi_m), m);\n    return\
     \ {ret, flg1 && flg2};\n  };\n\n  return calc(calc, a, b, m).first % m;\n}\n\n\
-    /**\n * @brief tetration\n * @docs docs/modulo/tetration.md\n */\n"
+    /**\n * @brief tetration\n */\n"
   dependsOn: []
   isVerificationFile: false
   path: modulo/tetration.hpp
   requiredBy: []
-  timestamp: '2020-12-05 07:59:51+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-math/yosupo-tetration-mod.test.cpp
 documentation_of: modulo/tetration.hpp
 layout: document
-redirect_from:
-- /library/modulo/tetration.hpp
-- /library/modulo/tetration.hpp.html
 title: tetration
 ---
+
 ## Tetration
 
 $a \uparrow \uparrow b \mod m$を$\mathrm{O}(\sqrt{M})$で計算するライブラリ。$a \uparrow \uparrow b$とは、

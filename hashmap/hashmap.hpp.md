@@ -41,7 +41,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/hashmap/hashmap.md
     document_title: "\u30CF\u30C3\u30B7\u30E5\u30DE\u30C3\u30D7(\u9023\u60F3\u914D\
       \u5217)"
     links: []
@@ -165,7 +164,7 @@ data:
     \ (base::cap - 1);\n    }\n  }\n\n  typename base::itr emplace(const Key& key,\
     \ const Val& val) {\n    return base::insert(Data(key, val));\n  }\n};\n\n/*\n\
     \ * @brief \u30CF\u30C3\u30B7\u30E5\u30DE\u30C3\u30D7(\u9023\u60F3\u914D\u5217\
-    )\n * @docs docs/hashmap/hashmap.md\n **/\n"
+    )\n **/\n"
   code: "#pragma once\n\n#include \"hashmap-base.hpp\"\n\ntemplate <typename Key,\
     \ typename Val>\nstruct HashMap : HashMapImpl::HashMapBase<Key, pair<Key, Val>>\
     \ {\n  using base = typename HashMapImpl::HashMapBase<Key, pair<Key, Val>>;\n\
@@ -183,7 +182,7 @@ data:
     \ (base::cap - 1);\n    }\n  }\n\n  typename base::itr emplace(const Key& key,\
     \ const Val& val) {\n    return base::insert(Data(key, val));\n  }\n};\n\n/*\n\
     \ * @brief \u30CF\u30C3\u30B7\u30E5\u30DE\u30C3\u30D7(\u9023\u60F3\u914D\u5217\
-    )\n * @docs docs/hashmap/hashmap.md\n **/\n"
+    )\n **/\n"
   dependsOn:
   - hashmap/hashmap-base.hpp
   isVerificationFile: false
@@ -192,7 +191,7 @@ data:
   - graph/offline-dynamic-connectivity.hpp
   - modulo/mod-log.hpp
   - data-structure/dynamic-union-find.hpp
-  timestamp: '2023-03-25 00:28:17+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-aoj-dsl/aoj-dsl-1-a-dynamic.test.cpp
@@ -204,11 +203,9 @@ data:
   - verify/verify-unit-test/debug.test.cpp
 documentation_of: hashmap/hashmap.hpp
 layout: document
-redirect_from:
-- /library/hashmap/hashmap.hpp
-- /library/hashmap/hashmap.hpp.html
 title: "\u30CF\u30C3\u30B7\u30E5\u30DE\u30C3\u30D7(\u9023\u60F3\u914D\u5217)"
 ---
+
 ## HashMap(連想配列)
 
 ## 概要

@@ -38,7 +38,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/data-structure/radix-heap.md
     document_title: Radix Heap
     links: []
   bundledCode: "#line 2 \"data-structure/radix-heap.hpp\"\n\ntemplate <typename Key,\
@@ -56,8 +55,7 @@ data:
     \        vs[b].emplace_back(p);\n        ms[b] = min(p.first, ms[b]);\n      }\n\
     \      vs[idx].clear();\n      ms[idx] = uint(-1);\n    }\n    --s;\n    auto\
     \ res = vs[0].back();\n    vs[0].pop_back();\n    if (vs[0].empty()) ms[0] = uint(-1);\n\
-    \    return res;\n  }\n};\n\n/**\n * @brief Radix Heap\n * @docs docs/data-structure/radix-heap.md\n\
-    \ */\n"
+    \    return res;\n  }\n};\n\n/**\n * @brief Radix Heap\n */\n"
   code: "#pragma once\n\ntemplate <typename Key, typename Val>\nstruct RadixHeap {\n\
     \  using uint = typename make_unsigned<Key>::type;\n  static constexpr int bit\
     \ = sizeof(Key) * 8;\n  array<vector<pair<uint, Val> >, bit + 1> vs;\n  array<uint,\
@@ -73,7 +71,7 @@ data:
     \        ms[b] = min(p.first, ms[b]);\n      }\n      vs[idx].clear();\n     \
     \ ms[idx] = uint(-1);\n    }\n    --s;\n    auto res = vs[0].back();\n    vs[0].pop_back();\n\
     \    if (vs[0].empty()) ms[0] = uint(-1);\n    return res;\n  }\n};\n\n/**\n *\
-    \ @brief Radix Heap\n * @docs docs/data-structure/radix-heap.md\n */\n"
+    \ @brief Radix Heap\n */\n"
   dependsOn: []
   isVerificationFile: false
   path: data-structure/radix-heap.hpp
@@ -81,7 +79,7 @@ data:
   - shortest-path/dijkstra-fast.hpp
   - shortest-path/dijkstra-radix-heap.hpp
   - shortest-path/dijkstra-with-restore.hpp
-  timestamp: '2020-12-05 07:59:51+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-graph/yosupo-shortest-path-3.test.cpp
@@ -93,11 +91,9 @@ data:
   - verify/verify-aoj-grl/aoj-grl-1-a-radix-heap.test.cpp
 documentation_of: data-structure/radix-heap.hpp
 layout: document
-redirect_from:
-- /library/data-structure/radix-heap.hpp
-- /library/data-structure/radix-heap.hpp.html
 title: Radix Heap
 ---
+
 ## Radix Heap
 
 #### 概要

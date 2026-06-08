@@ -236,7 +236,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/fps/ntt-friendly-fps.md
     document_title: "NTT mod\u7528FPS\u30E9\u30A4\u30D6\u30E9\u30EA"
     links: []
   bundledCode: "#line 2 \"fps/ntt-friendly-fps.hpp\"\n\n#line 2 \"ntt/ntt.hpp\"\n\n\
@@ -406,8 +405,8 @@ data:
     \ deg, FPSBackendPriority<1>{});\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>\
     \ FormalPowerSeries<mint>::exp(int deg) const {\n  return fps_exp_impl(*this,\
     \ deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief \u591A\u9805\u5F0F/\u5F62\
-    \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n * @docs docs/fps/formal-power-series.md\n\
-    \ */\n#line 5 \"fps/ntt-friendly-fps.hpp\"\n\ntemplate <typename mint>\nvoid fps_set_fft_impl(FormalPowerSeries<mint>*,\
+    \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n */\n#line 5 \"\
+    fps/ntt-friendly-fps.hpp\"\n\ntemplate <typename mint>\nvoid fps_set_fft_impl(FormalPowerSeries<mint>*,\
     \ FPSBackendPriority<1>) {\n  if (!FormalPowerSeries<mint>::ntt_ptr) {\n    FormalPowerSeries<mint>::ntt_ptr\
     \ = new NTT<mint>;\n  }\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>&\
     \ fps_multiply_impl(FormalPowerSeries<mint>& f,\n                            \
@@ -460,7 +459,7 @@ data:
     \ begin(x) + m, mint(0));\n    x.ntt();\n    for (int i = 0; i < 2 * m; ++i) x[i]\
     \ *= y[i];\n    x.intt();\n    b.insert(end(b), begin(x) + m, end(x));\n  }\n\
     \  return fps{begin(b), begin(b) + deg};\n}\n\n/**\n * @brief NTT mod\u7528FPS\u30E9\
-    \u30A4\u30D6\u30E9\u30EA\n * @docs docs/fps/ntt-friendly-fps.md\n */\n"
+    \u30A4\u30D6\u30E9\u30EA\n */\n"
   code: "#pragma once\n\n#include \"../ntt/ntt.hpp\"\n#include \"./formal-power-series.hpp\"\
     \n\ntemplate <typename mint>\nvoid fps_set_fft_impl(FormalPowerSeries<mint>*,\
     \ FPSBackendPriority<1>) {\n  if (!FormalPowerSeries<mint>::ntt_ptr) {\n    FormalPowerSeries<mint>::ntt_ptr\
@@ -515,7 +514,7 @@ data:
     \ begin(x) + m, mint(0));\n    x.ntt();\n    for (int i = 0; i < 2 * m; ++i) x[i]\
     \ *= y[i];\n    x.intt();\n    b.insert(end(b), begin(x) + m, end(x));\n  }\n\
     \  return fps{begin(b), begin(b) + deg};\n}\n\n/**\n * @brief NTT mod\u7528FPS\u30E9\
-    \u30A4\u30D6\u30E9\u30EA\n * @docs docs/fps/ntt-friendly-fps.md\n */\n"
+    \u30A4\u30D6\u30E9\u30EA\n */\n"
   dependsOn:
   - ntt/ntt.hpp
   - fps/formal-power-series.hpp
@@ -524,7 +523,7 @@ data:
   requiredBy:
   - fps/fast-multieval.hpp
   - fps/online-fps.hpp
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ntt/yosupo-convolution-large.test.cpp
@@ -601,11 +600,9 @@ data:
   - verify/verify-unit-test/fps-sparse.test.cpp
 documentation_of: fps/ntt-friendly-fps.hpp
 layout: document
-redirect_from:
-- /library/fps/ntt-friendly-fps.hpp
-- /library/fps/ntt-friendly-fps.hpp.html
 title: "NTT mod\u7528FPS\u30E9\u30A4\u30D6\u30E9\u30EA"
 ---
+
 ## NTT mod専用の形式的冪級数ライブラリ
 
 modがNTT modの時に高速に動作する実装を行ったFPSライブラリ。(現在はinvとexpのみ実装している。)

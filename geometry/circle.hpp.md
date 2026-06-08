@@ -10,7 +10,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':warning:'
   attributes:
-    _deprecated_at_docs: docs/geometry/circle.md
     document_title: "\u5186\u304A\u3088\u3073 2 \u5186\u306E\u4EA4\u70B9\u306E\u5B58\
       \u5728\u5224\u5B9A"
     links: []
@@ -64,7 +63,7 @@ data:
     \ p1 = c1.p + Point(cos(t + a) * c1.r, sin(t + a) * c1.r);\n  Point p2 = c1.p\
     \ + Point(cos(t - a) * c1.r, sin(t - a) * c1.r);\n  return {p1, p2};\n}\n\n/**\n\
     \ * @brief \u5186\u304A\u3088\u3073 2 \u5186\u306E\u4EA4\u70B9\u306E\u5B58\u5728\
-    \u5224\u5B9A\n * @docs docs/geometry/circle.md\n */\n"
+    \u5224\u5B9A\n */\n"
   code: "#pragma once\n\n#include \"geometry-base.hpp\"\n\nstruct Circle {\n  Point\
     \ p;\n  Real r;\n\n  Circle() = default;\n  Circle(Point _p, Real _r) : p(_p),\
     \ r(_r) {}\n};\n\nusing Circles = vector<Circle>;\n\nint intersect(Circle c1,\
@@ -78,23 +77,21 @@ data:
     \ p1 = c1.p + Point(cos(t + a) * c1.r, sin(t + a) * c1.r);\n  Point p2 = c1.p\
     \ + Point(cos(t - a) * c1.r, sin(t - a) * c1.r);\n  return {p1, p2};\n}\n\n/**\n\
     \ * @brief \u5186\u304A\u3088\u3073 2 \u5186\u306E\u4EA4\u70B9\u306E\u5B58\u5728\
-    \u5224\u5B9A\n * @docs docs/geometry/circle.md\n */\n"
+    \u5224\u5B9A\n */\n"
   dependsOn:
   - geometry/geometry-base.hpp
   isVerificationFile: false
   path: geometry/circle.hpp
   requiredBy: []
-  timestamp: '2026-05-31 12:17:46+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: geometry/circle.hpp
 layout: document
-redirect_from:
-- /library/geometry/circle.hpp
-- /library/geometry/circle.hpp.html
 title: "\u5186\u304A\u3088\u3073 2 \u5186\u306E\u4EA4\u70B9\u306E\u5B58\u5728\u5224\
   \u5B9A"
 ---
+
 ## 円および 2 円の交点の存在判定
 
 #### 使い方

@@ -23,7 +23,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/fps/fps-composition-old.md
     document_title: "\u95A2\u6570\u306E\u5408\u6210( $\\mathrm{O}\\left((N \\log N)^{\\\
       frac{3}{2}}\\right)$ )"
     links: []
@@ -146,9 +145,9 @@ data:
     \ deg, FPSBackendPriority<1>{});\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>\
     \ FormalPowerSeries<mint>::exp(int deg) const {\n  return fps_exp_impl(*this,\
     \ deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief \u591A\u9805\u5F0F/\u5F62\
-    \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n * @docs docs/fps/formal-power-series.md\n\
-    \ */\n#line 5 \"fps/fps-composition-old.hpp\"\n\n// find Q(P(x)) mod x ^ min(deg(P),\
-    \ deg(Q))\ntemplate <typename mint>\nFormalPowerSeries<mint> Composition(FormalPowerSeries<mint>\
+    \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n */\n#line 5 \"\
+    fps/fps-composition-old.hpp\"\n\n// find Q(P(x)) mod x ^ min(deg(P), deg(Q))\n\
+    template <typename mint>\nFormalPowerSeries<mint> Composition(FormalPowerSeries<mint>\
     \ P,\n                                    FormalPowerSeries<mint> Q,\n       \
     \                             Binomial<mint>& C, int deg = -1) {\n  using fps\
     \ = FormalPowerSeries<mint>;\n  int N = (deg == -1) ? min(P.size(), Q.size())\
@@ -175,7 +174,7 @@ data:
     \ * idPm).pre(N - d);\n      R += ((QPm * pw_Pr).pre(N - d) * C.finv(l)) << d;\n\
     \    };\n  }\n  R.resize(N, mint(0));\n  return R;\n}\n\n/**\n * @brief \u95A2\
     \u6570\u306E\u5408\u6210( $\\mathrm{O}\\left((N \\log N)^{\\frac{3}{2}}\\right)$\
-    \ )\n * @docs docs/fps/fps-composition-old.md\n */\n"
+    \ )\n */\n"
   code: "#pragma once\n\n#include \"../modulo/binomial.hpp\"\n#include \"./formal-power-series.hpp\"\
     \n\n// find Q(P(x)) mod x ^ min(deg(P), deg(Q))\ntemplate <typename mint>\nFormalPowerSeries<mint>\
     \ Composition(FormalPowerSeries<mint> P,\n                                   \
@@ -204,14 +203,14 @@ data:
     \ * idPm).pre(N - d);\n      R += ((QPm * pw_Pr).pre(N - d) * C.finv(l)) << d;\n\
     \    };\n  }\n  R.resize(N, mint(0));\n  return R;\n}\n\n/**\n * @brief \u95A2\
     \u6570\u306E\u5408\u6210( $\\mathrm{O}\\left((N \\log N)^{\\frac{3}{2}}\\right)$\
-    \ )\n * @docs docs/fps/fps-composition-old.md\n */\n"
+    \ )\n */\n"
   dependsOn:
   - modulo/binomial.hpp
   - fps/formal-power-series.hpp
   isVerificationFile: false
   path: fps/fps-composition-old.hpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-fps/yosupo-compositional-inverse-newton.test.cpp
@@ -219,12 +218,10 @@ data:
   - verify/verify-unit-test/composition.test.cpp
 documentation_of: fps/fps-composition-old.hpp
 layout: document
-redirect_from:
-- /library/fps/fps-composition-old.hpp
-- /library/fps/fps-composition-old.hpp.html
 title: "\u95A2\u6570\u306E\u5408\u6210( $\\mathrm{O}\\left((N \\log N)^{\\frac{3}{2}}\\\
   right)$ )"
 ---
+
 
 ## 関数の合成
 

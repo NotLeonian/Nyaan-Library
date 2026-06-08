@@ -421,53 +421,53 @@ data:
     \ mint>\nFormalPowerSeries<mint> FormalPowerSeries<mint>::exp(int deg) const {\n\
     \  return fps_exp_impl(*this, deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief\
     \ \u591A\u9805\u5F0F/\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\
-    \u30EA\n * @docs docs/fps/formal-power-series.md\n */\n#line 2 \"fps/mod-pow.hpp\"\
-    \n\n#line 4 \"fps/mod-pow.hpp\"\n\n#line 2 \"fps/arbitrary-fps.hpp\"\n\n#line\
-    \ 4 \"fps/arbitrary-fps.hpp\"\n\n#line 2 \"ntt/arbitrary-ntt.hpp\"\n\n#line 6\
-    \ \"ntt/arbitrary-ntt.hpp\"\nusing namespace std;\n\n#line 2 \"ntt/ntt.hpp\"\n\
-    \n#line 7 \"ntt/ntt.hpp\"\nusing namespace std;\n\ntemplate <typename mint>\n\
-    struct NTT {\n  static constexpr uint32_t get_pr() {\n    uint32_t _mod = mint::get_mod();\n\
-    \    using u64 = uint64_t;\n    u64 ds[32] = {};\n    int idx = 0;\n    u64 m\
-    \ = _mod - 1;\n    for (u64 i = 2; i * i <= m; ++i) {\n      if (m % i == 0) {\n\
-    \        ds[idx++] = i;\n        while (m % i == 0) m /= i;\n      }\n    }\n\
-    \    if (m != 1) ds[idx++] = m;\n\n    uint32_t _pr = 2;\n    while (1) {\n  \
-    \    int flg = 1;\n      for (int i = 0; i < idx; ++i) {\n        u64 a = _pr,\
-    \ b = (_mod - 1) / ds[i], r = 1;\n        while (b) {\n          if (b & 1) r\
-    \ = r * a % _mod;\n          a = a * a % _mod;\n          b >>= 1;\n        }\n\
-    \        if (r == 1) {\n          flg = 0;\n          break;\n        }\n    \
-    \  }\n      if (flg == 1) break;\n      ++_pr;\n    }\n    return _pr;\n  };\n\
-    \n  static constexpr uint32_t mod = mint::get_mod();\n  static constexpr uint32_t\
-    \ pr = get_pr();\n  static constexpr int level = __builtin_ctzll(mod - 1);\n \
-    \ mint dw[level], dy[level];\n\n  void setwy(int k) {\n    mint w[level], y[level];\n\
-    \    w[k - 1] = mint(pr).pow((mod - 1) / (1 << k));\n    y[k - 1] = w[k - 1].inverse();\n\
-    \    for (int i = k - 2; i > 0; --i)\n      w[i] = w[i + 1] * w[i + 1], y[i] =\
-    \ y[i + 1] * y[i + 1];\n    dw[1] = w[1], dy[1] = y[1], dw[2] = w[2], dy[2] =\
-    \ y[2];\n    for (int i = 3; i < k; ++i) {\n      dw[i] = dw[i - 1] * y[i - 2]\
-    \ * w[i];\n      dy[i] = dy[i - 1] * w[i - 2] * y[i];\n    }\n  }\n\n  NTT() {\
-    \ setwy(level); }\n\n  void fft4(vector<mint> &a, int k) {\n    if ((int)a.size()\
-    \ <= 1) return;\n    if (k == 1) {\n      mint a1 = a[1];\n      a[1] = a[0] -\
-    \ a[1];\n      a[0] = a[0] + a1;\n      return;\n    }\n    if (k & 1) {\n   \
-    \   int v = 1 << (k - 1);\n      for (int j = 0; j < v; ++j) {\n        mint ajv\
-    \ = a[j + v];\n        a[j + v] = a[j] - ajv;\n        a[j] += ajv;\n      }\n\
-    \    }\n    int u = 1 << (2 + (k & 1));\n    int v = 1 << (k - 2 - (k & 1));\n\
-    \    mint one = mint(1);\n    mint imag = dw[1];\n    while (v) {\n      // jh\
-    \ = 0\n      {\n        int j0 = 0;\n        int j1 = v;\n        int j2 = j1\
-    \ + v;\n        int j3 = j2 + v;\n        for (; j0 < v; ++j0, ++j1, ++j2, ++j3)\
-    \ {\n          mint t0 = a[j0], t1 = a[j1], t2 = a[j2], t3 = a[j3];\n        \
-    \  mint t0p2 = t0 + t2, t1p3 = t1 + t3;\n          mint t0m2 = t0 - t2, t1m3 =\
-    \ (t1 - t3) * imag;\n          a[j0] = t0p2 + t1p3, a[j1] = t0p2 - t1p3;\n   \
-    \       a[j2] = t0m2 + t1m3, a[j3] = t0m2 - t1m3;\n        }\n      }\n      //\
-    \ jh >= 1\n      mint ww = one, xx = one * dw[2], wx = one;\n      for (int jh\
-    \ = 4; jh < u;) {\n        ww = xx * xx, wx = ww * xx;\n        int j0 = jh *\
-    \ v;\n        int je = j0 + v;\n        int j2 = je + v;\n        for (; j0 <\
-    \ je; ++j0, ++j2) {\n          mint t0 = a[j0], t1 = a[j0 + v] * xx, t2 = a[j2]\
-    \ * ww,\n               t3 = a[j2 + v] * wx;\n          mint t0p2 = t0 + t2, t1p3\
+    \u30EA\n */\n#line 2 \"fps/mod-pow.hpp\"\n\n#line 4 \"fps/mod-pow.hpp\"\n\n#line\
+    \ 2 \"fps/arbitrary-fps.hpp\"\n\n#line 4 \"fps/arbitrary-fps.hpp\"\n\n#line 2\
+    \ \"ntt/arbitrary-ntt.hpp\"\n\n#line 6 \"ntt/arbitrary-ntt.hpp\"\nusing namespace\
+    \ std;\n\n#line 2 \"ntt/ntt.hpp\"\n\n#line 7 \"ntt/ntt.hpp\"\nusing namespace\
+    \ std;\n\ntemplate <typename mint>\nstruct NTT {\n  static constexpr uint32_t\
+    \ get_pr() {\n    uint32_t _mod = mint::get_mod();\n    using u64 = uint64_t;\n\
+    \    u64 ds[32] = {};\n    int idx = 0;\n    u64 m = _mod - 1;\n    for (u64 i\
+    \ = 2; i * i <= m; ++i) {\n      if (m % i == 0) {\n        ds[idx++] = i;\n \
+    \       while (m % i == 0) m /= i;\n      }\n    }\n    if (m != 1) ds[idx++]\
+    \ = m;\n\n    uint32_t _pr = 2;\n    while (1) {\n      int flg = 1;\n      for\
+    \ (int i = 0; i < idx; ++i) {\n        u64 a = _pr, b = (_mod - 1) / ds[i], r\
+    \ = 1;\n        while (b) {\n          if (b & 1) r = r * a % _mod;\n        \
+    \  a = a * a % _mod;\n          b >>= 1;\n        }\n        if (r == 1) {\n \
+    \         flg = 0;\n          break;\n        }\n      }\n      if (flg == 1)\
+    \ break;\n      ++_pr;\n    }\n    return _pr;\n  };\n\n  static constexpr uint32_t\
+    \ mod = mint::get_mod();\n  static constexpr uint32_t pr = get_pr();\n  static\
+    \ constexpr int level = __builtin_ctzll(mod - 1);\n  mint dw[level], dy[level];\n\
+    \n  void setwy(int k) {\n    mint w[level], y[level];\n    w[k - 1] = mint(pr).pow((mod\
+    \ - 1) / (1 << k));\n    y[k - 1] = w[k - 1].inverse();\n    for (int i = k -\
+    \ 2; i > 0; --i)\n      w[i] = w[i + 1] * w[i + 1], y[i] = y[i + 1] * y[i + 1];\n\
+    \    dw[1] = w[1], dy[1] = y[1], dw[2] = w[2], dy[2] = y[2];\n    for (int i =\
+    \ 3; i < k; ++i) {\n      dw[i] = dw[i - 1] * y[i - 2] * w[i];\n      dy[i] =\
+    \ dy[i - 1] * w[i - 2] * y[i];\n    }\n  }\n\n  NTT() { setwy(level); }\n\n  void\
+    \ fft4(vector<mint> &a, int k) {\n    if ((int)a.size() <= 1) return;\n    if\
+    \ (k == 1) {\n      mint a1 = a[1];\n      a[1] = a[0] - a[1];\n      a[0] = a[0]\
+    \ + a1;\n      return;\n    }\n    if (k & 1) {\n      int v = 1 << (k - 1);\n\
+    \      for (int j = 0; j < v; ++j) {\n        mint ajv = a[j + v];\n        a[j\
+    \ + v] = a[j] - ajv;\n        a[j] += ajv;\n      }\n    }\n    int u = 1 << (2\
+    \ + (k & 1));\n    int v = 1 << (k - 2 - (k & 1));\n    mint one = mint(1);\n\
+    \    mint imag = dw[1];\n    while (v) {\n      // jh = 0\n      {\n        int\
+    \ j0 = 0;\n        int j1 = v;\n        int j2 = j1 + v;\n        int j3 = j2\
+    \ + v;\n        for (; j0 < v; ++j0, ++j1, ++j2, ++j3) {\n          mint t0 =\
+    \ a[j0], t1 = a[j1], t2 = a[j2], t3 = a[j3];\n          mint t0p2 = t0 + t2, t1p3\
     \ = t1 + t3;\n          mint t0m2 = t0 - t2, t1m3 = (t1 - t3) * imag;\n      \
-    \    a[j0] = t0p2 + t1p3, a[j0 + v] = t0p2 - t1p3;\n          a[j2] = t0m2 + t1m3,\
-    \ a[j2 + v] = t0m2 - t1m3;\n        }\n        xx *= dw[__builtin_ctzll((jh +=\
-    \ 4))];\n      }\n      u <<= 2;\n      v >>= 2;\n    }\n  }\n\n  void ifft4(vector<mint>\
-    \ &a, int k) {\n    if ((int)a.size() <= 1) return;\n    if (k == 1) {\n     \
-    \ mint a1 = a[1];\n      a[1] = a[0] - a[1];\n      a[0] = a[0] + a1;\n      return;\n\
+    \    a[j0] = t0p2 + t1p3, a[j1] = t0p2 - t1p3;\n          a[j2] = t0m2 + t1m3,\
+    \ a[j3] = t0m2 - t1m3;\n        }\n      }\n      // jh >= 1\n      mint ww =\
+    \ one, xx = one * dw[2], wx = one;\n      for (int jh = 4; jh < u;) {\n      \
+    \  ww = xx * xx, wx = ww * xx;\n        int j0 = jh * v;\n        int je = j0\
+    \ + v;\n        int j2 = je + v;\n        for (; j0 < je; ++j0, ++j2) {\n    \
+    \      mint t0 = a[j0], t1 = a[j0 + v] * xx, t2 = a[j2] * ww,\n              \
+    \ t3 = a[j2 + v] * wx;\n          mint t0p2 = t0 + t2, t1p3 = t1 + t3;\n     \
+    \     mint t0m2 = t0 - t2, t1m3 = (t1 - t3) * imag;\n          a[j0] = t0p2 +\
+    \ t1p3, a[j0 + v] = t0p2 - t1p3;\n          a[j2] = t0m2 + t1m3, a[j2 + v] = t0m2\
+    \ - t1m3;\n        }\n        xx *= dw[__builtin_ctzll((jh += 4))];\n      }\n\
+    \      u <<= 2;\n      v >>= 2;\n    }\n  }\n\n  void ifft4(vector<mint> &a, int\
+    \ k) {\n    if ((int)a.size() <= 1) return;\n    if (k == 1) {\n      mint a1\
+    \ = a[1];\n      a[1] = a[0] - a[1];\n      a[0] = a[0] + a1;\n      return;\n\
     \    }\n    int u = 1 << (k - 2);\n    int v = 1;\n    mint one = mint(1);\n \
     \   mint imag = dy[1];\n    while (u) {\n      // jh = 0\n      {\n        int\
     \ j0 = 0;\n        int j1 = v;\n        int j2 = v + v;\n        int j3 = j2 +\
@@ -689,7 +689,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-math/yosupo-determinant-of-sparse-matrix-bbla.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-math/yosupo-determinant-of-sparse-matrix-bbla.test.cpp

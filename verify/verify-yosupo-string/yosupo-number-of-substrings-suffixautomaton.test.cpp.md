@@ -267,8 +267,8 @@ data:
     \ = i;\n    for (int i = 0; i < n; i++) {\n      state &s = st[i];\n      sort(begin(s.nxt),\
     \ end(s.nxt));\n      for (auto &[_, y] : s.nxt) y = inv[y];\n      if (s.link\
     \ != -1) s.link = inv[s.link];\n      if (s.origin != -1) s.origin = inv[s.origin];\n\
-    \    }\n    sorted = true;\n  }\n};\n\n/**\n * @brief Suffix Automaton\n * @docs\
-    \ docs/string/suffix-automaton.md\n */\n#line 6 \"verify/verify-yosupo-string/yosupo-number-of-substrings-suffixautomaton.test.cpp\"\
+    \    }\n    sorted = true;\n  }\n};\n\n/**\n * @brief Suffix Automaton\n */\n\
+    #line 6 \"verify/verify-yosupo-string/yosupo-number-of-substrings-suffixautomaton.test.cpp\"\
     \n\nusing namespace Nyaan;\nvoid Nyaan::solve() {\n  ins(s);\n  SuffixAutomaton\
     \ sa(s);\n\n  vl dp(sz(sa));\n  dp[0] = 1;\n  rep(i, sz(sa)) { each(p, sa.chd(i))\
     \ dp[p.second] += dp[i]; }\n  out(accumulate(all(dp),0LL) - 1);\n}\n"
@@ -288,7 +288,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-string/yosupo-number-of-substrings-suffixautomaton.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-string/yosupo-number-of-substrings-suffixautomaton.test.cpp

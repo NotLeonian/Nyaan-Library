@@ -329,13 +329,12 @@ data:
     \ decltype(Node::key)& key) {\n    this->splay(t);\n    t->key = key;\n    this->update(t);\n\
     \  }\n\n  virtual decltype(Node::key) get_key(Ptr t) { return t->key; }\n\n  decltype(Node::key)\
     \ fold(Ptr u, Ptr v) {\n    evert(u);\n    expose(v);\n    return v->sum;\n  }\n\
-    };\n\n/**\n * @brief Link/Cut Tree(base)\n * @docs docs/lct/link-cut-base.md\n\
-    \ */\n#line 32 \"lct/link-cut-tree-subtree.hpp\"\n\ntemplate <typename T, T (*f)(T,\
-    \ T), T (*finv)(T, T)>\nstruct LinkCutTreeSubtreeQuery\n    : LinkCutBase<SplayTreeForLCSubtree<T,\
-    \ f, finv>> {\n  using base = LinkCutBase<SplayTreeForLCSubtree<T, f, finv>>;\n\
-    \  using Node = typename base::Node;\n  using Ptr = typename base::Ptr;\n\n  Ptr\
-    \ expose(Ptr t) override {\n    Ptr rp = nullptr;\n    for (Ptr cur = t; cur;\
-    \ cur = cur->p) {\n      this->splay(cur);\n      if (cur->r) cur->add(cur->r);\n\
+    };\n\n/**\n * @brief Link/Cut Tree(base)\n */\n#line 32 \"lct/link-cut-tree-subtree.hpp\"\
+    \n\ntemplate <typename T, T (*f)(T, T), T (*finv)(T, T)>\nstruct LinkCutTreeSubtreeQuery\n\
+    \    : LinkCutBase<SplayTreeForLCSubtree<T, f, finv>> {\n  using base = LinkCutBase<SplayTreeForLCSubtree<T,\
+    \ f, finv>>;\n  using Node = typename base::Node;\n  using Ptr = typename base::Ptr;\n\
+    \n  Ptr expose(Ptr t) override {\n    Ptr rp = nullptr;\n    for (Ptr cur = t;\
+    \ cur; cur = cur->p) {\n      this->splay(cur);\n      if (cur->r) cur->add(cur->r);\n\
     \      cur->r = rp;\n      if (cur->r) cur->erase(cur->r);\n      this->update(cur);\n\
     \      rp = cur;\n    }\n    this->splay(t);\n    return rp;\n  }\n\n  void link(Ptr\
     \ u, Ptr v) override {\n    this->evert(u);\n    this->expose(v);\n    u->p =\
@@ -464,7 +463,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-ds/yosupo-dynamic-tree-vertex-add-subtree-sum.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-ds/yosupo-dynamic-tree-vertex-add-subtree-sum.test.cpp

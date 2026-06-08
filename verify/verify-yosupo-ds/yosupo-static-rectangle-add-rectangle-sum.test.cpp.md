@@ -248,8 +248,8 @@ data:
     \ x = 0;\n    for (int k = 1 << __lg(N); k; k >>= 1) {\n      if (x + k <= N -\
     \ 1 && data[x + k] <= w) {\n        w -= data[x + k];\n        x += k;\n     \
     \ }\n    }\n    return x;\n  }\n};\n\n/**\n * @brief Binary Indexed Tree(Fenwick\
-    \ Tree)\n * @docs docs/data-structure/binary-indexed-tree.md\n */\n#line 7 \"\
-    data-structure-2d/rectangle-add-rectangle-sum.hpp\"\n\n// https://hitonanode.github.io/cplib-cpp/data_structure/rectangle_add_rectangle_sum.hpp\n\
+    \ Tree)\n */\n#line 7 \"data-structure-2d/rectangle-add-rectangle-sum.hpp\"\n\n\
+    // https://hitonanode.github.io/cplib-cpp/data_structure/rectangle_add_rectangle_sum.hpp\n\
     template <class I, class T>\nclass RectangleAddRectangleSum {\n  struct AddQuery\
     \ {\n    I xl, xr, yl, yr;\n    T val;\n  };\n  struct SumQuery {\n    I xl, xr,\
     \ yl, yr;\n  };\n  vector<AddQuery> add_queries;\n  vector<SumQuery> sum_queries;\n\
@@ -351,7 +351,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-ds/yosupo-static-rectangle-add-rectangle-sum.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-ds/yosupo-static-rectangle-add-rectangle-sum.test.cpp

@@ -260,18 +260,17 @@ data:
     \ false;\n    if (data[x] > data[y]) swap(x, y);\n    data[x] += data[y];\n  \
     \  data[y] = x;\n    f(x, y);\n    return true;\n  }\n\n  int size(int k) { return\
     \ -data[find(k)]; }\n\n  int same(int x, int y) { return find(x) == find(y); }\n\
-    };\n\n/**\n * @brief Union Find(Disjoint Set Union)\n * @docs docs/data-structure/union-find.md\n\
-    \ */\n#line 7 \"verify/verify-yuki/yuki-1170-divide-interval.test.cpp\"\nusing\
-    \ namespace Nyaan;\n\nvoid q() {\n  inl(N, a, b);\n  vl X(N);\n  in(X);\n\n  DivideInterval\
-    \ d(N);\n  int B = d.B;\n  UnionFind uf(2 * B);\n  vi num(2 * B);\n  rep(i, N)\
-    \ num[B + i] = 1;\n\n  auto f = [&](int x, int y) { num[x] += num[y]; };\n  auto\
-    \ rec = [&](auto r, int c) -> void {\n    if (B <= c) return;\n    rep(t, 2) {\n\
-    \      if (!uf.same(c, c * 2 + t)) {\n        uf.unite(c, c * 2 + t, f);\n   \
-    \     r(r, c * 2 + t);\n      }\n    }\n  };\n  rep(i, N) {\n    int l = lb(X,\
-    \ X[i] + a);\n    int r = lb(X, X[i] + b + 1);\n    d.apply(l, r, [&](int j) {\n\
-    \      uf.unite(i + B, j, f);\n      rec(rec, j);\n    });\n  }\n  rep(i, N) out(num[uf.find(B\
-    \ + i)]);\n}\n\nvoid Nyaan::solve() {\n  int t = 1;\n  // in(t);\n  while (t--)\
-    \ q();\n}\n"
+    };\n\n/**\n * @brief Union Find(Disjoint Set Union)\n */\n#line 7 \"verify/verify-yuki/yuki-1170-divide-interval.test.cpp\"\
+    \nusing namespace Nyaan;\n\nvoid q() {\n  inl(N, a, b);\n  vl X(N);\n  in(X);\n\
+    \n  DivideInterval d(N);\n  int B = d.B;\n  UnionFind uf(2 * B);\n  vi num(2 *\
+    \ B);\n  rep(i, N) num[B + i] = 1;\n\n  auto f = [&](int x, int y) { num[x] +=\
+    \ num[y]; };\n  auto rec = [&](auto r, int c) -> void {\n    if (B <= c) return;\n\
+    \    rep(t, 2) {\n      if (!uf.same(c, c * 2 + t)) {\n        uf.unite(c, c *\
+    \ 2 + t, f);\n        r(r, c * 2 + t);\n      }\n    }\n  };\n  rep(i, N) {\n\
+    \    int l = lb(X, X[i] + a);\n    int r = lb(X, X[i] + b + 1);\n    d.apply(l,\
+    \ r, [&](int j) {\n      uf.unite(i + B, j, f);\n      rec(rec, j);\n    });\n\
+    \  }\n  rep(i, N) out(num[uf.find(B + i)]);\n}\n\nvoid Nyaan::solve() {\n  int\
+    \ t = 1;\n  // in(t);\n  while (t--) q();\n}\n"
   code: "#define PROBLEM \"https://yukicoder.me/problems/no/1170\"\n//\n#include \"\
     ../../template/template.hpp\"\n//\n#include \"../../data-structure/divide-interval.hpp\"\
     \n#include \"../../data-structure/union-find.hpp\"\nusing namespace Nyaan;\n\n\
@@ -297,7 +296,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yuki/yuki-1170-divide-interval.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yuki/yuki-1170-divide-interval.test.cpp

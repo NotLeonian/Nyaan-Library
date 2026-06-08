@@ -229,10 +229,9 @@ data:
     \ rect.first) {\n        P pre = st.top();\n        st.pop();\n        mx = max(mx,\
     \ pre.first * (i - pre.second));\n        j = pre.second;\n      }\n      rect.second\
     \ = j;\n      st.push(rect);\n    }\n  }\n  return mx;\n}\n\n/**\n * @brief \u6700\
-    \u5927\u9577\u65B9\u5F62\n * @docs docs/dp/maximal-rectangle.md\n */\n#line 6\
-    \ \"verify/verify-aoj-dpl/aoj-dpl-3-c.test.cpp\"\n//\nusing namespace Nyaan;\n\
-    \nvoid Nyaan::solve() {\n  ini(N);\n  vl a(N);\n  in(a);\n  out(MaximalRectangle(a));\n\
-    }\n"
+    \u5927\u9577\u65B9\u5F62\n */\n#line 6 \"verify/verify-aoj-dpl/aoj-dpl-3-c.test.cpp\"\
+    \n//\nusing namespace Nyaan;\n\nvoid Nyaan::solve() {\n  ini(N);\n  vl a(N);\n\
+    \  in(a);\n  out(MaximalRectangle(a));\n}\n"
   code: "#define PROBLEM \"http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DPL_3_C\"\
     \n\n#include \"../../template/template.hpp\"\n//\n#include \"../../dp/maximal-rectangle.hpp\"\
     \n//\nusing namespace Nyaan;\n\nvoid Nyaan::solve() {\n  ini(N);\n  vl a(N);\n\
@@ -248,7 +247,7 @@ data:
   isVerificationFile: true
   path: verify/verify-aoj-dpl/aoj-dpl-3-c.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-aoj-dpl/aoj-dpl-3-c.test.cpp

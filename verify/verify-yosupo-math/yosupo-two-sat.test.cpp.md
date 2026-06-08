@@ -82,47 +82,47 @@ data:
     \    }\n    return true;\n  }\n  vector<bool> answer() {\n    if (!built) satisfiable();\n\
     \    return _answer;\n  }\n\n private:\n  int _n;\n  vector<bool> _answer;\n \
     \ bool built;\n  internal::scc_graph scc;\n};\n\n}  // namespace TwoSatImpl\n\n\
-    using TwoSatImpl::two_sat;\n\n/**\n * @brief 2-SAT\n * @docs docs/math/two-sat.md\n\
-    \ */\n#line 2 \"template/template.hpp\"\nusing namespace std;\n\n// intrinstic\n\
-    #include <immintrin.h>\n\n#line 8 \"template/template.hpp\"\n#include <array>\n\
-    #include <bitset>\n#line 11 \"template/template.hpp\"\n#include <cctype>\n#include\
-    \ <cfenv>\n#include <cfloat>\n#include <chrono>\n#include <cinttypes>\n#include\
-    \ <climits>\n#include <cmath>\n#include <complex>\n#include <cstdarg>\n#include\
-    \ <cstddef>\n#include <cstdint>\n#include <cstdio>\n#include <cstdlib>\n#include\
-    \ <cstring>\n#include <deque>\n#include <fstream>\n#include <functional>\n#include\
-    \ <initializer_list>\n#include <iomanip>\n#include <ios>\n#include <iostream>\n\
-    #include <istream>\n#include <iterator>\n#include <limits>\n#include <list>\n\
-    #include <map>\n#include <memory>\n#include <new>\n#include <numeric>\n#include\
-    \ <ostream>\n#include <queue>\n#include <random>\n#include <set>\n#include <sstream>\n\
-    #include <stack>\n#include <streambuf>\n#include <string>\n#include <tuple>\n\
-    #include <type_traits>\n#include <typeinfo>\n#include <unordered_map>\n#include\
-    \ <unordered_set>\n#line 55 \"template/template.hpp\"\n\n// utility\n#line 3 \"\
-    template/util.hpp\"\n\nnamespace Nyaan {\nusing ll = long long;\nusing i64 = long\
-    \ long;\nusing u64 = unsigned long long;\nusing i128 = __int128_t;\nusing u128\
-    \ = __uint128_t;\n\ntemplate <typename T>\nusing V = vector<T>;\ntemplate <typename\
-    \ T>\nusing VV = vector<vector<T>>;\nusing vi = vector<int>;\nusing vl = vector<long\
-    \ long>;\nusing vd = V<double>;\nusing vs = V<string>;\nusing vvi = vector<vector<int>>;\n\
-    using vvl = vector<vector<long long>>;\ntemplate <typename T>\nusing minpq = priority_queue<T,\
-    \ vector<T>, greater<T>>;\n\ntemplate <typename T, typename U>\nstruct P : pair<T,\
-    \ U> {\n  template <typename... Args>\n  P(Args... args) : pair<T, U>(args...)\
-    \ {}\n\n  using pair<T, U>::first;\n  using pair<T, U>::second;\n\n  P &operator+=(const\
-    \ P &r) {\n    first += r.first;\n    second += r.second;\n    return *this;\n\
-    \  }\n  P &operator-=(const P &r) {\n    first -= r.first;\n    second -= r.second;\n\
-    \    return *this;\n  }\n  P &operator*=(const P &r) {\n    first *= r.first;\n\
-    \    second *= r.second;\n    return *this;\n  }\n  template <typename S>\n  P\
-    \ &operator*=(const S &r) {\n    first *= r, second *= r;\n    return *this;\n\
-    \  }\n  P operator+(const P &r) const { return P(*this) += r; }\n  P operator-(const\
-    \ P &r) const { return P(*this) -= r; }\n  P operator*(const P &r) const { return\
-    \ P(*this) *= r; }\n  template <typename S>\n  P operator*(const S &r) const {\n\
-    \    return P(*this) *= r;\n  }\n  P operator-() const { return P{-first, -second};\
-    \ }\n};\n\nusing pl = P<ll, ll>;\nusing pi = P<int, int>;\nusing vp = V<pl>;\n\
-    \nconstexpr int inf = 1001001001;\nconstexpr long long infLL = 4004004004004004004LL;\n\
-    \ntemplate <typename T>\nint sz(const T &t) {\n  return t.size();\n}\n\ntemplate\
-    \ <typename T, typename U>\ninline bool amin(T &x, U y) {\n  return (y < x) ?\
-    \ (x = y, true) : false;\n}\ntemplate <typename T, typename U>\ninline bool amax(T\
-    \ &x, U y) {\n  return (x < y) ? (x = y, true) : false;\n}\n\ntemplate <typename\
-    \ T>\ninline T Max(const vector<T> &v) {\n  return *max_element(begin(v), end(v));\n\
-    }\ntemplate <typename T>\ninline T Min(const vector<T> &v) {\n  return *min_element(begin(v),\
+    using TwoSatImpl::two_sat;\n\n/**\n * @brief 2-SAT\n */\n#line 2 \"template/template.hpp\"\
+    \nusing namespace std;\n\n// intrinstic\n#include <immintrin.h>\n\n#line 8 \"\
+    template/template.hpp\"\n#include <array>\n#include <bitset>\n#line 11 \"template/template.hpp\"\
+    \n#include <cctype>\n#include <cfenv>\n#include <cfloat>\n#include <chrono>\n\
+    #include <cinttypes>\n#include <climits>\n#include <cmath>\n#include <complex>\n\
+    #include <cstdarg>\n#include <cstddef>\n#include <cstdint>\n#include <cstdio>\n\
+    #include <cstdlib>\n#include <cstring>\n#include <deque>\n#include <fstream>\n\
+    #include <functional>\n#include <initializer_list>\n#include <iomanip>\n#include\
+    \ <ios>\n#include <iostream>\n#include <istream>\n#include <iterator>\n#include\
+    \ <limits>\n#include <list>\n#include <map>\n#include <memory>\n#include <new>\n\
+    #include <numeric>\n#include <ostream>\n#include <queue>\n#include <random>\n\
+    #include <set>\n#include <sstream>\n#include <stack>\n#include <streambuf>\n#include\
+    \ <string>\n#include <tuple>\n#include <type_traits>\n#include <typeinfo>\n#include\
+    \ <unordered_map>\n#include <unordered_set>\n#line 55 \"template/template.hpp\"\
+    \n\n// utility\n#line 3 \"template/util.hpp\"\n\nnamespace Nyaan {\nusing ll =\
+    \ long long;\nusing i64 = long long;\nusing u64 = unsigned long long;\nusing i128\
+    \ = __int128_t;\nusing u128 = __uint128_t;\n\ntemplate <typename T>\nusing V =\
+    \ vector<T>;\ntemplate <typename T>\nusing VV = vector<vector<T>>;\nusing vi =\
+    \ vector<int>;\nusing vl = vector<long long>;\nusing vd = V<double>;\nusing vs\
+    \ = V<string>;\nusing vvi = vector<vector<int>>;\nusing vvl = vector<vector<long\
+    \ long>>;\ntemplate <typename T>\nusing minpq = priority_queue<T, vector<T>, greater<T>>;\n\
+    \ntemplate <typename T, typename U>\nstruct P : pair<T, U> {\n  template <typename...\
+    \ Args>\n  P(Args... args) : pair<T, U>(args...) {}\n\n  using pair<T, U>::first;\n\
+    \  using pair<T, U>::second;\n\n  P &operator+=(const P &r) {\n    first += r.first;\n\
+    \    second += r.second;\n    return *this;\n  }\n  P &operator-=(const P &r)\
+    \ {\n    first -= r.first;\n    second -= r.second;\n    return *this;\n  }\n\
+    \  P &operator*=(const P &r) {\n    first *= r.first;\n    second *= r.second;\n\
+    \    return *this;\n  }\n  template <typename S>\n  P &operator*=(const S &r)\
+    \ {\n    first *= r, second *= r;\n    return *this;\n  }\n  P operator+(const\
+    \ P &r) const { return P(*this) += r; }\n  P operator-(const P &r) const { return\
+    \ P(*this) -= r; }\n  P operator*(const P &r) const { return P(*this) *= r; }\n\
+    \  template <typename S>\n  P operator*(const S &r) const {\n    return P(*this)\
+    \ *= r;\n  }\n  P operator-() const { return P{-first, -second}; }\n};\n\nusing\
+    \ pl = P<ll, ll>;\nusing pi = P<int, int>;\nusing vp = V<pl>;\n\nconstexpr int\
+    \ inf = 1001001001;\nconstexpr long long infLL = 4004004004004004004LL;\n\ntemplate\
+    \ <typename T>\nint sz(const T &t) {\n  return t.size();\n}\n\ntemplate <typename\
+    \ T, typename U>\ninline bool amin(T &x, U y) {\n  return (y < x) ? (x = y, true)\
+    \ : false;\n}\ntemplate <typename T, typename U>\ninline bool amax(T &x, U y)\
+    \ {\n  return (x < y) ? (x = y, true) : false;\n}\n\ntemplate <typename T>\ninline\
+    \ T Max(const vector<T> &v) {\n  return *max_element(begin(v), end(v));\n}\ntemplate\
+    \ <typename T>\ninline T Min(const vector<T> &v) {\n  return *min_element(begin(v),\
     \ end(v));\n}\ntemplate <typename T>\ninline long long Sum(const vector<T> &v)\
     \ {\n  return accumulate(begin(v), end(v), 0LL);\n}\n\ntemplate <typename T>\n\
     int lb(const vector<T> &v, const T &a) {\n  return lower_bound(begin(v), end(v),\
@@ -295,7 +295,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-math/yosupo-two-sat.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-math/yosupo-two-sat.test.cpp

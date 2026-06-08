@@ -16,7 +16,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/data-structure/rollback-union-find.md
     document_title: "Rollback\u3064\u304DUnion Find"
     links: []
   bundledCode: "#line 2 \"data-structure/rollback-union-find.hpp\"\n\nstruct RollbackUnionFind\
@@ -34,8 +33,7 @@ data:
     \ { return int(history.size() >> 1); }\n\n  void rollback(int state = -1) {\n\
     \    if (state == -1) state = inner_snap;\n    state <<= 1;\n    assert(state\
     \ <= (int)history.size());\n    while (state < (int)history.size()) undo();\n\
-    \  }\n};\n\n/**\n * @brief Rollback\u3064\u304DUnion Find\n * @docs docs/data-structure/rollback-union-find.md\n\
-    \ */\n"
+    \  }\n};\n\n/**\n * @brief Rollback\u3064\u304DUnion Find\n */\n"
   code: "#pragma once\n\nstruct RollbackUnionFind {\n  vector<int> data;\n  stack<pair<int,\
     \ int> > history;\n  int inner_snap;\n\n  RollbackUnionFind(int sz) : inner_snap(0)\
     \ { data.assign(sz, -1); }\n\n  bool unite(int x, int y) {\n    x = find(x), y\
@@ -50,25 +48,22 @@ data:
     \ >> 1); }\n\n  int get_state() { return int(history.size() >> 1); }\n\n  void\
     \ rollback(int state = -1) {\n    if (state == -1) state = inner_snap;\n    state\
     \ <<= 1;\n    assert(state <= (int)history.size());\n    while (state < (int)history.size())\
-    \ undo();\n  }\n};\n\n/**\n * @brief Rollback\u3064\u304DUnion Find\n * @docs\
-    \ docs/data-structure/rollback-union-find.md\n */\n"
+    \ undo();\n  }\n};\n\n/**\n * @brief Rollback\u3064\u304DUnion Find\n */\n"
   dependsOn: []
   isVerificationFile: false
   path: data-structure/rollback-union-find.hpp
   requiredBy:
   - graph/offline-dynamic-connectivity.hpp
-  timestamp: '2020-12-05 07:59:51+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ds/yosupo-rollback-union-find.test.cpp
   - verify/verify-yosupo-ds/yosupo-offline-dynamic-connectivity.test.cpp
 documentation_of: data-structure/rollback-union-find.hpp
 layout: document
-redirect_from:
-- /library/data-structure/rollback-union-find.hpp
-- /library/data-structure/rollback-union-find.hpp.html
 title: "Rollback\u3064\u304DUnion Find"
 ---
+
 ## rollbackつきUnion-Find
 
 #### 概要

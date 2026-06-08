@@ -295,20 +295,20 @@ data:
     \ multiplicative_function::sigma1<T>> em(\n      n);\n  return em.run();\n}\n\n\
     template <typename T>\nstatic constexpr vector<T> totient(int n) {\n  enamurate_multiplicative_function<T,\
     \ multiplicative_function::totient<T>> em(\n      n);\n  return em.run();\n}\n\
-    \n/**\n * @brief \u6709\u540D\u306A\u4E57\u6CD5\u7684\u95A2\u6570\n * @docs docs/multiplicative-function/mf-famous-series.md\n\
-    \ */\n#line 10 \"multiplicative-function/count-square-free.hpp\"\n\nlong long\
-    \ count_square_free(long long N) {\n  long long B = pow(N, 0.4);\n\n  auto pre\
-    \ = mobius_function<int>(B + 1);\n  for (int i = 1; i <= B; i++) pre[i] += pre[i\
-    \ - 1];\n  unordered_map<long long, long long> dp;\n  auto mu = [&](auto rc, long\
-    \ long n) -> long long {\n    if (n <= B) return pre[n];\n    if (dp.count(n))\
-    \ return dp[n];\n    long long cur = 1;\n    enumerate_quotient(n, [&](long long\
-    \ q, long long l, long long r) {\n      if (q != n) cur -= rc(rc, q) * (r - l);\n\
-    \    });\n    return dp[n] = cur;\n  };\n\n  long long ans = 0;\n  long long upper\
-    \ = isqrt(N);\n  for (long long i = 1; upper > B; i++) {\n    long long nxt =\
-    \ isqrt(N / (i + 1));\n    ans += i * (mu(mu, upper) - mu(mu, nxt));\n    upper\
-    \ = nxt;\n  }\n  while (upper > 0) {\n    ans += (pre[upper] - pre[upper - 1])\
-    \ * (N / (upper * upper));\n    upper--;\n  }\n  return ans;\n}\n\n/**\n * @brief\
-    \ \u7121\u5E73\u65B9\u6570\u306E\u6570\u3048\u4E0A\u3052\n */\n#line 6 \"verify/verify-yosupo-math/yosupo-count-squarefrees.test.cpp\"\
+    \n/**\n * @brief \u6709\u540D\u306A\u4E57\u6CD5\u7684\u95A2\u6570\n */\n#line\
+    \ 10 \"multiplicative-function/count-square-free.hpp\"\n\nlong long count_square_free(long\
+    \ long N) {\n  long long B = pow(N, 0.4);\n\n  auto pre = mobius_function<int>(B\
+    \ + 1);\n  for (int i = 1; i <= B; i++) pre[i] += pre[i - 1];\n  unordered_map<long\
+    \ long, long long> dp;\n  auto mu = [&](auto rc, long long n) -> long long {\n\
+    \    if (n <= B) return pre[n];\n    if (dp.count(n)) return dp[n];\n    long\
+    \ long cur = 1;\n    enumerate_quotient(n, [&](long long q, long long l, long\
+    \ long r) {\n      if (q != n) cur -= rc(rc, q) * (r - l);\n    });\n    return\
+    \ dp[n] = cur;\n  };\n\n  long long ans = 0;\n  long long upper = isqrt(N);\n\
+    \  for (long long i = 1; upper > B; i++) {\n    long long nxt = isqrt(N / (i +\
+    \ 1));\n    ans += i * (mu(mu, upper) - mu(mu, nxt));\n    upper = nxt;\n  }\n\
+    \  while (upper > 0) {\n    ans += (pre[upper] - pre[upper - 1]) * (N / (upper\
+    \ * upper));\n    upper--;\n  }\n  return ans;\n}\n\n/**\n * @brief \u7121\u5E73\
+    \u65B9\u6570\u306E\u6570\u3048\u4E0A\u3052\n */\n#line 6 \"verify/verify-yosupo-math/yosupo-count-squarefrees.test.cpp\"\
     \nusing namespace Nyaan;\n\nvoid q() {\n  inl(N);\n  out(count_square_free(N));\n\
     }\n\nvoid Nyaan::solve() {\n  int t = 1;\n  // in(t);\n  while (t--) q();\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/counting_squarefrees\"\n\
@@ -331,7 +331,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-math/yosupo-count-squarefrees.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-math/yosupo-count-squarefrees.test.cpp

@@ -16,7 +16,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/misc/mo.md
     document_title: Mo's algorithm
     links: []
   bundledCode: "#line 2 \"misc/mo.hpp\"\n\nstruct Mo {\n  int width;\n  vector<int>\
@@ -33,8 +32,7 @@ data:
     \    int nl = 0, nr = 0;\n    for (auto idx : order) {\n      while (nl > left[idx])\
     \ add_left(--nl);\n      while (nr < right[idx]) add_right(nr++);\n      while\
     \ (nl < left[idx]) delete_left(nl++);\n      while (nr > right[idx]) delete_right(--nr);\n\
-    \      rem(idx);\n    }\n  }\n};\n\n/**\n * @brief Mo's algorithm\n * @docs docs/misc/mo.md\n\
-    \ */\n"
+    \      rem(idx);\n    }\n  }\n};\n\n/**\n * @brief Mo's algorithm\n */\n"
   code: "#pragma once\n\nstruct Mo {\n  int width;\n  vector<int> left, right, order;\n\
     \n  Mo(int N, int Q) : order(Q) {\n    width = max<int>(1, 1.0 * N / max<double>(1.0,\
     \ sqrt(Q * 2.0 / 3.0)));\n    iota(begin(order), end(order), 0);\n  }\n\n  void\
@@ -49,25 +47,22 @@ data:
     \ 0;\n    for (auto idx : order) {\n      while (nl > left[idx]) add_left(--nl);\n\
     \      while (nr < right[idx]) add_right(nr++);\n      while (nl < left[idx])\
     \ delete_left(nl++);\n      while (nr > right[idx]) delete_right(--nr);\n    \
-    \  rem(idx);\n    }\n  }\n};\n\n/**\n * @brief Mo's algorithm\n * @docs docs/misc/mo.md\n\
-    \ */\n"
+    \  rem(idx);\n    }\n  }\n};\n\n/**\n * @brief Mo's algorithm\n */\n"
   dependsOn: []
   isVerificationFile: false
   path: misc/mo.hpp
   requiredBy:
   - modulo/multipoint-binomial-sum.hpp
-  timestamp: '2021-03-26 19:14:01+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ds/yosupo-static-range-inversions-query.test.cpp
   - verify/verify-unit-test/multipoint-binomial-sum.test.cpp
 documentation_of: misc/mo.hpp
 layout: document
-redirect_from:
-- /library/misc/mo.hpp
-- /library/misc/mo.hpp.html
 title: Mo's algorithm
 ---
+
 ## Mo's algorithm
 
 $[0,N)$上の区間に対する$Q$個のクエリを$\mathrm{O}(\alpha N \sqrt{Q})$で計算するライブラリ。(ただし区間の幅を$1$変化させる伸縮が$\mathrm{O}(\alpha)$で行えるとする。)

@@ -19,7 +19,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/multiplicative-function/sum-of-multiplicative-function.md
     document_title: "\u4E57\u6CD5\u7684\u95A2\u6570\u306Eprefix sum"
     links: []
   bundledCode: "#line 2 \"multiplicative-function/sum-of-multiplicative-function.hpp\"\
@@ -88,8 +87,7 @@ data:
     \ 1; i < (int)ns.size(); i++) F[i] += 1;\n    return F;\n  }\n\n  i64 quo(i64\
     \ n, i64 d) { return double(n) / d; }\n  i64 idx(i64 n) { return n <= sq ? s -\
     \ n : quo(M, n); }\n};\n\n/**\n * @brief \u4E57\u6CD5\u7684\u95A2\u6570\u306E\
-    prefix sum\n * @docs docs/multiplicative-function/sum-of-multiplicative-function.md\n\
-    \ */\n"
+    prefix sum\n */\n"
   code: "#pragma once\n\n#include \"../prime/prime-enumerate.hpp\"\n\n// f(p, c) :\
     \ f(p^c) \u306E\u5024\u3092\u8FD4\u3059\ntemplate <typename T, T (*f)(long long,\
     \ long long)>\nstruct mf_prefix_sum {\n  using i64 = long long;\n\n  i64 M, sq,\
@@ -146,14 +144,13 @@ data:
     \ 1; i < (int)ns.size(); i++) F[i] += 1;\n    return F;\n  }\n\n  i64 quo(i64\
     \ n, i64 d) { return double(n) / d; }\n  i64 idx(i64 n) { return n <= sq ? s -\
     \ n : quo(M, n); }\n};\n\n/**\n * @brief \u4E57\u6CD5\u7684\u95A2\u6570\u306E\
-    prefix sum\n * @docs docs/multiplicative-function/sum-of-multiplicative-function.md\n\
-    \ */\n"
+    prefix sum\n */\n"
   dependsOn:
   - prime/prime-enumerate.hpp
   isVerificationFile: false
   path: multiplicative-function/sum-of-multiplicative-function.hpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-math/yosupo-sum-of-totient-2.test.cpp
@@ -161,11 +158,9 @@ data:
   - verify/verify-unit-test/sum-of-mf.test.cpp
 documentation_of: multiplicative-function/sum-of-multiplicative-function.hpp
 layout: document
-redirect_from:
-- /library/multiplicative-function/sum-of-multiplicative-function.hpp
-- /library/multiplicative-function/sum-of-multiplicative-function.hpp.html
 title: "\u4E57\u6CD5\u7684\u95A2\u6570\u306Eprefix sum"
 ---
+
 
 ## 乗法的関数の和
 

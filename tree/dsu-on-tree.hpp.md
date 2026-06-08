@@ -19,7 +19,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/tree/dsu-on-tree.md
     document_title: DSU on Tree(Guni)
     links: []
   bundledCode: "#line 2 \"tree/dsu-on-tree.hpp\"\n\n\n\n#line 2 \"graph/graph-template.hpp\"\
@@ -51,18 +50,18 @@ data:
     \ {\n    int x, y;\n    cin >> x >> y;\n    T c;\n    if (is_weighted)\n     \
     \ cin >> c;\n    else\n      c = 1;\n    if (is_1origin) x--, y--;\n    d[x][y]\
     \ = c;\n    if (!is_directed) d[y][x] = c;\n  }\n  return d;\n}\n\n/**\n * @brief\
-    \ \u30B0\u30E9\u30D5\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\n * @docs docs/graph/graph-template.md\n\
-    \ */\n#line 6 \"tree/dsu-on-tree.hpp\"\n\ntemplate <typename G>\nstruct DSUonTree\
-    \ {\n private:\n  G &g;\n  int N;\n  vector<int> sub_sz, euler, down, up;\n  int\
-    \ idx_;\n  int root;\n\n  int dfs1(int cur, int par = -1) {\n    sub_sz[cur] =\
-    \ 1;\n    if ((int)g[cur].size() >= 2 and g[cur][0] == par) {\n      swap(g[cur][0],\
-    \ g[cur][1]);\n    }\n    for (auto &dst : g[cur]) {\n      if (dst == par) continue;\n\
-    \      sub_sz[cur] += dfs1(dst, cur);\n      if (sub_sz[dst] > sub_sz[g[cur][0]])\
-    \ swap(dst, g[cur][0]);\n    }\n    return sub_sz[cur];\n  }\n\n  void dfs2(int\
-    \ cur, int par = -1) {\n    euler[idx_] = cur;\n    down[cur] = idx_++;\n    for\
-    \ (auto &dst : g[cur]) {\n      if (dst == par) continue;\n      dfs2(dst, cur);\n\
-    \    }\n    up[cur] = idx_;\n  }\n\n public:\n  DSUonTree(G &_g,int _root = 0)\n\
-    \      : g(_g),\n        N(_g.size()),\n        sub_sz(_g.size()),\n        euler(_g.size()),\n\
+    \ \u30B0\u30E9\u30D5\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\n */\n#line 6 \"tree/dsu-on-tree.hpp\"\
+    \n\ntemplate <typename G>\nstruct DSUonTree {\n private:\n  G &g;\n  int N;\n\
+    \  vector<int> sub_sz, euler, down, up;\n  int idx_;\n  int root;\n\n  int dfs1(int\
+    \ cur, int par = -1) {\n    sub_sz[cur] = 1;\n    if ((int)g[cur].size() >= 2\
+    \ and g[cur][0] == par) {\n      swap(g[cur][0], g[cur][1]);\n    }\n    for (auto\
+    \ &dst : g[cur]) {\n      if (dst == par) continue;\n      sub_sz[cur] += dfs1(dst,\
+    \ cur);\n      if (sub_sz[dst] > sub_sz[g[cur][0]]) swap(dst, g[cur][0]);\n  \
+    \  }\n    return sub_sz[cur];\n  }\n\n  void dfs2(int cur, int par = -1) {\n \
+    \   euler[idx_] = cur;\n    down[cur] = idx_++;\n    for (auto &dst : g[cur])\
+    \ {\n      if (dst == par) continue;\n      dfs2(dst, cur);\n    }\n    up[cur]\
+    \ = idx_;\n  }\n\n public:\n  DSUonTree(G &_g,int _root = 0)\n      : g(_g),\n\
+    \        N(_g.size()),\n        sub_sz(_g.size()),\n        euler(_g.size()),\n\
     \        down(_g.size()),\n        up(_g.size()),\n        idx_(0),\n        root(_root)\
     \ {\n    dfs1(root);\n    dfs2(root);\n  }\n\n  int idx(int u) const { return\
     \ down[u]; }\n\n  template <typename UPDATE, typename QUERY, typename CLEAR, typename\
@@ -74,7 +73,7 @@ data:
     \ i < up[cur]; i++) update(euler[i]);\n      update(cur);\n      query(cur);\n\
     \      if (!keep) {\n        for (int i = down[cur]; i < up[cur]; i++) clear(euler[i]);\n\
     \        reset();\n      }\n      return;\n    };\n    dsu(dsu, root);\n  }\n\
-    };\n\n/**\n * @brief DSU on Tree(Guni)\n * @docs docs/tree/dsu-on-tree.md\n */\n"
+    };\n\n/**\n * @brief DSU on Tree(Guni)\n */\n"
   code: "#pragma once\n\n\n\n#include \"../graph/graph-template.hpp\"\n\ntemplate\
     \ <typename G>\nstruct DSUonTree {\n private:\n  G &g;\n  int N;\n  vector<int>\
     \ sub_sz, euler, down, up;\n  int idx_;\n  int root;\n\n  int dfs1(int cur, int\
@@ -98,13 +97,13 @@ data:
     \ update(euler[i]);\n      update(cur);\n      query(cur);\n      if (!keep) {\n\
     \        for (int i = down[cur]; i < up[cur]; i++) clear(euler[i]);\n        reset();\n\
     \      }\n      return;\n    };\n    dsu(dsu, root);\n  }\n};\n\n/**\n * @brief\
-    \ DSU on Tree(Guni)\n * @docs docs/tree/dsu-on-tree.md\n */\n"
+    \ DSU on Tree(Guni)\n */\n"
   dependsOn:
   - graph/graph-template.hpp
   isVerificationFile: false
   path: tree/dsu-on-tree.hpp
   requiredBy: []
-  timestamp: '2024-05-03 23:21:26+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-aoj-other/aoj-2995.test.cpp
@@ -112,11 +111,9 @@ data:
   - verify/verify-yosupo-ds/yosupo-vertex-add-subtree-sum-dst-on-tree.test.cpp
 documentation_of: tree/dsu-on-tree.hpp
 layout: document
-redirect_from:
-- /library/tree/dsu-on-tree.hpp
-- /library/tree/dsu-on-tree.hpp.html
 title: DSU on Tree(Guni)
 ---
+
 ## DSU on Tree
 
 DSU on Treeとは、全ての部分木に対するクエリを高速に処理するアルゴリズムである。

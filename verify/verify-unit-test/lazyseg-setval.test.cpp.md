@@ -361,15 +361,14 @@ data:
     using SegmentTreeUtil::AddSum_LazySegmentTree;\nusing SegmentTreeUtil::UpdateMax_LazySegmentTree;\n\
     using SegmentTreeUtil::UpdateMin_LazySegmentTree;\nusing SegmentTreeUtil::UpdateSum_LazySegmentTree;\n\
     \n/**\n * @brief \u4F7F\u7528\u983B\u5EA6\u306E\u9AD8\u3044\u9045\u5EF6\u30BB\u30B0\
-    \u30E1\u30F3\u30C8\u6728\n * @docs docs/segment-tree/lazy-segment-tree-utility.md\n\
-    \ */\n#line 7 \"verify/verify-unit-test/lazyseg-setval.test.cpp\"\n\nusing namespace\
-    \ Nyaan;\n\nvoid Nyaan::solve() {\n  int N = 100000;\n  int Q = 1000000;\n  vl\
-    \ init(N);\n  AddSum_LazySegmentTree<ll> seg(init);\n\n  rep(i, Q) {\n    if (rng()\
-    \ & 1) {\n      int l, r;\n      l = randint(0, N);\n      r = randint(0, N);\n\
-    \      if (l > r) swap(l, r);\n      r++;\n      seg.update(l, r, randint(0, TEN(6)));\n\
-    \    } else {\n      int x = randint(0, N);\n      ll v = seg.get_val(x);\n  \
-    \    ll w = seg.query(x, x + 1);\n      assert(v == w);\n    }\n  }\n\n  {\n \
-    \   ini(a, b);\n    out(a + b);\n  }\n}\n"
+    \u30E1\u30F3\u30C8\u6728\n */\n#line 7 \"verify/verify-unit-test/lazyseg-setval.test.cpp\"\
+    \n\nusing namespace Nyaan;\n\nvoid Nyaan::solve() {\n  int N = 100000;\n  int\
+    \ Q = 1000000;\n  vl init(N);\n  AddSum_LazySegmentTree<ll> seg(init);\n\n  rep(i,\
+    \ Q) {\n    if (rng() & 1) {\n      int l, r;\n      l = randint(0, N);\n    \
+    \  r = randint(0, N);\n      if (l > r) swap(l, r);\n      r++;\n      seg.update(l,\
+    \ r, randint(0, TEN(6)));\n    } else {\n      int x = randint(0, N);\n      ll\
+    \ v = seg.get_val(x);\n      ll w = seg.query(x, x + 1);\n      assert(v == w);\n\
+    \    }\n  }\n\n  {\n    ini(a, b);\n    out(a + b);\n  }\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/aplusb\"\n//\n#include\
     \ \"../../template/template.hpp\"\n//\n#include \"../../misc/rng.hpp\"\n#include\
     \ \"../../segment-tree/lazy-segment-tree-utility.hpp\"\n\nusing namespace Nyaan;\n\
@@ -393,7 +392,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/lazyseg-setval.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/lazyseg-setval.test.cpp

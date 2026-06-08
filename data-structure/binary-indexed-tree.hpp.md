@@ -52,7 +52,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/data-structure/binary-indexed-tree.md
     document_title: Binary Indexed Tree(Fenwick Tree)
     links: []
   bundledCode: "#line 2 \"data-structure/binary-indexed-tree.hpp\"\n\ntemplate <typename\
@@ -74,7 +73,7 @@ data:
     \ x = 0;\n    for (int k = 1 << __lg(N); k; k >>= 1) {\n      if (x + k <= N -\
     \ 1 && data[x + k] <= w) {\n        w -= data[x + k];\n        x += k;\n     \
     \ }\n    }\n    return x;\n  }\n};\n\n/**\n * @brief Binary Indexed Tree(Fenwick\
-    \ Tree)\n * @docs docs/data-structure/binary-indexed-tree.md\n */\n"
+    \ Tree)\n */\n"
   code: "#pragma once\n\ntemplate <typename T>\nstruct BinaryIndexedTree {\n  int\
     \ N;\n  vector<T> data;\n\n  BinaryIndexedTree() = default;\n\n  BinaryIndexedTree(int\
     \ size) { init(size); }\n\n  void init(int size) {\n    N = size + 2;\n    data.assign(N\
@@ -93,8 +92,7 @@ data:
     \    if (w < 0) return 0;\n    int x = 0;\n    for (int k = 1 << __lg(N); k; k\
     \ >>= 1) {\n      if (x + k <= N - 1 && data[x + k] <= w) {\n        w -= data[x\
     \ + k];\n        x += k;\n      }\n    }\n    return x;\n  }\n};\n\n/**\n * @brief\
-    \ Binary Indexed Tree(Fenwick Tree)\n * @docs docs/data-structure/binary-indexed-tree.md\n\
-    \ */\n"
+    \ Binary Indexed Tree(Fenwick Tree)\n */\n"
   dependsOn: []
   isVerificationFile: false
   path: data-structure/binary-indexed-tree.hpp
@@ -102,7 +100,7 @@ data:
   - dp/inversion-counting.hpp
   - data-structure-2d/rectangle-add-rectangle-sum.hpp
   - data-structure/range-sum-range-add-bit.hpp
-  timestamp: '2021-12-20 22:10:59+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-aoj-dsl/aoj-dsl-2-g-bit.test.cpp
@@ -119,11 +117,9 @@ data:
   - verify/verify-yuki/yuki-1115.test.cpp
 documentation_of: data-structure/binary-indexed-tree.hpp
 layout: document
-redirect_from:
-- /library/data-structure/binary-indexed-tree.hpp
-- /library/data-structure/binary-indexed-tree.hpp.html
 title: Binary Indexed Tree(Fenwick Tree)
 ---
+
 ## Binary Indexed Tree
 
 #### 概要

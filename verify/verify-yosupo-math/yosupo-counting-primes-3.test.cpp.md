@@ -234,9 +234,8 @@ data:
     \ N2; n >= x2; n--) {\n      hs[n] -= hs[my_div(n, x)] - pi;\n    }\n    ++pi;\n\
     \  }\n  return hl[1];\n}\n\n}  // namespace PrimeCounting\n\n/**\n * @brief \u7D20\
     \u6570\u30AB\u30A6\u30F3\u30C8( $\\mathrm{O}(\\frac{N^{\\frac{3}{4}}}{\\log N})$\u30FB\
-    \u9AD8\u901F\u5316\u7248)\n * @docs docs/multiplicative-function/prime-counting-faster.md\n\
-    \ */\n#line 5 \"verify/verify-yosupo-math/yosupo-counting-primes-3.test.cpp\"\n\
-    \nusing namespace Nyaan; void Nyaan::solve() {\n  inl(N);\n  out(PrimeCounting::prime_counting(N));\n\
+    \u9AD8\u901F\u5316\u7248)\n */\n#line 5 \"verify/verify-yosupo-math/yosupo-counting-primes-3.test.cpp\"\
+    \n\nusing namespace Nyaan; void Nyaan::solve() {\n  inl(N);\n  out(PrimeCounting::prime_counting(N));\n\
     }\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/counting_primes\"\n\n#include\
     \ \"../../template/template.hpp\"\n#include \"../../multiplicative-function/prime-counting-faster.hpp\"\
@@ -253,7 +252,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-math/yosupo-counting-primes-3.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-math/yosupo-counting-primes-3.test.cpp

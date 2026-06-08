@@ -469,15 +469,14 @@ data:
     \ decltype(Node::key)& key) {\n    this->splay(t);\n    t->key = key;\n    this->update(t);\n\
     \  }\n\n  virtual decltype(Node::key) get_key(Ptr t) { return t->key; }\n\n  decltype(Node::key)\
     \ fold(Ptr u, Ptr v) {\n    evert(u);\n    expose(v);\n    return v->sum;\n  }\n\
-    };\n\n/**\n * @brief Link/Cut Tree(base)\n * @docs docs/lct/link-cut-base.md\n\
-    \ */\n#line 7 \"lct/link-cut-tree-lazy.hpp\"\n\ntemplate <typename T, typename\
-    \ E, T (*f)(T, T), T (*g)(T, E), E (*h)(E, E),\n          T (*ts)(T)>\nstruct\
-    \ LazyLinkCutTree\n    : LinkCutBase<LazyReversibleSplayTree<T, E, f, g, h, ts>>\
-    \ {\n  using base = LinkCutBase<LazyReversibleSplayTree<T, E, f, g, h, ts>>;\n\
-    \  using Ptr = typename base::Ptr;\n\n  void set_key(Ptr t, const T& key) override\
-    \ {\n    this->evert(t);\n    t->key = key;\n    this->update(t);\n  }\n\n  T\
-    \ get_key(Ptr t) override {\n    this->evert(t);\n    return t->key;\n  }\n\n\
-    \  void apply(Ptr u, Ptr v, const E& e) {\n    this->evert(u);\n    this->expose(v);\n\
+    };\n\n/**\n * @brief Link/Cut Tree(base)\n */\n#line 7 \"lct/link-cut-tree-lazy.hpp\"\
+    \n\ntemplate <typename T, typename E, T (*f)(T, T), T (*g)(T, E), E (*h)(E, E),\n\
+    \          T (*ts)(T)>\nstruct LazyLinkCutTree\n    : LinkCutBase<LazyReversibleSplayTree<T,\
+    \ E, f, g, h, ts>> {\n  using base = LinkCutBase<LazyReversibleSplayTree<T, E,\
+    \ f, g, h, ts>>;\n  using Ptr = typename base::Ptr;\n\n  void set_key(Ptr t, const\
+    \ T& key) override {\n    this->evert(t);\n    t->key = key;\n    this->update(t);\n\
+    \  }\n\n  T get_key(Ptr t) override {\n    this->evert(t);\n    return t->key;\n\
+    \  }\n\n  void apply(Ptr u, Ptr v, const E& e) {\n    this->evert(u);\n    this->expose(v);\n\
     \    this->propagate(v, e);\n  }\n};\n\n/**\n * @brief \u9045\u5EF6\u4F1D\u642C\
     Link/Cut Tree\n */\n#line 14 \"verify/verify-yosupo-ds/yosupo-range-add-range-sum-linkcuttree.test.cpp\"\
     \n//\n\nusing T = pair<mint, mint>;\nusing E = Affine<mint>;\nT f(T a, T b) {\
@@ -526,7 +525,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-ds/yosupo-range-add-range-sum-linkcuttree.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-ds/yosupo-range-add-range-sum-linkcuttree.test.cpp

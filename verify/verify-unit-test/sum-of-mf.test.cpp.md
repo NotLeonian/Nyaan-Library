@@ -272,12 +272,12 @@ data:
     \ multiplicative_function::sigma1<T>> em(\n      n);\n  return em.run();\n}\n\n\
     template <typename T>\nstatic constexpr vector<T> totient(int n) {\n  enamurate_multiplicative_function<T,\
     \ multiplicative_function::totient<T>> em(\n      n);\n  return em.run();\n}\n\
-    \n/**\n * @brief \u6709\u540D\u306A\u4E57\u6CD5\u7684\u95A2\u6570\n * @docs docs/multiplicative-function/mf-famous-series.md\n\
-    \ */\n#line 2 \"multiplicative-function/sum-of-multiplicative-function.hpp\"\n\
-    \n#line 4 \"multiplicative-function/sum-of-multiplicative-function.hpp\"\n\n//\
-    \ f(p, c) : f(p^c) \u306E\u5024\u3092\u8FD4\u3059\ntemplate <typename T, T (*f)(long\
-    \ long, long long)>\nstruct mf_prefix_sum {\n  using i64 = long long;\n\n  i64\
-    \ M, sq, s;\n  vector<int> p;\n  int ps;\n  vector<T> buf;\n  T ans;\n\n  mf_prefix_sum(i64\
+    \n/**\n * @brief \u6709\u540D\u306A\u4E57\u6CD5\u7684\u95A2\u6570\n */\n#line\
+    \ 2 \"multiplicative-function/sum-of-multiplicative-function.hpp\"\n\n#line 4\
+    \ \"multiplicative-function/sum-of-multiplicative-function.hpp\"\n\n// f(p, c)\
+    \ : f(p^c) \u306E\u5024\u3092\u8FD4\u3059\ntemplate <typename T, T (*f)(long long,\
+    \ long long)>\nstruct mf_prefix_sum {\n  using i64 = long long;\n\n  i64 M, sq,\
+    \ s;\n  vector<int> p;\n  int ps;\n  vector<T> buf;\n  T ans;\n\n  mf_prefix_sum(i64\
     \ m) : M(m) {\n    assert(m <= 1e15);\n    sq = sqrt(M);\n    while (sq * sq >\
     \ M) sq--;\n    while ((sq + 1) * (sq + 1) <= M) sq++;\n\n    if (M != 0) {\n\
     \      i64 hls = quo(M, sq);\n      while (hls != 1 && quo(M, hls - 1) == sq)\
@@ -330,23 +330,22 @@ data:
     \ 1; i < (int)ns.size(); i++) F[i] += 1;\n    return F;\n  }\n\n  i64 quo(i64\
     \ n, i64 d) { return double(n) / d; }\n  i64 idx(i64 n) { return n <= sq ? s -\
     \ n : quo(M, n); }\n};\n\n/**\n * @brief \u4E57\u6CD5\u7684\u95A2\u6570\u306E\
-    prefix sum\n * @docs docs/multiplicative-function/sum-of-multiplicative-function.md\n\
-    \ */\n#line 2 \"multiplicative-function/sum-of-totient.hpp\"\n\ntemplate <typename\
-    \ T>\nT sum_of_totient(long long N) {\n  if (N < 2) return N;\n  using i64 = long\
-    \ long;\n\n  auto f = [](i64 v, i64 p, i64) -> i64 { return v / p * (p - 1); };\n\
-    \  vector<i64> ns{0}, p;\n  for (i64 i = N; i > 0; i = N / (N / i + 1)) ns.push_back(i);\n\
-    \  i64 s = ns.size(), sq = sqrt(N);\n  auto idx = [&](i64 n) { return n <= sq\
-    \ ? s - n : N / n; };\n\n  vector<T> h0(s), h1(s), buf(s);\n  for (int i = 0;\
-    \ i < s; i++) {\n    T x = ns[i];\n    h0[i] = x - 1;\n    h1[i] = x * (x + 1)\
-    \ / 2 - 1;\n  }\n\n  for (i64 x = 2; x <= sq; ++x) {\n    if (h0[s - x] == h0[s\
-    \ - x + 1]) continue;\n    p.push_back(x);\n    i64 x2 = x * x;\n    for (i64\
-    \ i = 1, n = ns[i]; i < s && n >= x2; n = ns[++i]) {\n      int id = (i * x <=\
-    \ sq ? i * x : s - n / x);\n      h0[i] -= h0[id] - h0[s - x + 1];\n      h1[i]\
-    \ -= (h1[id] - h1[s - x + 1]) * x;\n    }\n  }\n\n  for (int i = 0; i < s; i++)\
-    \ buf[i] = h1[i] - h0[i];\n  T ans = buf[idx(N)] + 1;\n\n  auto dfs = [&](auto\
-    \ rec, int i, int c, i64 v, i64 lim, T cur) -> void {\n    ans += cur * f(p[i]\
-    \ * v, p[i], c + 1);\n    if (lim >= p[i] * p[i]) rec(rec, i, c + 1, p[i] * v,\
-    \ lim / p[i], cur);\n    cur *= f(v, p[i], c);\n    ans += cur * (buf[idx(lim)]\
+    prefix sum\n */\n#line 2 \"multiplicative-function/sum-of-totient.hpp\"\n\ntemplate\
+    \ <typename T>\nT sum_of_totient(long long N) {\n  if (N < 2) return N;\n  using\
+    \ i64 = long long;\n\n  auto f = [](i64 v, i64 p, i64) -> i64 { return v / p *\
+    \ (p - 1); };\n  vector<i64> ns{0}, p;\n  for (i64 i = N; i > 0; i = N / (N /\
+    \ i + 1)) ns.push_back(i);\n  i64 s = ns.size(), sq = sqrt(N);\n  auto idx = [&](i64\
+    \ n) { return n <= sq ? s - n : N / n; };\n\n  vector<T> h0(s), h1(s), buf(s);\n\
+    \  for (int i = 0; i < s; i++) {\n    T x = ns[i];\n    h0[i] = x - 1;\n    h1[i]\
+    \ = x * (x + 1) / 2 - 1;\n  }\n\n  for (i64 x = 2; x <= sq; ++x) {\n    if (h0[s\
+    \ - x] == h0[s - x + 1]) continue;\n    p.push_back(x);\n    i64 x2 = x * x;\n\
+    \    for (i64 i = 1, n = ns[i]; i < s && n >= x2; n = ns[++i]) {\n      int id\
+    \ = (i * x <= sq ? i * x : s - n / x);\n      h0[i] -= h0[id] - h0[s - x + 1];\n\
+    \      h1[i] -= (h1[id] - h1[s - x + 1]) * x;\n    }\n  }\n\n  for (int i = 0;\
+    \ i < s; i++) buf[i] = h1[i] - h0[i];\n  T ans = buf[idx(N)] + 1;\n\n  auto dfs\
+    \ = [&](auto rec, int i, int c, i64 v, i64 lim, T cur) -> void {\n    ans += cur\
+    \ * f(p[i] * v, p[i], c + 1);\n    if (lim >= p[i] * p[i]) rec(rec, i, c + 1,\
+    \ p[i] * v, lim / p[i], cur);\n    cur *= f(v, p[i], c);\n    ans += cur * (buf[idx(lim)]\
     \ - buf[idx(p[i])]);\n    for (int j = i + 1; j < (int)p.size() && p[j] * p[j]\
     \ <= lim; j++) {\n      rec(rec, j, 1, p[j], lim / p[j], cur);\n    }\n  };\n\n\
     \  for (int i = 0; i < (int)p.size(); i++) dfs(dfs, i, 1, p[i], N / p[i], 1);\n\
@@ -433,7 +432,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/sum-of-mf.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/sum-of-mf.test.cpp

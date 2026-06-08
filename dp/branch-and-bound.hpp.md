@@ -13,7 +13,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/dp/branch-and-bound.md
     document_title: "0-1\u30CA\u30C3\u30D7\u30B5\u30C3\u30AF\u554F\u984C\u306E\u5206\
       \u679D\u9650\u5B9A\u6CD5\u306B\u3088\u308B\u89E3\u6CD5"
     links: []
@@ -35,7 +34,7 @@ data:
     \ + 1, v, w);\n    return;\n  }\n\n  V run(W w) {\n    dfs(0, best = 0, w);\n\
     \    return best;\n  }\n};\n\n/**\n * @brief 0-1\u30CA\u30C3\u30D7\u30B5\u30C3\
     \u30AF\u554F\u984C\u306E\u5206\u679D\u9650\u5B9A\u6CD5\u306B\u3088\u308B\u89E3\
-    \u6CD5\n * @docs docs/dp/branch-and-bound.md\n */\n"
+    \u6CD5\n */\n"
   code: "#pragma once\n\ntemplate <typename V, typename W, typename D = long double>\n\
     struct BranchAndBound {\n  vector<pair<V, W>> c;\n  V best;\n\n  BranchAndBound(const\
     \ vector<V>& v, const vector<W>& w) {\n    assert(v.size() == w.size());\n   \
@@ -53,25 +52,22 @@ data:
     \ c[i].second) dfs(i + 1, v + c[i].first, w - c[i].second);\n    dfs(i + 1, v,\
     \ w);\n    return;\n  }\n\n  V run(W w) {\n    dfs(0, best = 0, w);\n    return\
     \ best;\n  }\n};\n\n/**\n * @brief 0-1\u30CA\u30C3\u30D7\u30B5\u30C3\u30AF\u554F\
-    \u984C\u306E\u5206\u679D\u9650\u5B9A\u6CD5\u306B\u3088\u308B\u89E3\u6CD5\n * @docs\
-    \ docs/dp/branch-and-bound.md\n */\n"
+    \u984C\u306E\u5206\u679D\u9650\u5B9A\u6CD5\u306B\u3088\u308B\u89E3\u6CD5\n */\n"
   dependsOn: []
   isVerificationFile: false
   path: dp/branch-and-bound.hpp
   requiredBy: []
-  timestamp: '2021-11-25 10:30:05+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-aoj-dpl/aoj-dpl-1-h-bandb.test.cpp
   - verify/verify-aoj-dpl/aoj-dpl-1-f-bandb.test.cpp
 documentation_of: dp/branch-and-bound.hpp
 layout: document
-redirect_from:
-- /library/dp/branch-and-bound.hpp
-- /library/dp/branch-and-bound.hpp.html
 title: "0-1\u30CA\u30C3\u30D7\u30B5\u30C3\u30AF\u554F\u984C\u306E\u5206\u679D\u9650\
   \u5B9A\u6CD5\u306B\u3088\u308B\u89E3\u6CD5"
 ---
+
 ## 0-1ナップサック問題の、分枝限定法による解法
 
 ### 概要

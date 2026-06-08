@@ -102,12 +102,11 @@ data:
     \ mint>\nFormalPowerSeries<mint> FormalPowerSeries<mint>::exp(int deg) const {\n\
     \  return fps_exp_impl(*this, deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief\
     \ \u591A\u9805\u5F0F/\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\
-    \u30EA\n * @docs docs/fps/formal-power-series.md\n */\n#line 8 \"fps/fft2d.hpp\"\
-    \n\ntemplate <typename mint>\nvoid fft2d(vector<FormalPowerSeries<mint>>& a) {\n\
-    \  int H = a.size(), W = a[0].size();\n  assert((H & (H - 1)) == 0);\n  assert((W\
-    \ & (W - 1)) == 0);\n  for (int i = 0; i < H; i++) {\n    bool ok = false;\n \
-    \   for (auto& x : a[i]) {\n      if (x != mint()) {\n        ok = true;\n   \
-    \     break;\n      }\n    }\n    if (ok) a[i].ntt();\n  }\n  FormalPowerSeries<mint>\
+    \u30EA\n */\n#line 8 \"fps/fft2d.hpp\"\n\ntemplate <typename mint>\nvoid fft2d(vector<FormalPowerSeries<mint>>&\
+    \ a) {\n  int H = a.size(), W = a[0].size();\n  assert((H & (H - 1)) == 0);\n\
+    \  assert((W & (W - 1)) == 0);\n  for (int i = 0; i < H; i++) {\n    bool ok =\
+    \ false;\n    for (auto& x : a[i]) {\n      if (x != mint()) {\n        ok = true;\n\
+    \        break;\n      }\n    }\n    if (ok) a[i].ntt();\n  }\n  FormalPowerSeries<mint>\
     \ buf(H);\n  for (int i = 0; i < W; i++) {\n    for (int j = 0; j < H; j++) buf[j]\
     \ = a[j][i];\n    buf.ntt();\n    for (int j = 0; j < H; j++) a[j][i] = buf[j];\n\
     \  }\n}\n\ntemplate <typename mint>\nvoid ifft2d(vector<FormalPowerSeries<mint>>&\
@@ -253,7 +252,7 @@ data:
   isVerificationFile: false
   path: fps/fft2d.hpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-unit-test/fft2d.test.cpp

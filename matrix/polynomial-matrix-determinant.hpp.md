@@ -33,7 +33,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/matrix/polynomial-matrix-determinant.md
     document_title: "\u591A\u9805\u5F0F\u884C\u5217\u306E\u884C\u5217\u5F0F"
     links: []
   bundledCode: "#line 2 \"matrix/polynomial-matrix-determinant.hpp\"\n\n\n\n#line\
@@ -122,8 +121,8 @@ data:
     \ deg, FPSBackendPriority<1>{});\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>\
     \ FormalPowerSeries<mint>::exp(int deg) const {\n  return fps_exp_impl(*this,\
     \ deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief \u591A\u9805\u5F0F/\u5F62\
-    \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n * @docs docs/fps/formal-power-series.md\n\
-    \ */\n#line 2 \"fps/polynomial-interpolation.hpp\"\n\n#line 2 \"fps/multipoint-evaluation.hpp\"\
+    \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n */\n#line 2 \"\
+    fps/polynomial-interpolation.hpp\"\n\n#line 2 \"fps/multipoint-evaluation.hpp\"\
     \n\n#line 4 \"fps/multipoint-evaluation.hpp\"\n\ntemplate <typename mint>\nstruct\
     \ ProductTree {\n  using fps = FormalPowerSeries<mint>;\n  const vector<mint>\
     \ &xs;\n  vector<fps> buf;\n  int N, xsz;\n  vector<int> l, r;\n  ProductTree(const\
@@ -258,8 +257,7 @@ data:
     \ x = 0; x <= deg; x++) {\n    xs[x] = x;\n    for (int i = 0; i < N; ++i)\n \
     \     for (int j = 0; j < N; ++j) M[i][j] = m[i][j].eval(x);\n    ys[x] = M.determinant();\n\
     \  }\n  return PolynomialInterpolation<mint>(xs, ys);\n}\n\n/**\n * @brief \u591A\
-    \u9805\u5F0F\u884C\u5217\u306E\u884C\u5217\u5F0F\n * @docs docs/matrix/polynomial-matrix-determinant.md\n\
-    \ */\n"
+    \u9805\u5F0F\u884C\u5217\u306E\u884C\u5217\u5F0F\n */\n"
   code: "#pragma once\n\n\n\n#include \"../fps/formal-power-series.hpp\"\n#include\
     \ \"../fps/polynomial-interpolation.hpp\"\n#include \"matrix.hpp\"\n\ntemplate\
     \ <typename mint>\nFormalPowerSeries<mint> PolynomialMatrixDeterminant(\n    const\
@@ -269,8 +267,7 @@ data:
     \ x = 0; x <= deg; x++) {\n    xs[x] = x;\n    for (int i = 0; i < N; ++i)\n \
     \     for (int j = 0; j < N; ++j) M[i][j] = m[i][j].eval(x);\n    ys[x] = M.determinant();\n\
     \  }\n  return PolynomialInterpolation<mint>(xs, ys);\n}\n\n/**\n * @brief \u591A\
-    \u9805\u5F0F\u884C\u5217\u306E\u884C\u5217\u5F0F\n * @docs docs/matrix/polynomial-matrix-determinant.md\n\
-    \ */\n"
+    \u9805\u5F0F\u884C\u5217\u306E\u884C\u5217\u5F0F\n */\n"
   dependsOn:
   - fps/formal-power-series.hpp
   - fps/polynomial-interpolation.hpp
@@ -282,17 +279,15 @@ data:
   path: matrix/polynomial-matrix-determinant.hpp
   requiredBy:
   - matrix/matrix-tree.hpp
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yuki/yuki-1303.test.cpp
 documentation_of: matrix/polynomial-matrix-determinant.hpp
 layout: document
-redirect_from:
-- /library/matrix/polynomial-matrix-determinant.hpp
-- /library/matrix/polynomial-matrix-determinant.hpp.html
 title: "\u591A\u9805\u5F0F\u884C\u5217\u306E\u884C\u5217\u5F0F"
 ---
+
 ## 多項式行列の行列式
 
 TODO : 清書・使い方を書く

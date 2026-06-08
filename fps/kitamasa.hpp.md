@@ -35,7 +35,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/fps/kitamasa.md
     document_title: "\u7DDA\u5F62\u6F38\u5316\u5F0F\u306E\u9AD8\u901F\u8A08\u7B97"
     links: []
   bundledCode: "#line 2 \"fps/kitamasa.hpp\"\n\n#include <cassert>\n#include <vector>\n\
@@ -283,11 +282,10 @@ data:
     \ mint>\nFormalPowerSeries<mint> FormalPowerSeries<mint>::exp(int deg) const {\n\
     \  return fps_exp_impl(*this, deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief\
     \ \u591A\u9805\u5F0F/\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\
-    \u30EA\n * @docs docs/fps/formal-power-series.md\n */\n#line 7 \"fps/arbitrary-fps.hpp\"\
-    \n\ntemplate <typename mint>\nvoid fps_set_fft_impl(FormalPowerSeries<mint>*,\
-    \ FPSBackendPriority<0>) {\n  FormalPowerSeries<mint>::ntt_ptr = nullptr;\n}\n\
-    \ntemplate <typename mint>\nvoid fps_ntt_impl(FormalPowerSeries<mint>&, FPSBackendPriority<0>)\
-    \ {\n  exit(1);\n}\n\ntemplate <typename mint>\nvoid fps_intt_impl(FormalPowerSeries<mint>&,\
+    \u30EA\n */\n#line 7 \"fps/arbitrary-fps.hpp\"\n\ntemplate <typename mint>\nvoid\
+    \ fps_set_fft_impl(FormalPowerSeries<mint>*, FPSBackendPriority<0>) {\n  FormalPowerSeries<mint>::ntt_ptr\
+    \ = nullptr;\n}\n\ntemplate <typename mint>\nvoid fps_ntt_impl(FormalPowerSeries<mint>&,\
+    \ FPSBackendPriority<0>) {\n  exit(1);\n}\n\ntemplate <typename mint>\nvoid fps_intt_impl(FormalPowerSeries<mint>&,\
     \ FPSBackendPriority<0>) {\n  exit(1);\n}\n\ntemplate <typename mint>\nvoid fps_ntt_doubling_impl(FormalPowerSeries<mint>&,\
     \ FPSBackendPriority<0>) {\n  exit(1);\n}\n\ntemplate <typename mint>\nint fps_ntt_pr_impl(FormalPowerSeries<mint>*,\
     \ FPSBackendPriority<0>) {\n  exit(1);\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>&\
@@ -341,7 +339,7 @@ data:
     \ != 0);\n  if (N < (int)a.size()) return a[N];\n  assert((int)a.size() >= int(Q.size())\
     \ - 1);\n  auto P = a.pre((int)Q.size() - 1) * Q;\n  P.resize(Q.size() - 1);\n\
     \  return LinearRecurrence<mint>(N, Q, P);\n}\n\n/**\n * @brief \u7DDA\u5F62\u6F38\
-    \u5316\u5F0F\u306E\u9AD8\u901F\u8A08\u7B97\n * @docs docs/fps/kitamasa.md\n */\n"
+    \u5316\u5F0F\u306E\u9AD8\u901F\u8A08\u7B97\n */\n"
   code: "#pragma once\n\n#include <cassert>\n#include <vector>\nusing namespace std;\n\
     \n#include \"arbitrary-fps.hpp\"\n\ntemplate <typename mint>\nmint LinearRecurrence(long\
     \ long k, FormalPowerSeries<mint> Q,\n                      FormalPowerSeries<mint>\
@@ -379,7 +377,7 @@ data:
     \  if (N < (int)a.size()) return a[N];\n  assert((int)a.size() >= int(Q.size())\
     \ - 1);\n  auto P = a.pre((int)Q.size() - 1) * Q;\n  P.resize(Q.size() - 1);\n\
     \  return LinearRecurrence<mint>(N, Q, P);\n}\n\n/**\n * @brief \u7DDA\u5F62\u6F38\
-    \u5316\u5F0F\u306E\u9AD8\u901F\u8A08\u7B97\n * @docs docs/fps/kitamasa.md\n */\n"
+    \u5316\u5F0F\u306E\u9AD8\u901F\u8A08\u7B97\n */\n"
   dependsOn:
   - fps/arbitrary-fps.hpp
   - ntt/arbitrary-ntt.hpp
@@ -390,7 +388,7 @@ data:
   path: fps/kitamasa.hpp
   requiredBy:
   - fps/nth-term.hpp
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yuki/yuki-0215-nth-term.test.cpp
@@ -398,11 +396,9 @@ data:
   - verify/verify-yuki/yuki-0215.test.cpp
 documentation_of: fps/kitamasa.hpp
 layout: document
-redirect_from:
-- /library/fps/kitamasa.hpp
-- /library/fps/kitamasa.hpp.html
 title: "\u7DDA\u5F62\u6F38\u5316\u5F0F\u306E\u9AD8\u901F\u8A08\u7B97"
 ---
+
 ## 線形漸化式の高速計算
 
 分子分母が高々 $k$ 次の多項式で表される分数 $\frac{P(x)}{Q(x)}$ が与えられたときに、$[x^N]\frac{P(x)}{Q(x)}$ を $\mathrm{O}(k \log k \log N)$ で計算するライブラリ。

@@ -361,10 +361,9 @@ data:
     using SegmentTreeUtil::AddSum_LazySegmentTree;\nusing SegmentTreeUtil::UpdateMax_LazySegmentTree;\n\
     using SegmentTreeUtil::UpdateMin_LazySegmentTree;\nusing SegmentTreeUtil::UpdateSum_LazySegmentTree;\n\
     \n/**\n * @brief \u4F7F\u7528\u983B\u5EA6\u306E\u9AD8\u3044\u9045\u5EF6\u30BB\u30B0\
-    \u30E1\u30F3\u30C8\u6728\n * @docs docs/segment-tree/lazy-segment-tree-utility.md\n\
-    \ */\n#line 7 \"verify/verify-unit-test/lazyseg-bsearch.test.cpp\"\n//\n#line\
-    \ 1 \"atcoder/lazysegtree.hpp\"\n\n\n\n#line 8 \"atcoder/lazysegtree.hpp\"\n\n\
-    #line 1 \"atcoder/internal_bit.hpp\"\n\n\n\n#ifdef _MSC_VER\n#include <intrin.h>\n\
+    \u30E1\u30F3\u30C8\u6728\n */\n#line 7 \"verify/verify-unit-test/lazyseg-bsearch.test.cpp\"\
+    \n//\n#line 1 \"atcoder/lazysegtree.hpp\"\n\n\n\n#line 8 \"atcoder/lazysegtree.hpp\"\
+    \n\n#line 1 \"atcoder/internal_bit.hpp\"\n\n\n\n#ifdef _MSC_VER\n#include <intrin.h>\n\
     #endif\n\n#if __cplusplus >= 202002L\n#include <bit>\n#endif\n\nnamespace atcoder\
     \ {\n\nnamespace internal {\n\n#if __cplusplus >= 202002L\n\nusing std::bit_ceil;\n\
     \n#else\n\n// @return same with std::bit::bit_ceil\nunsigned int bit_ceil(unsigned\
@@ -502,7 +501,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/lazyseg-bsearch.test.cpp
   requiredBy: []
-  timestamp: '2026-06-08 02:23:45+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/lazyseg-bsearch.test.cpp

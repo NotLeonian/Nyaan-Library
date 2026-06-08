@@ -13,7 +13,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/data-structure-2d/2d-segment-tree.md
     document_title: "\u4E8C\u6B21\u5143\u30BB\u30B0\u30E1\u30F3\u30C8\u6728"
     links: []
   bundledCode: "#line 2 \"data-structure-2d/2d-segment-tree.hpp\"\n\ntemplate <typename\
@@ -44,8 +43,7 @@ data:
     \ >>= 1, h2 >>= 1) {\n      if (h1 & 1) res = f(res, _inner_query(h1, w1, w2)),\
     \ h1++;\n      if (h2 & 1) --h2, res = f(res, _inner_query(h2, w1, w2));\n   \
     \ }\n    return res;\n  }\n};\n\n/**\n * @brief \u4E8C\u6B21\u5143\u30BB\u30B0\
-    \u30E1\u30F3\u30C8\u6728\n * @docs docs/data-structure-2d/2d-segment-tree.md\n\
-    \ */\n"
+    \u30E1\u30F3\u30C8\u6728\n */\n"
   code: "#pragma once\n\ntemplate <typename T, typename F>\nstruct SegmentTree2D {\n\
     \ private:\n  int id(int h, int w) const { return h * 2 * W + w; }\n\n public:\n\
     \  int H, W;\n  vector<T> seg;\n  const F f;\n  const T I;\n\n  SegmentTree2D(int\
@@ -73,24 +71,21 @@ data:
     \ W, w2 += W;\n    for (; h1 < h2; h1 >>= 1, h2 >>= 1) {\n      if (h1 & 1) res\
     \ = f(res, _inner_query(h1, w1, w2)), h1++;\n      if (h2 & 1) --h2, res = f(res,\
     \ _inner_query(h2, w1, w2));\n    }\n    return res;\n  }\n};\n\n/**\n * @brief\
-    \ \u4E8C\u6B21\u5143\u30BB\u30B0\u30E1\u30F3\u30C8\u6728\n * @docs docs/data-structure-2d/2d-segment-tree.md\n\
-    \ */"
+    \ \u4E8C\u6B21\u5143\u30BB\u30B0\u30E1\u30F3\u30C8\u6728\n */"
   dependsOn: []
   isVerificationFile: false
   path: data-structure-2d/2d-segment-tree.hpp
   requiredBy: []
-  timestamp: '2023-09-08 22:52:34+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-aoj-dsl/aoj-dsl-5-b-2dseg.test.cpp
   - verify/verify-aoj-other/aoj-1068.test.cpp
 documentation_of: data-structure-2d/2d-segment-tree.hpp
 layout: document
-redirect_from:
-- /library/data-structure-2d/2d-segment-tree.hpp
-- /library/data-structure-2d/2d-segment-tree.hpp.html
 title: "\u4E8C\u6B21\u5143\u30BB\u30B0\u30E1\u30F3\u30C8\u6728"
 ---
+
 ## 二次元セグメント木
 
 #### 概要

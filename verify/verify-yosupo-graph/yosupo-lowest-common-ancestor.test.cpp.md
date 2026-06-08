@@ -253,27 +253,26 @@ data:
     \ {\n    int x, y;\n    cin >> x >> y;\n    T c;\n    if (is_weighted)\n     \
     \ cin >> c;\n    else\n      c = 1;\n    if (is_1origin) x--, y--;\n    d[x][y]\
     \ = c;\n    if (!is_directed) d[y][x] = c;\n  }\n  return d;\n}\n\n/**\n * @brief\
-    \ \u30B0\u30E9\u30D5\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\n * @docs docs/graph/graph-template.md\n\
-    \ */\n#line 4 \"tree/heavy-light-decomposition.hpp\"\n\ntemplate <typename G>\n\
-    struct HeavyLightDecomposition {\n private:\n  void dfs_sz(int cur) {\n    size[cur]\
-    \ = 1;\n    for (auto& dst : g[cur]) {\n      if (dst == par[cur]) {\n       \
-    \ if (g[cur].size() >= 2 && int(dst) == int(g[cur][0]))\n          swap(g[cur][0],\
-    \ g[cur][1]);\n        else\n          continue;\n      }\n      depth[dst] =\
-    \ depth[cur] + 1;\n      par[dst] = cur;\n      dfs_sz(dst);\n      size[cur]\
-    \ += size[dst];\n      if (size[dst] > size[g[cur][0]]) {\n        swap(dst, g[cur][0]);\n\
-    \      }\n    }\n  }\n\n  void dfs_hld(int cur) {\n    down[cur] = id++;\n   \
-    \ for (auto dst : g[cur]) {\n      if (dst == par[cur]) continue;\n      nxt[dst]\
-    \ = (int(dst) == int(g[cur][0]) ? nxt[cur] : int(dst));\n      dfs_hld(dst);\n\
-    \    }\n    up[cur] = id;\n  }\n\n  // [u, v)\n  vector<pair<int, int>> ascend(int\
-    \ u, int v) const {\n    vector<pair<int, int>> res;\n    while (nxt[u] != nxt[v])\
-    \ {\n      res.emplace_back(down[u], down[nxt[u]]);\n      u = par[nxt[u]];\n\
-    \    }\n    if (u != v) res.emplace_back(down[u], down[v] + 1);\n    return res;\n\
-    \  }\n\n  // (u, v]\n  vector<pair<int, int>> descend(int u, int v) const {\n\
-    \    if (u == v) return {};\n    if (nxt[u] == nxt[v]) return {{down[u] + 1, down[v]}};\n\
-    \    auto res = descend(u, par[nxt[v]]);\n    res.emplace_back(down[nxt[v]], down[v]);\n\
-    \    return res;\n  }\n\n public:\n  G& g;\n  int root, id;\n  vector<int> size,\
-    \ depth, down, up, nxt, par;\n  HeavyLightDecomposition(G& _g, int _root = 0)\n\
-    \      : g(_g),\n        root(_root),\n        id(0),\n        size(g.size(),\
+    \ \u30B0\u30E9\u30D5\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\n */\n#line 4 \"tree/heavy-light-decomposition.hpp\"\
+    \n\ntemplate <typename G>\nstruct HeavyLightDecomposition {\n private:\n  void\
+    \ dfs_sz(int cur) {\n    size[cur] = 1;\n    for (auto& dst : g[cur]) {\n    \
+    \  if (dst == par[cur]) {\n        if (g[cur].size() >= 2 && int(dst) == int(g[cur][0]))\n\
+    \          swap(g[cur][0], g[cur][1]);\n        else\n          continue;\n  \
+    \    }\n      depth[dst] = depth[cur] + 1;\n      par[dst] = cur;\n      dfs_sz(dst);\n\
+    \      size[cur] += size[dst];\n      if (size[dst] > size[g[cur][0]]) {\n   \
+    \     swap(dst, g[cur][0]);\n      }\n    }\n  }\n\n  void dfs_hld(int cur) {\n\
+    \    down[cur] = id++;\n    for (auto dst : g[cur]) {\n      if (dst == par[cur])\
+    \ continue;\n      nxt[dst] = (int(dst) == int(g[cur][0]) ? nxt[cur] : int(dst));\n\
+    \      dfs_hld(dst);\n    }\n    up[cur] = id;\n  }\n\n  // [u, v)\n  vector<pair<int,\
+    \ int>> ascend(int u, int v) const {\n    vector<pair<int, int>> res;\n    while\
+    \ (nxt[u] != nxt[v]) {\n      res.emplace_back(down[u], down[nxt[u]]);\n     \
+    \ u = par[nxt[u]];\n    }\n    if (u != v) res.emplace_back(down[u], down[v] +\
+    \ 1);\n    return res;\n  }\n\n  // (u, v]\n  vector<pair<int, int>> descend(int\
+    \ u, int v) const {\n    if (u == v) return {};\n    if (nxt[u] == nxt[v]) return\
+    \ {{down[u] + 1, down[v]}};\n    auto res = descend(u, par[nxt[v]]);\n    res.emplace_back(down[nxt[v]],\
+    \ down[v]);\n    return res;\n  }\n\n public:\n  G& g;\n  int root, id;\n  vector<int>\
+    \ size, depth, down, up, nxt, par;\n  HeavyLightDecomposition(G& _g, int _root\
+    \ = 0)\n      : g(_g),\n        root(_root),\n        id(0),\n        size(g.size(),\
     \ 0),\n        depth(g.size(), 0),\n        down(g.size(), -1),\n        up(g.size(),\
     \ -1),\n        nxt(g.size(), root),\n        par(g.size(), root) {\n    dfs_sz(root);\n\
     \    dfs_hld(root);\n  }\n\n  pair<int, int> idx(int i) const { return make_pair(down[i],\
@@ -291,8 +290,7 @@ data:
     \      if (down[a] < down[b]) swap(a, b);\n      a = par[nxt[a]];\n    }\n   \
     \ return depth[a] < depth[b] ? a : b;\n  }\n\n  int dist(int a, int b) { return\
     \ depth[a] + depth[b] - depth[lca(a, b)] * 2; }\n};\n\n/**\n * @brief Heavy Light\
-    \ Decomposition(\u91CD\u8EFD\u5206\u89E3)\n * @docs docs/tree/heavy-light-decomposition.md\n\
-    \ */\n#line 6 \"verify/verify-yosupo-graph/yosupo-lowest-common-ancestor.test.cpp\"\
+    \ Decomposition(\u91CD\u8EFD\u5206\u89E3)\n */\n#line 6 \"verify/verify-yosupo-graph/yosupo-lowest-common-ancestor.test.cpp\"\
     \n\nusing namespace Nyaan;\nvoid Nyaan::solve() {\n  ini(N, Q);\n  vvi g(N);\n\
     \  rep1(i, N - 1) {\n    ini(j);\n    g[j].push_back(i);\n  }\n  HeavyLightDecomposition<vvi>\
     \ hld(g);\n  rep(_, Q) {\n    ini(u, v);\n    out(hld.lca(u, v));\n  }\n}\n"
@@ -313,7 +311,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-graph/yosupo-lowest-common-ancestor.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-graph/yosupo-lowest-common-ancestor.test.cpp

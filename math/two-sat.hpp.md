@@ -10,7 +10,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/math/two-sat.md
     document_title: 2-SAT
     links: []
   bundledCode: "#line 2 \"math/two-sat.hpp\"\n\n#include <algorithm>\n#include <cassert>\n\
@@ -62,8 +61,7 @@ data:
     \    }\n    return true;\n  }\n  vector<bool> answer() {\n    if (!built) satisfiable();\n\
     \    return _answer;\n  }\n\n private:\n  int _n;\n  vector<bool> _answer;\n \
     \ bool built;\n  internal::scc_graph scc;\n};\n\n}  // namespace TwoSatImpl\n\n\
-    using TwoSatImpl::two_sat;\n\n/**\n * @brief 2-SAT\n * @docs docs/math/two-sat.md\n\
-    \ */\n"
+    using TwoSatImpl::two_sat;\n\n/**\n * @brief 2-SAT\n */\n"
   code: "#pragma once\n\n#include <algorithm>\n#include <cassert>\n#include <utility>\n\
     #include <vector>\n\nusing namespace std;\n\nnamespace TwoSatImpl {\nnamespace\
     \ internal {\n\ntemplate <class E>\nstruct csr {\n  vector<int> start;\n  vector<E>\
@@ -113,23 +111,20 @@ data:
     \    }\n    return true;\n  }\n  vector<bool> answer() {\n    if (!built) satisfiable();\n\
     \    return _answer;\n  }\n\n private:\n  int _n;\n  vector<bool> _answer;\n \
     \ bool built;\n  internal::scc_graph scc;\n};\n\n}  // namespace TwoSatImpl\n\n\
-    using TwoSatImpl::two_sat;\n\n/**\n * @brief 2-SAT\n * @docs docs/math/two-sat.md\n\
-    \ */\n"
+    using TwoSatImpl::two_sat;\n\n/**\n * @brief 2-SAT\n */\n"
   dependsOn: []
   isVerificationFile: false
   path: math/two-sat.hpp
   requiredBy: []
-  timestamp: '2021-07-18 18:42:12+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-math/yosupo-two-sat.test.cpp
 documentation_of: math/two-sat.hpp
 layout: document
-redirect_from:
-- /library/math/two-sat.hpp
-- /library/math/two-sat.hpp.html
 title: 2-SAT
 ---
+
 ## 2-SAT
 
 2-SATを$\mathrm{O}(N + M)$($N$は論理変数の個数、$M$は節の個数)で計算するライブラリ。

@@ -273,10 +273,9 @@ data:
     \  while (y != 1) {\n    int64_t j = 0;\n    Mint t = y;\n    while (t != one)\
     \ {\n      j += 1;\n      t *= t;\n    }\n    z = z.pow(int64_t(1) << (e - j -\
     \ 1));\n    x *= z;\n    z *= z;\n    y *= z;\n    e = j;\n  }\n  return x.get();\n\
-    }\n\n/**\n * @brief mod sqrt(Tonelli-Shanks algorithm)\n * @docs docs/modulo/mod-sqrt.md\n\
-    \ */\n#line 5 \"verify/verify-yosupo-math/yosupo-mod-sqrt.test.cpp\"\n\nusing\
-    \ namespace Nyaan; void Nyaan::solve() {\n  ini(T);\n  rep(_, T) {\n    inl(y,\
-    \ p);\n    out(mod_sqrt(y, p));\n  }\n}\n"
+    }\n\n/**\n * @brief mod sqrt(Tonelli-Shanks algorithm)\n */\n#line 5 \"verify/verify-yosupo-math/yosupo-mod-sqrt.test.cpp\"\
+    \n\nusing namespace Nyaan; void Nyaan::solve() {\n  ini(T);\n  rep(_, T) {\n \
+    \   inl(y, p);\n    out(mod_sqrt(y, p));\n  }\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/sqrt_mod\"\n\n#include\
     \ \"../../template/template.hpp\"\n#include \"../../modulo/mod-sqrt.hpp\"\n\n\
     using namespace Nyaan; void Nyaan::solve() {\n  ini(T);\n  rep(_, T) {\n    inl(y,\
@@ -293,7 +292,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-math/yosupo-mod-sqrt.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-math/yosupo-mod-sqrt.test.cpp

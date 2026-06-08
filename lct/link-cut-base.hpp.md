@@ -31,7 +31,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/lct/link-cut-base.md
     document_title: Link/Cut Tree(base)
     links: []
   bundledCode: "#line 2 \"lct/link-cut-base.hpp\"\n\ntemplate <typename Splay>\nstruct\
@@ -56,8 +55,7 @@ data:
     \ decltype(Node::key)& key) {\n    this->splay(t);\n    t->key = key;\n    this->update(t);\n\
     \  }\n\n  virtual decltype(Node::key) get_key(Ptr t) { return t->key; }\n\n  decltype(Node::key)\
     \ fold(Ptr u, Ptr v) {\n    evert(u);\n    expose(v);\n    return v->sum;\n  }\n\
-    };\n\n/**\n * @brief Link/Cut Tree(base)\n * @docs docs/lct/link-cut-base.md\n\
-    \ */\n"
+    };\n\n/**\n * @brief Link/Cut Tree(base)\n */\n"
   code: "#pragma once\n\ntemplate <typename Splay>\nstruct LinkCutBase : Splay {\n\
     \  using Node = typename Splay::Node;\n  using Ptr = Node*;\n\n  virtual Ptr expose(Ptr\
     \ t) {\n    Ptr rp = nullptr;\n    for (Ptr cur = t; cur; cur = cur->p) {\n  \
@@ -80,8 +78,7 @@ data:
     \ key) {\n    this->splay(t);\n    t->key = key;\n    this->update(t);\n  }\n\n\
     \  virtual decltype(Node::key) get_key(Ptr t) { return t->key; }\n\n  decltype(Node::key)\
     \ fold(Ptr u, Ptr v) {\n    evert(u);\n    expose(v);\n    return v->sum;\n  }\n\
-    };\n\n/**\n * @brief Link/Cut Tree(base)\n * @docs docs/lct/link-cut-base.md\n\
-    \ */\n"
+    };\n\n/**\n * @brief Link/Cut Tree(base)\n */\n"
   dependsOn: []
   isVerificationFile: false
   path: lct/link-cut-base.hpp
@@ -89,7 +86,7 @@ data:
   - lct/link-cut-tree.hpp
   - lct/link-cut-tree-subtree.hpp
   - lct/link-cut-tree-lazy.hpp
-  timestamp: '2026-05-31 17:09:38+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ds/yosupo-range-add-range-sum-linkcuttree.test.cpp
@@ -99,11 +96,9 @@ data:
   - verify/verify-yosupo-ds/yosupo-dynamic-tree-vertex-add-subtree-sum.test.cpp
 documentation_of: lct/link-cut-base.hpp
 layout: document
-redirect_from:
-- /library/lct/link-cut-base.hpp
-- /library/lct/link-cut-base.hpp.html
 title: Link/Cut Tree(base)
 ---
+
 ## Link/Cut Tree
 
 木の回転・辺の削除・辺の追加などを$\mathrm{O}(\log n)$で行うライブラリ。

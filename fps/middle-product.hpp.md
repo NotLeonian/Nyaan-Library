@@ -97,14 +97,14 @@ data:
     \ deg, FPSBackendPriority<1>{});\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>\
     \ FormalPowerSeries<mint>::exp(int deg) const {\n  return fps_exp_impl(*this,\
     \ deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief \u591A\u9805\u5F0F/\u5F62\
-    \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n * @docs docs/fps/formal-power-series.md\n\
-    \ */\n#line 4 \"fps/middle-product.hpp\"\n\n// b[i] = sum_k c[k] * a[k - i] \u3068\
-    \u306A\u308B b \u3092\u8A08\u7B97\ntemplate <typename mint>\nFormalPowerSeries<mint>\
-    \ middle_product(FormalPowerSeries<mint> a,\n                                \
-    \       FormalPowerSeries<mint> c) {\n  int s = a.size(), t = c.size();\n  assert(0\
-    \ < s and s <= t);\n  int B = 1;\n  while (B < t) B *= 2;\n  a = a.rev();\n  a.resize(B),\
-    \ c.resize(B);\n  a.ntt(), c.ntt();\n  for (int i = 0; i < B; i++) a[i] *= c[i];\n\
-    \  a.intt();\n  return {begin(a) + s - 1, begin(a) + t};\n}\n"
+    \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n */\n#line 4 \"\
+    fps/middle-product.hpp\"\n\n// b[i] = sum_k c[k] * a[k - i] \u3068\u306A\u308B\
+    \ b \u3092\u8A08\u7B97\ntemplate <typename mint>\nFormalPowerSeries<mint> middle_product(FormalPowerSeries<mint>\
+    \ a,\n                                       FormalPowerSeries<mint> c) {\n  int\
+    \ s = a.size(), t = c.size();\n  assert(0 < s and s <= t);\n  int B = 1;\n  while\
+    \ (B < t) B *= 2;\n  a = a.rev();\n  a.resize(B), c.resize(B);\n  a.ntt(), c.ntt();\n\
+    \  for (int i = 0; i < B; i++) a[i] *= c[i];\n  a.intt();\n  return {begin(a)\
+    \ + s - 1, begin(a) + t};\n}\n"
   code: "#pragma once\n\n#include \"formal-power-series.hpp\"\n\n// b[i] = sum_k c[k]\
     \ * a[k - i] \u3068\u306A\u308B b \u3092\u8A08\u7B97\ntemplate <typename mint>\n\
     FormalPowerSeries<mint> middle_product(FormalPowerSeries<mint> a,\n          \
@@ -118,7 +118,7 @@ data:
   isVerificationFile: false
   path: fps/middle-product.hpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: fps/middle-product.hpp

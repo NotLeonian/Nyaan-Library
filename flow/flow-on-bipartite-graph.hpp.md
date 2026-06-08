@@ -10,7 +10,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/flow/flow-on-bipartite-graph.md
     document_title: "\u4E8C\u90E8\u30B0\u30E9\u30D5\u306E\u30D5\u30ED\u30FC"
     links: []
   bundledCode: "#line 2 \"flow/flow-on-bipartite-graph.hpp\"\n\n#line 1 \"atcoder/maxflow.hpp\"\
@@ -116,8 +115,7 @@ data:
     \    }\n    };\n    for (int i = 0; i < L; i++)\n      if (!used[i]) colored[i]\
     \ = true, dfs(dfs, i);\n    return colored;\n  }\n};\n\n}  // namespace BipartiteGraphImpl\n\
     \nusing BipartiteGraphImpl::BipartiteGraph;\n\n/**\n * @brief \u4E8C\u90E8\u30B0\
-    \u30E9\u30D5\u306E\u30D5\u30ED\u30FC\n * @docs docs/flow/flow-on-bipartite-graph.md\n\
-    \ */\n"
+    \u30E9\u30D5\u306E\u30D5\u30ED\u30FC\n */\n"
   code: "#pragma once\n\n#include \"../atcoder/maxflow.hpp\"\n\nnamespace BipartiteGraphImpl\
     \ {\nusing namespace atcoder;\nstruct BipartiteGraph : private mf_graph<long long>\
     \ {\n  int L, R, s, t;\n  bool is_flow;\n\n  explicit BipartiteGraph(int N, int\
@@ -158,23 +156,20 @@ data:
     \    }\n    };\n    for (int i = 0; i < L; i++)\n      if (!used[i]) colored[i]\
     \ = true, dfs(dfs, i);\n    return colored;\n  }\n};\n\n}  // namespace BipartiteGraphImpl\n\
     \nusing BipartiteGraphImpl::BipartiteGraph;\n\n/**\n * @brief \u4E8C\u90E8\u30B0\
-    \u30E9\u30D5\u306E\u30D5\u30ED\u30FC\n * @docs docs/flow/flow-on-bipartite-graph.md\n\
-    \ */\n"
+    \u30E9\u30D5\u306E\u30D5\u30ED\u30FC\n */\n"
   dependsOn: []
   isVerificationFile: false
   path: flow/flow-on-bipartite-graph.hpp
   requiredBy: []
-  timestamp: '2026-06-08 02:23:45+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-graph/yosupo-matching-on-bipartite-graph.test.cpp
 documentation_of: flow/flow-on-bipartite-graph.hpp
 layout: document
-redirect_from:
-- /library/flow/flow-on-bipartite-graph.hpp
-- /library/flow/flow-on-bipartite-graph.hpp.html
 title: "\u4E8C\u90E8\u30B0\u30E9\u30D5\u306E\u30D5\u30ED\u30FC"
 ---
+
 ## 二部グラフのフロー
 
 #### 使い方

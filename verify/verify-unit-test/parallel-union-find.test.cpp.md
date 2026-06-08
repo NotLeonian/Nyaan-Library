@@ -343,42 +343,42 @@ data:
     \ u64 modfma(const u64 &a, const u64 &b, const u64 &c) {\n    u128 d = u128(a)\
     \ * b + c;\n    u64 ret = (d >> 61) + (u64(d) & md);\n    return ret >= md ? ret\
     \ - md : ret;\n  }\n};\n\n}  // namespace internal\n\n/**\n * @brief \u30CF\u30C3\
-    \u30B7\u30E5\u69CB\u9020\u4F53\n * @docs docs/internal/internal-hash.md\n */\n\
-    #line 8 \"string/rolling-hash-on-segment-tree.hpp\"\n\nnamespace RollingHashonSegmentTreeImpl\
-    \ {\n\nconstexpr int BASE_NUM = 1;\nusing Hash = internal::Hash<BASE_NUM>;\nusing\
-    \ T = pair<Hash, int>;\n\nvector<Hash> Pow{Hash::set(1)};\nconst Hash Basis =\
-    \ Hash::get_basis();\nconst Hash Zero = Hash::set(0);\n\nT op(T a, T b) {\n  while\
-    \ (b.second >= (int)Pow.size()) {\n    Hash h = Pow.back();\n    Pow.push_back(h\
-    \ * Basis);\n  }\n  Hash h = pfma(a.first, Pow[b.second], b.first);\n  int len\
-    \ = a.second + b.second;\n  return make_pair(h, len);\n}\nT e() { return make_pair(Zero,\
-    \ 0); }\n\ntemplate <typename Str>\nstruct RollingHashonSegmentTree {\n  using\
-    \ Value = typename Str::value_type;\n  int n;\n  atcoder::segtree<T, op, e> seg;\n\
-    \n  RollingHashonSegmentTree() : n(0) {}\n\n  RollingHashonSegmentTree(const Str&\
-    \ S) : n(S.size()) {\n    vector<T> init(n);\n    for (int i = 0; i < n; i++)\
-    \ {\n      init[i] = make_pair(Hash::set(S[i]), 1);\n    }\n    seg = atcoder::segtree<T,\
-    \ op, e>(init);\n  }\n\n  void update(int i, const Value& v) {\n    assert(0 <=\
-    \ i and i < n);\n    seg.set(i, make_pair(Hash::set(v), 1));\n  }\n\n  // [l1,\
-    \ r1) \u3068 [l2, r2) \u304C\u4E00\u81F4\u3059\u308B\u304B\u3092\u5224\u5B9A\n\
-    \  bool same(int l1, int r1, int l2, int r2) {\n    assert(0 <= l1 and l1 <= r1\
-    \ and r1 <= n);\n    assert(0 <= l2 and l2 <= r2 and r2 <= n);\n    if (r1 - l1\
-    \ != r2 - l2) return false;\n    return seg.prod(l1, r1) == seg.prod(l2, r2);\n\
-    \  }\n};\n}  // namespace RollingHashonSegmentTreeImpl\n\nusing RollingHashonSegmentTreeImpl::RollingHashonSegmentTree;\n\
-    #line 2 \"data-structure/union-find-enumerate.hpp\"\n\n#line 4 \"data-structure/union-find-enumerate.hpp\"\
-    \nusing namespace std;\n\nstruct UnionFindEnumerate {\n  vector<int> data, nxt;\n\
-    \  UnionFindEnumerate(int N) : data(N, -1), nxt(N) {\n    for (int i = 0; i <\
-    \ N; i++) nxt[i] = i;\n  }\n\n  int find(int k) { return data[k] < 0 ? k : data[k]\
-    \ = find(data[k]); }\n\n  int unite(int x, int y) {\n    if ((x = find(x)) ==\
-    \ (y = find(y))) return false;\n    if (data[x] > data[y]) swap(x, y);\n    data[x]\
-    \ += data[y];\n    data[y] = x;\n    swap(nxt[x], nxt[y]);\n    return true;\n\
-    \  }\n\n  // f(x, y) : x \u306B y \u3092\u30DE\u30FC\u30B8\n  template <typename\
-    \ F>\n  int unite(int x, int y, const F &f) {\n    if ((x = find(x)) == (y = find(y)))\
-    \ return false;\n    if (data[x] > data[y]) swap(x, y);\n    data[x] += data[y];\n\
-    \    data[y] = x;\n    f(x, y);\n    swap(nxt[x], nxt[y]);\n    return true;\n\
-    \  }\n\n  int size(int k) { return -data[find(k)]; }\n\n  int same(int x, int\
-    \ y) { return find(x) == find(y); }\n\n  vector<int> enumerate(int i) {\n    vector<int>\
-    \ res{i};\n    for (int j = nxt[i]; j != i; j = nxt[j]) res.push_back(j);\n  \
-    \  return res;\n  }\n};\n#line 5 \"data-structure/parallel-union-find.hpp\"\n\n\
-    struct ParallelUnionFind {\n  int n;\n  UnionFindEnumerate uf;\n  RollingHashonSegmentTree<vector<int>>\
+    \u30B7\u30E5\u69CB\u9020\u4F53\n */\n#line 8 \"string/rolling-hash-on-segment-tree.hpp\"\
+    \n\nnamespace RollingHashonSegmentTreeImpl {\n\nconstexpr int BASE_NUM = 1;\n\
+    using Hash = internal::Hash<BASE_NUM>;\nusing T = pair<Hash, int>;\n\nvector<Hash>\
+    \ Pow{Hash::set(1)};\nconst Hash Basis = Hash::get_basis();\nconst Hash Zero =\
+    \ Hash::set(0);\n\nT op(T a, T b) {\n  while (b.second >= (int)Pow.size()) {\n\
+    \    Hash h = Pow.back();\n    Pow.push_back(h * Basis);\n  }\n  Hash h = pfma(a.first,\
+    \ Pow[b.second], b.first);\n  int len = a.second + b.second;\n  return make_pair(h,\
+    \ len);\n}\nT e() { return make_pair(Zero, 0); }\n\ntemplate <typename Str>\n\
+    struct RollingHashonSegmentTree {\n  using Value = typename Str::value_type;\n\
+    \  int n;\n  atcoder::segtree<T, op, e> seg;\n\n  RollingHashonSegmentTree() :\
+    \ n(0) {}\n\n  RollingHashonSegmentTree(const Str& S) : n(S.size()) {\n    vector<T>\
+    \ init(n);\n    for (int i = 0; i < n; i++) {\n      init[i] = make_pair(Hash::set(S[i]),\
+    \ 1);\n    }\n    seg = atcoder::segtree<T, op, e>(init);\n  }\n\n  void update(int\
+    \ i, const Value& v) {\n    assert(0 <= i and i < n);\n    seg.set(i, make_pair(Hash::set(v),\
+    \ 1));\n  }\n\n  // [l1, r1) \u3068 [l2, r2) \u304C\u4E00\u81F4\u3059\u308B\u304B\
+    \u3092\u5224\u5B9A\n  bool same(int l1, int r1, int l2, int r2) {\n    assert(0\
+    \ <= l1 and l1 <= r1 and r1 <= n);\n    assert(0 <= l2 and l2 <= r2 and r2 <=\
+    \ n);\n    if (r1 - l1 != r2 - l2) return false;\n    return seg.prod(l1, r1)\
+    \ == seg.prod(l2, r2);\n  }\n};\n}  // namespace RollingHashonSegmentTreeImpl\n\
+    \nusing RollingHashonSegmentTreeImpl::RollingHashonSegmentTree;\n#line 2 \"data-structure/union-find-enumerate.hpp\"\
+    \n\n#line 4 \"data-structure/union-find-enumerate.hpp\"\nusing namespace std;\n\
+    \nstruct UnionFindEnumerate {\n  vector<int> data, nxt;\n  UnionFindEnumerate(int\
+    \ N) : data(N, -1), nxt(N) {\n    for (int i = 0; i < N; i++) nxt[i] = i;\n  }\n\
+    \n  int find(int k) { return data[k] < 0 ? k : data[k] = find(data[k]); }\n\n\
+    \  int unite(int x, int y) {\n    if ((x = find(x)) == (y = find(y))) return false;\n\
+    \    if (data[x] > data[y]) swap(x, y);\n    data[x] += data[y];\n    data[y]\
+    \ = x;\n    swap(nxt[x], nxt[y]);\n    return true;\n  }\n\n  // f(x, y) : x \u306B\
+    \ y \u3092\u30DE\u30FC\u30B8\n  template <typename F>\n  int unite(int x, int\
+    \ y, const F &f) {\n    if ((x = find(x)) == (y = find(y))) return false;\n  \
+    \  if (data[x] > data[y]) swap(x, y);\n    data[x] += data[y];\n    data[y] =\
+    \ x;\n    f(x, y);\n    swap(nxt[x], nxt[y]);\n    return true;\n  }\n\n  int\
+    \ size(int k) { return -data[find(k)]; }\n\n  int same(int x, int y) { return\
+    \ find(x) == find(y); }\n\n  vector<int> enumerate(int i) {\n    vector<int> res{i};\n\
+    \    for (int j = nxt[i]; j != i; j = nxt[j]) res.push_back(j);\n    return res;\n\
+    \  }\n};\n#line 5 \"data-structure/parallel-union-find.hpp\"\n\nstruct ParallelUnionFind\
+    \ {\n  int n;\n  UnionFindEnumerate uf;\n  RollingHashonSegmentTree<vector<int>>\
     \ seg;\n\n  ParallelUnionFind(int _n) : n(_n), uf(n) {\n    vector<int> init(n);\n\
     \    for (int i = 0; i < n; i++) init[i] = i;\n    seg = RollingHashonSegmentTree<vector<int>>(init);\n\
     \  }\n\n  // [l1, r1) \u3068 [l2, r2) \u3092 unite \u3059\u308B\n  void unite(int\
@@ -410,46 +410,45 @@ data:
     \ false;\n    if (data[x] > data[y]) swap(x, y);\n    data[x] += data[y];\n  \
     \  data[y] = x;\n    f(x, y);\n    return true;\n  }\n\n  int size(int k) { return\
     \ -data[find(k)]; }\n\n  int same(int x, int y) { return find(x) == find(y); }\n\
-    };\n\n/**\n * @brief Union Find(Disjoint Set Union)\n * @docs docs/data-structure/union-find.md\n\
-    \ */\n#line 2 \"misc/rng.hpp\"\n\n#line 7 \"misc/rng.hpp\"\nusing namespace std;\n\
-    \n#line 2 \"internal/internal-seed.hpp\"\n\n#line 4 \"internal/internal-seed.hpp\"\
-    \nusing namespace std;\n\nnamespace internal {\nunsigned long long non_deterministic_seed()\
-    \ {\n  unsigned long long m =\n      chrono::duration_cast<chrono::nanoseconds>(\n\
-    \          chrono::high_resolution_clock::now().time_since_epoch())\n        \
-    \  .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >> 31, m\
-    \ ^= m << 35;\n  return m;\n}\nunsigned long long deterministic_seed() { return\
-    \ 88172645463325252UL; }\n\n// 64 bit \u306E seed \u5024\u3092\u751F\u6210 (\u624B\
-    \u5143\u3067\u306F seed \u56FA\u5B9A)\n// \u9023\u7D9A\u3067\u547C\u3073\u51FA\
-    \u3059\u3068\u540C\u3058\u5024\u304C\u4F55\u5EA6\u3082\u8FD4\u3063\u3066\u304F\
-    \u308B\u306E\u3067\u6CE8\u610F\n// #define RANDOMIZED_SEED \u3059\u308B\u3068\u30B7\
-    \u30FC\u30C9\u304C\u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long long\
-    \ seed() {\n#if defined(NyaanLocal) && !defined(RANDOMIZED_SEED)\n  return deterministic_seed();\n\
-    #else\n  return non_deterministic_seed();\n#endif\n}\n\n}  // namespace internal\n\
-    #line 10 \"misc/rng.hpp\"\n\nnamespace my_rand {\nusing i64 = long long;\nusing\
-    \ u64 = unsigned long long;\n\n// [0, 2^64 - 1)\nu64 rng() {\n  static u64 _x\
-    \ = internal::seed();\n  return _x ^= _x << 7, _x ^= _x >> 9;\n}\n\n// [l, r]\n\
-    i64 rng(i64 l, i64 r) {\n  assert(l <= r);\n  return l + rng() % u64(r - l + 1);\n\
-    }\n\n// [l, r)\ni64 randint(i64 l, i64 r) {\n  assert(l < r);\n  return l + rng()\
-    \ % u64(r - l);\n}\n\n// choose n numbers from [l, r) without overlapping\nvector<i64>\
-    \ randset(i64 l, i64 r, i64 n) {\n  assert(l <= r && n <= r - l);\n  unordered_set<i64>\
-    \ s;\n  for (i64 i = n; i; --i) {\n    i64 m = randint(l, r + 1 - i);\n    if\
-    \ (s.find(m) != s.end()) m = r - i;\n    s.insert(m);\n  }\n  vector<i64> ret;\n\
-    \  for (auto& x : s) ret.push_back(x);\n  sort(begin(ret), end(ret));\n  return\
-    \ ret;\n}\n\n// [0.0, 1.0)\ndouble rnd() { return rng() * 5.42101086242752217004e-20;\
-    \ }\n// [l, r)\ndouble rnd(double l, double r) {\n  assert(l < r);\n  return l\
-    \ + rnd() * (r - l);\n}\n\ntemplate <typename T>\nvoid randshf(vector<T>& v) {\n\
-    \  int n = v.size();\n  for (int i = 1; i < n; i++) swap(v[i], v[randint(0, i\
-    \ + 1)]);\n}\n\n}  // namespace my_rand\n\nusing my_rand::randint;\nusing my_rand::randset;\n\
-    using my_rand::randshf;\nusing my_rand::rnd;\nusing my_rand::rng;\n#line 8 \"\
-    verify/verify-unit-test/parallel-union-find.test.cpp\"\nusing namespace Nyaan;\n\
-    \nvoid test() {\n  rep(t, 1000) {\n    int N = rng(1, 50);\n    UnionFind uf(N);\n\
-    \    ParallelUnionFind puf(N);\n\n    rep(u, 100) {\n      int len = rng(0, N);\n\
-    \      int l = rng(0, N - len);\n      int r = rng(0, N - len);\n      rep(i,\
-    \ len) uf.unite(l + i, r + i);\n      puf.unite(l, l + len, r, r + len);\n   \
-    \   rep(i, N) rep(j, i) assert(uf.same(i, j) == puf.same(i, j));\n    }\n  }\n\
-    \  trc2(\"OK\");\n}\n\nvoid q() {\n  test();\n\n  int a, b;\n  cin >> a >> b;\n\
-    \  cout << a + b << endl;\n}\n\nvoid Nyaan::solve() {\n  int t = 1;\n  // in(t);\n\
-    \  while (t--) q();\n}\n"
+    };\n\n/**\n * @brief Union Find(Disjoint Set Union)\n */\n#line 2 \"misc/rng.hpp\"\
+    \n\n#line 7 \"misc/rng.hpp\"\nusing namespace std;\n\n#line 2 \"internal/internal-seed.hpp\"\
+    \n\n#line 4 \"internal/internal-seed.hpp\"\nusing namespace std;\n\nnamespace\
+    \ internal {\nunsigned long long non_deterministic_seed() {\n  unsigned long long\
+    \ m =\n      chrono::duration_cast<chrono::nanoseconds>(\n          chrono::high_resolution_clock::now().time_since_epoch())\n\
+    \          .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >>\
+    \ 31, m ^= m << 35;\n  return m;\n}\nunsigned long long deterministic_seed() {\
+    \ return 88172645463325252UL; }\n\n// 64 bit \u306E seed \u5024\u3092\u751F\u6210\
+    \ (\u624B\u5143\u3067\u306F seed \u56FA\u5B9A)\n// \u9023\u7D9A\u3067\u547C\u3073\
+    \u51FA\u3059\u3068\u540C\u3058\u5024\u304C\u4F55\u5EA6\u3082\u8FD4\u3063\u3066\
+    \u304F\u308B\u306E\u3067\u6CE8\u610F\n// #define RANDOMIZED_SEED \u3059\u308B\u3068\
+    \u30B7\u30FC\u30C9\u304C\u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long\
+    \ long seed() {\n#if defined(NyaanLocal) && !defined(RANDOMIZED_SEED)\n  return\
+    \ deterministic_seed();\n#else\n  return non_deterministic_seed();\n#endif\n}\n\
+    \n}  // namespace internal\n#line 10 \"misc/rng.hpp\"\n\nnamespace my_rand {\n\
+    using i64 = long long;\nusing u64 = unsigned long long;\n\n// [0, 2^64 - 1)\n\
+    u64 rng() {\n  static u64 _x = internal::seed();\n  return _x ^= _x << 7, _x ^=\
+    \ _x >> 9;\n}\n\n// [l, r]\ni64 rng(i64 l, i64 r) {\n  assert(l <= r);\n  return\
+    \ l + rng() % u64(r - l + 1);\n}\n\n// [l, r)\ni64 randint(i64 l, i64 r) {\n \
+    \ assert(l < r);\n  return l + rng() % u64(r - l);\n}\n\n// choose n numbers from\
+    \ [l, r) without overlapping\nvector<i64> randset(i64 l, i64 r, i64 n) {\n  assert(l\
+    \ <= r && n <= r - l);\n  unordered_set<i64> s;\n  for (i64 i = n; i; --i) {\n\
+    \    i64 m = randint(l, r + 1 - i);\n    if (s.find(m) != s.end()) m = r - i;\n\
+    \    s.insert(m);\n  }\n  vector<i64> ret;\n  for (auto& x : s) ret.push_back(x);\n\
+    \  sort(begin(ret), end(ret));\n  return ret;\n}\n\n// [0.0, 1.0)\ndouble rnd()\
+    \ { return rng() * 5.42101086242752217004e-20; }\n// [l, r)\ndouble rnd(double\
+    \ l, double r) {\n  assert(l < r);\n  return l + rnd() * (r - l);\n}\n\ntemplate\
+    \ <typename T>\nvoid randshf(vector<T>& v) {\n  int n = v.size();\n  for (int\
+    \ i = 1; i < n; i++) swap(v[i], v[randint(0, i + 1)]);\n}\n\n}  // namespace my_rand\n\
+    \nusing my_rand::randint;\nusing my_rand::randset;\nusing my_rand::randshf;\n\
+    using my_rand::rnd;\nusing my_rand::rng;\n#line 8 \"verify/verify-unit-test/parallel-union-find.test.cpp\"\
+    \nusing namespace Nyaan;\n\nvoid test() {\n  rep(t, 1000) {\n    int N = rng(1,\
+    \ 50);\n    UnionFind uf(N);\n    ParallelUnionFind puf(N);\n\n    rep(u, 100)\
+    \ {\n      int len = rng(0, N);\n      int l = rng(0, N - len);\n      int r =\
+    \ rng(0, N - len);\n      rep(i, len) uf.unite(l + i, r + i);\n      puf.unite(l,\
+    \ l + len, r, r + len);\n      rep(i, N) rep(j, i) assert(uf.same(i, j) == puf.same(i,\
+    \ j));\n    }\n  }\n  trc2(\"OK\");\n}\n\nvoid q() {\n  test();\n\n  int a, b;\n\
+    \  cin >> a >> b;\n  cout << a + b << endl;\n}\n\nvoid Nyaan::solve() {\n  int\
+    \ t = 1;\n  // in(t);\n  while (t--) q();\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/aplusb\"\n//\n#include\
     \ \"../../template/template.hpp\"\n//\n#include \"../../data-structure/parallel-union-find.hpp\"\
     \n#include \"../../data-structure/union-find.hpp\"\n#include \"../../misc/rng.hpp\"\
@@ -478,7 +477,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/parallel-union-find.test.cpp
   requiredBy: []
-  timestamp: '2026-06-08 02:23:45+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/parallel-union-find.test.cpp

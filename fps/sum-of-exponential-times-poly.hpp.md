@@ -19,7 +19,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/fps/sum-of-exponential-times-poly.md
     document_title: $\sum_{i}a^i f(i)$
     links: []
   bundledCode: "#line 2 \"fps/sum-of-exponential-times-poly.hpp\"\n\n#line 2 \"fps/lagrange-interpolation-point.hpp\"\
@@ -98,8 +97,7 @@ data:
     \ d);\n  return sum_of_exp(f, r, n, C);\n}\n\n// given  : d, r\n// return : sum_{i=0...infty}\
     \ r^i i^d\ntemplate <typename mint>\nmint sum_of_exp_limit2(int d, mint r, Binomial<mint>&\
     \ C) {\n  vector<mint> f = exp_enamurate<mint>(d, d);\n  return sum_of_exp_limit(f,\
-    \ r, C);\n}\n\n/**\n * @brief $\\sum_{i}a^i f(i)$\n * @docs docs/fps/sum-of-exponential-times-poly.md\n\
-    \ */\n"
+    \ r, C);\n}\n\n/**\n * @brief $\\sum_{i}a^i f(i)$\n */\n"
   code: "#pragma once\n\n#include \"./lagrange-interpolation-point.hpp\"\n#include\
     \ \"../modulo/binomial.hpp\"\n\n// given  : f(0)...f(k) (deg(f) = k), a, n\n//\
     \ return : sum_{i=0...n-1} a^i f(i)\ntemplate <typename mint>\nmint sum_of_exp(const\
@@ -135,26 +133,23 @@ data:
     \ sum_of_exp(f, r, n, C);\n}\n\n// given  : d, r\n// return : sum_{i=0...infty}\
     \ r^i i^d\ntemplate <typename mint>\nmint sum_of_exp_limit2(int d, mint r, Binomial<mint>&\
     \ C) {\n  vector<mint> f = exp_enamurate<mint>(d, d);\n  return sum_of_exp_limit(f,\
-    \ r, C);\n}\n\n/**\n * @brief $\\sum_{i}a^i f(i)$\n * @docs docs/fps/sum-of-exponential-times-poly.md\n\
-    \ */\n"
+    \ r, C);\n}\n\n/**\n * @brief $\\sum_{i}a^i f(i)$\n */\n"
   dependsOn:
   - fps/lagrange-interpolation-point.hpp
   - modulo/binomial.hpp
   isVerificationFile: false
   path: fps/sum-of-exponential-times-poly.hpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-fps/yosupo-sum-of-exp-poly.test.cpp
   - verify/verify-yosupo-fps/yosupo-sum-of-exp-poly-limit.test.cpp
 documentation_of: fps/sum-of-exponential-times-poly.hpp
 layout: document
-redirect_from:
-- /library/fps/sum-of-exponential-times-poly.hpp
-- /library/fps/sum-of-exponential-times-poly.hpp.html
 title: $\sum_{i}a^i f(i)$
 ---
+
 
 ## $\sum_{i}a^i f(i)$
 

@@ -380,42 +380,42 @@ data:
     \ deg, FPSBackendPriority<1>{});\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>\
     \ FormalPowerSeries<mint>::exp(int deg) const {\n  return fps_exp_impl(*this,\
     \ deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief \u591A\u9805\u5F0F/\u5F62\
-    \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n * @docs docs/fps/formal-power-series.md\n\
-    \ */\n#line 2 \"fps/sample-point-shift.hpp\"\n\n#line 2 \"modulo/binomial.hpp\"\
-    \n\n#line 6 \"modulo/binomial.hpp\"\nusing namespace std;\n\n// \u30B3\u30F3\u30B9\
-    \u30C8\u30E9\u30AF\u30BF\u306E MAX \u306B \u300CC(n, r) \u3084 fac(n) \u3067\u30AF\
-    \u30A8\u30EA\u3092\u6295\u3052\u308B\u6700\u5927\u306E n \u300D\n// \u3092\u5165\
-    \u308C\u308B\u3068\u500D\u901F\u304F\u3089\u3044\u306B\u306A\u308B\n// mod \u3092\
-    \u8D85\u3048\u3066\u524D\u8A08\u7B97\u3057\u3066 0 \u5272\u308A\u3092\u8E0F\u3080\
-    \u30D0\u30B0\u306F\u5BFE\u7B56\u6E08\u307F\ntemplate <typename T>\nstruct Binomial\
-    \ {\n  vector<T> f, g, h;\n  Binomial(int MAX = 0) {\n    assert(T::get_mod()\
-    \ != 0 && \"Binomial<mint>()\");\n    f.resize(1, T{1});\n    g.resize(1, T{1});\n\
-    \    h.resize(1, T{1});\n    if (MAX > 0) extend(MAX + 1);\n  }\n\n  void extend(int\
-    \ m = -1) {\n    int n = f.size();\n    if (m == -1) m = n * 2;\n    m = min<int>(m,\
-    \ T::get_mod());\n    if (n >= m) return;\n    f.resize(m);\n    g.resize(m);\n\
-    \    h.resize(m);\n    for (int i = n; i < m; i++) f[i] = f[i - 1] * T(i);\n \
-    \   g[m - 1] = f[m - 1].inverse();\n    h[m - 1] = g[m - 1] * f[m - 2];\n    for\
-    \ (int i = m - 2; i >= n; i--) {\n      g[i] = g[i + 1] * T(i + 1);\n      h[i]\
-    \ = g[i] * f[i - 1];\n    }\n  }\n\n  T fac(int i) {\n    if (i < 0) return T(0);\n\
-    \    while (i >= (int)f.size()) extend();\n    return f[i];\n  }\n\n  T finv(int\
-    \ i) {\n    if (i < 0) return T(0);\n    while (i >= (int)g.size()) extend();\n\
-    \    return g[i];\n  }\n\n  T inv(int i) {\n    if (i < 0) return -inv(-i);\n\
-    \    while (i >= (int)h.size()) extend();\n    return h[i];\n  }\n\n  T C(int\
-    \ n, int r) {\n    if (n < 0 || n < r || r < 0) return T(0);\n    return fac(n)\
-    \ * finv(n - r) * finv(r);\n  }\n\n  inline T operator()(int n, int r) { return\
-    \ C(n, r); }\n\n  template <typename I>\n  T multinomial(const vector<I>& r) {\n\
-    \    static_assert(is_integral<I>::value == true);\n    int n = 0;\n    for (auto&\
-    \ x : r) {\n      if (x < 0) return T(0);\n      n += x;\n    }\n    T res = fac(n);\n\
-    \    for (auto& x : r) res *= finv(x);\n    return res;\n  }\n\n  template <typename\
-    \ I>\n  T operator()(const vector<I>& r) {\n    return multinomial(r);\n  }\n\n\
-    \  T C_naive(int n, int r) {\n    if (n < 0 || n < r || r < 0) return T(0);\n\
-    \    T ret = T(1);\n    r = min(r, n - r);\n    for (int i = 1; i <= r; ++i) ret\
-    \ *= inv(i) * (n--);\n    return ret;\n  }\n\n  T P(int n, int r) {\n    if (n\
-    \ < 0 || n < r || r < 0) return T(0);\n    return fac(n) * finv(n - r);\n  }\n\
-    \n  // [x^r] 1 / (1-x)^n\n  T H(int n, int r) {\n    if (n < 0 || r < 0) return\
-    \ T(0);\n    return r == 0 ? 1 : C(n + r - 1, r);\n  }\n};\n#line 2 \"fps/arbitrary-fps.hpp\"\
-    \n\n#line 4 \"fps/arbitrary-fps.hpp\"\n\n#line 2 \"ntt/arbitrary-ntt.hpp\"\n\n\
-    #line 6 \"ntt/arbitrary-ntt.hpp\"\nusing namespace std;\n\n#line 2 \"modint/montgomery-modint.hpp\"\
+    \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n */\n#line 2 \"\
+    fps/sample-point-shift.hpp\"\n\n#line 2 \"modulo/binomial.hpp\"\n\n#line 6 \"\
+    modulo/binomial.hpp\"\nusing namespace std;\n\n// \u30B3\u30F3\u30B9\u30C8\u30E9\
+    \u30AF\u30BF\u306E MAX \u306B \u300CC(n, r) \u3084 fac(n) \u3067\u30AF\u30A8\u30EA\
+    \u3092\u6295\u3052\u308B\u6700\u5927\u306E n \u300D\n// \u3092\u5165\u308C\u308B\
+    \u3068\u500D\u901F\u304F\u3089\u3044\u306B\u306A\u308B\n// mod \u3092\u8D85\u3048\
+    \u3066\u524D\u8A08\u7B97\u3057\u3066 0 \u5272\u308A\u3092\u8E0F\u3080\u30D0\u30B0\
+    \u306F\u5BFE\u7B56\u6E08\u307F\ntemplate <typename T>\nstruct Binomial {\n  vector<T>\
+    \ f, g, h;\n  Binomial(int MAX = 0) {\n    assert(T::get_mod() != 0 && \"Binomial<mint>()\"\
+    );\n    f.resize(1, T{1});\n    g.resize(1, T{1});\n    h.resize(1, T{1});\n \
+    \   if (MAX > 0) extend(MAX + 1);\n  }\n\n  void extend(int m = -1) {\n    int\
+    \ n = f.size();\n    if (m == -1) m = n * 2;\n    m = min<int>(m, T::get_mod());\n\
+    \    if (n >= m) return;\n    f.resize(m);\n    g.resize(m);\n    h.resize(m);\n\
+    \    for (int i = n; i < m; i++) f[i] = f[i - 1] * T(i);\n    g[m - 1] = f[m -\
+    \ 1].inverse();\n    h[m - 1] = g[m - 1] * f[m - 2];\n    for (int i = m - 2;\
+    \ i >= n; i--) {\n      g[i] = g[i + 1] * T(i + 1);\n      h[i] = g[i] * f[i -\
+    \ 1];\n    }\n  }\n\n  T fac(int i) {\n    if (i < 0) return T(0);\n    while\
+    \ (i >= (int)f.size()) extend();\n    return f[i];\n  }\n\n  T finv(int i) {\n\
+    \    if (i < 0) return T(0);\n    while (i >= (int)g.size()) extend();\n    return\
+    \ g[i];\n  }\n\n  T inv(int i) {\n    if (i < 0) return -inv(-i);\n    while (i\
+    \ >= (int)h.size()) extend();\n    return h[i];\n  }\n\n  T C(int n, int r) {\n\
+    \    if (n < 0 || n < r || r < 0) return T(0);\n    return fac(n) * finv(n - r)\
+    \ * finv(r);\n  }\n\n  inline T operator()(int n, int r) { return C(n, r); }\n\
+    \n  template <typename I>\n  T multinomial(const vector<I>& r) {\n    static_assert(is_integral<I>::value\
+    \ == true);\n    int n = 0;\n    for (auto& x : r) {\n      if (x < 0) return\
+    \ T(0);\n      n += x;\n    }\n    T res = fac(n);\n    for (auto& x : r) res\
+    \ *= finv(x);\n    return res;\n  }\n\n  template <typename I>\n  T operator()(const\
+    \ vector<I>& r) {\n    return multinomial(r);\n  }\n\n  T C_naive(int n, int r)\
+    \ {\n    if (n < 0 || n < r || r < 0) return T(0);\n    T ret = T(1);\n    r =\
+    \ min(r, n - r);\n    for (int i = 1; i <= r; ++i) ret *= inv(i) * (n--);\n  \
+    \  return ret;\n  }\n\n  T P(int n, int r) {\n    if (n < 0 || n < r || r < 0)\
+    \ return T(0);\n    return fac(n) * finv(n - r);\n  }\n\n  // [x^r] 1 / (1-x)^n\n\
+    \  T H(int n, int r) {\n    if (n < 0 || r < 0) return T(0);\n    return r ==\
+    \ 0 ? 1 : C(n + r - 1, r);\n  }\n};\n#line 2 \"fps/arbitrary-fps.hpp\"\n\n#line\
+    \ 4 \"fps/arbitrary-fps.hpp\"\n\n#line 2 \"ntt/arbitrary-ntt.hpp\"\n\n#line 6\
+    \ \"ntt/arbitrary-ntt.hpp\"\nusing namespace std;\n\n#line 2 \"modint/montgomery-modint.hpp\"\
     \n\n#line 5 \"modint/montgomery-modint.hpp\"\n\ntemplate <uint32_t mod>\nstruct\
     \ LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n  using i32 =\
     \ int32_t;\n  using u32 = uint32_t;\n  using u64 = uint64_t;\n\n  static constexpr\
@@ -737,10 +737,9 @@ data:
     \ n, d) == a.back()) {\n#ifdef NyaanLocal\n      cerr << \"Found, d = \" << d\
     \ << endl;\n#endif\n      return kth_term_of_p_recursive(a, k, d);\n    }\n  }\n\
     \  cerr << \"Failed.\" << endl;\n  exit(1);\n}\n\n\n\n/**\n * @brief P-recursive\u306E\
-    \u9AD8\u901F\u8A08\u7B97\n * @docs docs/fps/find-p-recursive.md\n */\n#line 2\
-    \ \"fps/ntt-friendly-fps.hpp\"\n\n#line 5 \"fps/ntt-friendly-fps.hpp\"\n\ntemplate\
-    \ <typename mint>\nvoid fps_set_fft_impl(FormalPowerSeries<mint>*, FPSBackendPriority<1>)\
-    \ {\n  if (!FormalPowerSeries<mint>::ntt_ptr) {\n    FormalPowerSeries<mint>::ntt_ptr\
+    \u9AD8\u901F\u8A08\u7B97\n */\n#line 2 \"fps/ntt-friendly-fps.hpp\"\n\n#line 5\
+    \ \"fps/ntt-friendly-fps.hpp\"\n\ntemplate <typename mint>\nvoid fps_set_fft_impl(FormalPowerSeries<mint>*,\
+    \ FPSBackendPriority<1>) {\n  if (!FormalPowerSeries<mint>::ntt_ptr) {\n    FormalPowerSeries<mint>::ntt_ptr\
     \ = new NTT<mint>;\n  }\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>&\
     \ fps_multiply_impl(FormalPowerSeries<mint>& f,\n                            \
     \               const FormalPowerSeries<mint>& r,\n                          \
@@ -792,21 +791,20 @@ data:
     \ begin(x) + m, mint(0));\n    x.ntt();\n    for (int i = 0; i < 2 * m; ++i) x[i]\
     \ *= y[i];\n    x.intt();\n    b.insert(end(b), begin(x) + m, end(x));\n  }\n\
     \  return fps{begin(b), begin(b) + deg};\n}\n\n/**\n * @brief NTT mod\u7528FPS\u30E9\
-    \u30A4\u30D6\u30E9\u30EA\n * @docs docs/fps/ntt-friendly-fps.md\n */\n#line 9\
-    \ \"verify/verify-unit-test/p-recursive.test.cpp\"\nusing namespace Nyaan;\n\n\
-    using mint = LazyMontgomeryModInt<998244353>;\nusing fps = FormalPowerSeries<mint>;\n\
-    \nvoid test(const vector<mint>& a, int p, int d) {\n  vector<mint> pre{begin(a),\
-    \ begin(a) + p};\n\n  auto coeff = find_p_recursive<mint>(pre, d);\n  int k =\
-    \ coeff.size() - 1;\n  rep(i, sz(coeff)) {\n    coeff[i].shrink();\n    if (i\
-    \ >= 2) cerr << \" + \";\n    if (i) coeff[i] = -coeff[i];\n    if (coeff[i] !=\
-    \ fps{1}) {\n      if (sz(coeff[i]) > 1) cerr << \"(\";\n      for (int j = sz(coeff[i]);\
-    \ j--;) {\n        mint m = coeff[i][j];\n        if (j == 0 or m != 1) cerr <<\
-    \ m;\n        if (j) cerr << \"k\";\n        if (j >= 2) cerr << \"^\" << j;\n\
-    \        if (j) cerr << \" + \";\n      }\n      cerr << \" )\"[sz(coeff[i]) >\
-    \ 1];\n    }\n    cerr << \"a_{k\";\n    if (i != k) cerr << \"+\" << (k - i);\n\
-    \    cerr << \"}\";\n    if (i == 0) cerr << \" = \";\n  }\n  cerr << endl;\n\n\
-    \  rep(i, sz(a)) {\n    auto b = kth_term_of_p_recursive<mint>(pre, i, d);\n \
-    \   assert(b == a[i]);\n  }\n\n  auto c = kth_term_of_p_recursive_enumerate(pre,\
+    \u30A4\u30D6\u30E9\u30EA\n */\n#line 9 \"verify/verify-unit-test/p-recursive.test.cpp\"\
+    \nusing namespace Nyaan;\n\nusing mint = LazyMontgomeryModInt<998244353>;\nusing\
+    \ fps = FormalPowerSeries<mint>;\n\nvoid test(const vector<mint>& a, int p, int\
+    \ d) {\n  vector<mint> pre{begin(a), begin(a) + p};\n\n  auto coeff = find_p_recursive<mint>(pre,\
+    \ d);\n  int k = coeff.size() - 1;\n  rep(i, sz(coeff)) {\n    coeff[i].shrink();\n\
+    \    if (i >= 2) cerr << \" + \";\n    if (i) coeff[i] = -coeff[i];\n    if (coeff[i]\
+    \ != fps{1}) {\n      if (sz(coeff[i]) > 1) cerr << \"(\";\n      for (int j =\
+    \ sz(coeff[i]); j--;) {\n        mint m = coeff[i][j];\n        if (j == 0 or\
+    \ m != 1) cerr << m;\n        if (j) cerr << \"k\";\n        if (j >= 2) cerr\
+    \ << \"^\" << j;\n        if (j) cerr << \" + \";\n      }\n      cerr << \" )\"\
+    [sz(coeff[i]) > 1];\n    }\n    cerr << \"a_{k\";\n    if (i != k) cerr << \"\
+    +\" << (k - i);\n    cerr << \"}\";\n    if (i == 0) cerr << \" = \";\n  }\n \
+    \ cerr << endl;\n\n  rep(i, sz(a)) {\n    auto b = kth_term_of_p_recursive<mint>(pre,\
+    \ i, d);\n    assert(b == a[i]);\n  }\n\n  auto c = kth_term_of_p_recursive_enumerate(pre,\
     \ sz(a), d);\n  rep(i, sz(a)) assert(c[i] == a[i]);\n}\n\nvoid verify(int N) {\n\
     \  Binomial<mint> C;\n\n  // constant function\n  {\n    cerr << \"Constant Function\"\
     \ << endl;\n    vector<mint> a(N, mint(1));\n    test(a, 4, 0);\n  }\n\n  // Identity\
@@ -920,7 +918,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/p-recursive.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/p-recursive.test.cpp

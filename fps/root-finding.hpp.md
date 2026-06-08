@@ -119,12 +119,12 @@ data:
     \ deg, FPSBackendPriority<1>{});\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>\
     \ FormalPowerSeries<mint>::exp(int deg) const {\n  return fps_exp_impl(*this,\
     \ deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief \u591A\u9805\u5F0F/\u5F62\
-    \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n * @docs docs/fps/formal-power-series.md\n\
-    \ */\n#line 2 \"fps/mod-pow.hpp\"\n\n#line 4 \"fps/mod-pow.hpp\"\n\n#line 2 \"\
-    fps/arbitrary-fps.hpp\"\n\n#include <cstdlib>\n\n#line 2 \"ntt/arbitrary-ntt.hpp\"\
-    \n\n#line 6 \"ntt/arbitrary-ntt.hpp\"\nusing namespace std;\n\n#line 2 \"modint/montgomery-modint.hpp\"\
-    \n\n#line 4 \"modint/montgomery-modint.hpp\"\n#include <iostream>\n\ntemplate\
-    \ <uint32_t mod>\nstruct LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n\
+    \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n */\n#line 2 \"\
+    fps/mod-pow.hpp\"\n\n#line 4 \"fps/mod-pow.hpp\"\n\n#line 2 \"fps/arbitrary-fps.hpp\"\
+    \n\n#include <cstdlib>\n\n#line 2 \"ntt/arbitrary-ntt.hpp\"\n\n#line 6 \"ntt/arbitrary-ntt.hpp\"\
+    \nusing namespace std;\n\n#line 2 \"modint/montgomery-modint.hpp\"\n\n#line 4\
+    \ \"modint/montgomery-modint.hpp\"\n#include <iostream>\n\ntemplate <uint32_t\
+    \ mod>\nstruct LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n\
     \  using i32 = int32_t;\n  using u32 = uint32_t;\n  using u64 = uint64_t;\n\n\
     \  static constexpr u32 get_r() {\n    u32 ret = mod;\n    for (i32 i = 0; i <\
     \ 4; ++i) ret *= 2 - mod * ret;\n    return ret;\n  }\n\n  static constexpr u32\
@@ -357,17 +357,17 @@ data:
     \ g);\n  fps gcd_ = (m * p).first;\n  if (gcd_.size() != 1) return {false, fps()};\n\
     \  pair<fps, fps> x(fps{mint(1)}, g);\n  return {true, ((m * x).first % g) * gcd_[0].inverse()};\n\
     }\n\n}  // namespace poly_gcd\nusing poly_gcd::PolyGCD;\nusing poly_gcd::PolyInv;\n\
-    \n/**\n * @brief \u591A\u9805\u5F0FGCD\n * @docs docs/fps/polynomial-gcd.md\n\
-    \ */\n#line 10 \"fps/root-finding.hpp\"\n\ntemplate <typename mint>\nvector<mint>\
-    \ root_finding(const FormalPowerSeries<mint>& f) {\n  using fps = FormalPowerSeries<mint>;\n\
-    \  long long p = mint::get_mod();\n  vector<mint> ans;\n  if (p == 2) {\n    for\
-    \ (int i = 0; i < 2; i++) {\n      if (f.eval(i) == 0) ans.push_back(i);\n   \
-    \ }\n    return ans;\n  }\n  vector<fps> fs;\n  fs.push_back(PolyGCD(mod_pow(p,\
-    \ fps{0, 1}, f) - fps{0, 1}, f));\n  mt19937_64 rng(58);\n  while (!fs.empty())\
-    \ {\n    auto g = fs.back();\n    fs.pop_back();\n    if (g.size() == 2) ans.push_back(-g[0]);\n\
-    \    if (g.size() <= 2) continue;\n    fps s = fps{(long long)(rng() % p), 1};\n\
-    \    fps t = PolyGCD(mod_pow((p - 1) / 2, s, g) - fps{1}, g);\n    fs.push_back(t);\n\
-    \    if (g.size() != t.size()) fs.push_back(g / t);\n  }\n  return ans;\n}\n"
+    \n/**\n * @brief \u591A\u9805\u5F0FGCD\n */\n#line 10 \"fps/root-finding.hpp\"\
+    \n\ntemplate <typename mint>\nvector<mint> root_finding(const FormalPowerSeries<mint>&\
+    \ f) {\n  using fps = FormalPowerSeries<mint>;\n  long long p = mint::get_mod();\n\
+    \  vector<mint> ans;\n  if (p == 2) {\n    for (int i = 0; i < 2; i++) {\n   \
+    \   if (f.eval(i) == 0) ans.push_back(i);\n    }\n    return ans;\n  }\n  vector<fps>\
+    \ fs;\n  fs.push_back(PolyGCD(mod_pow(p, fps{0, 1}, f) - fps{0, 1}, f));\n  mt19937_64\
+    \ rng(58);\n  while (!fs.empty()) {\n    auto g = fs.back();\n    fs.pop_back();\n\
+    \    if (g.size() == 2) ans.push_back(-g[0]);\n    if (g.size() <= 2) continue;\n\
+    \    fps s = fps{(long long)(rng() % p), 1};\n    fps t = PolyGCD(mod_pow((p -\
+    \ 1) / 2, s, g) - fps{1}, g);\n    fs.push_back(t);\n    if (g.size() != t.size())\
+    \ fs.push_back(g / t);\n  }\n  return ans;\n}\n"
   code: "#pragma once\n\n#include <random>\n#include <vector>\nusing namespace std;\n\
     \n#include \"formal-power-series.hpp\"\n#include \"mod-pow.hpp\"\n#include \"\
     polynomial-gcd.hpp\"\n\ntemplate <typename mint>\nvector<mint> root_finding(const\
@@ -391,7 +391,7 @@ data:
   isVerificationFile: false
   path: fps/root-finding.hpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-fps/yosupo-polynomial-root-finding.test.cpp

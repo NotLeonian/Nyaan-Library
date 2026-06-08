@@ -239,10 +239,10 @@ data:
     \ c[i].first, w - c[i].second);\n    dfs(i + 1, v, w);\n    return;\n  }\n\n \
     \ V run(W w) {\n    dfs(0, best = 0, w);\n    return best;\n  }\n};\n\n/**\n *\
     \ @brief 0-1\u30CA\u30C3\u30D7\u30B5\u30C3\u30AF\u554F\u984C\u306E\u5206\u679D\
-    \u9650\u5B9A\u6CD5\u306B\u3088\u308B\u89E3\u6CD5\n * @docs docs/dp/branch-and-bound.md\n\
-    \ */\n#line 6 \"verify/verify-aoj-dpl/aoj-dpl-1-f-bandb.test.cpp\"\n\nusing namespace\
-    \ Nyaan;\n\nvoid Nyaan::solve() {\n  inl(N, W);\n  vl v(N), w(N);\n  in2(v, w);\n\
-    \  BranchAndBound<ll, ll> bb(v, w);\n  out(bb.run(W));\n}\n"
+    \u9650\u5B9A\u6CD5\u306B\u3088\u308B\u89E3\u6CD5\n */\n#line 6 \"verify/verify-aoj-dpl/aoj-dpl-1-f-bandb.test.cpp\"\
+    \n\nusing namespace Nyaan;\n\nvoid Nyaan::solve() {\n  inl(N, W);\n  vl v(N),\
+    \ w(N);\n  in2(v, w);\n  BranchAndBound<ll, ll> bb(v, w);\n  out(bb.run(W));\n\
+    }\n"
   code: "#define PROBLEM \"http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DPL_1_F\"\
     \n//\n#include \"../../template/template.hpp\"\n//\n#include \"../../dp/branch-and-bound.hpp\"\
     \n\nusing namespace Nyaan;\n\nvoid Nyaan::solve() {\n  inl(N, W);\n  vl v(N),\
@@ -259,7 +259,7 @@ data:
   isVerificationFile: true
   path: verify/verify-aoj-dpl/aoj-dpl-1-f-bandb.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-aoj-dpl/aoj-dpl-1-f-bandb.test.cpp

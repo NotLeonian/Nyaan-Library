@@ -433,9 +433,9 @@ data:
     \ mint>\nFormalPowerSeries<mint> FormalPowerSeries<mint>::exp(int deg) const {\n\
     \  return fps_exp_impl(*this, deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief\
     \ \u591A\u9805\u5F0F/\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\
-    \u30EA\n * @docs docs/fps/formal-power-series.md\n */\n#line 5 \"fps/ntt-friendly-fps.hpp\"\
-    \n\ntemplate <typename mint>\nvoid fps_set_fft_impl(FormalPowerSeries<mint>*,\
-    \ FPSBackendPriority<1>) {\n  if (!FormalPowerSeries<mint>::ntt_ptr) {\n    FormalPowerSeries<mint>::ntt_ptr\
+    \u30EA\n */\n#line 5 \"fps/ntt-friendly-fps.hpp\"\n\ntemplate <typename mint>\n\
+    void fps_set_fft_impl(FormalPowerSeries<mint>*, FPSBackendPriority<1>) {\n  if\
+    \ (!FormalPowerSeries<mint>::ntt_ptr) {\n    FormalPowerSeries<mint>::ntt_ptr\
     \ = new NTT<mint>;\n  }\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>&\
     \ fps_multiply_impl(FormalPowerSeries<mint>& f,\n                            \
     \               const FormalPowerSeries<mint>& r,\n                          \
@@ -487,10 +487,10 @@ data:
     \ begin(x) + m, mint(0));\n    x.ntt();\n    for (int i = 0; i < 2 * m; ++i) x[i]\
     \ *= y[i];\n    x.intt();\n    b.insert(end(b), begin(x) + m, end(x));\n  }\n\
     \  return fps{begin(b), begin(b) + deg};\n}\n\n/**\n * @brief NTT mod\u7528FPS\u30E9\
-    \u30A4\u30D6\u30E9\u30EA\n * @docs docs/fps/ntt-friendly-fps.md\n */\n#line 6\
-    \ \"verify/verify-yosupo-fps/yosupo-log.test.cpp\"\nusing mint = LazyMontgomeryModInt<998244353>;\n\
-    using fps = FormalPowerSeries<mint>;\n\nusing namespace Nyaan; void Nyaan::solve()\
-    \ {\n  ini(N);\n  fps a(N);\n  in(a);\n  out(a.log());\n}\n"
+    \u30A4\u30D6\u30E9\u30EA\n */\n#line 6 \"verify/verify-yosupo-fps/yosupo-log.test.cpp\"\
+    \nusing mint = LazyMontgomeryModInt<998244353>;\nusing fps = FormalPowerSeries<mint>;\n\
+    \nusing namespace Nyaan; void Nyaan::solve() {\n  ini(N);\n  fps a(N);\n  in(a);\n\
+    \  out(a.log());\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/log_of_formal_power_series\"\
     \n\n#include \"../../template/template.hpp\"\n#include \"../../modint/montgomery-modint.hpp\"\
     \n#include \"../../fps/ntt-friendly-fps.hpp\"\nusing mint = LazyMontgomeryModInt<998244353>;\n\
@@ -510,7 +510,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-fps/yosupo-log.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-fps/yosupo-log.test.cpp

@@ -269,11 +269,10 @@ data:
     \    } else {\n      return get_kth_(n->nxt[(lazy >> bit_idx) & 1], k, bit_idx\
     \ - 1);\n    }\n  }\n\n public:\n  pair<T, Container &> get_kth(int64_t k) { return\
     \ get_kth_(root, k, MAX_LOG); }\n\n  void operate_xor(T x) { lazy ^= x; }\n};\n\
-    \n/**\n * @brief Binary Trie\n * @docs docs/data-structure/binary-trie.md\n */\n\
-    #line 5 \"verify/verify-yosupo-ds/yosupo-binary-trie.test.cpp\"\n\nusing namespace\
-    \ Nyaan; void Nyaan::solve() {\n  ini(Q);\n  BinaryTrie<int, 30> trie;\n  rep(_,\
-    \ Q) {\n    ini(c, x);\n    if (c == 0) {\n      if (trie.find(x).first == 0)\
-    \ {\n        trie.add(x);\n      }\n    } else if (c == 1) {\n      if (trie.find(x).first\
+    \n/**\n * @brief Binary Trie\n */\n#line 5 \"verify/verify-yosupo-ds/yosupo-binary-trie.test.cpp\"\
+    \n\nusing namespace Nyaan; void Nyaan::solve() {\n  ini(Q);\n  BinaryTrie<int,\
+    \ 30> trie;\n  rep(_, Q) {\n    ini(c, x);\n    if (c == 0) {\n      if (trie.find(x).first\
+    \ == 0) {\n        trie.add(x);\n      }\n    } else if (c == 1) {\n      if (trie.find(x).first\
     \ != 0) {\n        trie.del(x);\n      }\n    } else {\n      trie.operate_xor(x);\n\
     \      out(trie.min_element().first);\n      trie.operate_xor(x);\n    }\n  }\n\
     }\n"
@@ -296,7 +295,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-ds/yosupo-binary-trie.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-ds/yosupo-binary-trie.test.cpp

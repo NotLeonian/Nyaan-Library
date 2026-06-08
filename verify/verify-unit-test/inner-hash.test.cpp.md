@@ -268,18 +268,17 @@ data:
     \ u64 modfma(const u64 &a, const u64 &b, const u64 &c) {\n    u128 d = u128(a)\
     \ * b + c;\n    u64 ret = (d >> 61) + (u64(d) & md);\n    return ret >= md ? ret\
     \ - md : ret;\n  }\n};\n\n}  // namespace internal\n\n/**\n * @brief \u30CF\u30C3\
-    \u30B7\u30E5\u69CB\u9020\u4F53\n * @docs docs/internal/internal-hash.md\n */\n\
-    #line 6 \"verify/verify-unit-test/inner-hash.test.cpp\"\nusing namespace Nyaan;\n\
-    \nusing Hash = internal::Hash<3>;\n\nvoid Nyaan::solve() {\n  u64 mod = (1uLL\
-    \ << 61) - 1;\n\n  Hash a;\n  a[0] = 3, a[1] = 4, a[2] = 5;\n  trc(a);\n  Hash\
-    \ b = Hash::set(2);\n  trc(b);\n\n  auto c = a + b;\n  trc(c);\n  assert(c[0]\
-    \ == 5 and c[1] == 6 and c[2] == 7);\n  auto d = a + 2;\n  trc(d);\n  assert(c\
-    \ == d);\n\n  auto e = a - b;\n  trc(e);\n  assert(e[0] == 1 and e[1] == 2 and\
-    \ e[2] == 3);\n  auto f = a - 2;\n  trc(f);\n  assert(e == f);\n\n  auto g = a\
-    \ * b;\n  trc(g);\n  assert(g[0] == 6 and g[1] == 8 and g[2] == 10);\n  auto h\
-    \ = a * 2;\n  trc(h);\n  assert(g == h);\n\n  auto i = -a;\n  trc(i);\n  assert(i[0]\
-    \ == mod - 3);\n  auto j = a + i;\n  trc(j);\n  assert(j == Hash::set(0));\n\n\
-    \  auto k = pfma(a, b, b);\n  trc(k);\n  auto l = pfma(a, b, 2);\n  trc(l);\n\
+    \u30B7\u30E5\u69CB\u9020\u4F53\n */\n#line 6 \"verify/verify-unit-test/inner-hash.test.cpp\"\
+    \nusing namespace Nyaan;\n\nusing Hash = internal::Hash<3>;\n\nvoid Nyaan::solve()\
+    \ {\n  u64 mod = (1uLL << 61) - 1;\n\n  Hash a;\n  a[0] = 3, a[1] = 4, a[2] =\
+    \ 5;\n  trc(a);\n  Hash b = Hash::set(2);\n  trc(b);\n\n  auto c = a + b;\n  trc(c);\n\
+    \  assert(c[0] == 5 and c[1] == 6 and c[2] == 7);\n  auto d = a + 2;\n  trc(d);\n\
+    \  assert(c == d);\n\n  auto e = a - b;\n  trc(e);\n  assert(e[0] == 1 and e[1]\
+    \ == 2 and e[2] == 3);\n  auto f = a - 2;\n  trc(f);\n  assert(e == f);\n\n  auto\
+    \ g = a * b;\n  trc(g);\n  assert(g[0] == 6 and g[1] == 8 and g[2] == 10);\n \
+    \ auto h = a * 2;\n  trc(h);\n  assert(g == h);\n\n  auto i = -a;\n  trc(i);\n\
+    \  assert(i[0] == mod - 3);\n  auto j = a + i;\n  trc(j);\n  assert(j == Hash::set(0));\n\
+    \n  auto k = pfma(a, b, b);\n  trc(k);\n  auto l = pfma(a, b, 2);\n  trc(l);\n\
     \  auto m = a * b + b;\n  trc(m);\n  assert(k[0] == 8 and k[1] == 10 and k[2]\
     \ == 12);\n  assert(k == l and l == m);\n\n  int A, B;\n  cin >> A >> B;\n  cout\
     \ << A + B << endl;\n}\n"
@@ -309,7 +308,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/inner-hash.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/inner-hash.test.cpp

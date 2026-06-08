@@ -102,8 +102,8 @@ data:
     \ deg, FPSBackendPriority<1>{});\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>\
     \ FormalPowerSeries<mint>::exp(int deg) const {\n  return fps_exp_impl(*this,\
     \ deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief \u591A\u9805\u5F0F/\u5F62\
-    \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n * @docs docs/fps/formal-power-series.md\n\
-    \ */\n#line 7 \"fps/fast-interpolate.hpp\"\n\n// https://github.com/hos-lyric/libra/blob/master/algebra/poly_998244353.cpp\n\
+    \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n */\n#line 7 \"\
+    fps/fast-interpolate.hpp\"\n\n// https://github.com/hos-lyric/libra/blob/master/algebra/poly_998244353.cpp\n\
     // \u306E\u591A\u9805\u5F0F\u88DC\u9593\u3092\u624B\u5143\u3067\u52D5\u304F\u3088\
     \u3046\u306B\u6539\u9020\n// xs \u304C distinct \u3058\u3083\u306A\u3044\u3068\
     \u58CA\u308C\u308B\ntemplate <typename mint>\nstruct SubproductTree {\n  using\
@@ -239,7 +239,7 @@ data:
   isVerificationFile: false
   path: fps/fast-interpolate.hpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-fps/yosupo-polynomial-interpolation-fast.test.cpp

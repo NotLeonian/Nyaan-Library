@@ -59,13 +59,12 @@ data:
     \ T> &a) {\n    for (auto p1 = rbegin(a); p1 != rend(a); p1++)\n      for (auto\
     \ p2 = rbegin(a); p2 != p1; p2++)\n        if (p2->first % p1->first == 0) p1->second\
     \ -= p2->second;\n  }\n};\n\n/**\n * @brief \u500D\u6570\u5909\u63DB\u30FB\u7D04\
-    \u6570\u5909\u63DB\n * @docs docs/multiplicative-function/divisor-multiple-transform.md\n\
-    \ */\n#line 6 \"multiplicative-function/gcd-convolution.hpp\"\n\ntemplate <typename\
-    \ mint>\nvector<mint> gcd_convolution(const vector<mint>& a, const vector<mint>&\
-    \ b) {\n  assert(a.size() == b.size());\n  auto s = a, t = b;\n  multiple_transform::zeta_transform(s);\n\
-    \  multiple_transform::zeta_transform(t);\n  for (int i = 0; i < (int)a.size();\
-    \ i++) s[i] *= t[i];\n  multiple_transform::mobius_transform(s);\n  return s;\n\
-    }\n\n/**\n * @brief GCD\u7573\u307F\u8FBC\u307F\n */\n"
+    \u6570\u5909\u63DB\n */\n#line 6 \"multiplicative-function/gcd-convolution.hpp\"\
+    \n\ntemplate <typename mint>\nvector<mint> gcd_convolution(const vector<mint>&\
+    \ a, const vector<mint>& b) {\n  assert(a.size() == b.size());\n  auto s = a,\
+    \ t = b;\n  multiple_transform::zeta_transform(s);\n  multiple_transform::zeta_transform(t);\n\
+    \  for (int i = 0; i < (int)a.size(); i++) s[i] *= t[i];\n  multiple_transform::mobius_transform(s);\n\
+    \  return s;\n}\n\n/**\n * @brief GCD\u7573\u307F\u8FBC\u307F\n */\n"
   code: "#pragma once\n\n\n\n#include \"divisor-multiple-transform.hpp\"\n\ntemplate\
     \ <typename mint>\nvector<mint> gcd_convolution(const vector<mint>& a, const vector<mint>&\
     \ b) {\n  assert(a.size() == b.size());\n  auto s = a, t = b;\n  multiple_transform::zeta_transform(s);\n\
@@ -78,7 +77,7 @@ data:
   isVerificationFile: false
   path: multiplicative-function/gcd-convolution.hpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-math/yosupo-gcd-convolution.test.cpp

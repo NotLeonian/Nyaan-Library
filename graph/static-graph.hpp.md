@@ -44,7 +44,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/graph/static-graph.md
     document_title: Static Graph
     links: []
   bundledCode: "#line 2 \"graph/static-graph.hpp\"\n\nnamespace StaticGraphImpl {\n\
@@ -68,8 +67,7 @@ data:
     \ {begin(es) + head[u], begin(es) + head[u + 1]};\n  }\n  const Es<typename vector<E<T>>::const_iterator>\
     \ operator[](int u) const {\n    return {begin(es) + head[u], begin(es) + head[u\
     \ + 1]};\n  }\n  int size() const { return N; }\n};\n\n}  // namespace StaticGraphImpl\n\
-    \nusing StaticGraphImpl::StaticGraph;\n\n/**\n * @brief Static Graph\n * @docs\
-    \ docs/graph/static-graph.md\n */\n"
+    \nusing StaticGraphImpl::StaticGraph;\n\n/**\n * @brief Static Graph\n */\n"
   code: "#pragma once\n\nnamespace StaticGraphImpl {\n\ntemplate <typename T, bool\
     \ Cond = is_void<T>::value>\nstruct E;\ntemplate <typename T>\nstruct E<T, false>\
     \ {\n  int to;\n  T cost;\n  E() {}\n  E(const int& v, const T& c) : to(v), cost(c)\
@@ -91,15 +89,14 @@ data:
     \ {begin(es) + head[u], begin(es) + head[u + 1]};\n  }\n  const Es<typename vector<E<T>>::const_iterator>\
     \ operator[](int u) const {\n    return {begin(es) + head[u], begin(es) + head[u\
     \ + 1]};\n  }\n  int size() const { return N; }\n};\n\n}  // namespace StaticGraphImpl\n\
-    \nusing StaticGraphImpl::StaticGraph;\n\n/**\n * @brief Static Graph\n * @docs\
-    \ docs/graph/static-graph.md\n */"
+    \nusing StaticGraphImpl::StaticGraph;\n\n/**\n * @brief Static Graph\n */"
   dependsOn: []
   isVerificationFile: false
   path: graph/static-graph.hpp
   requiredBy:
   - shortest-path/dijkstra-fast.hpp
   - shortest-path/dijkstra-skew-heap.hpp
-  timestamp: '2020-12-05 07:59:51+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-graph/yosupo-shortest-path-3.test.cpp
@@ -114,11 +111,9 @@ data:
   - verify/verify-aoj-grl/aoj-grl-1-a-fast-dijkstra.test.cpp
 documentation_of: graph/static-graph.hpp
 layout: document
-redirect_from:
-- /library/graph/static-graph.hpp
-- /library/graph/static-graph.hpp.html
 title: Static Graph
 ---
+
 ## Static Graph
 
 静的なグラフライブラリ。通常のグラフライブラリと同様に隣接リストで辺を保存しているが、全ての辺を連続領域に保存することでアクセス時のキャッシュミスを減らし高速化している。

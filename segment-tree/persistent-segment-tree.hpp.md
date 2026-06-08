@@ -13,7 +13,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/segment-tree/persistent-segment-tree.md
     document_title: "\u6C38\u7D9A\u30BB\u30B0\u30E1\u30F3\u30C8\u6728"
     links: []
   bundledCode: "#line 2 \"segment-tree/persistent-segment-tree.hpp\"\n\n\n\ntemplate\
@@ -58,8 +57,7 @@ data:
     \ *n, ll a, ll b) { return query_(a, b, n, 0, N); }\n  T query(int t, ll a, ll\
     \ b) { return query_(a, b, roots[t], 0, N); }\n  T query(ll a, ll b) { return\
     \ query_(a, b, roots.back(), 0, N); }\n\n  Node *new_tree() { return nil; }\n\
-    };\n\n/**\n * @brief \u6C38\u7D9A\u30BB\u30B0\u30E1\u30F3\u30C8\u6728\n * @docs\
-    \ docs/segment-tree/persistent-segment-tree.md\n */\n"
+    };\n\n/**\n * @brief \u6C38\u7D9A\u30BB\u30B0\u30E1\u30F3\u30C8\u6728\n */\n"
   code: "#pragma once\n\n\n\ntemplate <typename T, typename F, int NODES = 20000000>\n\
     struct PersistentSegmentTree {\n  using ll = long long;\n  struct Node {\n   \
     \ T data;\n    Node *l, *r;\n    Node() {}\n    Node(const T &_data) : data(_data),\
@@ -101,24 +99,21 @@ data:
     \ *n, ll a, ll b) { return query_(a, b, n, 0, N); }\n  T query(int t, ll a, ll\
     \ b) { return query_(a, b, roots[t], 0, N); }\n  T query(ll a, ll b) { return\
     \ query_(a, b, roots.back(), 0, N); }\n\n  Node *new_tree() { return nil; }\n\
-    };\n\n/**\n * @brief \u6C38\u7D9A\u30BB\u30B0\u30E1\u30F3\u30C8\u6728\n * @docs\
-    \ docs/segment-tree/persistent-segment-tree.md\n */\n"
+    };\n\n/**\n * @brief \u6C38\u7D9A\u30BB\u30B0\u30E1\u30F3\u30C8\u6728\n */\n"
   dependsOn: []
   isVerificationFile: false
   path: segment-tree/persistent-segment-tree.hpp
   requiredBy:
   - data-structure-2d/rectangle-sum.hpp
-  timestamp: '2026-05-31 17:09:38+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ds/yosupo-rectangle-sum.test.cpp
 documentation_of: segment-tree/persistent-segment-tree.hpp
 layout: document
-redirect_from:
-- /library/segment-tree/persistent-segment-tree.hpp
-- /library/segment-tree/persistent-segment-tree.hpp.html
 title: "\u6C38\u7D9A\u30BB\u30B0\u30E1\u30F3\u30C8\u6728"
 ---
+
 ## 永続セグメント木(Persistent Segment Tree)
 
 永続セグメント木とはセグメント木を完全永続化したデータ構造である。完全永続化とは、更新をする時に更新前のデータを残したり、最新でないデータを元として更新したりできるようにすることである。

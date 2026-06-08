@@ -264,9 +264,8 @@ data:
     \ < cap; ++i)\n      if (flag[i]) ret.emplace_back(keys[i], vals[i]);\n    return\
     \ ret;\n  }\n\n  int size() const { return s; }\n\n  // set default_value\n  void\
     \ set_default(const Val& val) { DefaultValue = val; }\n};\n\n/**\n * @brief Hash\
-    \ Map(\u53EF\u5909\u9577\u7248)\n * @docs docs/data-structure/hash-map-variable-length.md\n\
-    \ */\n#line 2 \"data-structure-2d/dynamic-binary-indexed-tree-2d.hpp\"\n\n#line\
-    \ 2 \"data-structure/dynamic-binary-indexed-tree.hpp\"\n\n#line 4 \"data-structure/dynamic-binary-indexed-tree.hpp\"\
+    \ Map(\u53EF\u5909\u9577\u7248)\n */\n#line 2 \"data-structure-2d/dynamic-binary-indexed-tree-2d.hpp\"\
+    \n\n#line 2 \"data-structure/dynamic-binary-indexed-tree.hpp\"\n\n#line 4 \"data-structure/dynamic-binary-indexed-tree.hpp\"\
     \n\ntemplate <typename S, typename T>\nstruct DynamicFenwickTree {\n  S N;\n \
     \ HashMap<S, T> data;\n  explicit DynamicFenwickTree() = default;\n  explicit\
     \ DynamicFenwickTree(S size) { N = size + 1; }\n\n  void add(S k, T x) {\n   \
@@ -278,9 +277,8 @@ data:
     \  S lower_bound(T w) {\n    if (w <= 0) return 0;\n    S x = 0;\n    for (S k\
     \ = 1 << __lg(N); k; k >>= 1) {\n      if (x + k <= N - 1 && data[x + k] < w)\
     \ {\n        w -= data[x + k];\n        x += k;\n      }\n    }\n    return x;\n\
-    \  }\n};\n\n/**\n * @brief \u52D5\u7684Binary Indexed Tree\n * @docs docs/data-structure/dynamic-binary-indexed-tree.md\n\
-    \ */\n#line 4 \"data-structure-2d/dynamic-binary-indexed-tree-2d.hpp\"\n\ntemplate\
-    \ <typename T>\nstruct DynamicFenwickTree2D {\n  using BIT = DynamicFenwickTree<int,\
+    \  }\n};\n\n/**\n * @brief \u52D5\u7684Binary Indexed Tree\n */\n#line 4 \"data-structure-2d/dynamic-binary-indexed-tree-2d.hpp\"\
+    \n\ntemplate <typename T>\nstruct DynamicFenwickTree2D {\n  using BIT = DynamicFenwickTree<int,\
     \ T>;\n  int N, M;\n  vector<BIT*> bit;\n  DynamicFenwickTree2D() = default;\n\
     \  DynamicFenwickTree2D(int n, int m) : N(n + 1), M(m) {\n    for (int _ = 0;\
     \ _ < N; ++_) bit.push_back(new BIT(M));\n  }\n  \n  void add(int i, int j, const\
@@ -418,7 +416,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-bit2d.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-bit2d.test.cpp

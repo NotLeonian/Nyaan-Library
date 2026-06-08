@@ -37,7 +37,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/multiplicative-function/divisor-multiple-transform.md
     document_title: "\u500D\u6570\u5909\u63DB\u30FB\u7D04\u6570\u5909\u63DB"
     links: []
   bundledCode: "#line 2 \"multiplicative-function/divisor-multiple-transform.hpp\"\
@@ -77,8 +76,7 @@ data:
     \ T> &a) {\n    for (auto p1 = rbegin(a); p1 != rend(a); p1++)\n      for (auto\
     \ p2 = rbegin(a); p2 != p1; p2++)\n        if (p2->first % p1->first == 0) p1->second\
     \ -= p2->second;\n  }\n};\n\n/**\n * @brief \u500D\u6570\u5909\u63DB\u30FB\u7D04\
-    \u6570\u5909\u63DB\n * @docs docs/multiplicative-function/divisor-multiple-transform.md\n\
-    \ */\n"
+    \u6570\u5909\u63DB\n */\n"
   code: "#pragma once\n\n#include <map>\n#include <vector>\nusing namespace std;\n\
     \n#include \"../prime/prime-enumerate.hpp\"\n\nstruct divisor_transform {\n  template\
     \ <typename T>\n  static void zeta_transform(vector<T> &a) {\n    int N = a.size()\
@@ -107,14 +105,14 @@ data:
     \   for (auto p1 = rbegin(a); p1 != rend(a); p1++)\n      for (auto p2 = rbegin(a);\
     \ p2 != p1; p2++)\n        if (p2->first % p1->first == 0) p1->second -= p2->second;\n\
     \  }\n};\n\n/**\n * @brief \u500D\u6570\u5909\u63DB\u30FB\u7D04\u6570\u5909\u63DB\
-    \n * @docs docs/multiplicative-function/divisor-multiple-transform.md\n */\n"
+    \n */\n"
   dependsOn:
   - prime/prime-enumerate.hpp
   isVerificationFile: false
   path: multiplicative-function/divisor-multiple-transform.hpp
   requiredBy:
   - multiplicative-function/gcd-convolution.hpp
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-math/yosupo-lcm-convolution.test.cpp
@@ -127,11 +125,9 @@ data:
   - verify/verify-unit-test/multiplicative-function.test.cpp
 documentation_of: multiplicative-function/divisor-multiple-transform.hpp
 layout: document
-redirect_from:
-- /library/multiplicative-function/divisor-multiple-transform.hpp
-- /library/multiplicative-function/divisor-multiple-transform.hpp.html
 title: "\u500D\u6570\u5909\u63DB\u30FB\u7D04\u6570\u5909\u63DB"
 ---
+
 ## 倍数変換/約数変換
 
 (約数/倍数)(ゼータ/メビウス)変換を$\mathrm{O}(N\log \log N)$で行うライブラリ。

@@ -253,14 +253,13 @@ data:
     \ &operator<<(ostream &os, Mat &p) {\n    for (int i = 0; i < N; i++) {\n    \
     \  os << \"[\";\n      for (int j = 0; j < N; j++) {\n        os << p[i][j].x\
     \ << (j == N - 1 ? \"]\\n\" : \",\");\n      }\n    }\n    return (os);\n  }\n\
-    };\n\n/**\n * @brief \u534A\u74B0\u30E9\u30A4\u30D6\u30E9\u30EA\n * @docs docs/math/semiring.md\n\
-    \ */\n#line 8 \"verify/verify-yuki/yuki-1340-semiring.test.cpp\"\n\nusing U =\
-    \ unsigned long long;\nU add(U a, U b) { return a | b; }\nU mul(U a, U b) { return\
-    \ a & b; }\nU i0() { return 0; }\nU i1() { return U(-1); }\nusing rig = semiring<U,\
-    \ add, mul, i0, i1>;\nusing M = Mat<rig, 100>;\n\nvoid Nyaan::solve() {\n  inl(n,\
-    \ m, t);\n  M mat;\n  rep(i, m) {\n    ini(a, b);\n    mat[a][b] = 1;\n  }\n \
-    \ mat ^= t;\n  int ans = 0;\n  rep(i, n) if (mat[0][i] != 0) ans++;\n  out(ans);\n\
-    }\n"
+    };\n\n/**\n * @brief \u534A\u74B0\u30E9\u30A4\u30D6\u30E9\u30EA\n */\n#line 8\
+    \ \"verify/verify-yuki/yuki-1340-semiring.test.cpp\"\n\nusing U = unsigned long\
+    \ long;\nU add(U a, U b) { return a | b; }\nU mul(U a, U b) { return a & b; }\n\
+    U i0() { return 0; }\nU i1() { return U(-1); }\nusing rig = semiring<U, add, mul,\
+    \ i0, i1>;\nusing M = Mat<rig, 100>;\n\nvoid Nyaan::solve() {\n  inl(n, m, t);\n\
+    \  M mat;\n  rep(i, m) {\n    ini(a, b);\n    mat[a][b] = 1;\n  }\n  mat ^= t;\n\
+    \  int ans = 0;\n  rep(i, n) if (mat[0][i] != 0) ans++;\n  out(ans);\n}\n"
   code: "#define PROBLEM \"https://yukicoder.me/problems/no/1340\"\n//\n#include \"\
     ../../template/template.hpp\"\n//\nusing namespace Nyaan;\n\n#include \"../../math/semiring.hpp\"\
     \n\nusing U = unsigned long long;\nU add(U a, U b) { return a | b; }\nU mul(U\
@@ -280,7 +279,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yuki/yuki-1340-semiring.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yuki/yuki-1340-semiring.test.cpp

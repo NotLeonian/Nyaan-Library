@@ -239,12 +239,11 @@ data:
     \ x = 0;\n    for (int k = 1 << __lg(N); k; k >>= 1) {\n      if (x + k <= N -\
     \ 1 && data[x + k] <= w) {\n        w -= data[x + k];\n        x += k;\n     \
     \ }\n    }\n    return x;\n  }\n};\n\n/**\n * @brief Binary Indexed Tree(Fenwick\
-    \ Tree)\n * @docs docs/data-structure/binary-indexed-tree.md\n */\n#line 6 \"\
-    verify/verify-aoj-dsl/aoj-dsl-2-b-bit.test.cpp\"\n\nusing namespace Nyaan;\nvoid\
-    \ Nyaan::solve() {\n  ini(N, Q);\n  BinaryIndexedTree<int> bit(N);\n  rep(_, Q)\
-    \ {\n    ini(c);\n    if (c == 0) {\n      ini(i, a);\n      i--;\n      bit.add(i,\
-    \ a);\n    } else {\n      ini(x, y);\n      x--, y--;\n      out(bit.sum(x, y));\n\
-    \    }\n  }\n}\n"
+    \ Tree)\n */\n#line 6 \"verify/verify-aoj-dsl/aoj-dsl-2-b-bit.test.cpp\"\n\nusing\
+    \ namespace Nyaan;\nvoid Nyaan::solve() {\n  ini(N, Q);\n  BinaryIndexedTree<int>\
+    \ bit(N);\n  rep(_, Q) {\n    ini(c);\n    if (c == 0) {\n      ini(i, a);\n \
+    \     i--;\n      bit.add(i, a);\n    } else {\n      ini(x, y);\n      x--, y--;\n\
+    \      out(bit.sum(x, y));\n    }\n  }\n}\n"
   code: "#define PROBLEM \\\n  \"http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_2_B\"\
     \n\n#include \"../../template/template.hpp\"\n#include \"../../data-structure/binary-indexed-tree.hpp\"\
     \n\nusing namespace Nyaan;\nvoid Nyaan::solve() {\n  ini(N, Q);\n  BinaryIndexedTree<int>\
@@ -262,7 +261,7 @@ data:
   isVerificationFile: true
   path: verify/verify-aoj-dsl/aoj-dsl-2-b-bit.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-aoj-dsl/aoj-dsl-2-b-bit.test.cpp

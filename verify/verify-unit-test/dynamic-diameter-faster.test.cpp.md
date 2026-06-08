@@ -273,12 +273,12 @@ data:
     \ {\n    int x, y;\n    cin >> x >> y;\n    T c;\n    if (is_weighted)\n     \
     \ cin >> c;\n    else\n      c = 1;\n    if (is_1origin) x--, y--;\n    d[x][y]\
     \ = c;\n    if (!is_directed) d[y][x] = c;\n  }\n  return d;\n}\n\n/**\n * @brief\
-    \ \u30B0\u30E9\u30D5\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\n * @docs docs/graph/graph-template.md\n\
-    \ */\n#line 2 \"tree/static-top-tree-vertex-based.hpp\"\n\n#line 7 \"tree/static-top-tree-vertex-based.hpp\"\
-    \nusing namespace std;\n\n#line 2 \"tree/convert-tree.hpp\"\n\n#line 4 \"tree/convert-tree.hpp\"\
-    \n\ntemplate <typename T>\nstruct has_cost {\n private:\n  template <typename\
-    \ U>\n  static auto confirm(U u) -> decltype(u.cost, std::true_type());\n  static\
-    \ auto confirm(...) -> std::false_type;\n\n public:\n  enum : bool { value = decltype(confirm(std::declval<T>()))::value\
+    \ \u30B0\u30E9\u30D5\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\n */\n#line 2 \"tree/static-top-tree-vertex-based.hpp\"\
+    \n\n#line 7 \"tree/static-top-tree-vertex-based.hpp\"\nusing namespace std;\n\n\
+    #line 2 \"tree/convert-tree.hpp\"\n\n#line 4 \"tree/convert-tree.hpp\"\n\ntemplate\
+    \ <typename T>\nstruct has_cost {\n private:\n  template <typename U>\n  static\
+    \ auto confirm(U u) -> decltype(u.cost, std::true_type());\n  static auto confirm(...)\
+    \ -> std::false_type;\n\n public:\n  enum : bool { value = decltype(confirm(std::declval<T>()))::value\
     \ };\n};\n\ntemplate <typename T>\nvector<vector<T>> inverse_tree(const vector<vector<T>>&\
     \ g) {\n  int N = (int)g.size();\n  vector<vector<T>> rg(N);\n  for (int i = 0;\
     \ i < N; i++) {\n    for (auto& e : g[i]) {\n      if constexpr (is_same<T, int>::value)\
@@ -329,44 +329,44 @@ data:
     \      if (down[a] < down[b]) swap(a, b);\n      a = par[nxt[a]];\n    }\n   \
     \ return depth[a] < depth[b] ? a : b;\n  }\n\n  int dist(int a, int b) { return\
     \ depth[a] + depth[b] - depth[lca(a, b)] * 2; }\n};\n\n/**\n * @brief Heavy Light\
-    \ Decomposition(\u91CD\u8EFD\u5206\u89E3)\n * @docs docs/tree/heavy-light-decomposition.md\n\
-    \ */\n#line 11 \"tree/static-top-tree-vertex-based.hpp\"\n\nnamespace StaticTopTreeVertexBasedImpl\
-    \ {\n\nenum Type { Vertex, Compress, Rake, Add_Edge, Add_Vertex };\n\ntemplate\
-    \ <typename G>\nstruct StaticTopTreeVertexBased {\n  const HeavyLightDecomposition<G>&\
-    \ hld;\n  vector<vector<int>> g;\n  int root;     // \u5143\u306E\u6728\u306E\
-    \ root\n  int tt_root;  // top tree \u306E root\n  vector<int> P, L, R;\n  vector<Type>\
-    \ T;\n\n  StaticTopTreeVertexBased(const HeavyLightDecomposition<G>& _hld) : hld(_hld)\
-    \ {\n    root = hld.root;\n    g = rooted_tree(hld.g, root);\n    int n = g.size();\n\
-    \    P.resize(n, -1), L.resize(n, -1), R.resize(n, -1);\n    T.resize(n, Type::Vertex);\n\
-    \    build();\n  }\n\n private:\n  int add(int l, int r, Type t) {\n    if (t\
-    \ == Type::Compress or t == Type::Rake) {\n      assert(l != -1 and r != -1);\n\
-    \    }\n    if (t == Type::Add_Edge) {\n      assert(l != -1 and r == -1);\n \
-    \   }\n    assert(t != Type::Vertex and t != Type::Add_Vertex);\n    int k = P.size();\n\
-    \    P.push_back(-1), L.push_back(l), R.push_back(r), T.push_back(t);\n    if\
-    \ (l != -1) P[l] = k;\n    if (r != -1) P[r] = k;\n    return k;\n  }\n  int add2(int\
-    \ k, int l, int r, Type t) {\n    assert(k < (int)g.size());\n    assert(t ==\
-    \ Type::Vertex or t == Type::Add_Vertex);\n    if (t == Type::Vertex) {\n    \
-    \  assert(l == -1 and r == -1);\n    } else {\n      assert(l != -1 and r == -1);\n\
-    \    }\n    P[k] = -1, L[k] = l, R[k] = r, T[k] = t;\n    if (l != -1) P[l] =\
-    \ k;\n    if (r != -1) P[r] = k;\n    return k;\n  }\n  pair<int, int> merge(const\
-    \ vector<pair<int, int>>& a, Type t) {\n    assert(!a.empty());\n    if (a.size()\
-    \ == 1) return a[0];\n    int sum_s = 0;\n    for (auto& [_, s] : a) sum_s +=\
-    \ s;\n    vector<pair<int, int>> b, c;\n    for (auto& [i, s] : a) {\n      (sum_s\
-    \ > s ? b : c).emplace_back(i, s);\n      sum_s -= s * 2;\n    }\n    auto [i,\
-    \ si] = merge(b, t);\n    auto [j, sj] = merge(c, t);\n    return {add(i, j, t),\
-    \ si + sj};\n  }\n  pair<int, int> compress(int i) {\n    vector<pair<int, int>>\
-    \ chs;\n    while (true) {\n      chs.push_back(add_vertex(i));\n      if (g[i].empty())\
-    \ break;\n      i = g[i][0];\n    }\n    return merge(chs, Type::Compress);\n\
-    \  }\n  pair<int, int> rake(int i) {\n    vector<pair<int, int>> chs;\n    for\
-    \ (int j = 1; j < (int)g[i].size(); j++) chs.push_back(add_edge(g[i][j]));\n \
-    \   if (chs.empty()) return {-1, 0};\n    return merge(chs, Type::Rake);\n  }\n\
-    \  pair<int, int> add_edge(int i) {\n    auto [j, sj] = compress(i);\n    return\
-    \ {add(j, -1, Type::Add_Edge), sj};\n  }\n  pair<int, int> add_vertex(int i) {\n\
-    \    auto [j, sj] = rake(i);\n    return {add2(i, j, -1, j == -1 ? Type::Vertex\
-    \ : Type::Add_Vertex), sj + 1};\n  }\n  void build() {\n    auto [i, n] = compress(root);\n\
-    \    assert((int)g.size() == n);\n    tt_root = i;\n  }\n};\n\ntemplate <typename\
-    \ G, typename Path, typename Point, typename Vertex,\n          typename Compress,\
-    \ typename Rake, typename Add_edge,\n          typename Add_vertex>\nstruct DPonStaticTopTreeVertexBased\
+    \ Decomposition(\u91CD\u8EFD\u5206\u89E3)\n */\n#line 11 \"tree/static-top-tree-vertex-based.hpp\"\
+    \n\nnamespace StaticTopTreeVertexBasedImpl {\n\nenum Type { Vertex, Compress,\
+    \ Rake, Add_Edge, Add_Vertex };\n\ntemplate <typename G>\nstruct StaticTopTreeVertexBased\
+    \ {\n  const HeavyLightDecomposition<G>& hld;\n  vector<vector<int>> g;\n  int\
+    \ root;     // \u5143\u306E\u6728\u306E root\n  int tt_root;  // top tree \u306E\
+    \ root\n  vector<int> P, L, R;\n  vector<Type> T;\n\n  StaticTopTreeVertexBased(const\
+    \ HeavyLightDecomposition<G>& _hld) : hld(_hld) {\n    root = hld.root;\n    g\
+    \ = rooted_tree(hld.g, root);\n    int n = g.size();\n    P.resize(n, -1), L.resize(n,\
+    \ -1), R.resize(n, -1);\n    T.resize(n, Type::Vertex);\n    build();\n  }\n\n\
+    \ private:\n  int add(int l, int r, Type t) {\n    if (t == Type::Compress or\
+    \ t == Type::Rake) {\n      assert(l != -1 and r != -1);\n    }\n    if (t ==\
+    \ Type::Add_Edge) {\n      assert(l != -1 and r == -1);\n    }\n    assert(t !=\
+    \ Type::Vertex and t != Type::Add_Vertex);\n    int k = P.size();\n    P.push_back(-1),\
+    \ L.push_back(l), R.push_back(r), T.push_back(t);\n    if (l != -1) P[l] = k;\n\
+    \    if (r != -1) P[r] = k;\n    return k;\n  }\n  int add2(int k, int l, int\
+    \ r, Type t) {\n    assert(k < (int)g.size());\n    assert(t == Type::Vertex or\
+    \ t == Type::Add_Vertex);\n    if (t == Type::Vertex) {\n      assert(l == -1\
+    \ and r == -1);\n    } else {\n      assert(l != -1 and r == -1);\n    }\n   \
+    \ P[k] = -1, L[k] = l, R[k] = r, T[k] = t;\n    if (l != -1) P[l] = k;\n    if\
+    \ (r != -1) P[r] = k;\n    return k;\n  }\n  pair<int, int> merge(const vector<pair<int,\
+    \ int>>& a, Type t) {\n    assert(!a.empty());\n    if (a.size() == 1) return\
+    \ a[0];\n    int sum_s = 0;\n    for (auto& [_, s] : a) sum_s += s;\n    vector<pair<int,\
+    \ int>> b, c;\n    for (auto& [i, s] : a) {\n      (sum_s > s ? b : c).emplace_back(i,\
+    \ s);\n      sum_s -= s * 2;\n    }\n    auto [i, si] = merge(b, t);\n    auto\
+    \ [j, sj] = merge(c, t);\n    return {add(i, j, t), si + sj};\n  }\n  pair<int,\
+    \ int> compress(int i) {\n    vector<pair<int, int>> chs;\n    while (true) {\n\
+    \      chs.push_back(add_vertex(i));\n      if (g[i].empty()) break;\n      i\
+    \ = g[i][0];\n    }\n    return merge(chs, Type::Compress);\n  }\n  pair<int,\
+    \ int> rake(int i) {\n    vector<pair<int, int>> chs;\n    for (int j = 1; j <\
+    \ (int)g[i].size(); j++) chs.push_back(add_edge(g[i][j]));\n    if (chs.empty())\
+    \ return {-1, 0};\n    return merge(chs, Type::Rake);\n  }\n  pair<int, int> add_edge(int\
+    \ i) {\n    auto [j, sj] = compress(i);\n    return {add(j, -1, Type::Add_Edge),\
+    \ sj};\n  }\n  pair<int, int> add_vertex(int i) {\n    auto [j, sj] = rake(i);\n\
+    \    return {add2(i, j, -1, j == -1 ? Type::Vertex : Type::Add_Vertex), sj + 1};\n\
+    \  }\n  void build() {\n    auto [i, n] = compress(root);\n    assert((int)g.size()\
+    \ == n);\n    tt_root = i;\n  }\n};\n\ntemplate <typename G, typename Path, typename\
+    \ Point, typename Vertex,\n          typename Compress, typename Rake, typename\
+    \ Add_edge,\n          typename Add_vertex>\nstruct DPonStaticTopTreeVertexBased\
     \ {\n  const StaticTopTreeVertexBased<G> tt;\n  vector<Path> path;\n  vector<Point>\
     \ point;\n  Vertex vertex;\n  Compress compress;\n  Rake rake;\n  Add_edge add_edge;\n\
     \  Add_vertex add_vertex;\n\n  DPonStaticTopTreeVertexBased(const HeavyLightDecomposition<G>&\
@@ -485,11 +485,10 @@ data:
     \   for (auto dst : g[cur]) {\n      if (d[dst] == T(-1) || d[cur] + dst.cost\
     \ < d[dst]) {\n        d[dst] = d[cur] + dst.cost;\n        Q.emplace(d[dst],\
     \ dst);\n      }\n    }\n  }\n  return d;\n}\n\n/**\n * @brief \u30C0\u30A4\u30AF\
-    \u30B9\u30C8\u30E9\u6CD5\n * @docs docs/shortest-path/dijkstra.md\n */\n#line\
-    \ 9 \"verify/verify-unit-test/dynamic-diameter-faster.test.cpp\"\n//\n#line 2\
-    \ \"misc/rng.hpp\"\n\n#line 7 \"misc/rng.hpp\"\nusing namespace std;\n\n#line\
-    \ 2 \"internal/internal-seed.hpp\"\n\n#line 4 \"internal/internal-seed.hpp\"\n\
-    using namespace std;\n\nnamespace internal {\nunsigned long long non_deterministic_seed()\
+    \u30B9\u30C8\u30E9\u6CD5\n */\n#line 9 \"verify/verify-unit-test/dynamic-diameter-faster.test.cpp\"\
+    \n//\n#line 2 \"misc/rng.hpp\"\n\n#line 7 \"misc/rng.hpp\"\nusing namespace std;\n\
+    \n#line 2 \"internal/internal-seed.hpp\"\n\n#line 4 \"internal/internal-seed.hpp\"\
+    \nusing namespace std;\n\nnamespace internal {\nunsigned long long non_deterministic_seed()\
     \ {\n  unsigned long long m =\n      chrono::duration_cast<chrono::nanoseconds>(\n\
     \          chrono::high_resolution_clock::now().time_since_epoch())\n        \
     \  .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >> 31, m\
@@ -576,7 +575,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/dynamic-diameter-faster.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/dynamic-diameter-faster.test.cpp

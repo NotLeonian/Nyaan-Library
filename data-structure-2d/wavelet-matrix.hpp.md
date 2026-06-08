@@ -10,7 +10,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/data-structure-2d/wavelet-matrix.md
     document_title: Wavelet Matrix
     links: []
   bundledCode: "#line 2 \"data-structure-2d/wavelet-matrix.hpp\"\n\n#include <immintrin.h>\n\
@@ -64,8 +63,7 @@ data:
     \ == 0 ? T(-1) : kth_smallest(l, r, cnt - 1);\n  }\n\n  // min v[i] s.t. (l <=\
     \ i < r) && (lower <= v[i])\n  T next_value(int l, int r, T lower) {\n    int\
     \ cnt = range_freq(l, r, lower);\n    return cnt == r - l ? T(-1) : kth_smallest(l,\
-    \ r, cnt);\n  }\n};\n\n/*\n * @brief Wavelet Matrix\n * @docs docs/data-structure-2d/wavelet-matrix.md\n\
-    \ */\n"
+    \ r, cnt);\n  }\n};\n\n/*\n * @brief Wavelet Matrix\n */\n"
   code: "#pragma once\n\n#include <immintrin.h>\n\nstruct bit_vector {\n  using u32\
     \ = uint32_t;\n  using i64 = int64_t;\n  using u64 = uint64_t;\n\n  static constexpr\
     \ u32 w = 64;\n  vector<u64> block;\n  vector<u32> count;\n  u32 n, zeros;\n\n\
@@ -117,23 +115,20 @@ data:
     \ == 0 ? T(-1) : kth_smallest(l, r, cnt - 1);\n  }\n\n  // min v[i] s.t. (l <=\
     \ i < r) && (lower <= v[i])\n  T next_value(int l, int r, T lower) {\n    int\
     \ cnt = range_freq(l, r, lower);\n    return cnt == r - l ? T(-1) : kth_smallest(l,\
-    \ r, cnt);\n  }\n};\n\n/*\n * @brief Wavelet Matrix\n * @docs docs/data-structure-2d/wavelet-matrix.md\n\
-    \ */\n"
+    \ r, cnt);\n  }\n};\n\n/*\n * @brief Wavelet Matrix\n */\n"
   dependsOn: []
   isVerificationFile: false
   path: data-structure-2d/wavelet-matrix.hpp
   requiredBy: []
-  timestamp: '2022-04-16 23:19:38+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-unit-test/wavelet-matrix.test.cpp
 documentation_of: data-structure-2d/wavelet-matrix.hpp
 layout: document
-redirect_from:
-- /library/data-structure-2d/wavelet-matrix.hpp
-- /library/data-structure-2d/wavelet-matrix.hpp.html
 title: Wavelet Matrix
 ---
+
 ## Wavelet Matrix
 
 #### 概要

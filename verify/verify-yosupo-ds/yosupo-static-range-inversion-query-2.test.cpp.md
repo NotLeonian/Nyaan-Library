@@ -249,9 +249,8 @@ data:
     \ x = 0;\n    for (int k = 1 << __lg(N); k; k >>= 1) {\n      if (x + k <= N -\
     \ 1 && data[x + k] <= w) {\n        w -= data[x + k];\n        x += k;\n     \
     \ }\n    }\n    return x;\n  }\n};\n\n/**\n * @brief Binary Indexed Tree(Fenwick\
-    \ Tree)\n * @docs docs/data-structure/binary-indexed-tree.md\n */\n#line 6 \"\
-    verify/verify-yosupo-ds/yosupo-static-range-inversion-query-2.test.cpp\"\n//\n\
-    #line 2 \"misc/mo-fast.hpp\"\n\n#line 8 \"misc/mo-fast.hpp\"\nusing namespace\
+    \ Tree)\n */\n#line 6 \"verify/verify-yosupo-ds/yosupo-static-range-inversion-query-2.test.cpp\"\
+    \n//\n#line 2 \"misc/mo-fast.hpp\"\n\n#line 8 \"misc/mo-fast.hpp\"\nusing namespace\
     \ std;\n\nstruct Fast_Mo {\n  int N, Q, width;\n  vector<int> L, R, order;\n \
     \ bool is_build;\n  int nl, nr;\n\n  Fast_Mo(int _n, int _q) : N(_n), Q(_q), order(Q),\
     \ is_build(false) {\n    width = max<int>(1, 1.0 * N / max<double>(1.0, sqrt(Q\
@@ -403,7 +402,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-ds/yosupo-static-range-inversion-query-2.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-ds/yosupo-static-range-inversion-query-2.test.cpp

@@ -61,7 +61,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/data-structure/union-find.md
     document_title: Union Find(Disjoint Set Union)
     links: []
   bundledCode: "#line 2 \"data-structure/union-find.hpp\"\n\nstruct UnionFind {\n\
@@ -74,8 +73,7 @@ data:
     \ return false;\n    if (data[x] > data[y]) swap(x, y);\n    data[x] += data[y];\n\
     \    data[y] = x;\n    f(x, y);\n    return true;\n  }\n\n  int size(int k) {\
     \ return -data[find(k)]; }\n\n  int same(int x, int y) { return find(x) == find(y);\
-    \ }\n};\n\n/**\n * @brief Union Find(Disjoint Set Union)\n * @docs docs/data-structure/union-find.md\n\
-    \ */\n"
+    \ }\n};\n\n/**\n * @brief Union Find(Disjoint Set Union)\n */\n"
   code: "#pragma once\n\nstruct UnionFind {\n  vector<int> data;\n  UnionFind(int\
     \ N) : data(N, -1) {}\n\n  int find(int k) { return data[k] < 0 ? k : data[k]\
     \ = find(data[k]); }\n\n  int unite(int x, int y) {\n    if ((x = find(x)) ==\
@@ -86,8 +84,7 @@ data:
     \ > data[y]) swap(x, y);\n    data[x] += data[y];\n    data[y] = x;\n    f(x,\
     \ y);\n    return true;\n  }\n\n  int size(int k) { return -data[find(k)]; }\n\
     \n  int same(int x, int y) { return find(x) == find(y); }\n};\n\n/**\n * @brief\
-    \ Union Find(Disjoint Set Union)\n * @docs docs/data-structure/union-find.md\n\
-    \ */\n"
+    \ Union Find(Disjoint Set Union)\n */\n"
   dependsOn: []
   isVerificationFile: false
   path: data-structure/union-find.hpp
@@ -96,7 +93,7 @@ data:
   - graph/kruskal.hpp
   - graph/namori.hpp
   - graph/functional-graph.hpp
-  timestamp: '2024-08-10 13:03:16+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-aoj-dsl/aoj-dsl-1-a.test.cpp
@@ -115,11 +112,9 @@ data:
   - verify/verify-aoj-grl/aoj-grl-2-a.test.cpp
 documentation_of: data-structure/union-find.hpp
 layout: document
-redirect_from:
-- /library/data-structure/union-find.hpp
-- /library/data-structure/union-find.hpp.html
 title: Union Find(Disjoint Set Union)
 ---
+
 ## Union-Find Tree(Disjoint Set Union)
 
 #### 概要

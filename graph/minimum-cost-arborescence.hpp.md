@@ -36,19 +36,18 @@ data:
     \ x, const T &laz) {\n    x->laz += laz;\n    propagate(x);\n  }\n\n private:\n\
     \  static inline bool comp(Ptr x, Ptr y) {\n    if constexpr (isMin) {\n     \
     \ return x->key + x->laz < y->key + y->laz;\n    } else {\n      return x->key\
-    \ + x->laz > y->key + y->laz;\n    }\n  }\n};\n\n/**\n * @brief Skew Heap\n *\
-    \ @docs docs/data-structure/skew-heap.md\n */\n#line 2 \"data-structure/union-find.hpp\"\
-    \n\nstruct UnionFind {\n  vector<int> data;\n  UnionFind(int N) : data(N, -1)\
-    \ {}\n\n  int find(int k) { return data[k] < 0 ? k : data[k] = find(data[k]);\
-    \ }\n\n  int unite(int x, int y) {\n    if ((x = find(x)) == (y = find(y))) return\
+    \ + x->laz > y->key + y->laz;\n    }\n  }\n};\n\n/**\n * @brief Skew Heap\n */\n\
+    #line 2 \"data-structure/union-find.hpp\"\n\nstruct UnionFind {\n  vector<int>\
+    \ data;\n  UnionFind(int N) : data(N, -1) {}\n\n  int find(int k) { return data[k]\
+    \ < 0 ? k : data[k] = find(data[k]); }\n\n  int unite(int x, int y) {\n    if\
+    \ ((x = find(x)) == (y = find(y))) return false;\n    if (data[x] > data[y]) swap(x,\
+    \ y);\n    data[x] += data[y];\n    data[y] = x;\n    return true;\n  }\n\n  //\
+    \ f(x, y) : x \u306B y \u3092\u30DE\u30FC\u30B8\n  template<typename F>\n  int\
+    \ unite(int x, int y,const F &f) {\n    if ((x = find(x)) == (y = find(y))) return\
     \ false;\n    if (data[x] > data[y]) swap(x, y);\n    data[x] += data[y];\n  \
-    \  data[y] = x;\n    return true;\n  }\n\n  // f(x, y) : x \u306B y \u3092\u30DE\
-    \u30FC\u30B8\n  template<typename F>\n  int unite(int x, int y,const F &f) {\n\
-    \    if ((x = find(x)) == (y = find(y))) return false;\n    if (data[x] > data[y])\
-    \ swap(x, y);\n    data[x] += data[y];\n    data[y] = x;\n    f(x, y);\n    return\
-    \ true;\n  }\n\n  int size(int k) { return -data[find(k)]; }\n\n  int same(int\
-    \ x, int y) { return find(x) == find(y); }\n};\n\n/**\n * @brief Union Find(Disjoint\
-    \ Set Union)\n * @docs docs/data-structure/union-find.md\n */\n#line 2 \"graph/graph-template.hpp\"\
+    \  data[y] = x;\n    f(x, y);\n    return true;\n  }\n\n  int size(int k) { return\
+    \ -data[find(k)]; }\n\n  int same(int x, int y) { return find(x) == find(y); }\n\
+    };\n\n/**\n * @brief Union Find(Disjoint Set Union)\n */\n#line 2 \"graph/graph-template.hpp\"\
     \n\ntemplate <typename T>\nstruct edge {\n  int src, to;\n  T cost;\n\n  edge(int\
     \ _to, T _cost) : src(-1), to(_to), cost(_cost) {}\n  edge(int _src, int _to,\
     \ T _cost) : src(_src), to(_to), cost(_cost) {}\n\n  edge &operator=(const int\
@@ -77,18 +76,17 @@ data:
     \ {\n    int x, y;\n    cin >> x >> y;\n    T c;\n    if (is_weighted)\n     \
     \ cin >> c;\n    else\n      c = 1;\n    if (is_1origin) x--, y--;\n    d[x][y]\
     \ = c;\n    if (!is_directed) d[y][x] = c;\n  }\n  return d;\n}\n\n/**\n * @brief\
-    \ \u30B0\u30E9\u30D5\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\n * @docs docs/graph/graph-template.md\n\
-    \ */\n#line 6 \"graph/minimum-cost-arborescence.hpp\"\n\ntemplate <typename T>\n\
-    Edges<T> MinimumCostArborescence(int N, int root, const Edges<T> &es) {\n  using\
-    \ Heap = SkewHeap<T>;\n  using Ptr = typename Heap::Ptr;\n  UnionFind uf(N);\n\
-    \  vector<int> used(N, -1), from(N);\n  vector<T> from_cost(N);\n  vector<Ptr>\
-    \ come(N, nullptr);\n\n  used[root] = root;\n  vector<int> par_e(es.size(), -1),\
-    \ stem(N, -1), idxs;\n\n  for (int i = 0; i < (int)es.size(); i++) {\n    auto\
-    \ &e = es[i];\n    come[e] = Heap::push(come[e], e.cost, i);\n  }\n\n  T costs\
-    \ = 0;\n\n  for (int start = 0; start < N; start++) {\n    if (used[start] !=\
-    \ -1) continue;\n    int cur = start;\n    vector<int> chi_e;\n    int cycle =\
-    \ 0;\n    while (used[cur] == -1 || used[cur] == start) {\n      used[cur] = start;\n\
-    \      if (come[cur] == nullptr) return {};\n      int src = uf.find(es[come[cur]->idx].src);\n\
+    \ \u30B0\u30E9\u30D5\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\n */\n#line 6 \"graph/minimum-cost-arborescence.hpp\"\
+    \n\ntemplate <typename T>\nEdges<T> MinimumCostArborescence(int N, int root, const\
+    \ Edges<T> &es) {\n  using Heap = SkewHeap<T>;\n  using Ptr = typename Heap::Ptr;\n\
+    \  UnionFind uf(N);\n  vector<int> used(N, -1), from(N);\n  vector<T> from_cost(N);\n\
+    \  vector<Ptr> come(N, nullptr);\n\n  used[root] = root;\n  vector<int> par_e(es.size(),\
+    \ -1), stem(N, -1), idxs;\n\n  for (int i = 0; i < (int)es.size(); i++) {\n  \
+    \  auto &e = es[i];\n    come[e] = Heap::push(come[e], e.cost, i);\n  }\n\n  T\
+    \ costs = 0;\n\n  for (int start = 0; start < N; start++) {\n    if (used[start]\
+    \ != -1) continue;\n    int cur = start;\n    vector<int> chi_e;\n    int cycle\
+    \ = 0;\n    while (used[cur] == -1 || used[cur] == start) {\n      used[cur] =\
+    \ start;\n      if (come[cur] == nullptr) return {};\n      int src = uf.find(es[come[cur]->idx].src);\n\
     \      T cost = come[cur]->key + come[cur]->laz;\n      int idx = come[cur]->idx;\n\
     \      come[cur] = Heap::pop(come[cur]);\n      if (src == cur) continue;\n\n\
     \      from[cur] = src;\n      from_cost[cur] = cost;\n      if (stem[cur] ==\
@@ -140,7 +138,7 @@ data:
   isVerificationFile: false
   path: graph/minimum-cost-arborescence.hpp
   requiredBy: []
-  timestamp: '2024-08-10 13:03:16+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-graph/yosupo-directed-mst.test.cpp

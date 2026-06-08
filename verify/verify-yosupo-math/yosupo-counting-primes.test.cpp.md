@@ -231,8 +231,8 @@ data:
     \  }\n  return {ns, h};\n}\n\nlong long prime_counting(long long N) {\n  if (N\
     \ < 2) return 0;\n  return pi_table(N).second[1];\n}\n\n/**\n * @brief \u7D20\u6570\
     \u30AB\u30A6\u30F3\u30C8( $\\mathrm{O}(\\frac{N^{\\frac{3}{4}}}{\\log N})$ )\n\
-    \ * @docs docs/multiplicative-function/prime-counting.md\n */\n#line 5 \"verify/verify-yosupo-math/yosupo-counting-primes.test.cpp\"\
-    \n\nusing namespace Nyaan; void Nyaan::solve() {\n  inl(N);\n  out(prime_counting(N));\n\
+    \ */\n#line 5 \"verify/verify-yosupo-math/yosupo-counting-primes.test.cpp\"\n\n\
+    using namespace Nyaan; void Nyaan::solve() {\n  inl(N);\n  out(prime_counting(N));\n\
     }\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/counting_primes\"\n\n#include\
     \ \"../../template/template.hpp\"\n#include \"../../multiplicative-function/prime-counting.hpp\"\
@@ -249,7 +249,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-math/yosupo-counting-primes.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-math/yosupo-counting-primes.test.cpp

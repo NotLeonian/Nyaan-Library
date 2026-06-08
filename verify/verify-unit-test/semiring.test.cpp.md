@@ -265,12 +265,12 @@ data:
     \ i = 0; i < N; i++) {\n      os << \"[\";\n      for (int j = 0; j < N; j++)\
     \ {\n        os << p[i][j].x << (j == N - 1 ? \"]\\n\" : \",\");\n      }\n  \
     \  }\n    return (os);\n  }\n};\n\n/**\n * @brief \u534A\u74B0\u30E9\u30A4\u30D6\
-    \u30E9\u30EA\n * @docs docs/math/semiring.md\n */\n#line 2 \"shortest-path/warshall-floyd.hpp\"\
-    \n\n\n\n#line 2 \"graph/graph-template.hpp\"\n\ntemplate <typename T>\nstruct\
-    \ edge {\n  int src, to;\n  T cost;\n\n  edge(int _to, T _cost) : src(-1), to(_to),\
-    \ cost(_cost) {}\n  edge(int _src, int _to, T _cost) : src(_src), to(_to), cost(_cost)\
-    \ {}\n\n  edge &operator=(const int &x) {\n    to = x;\n    return *this;\n  }\n\
-    \n  operator int() const { return to; }\n};\ntemplate <typename T>\nusing Edges\
+    \u30E9\u30EA\n */\n#line 2 \"shortest-path/warshall-floyd.hpp\"\n\n\n\n#line 2\
+    \ \"graph/graph-template.hpp\"\n\ntemplate <typename T>\nstruct edge {\n  int\
+    \ src, to;\n  T cost;\n\n  edge(int _to, T _cost) : src(-1), to(_to), cost(_cost)\
+    \ {}\n  edge(int _src, int _to, T _cost) : src(_src), to(_to), cost(_cost) {}\n\
+    \n  edge &operator=(const int &x) {\n    to = x;\n    return *this;\n  }\n\n \
+    \ operator int() const { return to; }\n};\ntemplate <typename T>\nusing Edges\
     \ = vector<edge<T>>;\ntemplate <typename T>\nusing WeightedGraph = vector<Edges<T>>;\n\
     using UnweightedGraph = vector<vector<int>>;\n\n// Input of (Unweighted) Graph\n\
     UnweightedGraph graph(int N, int M = -1, bool is_directed = false,\n         \
@@ -295,15 +295,14 @@ data:
     \ {\n    int x, y;\n    cin >> x >> y;\n    T c;\n    if (is_weighted)\n     \
     \ cin >> c;\n    else\n      c = 1;\n    if (is_1origin) x--, y--;\n    d[x][y]\
     \ = c;\n    if (!is_directed) d[y][x] = c;\n  }\n  return d;\n}\n\n/**\n * @brief\
-    \ \u30B0\u30E9\u30D5\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\n * @docs docs/graph/graph-template.md\n\
-    \ */\n#line 6 \"shortest-path/warshall-floyd.hpp\"\n\n// i : d[i][i] < 0 exists\
-    \ -> negative cycle\ntemplate <typename T>\nvoid warshall_floyd(T& d) {\n  if((int)d.size()\
-    \ == 0) return;\n  int N = d[0].size();\n  for (int i = 0; i < N; i++) d[i][i]\
-    \ = 0;\n  for (int k = 0; k < N; k++)\n    for (int i = 0; i < N; i++)\n     \
-    \ for (int j = 0; j < N; j++) d[i][j] = min(d[i][j], d[i][k] + d[k][j]);\n}\n\
-    #line 7 \"verify/verify-unit-test/semiring.test.cpp\"\nusing namespace Nyaan;\n\
-    \n#line 2 \"misc/rng.hpp\"\n\n#line 7 \"misc/rng.hpp\"\nusing namespace std;\n\
-    \n#line 2 \"internal/internal-seed.hpp\"\n\n#line 4 \"internal/internal-seed.hpp\"\
+    \ \u30B0\u30E9\u30D5\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\n */\n#line 6 \"shortest-path/warshall-floyd.hpp\"\
+    \n\n// i : d[i][i] < 0 exists -> negative cycle\ntemplate <typename T>\nvoid warshall_floyd(T&\
+    \ d) {\n  if((int)d.size() == 0) return;\n  int N = d[0].size();\n  for (int i\
+    \ = 0; i < N; i++) d[i][i] = 0;\n  for (int k = 0; k < N; k++)\n    for (int i\
+    \ = 0; i < N; i++)\n      for (int j = 0; j < N; j++) d[i][j] = min(d[i][j], d[i][k]\
+    \ + d[k][j]);\n}\n#line 7 \"verify/verify-unit-test/semiring.test.cpp\"\nusing\
+    \ namespace Nyaan;\n\n#line 2 \"misc/rng.hpp\"\n\n#line 7 \"misc/rng.hpp\"\nusing\
+    \ namespace std;\n\n#line 2 \"internal/internal-seed.hpp\"\n\n#line 4 \"internal/internal-seed.hpp\"\
     \nusing namespace std;\n\nnamespace internal {\nunsigned long long non_deterministic_seed()\
     \ {\n  unsigned long long m =\n      chrono::duration_cast<chrono::nanoseconds>(\n\
     \          chrono::high_resolution_clock::now().time_since_epoch())\n        \
@@ -370,7 +369,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/semiring.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/semiring.test.cpp

@@ -118,36 +118,36 @@ data:
     \ deg, FPSBackendPriority<1>{});\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>\
     \ FormalPowerSeries<mint>::exp(int deg) const {\n  return fps_exp_impl(*this,\
     \ deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief \u591A\u9805\u5F0F/\u5F62\
-    \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n * @docs docs/fps/formal-power-series.md\n\
-    \ */\n#line 8 \"fps/sparse-fps.hpp\"\n\n// g \u304C sparse \u3092\u4EEE\u5B9A\
-    , f * g.inv() \u3092\u8A08\u7B97\ntemplate <typename mint>\nFormalPowerSeries<mint>\
-    \ sparse_div(const FormalPowerSeries<mint>& f,\n                             \
-    \      const FormalPowerSeries<mint>& g,\n                                   int\
-    \ deg = -1) {\n  assert(g.empty() == false && g[0] != mint(0));\n  if (deg ==\
-    \ -1) deg = f.size();\n  mint ig0 = g[0].inverse();\n  FormalPowerSeries<mint>\
-    \ s = f * ig0;\n  s.resize(deg);\n  vector<pair<int, mint>> gs;\n  for (int i\
-    \ = 1; i < (int)g.size(); i++) {\n    if (g[i] != 0) gs.emplace_back(i, g[i] *\
-    \ ig0);\n  }\n  for (int i = 0; i < deg; i++) {\n    for (auto& [j, g_j] : gs)\
-    \ {\n      if (i + j >= deg) break;\n      s[i + j] -= s[i] * g_j;\n    }\n  }\n\
-    \  return s;\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint> sparse_inv(const\
-    \ FormalPowerSeries<mint>& f,\n                                   int deg = -1)\
-    \ {\n  assert(f.empty() == false && f[0] != mint(0));\n  if (deg == -1) deg =\
-    \ f.size();\n  vector<pair<int, mint>> fs;\n  for (int i = 1; i < (int)f.size();\
-    \ i++) {\n    if (f[i] != 0) fs.emplace_back(i, f[i]);\n  }\n  FormalPowerSeries<mint>\
-    \ g(deg);\n  mint if0 = f[0].inverse();\n  if (0 < deg) g[0] = if0;\n  for (int\
-    \ k = 1; k < deg; k++) {\n    for (auto& [j, fj] : fs) {\n      if (k < j) break;\n\
-    \      g[k] += g[k - j] * fj;\n    }\n    g[k] *= -if0;\n  }\n  return g;\n}\n\
-    \ntemplate <typename mint>\nFormalPowerSeries<mint> sparse_log(const FormalPowerSeries<mint>&\
-    \ f,\n                                   int deg = -1) {\n  assert(f.empty() ==\
-    \ false && f[0] == 1);\n  if (deg == -1) deg = f.size();\n  vector<pair<int, mint>>\
-    \ fs;\n  for (int i = 1; i < (int)f.size(); i++) {\n    if (f[i] != 0) fs.emplace_back(i,\
-    \ f[i]);\n  }\n\n  int mod = mint::get_mod();\n  static vector<mint> invs{1, 1};\n\
-    \  while ((int)invs.size() <= deg) {\n    int i = invs.size();\n    invs.push_back((-invs[mod\
-    \ % i]) * (mod / i));\n  }\n\n  FormalPowerSeries<mint> g(deg);\n  for (int k\
-    \ = 0; k < deg - 1; k++) {\n    for (auto& [j, fj] : fs) {\n      if (k < j) break;\n\
-    \      int i = k - j;\n      g[k + 1] -= g[i + 1] * fj * (i + 1);\n    }\n   \
-    \ g[k + 1] *= invs[k + 1];\n    if (k + 1 < (int)f.size()) g[k + 1] += f[k + 1];\n\
-    \  }\n  return g;\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint> sparse_exp(const\
+    \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n */\n#line 8 \"\
+    fps/sparse-fps.hpp\"\n\n// g \u304C sparse \u3092\u4EEE\u5B9A, f * g.inv() \u3092\
+    \u8A08\u7B97\ntemplate <typename mint>\nFormalPowerSeries<mint> sparse_div(const\
+    \ FormalPowerSeries<mint>& f,\n                                   const FormalPowerSeries<mint>&\
+    \ g,\n                                   int deg = -1) {\n  assert(g.empty() ==\
+    \ false && g[0] != mint(0));\n  if (deg == -1) deg = f.size();\n  mint ig0 = g[0].inverse();\n\
+    \  FormalPowerSeries<mint> s = f * ig0;\n  s.resize(deg);\n  vector<pair<int,\
+    \ mint>> gs;\n  for (int i = 1; i < (int)g.size(); i++) {\n    if (g[i] != 0)\
+    \ gs.emplace_back(i, g[i] * ig0);\n  }\n  for (int i = 0; i < deg; i++) {\n  \
+    \  for (auto& [j, g_j] : gs) {\n      if (i + j >= deg) break;\n      s[i + j]\
+    \ -= s[i] * g_j;\n    }\n  }\n  return s;\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>\
+    \ sparse_inv(const FormalPowerSeries<mint>& f,\n                             \
+    \      int deg = -1) {\n  assert(f.empty() == false && f[0] != mint(0));\n  if\
+    \ (deg == -1) deg = f.size();\n  vector<pair<int, mint>> fs;\n  for (int i = 1;\
+    \ i < (int)f.size(); i++) {\n    if (f[i] != 0) fs.emplace_back(i, f[i]);\n  }\n\
+    \  FormalPowerSeries<mint> g(deg);\n  mint if0 = f[0].inverse();\n  if (0 < deg)\
+    \ g[0] = if0;\n  for (int k = 1; k < deg; k++) {\n    for (auto& [j, fj] : fs)\
+    \ {\n      if (k < j) break;\n      g[k] += g[k - j] * fj;\n    }\n    g[k] *=\
+    \ -if0;\n  }\n  return g;\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>\
+    \ sparse_log(const FormalPowerSeries<mint>& f,\n                             \
+    \      int deg = -1) {\n  assert(f.empty() == false && f[0] == 1);\n  if (deg\
+    \ == -1) deg = f.size();\n  vector<pair<int, mint>> fs;\n  for (int i = 1; i <\
+    \ (int)f.size(); i++) {\n    if (f[i] != 0) fs.emplace_back(i, f[i]);\n  }\n\n\
+    \  int mod = mint::get_mod();\n  static vector<mint> invs{1, 1};\n  while ((int)invs.size()\
+    \ <= deg) {\n    int i = invs.size();\n    invs.push_back((-invs[mod % i]) * (mod\
+    \ / i));\n  }\n\n  FormalPowerSeries<mint> g(deg);\n  for (int k = 0; k < deg\
+    \ - 1; k++) {\n    for (auto& [j, fj] : fs) {\n      if (k < j) break;\n     \
+    \ int i = k - j;\n      g[k + 1] -= g[i + 1] * fj * (i + 1);\n    }\n    g[k +\
+    \ 1] *= invs[k + 1];\n    if (k + 1 < (int)f.size()) g[k + 1] += f[k + 1];\n \
+    \ }\n  return g;\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint> sparse_exp(const\
     \ FormalPowerSeries<mint>& f,\n                                   int deg = -1)\
     \ {\n  assert(f.empty() or f[0] == 0);\n  if (deg == -1) deg = f.size();\n  vector<pair<int,\
     \ mint>> fs;\n  for (int i = 1; i < (int)f.size(); i++) {\n    if (f[i] != 0)\
@@ -239,7 +239,7 @@ data:
   isVerificationFile: false
   path: fps/sparse-fps.hpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-fps/yosupo-sparse-exp.test.cpp

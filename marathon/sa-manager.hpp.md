@@ -22,7 +22,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/marathon/sa-manager.md
     document_title: Multipoint Simulated Annealing
     links: []
   bundledCode: "#line 2 \"marathon/sa-manager.hpp\"\n\n#include <cassert>\n#include\
@@ -136,8 +135,7 @@ data:
     \        start_temp(_start_temp),\n        diff_temp(_start_temp - _end_temp),\n\
     \        cur_temp(_start_temp),\n        state_max(_state_max),\n        state_size(_state_max)\
     \ {\n    assert(_start_temp >= _end_temp);\n    assert(_state_max > 0);\n  }\n\
-    };\n\n#undef debug\n\n/**\n * @brief Multipoint Simulated Annealing\n * @docs\
-    \ docs/marathon/sa-manager.md\n */\n"
+    };\n\n#undef debug\n\n/**\n * @brief Multipoint Simulated Annealing\n */\n"
   code: "#pragma once\n\n#include <cassert>\n#include <iostream>\n#include <vector>\n\
     using namespace std;\n\n#include \"../misc/rng.hpp\"\n#include \"../misc/timer.hpp\"\
     \n#include \"log_table.hpp\"\n\ntemplate <typename state_t, typename score_t>\n\
@@ -208,8 +206,7 @@ data:
     \        start_temp(_start_temp),\n        diff_temp(_start_temp - _end_temp),\n\
     \        cur_temp(_start_temp),\n        state_max(_state_max),\n        state_size(_state_max)\
     \ {\n    assert(_start_temp >= _end_temp);\n    assert(_state_max > 0);\n  }\n\
-    };\n\n#undef debug\n\n/**\n * @brief Multipoint Simulated Annealing\n * @docs\
-    \ docs/marathon/sa-manager.md\n */\n"
+    };\n\n#undef debug\n\n/**\n * @brief Multipoint Simulated Annealing\n */\n"
   dependsOn:
   - misc/rng.hpp
   - internal/internal-seed.hpp
@@ -218,17 +215,15 @@ data:
   isVerificationFile: false
   path: marathon/sa-manager.hpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-unit-test/sa-manager.test.cpp
 documentation_of: marathon/sa-manager.hpp
 layout: document
-redirect_from:
-- /library/marathon/sa-manager.hpp
-- /library/marathon/sa-manager.hpp.html
 title: Multipoint Simulated Annealing
 ---
+
 ## 焼きなまし法
 
 焼きなまし法のライブラリを自分が使いやすいように改良したもの。

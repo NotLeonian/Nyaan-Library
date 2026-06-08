@@ -13,7 +13,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/tree/cartesian-tree.md
     document_title: Cartesian Tree
     links: []
   bundledCode: "#line 2 \"tree/cartesian-tree.hpp\"\n\n#include <utility>\n#include\
@@ -26,7 +25,7 @@ data:
     \ p[i] = st.back();\n    st.push_back(i);\n  }\n  int root = -1;\n  for (int i\
     \ = 0; i < N; i++) {\n    if (p[i] != -1)\n      g[p[i]].push_back(i);\n    else\n\
     \      root = i;\n  }\n  return make_pair(g, root);\n}\n\n/**\n * @brief Cartesian\
-    \ Tree\n * @docs docs/tree/cartesian-tree.md\n */\n"
+    \ Tree\n */\n"
   code: "#pragma once\n\n#include <utility>\n#include <vector>\nusing namespace std;\n\
     \n// return value : pair<graph, root>\ntemplate <typename T>\npair<vector<vector<int>>,\
     \ int> CartesianTree(vector<T> &a) {\n  int N = (int)a.size();\n  vector<vector<int>>\
@@ -36,23 +35,21 @@ data:
     \ = i;\n    if (!st.empty()) p[i] = st.back();\n    st.push_back(i);\n  }\n  int\
     \ root = -1;\n  for (int i = 0; i < N; i++) {\n    if (p[i] != -1)\n      g[p[i]].push_back(i);\n\
     \    else\n      root = i;\n  }\n  return make_pair(g, root);\n}\n\n/**\n * @brief\
-    \ Cartesian Tree\n * @docs docs/tree/cartesian-tree.md\n */"
+    \ Cartesian Tree\n */"
   dependsOn: []
   isVerificationFile: false
   path: tree/cartesian-tree.hpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-aoj-dsl/aoj-dsl-3-d-cartesiantree.test.cpp
   - verify/verify-yosupo-graph/yosupo-cartesian.test.cpp
 documentation_of: tree/cartesian-tree.hpp
 layout: document
-redirect_from:
-- /library/tree/cartesian-tree.hpp
-- /library/tree/cartesian-tree.hpp.html
 title: Cartesian Tree
 ---
+
 ## Cartesian Tree
 
 #### 概要

@@ -28,7 +28,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/math/nimber.md
     document_title: Nim Product
     links: []
   bundledCode: "#line 2 \"math/nimber.hpp\"\n\n#line 2 \"math/garner.hpp\"\n\n// input\
@@ -130,7 +129,7 @@ data:
     \  }\n};\n\nusing Nimber16 = NimberBase<uint16_t, NimberImpl::product16>;\nusing\
     \ Nimber32 = NimberBase<uint32_t, NimberImpl::product32>;\nusing Nimber64 = NimberBase<uint64_t,\
     \ NimberImpl::product64>;\nusing Nimber = Nimber64;\n\n/**\n * @brief Nim Product\n\
-    \ * @docs docs/math/nimber.md\n */\n"
+    \ */\n"
   code: "#pragma once\n\n#include \"garner.hpp\"\n\nnamespace NimberImpl {\nusing\
     \ u16 = uint16_t;\nusing u32 = uint32_t;\nusing u64 = uint64_t;\n\nstruct calc8\
     \ {\n  u16 dp[1 << 8][1 << 8];\n  constexpr calc8() : dp() {\n    dp[0][0] = dp[0][1]\
@@ -210,14 +209,14 @@ data:
     \  }\n};\n\nusing Nimber16 = NimberBase<uint16_t, NimberImpl::product16>;\nusing\
     \ Nimber32 = NimberBase<uint32_t, NimberImpl::product32>;\nusing Nimber64 = NimberBase<uint64_t,\
     \ NimberImpl::product64>;\nusing Nimber = Nimber64;\n\n/**\n * @brief Nim Product\n\
-    \ * @docs docs/math/nimber.md\n */\n"
+    \ */\n"
   dependsOn:
   - math/garner.hpp
   isVerificationFile: false
   path: math/nimber.hpp
   requiredBy:
   - math/nimber-to-field.hpp
-  timestamp: '2021-12-23 23:20:46+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-math/yosupo-nim-product.test.cpp
@@ -227,11 +226,9 @@ data:
   - verify/verify-unit-test/nimber-to-field.test.cpp
 documentation_of: math/nimber.hpp
 layout: document
-redirect_from:
-- /library/math/nimber.hpp
-- /library/math/nimber.hpp.html
 title: Nim Product
 ---
+
 ## Nim Product
 
 $$a \oplus b =\mathrm{mex}(\lbrace a' \oplus b \mid a' \lt a \rbrace\cup\lbrace a \oplus b' \mid b' \lt b \rbrace)$$

@@ -338,42 +338,42 @@ data:
     \ u64 modfma(const u64 &a, const u64 &b, const u64 &c) {\n    u128 d = u128(a)\
     \ * b + c;\n    u64 ret = (d >> 61) + (u64(d) & md);\n    return ret >= md ? ret\
     \ - md : ret;\n  }\n};\n\n}  // namespace internal\n\n/**\n * @brief \u30CF\u30C3\
-    \u30B7\u30E5\u69CB\u9020\u4F53\n * @docs docs/internal/internal-hash.md\n */\n\
-    #line 8 \"string/rolling-hash-on-segment-tree.hpp\"\n\nnamespace RollingHashonSegmentTreeImpl\
-    \ {\n\nconstexpr int BASE_NUM = 1;\nusing Hash = internal::Hash<BASE_NUM>;\nusing\
-    \ T = pair<Hash, int>;\n\nvector<Hash> Pow{Hash::set(1)};\nconst Hash Basis =\
-    \ Hash::get_basis();\nconst Hash Zero = Hash::set(0);\n\nT op(T a, T b) {\n  while\
-    \ (b.second >= (int)Pow.size()) {\n    Hash h = Pow.back();\n    Pow.push_back(h\
-    \ * Basis);\n  }\n  Hash h = pfma(a.first, Pow[b.second], b.first);\n  int len\
-    \ = a.second + b.second;\n  return make_pair(h, len);\n}\nT e() { return make_pair(Zero,\
-    \ 0); }\n\ntemplate <typename Str>\nstruct RollingHashonSegmentTree {\n  using\
-    \ Value = typename Str::value_type;\n  int n;\n  atcoder::segtree<T, op, e> seg;\n\
-    \n  RollingHashonSegmentTree() : n(0) {}\n\n  RollingHashonSegmentTree(const Str&\
-    \ S) : n(S.size()) {\n    vector<T> init(n);\n    for (int i = 0; i < n; i++)\
-    \ {\n      init[i] = make_pair(Hash::set(S[i]), 1);\n    }\n    seg = atcoder::segtree<T,\
-    \ op, e>(init);\n  }\n\n  void update(int i, const Value& v) {\n    assert(0 <=\
-    \ i and i < n);\n    seg.set(i, make_pair(Hash::set(v), 1));\n  }\n\n  // [l1,\
-    \ r1) \u3068 [l2, r2) \u304C\u4E00\u81F4\u3059\u308B\u304B\u3092\u5224\u5B9A\n\
-    \  bool same(int l1, int r1, int l2, int r2) {\n    assert(0 <= l1 and l1 <= r1\
-    \ and r1 <= n);\n    assert(0 <= l2 and l2 <= r2 and r2 <= n);\n    if (r1 - l1\
-    \ != r2 - l2) return false;\n    return seg.prod(l1, r1) == seg.prod(l2, r2);\n\
-    \  }\n};\n}  // namespace RollingHashonSegmentTreeImpl\n\nusing RollingHashonSegmentTreeImpl::RollingHashonSegmentTree;\n\
-    #line 2 \"data-structure/union-find-enumerate.hpp\"\n\n#line 4 \"data-structure/union-find-enumerate.hpp\"\
-    \nusing namespace std;\n\nstruct UnionFindEnumerate {\n  vector<int> data, nxt;\n\
-    \  UnionFindEnumerate(int N) : data(N, -1), nxt(N) {\n    for (int i = 0; i <\
-    \ N; i++) nxt[i] = i;\n  }\n\n  int find(int k) { return data[k] < 0 ? k : data[k]\
-    \ = find(data[k]); }\n\n  int unite(int x, int y) {\n    if ((x = find(x)) ==\
-    \ (y = find(y))) return false;\n    if (data[x] > data[y]) swap(x, y);\n    data[x]\
-    \ += data[y];\n    data[y] = x;\n    swap(nxt[x], nxt[y]);\n    return true;\n\
-    \  }\n\n  // f(x, y) : x \u306B y \u3092\u30DE\u30FC\u30B8\n  template <typename\
-    \ F>\n  int unite(int x, int y, const F &f) {\n    if ((x = find(x)) == (y = find(y)))\
-    \ return false;\n    if (data[x] > data[y]) swap(x, y);\n    data[x] += data[y];\n\
-    \    data[y] = x;\n    f(x, y);\n    swap(nxt[x], nxt[y]);\n    return true;\n\
-    \  }\n\n  int size(int k) { return -data[find(k)]; }\n\n  int same(int x, int\
-    \ y) { return find(x) == find(y); }\n\n  vector<int> enumerate(int i) {\n    vector<int>\
-    \ res{i};\n    for (int j = nxt[i]; j != i; j = nxt[j]) res.push_back(j);\n  \
-    \  return res;\n  }\n};\n#line 5 \"data-structure/parallel-union-find.hpp\"\n\n\
-    struct ParallelUnionFind {\n  int n;\n  UnionFindEnumerate uf;\n  RollingHashonSegmentTree<vector<int>>\
+    \u30B7\u30E5\u69CB\u9020\u4F53\n */\n#line 8 \"string/rolling-hash-on-segment-tree.hpp\"\
+    \n\nnamespace RollingHashonSegmentTreeImpl {\n\nconstexpr int BASE_NUM = 1;\n\
+    using Hash = internal::Hash<BASE_NUM>;\nusing T = pair<Hash, int>;\n\nvector<Hash>\
+    \ Pow{Hash::set(1)};\nconst Hash Basis = Hash::get_basis();\nconst Hash Zero =\
+    \ Hash::set(0);\n\nT op(T a, T b) {\n  while (b.second >= (int)Pow.size()) {\n\
+    \    Hash h = Pow.back();\n    Pow.push_back(h * Basis);\n  }\n  Hash h = pfma(a.first,\
+    \ Pow[b.second], b.first);\n  int len = a.second + b.second;\n  return make_pair(h,\
+    \ len);\n}\nT e() { return make_pair(Zero, 0); }\n\ntemplate <typename Str>\n\
+    struct RollingHashonSegmentTree {\n  using Value = typename Str::value_type;\n\
+    \  int n;\n  atcoder::segtree<T, op, e> seg;\n\n  RollingHashonSegmentTree() :\
+    \ n(0) {}\n\n  RollingHashonSegmentTree(const Str& S) : n(S.size()) {\n    vector<T>\
+    \ init(n);\n    for (int i = 0; i < n; i++) {\n      init[i] = make_pair(Hash::set(S[i]),\
+    \ 1);\n    }\n    seg = atcoder::segtree<T, op, e>(init);\n  }\n\n  void update(int\
+    \ i, const Value& v) {\n    assert(0 <= i and i < n);\n    seg.set(i, make_pair(Hash::set(v),\
+    \ 1));\n  }\n\n  // [l1, r1) \u3068 [l2, r2) \u304C\u4E00\u81F4\u3059\u308B\u304B\
+    \u3092\u5224\u5B9A\n  bool same(int l1, int r1, int l2, int r2) {\n    assert(0\
+    \ <= l1 and l1 <= r1 and r1 <= n);\n    assert(0 <= l2 and l2 <= r2 and r2 <=\
+    \ n);\n    if (r1 - l1 != r2 - l2) return false;\n    return seg.prod(l1, r1)\
+    \ == seg.prod(l2, r2);\n  }\n};\n}  // namespace RollingHashonSegmentTreeImpl\n\
+    \nusing RollingHashonSegmentTreeImpl::RollingHashonSegmentTree;\n#line 2 \"data-structure/union-find-enumerate.hpp\"\
+    \n\n#line 4 \"data-structure/union-find-enumerate.hpp\"\nusing namespace std;\n\
+    \nstruct UnionFindEnumerate {\n  vector<int> data, nxt;\n  UnionFindEnumerate(int\
+    \ N) : data(N, -1), nxt(N) {\n    for (int i = 0; i < N; i++) nxt[i] = i;\n  }\n\
+    \n  int find(int k) { return data[k] < 0 ? k : data[k] = find(data[k]); }\n\n\
+    \  int unite(int x, int y) {\n    if ((x = find(x)) == (y = find(y))) return false;\n\
+    \    if (data[x] > data[y]) swap(x, y);\n    data[x] += data[y];\n    data[y]\
+    \ = x;\n    swap(nxt[x], nxt[y]);\n    return true;\n  }\n\n  // f(x, y) : x \u306B\
+    \ y \u3092\u30DE\u30FC\u30B8\n  template <typename F>\n  int unite(int x, int\
+    \ y, const F &f) {\n    if ((x = find(x)) == (y = find(y))) return false;\n  \
+    \  if (data[x] > data[y]) swap(x, y);\n    data[x] += data[y];\n    data[y] =\
+    \ x;\n    f(x, y);\n    swap(nxt[x], nxt[y]);\n    return true;\n  }\n\n  int\
+    \ size(int k) { return -data[find(k)]; }\n\n  int same(int x, int y) { return\
+    \ find(x) == find(y); }\n\n  vector<int> enumerate(int i) {\n    vector<int> res{i};\n\
+    \    for (int j = nxt[i]; j != i; j = nxt[j]) res.push_back(j);\n    return res;\n\
+    \  }\n};\n#line 5 \"data-structure/parallel-union-find.hpp\"\n\nstruct ParallelUnionFind\
+    \ {\n  int n;\n  UnionFindEnumerate uf;\n  RollingHashonSegmentTree<vector<int>>\
     \ seg;\n\n  ParallelUnionFind(int _n) : n(_n), uf(n) {\n    vector<int> init(n);\n\
     \    for (int i = 0; i < n; i++) init[i] = i;\n    seg = RollingHashonSegmentTree<vector<int>>(init);\n\
     \  }\n\n  // [l1, r1) \u3068 [l2, r2) \u3092 unite \u3059\u308B\n  void unite(int\
@@ -466,7 +466,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-ds/yosupo-range-parallel-unionfind.test.cpp
   requiredBy: []
-  timestamp: '2026-06-08 02:23:45+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-ds/yosupo-range-parallel-unionfind.test.cpp

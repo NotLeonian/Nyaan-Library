@@ -20,7 +20,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/fps/polynomial-gcd.md
     document_title: "\u591A\u9805\u5F0FGCD"
     links: []
   bundledCode: "#line 2 \"fps/polynomial-gcd.hpp\"\n\n#line 2 \"fps/formal-power-series.hpp\"\
@@ -108,18 +107,18 @@ data:
     \ deg, FPSBackendPriority<1>{});\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>\
     \ FormalPowerSeries<mint>::exp(int deg) const {\n  return fps_exp_impl(*this,\
     \ deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief \u591A\u9805\u5F0F/\u5F62\
-    \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n * @docs docs/fps/formal-power-series.md\n\
-    \ */\n#line 4 \"fps/polynomial-gcd.hpp\"\n\nnamespace poly_gcd {\n\ntemplate <typename\
-    \ mint>\nusing FPS = FormalPowerSeries<mint>;\ntemplate <typename mint>\nusing\
-    \ Arr = pair<FPS<mint>, FPS<mint>>;\n\ntemplate <typename mint>\nstruct Mat {\n\
-    \  using fps = FPS<mint>;\n  fps a00, a01, a10, a11;\n\n  Mat() = default;\n \
-    \ Mat(const fps& a00_, const fps& a01_, const fps& a10_, const fps& a11_)\n  \
-    \    : a00(a00_), a01(a01_), a10(a10_), a11(a11_) {}\n\n  Mat& operator*=(const\
-    \ Mat& r) {\n    fps A00 = a00 * r.a00 + a01 * r.a10;\n    fps A01 = a00 * r.a01\
-    \ + a01 * r.a11;\n    fps A10 = a10 * r.a00 + a11 * r.a10;\n    fps A11 = a10\
-    \ * r.a01 + a11 * r.a11;\n    A00.shrink();\n    A01.shrink();\n    A10.shrink();\n\
-    \    A11.shrink();\n    swap(A00, a00);\n    swap(A01, a01);\n    swap(A10, a10);\n\
-    \    swap(A11, a11);\n    return *this;\n  }\n\n  static Mat I() { return Mat(fps{mint(1)},\
+    \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n */\n#line 4 \"\
+    fps/polynomial-gcd.hpp\"\n\nnamespace poly_gcd {\n\ntemplate <typename mint>\n\
+    using FPS = FormalPowerSeries<mint>;\ntemplate <typename mint>\nusing Arr = pair<FPS<mint>,\
+    \ FPS<mint>>;\n\ntemplate <typename mint>\nstruct Mat {\n  using fps = FPS<mint>;\n\
+    \  fps a00, a01, a10, a11;\n\n  Mat() = default;\n  Mat(const fps& a00_, const\
+    \ fps& a01_, const fps& a10_, const fps& a11_)\n      : a00(a00_), a01(a01_),\
+    \ a10(a10_), a11(a11_) {}\n\n  Mat& operator*=(const Mat& r) {\n    fps A00 =\
+    \ a00 * r.a00 + a01 * r.a10;\n    fps A01 = a00 * r.a01 + a01 * r.a11;\n    fps\
+    \ A10 = a10 * r.a00 + a11 * r.a10;\n    fps A11 = a10 * r.a01 + a11 * r.a11;\n\
+    \    A00.shrink();\n    A01.shrink();\n    A10.shrink();\n    A11.shrink();\n\
+    \    swap(A00, a00);\n    swap(A01, a01);\n    swap(A10, a10);\n    swap(A11,\
+    \ a11);\n    return *this;\n  }\n\n  static Mat I() { return Mat(fps{mint(1)},\
     \ fps(), fps(), fps{mint(1)}); }\n\n  Mat operator*(const Mat& r) const { return\
     \ Mat(*this) *= r; }\n};\n\ntemplate <typename mint>\nArr<mint> operator*(const\
     \ Mat<mint>& m, const Arr<mint>& a) {\n  using fps = FPS<mint>;\n  fps b0 = m.a00\
@@ -154,8 +153,7 @@ data:
     \ g);\n  fps gcd_ = (m * p).first;\n  if (gcd_.size() != 1) return {false, fps()};\n\
     \  pair<fps, fps> x(fps{mint(1)}, g);\n  return {true, ((m * x).first % g) * gcd_[0].inverse()};\n\
     }\n\n}  // namespace poly_gcd\nusing poly_gcd::PolyGCD;\nusing poly_gcd::PolyInv;\n\
-    \n/**\n * @brief \u591A\u9805\u5F0FGCD\n * @docs docs/fps/polynomial-gcd.md\n\
-    \ */\n"
+    \n/**\n * @brief \u591A\u9805\u5F0FGCD\n */\n"
   code: "#pragma once\n\n#include \"./formal-power-series.hpp\"\n\nnamespace poly_gcd\
     \ {\n\ntemplate <typename mint>\nusing FPS = FormalPowerSeries<mint>;\ntemplate\
     \ <typename mint>\nusing Arr = pair<FPS<mint>, FPS<mint>>;\n\ntemplate <typename\
@@ -202,26 +200,23 @@ data:
     \  fps gcd_ = (m * p).first;\n  if (gcd_.size() != 1) return {false, fps()};\n\
     \  pair<fps, fps> x(fps{mint(1)}, g);\n  return {true, ((m * x).first % g) * gcd_[0].inverse()};\n\
     }\n\n}  // namespace poly_gcd\nusing poly_gcd::PolyGCD;\nusing poly_gcd::PolyInv;\n\
-    \n/**\n * @brief \u591A\u9805\u5F0FGCD\n * @docs docs/fps/polynomial-gcd.md\n\
-    \ */\n"
+    \n/**\n * @brief \u591A\u9805\u5F0FGCD\n */\n"
   dependsOn:
   - fps/formal-power-series.hpp
   isVerificationFile: false
   path: fps/polynomial-gcd.hpp
   requiredBy:
   - fps/root-finding.hpp
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-fps/yosupo-polynomial-root-finding.test.cpp
   - verify/verify-yosupo-fps/yosupo-inv-of-polynomials.test.cpp
 documentation_of: fps/polynomial-gcd.hpp
 layout: document
-redirect_from:
-- /library/fps/polynomial-gcd.hpp
-- /library/fps/polynomial-gcd.hpp.html
 title: "\u591A\u9805\u5F0FGCD"
 ---
+
 ## 多項式GCD
 
 多項式GCDを$\mathrm{O}(N \log ^ 2 N)$($N$は多項式の次数)で求めるライブラリ。

@@ -311,9 +311,9 @@ data:
     \ mint>\nFormalPowerSeries<mint> FormalPowerSeries<mint>::exp(int deg) const {\n\
     \  return fps_exp_impl(*this, deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief\
     \ \u591A\u9805\u5F0F/\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\
-    \u30EA\n * @docs docs/fps/formal-power-series.md\n */\n#line 5 \"fps/ntt-friendly-fps.hpp\"\
-    \n\ntemplate <typename mint>\nvoid fps_set_fft_impl(FormalPowerSeries<mint>*,\
-    \ FPSBackendPriority<1>) {\n  if (!FormalPowerSeries<mint>::ntt_ptr) {\n    FormalPowerSeries<mint>::ntt_ptr\
+    \u30EA\n */\n#line 5 \"fps/ntt-friendly-fps.hpp\"\n\ntemplate <typename mint>\n\
+    void fps_set_fft_impl(FormalPowerSeries<mint>*, FPSBackendPriority<1>) {\n  if\
+    \ (!FormalPowerSeries<mint>::ntt_ptr) {\n    FormalPowerSeries<mint>::ntt_ptr\
     \ = new NTT<mint>;\n  }\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>&\
     \ fps_multiply_impl(FormalPowerSeries<mint>& f,\n                            \
     \               const FormalPowerSeries<mint>& r,\n                          \
@@ -365,19 +365,18 @@ data:
     \ begin(x) + m, mint(0));\n    x.ntt();\n    for (int i = 0; i < 2 * m; ++i) x[i]\
     \ *= y[i];\n    x.intt();\n    b.insert(end(b), begin(x) + m, end(x));\n  }\n\
     \  return fps{begin(b), begin(b) + deg};\n}\n\n/**\n * @brief NTT mod\u7528FPS\u30E9\
-    \u30A4\u30D6\u30E9\u30EA\n * @docs docs/fps/ntt-friendly-fps.md\n */\n#line 13\
-    \ \"fps/online-fps.hpp\"\n\nusing mint = LazyMontgomeryModInt<998244353>;\nusing\
-    \ fps = FormalPowerSeries<mint>;\n\nstruct ofpsBase {\n  using ob = ofpsBase;\n\
-    \  using Func = internal::inplace_function<mint(int), 64>;\n  Func func;\n  fps\
-    \ f;\n  ofpsBase() {\n    func = [](int) -> mint { return 0; };\n  }\n  ofpsBase(const\
-    \ fps& _f) : f(_f) {\n    func = [this](int i) { return i < (int)f.size() ? f[i]\
-    \ : 0; };\n  }\n  ofpsBase(const Func& _func) : func(_func) {}\n\n  template <typename\
-    \ F, typename = enable_if_t<is_invocable_r_v<mint, F&, int>>>\n  ofpsBase(F&&\
-    \ _func) : func(std::forward<F>(_func)) {}\n\n  ofpsBase(const ob& rhs) = delete;\n\
-    \  ob& operator=(const ob& rhs) = delete;\n  ofpsBase(ob&& rhs) noexcept = delete;\n\
-    \  ob& operator=(ob&& rhs) noexcept = delete;\n\n  void set_corner(const fps&\
-    \ _f) { f = _f; }\n  void set_func(const Func& _func) { func = _func; }\n\n  template\
-    \ <typename F>\n  auto set_func(F&& _func) -> enable_if_t<is_invocable_r_v<mint,\
+    \u30A4\u30D6\u30E9\u30EA\n */\n#line 13 \"fps/online-fps.hpp\"\n\nusing mint =\
+    \ LazyMontgomeryModInt<998244353>;\nusing fps = FormalPowerSeries<mint>;\n\nstruct\
+    \ ofpsBase {\n  using ob = ofpsBase;\n  using Func = internal::inplace_function<mint(int),\
+    \ 64>;\n  Func func;\n  fps f;\n  ofpsBase() {\n    func = [](int) -> mint { return\
+    \ 0; };\n  }\n  ofpsBase(const fps& _f) : f(_f) {\n    func = [this](int i) {\
+    \ return i < (int)f.size() ? f[i] : 0; };\n  }\n  ofpsBase(const Func& _func)\
+    \ : func(_func) {}\n\n  template <typename F, typename = enable_if_t<is_invocable_r_v<mint,\
+    \ F&, int>>>\n  ofpsBase(F&& _func) : func(std::forward<F>(_func)) {}\n\n  ofpsBase(const\
+    \ ob& rhs) = delete;\n  ob& operator=(const ob& rhs) = delete;\n  ofpsBase(ob&&\
+    \ rhs) noexcept = delete;\n  ob& operator=(ob&& rhs) noexcept = delete;\n\n  void\
+    \ set_corner(const fps& _f) { f = _f; }\n  void set_func(const Func& _func) {\
+    \ func = _func; }\n\n  template <typename F>\n  auto set_func(F&& _func) -> enable_if_t<is_invocable_r_v<mint,\
     \ F&, int>> {\n    func = std::forward<F>(_func);\n  }\n\n  mint get(int i) {\n\
     \    while ((int)f.size() <= i) f.push_back(std::invoke(func, f.size()));\n  \
     \  return f[i];\n  }\n  ob integral() {\n    return ob{[this](int i) { return\
@@ -531,7 +530,7 @@ data:
   isVerificationFile: false
   path: fps/online-fps.hpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-fps/yosupo-exp-ofps.test.cpp

@@ -143,30 +143,29 @@ data:
     \ deg, FPSBackendPriority<1>{});\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>\
     \ FormalPowerSeries<mint>::exp(int deg) const {\n  return fps_exp_impl(*this,\
     \ deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief \u591A\u9805\u5F0F/\u5F62\
-    \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n * @docs docs/fps/formal-power-series.md\n\
-    \ */\n#line 2 \"fps/fps-famous-series.hpp\"\n\n#line 4 \"fps/taylor-shift.hpp\"\
-    \n\n// calculate F(x + a)\ntemplate <typename mint>\nFormalPowerSeries<mint> TaylorShift(FormalPowerSeries<mint>\
+    \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n */\n#line 2 \"\
+    fps/fps-famous-series.hpp\"\n\n#line 4 \"fps/taylor-shift.hpp\"\n\n// calculate\
+    \ F(x + a)\ntemplate <typename mint>\nFormalPowerSeries<mint> TaylorShift(FormalPowerSeries<mint>\
     \ f, mint a,\n                                    Binomial<mint>& C) {\n  using\
     \ fps = FormalPowerSeries<mint>;\n  int N = f.size();\n  for (int i = 0; i < N;\
     \ i++) f[i] *= C.fac(i);\n  reverse(begin(f), end(f));\n  fps g(N, mint(1));\n\
     \  for (int i = 1; i < N; i++) g[i] = g[i - 1] * a * C.inv(i);\n  f = (f * g).pre(N);\n\
     \  reverse(begin(f), end(f));\n  for (int i = 0; i < N; i++) f[i] *= C.finv(i);\n\
-    \  return f;\n}\n\n/**\n * @brief \u5E73\u884C\u79FB\u52D5\n * @docs docs/fps/taylor-shift.md\n\
-    \ */\n#line 6 \"fps/fps-famous-series.hpp\"\n\ntemplate <typename mint>\nFormalPowerSeries<mint>\
-    \ Stirling1st(int N, Binomial<mint> &C) {\n  using fps = FormalPowerSeries<mint>;\n\
-    \  if (N <= 0) return fps{1};\n  int lg = 31 - __builtin_clz(N);\n  fps f = {0,\
-    \ 1};\n  for (int i = lg - 1; i >= 0; i--) {\n    int n = N >> i;\n    f *= TaylorShift(f,\
-    \ mint(n >> 1), C);\n    if (n & 1) f = (f << 1) + f * (n - 1);\n  }\n  return\
-    \ f;\n}\n\n// S(0, K), S(1, K), ..., S(upper, K) \u3092\u5217\u6319\ntemplate\
-    \ <typename mint>\nFormalPowerSeries<mint> Stirling1stRow(int K, int upper, Binomial<mint>\
-    \ &C) {\n  using fps = FormalPowerSeries<mint>;\n  if (upper < K) return {};\n\
-    \  fps f(upper + 1);\n  for (int i = 1; i < (int)f.size(); i++) f[i] = C.inv(i);\n\
-    \  f = f.pow(K) * C.finv(K);\n  for (int n = K; n <= upper; n++) f[n] *= C.fac(n);\n\
-    \  return f;\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint> Stirling2nd(int\
-    \ N, Binomial<mint> &C) {\n  using fps = FormalPowerSeries<mint>;\n  fps f(N +\
-    \ 1), g(N + 1);\n  for (int i = 0; i <= N; i++) {\n    f[i] = mint(i).pow(N) *\
-    \ C.finv(i);\n    g[i] = (i & 1) ? -C.finv(i) : C.finv(i);\n  }\n  return (f *\
-    \ g).pre(N + 1);\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint> Stirling2ndRow(int\
+    \  return f;\n}\n\n/**\n * @brief \u5E73\u884C\u79FB\u52D5\n */\n#line 6 \"fps/fps-famous-series.hpp\"\
+    \n\ntemplate <typename mint>\nFormalPowerSeries<mint> Stirling1st(int N, Binomial<mint>\
+    \ &C) {\n  using fps = FormalPowerSeries<mint>;\n  if (N <= 0) return fps{1};\n\
+    \  int lg = 31 - __builtin_clz(N);\n  fps f = {0, 1};\n  for (int i = lg - 1;\
+    \ i >= 0; i--) {\n    int n = N >> i;\n    f *= TaylorShift(f, mint(n >> 1), C);\n\
+    \    if (n & 1) f = (f << 1) + f * (n - 1);\n  }\n  return f;\n}\n\n// S(0, K),\
+    \ S(1, K), ..., S(upper, K) \u3092\u5217\u6319\ntemplate <typename mint>\nFormalPowerSeries<mint>\
+    \ Stirling1stRow(int K, int upper, Binomial<mint> &C) {\n  using fps = FormalPowerSeries<mint>;\n\
+    \  if (upper < K) return {};\n  fps f(upper + 1);\n  for (int i = 1; i < (int)f.size();\
+    \ i++) f[i] = C.inv(i);\n  f = f.pow(K) * C.finv(K);\n  for (int n = K; n <= upper;\
+    \ n++) f[n] *= C.fac(n);\n  return f;\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>\
+    \ Stirling2nd(int N, Binomial<mint> &C) {\n  using fps = FormalPowerSeries<mint>;\n\
+    \  fps f(N + 1), g(N + 1);\n  for (int i = 0; i <= N; i++) {\n    f[i] = mint(i).pow(N)\
+    \ * C.finv(i);\n    g[i] = (i & 1) ? -C.finv(i) : C.finv(i);\n  }\n  return (f\
+    \ * g).pre(N + 1);\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint> Stirling2ndRow(int\
     \ K, int upper, Binomial<mint> &C) {\n  using fps = FormalPowerSeries<mint>;\n\
     \  if (upper < K) return {};\n  fps f(upper + 1);\n  for (int i = 1; i <= upper;\
     \ i++) f[i] = C.finv(i);\n  f = f.pow(K) * C.finv(K);\n  for (int i = K; i <=\
@@ -213,7 +212,7 @@ data:
   isVerificationFile: false
   path: fps/fualhuber.hpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yuki/yuki-2580.test.cpp

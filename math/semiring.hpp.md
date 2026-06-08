@@ -16,7 +16,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/math/semiring.md
     document_title: "\u534A\u74B0\u30E9\u30A4\u30D6\u30E9\u30EA"
     links: []
   bundledCode: "#line 2 \"math/semiring.hpp\"\n\ntemplate <typename T, T (*add)(T,\
@@ -51,8 +50,7 @@ data:
     \ ostream &operator<<(ostream &os, Mat &p) {\n    for (int i = 0; i < N; i++)\
     \ {\n      os << \"[\";\n      for (int j = 0; j < N; j++) {\n        os << p[i][j].x\
     \ << (j == N - 1 ? \"]\\n\" : \",\");\n      }\n    }\n    return (os);\n  }\n\
-    };\n\n/**\n * @brief \u534A\u74B0\u30E9\u30A4\u30D6\u30E9\u30EA\n * @docs docs/math/semiring.md\n\
-    \ */\n"
+    };\n\n/**\n * @brief \u534A\u74B0\u30E9\u30A4\u30D6\u30E9\u30EA\n */\n"
   code: "#pragma once\n\ntemplate <typename T, T (*add)(T, T), T (*mul)(T, T), T (*I0)(),\
     \ T (*I1)()>\nstruct semiring {\n  T x;\n  semiring() : x(I0()) {}\n  semiring(T\
     \ y) : x(y) {}\n  static T id0() { return I0(); }\n  static T id1() { return I1();\
@@ -85,12 +83,12 @@ data:
     \ &p) {\n    for (int i = 0; i < N; i++) {\n      os << \"[\";\n      for (int\
     \ j = 0; j < N; j++) {\n        os << p[i][j].x << (j == N - 1 ? \"]\\n\" : \"\
     ,\");\n      }\n    }\n    return (os);\n  }\n};\n\n/**\n * @brief \u534A\u74B0\
-    \u30E9\u30A4\u30D6\u30E9\u30EA\n * @docs docs/math/semiring.md\n */\n"
+    \u30E9\u30A4\u30D6\u30E9\u30EA\n */\n"
   dependsOn: []
   isVerificationFile: false
   path: math/semiring.hpp
   requiredBy: []
-  timestamp: '2021-01-01 23:05:31+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yuki/yuki-1340-semiring.test.cpp
@@ -98,11 +96,9 @@ data:
   - verify/verify-unit-test/semiring.test.cpp
 documentation_of: math/semiring.hpp
 layout: document
-redirect_from:
-- /library/math/semiring.hpp
-- /library/math/semiring.hpp.html
 title: "\u534A\u74B0\u30E9\u30A4\u30D6\u30E9\u30EA"
 ---
+
 ## 半環ライブラリ
 
 #### 概要

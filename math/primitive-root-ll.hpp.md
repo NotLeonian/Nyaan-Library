@@ -219,13 +219,13 @@ data:
     \ 1);\n  sort(begin(ret), end(ret));\n  return ret;\n}\n\n}  // namespace fast_factorize\n\
     \nusing fast_factorize::divisors;\nusing fast_factorize::factor_count;\nusing\
     \ fast_factorize::factorize;\n\n/**\n * @brief \u9AD8\u901F\u7D20\u56E0\u6570\u5206\
-    \u89E3(Miller Rabin/Pollard's Rho)\n * @docs docs/prime/fast-factorize.md\n */\n\
-    #line 9 \"math/primitive-root-ll.hpp\"\n\nlong long primitive_root_ll(long long\
-    \ p) {\n  if (p == 2) return 1;\n  auto fs = factorize(p - 1);\n  sort(begin(fs),\
-    \ end(fs));\n  fs.erase(unique(begin(fs), end(fs)), end(fs));\n  for (int g =\
-    \ 2;; g++) {\n    int ok = 1;\n    for (auto& f : fs) {\n      if (internal::modpow<long\
-    \ long, __int128_t>(g, (p - 1) / f, p) == 1) {\n        ok = false;\n        break;\n\
-    \      }\n    }\n    if (ok) return g;\n  }\n  exit(1);\n}\n"
+    \u89E3(Miller Rabin/Pollard's Rho)\n */\n#line 9 \"math/primitive-root-ll.hpp\"\
+    \n\nlong long primitive_root_ll(long long p) {\n  if (p == 2) return 1;\n  auto\
+    \ fs = factorize(p - 1);\n  sort(begin(fs), end(fs));\n  fs.erase(unique(begin(fs),\
+    \ end(fs)), end(fs));\n  for (int g = 2;; g++) {\n    int ok = 1;\n    for (auto&\
+    \ f : fs) {\n      if (internal::modpow<long long, __int128_t>(g, (p - 1) / f,\
+    \ p) == 1) {\n        ok = false;\n        break;\n      }\n    }\n    if (ok)\
+    \ return g;\n  }\n  exit(1);\n}\n"
   code: "#pragma once\n\n#include <algorithm>\n#include <vector>\nusing namespace\
     \ std;\n\n#include \"../internal/internal-math.hpp\"\n#include \"../prime/fast-factorize.hpp\"\
     \n\nlong long primitive_root_ll(long long p) {\n  if (p == 2) return 1;\n  auto\
@@ -246,7 +246,7 @@ data:
   path: math/primitive-root-ll.hpp
   requiredBy:
   - ntt/ntt-64bit.hpp
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-math/yosupo-primitive-root.test.cpp

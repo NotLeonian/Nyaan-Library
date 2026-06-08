@@ -25,7 +25,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/multiplicative-function/mf-famous-series.md
     document_title: "\u6709\u540D\u306A\u4E57\u6CD5\u7684\u95A2\u6570"
     links: []
   bundledCode: "#line 2 \"multiplicative-function/mf-famous-series.hpp\"\n\n#line\
@@ -64,8 +63,7 @@ data:
     \ multiplicative_function::sigma1<T>> em(\n      n);\n  return em.run();\n}\n\n\
     template <typename T>\nstatic constexpr vector<T> totient(int n) {\n  enamurate_multiplicative_function<T,\
     \ multiplicative_function::totient<T>> em(\n      n);\n  return em.run();\n}\n\
-    \n/**\n * @brief \u6709\u540D\u306A\u4E57\u6CD5\u7684\u95A2\u6570\n * @docs docs/multiplicative-function/mf-famous-series.md\n\
-    \ */\n"
+    \n/**\n * @brief \u6709\u540D\u306A\u4E57\u6CD5\u7684\u95A2\u6570\n */\n"
   code: "#pragma once\n\n#include \"enamurate-multiplicative-function.hpp\"\n\nnamespace\
     \ multiplicative_function {\ntemplate <typename T>\nT moebius(int, int, int c)\
     \ {\n  return c == 0 ? 1 : c == 1 ? -1 : 0;\n}\ntemplate <typename T>\nT sigma0(int,\
@@ -81,8 +79,7 @@ data:
     \ em(\n      n);\n  return em.run();\n}\n\ntemplate <typename T>\nstatic constexpr\
     \ vector<T> totient(int n) {\n  enamurate_multiplicative_function<T, multiplicative_function::totient<T>>\
     \ em(\n      n);\n  return em.run();\n}\n\n/**\n * @brief \u6709\u540D\u306A\u4E57\
-    \u6CD5\u7684\u95A2\u6570\n * @docs docs/multiplicative-function/mf-famous-series.md\n\
-    \ */\n"
+    \u6CD5\u7684\u95A2\u6570\n */\n"
   dependsOn:
   - multiplicative-function/enamurate-multiplicative-function.hpp
   - prime/prime-enumerate.hpp
@@ -90,7 +87,7 @@ data:
   path: multiplicative-function/mf-famous-series.hpp
   requiredBy:
   - multiplicative-function/count-square-free.hpp
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-math/yosupo-count-squarefrees.test.cpp
@@ -98,11 +95,9 @@ data:
   - verify/verify-unit-test/sum-of-mf.test.cpp
 documentation_of: multiplicative-function/mf-famous-series.hpp
 layout: document
-redirect_from:
-- /library/multiplicative-function/mf-famous-series.hpp
-- /library/multiplicative-function/mf-famous-series.hpp.html
 title: "\u6709\u540D\u306A\u4E57\u6CD5\u7684\u95A2\u6570"
 ---
+
 ## 有名な乗法的関数
 
 来るべきDGF(ディリクレ母関数)の流行に備えて(本当に流行るのか？)、自分が理解していることをメモしておく…

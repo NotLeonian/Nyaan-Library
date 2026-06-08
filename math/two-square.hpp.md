@@ -219,28 +219,28 @@ data:
     \ 1);\n  sort(begin(ret), end(ret));\n  return ret;\n}\n\n}  // namespace fast_factorize\n\
     \nusing fast_factorize::divisors;\nusing fast_factorize::factor_count;\nusing\
     \ fast_factorize::factorize;\n\n/**\n * @brief \u9AD8\u901F\u7D20\u56E0\u6570\u5206\
-    \u89E3(Miller Rabin/Pollard's Rho)\n * @docs docs/prime/fast-factorize.md\n */\n\
-    #line 2 \"math/gaussian-integer.hpp\"\n\n// x + yi\ntemplate <typename T>\nstruct\
-    \ Gaussian_Integer {\n  T x, y;\n  using G = Gaussian_Integer;\n\n  Gaussian_Integer(T\
-    \ _x = 0, T _y = 0) : x(_x), y(_y) {}\n  Gaussian_Integer(const pair<T, T>& p)\
-    \ : x(p.fi), y(p.se) {}\n\n  T norm() const { return x * x + y * y; }\n  G conj()\
-    \ const { return G{x, -y}; }\n\n  G operator+(const G& r) const { return G{x +\
-    \ r.x, y + r.y}; }\n  G operator-(const G& r) const { return G{x - r.x, y - r.y};\
-    \ }\n  G operator*(const G& r) const {\n    return G{x * r.x - y * r.y, x * r.y\
-    \ + y * r.x};\n  }\n  G operator/(const G& r) const {\n    G g = G{*this} * r.conj();\n\
-    \    T n = r.norm();\n    g.x += n / 2, g.y += n / 2;\n    return G{g.x / n -\
-    \ (g.x % n < 0), g.y / n - (g.y % n < 0)};\n  }\n  G operator%(const G& r) const\
-    \ { return G{*this} - G{*this} / r * r; }\n\n  G& operator+=(const G& r) { return\
-    \ *this = G{*this} + r; }\n  G& operator-=(const G& r) { return *this = G{*this}\
-    \ - r; }\n  G& operator*=(const G& r) { return *this = G{*this} * r; }\n  G& operator/=(const\
-    \ G& r) { return *this = G{*this} / r; }\n  G& operator%=(const G& r) { return\
-    \ *this = G{*this} % r; }\n  G operator-() const { return G{-x, -y}; }\n  G operator+()\
-    \ const { return G{*this}; }\n  bool operator==(const G& g) const { return x ==\
-    \ g.x && y == g.y; }\n  bool operator!=(const G& g) const { return x != g.x ||\
-    \ y != g.y; }\n\n  G pow(__int128_t e) const {\n    G res{1}, a{*this};\n    while\
-    \ (e) {\n      if (e & 1) res *= a;\n      a *= a, e >>= 1;\n    }\n    return\
-    \ res;\n  }\n\n  friend G gcd(G a, G b) {\n    while (b != G{0, 0}) {\n      trc(a,\
-    \ b, a / b, a % b);\n      swap(a %= b, b);\n    }\n    return a;\n  }\n  friend\
+    \u89E3(Miller Rabin/Pollard's Rho)\n */\n#line 2 \"math/gaussian-integer.hpp\"\
+    \n\n// x + yi\ntemplate <typename T>\nstruct Gaussian_Integer {\n  T x, y;\n \
+    \ using G = Gaussian_Integer;\n\n  Gaussian_Integer(T _x = 0, T _y = 0) : x(_x),\
+    \ y(_y) {}\n  Gaussian_Integer(const pair<T, T>& p) : x(p.fi), y(p.se) {}\n\n\
+    \  T norm() const { return x * x + y * y; }\n  G conj() const { return G{x, -y};\
+    \ }\n\n  G operator+(const G& r) const { return G{x + r.x, y + r.y}; }\n  G operator-(const\
+    \ G& r) const { return G{x - r.x, y - r.y}; }\n  G operator*(const G& r) const\
+    \ {\n    return G{x * r.x - y * r.y, x * r.y + y * r.x};\n  }\n  G operator/(const\
+    \ G& r) const {\n    G g = G{*this} * r.conj();\n    T n = r.norm();\n    g.x\
+    \ += n / 2, g.y += n / 2;\n    return G{g.x / n - (g.x % n < 0), g.y / n - (g.y\
+    \ % n < 0)};\n  }\n  G operator%(const G& r) const { return G{*this} - G{*this}\
+    \ / r * r; }\n\n  G& operator+=(const G& r) { return *this = G{*this} + r; }\n\
+    \  G& operator-=(const G& r) { return *this = G{*this} - r; }\n  G& operator*=(const\
+    \ G& r) { return *this = G{*this} * r; }\n  G& operator/=(const G& r) { return\
+    \ *this = G{*this} / r; }\n  G& operator%=(const G& r) { return *this = G{*this}\
+    \ % r; }\n  G operator-() const { return G{-x, -y}; }\n  G operator+() const {\
+    \ return G{*this}; }\n  bool operator==(const G& g) const { return x == g.x &&\
+    \ y == g.y; }\n  bool operator!=(const G& g) const { return x != g.x || y != g.y;\
+    \ }\n\n  G pow(__int128_t e) const {\n    G res{1}, a{*this};\n    while (e) {\n\
+    \      if (e & 1) res *= a;\n      a *= a, e >>= 1;\n    }\n    return res;\n\
+    \  }\n\n  friend G gcd(G a, G b) {\n    while (b != G{0, 0}) {\n      trc(a, b,\
+    \ a / b, a % b);\n      swap(a %= b, b);\n    }\n    return a;\n  }\n  friend\
     \ ostream& operator<<(ostream& os, const G& rhs) {\n    return os << rhs.x <<\
     \ \" \" << rhs.y;\n  }\n};\n#line 6 \"math/two-square.hpp\"\n\n// \u89E3\u304C\
     \u5B58\u5728\u3057\u306A\u3044\u5834\u5408 (-1, -1) \u3092\u8FD4\u3059\nGaussian_Integer<__int128_t>\
@@ -322,7 +322,7 @@ data:
   isVerificationFile: false
   path: math/two-square.hpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-math/yosupo-two-square-sum.test.cpp

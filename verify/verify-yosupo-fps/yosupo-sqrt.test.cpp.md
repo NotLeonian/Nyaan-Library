@@ -442,9 +442,9 @@ data:
     \ mint>\nFormalPowerSeries<mint> FormalPowerSeries<mint>::exp(int deg) const {\n\
     \  return fps_exp_impl(*this, deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief\
     \ \u591A\u9805\u5F0F/\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\
-    \u30EA\n * @docs docs/fps/formal-power-series.md\n */\n#line 5 \"fps/ntt-friendly-fps.hpp\"\
-    \n\ntemplate <typename mint>\nvoid fps_set_fft_impl(FormalPowerSeries<mint>*,\
-    \ FPSBackendPriority<1>) {\n  if (!FormalPowerSeries<mint>::ntt_ptr) {\n    FormalPowerSeries<mint>::ntt_ptr\
+    \u30EA\n */\n#line 5 \"fps/ntt-friendly-fps.hpp\"\n\ntemplate <typename mint>\n\
+    void fps_set_fft_impl(FormalPowerSeries<mint>*, FPSBackendPriority<1>) {\n  if\
+    \ (!FormalPowerSeries<mint>::ntt_ptr) {\n    FormalPowerSeries<mint>::ntt_ptr\
     \ = new NTT<mint>;\n  }\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>&\
     \ fps_multiply_impl(FormalPowerSeries<mint>& f,\n                            \
     \               const FormalPowerSeries<mint>& r,\n                          \
@@ -496,37 +496,36 @@ data:
     \ begin(x) + m, mint(0));\n    x.ntt();\n    for (int i = 0; i < 2 * m; ++i) x[i]\
     \ *= y[i];\n    x.intt();\n    b.insert(end(b), begin(x) + m, end(x));\n  }\n\
     \  return fps{begin(b), begin(b) + deg};\n}\n\n/**\n * @brief NTT mod\u7528FPS\u30E9\
-    \u30A4\u30D6\u30E9\u30EA\n * @docs docs/fps/ntt-friendly-fps.md\n */\n#line 2\
-    \ \"modint/arbitrary-montgomery-modint.hpp\"\n\n#line 4 \"modint/arbitrary-montgomery-modint.hpp\"\
-    \nusing namespace std;\n\ntemplate <typename Int, typename UInt, typename Long,\
-    \ typename ULong, int id>\nstruct ArbitraryLazyMontgomeryModIntBase {\n  using\
-    \ mint = ArbitraryLazyMontgomeryModIntBase;\n\n  inline static UInt mod;\n  inline\
-    \ static UInt r;\n  inline static UInt n2;\n  static constexpr int bit_length\
-    \ = sizeof(UInt) * 8;\n\n  static UInt get_r() {\n    UInt ret = mod;\n    while\
-    \ (mod * ret != 1) ret *= UInt(2) - mod * ret;\n    return ret;\n  }\n  static\
-    \ void set_mod(UInt m) {\n    assert(m < (UInt(1u) << (bit_length - 2)));\n  \
-    \  assert((m & 1) == 1);\n    mod = m, n2 = -ULong(m) % m, r = get_r();\n  }\n\
-    \  UInt a;\n\n  ArbitraryLazyMontgomeryModIntBase() : a(0) {}\n  ArbitraryLazyMontgomeryModIntBase(const\
-    \ Long &b)\n      : a(reduce(ULong(b % mod + mod) * n2)){};\n\n  static UInt reduce(const\
-    \ ULong &b) {\n    return (b + ULong(UInt(b) * UInt(-r)) * mod) >> bit_length;\n\
-    \  }\n\n  mint &operator+=(const mint &b) {\n    if (Int(a += b.a - 2 * mod) <\
-    \ 0) a += 2 * mod;\n    return *this;\n  }\n  mint &operator-=(const mint &b)\
-    \ {\n    if (Int(a -= b.a) < 0) a += 2 * mod;\n    return *this;\n  }\n  mint\
-    \ &operator*=(const mint &b) {\n    a = reduce(ULong(a) * b.a);\n    return *this;\n\
-    \  }\n  mint &operator/=(const mint &b) {\n    *this *= b.inverse();\n    return\
-    \ *this;\n  }\n\n  mint operator+(const mint &b) const { return mint(*this) +=\
-    \ b; }\n  mint operator-(const mint &b) const { return mint(*this) -= b; }\n \
-    \ mint operator*(const mint &b) const { return mint(*this) *= b; }\n  mint operator/(const\
-    \ mint &b) const { return mint(*this) /= b; }\n\n  bool operator==(const mint\
-    \ &b) const {\n    return (a >= mod ? a - mod : a) == (b.a >= mod ? b.a - mod\
-    \ : b.a);\n  }\n  bool operator!=(const mint &b) const {\n    return (a >= mod\
-    \ ? a - mod : a) != (b.a >= mod ? b.a - mod : b.a);\n  }\n  mint operator-() const\
-    \ { return mint(0) - mint(*this); }\n  mint operator+() const { return mint(*this);\
-    \ }\n\n  mint pow(ULong n) const {\n    mint ret(1), mul(*this);\n    while (n\
-    \ > 0) {\n      if (n & 1) ret *= mul;\n      mul *= mul, n >>= 1;\n    }\n  \
-    \  return ret;\n  }\n\n  friend ostream &operator<<(ostream &os, const mint &b)\
-    \ {\n    return os << b.get();\n  }\n\n  friend istream &operator>>(istream &is,\
-    \ mint &b) {\n    Long t;\n    is >> t;\n    b = ArbitraryLazyMontgomeryModIntBase(t);\n\
+    \u30A4\u30D6\u30E9\u30EA\n */\n#line 2 \"modint/arbitrary-montgomery-modint.hpp\"\
+    \n\n#line 4 \"modint/arbitrary-montgomery-modint.hpp\"\nusing namespace std;\n\
+    \ntemplate <typename Int, typename UInt, typename Long, typename ULong, int id>\n\
+    struct ArbitraryLazyMontgomeryModIntBase {\n  using mint = ArbitraryLazyMontgomeryModIntBase;\n\
+    \n  inline static UInt mod;\n  inline static UInt r;\n  inline static UInt n2;\n\
+    \  static constexpr int bit_length = sizeof(UInt) * 8;\n\n  static UInt get_r()\
+    \ {\n    UInt ret = mod;\n    while (mod * ret != 1) ret *= UInt(2) - mod * ret;\n\
+    \    return ret;\n  }\n  static void set_mod(UInt m) {\n    assert(m < (UInt(1u)\
+    \ << (bit_length - 2)));\n    assert((m & 1) == 1);\n    mod = m, n2 = -ULong(m)\
+    \ % m, r = get_r();\n  }\n  UInt a;\n\n  ArbitraryLazyMontgomeryModIntBase() :\
+    \ a(0) {}\n  ArbitraryLazyMontgomeryModIntBase(const Long &b)\n      : a(reduce(ULong(b\
+    \ % mod + mod) * n2)){};\n\n  static UInt reduce(const ULong &b) {\n    return\
+    \ (b + ULong(UInt(b) * UInt(-r)) * mod) >> bit_length;\n  }\n\n  mint &operator+=(const\
+    \ mint &b) {\n    if (Int(a += b.a - 2 * mod) < 0) a += 2 * mod;\n    return *this;\n\
+    \  }\n  mint &operator-=(const mint &b) {\n    if (Int(a -= b.a) < 0) a += 2 *\
+    \ mod;\n    return *this;\n  }\n  mint &operator*=(const mint &b) {\n    a = reduce(ULong(a)\
+    \ * b.a);\n    return *this;\n  }\n  mint &operator/=(const mint &b) {\n    *this\
+    \ *= b.inverse();\n    return *this;\n  }\n\n  mint operator+(const mint &b) const\
+    \ { return mint(*this) += b; }\n  mint operator-(const mint &b) const { return\
+    \ mint(*this) -= b; }\n  mint operator*(const mint &b) const { return mint(*this)\
+    \ *= b; }\n  mint operator/(const mint &b) const { return mint(*this) /= b; }\n\
+    \n  bool operator==(const mint &b) const {\n    return (a >= mod ? a - mod : a)\
+    \ == (b.a >= mod ? b.a - mod : b.a);\n  }\n  bool operator!=(const mint &b) const\
+    \ {\n    return (a >= mod ? a - mod : a) != (b.a >= mod ? b.a - mod : b.a);\n\
+    \  }\n  mint operator-() const { return mint(0) - mint(*this); }\n  mint operator+()\
+    \ const { return mint(*this); }\n\n  mint pow(ULong n) const {\n    mint ret(1),\
+    \ mul(*this);\n    while (n > 0) {\n      if (n & 1) ret *= mul;\n      mul *=\
+    \ mul, n >>= 1;\n    }\n    return ret;\n  }\n\n  friend ostream &operator<<(ostream\
+    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend istream &operator>>(istream\
+    \ &is, mint &b) {\n    Long t;\n    is >> t;\n    b = ArbitraryLazyMontgomeryModIntBase(t);\n\
     \    return (is);\n  }\n\n  mint inverse() const {\n    Int x = get(), y = get_mod(),\
     \ u = 1, v = 0;\n    while (y > 0) {\n      Int t = x / y;\n      swap(x -= t\
     \ * y, y);\n      swap(u -= t * v, v);\n    }\n    return mint{u};\n  }\n\n  UInt\
@@ -547,22 +546,21 @@ data:
     \  while (y != 1) {\n    int64_t j = 0;\n    Mint t = y;\n    while (t != one)\
     \ {\n      j += 1;\n      t *= t;\n    }\n    z = z.pow(int64_t(1) << (e - j -\
     \ 1));\n    x *= z;\n    z *= z;\n    y *= z;\n    e = j;\n  }\n  return x.get();\n\
-    }\n\n/**\n * @brief mod sqrt(Tonelli-Shanks algorithm)\n * @docs docs/modulo/mod-sqrt.md\n\
-    \ */\n#line 4 \"fps/fps-sqrt.hpp\"\n\ntemplate <typename mint>\nFormalPowerSeries<mint>\
-    \ sqrt(const FormalPowerSeries<mint> &f, int deg = -1) {\n  if (deg == -1) deg\
-    \ = (int)f.size();\n  if ((int)f.size() == 0) return FormalPowerSeries<mint>(deg,\
-    \ 0);\n  if (f[0] == mint(0)) {\n    for (int i = 1; i < (int)f.size(); i++) {\n\
-    \      if (f[i] != mint(0)) {\n        if (i & 1) return {};\n        if (deg\
-    \ - i / 2 <= 0) break;\n        auto ret = sqrt(f >> i, deg - i / 2);\n      \
-    \  if (ret.empty()) return {};\n        ret = ret << (i / 2);\n        if ((int)ret.size()\
-    \ < deg) ret.resize(deg, mint(0));\n        return ret;\n      }\n    }\n    return\
-    \ FormalPowerSeries<mint>(deg, 0);\n  }\n\n  int64_t sqr = mod_sqrt(f[0].get(),\
-    \ mint::get_mod());\n  if (sqr == -1) return {};\n  assert(sqr * sqr % mint::get_mod()\
-    \ == f[0].get());\n  FormalPowerSeries<mint> ret = {mint(sqr)};\n  mint inv2 =\
-    \ mint(2).inverse();\n  for (int i = 1; i < deg; i <<= 1) {\n    ret = (ret +\
-    \ f.pre(i << 1) * ret.inv(i << 1)) * inv2;\n  }\n  return ret.pre(deg);\n}\n\n\
-    /**\n * @brief \u5E73\u65B9\u6839\n * @docs docs/fps/fps-sqrt.md\n */\n#line 7\
-    \ \"verify/verify-yosupo-fps/yosupo-sqrt.test.cpp\"\n\nusing namespace Nyaan;\
+    }\n\n/**\n * @brief mod sqrt(Tonelli-Shanks algorithm)\n */\n#line 4 \"fps/fps-sqrt.hpp\"\
+    \n\ntemplate <typename mint>\nFormalPowerSeries<mint> sqrt(const FormalPowerSeries<mint>\
+    \ &f, int deg = -1) {\n  if (deg == -1) deg = (int)f.size();\n  if ((int)f.size()\
+    \ == 0) return FormalPowerSeries<mint>(deg, 0);\n  if (f[0] == mint(0)) {\n  \
+    \  for (int i = 1; i < (int)f.size(); i++) {\n      if (f[i] != mint(0)) {\n \
+    \       if (i & 1) return {};\n        if (deg - i / 2 <= 0) break;\n        auto\
+    \ ret = sqrt(f >> i, deg - i / 2);\n        if (ret.empty()) return {};\n    \
+    \    ret = ret << (i / 2);\n        if ((int)ret.size() < deg) ret.resize(deg,\
+    \ mint(0));\n        return ret;\n      }\n    }\n    return FormalPowerSeries<mint>(deg,\
+    \ 0);\n  }\n\n  int64_t sqr = mod_sqrt(f[0].get(), mint::get_mod());\n  if (sqr\
+    \ == -1) return {};\n  assert(sqr * sqr % mint::get_mod() == f[0].get());\n  FormalPowerSeries<mint>\
+    \ ret = {mint(sqr)};\n  mint inv2 = mint(2).inverse();\n  for (int i = 1; i <\
+    \ deg; i <<= 1) {\n    ret = (ret + f.pre(i << 1) * ret.inv(i << 1)) * inv2;\n\
+    \  }\n  return ret.pre(deg);\n}\n\n/**\n * @brief \u5E73\u65B9\u6839\n */\n#line\
+    \ 7 \"verify/verify-yosupo-fps/yosupo-sqrt.test.cpp\"\n\nusing namespace Nyaan;\
     \ void Nyaan::solve() {\n  using mint = LazyMontgomeryModInt<998244353>;\n  using\
     \ fps = FormalPowerSeries<mint>;\n  ini(N);\n  fps f(N);\n  in(f);\n  auto g =\
     \ sqrt(f);\n  if(g.empty()) out(-1);\n  else out(g);\n}\n"
@@ -589,7 +587,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-fps/yosupo-sqrt.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-fps/yosupo-sqrt.test.cpp

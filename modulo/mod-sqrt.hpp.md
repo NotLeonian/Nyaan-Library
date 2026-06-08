@@ -22,7 +22,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/modulo/mod-sqrt.md
     document_title: mod sqrt(Tonelli-Shanks algorithm)
     links: []
   bundledCode: "#line 2 \"modint/arbitrary-montgomery-modint.hpp\"\n\n#include <iostream>\n\
@@ -75,8 +74,7 @@ data:
     \  while (y != 1) {\n    int64_t j = 0;\n    Mint t = y;\n    while (t != one)\
     \ {\n      j += 1;\n      t *= t;\n    }\n    z = z.pow(int64_t(1) << (e - j -\
     \ 1));\n    x *= z;\n    z *= z;\n    y *= z;\n    e = j;\n  }\n  return x.get();\n\
-    }\n\n/**\n * @brief mod sqrt(Tonelli-Shanks algorithm)\n * @docs docs/modulo/mod-sqrt.md\n\
-    \ */\n"
+    }\n\n/**\n * @brief mod sqrt(Tonelli-Shanks algorithm)\n */\n"
   code: "#pragma once\n#include \"../modint/arbitrary-montgomery-modint.hpp\"\n\n\
     int64_t mod_sqrt(const int64_t &a, const int64_t &p) {\n  assert(0 <= a && a <\
     \ p);\n  if (a < 2) return a;\n  using Mint = ArbitraryLazyMontgomeryModInt<409075245>;\n\
@@ -87,8 +85,7 @@ data:
     \  while (y != 1) {\n    int64_t j = 0;\n    Mint t = y;\n    while (t != one)\
     \ {\n      j += 1;\n      t *= t;\n    }\n    z = z.pow(int64_t(1) << (e - j -\
     \ 1));\n    x *= z;\n    z *= z;\n    y *= z;\n    e = j;\n  }\n  return x.get();\n\
-    }\n\n/**\n * @brief mod sqrt(Tonelli-Shanks algorithm)\n * @docs docs/modulo/mod-sqrt.md\n\
-    \ */\n"
+    }\n\n/**\n * @brief mod sqrt(Tonelli-Shanks algorithm)\n */\n"
   dependsOn:
   - modint/arbitrary-montgomery-modint.hpp
   isVerificationFile: false
@@ -96,18 +93,16 @@ data:
   requiredBy:
   - fps/fps-sqrt.hpp
   - modulo/quadratic-equation.hpp
-  timestamp: '2023-05-29 20:16:02+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-fps/yosupo-sqrt.test.cpp
   - verify/verify-yosupo-math/yosupo-mod-sqrt.test.cpp
 documentation_of: modulo/mod-sqrt.hpp
 layout: document
-redirect_from:
-- /library/modulo/mod-sqrt.hpp
-- /library/modulo/mod-sqrt.hpp.html
 title: mod sqrt(Tonelli-Shanks algorithm)
 ---
+
 ## mod sqrt(Tonelli-Shanks algorithm)
 
 整数$a$、素数$p$に対して$x^2 \equiv a \mod p$を満たす$x$を$\mathrm{O}(\log ^2 p)$で計算するライブラリ。

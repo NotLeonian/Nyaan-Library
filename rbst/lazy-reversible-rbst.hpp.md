@@ -14,7 +14,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/rbst/lazy-reversible-rbst.md
     document_title: "\u9045\u5EF6\u4F1D\u642C\u53CD\u8EE2\u53EF\u80FD\u4E71\u629E\u5E73\
       \u8861\u4E8C\u5206\u6728"
     links: []
@@ -76,8 +75,7 @@ data:
     \ (t->r) propagate(t->r, t->lazy);\n      t->lazy = E();\n    }\n  }\n\n  void\
     \ propagate(Ptr t, const E &x) {\n    t->lazy = h(t->lazy, x);\n    t->key = g(t->key,\
     \ x);\n    t->sum = g(t->sum, x);\n  }\n};\n\n/**\n * @brief \u9045\u5EF6\u4F1D\
-    \u642C\u53CD\u8EE2\u53EF\u80FD\u4E71\u629E\u5E73\u8861\u4E8C\u5206\u6728\n * @docs\
-    \ docs/rbst/lazy-reversible-rbst.md\n */\n"
+    \u642C\u53CD\u8EE2\u53EF\u80FD\u4E71\u629E\u5E73\u8861\u4E8C\u5206\u6728\n */\n"
   code: "#pragma once\n\n#include \"rbst-base.hpp\"\n\ntemplate <typename T, typename\
     \ E>\nstruct LazyReversibleRBSTNode {\n  typename RBSTBase<LazyReversibleRBSTNode>::Ptr\
     \ l, r;\n  T key, sum;\n  E lazy;\n  int cnt;\n  bool rev;\n\n  LazyReversibleRBSTNode(const\
@@ -105,25 +103,22 @@ data:
     \ (t->r) propagate(t->r, t->lazy);\n      t->lazy = E();\n    }\n  }\n\n  void\
     \ propagate(Ptr t, const E &x) {\n    t->lazy = h(t->lazy, x);\n    t->key = g(t->key,\
     \ x);\n    t->sum = g(t->sum, x);\n  }\n};\n\n/**\n * @brief \u9045\u5EF6\u4F1D\
-    \u642C\u53CD\u8EE2\u53EF\u80FD\u4E71\u629E\u5E73\u8861\u4E8C\u5206\u6728\n * @docs\
-    \ docs/rbst/lazy-reversible-rbst.md\n */\n"
+    \u642C\u53CD\u8EE2\u53EF\u80FD\u4E71\u629E\u5E73\u8861\u4E8C\u5206\u6728\n */\n"
   dependsOn:
   - rbst/rbst-base.hpp
   isVerificationFile: false
   path: rbst/lazy-reversible-rbst.hpp
   requiredBy: []
-  timestamp: '2023-08-10 13:25:59+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ds/yosupo-dynamic-sequence-range-affine-range-sum.test.cpp
 documentation_of: rbst/lazy-reversible-rbst.hpp
 layout: document
-redirect_from:
-- /library/rbst/lazy-reversible-rbst.hpp
-- /library/rbst/lazy-reversible-rbst.hpp.html
 title: "\u9045\u5EF6\u4F1D\u642C\u53CD\u8EE2\u53EF\u80FD\u4E71\u629E\u5E73\u8861\u4E8C\
   \u5206\u6728"
 ---
+
 ## 遅延伝搬反転可能乱択平衡二分木
 
 強すぎてAtCoderRated出禁になった最強データ構造・平衡二分木のRBSTによる実装。

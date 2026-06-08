@@ -10,7 +10,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/data-structure/binary-trie.md
     document_title: Binary Trie
     links: []
   bundledCode: "#line 2 \"data-structure/binary-trie.hpp\"\n\ntemplate <typename T,\
@@ -62,7 +61,7 @@ data:
     \    } else {\n      return get_kth_(n->nxt[(lazy >> bit_idx) & 1], k, bit_idx\
     \ - 1);\n    }\n  }\n\n public:\n  pair<T, Container &> get_kth(int64_t k) { return\
     \ get_kth_(root, k, MAX_LOG); }\n\n  void operate_xor(T x) { lazy ^= x; }\n};\n\
-    \n/**\n * @brief Binary Trie\n * @docs docs/data-structure/binary-trie.md\n */\n"
+    \n/**\n * @brief Binary Trie\n */\n"
   code: "#pragma once\n\ntemplate <typename T, int MAX_LOG, int NODES = 16777216>\n\
     struct BinaryTrie {\n  using Container = vector<int>;\n  struct Node {\n    Node\
     \ *nxt[2];\n    int exist;\n    Container accept;\n    Node() {}\n  };\n\n  Node\
@@ -112,22 +111,20 @@ data:
     \    } else {\n      return get_kth_(n->nxt[(lazy >> bit_idx) & 1], k, bit_idx\
     \ - 1);\n    }\n  }\n\n public:\n  pair<T, Container &> get_kth(int64_t k) { return\
     \ get_kth_(root, k, MAX_LOG); }\n\n  void operate_xor(T x) { lazy ^= x; }\n};\n\
-    \n/**\n * @brief Binary Trie\n * @docs docs/data-structure/binary-trie.md\n */\n"
+    \n/**\n * @brief Binary Trie\n */\n"
   dependsOn: []
   isVerificationFile: false
   path: data-structure/binary-trie.hpp
   requiredBy: []
-  timestamp: '2020-12-05 07:59:51+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ds/yosupo-binary-trie.test.cpp
 documentation_of: data-structure/binary-trie.hpp
 layout: document
-redirect_from:
-- /library/data-structure/binary-trie.hpp
-- /library/data-structure/binary-trie.hpp.html
 title: Binary Trie
 ---
+
 ## Binary Trie
 
 トライ木の辺に対応する文字を0/1に限定することで非負整数を管理できるようにしたデータ構造。

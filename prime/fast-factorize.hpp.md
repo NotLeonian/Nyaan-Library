@@ -76,7 +76,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/prime/fast-factorize.md
     document_title: "\u9AD8\u901F\u7D20\u56E0\u6570\u5206\u89E3(Miller Rabin/Pollard's\
       \ Rho)"
     links: []
@@ -260,7 +259,7 @@ data:
     \ 1);\n  sort(begin(ret), end(ret));\n  return ret;\n}\n\n}  // namespace fast_factorize\n\
     \nusing fast_factorize::divisors;\nusing fast_factorize::factor_count;\nusing\
     \ fast_factorize::factorize;\n\n/**\n * @brief \u9AD8\u901F\u7D20\u56E0\u6570\u5206\
-    \u89E3(Miller Rabin/Pollard's Rho)\n * @docs docs/prime/fast-factorize.md\n */\n"
+    \u89E3(Miller Rabin/Pollard's Rho)\n */\n"
   code: "#pragma once\n\n#include <cstdint>\n#include <numeric>\n#include <vector>\n\
     using namespace std;\n\n#include \"../internal/internal-math.hpp\"\n#include \"\
     ../misc/rng.hpp\"\n#include \"../modint/arbitrary-montgomery-modint.hpp\"\n#include\
@@ -295,7 +294,7 @@ data:
     \  return ret;\n}\n\n}  // namespace fast_factorize\n\nusing fast_factorize::divisors;\n\
     using fast_factorize::factor_count;\nusing fast_factorize::factorize;\n\n/**\n\
     \ * @brief \u9AD8\u901F\u7D20\u56E0\u6570\u5206\u89E3(Miller Rabin/Pollard's Rho)\n\
-    \ * @docs docs/prime/fast-factorize.md\n */\n"
+    \ */\n"
   dependsOn:
   - internal/internal-math.hpp
   - internal/internal-type-traits.hpp
@@ -311,7 +310,7 @@ data:
   - ntt/multivariate-circular-convolution.hpp
   - ntt/ntt-64bit.hpp
   - modulo/mod-kth-root.hpp
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ntt/yosupo-multivariate-circular-convolution.test.cpp
@@ -328,11 +327,9 @@ data:
   - verify/verify-unit-test/factorize.test.cpp
 documentation_of: prime/fast-factorize.hpp
 layout: document
-redirect_from:
-- /library/prime/fast-factorize.hpp
-- /library/prime/fast-factorize.hpp.html
 title: "\u9AD8\u901F\u7D20\u56E0\u6570\u5206\u89E3(Miller Rabin/Pollard's Rho)"
 ---
+
 ## 高速な素因数分解
 
 ミラーラビン素数判定法とポラード・ロー素因数分解法を組み合わせることで$\mathrm{O}(N^{\frac{1}{4}})$で素因数分解を行うライブラリ。

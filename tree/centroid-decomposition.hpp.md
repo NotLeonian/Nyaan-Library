@@ -13,7 +13,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/tree/centroid-decomposition.md
     document_title: Centroid Decomposition
     links: []
   bundledCode: "#line 2 \"tree/centroid-decomposition.hpp\"\n\n\n\ntemplate <typename\
@@ -31,8 +30,7 @@ data:
     \   v[centroid] = true;\n    for (auto &dst : g[centroid]) {\n      if (!v[dst])\
     \ {\n        int nxt = build_dfs(dst);\n        if (centroid != nxt) tree[centroid].emplace_back(nxt);\n\
     \      }\n    }\n    v[centroid] = false;\n    return centroid;\n  }\n};\n\n/**\n\
-    \ * @brief Centroid Decomposition\n * @docs docs/tree/centroid-decomposition.md\n\
-    \ */\n"
+    \ * @brief Centroid Decomposition\n */\n"
   code: "#pragma once\n\n\n\ntemplate <typename G>\nstruct CentroidDecomposition {\n\
     \  const G &g;\n  vector<int> sub;\n  vector<bool> v;\n  vector<vector<int>> tree;\n\
     \  int root;\n\n  CentroidDecomposition(const G &g_, int isbuild = true) : g(g_)\
@@ -48,23 +46,21 @@ data:
     \ for (auto &dst : g[centroid]) {\n      if (!v[dst]) {\n        int nxt = build_dfs(dst);\n\
     \        if (centroid != nxt) tree[centroid].emplace_back(nxt);\n      }\n   \
     \ }\n    v[centroid] = false;\n    return centroid;\n  }\n};\n\n/**\n * @brief\
-    \ Centroid Decomposition\n * @docs docs/tree/centroid-decomposition.md\n */"
+    \ Centroid Decomposition\n */"
   dependsOn: []
   isVerificationFile: false
   path: tree/centroid-decomposition.hpp
   requiredBy:
   - tree/frequency-table-of-tree-distance.hpp
-  timestamp: '2020-12-05 07:59:51+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-graph/yosupo-frequency-table-of-tree-distance.test.cpp
 documentation_of: tree/centroid-decomposition.hpp
 layout: document
-redirect_from:
-- /library/tree/centroid-decomposition.hpp
-- /library/tree/centroid-decomposition.hpp.html
 title: Centroid Decomposition
 ---
+
 ## 重心分解
 
 #### 概要

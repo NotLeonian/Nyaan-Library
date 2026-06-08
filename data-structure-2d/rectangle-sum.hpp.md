@@ -59,10 +59,10 @@ data:
     \ *n, ll a, ll b) { return query_(a, b, n, 0, N); }\n  T query(int t, ll a, ll\
     \ b) { return query_(a, b, roots[t], 0, N); }\n  T query(ll a, ll b) { return\
     \ query_(a, b, roots.back(), 0, N); }\n\n  Node *new_tree() { return nil; }\n\
-    };\n\n/**\n * @brief \u6C38\u7D9A\u30BB\u30B0\u30E1\u30F3\u30C8\u6728\n * @docs\
-    \ docs/segment-tree/persistent-segment-tree.md\n */\n#line 6 \"data-structure-2d/rectangle-sum.hpp\"\
-    \n\ntemplate <typename T, typename U, typename F>\nstruct RectangleSum {\n  PersistentSegmentTree<U,\
-    \ F> seg;\n  vector<T> xs, ys;\n  vector<U> ws;\n  vector<int> ord;\n\n  RectangleSum(const\
+    };\n\n/**\n * @brief \u6C38\u7D9A\u30BB\u30B0\u30E1\u30F3\u30C8\u6728\n */\n#line\
+    \ 6 \"data-structure-2d/rectangle-sum.hpp\"\n\ntemplate <typename T, typename\
+    \ U, typename F>\nstruct RectangleSum {\n  PersistentSegmentTree<U, F> seg;\n\
+    \  vector<T> xs, ys;\n  vector<U> ws;\n  vector<int> ord;\n\n  RectangleSum(const\
     \ vector<T> &xs_, const vector<T> &ys_, const vector<U> &ws_,\n              \
     \ const F &f)\n      : seg({(int)xs_.size() + 1, f, U(0)}) {\n    int N = xs_.size();\n\
     \    xs.reserve(N);\n    ys.reserve(N);\n    ws.reserve(N);\n    ord.resize(N);\n\
@@ -111,7 +111,7 @@ data:
   isVerificationFile: false
   path: data-structure-2d/rectangle-sum.hpp
   requiredBy: []
-  timestamp: '2026-05-31 17:09:38+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ds/yosupo-rectangle-sum.test.cpp

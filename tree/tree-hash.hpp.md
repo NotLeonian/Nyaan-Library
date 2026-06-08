@@ -82,23 +82,23 @@ data:
     \ u64 modfma(const u64 &a, const u64 &b, const u64 &c) {\n    u128 d = u128(a)\
     \ * b + c;\n    u64 ret = (d >> 61) + (u64(d) & md);\n    return ret >= md ? ret\
     \ - md : ret;\n  }\n};\n\n}  // namespace internal\n\n/**\n * @brief \u30CF\u30C3\
-    \u30B7\u30E5\u69CB\u9020\u4F53\n * @docs docs/internal/internal-hash.md\n */\n\
-    #line 10 \"tree/rooted-tree-hash.hpp\"\n\ntemplate <typename G>\nstruct RootedTreeHash\
-    \ {\n  using Hash = internal::Hash<1>;\n\n  const G& g;\n  int n;\n  vector<Hash>\
-    \ hash;\n  vector<int> depth;\n\n  static vector<Hash>& xs() {\n    static vector<Hash>\
-    \ _xs;\n    return _xs;\n  }\n\n  RootedTreeHash(const G& _g, int root = 0) :\
-    \ g(_g), n(g.size()) {\n    hash.resize(n);\n    depth.resize(n, 0);\n    while\
-    \ ((int)xs().size() <= n) xs().push_back(Hash::get_basis());\n    dfs(root, -1);\n\
-    \  }\n\n private:\n  int dfs(int c, int p) {\n    int dep = 0;\n    for (auto&\
-    \ d : g[c]) {\n      if (d != p) dep = max(dep, dfs(d, c) + 1);\n    }\n    Hash\
-    \ x = xs()[dep], h = Hash::set(1);\n    for (auto& d : g[c]) {\n      if (d !=\
-    \ p) h = h * (x + hash[d]);\n    }\n    hash[c] = h;\n    return depth[c] = dep;\n\
-    \  }\n};\n\n/**\n * @brief \u6839\u4ED8\u304D\u6728\u306E\u30CF\u30C3\u30B7\u30E5\
-    \n */\n#line 5 \"tree/tree-hash.hpp\"\n\ntemplate <typename G>\nvector<typename\
-    \ RootedTreeHash<G>::Hash> tree_hash(const G& g) {\n  using Hash = typename RootedTreeHash<G>::Hash;\n\
-    \  auto cs = centroid(g);\n  if ((int)cs.size() == 1) cs.push_back(cs[0]);\n \
-    \ vector<Hash> hs;\n  for (auto& c : cs) hs.push_back(RootedTreeHash{g, c}.hash[c]);\n\
-    \  sort(begin(hs), end(hs));\n  return hs;\n}\n"
+    \u30B7\u30E5\u69CB\u9020\u4F53\n */\n#line 10 \"tree/rooted-tree-hash.hpp\"\n\n\
+    template <typename G>\nstruct RootedTreeHash {\n  using Hash = internal::Hash<1>;\n\
+    \n  const G& g;\n  int n;\n  vector<Hash> hash;\n  vector<int> depth;\n\n  static\
+    \ vector<Hash>& xs() {\n    static vector<Hash> _xs;\n    return _xs;\n  }\n\n\
+    \  RootedTreeHash(const G& _g, int root = 0) : g(_g), n(g.size()) {\n    hash.resize(n);\n\
+    \    depth.resize(n, 0);\n    while ((int)xs().size() <= n) xs().push_back(Hash::get_basis());\n\
+    \    dfs(root, -1);\n  }\n\n private:\n  int dfs(int c, int p) {\n    int dep\
+    \ = 0;\n    for (auto& d : g[c]) {\n      if (d != p) dep = max(dep, dfs(d, c)\
+    \ + 1);\n    }\n    Hash x = xs()[dep], h = Hash::set(1);\n    for (auto& d :\
+    \ g[c]) {\n      if (d != p) h = h * (x + hash[d]);\n    }\n    hash[c] = h;\n\
+    \    return depth[c] = dep;\n  }\n};\n\n/**\n * @brief \u6839\u4ED8\u304D\u6728\
+    \u306E\u30CF\u30C3\u30B7\u30E5\n */\n#line 5 \"tree/tree-hash.hpp\"\n\ntemplate\
+    \ <typename G>\nvector<typename RootedTreeHash<G>::Hash> tree_hash(const G& g)\
+    \ {\n  using Hash = typename RootedTreeHash<G>::Hash;\n  auto cs = centroid(g);\n\
+    \  if ((int)cs.size() == 1) cs.push_back(cs[0]);\n  vector<Hash> hs;\n  for (auto&\
+    \ c : cs) hs.push_back(RootedTreeHash{g, c}.hash[c]);\n  sort(begin(hs), end(hs));\n\
+    \  return hs;\n}\n"
   code: "#pragma once\n\n#include \"centroid.hpp\"\n#include \"rooted-tree-hash.hpp\"\
     \n\ntemplate <typename G>\nvector<typename RootedTreeHash<G>::Hash> tree_hash(const\
     \ G& g) {\n  using Hash = typename RootedTreeHash<G>::Hash;\n  auto cs = centroid(g);\n\
@@ -112,7 +112,7 @@ data:
   isVerificationFile: false
   path: tree/tree-hash.hpp
   requiredBy: []
-  timestamp: '2024-05-04 15:53:37+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-aoj-other/aoj-2821.test.cpp

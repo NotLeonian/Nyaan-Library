@@ -305,11 +305,10 @@ data:
     \ n) {\n    __uint128_t x = 1, m = n;\n    for (int p = k; p; p >>= 1, m *= m)\n\
     \      if (p & 1) x *= m;\n    return x <= a;\n  };\n  uint64_t n = powl(a, (long\
     \ double)(1.0) / k);\n  while (!check(n)) --n;\n  while (check(n + 1)) ++n;\n\
-    \  return n;\n}\n\n/**\n * @brief $\\mathrm{floor}(a^{\\frac{1}{k}})$\n * @docs\
-    \ docs/math/kth-root-integral.md\n */\n#line 6 \"verify/verify-yosupo-math/yosupo-kth-root-integral.test.cpp\"\
-    \n\nusing namespace Nyaan; void Nyaan::solve() {\n  int T;\n  uint64_t A, K;\n\
-    \  rd(T);\n  while (T--) {\n    rd(A, K);\n    wtn(kth_root_integral(A, K));\n\
-    \  }\n}\n"
+    \  return n;\n}\n\n/**\n * @brief $\\mathrm{floor}(a^{\\frac{1}{k}})$\n */\n#line\
+    \ 6 \"verify/verify-yosupo-math/yosupo-kth-root-integral.test.cpp\"\n\nusing namespace\
+    \ Nyaan; void Nyaan::solve() {\n  int T;\n  uint64_t A, K;\n  rd(T);\n  while\
+    \ (T--) {\n    rd(A, K);\n    wtn(kth_root_integral(A, K));\n  }\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/kth_root_integer\"\n\n\
     #include \"../../template/template.hpp\"\n#include \"../../misc/fastio.hpp\"\n\
     #include \"../../math/kth-root-integral.hpp\"\n\nusing namespace Nyaan; void Nyaan::solve()\
@@ -328,7 +327,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-math/yosupo-kth-root-integral.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-math/yosupo-kth-root-integral.test.cpp

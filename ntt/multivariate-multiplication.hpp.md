@@ -17,7 +17,6 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/ntt/multivariate-multiplication.md
     document_title: Multivariate Multiplication
     links: []
   bundledCode: "#line 2 \"ntt/multivariate-multiplication.hpp\"\n\n// \u9577\u3055\
@@ -36,7 +35,7 @@ data:
     \ * G[j][k];\n      }\n    for (int i = 0; i < s; i++) F[i][k] = a[i];\n  }\n\
     \  for (auto& x : F) x.intt();\n  fps h(n);\n  for (int i = 0; i < n; i++) h[i]\
     \ = F[chi[i]][i];\n  return h;\n}\n\n/**\n * @brief Multivariate Multiplication\n\
-    \ * @docs docs/ntt/multivariate-multiplication.md\n */\n"
+    \ */\n"
   code: "#pragma once\n\n// \u9577\u3055\u304C\u7B49\u3057\u3044\u5217\u540C\u58EB\
     \u306E\u7573\u307F\u8FBC\u307F\u3057\u304B\u3057\u306A\u3044\ntemplate <typename\
     \ fps>\nfps multivariate_multiplication(const fps& f, const fps& g,\n        \
@@ -52,25 +51,22 @@ data:
     \  a[i + j - (i + j >= s ? s : 0)] += F[i][k] * G[j][k];\n      }\n    for (int\
     \ i = 0; i < s; i++) F[i][k] = a[i];\n  }\n  for (auto& x : F) x.intt();\n  fps\
     \ h(n);\n  for (int i = 0; i < n; i++) h[i] = F[chi[i]][i];\n  return h;\n}\n\n\
-    /**\n * @brief Multivariate Multiplication\n * @docs docs/ntt/multivariate-multiplication.md\n\
-    \ */\n"
+    /**\n * @brief Multivariate Multiplication\n */\n"
   dependsOn: []
   isVerificationFile: false
   path: ntt/multivariate-multiplication.hpp
   requiredBy:
   - fps/multivariate-fps.hpp
-  timestamp: '2023-05-28 20:44:00+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ntt/yosupo-multiplicative-convolution.test.cpp
   - verify/verify-yuki/yuki-1783.test.cpp
 documentation_of: ntt/multivariate-multiplication.hpp
 layout: document
-redirect_from:
-- /library/ntt/multivariate-multiplication.hpp
-- /library/ntt/multivariate-multiplication.hpp.html
 title: Multivariate Multiplication
 ---
+
 
 ## Multivariate Multiplication
 

@@ -80,38 +80,37 @@ data:
     \ = i;\n    for (int i = 0; i < n; i++) {\n      state &s = st[i];\n      sort(begin(s.nxt),\
     \ end(s.nxt));\n      for (auto &[_, y] : s.nxt) y = inv[y];\n      if (s.link\
     \ != -1) s.link = inv[s.link];\n      if (s.origin != -1) s.origin = inv[s.origin];\n\
-    \    }\n    sorted = true;\n  }\n};\n\n/**\n * @brief Suffix Automaton\n * @docs\
-    \ docs/string/suffix-automaton.md\n */\n#line 2 \"template/template.hpp\"\nusing\
-    \ namespace std;\n\n// intrinstic\n#line 6 \"template/template.hpp\"\n\n#line\
-    \ 28 \"template/template.hpp\"\n#include <initializer_list>\n#line 49 \"template/template.hpp\"\
-    \n#include <type_traits>\n#line 55 \"template/template.hpp\"\n\n// utility\n#line\
-    \ 3 \"template/util.hpp\"\n\nnamespace Nyaan {\nusing ll = long long;\nusing i64\
-    \ = long long;\nusing u64 = unsigned long long;\nusing i128 = __int128_t;\nusing\
-    \ u128 = __uint128_t;\n\ntemplate <typename T>\nusing V = vector<T>;\ntemplate\
-    \ <typename T>\nusing VV = vector<vector<T>>;\nusing vi = vector<int>;\nusing\
-    \ vl = vector<long long>;\nusing vd = V<double>;\nusing vs = V<string>;\nusing\
-    \ vvi = vector<vector<int>>;\nusing vvl = vector<vector<long long>>;\ntemplate\
-    \ <typename T>\nusing minpq = priority_queue<T, vector<T>, greater<T>>;\n\ntemplate\
-    \ <typename T, typename U>\nstruct P : pair<T, U> {\n  template <typename... Args>\n\
-    \  P(Args... args) : pair<T, U>(args...) {}\n\n  using pair<T, U>::first;\n  using\
-    \ pair<T, U>::second;\n\n  P &operator+=(const P &r) {\n    first += r.first;\n\
-    \    second += r.second;\n    return *this;\n  }\n  P &operator-=(const P &r)\
-    \ {\n    first -= r.first;\n    second -= r.second;\n    return *this;\n  }\n\
-    \  P &operator*=(const P &r) {\n    first *= r.first;\n    second *= r.second;\n\
-    \    return *this;\n  }\n  template <typename S>\n  P &operator*=(const S &r)\
-    \ {\n    first *= r, second *= r;\n    return *this;\n  }\n  P operator+(const\
-    \ P &r) const { return P(*this) += r; }\n  P operator-(const P &r) const { return\
-    \ P(*this) -= r; }\n  P operator*(const P &r) const { return P(*this) *= r; }\n\
-    \  template <typename S>\n  P operator*(const S &r) const {\n    return P(*this)\
-    \ *= r;\n  }\n  P operator-() const { return P{-first, -second}; }\n};\n\nusing\
-    \ pl = P<ll, ll>;\nusing pi = P<int, int>;\nusing vp = V<pl>;\n\nconstexpr int\
-    \ inf = 1001001001;\nconstexpr long long infLL = 4004004004004004004LL;\n\ntemplate\
-    \ <typename T>\nint sz(const T &t) {\n  return t.size();\n}\n\ntemplate <typename\
-    \ T, typename U>\ninline bool amin(T &x, U y) {\n  return (y < x) ? (x = y, true)\
-    \ : false;\n}\ntemplate <typename T, typename U>\ninline bool amax(T &x, U y)\
-    \ {\n  return (x < y) ? (x = y, true) : false;\n}\n\ntemplate <typename T>\ninline\
-    \ T Max(const vector<T> &v) {\n  return *max_element(begin(v), end(v));\n}\ntemplate\
-    \ <typename T>\ninline T Min(const vector<T> &v) {\n  return *min_element(begin(v),\
+    \    }\n    sorted = true;\n  }\n};\n\n/**\n * @brief Suffix Automaton\n */\n\
+    #line 2 \"template/template.hpp\"\nusing namespace std;\n\n// intrinstic\n#line\
+    \ 6 \"template/template.hpp\"\n\n#line 28 \"template/template.hpp\"\n#include\
+    \ <initializer_list>\n#line 49 \"template/template.hpp\"\n#include <type_traits>\n\
+    #line 55 \"template/template.hpp\"\n\n// utility\n#line 3 \"template/util.hpp\"\
+    \n\nnamespace Nyaan {\nusing ll = long long;\nusing i64 = long long;\nusing u64\
+    \ = unsigned long long;\nusing i128 = __int128_t;\nusing u128 = __uint128_t;\n\
+    \ntemplate <typename T>\nusing V = vector<T>;\ntemplate <typename T>\nusing VV\
+    \ = vector<vector<T>>;\nusing vi = vector<int>;\nusing vl = vector<long long>;\n\
+    using vd = V<double>;\nusing vs = V<string>;\nusing vvi = vector<vector<int>>;\n\
+    using vvl = vector<vector<long long>>;\ntemplate <typename T>\nusing minpq = priority_queue<T,\
+    \ vector<T>, greater<T>>;\n\ntemplate <typename T, typename U>\nstruct P : pair<T,\
+    \ U> {\n  template <typename... Args>\n  P(Args... args) : pair<T, U>(args...)\
+    \ {}\n\n  using pair<T, U>::first;\n  using pair<T, U>::second;\n\n  P &operator+=(const\
+    \ P &r) {\n    first += r.first;\n    second += r.second;\n    return *this;\n\
+    \  }\n  P &operator-=(const P &r) {\n    first -= r.first;\n    second -= r.second;\n\
+    \    return *this;\n  }\n  P &operator*=(const P &r) {\n    first *= r.first;\n\
+    \    second *= r.second;\n    return *this;\n  }\n  template <typename S>\n  P\
+    \ &operator*=(const S &r) {\n    first *= r, second *= r;\n    return *this;\n\
+    \  }\n  P operator+(const P &r) const { return P(*this) += r; }\n  P operator-(const\
+    \ P &r) const { return P(*this) -= r; }\n  P operator*(const P &r) const { return\
+    \ P(*this) *= r; }\n  template <typename S>\n  P operator*(const S &r) const {\n\
+    \    return P(*this) *= r;\n  }\n  P operator-() const { return P{-first, -second};\
+    \ }\n};\n\nusing pl = P<ll, ll>;\nusing pi = P<int, int>;\nusing vp = V<pl>;\n\
+    \nconstexpr int inf = 1001001001;\nconstexpr long long infLL = 4004004004004004004LL;\n\
+    \ntemplate <typename T>\nint sz(const T &t) {\n  return t.size();\n}\n\ntemplate\
+    \ <typename T, typename U>\ninline bool amin(T &x, U y) {\n  return (y < x) ?\
+    \ (x = y, true) : false;\n}\ntemplate <typename T, typename U>\ninline bool amax(T\
+    \ &x, U y) {\n  return (x < y) ? (x = y, true) : false;\n}\n\ntemplate <typename\
+    \ T>\ninline T Max(const vector<T> &v) {\n  return *max_element(begin(v), end(v));\n\
+    }\ntemplate <typename T>\ninline T Min(const vector<T> &v) {\n  return *min_element(begin(v),\
     \ end(v));\n}\ntemplate <typename T>\ninline long long Sum(const vector<T> &v)\
     \ {\n  return accumulate(begin(v), end(v), 0LL);\n}\n\ntemplate <typename T>\n\
     int lb(const vector<T> &v, const T &a) {\n  return lower_bound(begin(v), end(v),\
@@ -300,7 +299,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/suffix-automaton.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/suffix-automaton.test.cpp

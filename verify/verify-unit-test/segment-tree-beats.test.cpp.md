@@ -292,12 +292,11 @@ data:
     \      l >>= 1;\n      r >>= 1;\n    }\n    if constexpr (cmd == 1) lx = min(lx,\
     \ rx);\n    if constexpr (cmd == 2) lx = max(lx, rx);\n    if constexpr (cmd ==\
     \ 3) lx += rx;\n    return lx;\n  }\n};\n\n/**\n * @brief Range Chmin Chmax Add\
-    \ Update Range Min Max Sum Segment Tree Beats!\n * @docs docs/segment-tree/segment-tree-beats.md\n\
-    \ */\n#line 6 \"verify/verify-unit-test/segment-tree-beats.test.cpp\"\n\nusing\
-    \ namespace Nyaan;\n\n#line 2 \"misc/rng.hpp\"\n\n#line 7 \"misc/rng.hpp\"\nusing\
-    \ namespace std;\n\n#line 2 \"internal/internal-seed.hpp\"\n\n#line 4 \"internal/internal-seed.hpp\"\
-    \nusing namespace std;\n\nnamespace internal {\nunsigned long long non_deterministic_seed()\
-    \ {\n  unsigned long long m =\n      chrono::duration_cast<chrono::nanoseconds>(\n\
+    \ Update Range Min Max Sum Segment Tree Beats!\n */\n#line 6 \"verify/verify-unit-test/segment-tree-beats.test.cpp\"\
+    \n\nusing namespace Nyaan;\n\n#line 2 \"misc/rng.hpp\"\n\n#line 7 \"misc/rng.hpp\"\
+    \nusing namespace std;\n\n#line 2 \"internal/internal-seed.hpp\"\n\n#line 4 \"\
+    internal/internal-seed.hpp\"\nusing namespace std;\n\nnamespace internal {\nunsigned\
+    \ long long non_deterministic_seed() {\n  unsigned long long m =\n      chrono::duration_cast<chrono::nanoseconds>(\n\
     \          chrono::high_resolution_clock::now().time_since_epoch())\n        \
     \  .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >> 31, m\
     \ ^= m << 35;\n  return m;\n}\nunsigned long long deterministic_seed() { return\
@@ -385,7 +384,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/segment-tree-beats.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/segment-tree-beats.test.cpp

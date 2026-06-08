@@ -409,15 +409,15 @@ data:
     \ deg, FPSBackendPriority<1>{});\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>\
     \ FormalPowerSeries<mint>::exp(int deg) const {\n  return fps_exp_impl(*this,\
     \ deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief \u591A\u9805\u5F0F/\u5F62\
-    \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n * @docs docs/fps/formal-power-series.md\n\
-    \ */\n#line 2 \"modulo/binomial.hpp\"\n\n#line 6 \"modulo/binomial.hpp\"\nusing\
-    \ namespace std;\n\n// \u30B3\u30F3\u30B9\u30C8\u30E9\u30AF\u30BF\u306E MAX \u306B\
-    \ \u300CC(n, r) \u3084 fac(n) \u3067\u30AF\u30A8\u30EA\u3092\u6295\u3052\u308B\
-    \u6700\u5927\u306E n \u300D\n// \u3092\u5165\u308C\u308B\u3068\u500D\u901F\u304F\
-    \u3089\u3044\u306B\u306A\u308B\n// mod \u3092\u8D85\u3048\u3066\u524D\u8A08\u7B97\
-    \u3057\u3066 0 \u5272\u308A\u3092\u8E0F\u3080\u30D0\u30B0\u306F\u5BFE\u7B56\u6E08\
-    \u307F\ntemplate <typename T>\nstruct Binomial {\n  vector<T> f, g, h;\n  Binomial(int\
-    \ MAX = 0) {\n    assert(T::get_mod() != 0 && \"Binomial<mint>()\");\n    f.resize(1,\
+    \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n */\n#line 2 \"\
+    modulo/binomial.hpp\"\n\n#line 6 \"modulo/binomial.hpp\"\nusing namespace std;\n\
+    \n// \u30B3\u30F3\u30B9\u30C8\u30E9\u30AF\u30BF\u306E MAX \u306B \u300CC(n, r)\
+    \ \u3084 fac(n) \u3067\u30AF\u30A8\u30EA\u3092\u6295\u3052\u308B\u6700\u5927\u306E\
+    \ n \u300D\n// \u3092\u5165\u308C\u308B\u3068\u500D\u901F\u304F\u3089\u3044\u306B\
+    \u306A\u308B\n// mod \u3092\u8D85\u3048\u3066\u524D\u8A08\u7B97\u3057\u3066 0\
+    \ \u5272\u308A\u3092\u8E0F\u3080\u30D0\u30B0\u306F\u5BFE\u7B56\u6E08\u307F\ntemplate\
+    \ <typename T>\nstruct Binomial {\n  vector<T> f, g, h;\n  Binomial(int MAX =\
+    \ 0) {\n    assert(T::get_mod() != 0 && \"Binomial<mint>()\");\n    f.resize(1,\
     \ T{1});\n    g.resize(1, T{1});\n    h.resize(1, T{1});\n    if (MAX > 0) extend(MAX\
     \ + 1);\n  }\n\n  void extend(int m = -1) {\n    int n = f.size();\n    if (m\
     \ == -1) m = n * 2;\n    m = min<int>(m, T::get_mod());\n    if (n >= m) return;\n\
@@ -449,36 +449,34 @@ data:
     \ i++) f[i] *= C.fac(i);\n  reverse(begin(f), end(f));\n  fps g(N, mint(1));\n\
     \  for (int i = 1; i < N; i++) g[i] = g[i - 1] * a * C.inv(i);\n  f = (f * g).pre(N);\n\
     \  reverse(begin(f), end(f));\n  for (int i = 0; i < N; i++) f[i] *= C.finv(i);\n\
-    \  return f;\n}\n\n/**\n * @brief \u5E73\u884C\u79FB\u52D5\n * @docs docs/fps/taylor-shift.md\n\
-    \ */\n#line 2 \"set-function/subset-convolution.hpp\"\n\n#line 5 \"set-function/subset-convolution.hpp\"\
-    \nusing namespace std;\n\ntemplate <typename mint, int _s>\nstruct SubsetConvolution\
-    \ {\n  using fps = array<mint, _s + 1>;\n  static constexpr int s = _s;\n  vector<int>\
-    \ pc;\n\n  SubsetConvolution() : pc(1 << s) {\n    for (int i = 1; i < (1 << s);\
-    \ i++) pc[i] = pc[i - (i & -i)] + 1;\n  }\n\n  void add(fps& l, const fps& r,\
-    \ int d) {\n    for (int i = 0; i < d; ++i) l[i] += r[i];\n  }\n\n  void sub(fps&\
-    \ l, const fps& r, int d) {\n    for (int i = d; i <= s; ++i) l[i] -= r[i];\n\
-    \  }\n\n  void zeta(vector<fps>& a) {\n    int n = a.size();\n    for (int w =\
-    \ 1; w < n; w *= 2) {\n      for (int k = 0; k < n; k += w * 2) {\n        for\
-    \ (int i = 0; i < w; ++i) {\n          add(a[k + w + i], a[k + i], pc[k + w +\
-    \ i]);\n        }\n      }\n    }\n  }\n\n  void mobius(vector<fps>& a) {\n  \
-    \  int n = a.size();\n    for (int w = n >> 1; w; w >>= 1) {\n      for (int k\
-    \ = 0; k < n; k += w * 2) {\n        for (int i = 0; i < w; ++i) {\n         \
-    \ sub(a[k + w + i], a[k + i], pc[k + w + i]);\n        }\n      }\n    }\n  }\n\
-    \n  vector<fps> lift(const vector<mint>& a) {\n    vector<fps> A(a.size());\n\
-    \    for (int i = 0; i < (int)a.size(); i++) {\n      fill(begin(A[i]), end(A[i]),\
-    \ mint());\n      A[i][pc[i]] = a[i];\n    }\n    return A;\n  }\n\n  vector<mint>\
-    \ unlift(const vector<fps>& A) {\n    vector<mint> a(A.size());\n    for (int\
-    \ i = 0; i < (int)A.size(); i++) a[i] = A[i][pc[i]];\n    return a;\n  }\n\n \
-    \ void prod(vector<fps>& A, const vector<fps>& B) {\n    int n = A.size(), d =\
-    \ __builtin_ctz(n);\n    for (int i = 0; i < n; i++) {\n      fps c{};\n     \
-    \ for (int j = 0; j <= d; j++) {\n        for (int k = 0; k <= d - j; k++) {\n\
-    \          c[j + k] += A[i][j] * B[i][k];\n        }\n      }\n      A[i].swap(c);\n\
-    \    }\n  }\n\n  vector<mint> multiply(const vector<mint>& a, const vector<mint>&\
-    \ b) {\n    vector<fps> A = lift(a), B = lift(b);\n    zeta(A), zeta(B);\n   \
-    \ prod(A, B);\n    mobius(A);\n    return unlift(A);\n  }\n};\n\n/**\n * @brief\
-    \ Subset Convolution\n * @docs docs/set-function/subset-convolution.md\n */\n\
-    #line 10 \"set-function/polynomial-composite-set-power-series.hpp\"\n\ntemplate\
-    \ <typename mint, int MAX = 21>\nvector<mint> polynomial_composite_set_power_series(int\
+    \  return f;\n}\n\n/**\n * @brief \u5E73\u884C\u79FB\u52D5\n */\n#line 2 \"set-function/subset-convolution.hpp\"\
+    \n\n#line 5 \"set-function/subset-convolution.hpp\"\nusing namespace std;\n\n\
+    template <typename mint, int _s>\nstruct SubsetConvolution {\n  using fps = array<mint,\
+    \ _s + 1>;\n  static constexpr int s = _s;\n  vector<int> pc;\n\n  SubsetConvolution()\
+    \ : pc(1 << s) {\n    for (int i = 1; i < (1 << s); i++) pc[i] = pc[i - (i & -i)]\
+    \ + 1;\n  }\n\n  void add(fps& l, const fps& r, int d) {\n    for (int i = 0;\
+    \ i < d; ++i) l[i] += r[i];\n  }\n\n  void sub(fps& l, const fps& r, int d) {\n\
+    \    for (int i = d; i <= s; ++i) l[i] -= r[i];\n  }\n\n  void zeta(vector<fps>&\
+    \ a) {\n    int n = a.size();\n    for (int w = 1; w < n; w *= 2) {\n      for\
+    \ (int k = 0; k < n; k += w * 2) {\n        for (int i = 0; i < w; ++i) {\n  \
+    \        add(a[k + w + i], a[k + i], pc[k + w + i]);\n        }\n      }\n   \
+    \ }\n  }\n\n  void mobius(vector<fps>& a) {\n    int n = a.size();\n    for (int\
+    \ w = n >> 1; w; w >>= 1) {\n      for (int k = 0; k < n; k += w * 2) {\n    \
+    \    for (int i = 0; i < w; ++i) {\n          sub(a[k + w + i], a[k + i], pc[k\
+    \ + w + i]);\n        }\n      }\n    }\n  }\n\n  vector<fps> lift(const vector<mint>&\
+    \ a) {\n    vector<fps> A(a.size());\n    for (int i = 0; i < (int)a.size(); i++)\
+    \ {\n      fill(begin(A[i]), end(A[i]), mint());\n      A[i][pc[i]] = a[i];\n\
+    \    }\n    return A;\n  }\n\n  vector<mint> unlift(const vector<fps>& A) {\n\
+    \    vector<mint> a(A.size());\n    for (int i = 0; i < (int)A.size(); i++) a[i]\
+    \ = A[i][pc[i]];\n    return a;\n  }\n\n  void prod(vector<fps>& A, const vector<fps>&\
+    \ B) {\n    int n = A.size(), d = __builtin_ctz(n);\n    for (int i = 0; i < n;\
+    \ i++) {\n      fps c{};\n      for (int j = 0; j <= d; j++) {\n        for (int\
+    \ k = 0; k <= d - j; k++) {\n          c[j + k] += A[i][j] * B[i][k];\n      \
+    \  }\n      }\n      A[i].swap(c);\n    }\n  }\n\n  vector<mint> multiply(const\
+    \ vector<mint>& a, const vector<mint>& b) {\n    vector<fps> A = lift(a), B =\
+    \ lift(b);\n    zeta(A), zeta(B);\n    prod(A, B);\n    mobius(A);\n    return\
+    \ unlift(A);\n  }\n};\n\n/**\n * @brief Subset Convolution\n */\n#line 10 \"set-function/polynomial-composite-set-power-series.hpp\"\
+    \n\ntemplate <typename mint, int MAX = 21>\nvector<mint> polynomial_composite_set_power_series(int\
     \ n, FormalPowerSeries<mint> f,\n                                            vector<mint>\
     \ g) {\n  assert(0 <= n && n <= MAX);\n  static SubsetConvolution<mint, MAX> ss;\n\
     \n  Binomial<mint> binom(f.size());\n  if (g[0] != 0) {\n    f = TaylorShift(f,\
@@ -627,32 +625,31 @@ data:
     \ begin(x) + m, mint(0));\n    x.ntt();\n    for (int i = 0; i < 2 * m; ++i) x[i]\
     \ *= y[i];\n    x.intt();\n    b.insert(end(b), begin(x) + m, end(x));\n  }\n\
     \  return fps{begin(b), begin(b) + deg};\n}\n\n/**\n * @brief NTT mod\u7528FPS\u30E9\
-    \u30A4\u30D6\u30E9\u30EA\n * @docs docs/fps/ntt-friendly-fps.md\n */\n#line 2\
-    \ \"modint/montgomery-modint.hpp\"\n\n#line 5 \"modint/montgomery-modint.hpp\"\
-    \n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n\
-    \  using i32 = int32_t;\n  using u32 = uint32_t;\n  using u64 = uint64_t;\n\n\
-    \  static constexpr u32 get_r() {\n    u32 ret = mod;\n    for (i32 i = 0; i <\
-    \ 4; ++i) ret *= 2 - mod * ret;\n    return ret;\n  }\n\n  static constexpr u32\
-    \ r = get_r();\n  static constexpr u32 n2 = -u64(mod) % mod;\n  static_assert(mod\
-    \ < (1 << 30), \"invalid, mod >= 2 ^ 30\");\n  static_assert((mod & 1) == 1, \"\
-    invalid, mod % 2 == 0\");\n  static_assert(r * mod == 1, \"this code has bugs.\"\
-    );\n\n  u32 a;\n\n  constexpr LazyMontgomeryModInt() : a(0) {}\n  constexpr LazyMontgomeryModInt(const\
-    \ int64_t &b)\n      : a(reduce(u64(b % mod + mod) * n2)){};\n\n  static constexpr\
-    \ u32 reduce(const u64 &b) {\n    return (b + u64(u32(b) * u32(-r)) * mod) >>\
-    \ 32;\n  }\n\n  constexpr mint &operator+=(const mint &b) {\n    if (i32(a +=\
-    \ b.a - 2 * mod) < 0) a += 2 * mod;\n    return *this;\n  }\n\n  constexpr mint\
-    \ &operator-=(const mint &b) {\n    if (i32(a -= b.a) < 0) a += 2 * mod;\n   \
-    \ return *this;\n  }\n\n  constexpr mint &operator*=(const mint &b) {\n    a =\
-    \ reduce(u64(a) * b.a);\n    return *this;\n  }\n\n  constexpr mint &operator/=(const\
-    \ mint &b) {\n    *this *= b.inverse();\n    return *this;\n  }\n\n  constexpr\
-    \ mint operator+(const mint &b) const { return mint(*this) += b; }\n  constexpr\
-    \ mint operator-(const mint &b) const { return mint(*this) -= b; }\n  constexpr\
-    \ mint operator*(const mint &b) const { return mint(*this) *= b; }\n  constexpr\
-    \ mint operator/(const mint &b) const { return mint(*this) /= b; }\n  constexpr\
-    \ bool operator==(const mint &b) const {\n    return (a >= mod ? a - mod : a)\
-    \ == (b.a >= mod ? b.a - mod : b.a);\n  }\n  constexpr bool operator!=(const mint\
-    \ &b) const {\n    return (a >= mod ? a - mod : a) != (b.a >= mod ? b.a - mod\
-    \ : b.a);\n  }\n  constexpr mint operator-() const { return mint() - mint(*this);\
+    \u30A4\u30D6\u30E9\u30EA\n */\n#line 2 \"modint/montgomery-modint.hpp\"\n\n#line\
+    \ 5 \"modint/montgomery-modint.hpp\"\n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt\
+    \ {\n  using mint = LazyMontgomeryModInt;\n  using i32 = int32_t;\n  using u32\
+    \ = uint32_t;\n  using u64 = uint64_t;\n\n  static constexpr u32 get_r() {\n \
+    \   u32 ret = mod;\n    for (i32 i = 0; i < 4; ++i) ret *= 2 - mod * ret;\n  \
+    \  return ret;\n  }\n\n  static constexpr u32 r = get_r();\n  static constexpr\
+    \ u32 n2 = -u64(mod) % mod;\n  static_assert(mod < (1 << 30), \"invalid, mod >=\
+    \ 2 ^ 30\");\n  static_assert((mod & 1) == 1, \"invalid, mod % 2 == 0\");\n  static_assert(r\
+    \ * mod == 1, \"this code has bugs.\");\n\n  u32 a;\n\n  constexpr LazyMontgomeryModInt()\
+    \ : a(0) {}\n  constexpr LazyMontgomeryModInt(const int64_t &b)\n      : a(reduce(u64(b\
+    \ % mod + mod) * n2)){};\n\n  static constexpr u32 reduce(const u64 &b) {\n  \
+    \  return (b + u64(u32(b) * u32(-r)) * mod) >> 32;\n  }\n\n  constexpr mint &operator+=(const\
+    \ mint &b) {\n    if (i32(a += b.a - 2 * mod) < 0) a += 2 * mod;\n    return *this;\n\
+    \  }\n\n  constexpr mint &operator-=(const mint &b) {\n    if (i32(a -= b.a) <\
+    \ 0) a += 2 * mod;\n    return *this;\n  }\n\n  constexpr mint &operator*=(const\
+    \ mint &b) {\n    a = reduce(u64(a) * b.a);\n    return *this;\n  }\n\n  constexpr\
+    \ mint &operator/=(const mint &b) {\n    *this *= b.inverse();\n    return *this;\n\
+    \  }\n\n  constexpr mint operator+(const mint &b) const { return mint(*this) +=\
+    \ b; }\n  constexpr mint operator-(const mint &b) const { return mint(*this) -=\
+    \ b; }\n  constexpr mint operator*(const mint &b) const { return mint(*this) *=\
+    \ b; }\n  constexpr mint operator/(const mint &b) const { return mint(*this) /=\
+    \ b; }\n  constexpr bool operator==(const mint &b) const {\n    return (a >= mod\
+    \ ? a - mod : a) == (b.a >= mod ? b.a - mod : b.a);\n  }\n  constexpr bool operator!=(const\
+    \ mint &b) const {\n    return (a >= mod ? a - mod : a) != (b.a >= mod ? b.a -\
+    \ mod : b.a);\n  }\n  constexpr mint operator-() const { return mint() - mint(*this);\
     \ }\n  constexpr mint operator+() const { return mint(*this); }\n\n  constexpr\
     \ mint pow(u64 n) const {\n    mint ret(1), mul(*this);\n    while (n > 0) {\n\
     \      if (n & 1) ret *= mul;\n      mul *= mul;\n      n >>= 1;\n    }\n    return\
@@ -704,7 +701,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-math/yosupo-polynomial-composite-set-power-series.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-math/yosupo-polynomial-composite-set-power-series.test.cpp

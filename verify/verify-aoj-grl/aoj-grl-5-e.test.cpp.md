@@ -331,29 +331,29 @@ data:
     using SegmentTreeUtil::AddSum_LazySegmentTree;\nusing SegmentTreeUtil::UpdateMax_LazySegmentTree;\n\
     using SegmentTreeUtil::UpdateMin_LazySegmentTree;\nusing SegmentTreeUtil::UpdateSum_LazySegmentTree;\n\
     \n/**\n * @brief \u4F7F\u7528\u983B\u5EA6\u306E\u9AD8\u3044\u9045\u5EF6\u30BB\u30B0\
-    \u30E1\u30F3\u30C8\u6728\n * @docs docs/segment-tree/lazy-segment-tree-utility.md\n\
-    \ */\n#line 2 \"tree/heavy-light-decomposition.hpp\"\n\n#line 2 \"graph/graph-template.hpp\"\
-    \n\ntemplate <typename T>\nstruct edge {\n  int src, to;\n  T cost;\n\n  edge(int\
-    \ _to, T _cost) : src(-1), to(_to), cost(_cost) {}\n  edge(int _src, int _to,\
-    \ T _cost) : src(_src), to(_to), cost(_cost) {}\n\n  edge &operator=(const int\
-    \ &x) {\n    to = x;\n    return *this;\n  }\n\n  operator int() const { return\
-    \ to; }\n};\ntemplate <typename T>\nusing Edges = vector<edge<T>>;\ntemplate <typename\
-    \ T>\nusing WeightedGraph = vector<Edges<T>>;\nusing UnweightedGraph = vector<vector<int>>;\n\
-    \n// Input of (Unweighted) Graph\nUnweightedGraph graph(int N, int M = -1, bool\
-    \ is_directed = false,\n                      bool is_1origin = true) {\n  UnweightedGraph\
+    \u30E1\u30F3\u30C8\u6728\n */\n#line 2 \"tree/heavy-light-decomposition.hpp\"\n\
+    \n#line 2 \"graph/graph-template.hpp\"\n\ntemplate <typename T>\nstruct edge {\n\
+    \  int src, to;\n  T cost;\n\n  edge(int _to, T _cost) : src(-1), to(_to), cost(_cost)\
+    \ {}\n  edge(int _src, int _to, T _cost) : src(_src), to(_to), cost(_cost) {}\n\
+    \n  edge &operator=(const int &x) {\n    to = x;\n    return *this;\n  }\n\n \
+    \ operator int() const { return to; }\n};\ntemplate <typename T>\nusing Edges\
+    \ = vector<edge<T>>;\ntemplate <typename T>\nusing WeightedGraph = vector<Edges<T>>;\n\
+    using UnweightedGraph = vector<vector<int>>;\n\n// Input of (Unweighted) Graph\n\
+    UnweightedGraph graph(int N, int M = -1, bool is_directed = false,\n         \
+    \             bool is_1origin = true) {\n  UnweightedGraph g(N);\n  if (M == -1)\
+    \ M = N - 1;\n  for (int _ = 0; _ < M; _++) {\n    int x, y;\n    cin >> x >>\
+    \ y;\n    if (is_1origin) x--, y--;\n    g[x].push_back(y);\n    if (!is_directed)\
+    \ g[y].push_back(x);\n  }\n  return g;\n}\n\n// Input of Weighted Graph\ntemplate\
+    \ <typename T>\nWeightedGraph<T> wgraph(int N, int M = -1, bool is_directed =\
+    \ false,\n                        bool is_1origin = true) {\n  WeightedGraph<T>\
     \ g(N);\n  if (M == -1) M = N - 1;\n  for (int _ = 0; _ < M; _++) {\n    int x,\
-    \ y;\n    cin >> x >> y;\n    if (is_1origin) x--, y--;\n    g[x].push_back(y);\n\
-    \    if (!is_directed) g[y].push_back(x);\n  }\n  return g;\n}\n\n// Input of\
-    \ Weighted Graph\ntemplate <typename T>\nWeightedGraph<T> wgraph(int N, int M\
-    \ = -1, bool is_directed = false,\n                        bool is_1origin = true)\
-    \ {\n  WeightedGraph<T> g(N);\n  if (M == -1) M = N - 1;\n  for (int _ = 0; _\
-    \ < M; _++) {\n    int x, y;\n    cin >> x >> y;\n    T c;\n    cin >> c;\n  \
-    \  if (is_1origin) x--, y--;\n    g[x].emplace_back(x, y, c);\n    if (!is_directed)\
-    \ g[y].emplace_back(y, x, c);\n  }\n  return g;\n}\n\n// Input of Edges\ntemplate\
-    \ <typename T>\nEdges<T> esgraph([[maybe_unused]] int N, int M, int is_weighted\
-    \ = true,\n                 bool is_1origin = true) {\n  Edges<T> es;\n  for (int\
-    \ _ = 0; _ < M; _++) {\n    int x, y;\n    cin >> x >> y;\n    T c;\n    if (is_weighted)\n\
-    \      cin >> c;\n    else\n      c = 1;\n    if (is_1origin) x--, y--;\n    es.emplace_back(x,\
+    \ y;\n    cin >> x >> y;\n    T c;\n    cin >> c;\n    if (is_1origin) x--, y--;\n\
+    \    g[x].emplace_back(x, y, c);\n    if (!is_directed) g[y].emplace_back(y, x,\
+    \ c);\n  }\n  return g;\n}\n\n// Input of Edges\ntemplate <typename T>\nEdges<T>\
+    \ esgraph([[maybe_unused]] int N, int M, int is_weighted = true,\n           \
+    \      bool is_1origin = true) {\n  Edges<T> es;\n  for (int _ = 0; _ < M; _++)\
+    \ {\n    int x, y;\n    cin >> x >> y;\n    T c;\n    if (is_weighted)\n     \
+    \ cin >> c;\n    else\n      c = 1;\n    if (is_1origin) x--, y--;\n    es.emplace_back(x,\
     \ y, c);\n  }\n  return es;\n}\n\n// Input of Adjacency Matrix\ntemplate <typename\
     \ T>\nvector<vector<T>> adjgraph(int N, int M, T INF, int is_weighted = true,\n\
     \                           bool is_directed = false, bool is_1origin = true)\
@@ -361,27 +361,26 @@ data:
     \ {\n    int x, y;\n    cin >> x >> y;\n    T c;\n    if (is_weighted)\n     \
     \ cin >> c;\n    else\n      c = 1;\n    if (is_1origin) x--, y--;\n    d[x][y]\
     \ = c;\n    if (!is_directed) d[y][x] = c;\n  }\n  return d;\n}\n\n/**\n * @brief\
-    \ \u30B0\u30E9\u30D5\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\n * @docs docs/graph/graph-template.md\n\
-    \ */\n#line 4 \"tree/heavy-light-decomposition.hpp\"\n\ntemplate <typename G>\n\
-    struct HeavyLightDecomposition {\n private:\n  void dfs_sz(int cur) {\n    size[cur]\
-    \ = 1;\n    for (auto& dst : g[cur]) {\n      if (dst == par[cur]) {\n       \
-    \ if (g[cur].size() >= 2 && int(dst) == int(g[cur][0]))\n          swap(g[cur][0],\
-    \ g[cur][1]);\n        else\n          continue;\n      }\n      depth[dst] =\
-    \ depth[cur] + 1;\n      par[dst] = cur;\n      dfs_sz(dst);\n      size[cur]\
-    \ += size[dst];\n      if (size[dst] > size[g[cur][0]]) {\n        swap(dst, g[cur][0]);\n\
-    \      }\n    }\n  }\n\n  void dfs_hld(int cur) {\n    down[cur] = id++;\n   \
-    \ for (auto dst : g[cur]) {\n      if (dst == par[cur]) continue;\n      nxt[dst]\
-    \ = (int(dst) == int(g[cur][0]) ? nxt[cur] : int(dst));\n      dfs_hld(dst);\n\
-    \    }\n    up[cur] = id;\n  }\n\n  // [u, v)\n  vector<pair<int, int>> ascend(int\
-    \ u, int v) const {\n    vector<pair<int, int>> res;\n    while (nxt[u] != nxt[v])\
-    \ {\n      res.emplace_back(down[u], down[nxt[u]]);\n      u = par[nxt[u]];\n\
-    \    }\n    if (u != v) res.emplace_back(down[u], down[v] + 1);\n    return res;\n\
-    \  }\n\n  // (u, v]\n  vector<pair<int, int>> descend(int u, int v) const {\n\
-    \    if (u == v) return {};\n    if (nxt[u] == nxt[v]) return {{down[u] + 1, down[v]}};\n\
-    \    auto res = descend(u, par[nxt[v]]);\n    res.emplace_back(down[nxt[v]], down[v]);\n\
-    \    return res;\n  }\n\n public:\n  G& g;\n  int root, id;\n  vector<int> size,\
-    \ depth, down, up, nxt, par;\n  HeavyLightDecomposition(G& _g, int _root = 0)\n\
-    \      : g(_g),\n        root(_root),\n        id(0),\n        size(g.size(),\
+    \ \u30B0\u30E9\u30D5\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\n */\n#line 4 \"tree/heavy-light-decomposition.hpp\"\
+    \n\ntemplate <typename G>\nstruct HeavyLightDecomposition {\n private:\n  void\
+    \ dfs_sz(int cur) {\n    size[cur] = 1;\n    for (auto& dst : g[cur]) {\n    \
+    \  if (dst == par[cur]) {\n        if (g[cur].size() >= 2 && int(dst) == int(g[cur][0]))\n\
+    \          swap(g[cur][0], g[cur][1]);\n        else\n          continue;\n  \
+    \    }\n      depth[dst] = depth[cur] + 1;\n      par[dst] = cur;\n      dfs_sz(dst);\n\
+    \      size[cur] += size[dst];\n      if (size[dst] > size[g[cur][0]]) {\n   \
+    \     swap(dst, g[cur][0]);\n      }\n    }\n  }\n\n  void dfs_hld(int cur) {\n\
+    \    down[cur] = id++;\n    for (auto dst : g[cur]) {\n      if (dst == par[cur])\
+    \ continue;\n      nxt[dst] = (int(dst) == int(g[cur][0]) ? nxt[cur] : int(dst));\n\
+    \      dfs_hld(dst);\n    }\n    up[cur] = id;\n  }\n\n  // [u, v)\n  vector<pair<int,\
+    \ int>> ascend(int u, int v) const {\n    vector<pair<int, int>> res;\n    while\
+    \ (nxt[u] != nxt[v]) {\n      res.emplace_back(down[u], down[nxt[u]]);\n     \
+    \ u = par[nxt[u]];\n    }\n    if (u != v) res.emplace_back(down[u], down[v] +\
+    \ 1);\n    return res;\n  }\n\n  // (u, v]\n  vector<pair<int, int>> descend(int\
+    \ u, int v) const {\n    if (u == v) return {};\n    if (nxt[u] == nxt[v]) return\
+    \ {{down[u] + 1, down[v]}};\n    auto res = descend(u, par[nxt[v]]);\n    res.emplace_back(down[nxt[v]],\
+    \ down[v]);\n    return res;\n  }\n\n public:\n  G& g;\n  int root, id;\n  vector<int>\
+    \ size, depth, down, up, nxt, par;\n  HeavyLightDecomposition(G& _g, int _root\
+    \ = 0)\n      : g(_g),\n        root(_root),\n        id(0),\n        size(g.size(),\
     \ 0),\n        depth(g.size(), 0),\n        down(g.size(), -1),\n        up(g.size(),\
     \ -1),\n        nxt(g.size(), root),\n        par(g.size(), root) {\n    dfs_sz(root);\n\
     \    dfs_hld(root);\n  }\n\n  pair<int, int> idx(int i) const { return make_pair(down[i],\
@@ -399,15 +398,14 @@ data:
     \      if (down[a] < down[b]) swap(a, b);\n      a = par[nxt[a]];\n    }\n   \
     \ return depth[a] < depth[b] ? a : b;\n  }\n\n  int dist(int a, int b) { return\
     \ depth[a] + depth[b] - depth[lca(a, b)] * 2; }\n};\n\n/**\n * @brief Heavy Light\
-    \ Decomposition(\u91CD\u8EFD\u5206\u89E3)\n * @docs docs/tree/heavy-light-decomposition.md\n\
-    \ */\n#line 8 \"verify/verify-aoj-grl/aoj-grl-5-e.test.cpp\"\n\nusing namespace\
-    \ Nyaan;\nvoid Nyaan::solve() {\n  ini(N);\n  vvi g(N);\n  rep(i, N) {\n    ini(n);\n\
-    \    g[i].resize(n);\n    in(g[i]);\n  }\n\n  HeavyLightDecomposition<vvi> hld(g);\n\
-    \  AddSum_LazySegmentTree<ll> seg(vl(N, 0));\n  ll W = 0;\n  auto add = [&](int\
-    \ u, int v) { seg.update(u, v, W); };\n  ll ans = 0;\n  auto query = [&](int u,\
-    \ int v) { ans += seg.query(u, v); };\n\n  ini(Q);\n  rep(_, Q) {\n    ini(c);\n\
-    \    if (c == 0) {\n      inl(v, w);\n      W = w;\n      hld.path_query(0, v,\
-    \ false, add);\n    } else {\n      ini(v);\n      ans = 0;\n      hld.path_query(0,\
+    \ Decomposition(\u91CD\u8EFD\u5206\u89E3)\n */\n#line 8 \"verify/verify-aoj-grl/aoj-grl-5-e.test.cpp\"\
+    \n\nusing namespace Nyaan;\nvoid Nyaan::solve() {\n  ini(N);\n  vvi g(N);\n  rep(i,\
+    \ N) {\n    ini(n);\n    g[i].resize(n);\n    in(g[i]);\n  }\n\n  HeavyLightDecomposition<vvi>\
+    \ hld(g);\n  AddSum_LazySegmentTree<ll> seg(vl(N, 0));\n  ll W = 0;\n  auto add\
+    \ = [&](int u, int v) { seg.update(u, v, W); };\n  ll ans = 0;\n  auto query =\
+    \ [&](int u, int v) { ans += seg.query(u, v); };\n\n  ini(Q);\n  rep(_, Q) {\n\
+    \    ini(c);\n    if (c == 0) {\n      inl(v, w);\n      W = w;\n      hld.path_query(0,\
+    \ v, false, add);\n    } else {\n      ini(v);\n      ans = 0;\n      hld.path_query(0,\
     \ v, false, query);\n      out(ans);\n    }\n  }\n}\n"
   code: "#define PROBLEM \\\n  \"http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_5_E\"\
     \n\n#include \"../../template/template.hpp\"\n//\n#include \"../../segment-tree/lazy-segment-tree-utility.hpp\"\
@@ -433,7 +431,7 @@ data:
   isVerificationFile: true
   path: verify/verify-aoj-grl/aoj-grl-5-e.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-aoj-grl/aoj-grl-5-e.test.cpp

@@ -1,3 +1,7 @@
+---
+title: "\u9AD8\u901Fmodulo\u9006\u5143"
+---
+
 ## 高速modulo逆元
 
 高速なmodulo逆元の実装に関する実験。

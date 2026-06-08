@@ -424,24 +424,23 @@ data:
     \ 1);\n  sort(begin(ret), end(ret));\n  return ret;\n}\n\n}  // namespace fast_factorize\n\
     \nusing fast_factorize::divisors;\nusing fast_factorize::factor_count;\nusing\
     \ fast_factorize::factorize;\n\n/**\n * @brief \u9AD8\u901F\u7D20\u56E0\u6570\u5206\
-    \u89E3(Miller Rabin/Pollard's Rho)\n * @docs docs/prime/fast-factorize.md\n */\n\
-    #line 2 \"prime/osak.hpp\"\n\n#line 2 \"prime/factor-enumerate.hpp\"\n\nvector<int>\
-    \ factor_enumerate(int N) {\n  vector<int> lp(N + 1, 0);\n  if (N < 2) return\
-    \ lp;\n  vector<int> pr{2, 3};\n  for (int i = 2; i <= N; i += 2) lp[i] = 2;\n\
-    \  for (int i = 3; i <= N; i += 6) lp[i] = 3;\n  for (int i = 5, d = 4; i <= N;\
-    \ i += d = 6 - d) {\n    if (lp[i] == 0) {\n      lp[i] = i;\n      pr.push_back(i);\n\
-    \    }\n    for (int j = 2; j < (int)pr.size() && i * pr[j] <= N; ++j) {\n   \
-    \   lp[i * pr[j]] = pr[j];\n      if (pr[j] == lp[i]) break;\n    }\n  }\n  return\
-    \ lp;\n}\n#line 4 \"prime/osak.hpp\"\n\ntemplate <int MAX>\nvector<int> osak(int\
-    \ n) {\n  static vector<int> f = factor_enumerate(MAX);\n  vector<int> ret;\n\
-    \  while (f[n]) ret.push_back(f[n]), n /= f[n];\n  return ret;\n}\n\ntemplate\
-    \ <int MAX>\nvector<pair<int, int>> osak_table(int n) {\n  static vector<int>\
-    \ f = factor_enumerate(MAX);\n  vector<pair<int, int>> v;\n  for (; f[n]; n /=\
-    \ f[n]) {\n    if (v.empty() || v.back().first != f[n]) {\n      v.emplace_back(f[n],\
-    \ 1);\n    } else {\n      v.back().second++;\n    }\n  }\n  return v;\n}\n\n\
-    template <int MAX>\nvector<int> osak_divisors(int n) {\n  if(n == 0) return {};\n\
-    \  if(n == 1) return vector<int>(1, 1);\n  auto p = osak_table<MAX>(n);\n  vector<int>\
-    \ ds;\n\n  auto dfs = [&](auto r, int i, int c) {\n    if (i == (int)p.size())\
+    \u89E3(Miller Rabin/Pollard's Rho)\n */\n#line 2 \"prime/osak.hpp\"\n\n#line 2\
+    \ \"prime/factor-enumerate.hpp\"\n\nvector<int> factor_enumerate(int N) {\n  vector<int>\
+    \ lp(N + 1, 0);\n  if (N < 2) return lp;\n  vector<int> pr{2, 3};\n  for (int\
+    \ i = 2; i <= N; i += 2) lp[i] = 2;\n  for (int i = 3; i <= N; i += 6) lp[i] =\
+    \ 3;\n  for (int i = 5, d = 4; i <= N; i += d = 6 - d) {\n    if (lp[i] == 0)\
+    \ {\n      lp[i] = i;\n      pr.push_back(i);\n    }\n    for (int j = 2; j <\
+    \ (int)pr.size() && i * pr[j] <= N; ++j) {\n      lp[i * pr[j]] = pr[j];\n   \
+    \   if (pr[j] == lp[i]) break;\n    }\n  }\n  return lp;\n}\n#line 4 \"prime/osak.hpp\"\
+    \n\ntemplate <int MAX>\nvector<int> osak(int n) {\n  static vector<int> f = factor_enumerate(MAX);\n\
+    \  vector<int> ret;\n  while (f[n]) ret.push_back(f[n]), n /= f[n];\n  return\
+    \ ret;\n}\n\ntemplate <int MAX>\nvector<pair<int, int>> osak_table(int n) {\n\
+    \  static vector<int> f = factor_enumerate(MAX);\n  vector<pair<int, int>> v;\n\
+    \  for (; f[n]; n /= f[n]) {\n    if (v.empty() || v.back().first != f[n]) {\n\
+    \      v.emplace_back(f[n], 1);\n    } else {\n      v.back().second++;\n    }\n\
+    \  }\n  return v;\n}\n\ntemplate <int MAX>\nvector<int> osak_divisors(int n) {\n\
+    \  if(n == 0) return {};\n  if(n == 1) return vector<int>(1, 1);\n  auto p = osak_table<MAX>(n);\n\
+    \  vector<int> ds;\n\n  auto dfs = [&](auto r, int i, int c) {\n    if (i == (int)p.size())\
     \ {\n      ds.push_back(c);\n      return;\n    }\n    for (int j = 0; j <= p[i].second;\
     \ j++) {\n      r(r, i + 1, c);\n      c *= p[i].first;\n    }\n  };\n\n  dfs(dfs,\
     \ 0, 1);\n  sort(begin(ds), end(ds));\n  return ds;\n}\n#line 7 \"verify/verify-unit-test/osak.test.cpp\"\
@@ -499,7 +498,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/osak.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/osak.test.cpp

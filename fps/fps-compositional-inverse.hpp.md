@@ -121,13 +121,13 @@ data:
     \ deg, FPSBackendPriority<1>{});\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>\
     \ FormalPowerSeries<mint>::exp(int deg) const {\n  return fps_exp_impl(*this,\
     \ deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief \u591A\u9805\u5F0F/\u5F62\
-    \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n * @docs docs/fps/formal-power-series.md\n\
-    \ */\n#line 2 \"fps/pow-enumerate.hpp\"\n\n#line 5 \"fps/pow-enumerate.hpp\"\n\
-    using namespace std;\n\n#line 8 \"fps/pow-enumerate.hpp\"\n\n// [x^n] f(x)^i g(x)\
-    \ \u3092 i=0,1,...,m \u3067\u5217\u6319\n// n = (f \u306E\u6B21\u6570) - 1\ntemplate\
-    \ <typename mint>\nFormalPowerSeries<mint> pow_enumerate(FormalPowerSeries<mint>\
-    \ f,\n                                      FormalPowerSeries<mint> g = {1},\n\
-    \                                      int m = -1) {\n  using fps = FormalPowerSeries<mint>;\n\
+    \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n */\n#line 2 \"\
+    fps/pow-enumerate.hpp\"\n\n#line 5 \"fps/pow-enumerate.hpp\"\nusing namespace\
+    \ std;\n\n#line 8 \"fps/pow-enumerate.hpp\"\n\n// [x^n] f(x)^i g(x) \u3092 i=0,1,...,m\
+    \ \u3067\u5217\u6319\n// n = (f \u306E\u6B21\u6570) - 1\ntemplate <typename mint>\n\
+    FormalPowerSeries<mint> pow_enumerate(FormalPowerSeries<mint> f,\n           \
+    \                           FormalPowerSeries<mint> g = {1},\n               \
+    \                       int m = -1) {\n  using fps = FormalPowerSeries<mint>;\n\
     \  int n = f.size() - 1, k = 1;\n  g.resize(n + 1);\n  if (m == -1) m = n;\n \
     \ int h = 1;\n  while (h < n + 1) h *= 2;\n  fps P((n + 1) * k), Q((n + 1) * k),\
     \ nP, nQ, buf, buf2;\n  for (int i = 0; i <= n; i++) P[i * k + 0] = g[i];\n  for\
@@ -245,7 +245,7 @@ data:
   isVerificationFile: false
   path: fps/fps-compositional-inverse.hpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-fps/yosupo-compositional-inverse.test.cpp
