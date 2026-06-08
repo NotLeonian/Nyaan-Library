@@ -136,13 +136,9 @@ jobs:
       run: |
         set -euo pipefail
 
-        wrapper_dir="${RUNNER_TEMP}"
         wrapper_basename="g++-for-oj-bundle"
-        wrapper="${wrapper_dir}/${wrapper_basename}"
+        wrapper="${RUNNER_TEMP}/${wrapper_basename}"
         real_gxx="$(command -v g++)"
-
-        mkdir -p "${wrapper_dir}"
-        cat > "${wrapper}" <<EOF
 
         {
           printf '%s\n' '#!/usr/bin/env bash'
