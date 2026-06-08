@@ -41,6 +41,89 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         python -m pip install "setuptools<82" "online-judge-verify-helper==5.6.0"
+      
+
+    - name: Check documentation_of consistency
+      run: |
+        set -euo pipefail
+
+        script="${RUNNER_TEMP}/check-documentation-of.py"
+
+        {
+          printf '%s\n' 'import pathlib'
+          printf '%s\n' 'import sys'
+          printf '%s\n' ''
+          printf '%s\n' 'from onlinejudge_verify.documentation import configure'
+          printf '%s\n' 'from onlinejudge_verify.documentation import front_matter as oj_front_matter'
+          printf '%s\n' 'from onlinejudge_verify.documentation import main as doc_main'
+          printf '%s\n' 'from onlinejudge_verify.languages import list as language_list'
+          printf '%s\n' ''
+          printf '%s\n' 'DOCUMENTATION_OF = "documentation_of"'
+          printf '%s\n' ''
+          printf '%s\n' 'basedir = pathlib.Path.cwd().resolve()'
+          printf '%s\n' 'config = doc_main.load_render_config(basedir=basedir)'
+          printf '%s\n' ''
+          printf '%s\n' 'excluded_paths = ['
+          printf '%s\n' '    pathlib.Path(p)'
+          printf '%s\n' '    for p in config.config_yml.get("exclude", [])'
+          printf '%s\n' ']'
+          printf '%s\n' ''
+          printf '%s\n' 'bad = []'
+          printf '%s\n' ''
+          printf '%s\n' 'for md in sorted(configure.find_markdown_paths(basedir=basedir)):'
+          printf '%s\n' '    md_abs = md.resolve()'
+          printf '%s\n' '    rel_md = md_abs.relative_to(basedir)'
+          printf '%s\n' ''
+          printf '%s\n' '    if configure.is_excluded(rel_md, excluded_paths=excluded_paths):'
+          printf '%s\n' '        continue'
+          printf '%s\n' ''
+          printf '%s\n' '    front_matter, _ = oj_front_matter.split_front_matter(md_abs.read_bytes())'
+          printf '%s\n' '    documentation_of = front_matter.get(DOCUMENTATION_OF)'
+          printf '%s\n' ''
+          printf '%s\n' '    if documentation_of is None:'
+          printf '%s\n' '        continue'
+          printf '%s\n' ''
+          printf '%s\n' '    if not isinstance(documentation_of, str):'
+          printf '%s\n' '        bad.append((rel_md, documentation_of, "documentation_of must be a string"))'
+          printf '%s\n' '        continue'
+          printf '%s\n' ''
+          printf '%s\n' '    src = configure.resolve_documentation_of('
+          printf '%s\n' '        documentation_of,'
+          printf '%s\n' '        markdown_path=rel_md,'
+          printf '%s\n' '        basedir=basedir,'
+          printf '%s\n' '    )'
+          printf '%s\n' ''
+          printf '%s\n' '    if src is None:'
+          printf '%s\n' '        bad.append((rel_md, documentation_of, "source file is not found"))'
+          printf '%s\n' '        continue'
+          printf '%s\n' ''
+          printf '%s\n' '    src_abs = src.resolve()'
+          printf '%s\n' '    rel_src = src_abs.relative_to(basedir)'
+          printf '%s\n' ''
+          printf '%s\n' '    if configure.is_excluded(rel_src, excluded_paths=excluded_paths):'
+          printf '%s\n' '        bad.append(('
+          printf '%s\n' '            rel_md,'
+          printf '%s\n' '            documentation_of,'
+          printf '%s\n' '            f"points to excluded source: {rel_src}",'
+          printf '%s\n' '        ))'
+          printf '%s\n' '        continue'
+          printf '%s\n' ''
+          printf '%s\n' '    if language_list.get(rel_src) is None:'
+          printf '%s\n' '        bad.append(('
+          printf '%s\n' '            rel_md,'
+          printf '%s\n' '            documentation_of,'
+          printf '%s\n' '            f"points to a file that oj-verify docs does not treat as source code: {rel_src}",'
+          printf '%s\n' '        ))'
+          printf '%s\n' '        continue'
+          printf '%s\n' ''
+          printf '%s\n' 'for md, documentation_of, reason in bad:'
+          printf '%s\n' '    print(f"{md}: documentation_of={documentation_of!r}: {reason}")'
+          printf '%s\n' ''
+          printf '%s\n' 'if bad:'
+          printf '%s\n' '    sys.exit(1)'
+        } > "${script}"
+
+        python3 "${script}"
 
     - name: Check AVX2 support
       run: |
