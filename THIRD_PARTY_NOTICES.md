@@ -4,7 +4,7 @@
 This repository includes the following third-party source code:
 
 - File: [`random_graph/random.hpp`](random_graph/random.hpp)
-- Source: `yosupo06/library-checker-problems/common/random.h`
+- Source: [`yosupo06/library-checker-problems/common/random.h`](https://github.com/yosupo06/library-checker-problems/blob/1e3da4fd4135f4f3cb3a6d76b51c827f7d987942/common/random.h)
 - Project: [Library Checker Problems](https://github.com/yosupo06/library-checker-problems)
 - Copyright: 2024 Kohei Morita
 - License: Apache-2.0
