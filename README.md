@@ -15,9 +15,9 @@ Not_Leonian: [![Not_Leonian](https://img.shields.io/endpoint?url=https%3A%2F%2Fa
 
 ## License
 
-Except as otherwise noted, this repository is licensed under CC0-1.0.
-See `LICENSE`.
+Except as otherwise noted, this repository is licensed under CC0-1.0.  
+See [`LICENSE`](LICENSE).
 
-Third-party code and assets are listed in `THIRD_PARTY_NOTICES.md`.
-`random_graph/random.hpp` includes code derived from Library Checker Problems, licensed under Apache-2.0.
-The favicon uses Twemoji `1f4c4.svg`, licensed under CC BY 4.0.
+Third-party code and assets are listed in [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).  
+[`random_graph/random.hpp`](random_graph/random.hpp) includes code derived from [Library Checker Problems](https://github.com/yosupo06/library-checker-problems), licensed under Apache-2.0.  
+The favicon [`.verify-helper/docs/static/favicon.svg`](.verify-helper/docs/static/favicon.svg) uses [Twemoji `1f4c4.svg`](https://raw.githubusercontent.com/jdecked/twemoji/main/assets/svg/1f4c4.svg), licensed under CC BY 4.0.
