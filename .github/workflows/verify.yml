@@ -257,4 +257,57 @@ jobs:
         } > "${wrapper}"
 
         chmod +x "${wrapper}"
+
+        patch_dir="${RUNNER_TEMP}/oj-verify-docs-exclude-patch"
+        patch_basename="sitecustomize.py"
+        patch="${patch_dir}/${patch_basename}"
+
+        mkdir -p "${patch_dir}"
+
+        {
+          printf '%s\n' 'import pathlib'
+          printf '%s\n' ''
+          printf '%s\n' 'from onlinejudge_verify.documentation import configure as _cfg'
+          printf '%s\n' ''
+          printf '%s\n' '_orig_find_source_code_paths = _cfg._find_source_code_paths'
+          printf '%s\n' ''
+          printf '%s\n' ''
+          printf '%s\n' 'def _to_relative(path, *, basedir):'
+          printf '%s\n' '    path = pathlib.Path(path)'
+          printf '%s\n' '    try:'
+          printf '%s\n' '        return path.resolve().relative_to(basedir.resolve())'
+          printf '%s\n' '    except Exception:'
+          printf '%s\n' '        return path'
+          printf '%s\n' ''
+          printf '%s\n' ''
+          printf '%s\n' 'def _find_source_code_paths(*, basedir):'
+          printf '%s\n' '    paths = _orig_find_source_code_paths(basedir=basedir)'
+          printf '%s\n' ''
+          printf '%s\n' '    try:'
+          printf '%s\n' '        from onlinejudge_verify.documentation import main as _doc_main'
+          printf '%s\n' ''
+          printf '%s\n' '        site_config = _doc_main.load_render_config(basedir=basedir)'
+          printf '%s\n' '        excluded_paths = ['
+          printf '%s\n' '            pathlib.Path(p)'
+          printf '%s\n' '            for p in site_config.config_yml.get("exclude", [])'
+          printf '%s\n' '        ]'
+          printf '%s\n' ''
+          printf '%s\n' '        return ['
+          printf '%s\n' '            path'
+          printf '%s\n' '            for path in paths'
+          printf '%s\n' '            if not _cfg.is_excluded('
+          printf '%s\n' '                _to_relative(path, basedir=basedir),'
+          printf '%s\n' '                excluded_paths=excluded_paths,'
+          printf '%s\n' '            )'
+          printf '%s\n' '        ]'
+          printf '%s\n' '    except Exception:'
+          printf '%s\n' '        return paths'
+          printf '%s\n' ''
+          printf '%s\n' ''
+          printf '%s\n' '_cfg._find_source_code_paths = _find_source_code_paths'
+        } > "${patch}"
+
+        python3 -m py_compile "${patch}"
+        export PYTHONPATH="${patch_dir}${PYTHONPATH:+:${PYTHONPATH}}"
+
         PATH="${wrapper_dir}:${PATH}" REAL_GXX="${real_gxx}" CXX="${wrapper}" oj-verify docs
