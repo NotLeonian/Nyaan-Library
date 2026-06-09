@@ -9,7 +9,13 @@ This repository includes the following third-party source code:
 - Copyright: 2024 Kohei Morita
 - License: Apache-2.0
 - License text: [`LICENSES/Apache-2.0.txt`](LICENSES/Apache-2.0.txt)
-- Changes: Adapted for this library. In this fork, `#pragma once` was moved to the first line for oj-bundle compatibility.
+- Changes:
+  - Adapted as [`random_graph/random.hpp`](`random_graph/random.hpp`).
+  - Moved `#pragma once` to the first line for oj-bundle compatibility.
+  - Made the header self-contained by adding missing standard library
+    includes: `<cstddef>`, `<string>`, `<utility>`, and `<vector>`.
+  - Removed the unused `<random>` include.
+  - changed uses of `size_t` to `std::size_t`.
 
 The Apache-2.0 license text is included in [`LICENSES/Apache-2.0.txt`](LICENSES/Apache-2.0.txt).
 

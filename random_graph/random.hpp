@@ -1,16 +1,26 @@
 #pragma once
 
 // SPDX-License-Identifier: Apache-2.0
-// This file includes work distributed under the Apache License 2.0.
-// Source: https://github.com/yosupo06/library-checker-problems/blob/1e3da4fd4135f4f3cb3a6d76b51c827f7d987942/common/random.h
+// This file includes code derived from Library Checker Problems:
+//   https://github.com/yosupo06/library-checker-problems/blob/1e3da4fd4135f4f3cb3a6d76b51c827f7d987942/common/random.h
+//
+// The original work is licensed under the Apache License, Version 2.0.
+//
+// Local modifications in this repository:
+// - Moved #pragma once to the first line for oj-bundle compatibility.
+// - Made this header self-contained by adding missing standard library
+//   includes and removing an unused include.
 
 #include <algorithm>
 #include <array>
 #include <cassert>
+#include <cstddef>
 #include <cstdint>
 #include <numeric>
-#include <random>
 #include <set>
+#include <string>
+#include <utility>
+#include <vector>
 
 struct Random {
   private:
@@ -97,9 +107,9 @@ struct Random {
     }
 
     // generate random lower string that length = n
-    std::string lower_string(size_t n) {
+    std::string lower_string(std::size_t n) {
         std::string res = "";
-        for (size_t i = 0; i < n; i++) {
+        for (std::size_t i = 0; i < n; i++) {
             res += uniform('a', 'z');
         }
         return res;
@@ -123,7 +133,7 @@ struct Random {
 
     // generate random permutation that length = n
     template <class T>
-    std::vector<T> perm(size_t n) {
+    std::vector<T> perm(std::size_t n) {
         std::vector<T> idx(n);
         std::iota(idx.begin(), idx.end(), T(0));
         shuffle(idx.begin(), idx.end());
@@ -132,7 +142,7 @@ struct Random {
 
     // random choise n elements from [lower, upper]
     template <class T>
-    std::vector<T> choice(size_t n, T lower, T upper) {
+    std::vector<T> choice(std::size_t n, T lower, T upper) {
         assert(T(n) <= upper - lower + 1);
         std::set<T> res;
         while (res.size() < n) res.insert(uniform(lower, upper));
