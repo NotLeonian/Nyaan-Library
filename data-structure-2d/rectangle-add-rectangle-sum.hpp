@@ -1,11 +1,24 @@
 #pragma once
 
+// SPDX-License-Identifier: MIT
+// This file includes code derived from hitonanode/cplib-cpp:
+//   https://github.com/hitonanode/cplib-cpp/blob/99e4d0494958b4176c449c28c80a985b12b6791b/data_structure/rectangle_add_rectangle_sum.hpp
+//
+// Original copyright:
+//   Copyright (c) 2019 Ryotaro Sato
+//
+// Local modifications in this repository:
+// - Adjusted names and style to match this repository.
+// - Made this header self-contained by adding missing standard library includes.
+
+#include <algorithm>
+#include <tuple>
+#include <utility>
 #include <vector>
 using namespace std;
 
 #include "../data-structure/binary-indexed-tree.hpp"
 
-// https://hitonanode.github.io/cplib-cpp/data_structure/rectangle_add_rectangle_sum.hpp
 template <class I, class T>
 class RectangleAddRectangleSum {
   struct AddQuery {
