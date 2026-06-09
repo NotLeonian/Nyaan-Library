@@ -1,7 +1,8 @@
-// This software includes the work that is distributed in the Apache License 2.0.
-// https://github.com/yosupo06/library-checker-problems/blob/master/common/random.h
-
 #pragma once
+
+// SPDX-License-Identifier: Apache-2.0
+// This file includes work distributed under the Apache License 2.0.
+// Source: https://github.com/yosupo06/library-checker-problems/blob/master/common/random.h
 
 #include <algorithm>
 #include <array>
