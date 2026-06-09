@@ -10,7 +10,7 @@ This repository includes the following third-party source code:
 - License: Apache-2.0
 - License text: [`LICENSES/Apache-2.0.txt`](LICENSES/Apache-2.0.txt)
 - Changes:
-  - Adapted as [`random_graph/random.hpp`](`random_graph/random.hpp`).
+  - Adapted as [`random_graph/random.hpp`](random_graph/random.hpp).
   - Moved `#pragma once` to the first line for oj-bundle compatibility.
   - Made the header self-contained by adding missing standard library
     includes: `<cstddef>`, `<string>`, `<utility>`, and `<vector>`.
