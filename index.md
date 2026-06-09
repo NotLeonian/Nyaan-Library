@@ -198,9 +198,6 @@ data:
       title: "\u5468\u6CE2\u6570\u9818\u57DF\u3067\u306E\u5024\u3092\u4FDD\u6301\u3059\
         \u308BFPS"
     - icon: ':heavy_check_mark:'
-      path: fps/fast-interpolate.hpp
-      title: fps/fast-interpolate.hpp
-    - icon: ':heavy_check_mark:'
       path: fps/fast-multieval.hpp
       title: "Multipoint Evaluation(\u9AD8\u901F\u5316\u7248)"
     - icon: ':heavy_check_mark:'
@@ -570,9 +567,6 @@ data:
       path: math/rational.hpp
       title: math/rational.hpp
     - icon: ':heavy_check_mark:'
-      path: math/sat-solver.hpp
-      title: math/sat-solver.hpp
-    - icon: ':heavy_check_mark:'
       path: math/semiring-linear-recursive.hpp
       title: math/semiring-linear-recursive.hpp
     - icon: ':heavy_check_mark:'
@@ -677,9 +671,6 @@ data:
       title: "Base64 (\u30BD\u30FC\u30B9\u30B3\u30FC\u30C9\u306B\u6570\u5217\u3092\
         \u5727\u7E2E\u3057\u3066\u57CB\u3081\u8FBC\u3080\u7528\u306E\u7B26\u53F7\u5316\
         \u30FB\u5FA9\u53F7\u5316\u30E9\u30A4\u30D6\u30E9\u30EA)"
-    - icon: ':heavy_check_mark:'
-      path: misc/bitset-find-prev.hpp
-      title: bitset::find_prev
     - icon: ':heavy_check_mark:'
       path: misc/compress.hpp
       title: misc/compress.hpp
@@ -1505,9 +1496,6 @@ data:
       path: verify/verify-unit-test/binomial-table.test.cpp
       title: verify/verify-unit-test/binomial-table.test.cpp
     - icon: ':heavy_check_mark:'
-      path: verify/verify-unit-test/bitset-find-prev.test.cpp
-      title: verify/verify-unit-test/bitset-find-prev.test.cpp
-    - icon: ':heavy_check_mark:'
       path: verify/verify-unit-test/complex-fft.test.cpp
       title: verify/verify-unit-test/complex-fft.test.cpp
     - icon: ':heavy_check_mark:'
@@ -2015,9 +2003,6 @@ data:
     - icon: ':heavy_check_mark:'
       path: verify/verify-yosupo-fps/yosupo-multieval.test.cpp
       title: verify/verify-yosupo-fps/yosupo-multieval.test.cpp
-    - icon: ':heavy_check_mark:'
-      path: verify/verify-yosupo-fps/yosupo-polynomial-interpolation-fast.test.cpp
-      title: verify/verify-yosupo-fps/yosupo-polynomial-interpolation-fast.test.cpp
     - icon: ':heavy_check_mark:'
       path: verify/verify-yosupo-fps/yosupo-polynomial-root-finding.test.cpp
       title: verify/verify-yosupo-fps/yosupo-polynomial-root-finding.test.cpp
@@ -2648,9 +2633,6 @@ data:
     - icon: ':heavy_check_mark:'
       path: verify/verify-yuki/yuki-1775.test.cpp
       title: verify/verify-yuki/yuki-1775.test.cpp
-    - icon: ':heavy_check_mark:'
-      path: verify/verify-yuki/yuki-1777.test.cpp
-      title: verify/verify-yuki/yuki-1777.test.cpp
     - icon: ':heavy_check_mark:'
       path: verify/verify-yuki/yuki-1778.test.cpp
       title: verify/verify-yuki/yuki-1778.test.cpp

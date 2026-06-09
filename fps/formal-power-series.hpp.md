@@ -12,9 +12,6 @@ data:
     path: fps/differential-equation.hpp
     title: "\u5E38\u5FAE\u5206\u65B9\u7A0B\u5F0F"
   - icon: ':heavy_check_mark:'
-    path: fps/fast-interpolate.hpp
-    title: fps/fast-interpolate.hpp
-  - icon: ':heavy_check_mark:'
     path: fps/fast-multieval.hpp
     title: "Multipoint Evaluation(\u9AD8\u901F\u5316\u7248)"
   - icon: ':heavy_check_mark:'
@@ -247,9 +244,6 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-multieval.test.cpp
     title: verify/verify-yosupo-fps/yosupo-multieval.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/verify-yosupo-fps/yosupo-polynomial-interpolation-fast.test.cpp
-    title: verify/verify-yosupo-fps/yosupo-polynomial-interpolation-fast.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-polynomial-root-finding.test.cpp
     title: verify/verify-yosupo-fps/yosupo-polynomial-root-finding.test.cpp
@@ -599,7 +593,6 @@ data:
   - fps/kitamasa.hpp
   - fps/nth-term.hpp
   - fps/polynomial-interpolation.hpp
-  - fps/fast-interpolate.hpp
   - fps/multipoint-evaluation.hpp
   - fps/differential-equation.hpp
   - fps/multivariate-fps.hpp
@@ -647,7 +640,6 @@ data:
   - verify/verify-yosupo-fps/yosupo-composition-large.test.cpp
   - verify/verify-yosupo-fps/yosupo-taylor-shift.test.cpp
   - verify/verify-yosupo-fps/yosupo-stirling-1st-row.test.cpp
-  - verify/verify-yosupo-fps/yosupo-polynomial-interpolation-fast.test.cpp
   - verify/verify-yosupo-fps/yosupo-stirling-2nd.test.cpp
   - verify/verify-yosupo-fps/yosupo-sparse-log.test.cpp
   - verify/verify-yosupo-fps/yosupo-inv.test.cpp

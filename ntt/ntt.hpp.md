@@ -238,9 +238,6 @@ data:
     path: verify/verify-yosupo-fps/yosupo-multieval.test.cpp
     title: verify/verify-yosupo-fps/yosupo-multieval.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/verify-yosupo-fps/yosupo-polynomial-interpolation-fast.test.cpp
-    title: verify/verify-yosupo-fps/yosupo-polynomial-interpolation-fast.test.cpp
-  - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-polynomial-root-finding.test.cpp
     title: verify/verify-yosupo-fps/yosupo-polynomial-root-finding.test.cpp
   - icon: ':heavy_check_mark:'
@@ -666,7 +663,6 @@ data:
   - verify/verify-yosupo-fps/yosupo-composition-large.test.cpp
   - verify/verify-yosupo-fps/yosupo-taylor-shift.test.cpp
   - verify/verify-yosupo-fps/yosupo-stirling-1st-row.test.cpp
-  - verify/verify-yosupo-fps/yosupo-polynomial-interpolation-fast.test.cpp
   - verify/verify-yosupo-fps/yosupo-stirling-2nd.test.cpp
   - verify/verify-yosupo-fps/yosupo-sparse-log.test.cpp
   - verify/verify-yosupo-fps/yosupo-inv.test.cpp

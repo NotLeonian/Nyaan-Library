@@ -298,9 +298,6 @@ data:
     path: verify/verify-unit-test/binomial-table.test.cpp
     title: verify/verify-unit-test/binomial-table.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/verify-unit-test/bitset-find-prev.test.cpp
-    title: verify/verify-unit-test/bitset-find-prev.test.cpp
-  - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/complex-fft.test.cpp
     title: verify/verify-unit-test/complex-fft.test.cpp
   - icon: ':heavy_check_mark:'
@@ -801,9 +798,6 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-multieval.test.cpp
     title: verify/verify-yosupo-fps/yosupo-multieval.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/verify-yosupo-fps/yosupo-polynomial-interpolation-fast.test.cpp
-    title: verify/verify-yosupo-fps/yosupo-polynomial-interpolation-fast.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-polynomial-root-finding.test.cpp
     title: verify/verify-yosupo-fps/yosupo-polynomial-root-finding.test.cpp
@@ -1414,9 +1408,6 @@ data:
     path: verify/verify-yuki/yuki-1775.test.cpp
     title: verify/verify-yuki/yuki-1775.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/verify-yuki/yuki-1777.test.cpp
-    title: verify/verify-yuki/yuki-1777.test.cpp
-  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1778.test.cpp
     title: verify/verify-yuki/yuki-1778.test.cpp
   - icon: ':heavy_check_mark:'
@@ -1754,7 +1745,6 @@ data:
   - verify/verify-yosupo-fps/yosupo-taylor-shift.test.cpp
   - verify/verify-yosupo-fps/yosupo-sum-of-exp-poly-limit.test.cpp
   - verify/verify-yosupo-fps/yosupo-stirling-1st-row.test.cpp
-  - verify/verify-yosupo-fps/yosupo-polynomial-interpolation-fast.test.cpp
   - verify/verify-yosupo-fps/yosupo-stirling-2nd.test.cpp
   - verify/verify-yosupo-fps/yosupo-sparse-log.test.cpp
   - verify/verify-yosupo-fps/yosupo-inv.test.cpp
@@ -1971,7 +1961,6 @@ data:
   - verify/verify-yuki/yuki-1170-divide-interval.test.cpp
   - verify/verify-yuki/yuki-0502.test.cpp
   - verify/verify-yuki/yuki-0704.test.cpp
-  - verify/verify-yuki/yuki-1777.test.cpp
   - verify/verify-yuki/yuki-1115.test.cpp
   - verify/verify-yuki/yuki-1112-sparse.test.cpp
   - verify/verify-yuki/yuki-2012.test.cpp
@@ -2028,7 +2017,6 @@ data:
   - verify/verify-yuki/yuki-0697.test.cpp
   - verify/verify-yuki/yuki-1170.test.cpp
   - verify/verify-yuki/yuki-2266.test.cpp
-  - verify/verify-unit-test/bitset-find-prev.test.cpp
   - verify/verify-unit-test/tree-path.test.cpp
   - verify/verify-unit-test/wavelet-matrix.test.cpp
   - verify/verify-unit-test/mf.test.cpp
