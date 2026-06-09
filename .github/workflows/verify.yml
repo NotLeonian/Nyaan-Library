@@ -258,8 +258,8 @@ jobs:
 
         chmod +x "${wrapper}"
 
-        patch_dir="${RUNNER_TEMP}/oj-verify-patch"
-        patch_basename="docs-exclude.py"
+        patch_dir="${RUNNER_TEMP}/oj-verify-docs-exclude-patch"
+        patch_basename="sitecustomize.py"
         patch="${patch_dir}/${patch_basename}"
 
         mkdir -p "${patch_dir}"
