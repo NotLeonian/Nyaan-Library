@@ -14,8 +14,14 @@ data:
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links:
-    - https://hitonanode.github.io/cplib-cpp/data_structure/rectangle_add_rectangle_sum.hpp
+    - https://github.com/hitonanode/cplib-cpp/blob/99e4d0494958b4176c449c28c80a985b12b6791b/data_structure/rectangle_add_rectangle_sum.hpp
   bundledCode: "#line 2 \"data-structure-2d/rectangle-add-rectangle-sum.hpp\"\n\n\
+    // SPDX-License-Identifier: MIT\n// This file includes code derived from hitonanode/cplib-cpp:\n\
+    //   https://github.com/hitonanode/cplib-cpp/blob/99e4d0494958b4176c449c28c80a985b12b6791b/data_structure/rectangle_add_rectangle_sum.hpp\n\
+    //\n// Original copyright:\n//   Copyright (c) 2019 Ryotaro Sato\n//\n// Local\
+    \ modifications in this repository:\n// - Adjusted names and style to match this\
+    \ repository.\n// - Made this header self-contained by adding missing standard\
+    \ library includes.\n\n#include <algorithm>\n#include <tuple>\n#include <utility>\n\
     #include <vector>\nusing namespace std;\n\n#line 2 \"data-structure/binary-indexed-tree.hpp\"\
     \n\ntemplate <typename T>\nstruct BinaryIndexedTree {\n  int N;\n  vector<T> data;\n\
     \n  BinaryIndexedTree() = default;\n\n  BinaryIndexedTree(int size) { init(size);\
@@ -35,9 +41,8 @@ data:
     \ x = 0;\n    for (int k = 1 << __lg(N); k; k >>= 1) {\n      if (x + k <= N -\
     \ 1 && data[x + k] <= w) {\n        w -= data[x + k];\n        x += k;\n     \
     \ }\n    }\n    return x;\n  }\n};\n\n/**\n * @brief Binary Indexed Tree(Fenwick\
-    \ Tree)\n */\n#line 7 \"data-structure-2d/rectangle-add-rectangle-sum.hpp\"\n\n\
-    // https://hitonanode.github.io/cplib-cpp/data_structure/rectangle_add_rectangle_sum.hpp\n\
-    template <class I, class T>\nclass RectangleAddRectangleSum {\n  struct AddQuery\
+    \ Tree)\n */\n#line 21 \"data-structure-2d/rectangle-add-rectangle-sum.hpp\"\n\
+    \ntemplate <class I, class T>\nclass RectangleAddRectangleSum {\n  struct AddQuery\
     \ {\n    I xl, xr, yl, yr;\n    T val;\n  };\n  struct SumQuery {\n    I xl, xr,\
     \ yl, yr;\n  };\n  vector<AddQuery> add_queries;\n  vector<SumQuery> sum_queries;\n\
     \n public:\n  RectangleAddRectangleSum() = default;\n\n  void add_rectangle(I\
@@ -69,9 +74,14 @@ data:
     \   ret[q] +=\n            b00.sum(i) + b01.sum(i) * yi + b10.sum(i) * x + b11.sum(i)\
     \ * x * yi;\n        ret[q] -=\n            b00.sum(j) + b01.sum(j) * yj + b10.sum(j)\
     \ * x + b11.sum(j) * x * yj;\n      }\n    }\n    return ret;\n  }\n};\n"
-  code: "#pragma once\n\n#include <vector>\nusing namespace std;\n\n#include \"../data-structure/binary-indexed-tree.hpp\"\
-    \n\n// https://hitonanode.github.io/cplib-cpp/data_structure/rectangle_add_rectangle_sum.hpp\n\
-    template <class I, class T>\nclass RectangleAddRectangleSum {\n  struct AddQuery\
+  code: "#pragma once\n\n// SPDX-License-Identifier: MIT\n// This file includes code\
+    \ derived from hitonanode/cplib-cpp:\n//   https://github.com/hitonanode/cplib-cpp/blob/99e4d0494958b4176c449c28c80a985b12b6791b/data_structure/rectangle_add_rectangle_sum.hpp\n\
+    //\n// Original copyright:\n//   Copyright (c) 2019 Ryotaro Sato\n//\n// Local\
+    \ modifications in this repository:\n// - Adjusted names and style to match this\
+    \ repository.\n// - Made this header self-contained by adding missing standard\
+    \ library includes.\n\n#include <algorithm>\n#include <tuple>\n#include <utility>\n\
+    #include <vector>\nusing namespace std;\n\n#include \"../data-structure/binary-indexed-tree.hpp\"\
+    \n\ntemplate <class I, class T>\nclass RectangleAddRectangleSum {\n  struct AddQuery\
     \ {\n    I xl, xr, yl, yr;\n    T val;\n  };\n  struct SumQuery {\n    I xl, xr,\
     \ yl, yr;\n  };\n  vector<AddQuery> add_queries;\n  vector<SumQuery> sum_queries;\n\
     \n public:\n  RectangleAddRectangleSum() = default;\n\n  void add_rectangle(I\
@@ -108,7 +118,7 @@ data:
   isVerificationFile: false
   path: data-structure-2d/rectangle-add-rectangle-sum.hpp
   requiredBy: []
-  timestamp: '2026-06-08 17:59:24+09:00'
+  timestamp: '2026-06-09 11:45:51+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ds/yosupo-static-rectangle-add-rectangle-sum.test.cpp

@@ -19,6 +19,23 @@ This repository includes the following third-party source code:
 
 The Apache-2.0 license text is included in [`LICENSES/Apache-2.0.txt`](LICENSES/Apache-2.0.txt).
 
+## hitonanode/cplib-cpp rectangle add rectangle sum
+This repository includes the following third-party source code:
+
+- File: [`data-structure-2d/rectangle-add-rectangle-sum.hpp`](data-structure-2d/rectangle-add-rectangle-sum.hpp)
+- Source: [`hitonanode/cplib-cpp/data_structure/rectangle_add_rectangle_sum.hpp`](https://github.com/hitonanode/cplib-cpp/blob/99e4d0494958b4176c449c28c80a985b12b6791b/data_structure/rectangle_add_rectangle_sum.hpp)
+- Project: [`hitonanode/cplib-cpp`](https://github.com/hitonanode/cplib-cpp)
+- Copyright: 2019 Ryotaro Sato
+- License: MIT
+- License text: [`LICENSES/MIT.txt`](LICENSES/MIT.txt)
+- Changes:
+  - Adapted as [`data-structure-2d/rectangle-add-rectangle-sum.hpp`](data-structure-2d/rectangle-add-rectangle-sum.hpp).
+  - Made the header self-contained by adding missing standard library
+    includes: `<algorithm>`, `<tuple>`, and `<utility>`.
+  - Adjusted names and style to match this repository.
+
+The MIT license text is included in [`LICENSES/MIT.txt`](LICENSES/MIT.txt).
+
 ## Twemoji favicon
 This repository includes the following third-party asset:
 
