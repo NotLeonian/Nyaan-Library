@@ -23,7 +23,7 @@ The Apache-2.0 license text is included in [`LICENSES/Apache-2.0.txt`](LICENSES/
 This repository includes the following third-party asset:
 
 - File: [`.verify-helper/docs/static/favicon.svg`](.verify-helper/docs/static/favicon.svg)
-- Source: Twemoji `assets/svg/1f4c4.svg` (Page Facing Up)
+- Source: [Twemoji `assets/svg/1f4c4.svg` (Page Facing Up)](https://raw.githubusercontent.com/jdecked/twemoji/main/assets/svg/1f4c4.svg)
 - Project: [Twemoji](https://github.com/twitter/twemoji)
 - Copyright: 2014-2021 Twitter, 2022-present Jason Sofonia & Justine De Caires
 - License: CC BY 4.0
