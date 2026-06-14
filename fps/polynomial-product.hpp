@@ -12,5 +12,5 @@ fps Pi(vector<fps> v) {
     if (v.size() % 2) nx.push_back(v.back());
     v = nx;
   }
-  return v.back();
+  return v[0];
 }
