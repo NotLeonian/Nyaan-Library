@@ -307,6 +307,9 @@ data:
       path: fps/sum-of-exponential-times-poly.hpp
       title: $\sum_{i}a^i f(i)$
     - icon: ':heavy_check_mark:'
+      path: fps/sum-of-rational-functions.hpp
+      title: fps/sum-of-rational-functions.hpp
+    - icon: ':heavy_check_mark:'
       path: fps/taylor-shift.hpp
       title: "\u5E73\u884C\u79FB\u52D5"
   - name: game
@@ -2570,6 +2573,9 @@ data:
     - icon: ':heavy_check_mark:'
       path: verify/verify-yuki/yuki-1145-frac.test.cpp
       title: verify/verify-yuki/yuki-1145-frac.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: verify/verify-yuki/yuki-1145-sum-of-rational-functions.test.cpp
+      title: verify/verify-yuki/yuki-1145-sum-of-rational-functions.test.cpp
     - icon: ':heavy_check_mark:'
       path: verify/verify-yuki/yuki-1145.test.cpp
       title: verify/verify-yuki/yuki-1145.test.cpp

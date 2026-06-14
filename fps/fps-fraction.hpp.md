@@ -7,6 +7,9 @@ data:
     path: verify/verify-yuki/yuki-1145-frac.test.cpp
     title: verify/verify-yuki/yuki-1145-frac.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/verify-yuki/yuki-1145-sum-of-rational-functions.test.cpp
+    title: verify/verify-yuki/yuki-1145-sum-of-rational-functions.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1875.test.cpp
     title: verify/verify-yuki/yuki-1875.test.cpp
   _isVerificationFailed: false
@@ -75,6 +78,7 @@ data:
   timestamp: '2023-08-10 13:25:59+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
+  - verify/verify-yuki/yuki-1145-sum-of-rational-functions.test.cpp
   - verify/verify-yuki/yuki-1145-frac.test.cpp
   - verify/verify-yuki/yuki-1875.test.cpp
 documentation_of: fps/fps-fraction.hpp

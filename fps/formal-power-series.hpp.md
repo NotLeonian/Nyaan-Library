@@ -105,6 +105,9 @@ data:
     path: fps/stirling-matrix.hpp
     title: fps/stirling-matrix.hpp
   - icon: ':heavy_check_mark:'
+    path: fps/sum-of-rational-functions.hpp
+    title: fps/sum-of-rational-functions.hpp
+  - icon: ':heavy_check_mark:'
     path: fps/taylor-shift.hpp
     title: "\u5E73\u884C\u79FB\u52D5"
   - icon: ':heavy_check_mark:'
@@ -356,6 +359,9 @@ data:
     path: verify/verify-yuki/yuki-1145-frac.test.cpp
     title: verify/verify-yuki/yuki-1145-frac.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/verify-yuki/yuki-1145-sum-of-rational-functions.test.cpp
+    title: verify/verify-yuki/yuki-1145-sum-of-rational-functions.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1145.test.cpp
     title: verify/verify-yuki/yuki-1145.test.cpp
   - icon: ':heavy_check_mark:'
@@ -601,6 +607,7 @@ data:
   - fps/ntt-friendly-fps.hpp
   - fps/fps-composition.hpp
   - fps/fps-famous-series.hpp
+  - fps/sum-of-rational-functions.hpp
   - fps/root-finding.hpp
   - fps/mod-pow.hpp
   - fps/middle-product.hpp
@@ -685,6 +692,7 @@ data:
   - verify/verify-yuki/yuki-0215.test.cpp
   - verify/verify-yuki/yuki-0214.test.cpp
   - verify/verify-yuki/yuki-1504.test.cpp
+  - verify/verify-yuki/yuki-1145-sum-of-rational-functions.test.cpp
   - verify/verify-yuki/yuki-0720.test.cpp
   - verify/verify-yuki/yuki-1939-sparse-pow.test.cpp
   - verify/verify-yuki/yuki-1303.test.cpp

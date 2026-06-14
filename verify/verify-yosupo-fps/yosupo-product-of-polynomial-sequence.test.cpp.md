@@ -320,10 +320,10 @@ data:
     \ deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief \u591A\u9805\u5F0F/\u5F62\
     \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n */\n#line 3 \"\
     fps/polynomial-product.hpp\"\n\ntemplate <typename fps>\nfps Pi(vector<fps> v)\
-    \ {\n  if ((int)v.size() == 0) return fps{1};\n  while ((int)v.size() >= 2) {\n\
-    \    vector<fps> nx;\n    for (int i = 0; i + 1 < (int)v.size(); i += 2)\n   \
-    \   nx.push_back(v[i] * v[i + 1]);\n    if (v.size() % 2) nx.push_back(v.back());\n\
-    \    v = nx;\n  }\n  return v.back();\n}\n#line 6 \"verify/verify-yosupo-fps/yosupo-product-of-polynomial-sequence.test.cpp\"\
+    \ {\n  if (v.empty()) return fps{1};\n  while ((int)v.size() >= 2) {\n    vector<fps>\
+    \ nx;\n    nx.reserve((v.size() + 1) / 2);\n    for (int i = 0; i + 1 < (int)v.size();\
+    \ i += 2)\n      nx.push_back(v[i] * v[i + 1]);\n    if (v.size() % 2) nx.push_back(v.back());\n\
+    \    v = nx;\n  }\n  return v[0];\n}\n#line 6 \"verify/verify-yosupo-fps/yosupo-product-of-polynomial-sequence.test.cpp\"\
     \n//\n#line 2 \"fps/ntt-friendly-fps.hpp\"\n\n#line 2 \"ntt/ntt.hpp\"\n\n#line\
     \ 7 \"ntt/ntt.hpp\"\nusing namespace std;\n\ntemplate <typename mint>\nstruct\
     \ NTT {\n  static constexpr uint32_t get_pr() {\n    uint32_t _mod = mint::get_mod();\n\
@@ -527,7 +527,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-fps/yosupo-product-of-polynomial-sequence.test.cpp
   requiredBy: []
-  timestamp: '2026-06-14 14:17:15+09:00'
+  timestamp: '2026-06-14 14:52:11+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-fps/yosupo-product-of-polynomial-sequence.test.cpp

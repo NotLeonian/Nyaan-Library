@@ -8,14 +8,8 @@ data:
   _extendedRequiredBy: []
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
-    path: verify/verify-unit-test/partial-fraction-decomposition.test.cpp
-    title: verify/verify-unit-test/partial-fraction-decomposition.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/verify-yosupo-fps/yosupo-product-of-polynomial-sequence.test.cpp
-    title: verify/verify-yosupo-fps/yosupo-product-of-polynomial-sequence.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/verify-yuki/yuki-1145.test.cpp
-    title: verify/verify-yuki/yuki-1145.test.cpp
+    path: verify/verify-yuki/yuki-1145-sum-of-rational-functions.test.cpp
+    title: verify/verify-yuki/yuki-1145-sum-of-rational-functions.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
@@ -107,32 +101,30 @@ data:
     \ FormalPowerSeries<mint>::exp(int deg) const {\n  return fps_exp_impl(*this,\
     \ deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief \u591A\u9805\u5F0F/\u5F62\
     \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n */\n#line 3 \"\
-    fps/polynomial-product.hpp\"\n\ntemplate <typename fps>\nfps Pi(vector<fps> v)\
-    \ {\n  if (v.empty()) return fps{1};\n  while ((int)v.size() >= 2) {\n    vector<fps>\
+    fps/sum-of-rational-functions.hpp\"\n\ntemplate <typename frac>\nfrac sum_of_rational_functions(vector<frac>\
+    \ v) {\n  if (v.empty()) return frac{};\n  while ((int)v.size() >= 2) {\n    vector<frac>\
     \ nx;\n    nx.reserve((v.size() + 1) / 2);\n    for (int i = 0; i + 1 < (int)v.size();\
-    \ i += 2)\n      nx.push_back(v[i] * v[i + 1]);\n    if (v.size() % 2) nx.push_back(v.back());\n\
+    \ i += 2)\n      nx.push_back(v[i] + v[i + 1]);\n    if (v.size() % 2) nx.push_back(v.back());\n\
     \    v = nx;\n  }\n  return v[0];\n}\n"
   code: "#pragma once\n#include \"./formal-power-series.hpp\"\n\ntemplate <typename\
-    \ fps>\nfps Pi(vector<fps> v) {\n  if (v.empty()) return fps{1};\n  while ((int)v.size()\
-    \ >= 2) {\n    vector<fps> nx;\n    nx.reserve((v.size() + 1) / 2);\n    for (int\
-    \ i = 0; i + 1 < (int)v.size(); i += 2)\n      nx.push_back(v[i] * v[i + 1]);\n\
-    \    if (v.size() % 2) nx.push_back(v.back());\n    v = nx;\n  }\n  return v[0];\n\
-    }\n"
+    \ frac>\nfrac sum_of_rational_functions(vector<frac> v) {\n  if (v.empty()) return\
+    \ frac{};\n  while ((int)v.size() >= 2) {\n    vector<frac> nx;\n    nx.reserve((v.size()\
+    \ + 1) / 2);\n    for (int i = 0; i + 1 < (int)v.size(); i += 2)\n      nx.push_back(v[i]\
+    \ + v[i + 1]);\n    if (v.size() % 2) nx.push_back(v.back());\n    v = nx;\n \
+    \ }\n  return v[0];\n}\n"
   dependsOn:
   - fps/formal-power-series.hpp
   isVerificationFile: false
-  path: fps/polynomial-product.hpp
+  path: fps/sum-of-rational-functions.hpp
   requiredBy: []
   timestamp: '2026-06-14 14:52:11+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-yosupo-fps/yosupo-product-of-polynomial-sequence.test.cpp
-  - verify/verify-yuki/yuki-1145.test.cpp
-  - verify/verify-unit-test/partial-fraction-decomposition.test.cpp
-documentation_of: fps/polynomial-product.hpp
+  - verify/verify-yuki/yuki-1145-sum-of-rational-functions.test.cpp
+documentation_of: fps/sum-of-rational-functions.hpp
 layout: document
 redirect_from:
-- /library/fps/polynomial-product.hpp
-- /library/fps/polynomial-product.hpp.html
-title: fps/polynomial-product.hpp
+- /library/fps/sum-of-rational-functions.hpp
+- /library/fps/sum-of-rational-functions.hpp.html
+title: fps/sum-of-rational-functions.hpp
 ---

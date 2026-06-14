@@ -1345,6 +1345,9 @@ data:
     path: verify/verify-yuki/yuki-1145-frac.test.cpp
     title: verify/verify-yuki/yuki-1145-frac.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/verify-yuki/yuki-1145-sum-of-rational-functions.test.cpp
+    title: verify/verify-yuki/yuki-1145-sum-of-rational-functions.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/verify-yuki/yuki-1145.test.cpp
     title: verify/verify-yuki/yuki-1145.test.cpp
   - icon: ':heavy_check_mark:'
@@ -1836,6 +1839,7 @@ data:
   - verify/verify-yuki/yuki-0214.test.cpp
   - verify/verify-yuki/yuki-0704.test.cpp
   - verify/verify-yuki/yuki-1504.test.cpp
+  - verify/verify-yuki/yuki-1145-sum-of-rational-functions.test.cpp
   - verify/verify-yuki/yuki-0720.test.cpp
   - verify/verify-yuki/yuki-1320.test.cpp
   - verify/verify-yuki/yuki-2333.test.cpp
