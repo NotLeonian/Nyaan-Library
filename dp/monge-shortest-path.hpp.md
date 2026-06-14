@@ -64,11 +64,11 @@ data:
   timestamp: '2026-06-05 19:46:06+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-aoj-other/aoj-3086.test.cpp
-  - verify/verify-yuki/yuki-0703.test.cpp
   - verify/verify-yuki/yuki-0952.test.cpp
-  - verify/verify-yuki/yuki-0704.test.cpp
   - verify/verify-yuki/yuki-0705.test.cpp
+  - verify/verify-yuki/yuki-0703.test.cpp
+  - verify/verify-yuki/yuki-0704.test.cpp
+  - verify/verify-aoj-other/aoj-3086.test.cpp
 documentation_of: dp/monge-shortest-path.hpp
 layout: document
 redirect_from:

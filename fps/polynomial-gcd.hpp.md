@@ -210,8 +210,8 @@ data:
   timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-yosupo-fps/yosupo-polynomial-root-finding.test.cpp
   - verify/verify-yosupo-fps/yosupo-inv-of-polynomials.test.cpp
+  - verify/verify-yosupo-fps/yosupo-polynomial-root-finding.test.cpp
 documentation_of: fps/polynomial-gcd.hpp
 layout: document
 title: "\u591A\u9805\u5F0FGCD"

@@ -99,8 +99,8 @@ data:
   timestamp: '2024-05-03 21:06:15+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-yosupo-other/yosupo-argument-sort.test.cpp
   - verify/verify-yosupo-other/yosupo-static-convex-hull-2.test.cpp
+  - verify/verify-yosupo-other/yosupo-argument-sort.test.cpp
 documentation_of: geometry/integer-geometry.hpp
 layout: document
 redirect_from:

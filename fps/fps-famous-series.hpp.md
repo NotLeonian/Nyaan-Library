@@ -240,10 +240,10 @@ data:
   timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-yosupo-fps/yosupo-stirling-1st-row.test.cpp
-  - verify/verify-yosupo-fps/yosupo-stirling-2nd.test.cpp
   - verify/verify-yosupo-fps/yosupo-stirling-1st.test.cpp
   - verify/verify-yosupo-fps/yosupo-stirling-2nd-row.test.cpp
+  - verify/verify-yosupo-fps/yosupo-stirling-1st-row.test.cpp
+  - verify/verify-yosupo-fps/yosupo-stirling-2nd.test.cpp
   - verify/verify-yuki/yuki-2580.test.cpp
 documentation_of: fps/fps-famous-series.hpp
 layout: document

@@ -40,8 +40,8 @@ data:
   timestamp: '2024-09-14 20:40:02+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-yosupo-string/yosupo-run-enumerate.test.cpp
   - verify/verify-yosupo-string/yosupo-z-algorithm.test.cpp
+  - verify/verify-yosupo-string/yosupo-run-enumerate.test.cpp
 documentation_of: string/z-algorithm.hpp
 layout: document
 redirect_from:

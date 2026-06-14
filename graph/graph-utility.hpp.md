@@ -126,11 +126,11 @@ data:
   timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-yosupo-graph/yosupo-strongly-connected-components.test.cpp
-  - verify/verify-yosupo-graph/yosupo-diameter.test.cpp
+  - verify/verify-aoj-grl/aoj-grl-5-a.test.cpp
   - verify/verify-yosupo-graph/yosupo-shortest-path.test.cpp
   - verify/verify-yosupo-graph/yosupo-shortest-path-dijkstra-abstruct.test.cpp
-  - verify/verify-aoj-grl/aoj-grl-5-a.test.cpp
+  - verify/verify-yosupo-graph/yosupo-diameter.test.cpp
+  - verify/verify-yosupo-graph/yosupo-strongly-connected-components.test.cpp
 documentation_of: graph/graph-utility.hpp
 layout: document
 title: "\u30B0\u30E9\u30D5\u30E6\u30FC\u30C6\u30A3\u30EA\u30C6\u30A3"

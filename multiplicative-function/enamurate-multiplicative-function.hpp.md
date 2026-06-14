@@ -66,8 +66,8 @@ data:
   isVerificationFile: false
   path: multiplicative-function/enamurate-multiplicative-function.hpp
   requiredBy:
-  - multiplicative-function/count-square-free.hpp
   - multiplicative-function/mf-famous-series.hpp
+  - multiplicative-function/count-square-free.hpp
   timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:

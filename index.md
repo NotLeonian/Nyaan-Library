@@ -236,9 +236,6 @@ data:
       path: fps/fps-sqrt.hpp
       title: "\u5E73\u65B9\u6839"
     - icon: ':heavy_check_mark:'
-      path: fps/fps-utility.hpp
-      title: fps/fps-utility.hpp
-    - icon: ':heavy_check_mark:'
       path: fps/fualhuber.hpp
       title: fps/fualhuber.hpp
     - icon: ':warning:'
@@ -288,6 +285,9 @@ data:
     - icon: ':heavy_check_mark:'
       path: fps/polynomial-interpolation.hpp
       title: fps/polynomial-interpolation.hpp
+    - icon: ':heavy_check_mark:'
+      path: fps/polynomial-product.hpp
+      title: fps/polynomial-product.hpp
     - icon: ':heavy_check_mark:'
       path: fps/pow-enumerate.hpp
       title: "pow \u5217\u6319"

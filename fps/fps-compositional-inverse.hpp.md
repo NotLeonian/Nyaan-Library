@@ -250,9 +250,9 @@ data:
   verifiedWith:
   - verify/verify-yosupo-fps/yosupo-compositional-inverse.test.cpp
   - verify/verify-yosupo-fps/yosupo-compositional-inverse-large.test.cpp
+  - verify/verify-yuki/yuki-1939-2.test.cpp
   - verify/verify-yuki/yuki-2661.test.cpp
   - verify/verify-yuki/yuki-1939.test.cpp
-  - verify/verify-yuki/yuki-1939-2.test.cpp
   - verify/verify-unit-test/composition.test.cpp
 documentation_of: fps/fps-compositional-inverse.hpp
 layout: document

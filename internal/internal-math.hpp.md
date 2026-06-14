@@ -176,35 +176,35 @@ data:
   isVerificationFile: false
   path: internal/internal-math.hpp
   requiredBy:
-  - math/two-square.hpp
-  - math/primitive-root-ll.hpp
   - ntt/multivariate-circular-convolution.hpp
   - ntt/ntt-64bit.hpp
-  - prime/fast-factorize.hpp
-  - prime/miller-rabin.hpp
   - modulo/mod-kth-root.hpp
   - modulo/mod-log.hpp
+  - math/primitive-root-ll.hpp
+  - math/two-square.hpp
+  - prime/fast-factorize.hpp
+  - prime/miller-rabin.hpp
   timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ntt/yosupo-multivariate-circular-convolution.test.cpp
-  - verify/verify-yosupo-math/yosupo-two-square-sum.test.cpp
-  - verify/verify-yosupo-math/yosupo-kth-root-mod.test.cpp
-  - verify/verify-yosupo-math/yosupo-mod-log.test.cpp
-  - verify/verify-yosupo-math/yosupo-factorization.test.cpp
   - verify/verify-yosupo-math/yosupo-primality-test.test.cpp
+  - verify/verify-yosupo-math/yosupo-factorization.test.cpp
+  - verify/verify-yosupo-math/yosupo-kth-root-mod.test.cpp
+  - verify/verify-yosupo-math/yosupo-two-square-sum.test.cpp
   - verify/verify-yosupo-math/yosupo-primitive-root.test.cpp
+  - verify/verify-yosupo-math/yosupo-mod-log.test.cpp
   - verify/verify-yosupo-math/yosupo-primality-test-u64.test.cpp
   - verify/verify-yuki/yuki-0002.test.cpp
   - verify/verify-yuki/yuki-0103.test.cpp
   - verify/verify-unit-test/osak.test.cpp
   - verify/verify-unit-test/internal-math.test.cpp
+  - verify/verify-unit-test/primitive-root.test.cpp
+  - verify/verify-unit-test/garner-bigint.test.cpp
   - verify/verify-unit-test/ntt-64bit.test.cpp
   - verify/verify-unit-test/enumerate-convex.test.cpp
-  - verify/verify-unit-test/garner-bigint.test.cpp
-  - verify/verify-unit-test/primitive-root.test.cpp
-  - verify/verify-unit-test/factorize.test.cpp
   - verify/verify-unit-test/primality-test.test.cpp
+  - verify/verify-unit-test/factorize.test.cpp
 documentation_of: internal/internal-math.hpp
 layout: document
 redirect_from:

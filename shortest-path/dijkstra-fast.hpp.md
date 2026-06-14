@@ -118,10 +118,10 @@ data:
   timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-yosupo-graph/yosupo-shortest-path-3.test.cpp
   - verify/verify-yuki/yuki-1320.test.cpp
   - verify/verify-unit-test/dijkstra.test.cpp
   - verify/verify-aoj-grl/aoj-grl-1-a-fast-dijkstra.test.cpp
+  - verify/verify-yosupo-graph/yosupo-shortest-path-3.test.cpp
 documentation_of: shortest-path/dijkstra-fast.hpp
 layout: document
 title: "\u30C0\u30A4\u30AF\u30B9\u30C8\u30E9\u6CD5(\u5B9A\u6570\u500D\u9AD8\u901F\u5316\

@@ -533,9 +533,9 @@ data:
   timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-aoj-other/aoj-2171-bigrational.test.cpp
   - verify/verify-unit-test/bigrational.test.cpp
   - verify/verify-unit-test/bigint-gcd.test.cpp
+  - verify/verify-aoj-other/aoj-2171-bigrational.test.cpp
 documentation_of: math/bigint-gcd.hpp
 layout: document
 redirect_from:

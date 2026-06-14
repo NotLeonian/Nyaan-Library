@@ -92,8 +92,8 @@ data:
   timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-unit-test/tree-path.test.cpp
   - verify/verify-unit-test/rerooting.test.cpp
+  - verify/verify-unit-test/tree-path.test.cpp
 documentation_of: tree/pruefer-code.hpp
 layout: document
 redirect_from:

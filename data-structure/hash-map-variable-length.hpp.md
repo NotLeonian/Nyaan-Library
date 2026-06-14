@@ -98,9 +98,9 @@ data:
   timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-yosupo-ds/yosupo-dynamic-li-chao-tree.test.cpp
   - verify/verify-yosupo-ds/yosupo-hash-map-variable-length.test.cpp
   - verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-bit2d.test.cpp
+  - verify/verify-yosupo-ds/yosupo-dynamic-li-chao-tree.test.cpp
 documentation_of: data-structure/hash-map-variable-length.hpp
 layout: document
 title: "Hash Map(\u53EF\u5909\u9577\u7248)"

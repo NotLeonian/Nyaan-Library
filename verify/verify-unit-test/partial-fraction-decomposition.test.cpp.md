@@ -6,15 +6,15 @@ data:
     title: "\u591A\u9805\u5F0F/\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\
       \u30E9\u30EA"
   - icon: ':heavy_check_mark:'
-    path: fps/fps-utility.hpp
-    title: fps/fps-utility.hpp
-  - icon: ':heavy_check_mark:'
     path: fps/ntt-friendly-fps.hpp
     title: "NTT mod\u7528FPS\u30E9\u30A4\u30D6\u30E9\u30EA"
   - icon: ':heavy_check_mark:'
     path: fps/partial-fraction-decomposition.hpp
     title: "\u90E8\u5206\u5206\u6570\u5206\u89E3(\u5206\u6BCD\u304C1\u6B21\u5F0F\u306E\
       \u7A4D\u3067\u8868\u305B\u308B\u5834\u5408)"
+  - icon: ':heavy_check_mark:'
+    path: fps/polynomial-product.hpp
+    title: fps/polynomial-product.hpp
   - icon: ':heavy_check_mark:'
     path: fps/taylor-shift.hpp
     title: "\u5E73\u884C\u79FB\u52D5"
@@ -546,14 +546,14 @@ data:
     \    if ((int)f.size() < d) f.resize(d);\n    f = f.rev();\n    res.emplace_back(m,\
     \ vector<mint>{begin(f), end(f)});\n  }\n  return res;\n}\n\n/**\n * @brief \u90E8\
     \u5206\u5206\u6570\u5206\u89E3(\u5206\u6BCD\u304C1\u6B21\u5F0F\u306E\u7A4D\u3067\
-    \u8868\u305B\u308B\u5834\u5408)\n */\n#line 3 \"fps/fps-utility.hpp\"\n\ntemplate\
-    \ <typename fps>\nfps Pi(vector<fps> v) {\n  if ((int)v.size() == 0) return fps{1};\n\
-    \  while ((int)v.size() >= 2) {\n    vector<fps> nx;\n    for (int i = 0; i +\
-    \ 1 < (int)v.size(); i += 2)\n      nx.push_back(v[i] * v[i + 1]);\n    if (v.size()\
-    \ % 2) nx.push_back(v.back());\n    v = nx;\n  }\n  return v.back();\n}\n#line\
-    \ 2 \"misc/rng.hpp\"\n\n#line 7 \"misc/rng.hpp\"\nusing namespace std;\n\n#line\
-    \ 2 \"internal/internal-seed.hpp\"\n\n#line 4 \"internal/internal-seed.hpp\"\n\
-    using namespace std;\n\nnamespace internal {\nunsigned long long non_deterministic_seed()\
+    \u8868\u305B\u308B\u5834\u5408)\n */\n#line 3 \"fps/polynomial-product.hpp\"\n\
+    \ntemplate <typename fps>\nfps Pi(vector<fps> v) {\n  if ((int)v.size() == 0)\
+    \ return fps{1};\n  while ((int)v.size() >= 2) {\n    vector<fps> nx;\n    for\
+    \ (int i = 0; i + 1 < (int)v.size(); i += 2)\n      nx.push_back(v[i] * v[i +\
+    \ 1]);\n    if (v.size() % 2) nx.push_back(v.back());\n    v = nx;\n  }\n  return\
+    \ v.back();\n}\n#line 2 \"misc/rng.hpp\"\n\n#line 7 \"misc/rng.hpp\"\nusing namespace\
+    \ std;\n\n#line 2 \"internal/internal-seed.hpp\"\n\n#line 4 \"internal/internal-seed.hpp\"\
+    \nusing namespace std;\n\nnamespace internal {\nunsigned long long non_deterministic_seed()\
     \ {\n  unsigned long long m =\n      chrono::duration_cast<chrono::nanoseconds>(\n\
     \          chrono::high_resolution_clock::now().time_since_epoch())\n        \
     \  .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >> 31, m\
@@ -642,7 +642,7 @@ data:
     \ + b << endl;\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/aplusb\"\n//\n#include\
     \ \"../../template/template.hpp\"\n//\n#include \"../../fps/ntt-friendly-fps.hpp\"\
-    \n#include \"../../fps/partial-fraction-decomposition.hpp\"\n#include \"../../fps/fps-utility.hpp\"\
+    \n#include \"../../fps/partial-fraction-decomposition.hpp\"\n#include \"../../fps/polynomial-product.hpp\"\
     \n#include \"../../misc/rng.hpp\"\n#include \"../../modint/montgomery-modint.hpp\"\
     \n#include \"../../modulo/binomial.hpp\"\n\nusing namespace Nyaan;\n\nusing mint\
     \ = LazyMontgomeryModInt<998244353>;\n// #include \"fps/arbitrary-fps.hpp\"\n\
@@ -665,7 +665,7 @@ data:
     \ < b.first.get(); });\n  sort(all(part2),\n       [](auto a, auto b) { return\
     \ a.first.get() < b.first.get(); });\n\n  assert(part1 == part2);\n}\n\nvoid Nyaan::solve()\
     \ {\n  rep(loop, 100) verify();\n\n  int a, b;\n  cin >> a >> b;\n  cout << a\
-    \ + b << endl;\n}"
+    \ + b << endl;\n}\n"
   dependsOn:
   - template/template.hpp
   - template/util.hpp
@@ -679,14 +679,14 @@ data:
   - fps/partial-fraction-decomposition.hpp
   - fps/taylor-shift.hpp
   - modulo/binomial.hpp
-  - fps/fps-utility.hpp
+  - fps/polynomial-product.hpp
   - misc/rng.hpp
   - internal/internal-seed.hpp
   - modint/montgomery-modint.hpp
   isVerificationFile: true
   path: verify/verify-unit-test/partial-fraction-decomposition.test.cpp
   requiredBy: []
-  timestamp: '2026-06-08 17:59:24+09:00'
+  timestamp: '2026-06-14 14:17:15+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/partial-fraction-decomposition.test.cpp

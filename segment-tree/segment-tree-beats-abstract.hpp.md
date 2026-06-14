@@ -69,8 +69,8 @@ data:
   timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-yuki/yuki-0879.test.cpp
   - verify/verify-yuki/yuki-0880.test.cpp
+  - verify/verify-yuki/yuki-0879.test.cpp
 documentation_of: segment-tree/segment-tree-beats-abstract.hpp
 layout: document
 title: "\u62BD\u8C61\u5316Segment Tree Beats!"

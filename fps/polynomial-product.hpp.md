@@ -5,34 +5,28 @@ data:
     path: fps/formal-power-series.hpp
     title: "\u591A\u9805\u5F0F/\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\
       \u30E9\u30EA"
-  _extendedRequiredBy:
-  - icon: ':heavy_check_mark:'
-    path: fps/stirling-matrix.hpp
-    title: fps/stirling-matrix.hpp
+  _extendedRequiredBy: []
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
-    path: verify/verify-unit-test/composite-exp.test.cpp
-    title: verify/verify-unit-test/composite-exp.test.cpp
+    path: verify/verify-unit-test/partial-fraction-decomposition.test.cpp
+    title: verify/verify-unit-test/partial-fraction-decomposition.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/verify-unit-test/stirling-matrix.test.cpp
-    title: verify/verify-unit-test/stirling-matrix.test.cpp
+    path: verify/verify-yosupo-fps/yosupo-product-of-polynomial-sequence.test.cpp
+    title: verify/verify-yosupo-fps/yosupo-product-of-polynomial-sequence.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/verify-yuki/yuki-1875.test.cpp
-    title: verify/verify-yuki/yuki-1875.test.cpp
+    path: verify/verify-yuki/yuki-1145.test.cpp
+    title: verify/verify-yuki/yuki-1145.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    document_title: "$f(exp(cx))$ \u306E\u8A08\u7B97"
     links: []
-  bundledCode: "#line 2 \"fps/composite-exp.hpp\"\n\n#include <cassert>\n#include\
-    \ <utility>\n#include <vector>\nusing namespace std;\n\n#line 2 \"fps/formal-power-series.hpp\"\
-    \n\n#include <algorithm>\n#line 5 \"fps/formal-power-series.hpp\"\n#include <cstdint>\n\
-    #include <iterator>\n#line 8 \"fps/formal-power-series.hpp\"\nusing namespace\
-    \ std;\n\ntemplate <typename mint>\nstruct FormalPowerSeries : vector<mint> {\n\
-    \  using vector<mint>::vector;\n  using FPS = FormalPowerSeries;\n\n  FPS &operator+=(const\
-    \ FPS &r) {\n    if (r.size() > this->size()) this->resize(r.size());\n    for\
-    \ (int i = 0; i < (int)r.size(); i++) (*this)[i] += r[i];\n    return *this;\n\
+  bundledCode: "#line 2 \"fps/formal-power-series.hpp\"\n\n#include <algorithm>\n\
+    #include <cassert>\n#include <cstdint>\n#include <iterator>\n#include <vector>\n\
+    using namespace std;\n\ntemplate <typename mint>\nstruct FormalPowerSeries : vector<mint>\
+    \ {\n  using vector<mint>::vector;\n  using FPS = FormalPowerSeries;\n\n  FPS\
+    \ &operator+=(const FPS &r) {\n    if (r.size() > this->size()) this->resize(r.size());\n\
+    \    for (int i = 0; i < (int)r.size(); i++) (*this)[i] += r[i];\n    return *this;\n\
     \  }\n\n  FPS &operator+=(const mint &r) {\n    if (this->empty()) this->resize(1);\n\
     \    (*this)[0] += r;\n    return *this;\n  }\n\n  FPS &operator-=(const FPS &r)\
     \ {\n    if (r.size() > this->size()) this->resize(r.size());\n    for (int i\
@@ -112,90 +106,32 @@ data:
     \ deg, FPSBackendPriority<1>{});\n}\n\ntemplate <typename mint>\nFormalPowerSeries<mint>\
     \ FormalPowerSeries<mint>::exp(int deg) const {\n  return fps_exp_impl(*this,\
     \ deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief \u591A\u9805\u5F0F/\u5F62\
-    \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n */\n#line 9 \"\
-    fps/composite-exp.hpp\"\n\n// \u591A\u9805\u5F0F f \u306B exp(cx) \u4EE3\u5165\
-    \n// \u6B21\u6570 : mod x^{deg} \u307E\u3067\u8A08\u7B97, \u6307\u5B9A\u304C\u306A\
-    \u3044\u5834\u5408 f \u3068\u540C\u3058\u9577\u3055\u8A08\u7B97\ntemplate <typename\
-    \ mint>\nFormalPowerSeries<mint> composite_exp(FormalPowerSeries<mint> f, mint\
-    \ c = 1,\n                                      int deg = -1) {\n  using fps =\
-    \ FormalPowerSeries<mint>;\n  assert(c != 0);\n  if (deg == -1) deg = f.size();\n\
-    \n  if (f.empty()) return {};\n  int N = f.size();\n  vector<pair<fps, fps>> fs;\n\
-    \  for (int i = 0; i < N; i++) fs.emplace_back(fps{f[i]}, fps{1, -c * i});\n \
-    \ while (fs.size() > 1u) {\n    vector<pair<fps, fps>> nx;\n    for (int i = 0;\
-    \ i + 1 < (int)fs.size(); i += 2) {\n      pair<fps, fps>& f0 = fs[i];\n     \
-    \ pair<fps, fps>& f1 = fs[i + 1];\n      fps s = f0.first * f1.second + f1.first\
-    \ * f0.second;\n      fps t = f0.second * f1.second;\n      nx.emplace_back(s,\
-    \ t);\n    }\n    if (fs.size() % 2) nx.push_back(fs.back());\n    fs = nx;\n\
-    \  }\n  fps g = (fs[0].first * fs[0].second.inv(deg)).pre(deg);\n  mint b = 1;\n\
-    \  for (int i = 0; i < deg; i++) g[i] *= b, b /= i + 1;\n  return g;\n}\n\n//\
-    \ \u5165\u529B f(x) = sum_{0 <= k < N} a_i exp(ckx) \u3092\u6E80\u305F\u3059 g(x)\
-    \ (mod x^N)\n// \u51FA\u529B a(x) = sum_{0 <= k < N} a_i x^i\ntemplate <typename\
-    \ mint>\nFormalPowerSeries<mint> inverse_of_composite_exp(FormalPowerSeries<mint>\
-    \ f,\n                                                 mint c = 1) {\n  using\
-    \ fps = FormalPowerSeries<mint>;\n  if (f.empty()) return {};\n  int N = f.size();\n\
-    \  mint b = 1;\n  for (int i = 0; i < N; i++) f[i] *= b, b *= i + 1;\n\n  int\
-    \ B = 1;\n  while (B < N) B *= 2;\n  vector<fps> mod(2 * B, fps{1});\n  for (int\
-    \ i = 0; i < N; i++) mod[B + i] = fps{-c * i, 1};\n  for (int i = B - 1; i; i--)\
-    \ mod[i] = mod[2 * i] * mod[2 * i + 1];\n  fps denom = mod[1].rev();\n  fps numer\
-    \ = (f * denom).pre(N);\n\n  vector<mint> a(N);\n  auto dfs = [&](auto rc, int\
-    \ i, int l, int r, fps g) -> void {\n    if (N <= l) return;\n    if (l + 1 ==\
-    \ r) {\n      a[l] = g.eval(0);\n      return;\n    }\n    int m = (l + r) / 2;\n\
-    \    rc(rc, i * 2 + 0, l, m, g % mod[i * 2 + 0]);\n    rc(rc, i * 2 + 1, m, r,\
-    \ g % mod[i * 2 + 1]);\n  };\n  dfs(dfs, 1, 0, B, numer.rev());\n\n  vector<mint>\
-    \ fac(N);\n  fac[0] = 1;\n  for (int i = 1; i < N; i++) fac[i] = fac[i - 1] *\
-    \ c * i;\n  for (int i = 0; i < N; i++) {\n    a[i] /= fac[N - 1 - i] * fac[i]\
-    \ * ((N - 1 - i) % 2 ? -1 : 1);\n  }\n  return fps{begin(a), end(a)};\n}\n\n/**\n\
-    \ * @brief $f(exp(cx))$ \u306E\u8A08\u7B97\n */\n"
-  code: "#pragma once\n\n#include <cassert>\n#include <utility>\n#include <vector>\n\
-    using namespace std;\n\n#include \"formal-power-series.hpp\"\n\n// \u591A\u9805\
-    \u5F0F f \u306B exp(cx) \u4EE3\u5165\n// \u6B21\u6570 : mod x^{deg} \u307E\u3067\
-    \u8A08\u7B97, \u6307\u5B9A\u304C\u306A\u3044\u5834\u5408 f \u3068\u540C\u3058\u9577\
-    \u3055\u8A08\u7B97\ntemplate <typename mint>\nFormalPowerSeries<mint> composite_exp(FormalPowerSeries<mint>\
-    \ f, mint c = 1,\n                                      int deg = -1) {\n  using\
-    \ fps = FormalPowerSeries<mint>;\n  assert(c != 0);\n  if (deg == -1) deg = f.size();\n\
-    \n  if (f.empty()) return {};\n  int N = f.size();\n  vector<pair<fps, fps>> fs;\n\
-    \  for (int i = 0; i < N; i++) fs.emplace_back(fps{f[i]}, fps{1, -c * i});\n \
-    \ while (fs.size() > 1u) {\n    vector<pair<fps, fps>> nx;\n    for (int i = 0;\
-    \ i + 1 < (int)fs.size(); i += 2) {\n      pair<fps, fps>& f0 = fs[i];\n     \
-    \ pair<fps, fps>& f1 = fs[i + 1];\n      fps s = f0.first * f1.second + f1.first\
-    \ * f0.second;\n      fps t = f0.second * f1.second;\n      nx.emplace_back(s,\
-    \ t);\n    }\n    if (fs.size() % 2) nx.push_back(fs.back());\n    fs = nx;\n\
-    \  }\n  fps g = (fs[0].first * fs[0].second.inv(deg)).pre(deg);\n  mint b = 1;\n\
-    \  for (int i = 0; i < deg; i++) g[i] *= b, b /= i + 1;\n  return g;\n}\n\n//\
-    \ \u5165\u529B f(x) = sum_{0 <= k < N} a_i exp(ckx) \u3092\u6E80\u305F\u3059 g(x)\
-    \ (mod x^N)\n// \u51FA\u529B a(x) = sum_{0 <= k < N} a_i x^i\ntemplate <typename\
-    \ mint>\nFormalPowerSeries<mint> inverse_of_composite_exp(FormalPowerSeries<mint>\
-    \ f,\n                                                 mint c = 1) {\n  using\
-    \ fps = FormalPowerSeries<mint>;\n  if (f.empty()) return {};\n  int N = f.size();\n\
-    \  mint b = 1;\n  for (int i = 0; i < N; i++) f[i] *= b, b *= i + 1;\n\n  int\
-    \ B = 1;\n  while (B < N) B *= 2;\n  vector<fps> mod(2 * B, fps{1});\n  for (int\
-    \ i = 0; i < N; i++) mod[B + i] = fps{-c * i, 1};\n  for (int i = B - 1; i; i--)\
-    \ mod[i] = mod[2 * i] * mod[2 * i + 1];\n  fps denom = mod[1].rev();\n  fps numer\
-    \ = (f * denom).pre(N);\n\n  vector<mint> a(N);\n  auto dfs = [&](auto rc, int\
-    \ i, int l, int r, fps g) -> void {\n    if (N <= l) return;\n    if (l + 1 ==\
-    \ r) {\n      a[l] = g.eval(0);\n      return;\n    }\n    int m = (l + r) / 2;\n\
-    \    rc(rc, i * 2 + 0, l, m, g % mod[i * 2 + 0]);\n    rc(rc, i * 2 + 1, m, r,\
-    \ g % mod[i * 2 + 1]);\n  };\n  dfs(dfs, 1, 0, B, numer.rev());\n\n  vector<mint>\
-    \ fac(N);\n  fac[0] = 1;\n  for (int i = 1; i < N; i++) fac[i] = fac[i - 1] *\
-    \ c * i;\n  for (int i = 0; i < N; i++) {\n    a[i] /= fac[N - 1 - i] * fac[i]\
-    \ * ((N - 1 - i) % 2 ? -1 : 1);\n  }\n  return fps{begin(a), end(a)};\n}\n\n/**\n\
-    \ * @brief $f(exp(cx))$ \u306E\u8A08\u7B97\n */\n"
+    \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n */\n#line 3 \"\
+    fps/polynomial-product.hpp\"\n\ntemplate <typename fps>\nfps Pi(vector<fps> v)\
+    \ {\n  if ((int)v.size() == 0) return fps{1};\n  while ((int)v.size() >= 2) {\n\
+    \    vector<fps> nx;\n    for (int i = 0; i + 1 < (int)v.size(); i += 2)\n   \
+    \   nx.push_back(v[i] * v[i + 1]);\n    if (v.size() % 2) nx.push_back(v.back());\n\
+    \    v = nx;\n  }\n  return v.back();\n}\n"
+  code: "#pragma once\n#include \"./formal-power-series.hpp\"\n\ntemplate <typename\
+    \ fps>\nfps Pi(vector<fps> v) {\n  if ((int)v.size() == 0) return fps{1};\n  while\
+    \ ((int)v.size() >= 2) {\n    vector<fps> nx;\n    for (int i = 0; i + 1 < (int)v.size();\
+    \ i += 2)\n      nx.push_back(v[i] * v[i + 1]);\n    if (v.size() % 2) nx.push_back(v.back());\n\
+    \    v = nx;\n  }\n  return v.back();\n}\n"
   dependsOn:
   - fps/formal-power-series.hpp
   isVerificationFile: false
-  path: fps/composite-exp.hpp
-  requiredBy:
-  - fps/stirling-matrix.hpp
-  timestamp: '2026-06-08 17:59:24+09:00'
+  path: fps/polynomial-product.hpp
+  requiredBy: []
+  timestamp: '2026-06-14 14:17:15+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-yuki/yuki-1875.test.cpp
-  - verify/verify-unit-test/stirling-matrix.test.cpp
-  - verify/verify-unit-test/composite-exp.test.cpp
-documentation_of: fps/composite-exp.hpp
+  - verify/verify-yosupo-fps/yosupo-product-of-polynomial-sequence.test.cpp
+  - verify/verify-yuki/yuki-1145.test.cpp
+  - verify/verify-unit-test/partial-fraction-decomposition.test.cpp
+documentation_of: fps/polynomial-product.hpp
 layout: document
 redirect_from:
-- /library/fps/composite-exp.hpp
-- /library/fps/composite-exp.hpp.html
-title: "$f(exp(cx))$ \u306E\u8A08\u7B97"
+- /library/fps/polynomial-product.hpp
+- /library/fps/polynomial-product.hpp.html
+title: fps/polynomial-product.hpp
 ---

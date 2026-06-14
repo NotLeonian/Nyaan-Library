@@ -110,10 +110,10 @@ data:
   timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-yosupo-graph/yosupo-tree-hash.test.cpp
-  - verify/verify-aoj-other/aoj-2821.test.cpp
-  - verify/verify-aoj-other/aoj-1613.test.cpp
   - verify/verify-yuki/yuki-1789.test.cpp
+  - verify/verify-yosupo-graph/yosupo-tree-hash.test.cpp
+  - verify/verify-aoj-other/aoj-1613.test.cpp
+  - verify/verify-aoj-other/aoj-2821.test.cpp
 documentation_of: tree/rooted-tree-hash.hpp
 layout: document
 redirect_from:

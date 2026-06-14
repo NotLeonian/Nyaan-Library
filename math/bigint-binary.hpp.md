@@ -385,8 +385,8 @@ data:
   timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-yosupo-math/yosupo-addition-of-hex.test.cpp
   - verify/verify-yosupo-math/yosupo-multiplication-of-hex.test.cpp
+  - verify/verify-yosupo-math/yosupo-addition-of-hex.test.cpp
   - verify/verify-unit-test/bigint-gcd.test.cpp
 documentation_of: math/bigint-binary.hpp
 layout: document

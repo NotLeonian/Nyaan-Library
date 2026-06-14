@@ -244,8 +244,8 @@ data:
   verifiedWith:
   - verify/verify-yosupo-fps/yosupo-sparse-exp.test.cpp
   - verify/verify-yosupo-fps/yosupo-sparse-log.test.cpp
-  - verify/verify-yosupo-fps/yosupo-sparse-pow.test.cpp
   - verify/verify-yosupo-fps/yosupo-sparse-inv.test.cpp
+  - verify/verify-yosupo-fps/yosupo-sparse-pow.test.cpp
   - verify/verify-yuki/yuki-1939-sparse-pow.test.cpp
   - verify/verify-unit-test/fps-sparse.test.cpp
 documentation_of: fps/sparse-fps.hpp
