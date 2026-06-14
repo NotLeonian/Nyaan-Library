@@ -2,7 +2,7 @@
 //
 #include "../../template/template.hpp"
 //
-#include "../../fps/fps-utility.hpp"
+#include "../../fps/polynomial-product.hpp"
 //
 #include "../../fps/ntt-friendly-fps.hpp"
 #include "../../modint/montgomery-modint.hpp"
