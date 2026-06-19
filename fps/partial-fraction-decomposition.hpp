@@ -38,7 +38,7 @@ vector<mint> PartialFractionDecomposition(const FormalPowerSeries<mint>& f,
 // 古い方
 template <typename mint>
 vector<pair<mint, vector<mint>>> PartialFractionDecomposition(
-    FormalPowerSeries<mint> numer, vector<pair<mint, int>> denom) {
+    FormalPowerSeries<mint> numerator, vector<pair<mint, int>> denom) {
   using fps = FormalPowerSeries<mint>;
 
   if (denom.empty()) return {};
@@ -70,7 +70,7 @@ vector<pair<mint, vector<mint>>> PartialFractionDecomposition(
 
   vector<fps> F(2 * s);
   vector<fps> G(2 * s);
-  F[1] = numer % fs[1];
+  F[1] = numerator % fs[1];
   G[1] = fps{1};
   for (int i = 1; i < s; i++) {
     F[i * 2 + 0] = F[i] % fs[i * 2 + 0];

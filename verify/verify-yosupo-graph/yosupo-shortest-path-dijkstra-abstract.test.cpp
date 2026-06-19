@@ -4,14 +4,14 @@
 //
 #include "../../graph/graph-utility.hpp"
 //
-#include "../../shortest-path/dijkstra-abstruct.hpp"
+#include "../../shortest-path/dijkstra-abstract.hpp"
 using namespace Nyaan;
 
 void q() {
   inl(N, M, S, T);
   auto g = wgraph<ll>(N, M, true, false);
 
-  auto res = dijkstra_abstruct<int, ll>(
+  auto res = dijkstra_abstract<int, ll>(
       [&](int c, ll cd, auto add) { each(e, g[c]) add(e.to, cd + e.cost); }, S,
       T);
   if (!res.reachable) die(-1);

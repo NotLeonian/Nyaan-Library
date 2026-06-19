@@ -1,4 +1,4 @@
-class NumberTheroemTransform:
+class NumberTheoremTransform:
   def __init__(self, mod, pr):
     self.mod = mod
     self.pr = pr

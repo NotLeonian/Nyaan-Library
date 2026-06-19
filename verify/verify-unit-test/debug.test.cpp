@@ -122,7 +122,7 @@ void test() {
   }
   // original structure
   {
-    cerr << "original strucure" << endl;
+    cerr << "original structure" << endl;
     LazyMontgomeryModInt<998244353> a(998244354);
     trace(a);
     Matrix<LazyMontgomeryModInt<998244353>> mat;

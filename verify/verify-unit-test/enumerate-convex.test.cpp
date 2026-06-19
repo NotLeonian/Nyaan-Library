@@ -15,7 +15,7 @@ vector<pair<long long, long long>> calc(ll N) {
   auto inside = [&](ll x, ll y) {
     return y >= m or x * x + (y - m) * (y - m) <= N;
   };
-  auto candicate = [&](ll x, ll y, ll c, ll d) {
+  auto candidate = [&](ll x, ll y, ll c, ll d) {
     // (x + sc)^2 + (y - m + sd)^2 <= N
     ll A = c * c + d * d;
     ll B = 2 * c * x + 2 * d * (y - m);
@@ -27,7 +27,7 @@ vector<pair<long long, long long>> calc(ll N) {
     return quo;
   };
 
-  auto ans = enumerate_convex<ll>(0, 0, m, inside, candicate);
+  auto ans = enumerate_convex<ll>(0, 0, m, inside, candidate);
   vector<pair<long long, long long>> res;
   each2(x, y, ans) if (x * x + (y - m) * (y - m) == N) {
     res.emplace_back(x, m - y);

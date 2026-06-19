@@ -1,0 +1,29 @@
+[files]
+extend-exclude = [
+  "atcoder/**",
+  "typos.toml",
+]
+
+[default.extend-identifiers]
+Stirling2nd = "Stirling2nd"
+Stirling2ndRow = "Stirling2ndRow"
+
+[default.extend-words]
+abstruct = "abstract"
+BA = "BA"
+ba = "ba"
+choise = "choice"
+cll = "c_ll"
+enamurate = "enumerate"
+fim = "f_im"
+fo = "first_occurrence"
+fre = "f_re"
+Nimber = "Nimber"
+nimber = "nimber"
+numer = "numerator"
+Padd = "PairAdd"
+precedessor = "predecessor"
+ths = "target_hash"
+thr = "threshold"
+Toom = "Toom"
+toom = "toom"

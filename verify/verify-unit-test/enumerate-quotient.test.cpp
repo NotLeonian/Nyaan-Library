@@ -11,11 +11,11 @@ V<vl> naive(ll N) {
   ll upper = N;
   while (upper) {
     ll quo = N / upper;
-    ll thr = N / (quo + 1);
+    ll threshold = N / (quo + 1);
     q.push_back(quo);
-    l.push_back(thr);
+    l.push_back(threshold);
     r.push_back(upper);
-    upper = thr;
+    upper = threshold;
   }
   return V<vl>{q, l, r};
 }

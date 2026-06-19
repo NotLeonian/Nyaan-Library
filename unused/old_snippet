@@ -1173,7 +1173,7 @@
     ],
     "description": "warshall_floyd_algorithm"
   },
-  "NTT_and_ArbitaryPrimitiveNTT": {
+  "NTT_and_ArbitraryPrimitiveNTT": {
     "prefix": "_ntt",
     "body": [
       "",
@@ -1261,10 +1261,10 @@
       "// 任意長NTT",
       "// b[i] = Σ a[j] r^(ij) (mod p) (0 <= i,j <= p-2)を計算する",
       "template<typename T>",
-      "struct ArbitaryLengthNTT{",
+      "struct ArbitraryLengthNTT{",
       "  T prime , size_; // 要素数 n = p - 1",
       "  vector<T> pr;",
-      "  ArbitaryLengthNTT(T pp ) : prime(pp){",
+      "  ArbitraryLengthNTT(T pp ) : prime(pp){",
       "    // rのべき乗",
       "    T p_primitive = primitive(prime);",
       "    //trc(p_primitive);",
@@ -1386,7 +1386,7 @@
       "  int N = 97;",
       "  vector<int> x(N - 1);",
       "  rep(i , N - 1) x[i] = rand() % N;",
-      "  ArbitaryLengthNTT<int> ntt(N);",
+      "  ArbitraryLengthNTT<int> ntt(N);",
       "  vector<int> ans;",
       "  cout << (ans = ntt.mul(x)) << endl;",
       "  cerr << clock() - start << \"ms\" << endl;",
@@ -1403,7 +1403,7 @@
       "}",
       "//*/"
     ],
-    "description": "NTT_and_ArbitaryPrimitiveNTT"
+    "description": "NTT_and_ArbitraryPrimitiveNTT"
   },
   "coordinate_compression": {
     "prefix": "_compress",
@@ -2199,7 +2199,7 @@
       "    : s(lcp.SA.s) , sa(lcp.SA) , lcp(lcp) , sparse(lcp.LCP){ }",
       "",
       " // 文字列sの[i , N)と[j , N)の共通接頭辞の長さを求める",
-      "  int ArbitaryLCP(int i , int j){",
+      "  int ArbitraryLCP(int i , int j){",
       "    if(i == j) return (int)(s.size()) - i;",
       "    return sparse.query(",
       "      min(lcp.rank[i] , lcp.rank[j]) , ",
@@ -6752,11 +6752,11 @@
       "",
       "  };",
       "  // below two function are called if all data must be deleted",
-      "  // delete data of node i (if necesarry)",
+      "  // delete data of node i (if necessary)",
       "  auto clear = [&](int i) {",
       "",
       "  };",
-      "  // delete data related to all (if necesarry)",
+      "  // delete data related to all (if necessary)",
       "  auto reset = [&]() {",
       "",
       "  };",

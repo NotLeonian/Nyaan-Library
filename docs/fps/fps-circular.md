@@ -14,4 +14,4 @@ $g \equiv \cos f, h \equiv \sin f \pmod{x^n}$ を求めたい。
 
 #### 使い方
 
-- `circular(fre, fim, deg)` : $Re[f]=fre,Im[f]=fim$ である FPS $f$ について $\cos f,\sin f$ を $\deg$ 次の項まで求める。
+- `circular(f_re, f_im, deg)` : $Re[f]=f_re,Im[f]=f_im$ である FPS $f$ について $\cos f,\sin f$ を $\deg$ 次の項まで求める。

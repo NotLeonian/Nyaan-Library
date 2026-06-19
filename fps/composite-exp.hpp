@@ -55,7 +55,7 @@ FormalPowerSeries<mint> inverse_of_composite_exp(FormalPowerSeries<mint> f,
   for (int i = 0; i < N; i++) mod[B + i] = fps{-c * i, 1};
   for (int i = B - 1; i; i--) mod[i] = mod[2 * i] * mod[2 * i + 1];
   fps denom = mod[1].rev();
-  fps numer = (f * denom).pre(N);
+  fps numerator = (f * denom).pre(N);
 
   vector<mint> a(N);
   auto dfs = [&](auto rc, int i, int l, int r, fps g) -> void {
@@ -68,7 +68,7 @@ FormalPowerSeries<mint> inverse_of_composite_exp(FormalPowerSeries<mint> f,
     rc(rc, i * 2 + 0, l, m, g % mod[i * 2 + 0]);
     rc(rc, i * 2 + 1, m, r, g % mod[i * 2 + 1]);
   };
-  dfs(dfs, 1, 0, B, numer.rev());
+  dfs(dfs, 1, 0, B, numerator.rev());
 
   vector<mint> fac(N);
   fac[0] = 1;

@@ -2,7 +2,7 @@
 //
 #include "../../template/template.hpp"
 //
-#include "../../segment-tree/li-chao-tree-abstruct.hpp"
+#include "../../segment-tree/li-chao-tree-abstract.hpp"
 //
 #include "../../misc/rng.hpp"
 using namespace Nyaan;

@@ -2,7 +2,7 @@
 //
 #include "../../template/template.hpp"
 //
-#include "../../segment-tree/li-chao-tree-abstruct.hpp"
+#include "../../segment-tree/li-chao-tree-abstract.hpp"
 using namespace Nyaan;
 
 vl c, d;

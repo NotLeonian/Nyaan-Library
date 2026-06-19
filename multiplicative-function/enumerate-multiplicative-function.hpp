@@ -8,8 +8,8 @@ using namespace std;
 // f(n, p, c) : n = pow(p, c), f is multiplicative function
 
 template <typename T, T (*f)(int, int, int)>
-struct enamurate_multiplicative_function {
-  enamurate_multiplicative_function(int _n)
+struct enumerate_multiplicative_function {
+  enumerate_multiplicative_function(int _n)
       : ps(prime_enumerate(_n)), a(_n + 1, T()), n(_n), p(ps.size()) {}
 
   vector<T> run() {

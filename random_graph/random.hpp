@@ -140,7 +140,7 @@ struct Random {
         return idx;
     }
 
-    // random choise n elements from [lower, upper]
+    // random choice n elements from [lower, upper]
     template <class T>
     std::vector<T> choice(std::size_t n, T lower, T upper) {
         assert(T(n) <= upper - lower + 1);

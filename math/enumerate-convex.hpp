@@ -12,12 +12,12 @@ using namespace std;
 // 下向き凸包の頂点列挙
 // (xl, yl) 始点, x in [xl, xr]
 // inside(x, y) : (x, y) が凸包内部か？
-// candicate(x, y, c, d) : (x, y) が凸包外部にあるとする。
+// candidate(x, y, c, d) : (x, y) が凸包外部にあるとする。
 // 凸包内部の点 (x + sc, y + sd) が存在すればそのような s を返す
 // 存在しなければ任意の値 (-1 でもよい) を返す
 template <typename Int, typename Inside, typename Candidate>
 auto enumerate_convex(Int xl, Int yl, Int xr, Inside&& inside,
-                      Candidate&& candicate)
+                      Candidate&& candidate)
     -> enable_if_t<is_invocable_r_v<bool, Inside&, Int, Int> &&
                        is_invocable_r_v<Int, Candidate&, Int, Int, Int, Int>,
                    vector<pair<Int, Int>>> {
@@ -70,7 +70,7 @@ auto enumerate_convex(Int xl, Int yl, Int xr, Inside&& inside,
           assert(s > 0);
           sb.go_right(s);
         } else {
-          Int s = std::invoke(candicate, x + sb.rx, y + sb.ry, sb.lx, sb.ly);
+          Int s = std::invoke(candidate, x + sb.rx, y + sb.ry, sb.lx, sb.ly);
           if (s <= 0 ||
               !std::invoke(inside, x + sb.lx * s + sb.rx,
                            y + sb.ly * s + sb.ry)) {

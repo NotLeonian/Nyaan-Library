@@ -43,14 +43,14 @@ vector<T> karatsuba(const vector<T>& a, const vector<T>& b) {
   vector<T> bl{begin(b), begin(b) + d}, bu{begin(b) + d, end(b)};
   vector<T> alu{al}, blu{bl};
   add(alu, au), add(blu, bu);
-  auto cll = karatsuba(al, bl);
+  auto c_ll = karatsuba(al, bl);
   auto cuu = karatsuba(au, bu);
   auto clu = karatsuba(alu, blu);
-  sub(clu, cll), sub(clu, cuu);
+  sub(clu, c_ll), sub(clu, cuu);
   vector<T> c(d);
   copy(begin(clu), end(clu), back_inserter(c));
   c.resize(a.size() + b.size() - 1);
-  add(c, cll);
+  add(c, c_ll);
   for (int i = 0; i < (int)cuu.size(); i++) c[i + 2 * d] += cuu[i];
   c.resize(a.size() + b.size() - 1);
   return c;

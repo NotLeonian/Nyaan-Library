@@ -139,7 +139,7 @@ struct StringSearch {
 
  public:
   // Longest Common Prefix between S[i , N) and S[j , N)
-  int ArbitaryLCP(int i, int j) {
+  int ArbitraryLCP(int i, int j) {
     if (i == j) return (int)(s.size()) - i;
     return sparse.query(min(lcp.rank[i], lcp.rank[j]),
                         max(lcp.rank[i], lcp.rank[j]));

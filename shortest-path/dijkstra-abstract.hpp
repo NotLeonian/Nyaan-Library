@@ -43,7 +43,7 @@ struct DijkstraResult {
 // (始点が複数ある場合は超頂点を使うことにする)
 template <typename Index, typename Cost, bool has_goal = true, typename F,
           typename IsGoal>
-auto dijkstra_abstruct(F&& f, const Index& start, IsGoal&& is_goal)
+auto dijkstra_abstract(F&& f, const Index& start, IsGoal&& is_goal)
     -> enable_if_t<is_invocable_r_v<bool, IsGoal&, Index>,
                    DijkstraResult<Index, Cost>> {
   using P = pair<Cost, Index>;
@@ -67,7 +67,7 @@ auto dijkstra_abstruct(F&& f, const Index& start, IsGoal&& is_goal)
       }
     };
     static_assert(is_invocable_r_v<void, F&, Index, Cost, decltype(add)&>,
-                  "dijkstra_abstruct transition must be callable as "
+                  "dijkstra_abstract transition must be callable as "
                   "void(Index, Cost, add_callback)");
     std::invoke(f, t, u, add);
   }
@@ -82,9 +82,9 @@ auto dijkstra_abstruct(F&& f, const Index& start, IsGoal&& is_goal)
 // goal は lambda 式 or 値 を渡せる, goal が複数ある場合に対応している
 // (始点が複数ある場合は超頂点を使うことにする)
 template <typename Index, typename Cost, bool has_goal = true, typename F>
-DijkstraResult<Index, Cost> dijkstra_abstruct(F&& f, const Index& start,
+DijkstraResult<Index, Cost> dijkstra_abstract(F&& f, const Index& start,
                                               const Index& goal = Index{}) {
   auto is_goal = [&goal](Index i) -> bool { return i == goal; };
-  return dijkstra_abstruct<Index, Cost, has_goal>(std::forward<F>(f), start,
+  return dijkstra_abstract<Index, Cost, has_goal>(std::forward<F>(f), start,
                                                   is_goal);
 }
