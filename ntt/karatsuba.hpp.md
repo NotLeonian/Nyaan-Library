@@ -33,12 +33,12 @@ data:
     \ i++) c[i] = cl[i];\n    for (int i = 0; i < (int)cu.size(); i++) c[i + d] +=\
     \ cu[i];\n    return c;\n  }\n  vector<T> bl{begin(b), begin(b) + d}, bu{begin(b)\
     \ + d, end(b)};\n  vector<T> alu{al}, blu{bl};\n  add(alu, au), add(blu, bu);\n\
-    \  auto cll = karatsuba(al, bl);\n  auto cuu = karatsuba(au, bu);\n  auto clu\
-    \ = karatsuba(alu, blu);\n  sub(clu, cll), sub(clu, cuu);\n  vector<T> c(d);\n\
+    \  auto c_ll = karatsuba(al, bl);\n  auto cuu = karatsuba(au, bu);\n  auto clu\
+    \ = karatsuba(alu, blu);\n  sub(clu, c_ll), sub(clu, cuu);\n  vector<T> c(d);\n\
     \  copy(begin(clu), end(clu), back_inserter(c));\n  c.resize(a.size() + b.size()\
-    \ - 1);\n  add(c, cll);\n  for (int i = 0; i < (int)cuu.size(); i++) c[i + 2 *\
-    \ d] += cuu[i];\n  c.resize(a.size() + b.size() - 1);\n  return c;\n}\n\n}  //\
-    \ namespace KaratsubaImpl\nusing KaratsubaImpl::karatsuba;\n"
+    \ - 1);\n  add(c, c_ll);\n  for (int i = 0; i < (int)cuu.size(); i++) c[i + 2\
+    \ * d] += cuu[i];\n  c.resize(a.size() + b.size() - 1);\n  return c;\n}\n\n} \
+    \ // namespace KaratsubaImpl\nusing KaratsubaImpl::karatsuba;\n"
   code: "#pragma once\n\nnamespace KaratsubaImpl {\n  \ntemplate <typename T>\nvector<T>\
     \ naive(const vector<T>& a, const vector<T>& b) {\n  if (a.empty() and b.empty())\
     \ return {};\n  if (a.size() < b.size()) return naive(b, a);\n  int s = a.size(),\
@@ -57,17 +57,17 @@ data:
     \ 1);\n    for (int i = 0; i < (int)cl.size(); i++) c[i] = cl[i];\n    for (int\
     \ i = 0; i < (int)cu.size(); i++) c[i + d] += cu[i];\n    return c;\n  }\n  vector<T>\
     \ bl{begin(b), begin(b) + d}, bu{begin(b) + d, end(b)};\n  vector<T> alu{al},\
-    \ blu{bl};\n  add(alu, au), add(blu, bu);\n  auto cll = karatsuba(al, bl);\n \
-    \ auto cuu = karatsuba(au, bu);\n  auto clu = karatsuba(alu, blu);\n  sub(clu,\
-    \ cll), sub(clu, cuu);\n  vector<T> c(d);\n  copy(begin(clu), end(clu), back_inserter(c));\n\
-    \  c.resize(a.size() + b.size() - 1);\n  add(c, cll);\n  for (int i = 0; i < (int)cuu.size();\
-    \ i++) c[i + 2 * d] += cuu[i];\n  c.resize(a.size() + b.size() - 1);\n  return\
-    \ c;\n}\n\n}  // namespace KaratsubaImpl\nusing KaratsubaImpl::karatsuba;\n"
+    \ blu{bl};\n  add(alu, au), add(blu, bu);\n  auto c_ll = karatsuba(al, bl);\n\
+    \  auto cuu = karatsuba(au, bu);\n  auto clu = karatsuba(alu, blu);\n  sub(clu,\
+    \ c_ll), sub(clu, cuu);\n  vector<T> c(d);\n  copy(begin(clu), end(clu), back_inserter(c));\n\
+    \  c.resize(a.size() + b.size() - 1);\n  add(c, c_ll);\n  for (int i = 0; i <\
+    \ (int)cuu.size(); i++) c[i + 2 * d] += cuu[i];\n  c.resize(a.size() + b.size()\
+    \ - 1);\n  return c;\n}\n\n}  // namespace KaratsubaImpl\nusing KaratsubaImpl::karatsuba;\n"
   dependsOn: []
   isVerificationFile: false
   path: ntt/karatsuba.hpp
   requiredBy: []
-  timestamp: '2021-12-21 23:55:14+09:00'
+  timestamp: '2026-06-19 18:03:18+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ntt/yosupo-convolution-2-64-karatsuba.test.cpp

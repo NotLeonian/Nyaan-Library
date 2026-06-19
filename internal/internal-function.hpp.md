@@ -19,8 +19,8 @@ data:
     title: "\u591A\u5909\u6570\u5DE1\u56DE\u7573\u307F\u8FBC\u307F"
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
-    path: verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-abstruct-range-tree.test.cpp
-    title: verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-abstruct-range-tree.test.cpp
+    path: verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-abstract-range-tree.test.cpp
+    title: verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-abstract-range-tree.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-fps/yosupo-exp-ofps.test.cpp
     title: verify/verify-yosupo-fps/yosupo-exp-ofps.test.cpp
@@ -209,7 +209,7 @@ data:
   timestamp: '2026-06-05 19:46:06+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-abstruct-range-tree.test.cpp
+  - verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-abstract-range-tree.test.cpp
   - verify/verify-yosupo-fps/yosupo-exp-ofps.test.cpp
   - verify/verify-yosupo-fps/yosupo-inv-ofps.test.cpp
   - verify/verify-yosupo-ntt/yosupo-multivariate-circular-convolution.test.cpp

@@ -397,8 +397,8 @@ data:
     path: verify/verify-unit-test/lazyseg-setval.test.cpp
     title: verify/verify-unit-test/lazyseg-setval.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/verify-unit-test/li-chao-tree-abstruct.test.cpp
-    title: verify/verify-unit-test/li-chao-tree-abstruct.test.cpp
+    path: verify/verify-unit-test/li-chao-tree-abstract.test.cpp
+    title: verify/verify-unit-test/li-chao-tree-abstract.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/manacher.test.cpp
     title: verify/verify-unit-test/manacher.test.cpp
@@ -607,8 +607,8 @@ data:
     path: verify/verify-yosupo-ds/yosupo-point-add-range-sum.test.cpp
     title: verify/verify-yosupo-ds/yosupo-point-add-range-sum.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-abstruct-range-tree.test.cpp
-    title: verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-abstruct-range-tree.test.cpp
+    path: verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-abstract-range-tree.test.cpp
+    title: verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-abstract-range-tree.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-bit2d.test.cpp
     title: verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-bit2d.test.cpp
@@ -634,17 +634,17 @@ data:
     path: verify/verify-yosupo-ds/yosupo-point-set-range-composite-rbstseg2.test.cpp
     title: verify/verify-yosupo-ds/yosupo-point-set-range-composite-rbstseg2.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/verify-yosupo-ds/yosupo-precedessor-problem-segtree.test.cpp
-    title: verify/verify-yosupo-ds/yosupo-precedessor-problem-segtree.test.cpp
+    path: verify/verify-yosupo-ds/yosupo-predecessor-problem-rbstseg.test.cpp
+    title: verify/verify-yosupo-ds/yosupo-predecessor-problem-rbstseg.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/verify-yosupo-ds/yosupo-predecessor-problem-segtree.test.cpp
+    title: verify/verify-yosupo-ds/yosupo-predecessor-problem-segtree.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-predecessor-problem-vEB-tree.test.cpp
     title: verify/verify-yosupo-ds/yosupo-predecessor-problem-vEB-tree.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-predecessor-problem.test.cpp
     title: verify/verify-yosupo-ds/yosupo-predecessor-problem.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/verify-yosupo-ds/yosupo-procedessor-problem-rbstseg.test.cpp
-    title: verify/verify-yosupo-ds/yosupo-procedessor-problem-rbstseg.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-range-add-range-sum-linkcuttree.test.cpp
     title: verify/verify-yosupo-ds/yosupo-range-add-range-sum-linkcuttree.test.cpp
@@ -916,8 +916,8 @@ data:
     path: verify/verify-yosupo-graph/yosupo-shortest-path-4.test.cpp
     title: verify/verify-yosupo-graph/yosupo-shortest-path-4.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/verify-yosupo-graph/yosupo-shortest-path-dijkstra-abstruct.test.cpp
-    title: verify/verify-yosupo-graph/yosupo-shortest-path-dijkstra-abstruct.test.cpp
+    path: verify/verify-yosupo-graph/yosupo-shortest-path-dijkstra-abstract.test.cpp
+    title: verify/verify-yosupo-graph/yosupo-shortest-path-dijkstra-abstract.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-graph/yosupo-shortest-path.test.cpp
     title: verify/verify-yosupo-graph/yosupo-shortest-path.test.cpp
@@ -1544,17 +1544,18 @@ data:
   - verify/verify-yosupo-ds/yosupo-dynamic-sequence-range-affine-range-sum-splay.test.cpp
   - verify/verify-yosupo-ds/yosupo-point-set-range-composite-rbstseg2.test.cpp
   - verify/verify-yosupo-ds/yosupo-swag.test.cpp
+  - verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-abstract-range-tree.test.cpp
   - verify/verify-yosupo-ds/yosupo-rectangle-sum.test.cpp
   - verify/verify-yosupo-ds/yosupo-binary-trie.test.cpp
   - verify/verify-yosupo-ds/yosupo-hash-map-variable-length.test.cpp
   - verify/verify-yosupo-ds/yosupo-vertex-add-subtree-sum.test.cpp
+  - verify/verify-yosupo-ds/yosupo-predecessor-problem-rbstseg.test.cpp
   - verify/verify-yosupo-ds/yosupo-associative-array-unerasable-hashmap.test.cpp
   - verify/verify-yosupo-ds/yosupo-static-range-inversions-query.test.cpp
   - verify/verify-yosupo-ds/yosupo-range-set-range-composite.test.cpp
   - verify/verify-yosupo-ds/yosupo-line-add-get-min.test.cpp
   - verify/verify-yosupo-ds/yosupo-range-reverse-range-sum.test.cpp
   - verify/verify-yosupo-ds/yosupo-dynamic-tree-vertex-add-subtree-sum-2.test.cpp
-  - verify/verify-yosupo-ds/yosupo-procedessor-problem-rbstseg.test.cpp
   - verify/verify-yosupo-ds/yosupo-dynamic-sequence-range-affine-range-sum.test.cpp
   - verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-bit2d.test.cpp
   - verify/verify-yosupo-ds/yosupo-lazysegtree-2.test.cpp
@@ -1573,6 +1574,7 @@ data:
   - verify/verify-yosupo-ds/yosupo-range-affine-range-sum-rbstseg.test.cpp
   - verify/verify-yosupo-ds/yosupo-persistent-queue.test.cpp
   - verify/verify-yosupo-ds/yosupo-static-rmq.test.cpp
+  - verify/verify-yosupo-ds/yosupo-predecessor-problem-segtree.test.cpp
   - verify/verify-yosupo-ds/yosupo-dynamic-tree-vertex-add-path-sum.test.cpp
   - verify/verify-yosupo-ds/yosupo-segment-add-get-min.test.cpp
   - verify/verify-yosupo-ds/yosupo-point-add-range-sum.test.cpp
@@ -1590,13 +1592,11 @@ data:
   - verify/verify-yosupo-ds/yosupo-predecessor-problem.test.cpp
   - verify/verify-yosupo-ds/yosupo-point-set-range-composite-dynamic-segtree.test.cpp
   - verify/verify-yosupo-ds/yosupo-dynamic-sequence-range-affine-range-sum-treap.test.cpp
-  - verify/verify-yosupo-ds/yosupo-precedessor-problem-segtree.test.cpp
   - verify/verify-yosupo-ds/yosupo-vertex-add-path-sum-euler-tour.test.cpp
   - verify/verify-yosupo-ds/yosupo-dynamic-tree-subtree-add-subtree-sum.test.cpp
   - verify/verify-yosupo-ds/yosupo-deque-operate-all-composite.test.cpp
   - verify/verify-yosupo-ds/yosupo-hashmap.test.cpp
   - verify/verify-yosupo-ds/yosupo-range-affine-sqdec.test.cpp
-  - verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-abstruct-range-tree.test.cpp
   - verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-dseg2d.test.cpp
   - verify/verify-yosupo-ds/yosupo-associative-array-dynamic-segtree.test.cpp
   - verify/verify-yosupo-ds/yosupo-dynamic-tree-vertex-add-subtree-sum.test.cpp
@@ -1875,6 +1875,7 @@ data:
   - verify/verify-unit-test/radix-sort.test.cpp
   - verify/verify-unit-test/semiring.test.cpp
   - verify/verify-unit-test/multieval.test.cpp
+  - verify/verify-unit-test/li-chao-tree-abstract.test.cpp
   - verify/verify-unit-test/mf.test.cpp
   - verify/verify-unit-test/interval-union.test.cpp
   - verify/verify-unit-test/sum-of-mf.test.cpp
@@ -1894,7 +1895,6 @@ data:
   - verify/verify-unit-test/erasable-priority-queue.test.cpp
   - verify/verify-unit-test/modint-2-61m1.test.cpp
   - verify/verify-unit-test/bigint3.test.cpp
-  - verify/verify-unit-test/li-chao-tree-abstruct.test.cpp
   - verify/verify-unit-test/segment-set.test.cpp
   - verify/verify-unit-test/primitive-root.test.cpp
   - verify/verify-unit-test/binomial-table.test.cpp
@@ -1996,12 +1996,12 @@ data:
   - verify/verify-yosupo-graph/yosupo-shortest-path.test.cpp
   - verify/verify-yosupo-graph/yosupo-shortest-path-4.test.cpp
   - verify/verify-yosupo-graph/yosupo-tree-hash.test.cpp
-  - verify/verify-yosupo-graph/yosupo-shortest-path-dijkstra-abstruct.test.cpp
   - verify/verify-yosupo-graph/yosupo-two-edge-cc.test.cpp
   - verify/verify-yosupo-graph/yosupo-frequency-table-of-tree-distance.test.cpp
   - verify/verify-yosupo-graph/yosupo-lowest-common-ancestor-euler-tour.test.cpp
   - verify/verify-yosupo-graph/yosupo-point-set-tree-path-composite-sum-fixed-root.test.cpp
   - verify/verify-yosupo-graph/yosupo-directed-mst.test.cpp
+  - verify/verify-yosupo-graph/yosupo-shortest-path-dijkstra-abstract.test.cpp
   - verify/verify-yosupo-graph/yosupo-tree-path-composite-sum.test.cpp
   - verify/verify-yosupo-graph/yosupo-lowest-common-ancestor-tree-util.test.cpp
   - verify/verify-yosupo-graph/yosupo-diameter.test.cpp

@@ -71,13 +71,13 @@ data:
     \  }\n};\n\n/**\n *  @brief Stern-Brocot Tree\n */\n#line 11 \"math/enumerate-convex.hpp\"\
     \n\n// \u4E0B\u5411\u304D\u51F8\u5305\u306E\u9802\u70B9\u5217\u6319\n// (xl, yl)\
     \ \u59CB\u70B9, x in [xl, xr]\n// inside(x, y) : (x, y) \u304C\u51F8\u5305\u5185\
-    \u90E8\u304B\uFF1F\n// candicate(x, y, c, d) : (x, y) \u304C\u51F8\u5305\u5916\
+    \u90E8\u304B\uFF1F\n// candidate(x, y, c, d) : (x, y) \u304C\u51F8\u5305\u5916\
     \u90E8\u306B\u3042\u308B\u3068\u3059\u308B\u3002\n// \u51F8\u5305\u5185\u90E8\u306E\
     \u70B9 (x + sc, y + sd) \u304C\u5B58\u5728\u3059\u308C\u3070\u305D\u306E\u3088\
     \u3046\u306A s \u3092\u8FD4\u3059\n// \u5B58\u5728\u3057\u306A\u3051\u308C\u3070\
     \u4EFB\u610F\u306E\u5024 (-1 \u3067\u3082\u3088\u3044) \u3092\u8FD4\u3059\ntemplate\
     \ <typename Int, typename Inside, typename Candidate>\nauto enumerate_convex(Int\
-    \ xl, Int yl, Int xr, Inside&& inside,\n                      Candidate&& candicate)\n\
+    \ xl, Int yl, Int xr, Inside&& inside,\n                      Candidate&& candidate)\n\
     \    -> enable_if_t<is_invocable_r_v<bool, Inside&, Int, Int> &&\n           \
     \            is_invocable_r_v<Int, Candidate&, Int, Int, Int, Int>,\n        \
     \           vector<pair<Int, Int>>> {\n  assert(xl <= xr);\n\n  // inside \u304B\
@@ -100,7 +100,7 @@ data:
     \  assert(!f(x + sb.rx, y + sb.ry));\n        if (f(x + sb.lx + sb.rx, y + sb.ly\
     \ + sb.ry)) {\n          Int s = go(x + sb.lx, y + sb.ly, sb.rx, sb.ry);\n   \
     \       assert(s > 0);\n          sb.go_right(s);\n        } else {\n        \
-    \  Int s = std::invoke(candicate, x + sb.rx, y + sb.ry, sb.lx, sb.ly);\n     \
+    \  Int s = std::invoke(candidate, x + sb.rx, y + sb.ry, sb.lx, sb.ly);\n     \
     \     if (s <= 0 ||\n              !std::invoke(inside, x + sb.lx * s + sb.rx,\n\
     \                           y + sb.ly * s + sb.ry)) {\n            a = sb.lx,\
     \ b = sb.ly;\n            break;\n          } else {\n            Int t = go2(x\
@@ -111,13 +111,13 @@ data:
     #include <utility>\n#include <vector>\nusing namespace std;\n\n#include \"stern-brocot-tree.hpp\"\
     \n\n// \u4E0B\u5411\u304D\u51F8\u5305\u306E\u9802\u70B9\u5217\u6319\n// (xl, yl)\
     \ \u59CB\u70B9, x in [xl, xr]\n// inside(x, y) : (x, y) \u304C\u51F8\u5305\u5185\
-    \u90E8\u304B\uFF1F\n// candicate(x, y, c, d) : (x, y) \u304C\u51F8\u5305\u5916\
+    \u90E8\u304B\uFF1F\n// candidate(x, y, c, d) : (x, y) \u304C\u51F8\u5305\u5916\
     \u90E8\u306B\u3042\u308B\u3068\u3059\u308B\u3002\n// \u51F8\u5305\u5185\u90E8\u306E\
     \u70B9 (x + sc, y + sd) \u304C\u5B58\u5728\u3059\u308C\u3070\u305D\u306E\u3088\
     \u3046\u306A s \u3092\u8FD4\u3059\n// \u5B58\u5728\u3057\u306A\u3051\u308C\u3070\
     \u4EFB\u610F\u306E\u5024 (-1 \u3067\u3082\u3088\u3044) \u3092\u8FD4\u3059\ntemplate\
     \ <typename Int, typename Inside, typename Candidate>\nauto enumerate_convex(Int\
-    \ xl, Int yl, Int xr, Inside&& inside,\n                      Candidate&& candicate)\n\
+    \ xl, Int yl, Int xr, Inside&& inside,\n                      Candidate&& candidate)\n\
     \    -> enable_if_t<is_invocable_r_v<bool, Inside&, Int, Int> &&\n           \
     \            is_invocable_r_v<Int, Candidate&, Int, Int, Int, Int>,\n        \
     \           vector<pair<Int, Int>>> {\n  assert(xl <= xr);\n\n  // inside \u304B\
@@ -140,7 +140,7 @@ data:
     \  assert(!f(x + sb.rx, y + sb.ry));\n        if (f(x + sb.lx + sb.rx, y + sb.ly\
     \ + sb.ry)) {\n          Int s = go(x + sb.lx, y + sb.ly, sb.rx, sb.ry);\n   \
     \       assert(s > 0);\n          sb.go_right(s);\n        } else {\n        \
-    \  Int s = std::invoke(candicate, x + sb.rx, y + sb.ry, sb.lx, sb.ly);\n     \
+    \  Int s = std::invoke(candidate, x + sb.rx, y + sb.ry, sb.lx, sb.ly);\n     \
     \     if (s <= 0 ||\n              !std::invoke(inside, x + sb.lx * s + sb.rx,\n\
     \                           y + sb.ly * s + sb.ry)) {\n            a = sb.lx,\
     \ b = sb.ly;\n            break;\n          } else {\n            Int t = go2(x\
@@ -152,7 +152,7 @@ data:
   isVerificationFile: false
   path: math/enumerate-convex.hpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-19 18:03:18+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-unit-test/enumerate-convex.test.cpp

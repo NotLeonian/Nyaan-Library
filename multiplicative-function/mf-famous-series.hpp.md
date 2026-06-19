@@ -2,7 +2,7 @@
 data:
   _extendedDependsOn:
   - icon: ':heavy_check_mark:'
-    path: multiplicative-function/enamurate-multiplicative-function.hpp
+    path: multiplicative-function/enumerate-multiplicative-function.hpp
     title: "\u4E57\u6CD5\u7684\u95A2\u6570\u306E\u5217\u6319"
   - icon: ':heavy_check_mark:'
     path: prime/prime-enumerate.hpp
@@ -28,7 +28,7 @@ data:
     document_title: "\u6709\u540D\u306A\u4E57\u6CD5\u7684\u95A2\u6570"
     links: []
   bundledCode: "#line 2 \"multiplicative-function/mf-famous-series.hpp\"\n\n#line\
-    \ 2 \"multiplicative-function/enamurate-multiplicative-function.hpp\"\n\n#include\
+    \ 2 \"multiplicative-function/enumerate-multiplicative-function.hpp\"\n\n#include\
     \ <vector>\nusing namespace std;\n\n#line 2 \"prime/prime-enumerate.hpp\"\n\n\
     #include <cmath>\n#line 5 \"prime/prime-enumerate.hpp\"\nusing namespace std;\n\
     \n// Prime Sieve {2, 3, 5, 7, 11, 13, 17, ...}\nvector<int> prime_enumerate(int\
@@ -38,9 +38,9 @@ data:
     \           qe = sieve.size();\n         q < qe; q += r = s - r)\n      sieve[q]\
     \ = 0;\n  }\n  vector<int> ret{2, 3};\n  for (int p = 5, d = 4, i = 1; p <= N;\
     \ p += d = 6 - d, i++)\n    if (sieve[i]) ret.push_back(p);\n  while (!ret.empty()\
-    \ && ret.back() > N) ret.pop_back();\n  return ret;\n}\n#line 7 \"multiplicative-function/enamurate-multiplicative-function.hpp\"\
+    \ && ret.back() > N) ret.pop_back();\n  return ret;\n}\n#line 7 \"multiplicative-function/enumerate-multiplicative-function.hpp\"\
     \n\n// f(n, p, c) : n = pow(p, c), f is multiplicative function\n\ntemplate <typename\
-    \ T, T (*f)(int, int, int)>\nstruct enamurate_multiplicative_function {\n  enamurate_multiplicative_function(int\
+    \ T, T (*f)(int, int, int)>\nstruct enumerate_multiplicative_function {\n  enumerate_multiplicative_function(int\
     \ _n)\n      : ps(prime_enumerate(_n)), a(_n + 1, T()), n(_n), p(ps.size()) {}\n\
     \n  vector<T> run() {\n    a[1] = 1;\n    dfs(-1, 1, 1);\n    return a;\n  }\n\
     \n private:\n  vector<int> ps;\n  vector<T> a;\n  int n, p;\n  void dfs(int i,\
@@ -48,46 +48,48 @@ data:
     \ j = i + 1; j < p; j++) {\n      long long nx = x * ps[j];\n      long long dx\
     \ = ps[j];\n      if (nx > n) break;\n      for (int c = 1; nx <= n; nx *= ps[j],\
     \ dx *= ps[j], ++c) {\n        dfs(j, nx, y * f(dx, ps[j], c));\n      }\n   \
-    \ }\n  }\n};\n\n/**\n * @brief \u4E57\u6CD5\u7684\u95A2\u6570\u306E\u5217\u6319\
-    \n */\n#line 4 \"multiplicative-function/mf-famous-series.hpp\"\n\nnamespace multiplicative_function\
-    \ {\ntemplate <typename T>\nT moebius(int, int, int c) {\n  return c == 0 ? 1\
-    \ : c == 1 ? -1 : 0;\n}\ntemplate <typename T>\nT sigma0(int, int, int c) {\n\
-    \  return c + 1;\n}\ntemplate <typename T>\nT sigma1(int n, int p, int) {\n  return\
-    \ (n - 1) / (p - 1) + n;\n}\ntemplate <typename T>\nT totient(int n, int p, int)\
-    \ {\n  return n - n / p;\n}\n}  // namespace multiplicative_function\n\ntemplate\
-    \ <typename T>\nstatic constexpr vector<T> mobius_function(int n) {\n  enamurate_multiplicative_function<T,\
-    \ multiplicative_function::moebius<T>> em(\n      n);\n  return em.run();\n}\n\
-    \ntemplate <typename T>\nstatic constexpr vector<T> sigma0(int n) {\n  enamurate_multiplicative_function<T,\
-    \ multiplicative_function::sigma0<T>> em(\n      n);\n  return em.run();\n}\n\n\
-    template <typename T>\nstatic constexpr vector<T> sigma1(int n) {\n  enamurate_multiplicative_function<T,\
-    \ multiplicative_function::sigma1<T>> em(\n      n);\n  return em.run();\n}\n\n\
-    template <typename T>\nstatic constexpr vector<T> totient(int n) {\n  enamurate_multiplicative_function<T,\
-    \ multiplicative_function::totient<T>> em(\n      n);\n  return em.run();\n}\n\
-    \n/**\n * @brief \u6709\u540D\u306A\u4E57\u6CD5\u7684\u95A2\u6570\n */\n"
-  code: "#pragma once\n\n#include \"enamurate-multiplicative-function.hpp\"\n\nnamespace\
+    \ }\n  }\n};\n\ntemplate <typename T, T (*f)(int, int, int)>\nusing enamurate_multiplicative_function\
+    \ =\n    enumerate_multiplicative_function<T, f>;\n\n/**\n * @brief \u4E57\u6CD5\
+    \u7684\u95A2\u6570\u306E\u5217\u6319\n */\n#line 4 \"multiplicative-function/mf-famous-series.hpp\"\
+    \n\nnamespace multiplicative_function {\ntemplate <typename T>\nT moebius(int,\
+    \ int, int c) {\n  return c == 0 ? 1 : c == 1 ? -1 : 0;\n}\ntemplate <typename\
+    \ T>\nT sigma0(int, int, int c) {\n  return c + 1;\n}\ntemplate <typename T>\n\
+    T sigma1(int n, int p, int) {\n  return (n - 1) / (p - 1) + n;\n}\ntemplate <typename\
+    \ T>\nT totient(int n, int p, int) {\n  return n - n / p;\n}\n}  // namespace\
+    \ multiplicative_function\n\ntemplate <typename T>\nstatic constexpr vector<T>\
+    \ mobius_function(int n) {\n  enumerate_multiplicative_function<T, multiplicative_function::moebius<T>>\
+    \ em(\n      n);\n  return em.run();\n}\n\ntemplate <typename T>\nstatic constexpr\
+    \ vector<T> sigma0(int n) {\n  enumerate_multiplicative_function<T, multiplicative_function::sigma0<T>>\
+    \ em(\n      n);\n  return em.run();\n}\n\ntemplate <typename T>\nstatic constexpr\
+    \ vector<T> sigma1(int n) {\n  enumerate_multiplicative_function<T, multiplicative_function::sigma1<T>>\
+    \ em(\n      n);\n  return em.run();\n}\n\ntemplate <typename T>\nstatic constexpr\
+    \ vector<T> totient(int n) {\n  enumerate_multiplicative_function<T, multiplicative_function::totient<T>>\
+    \ em(\n      n);\n  return em.run();\n}\n\n/**\n * @brief \u6709\u540D\u306A\u4E57\
+    \u6CD5\u7684\u95A2\u6570\n */\n"
+  code: "#pragma once\n\n#include \"enumerate-multiplicative-function.hpp\"\n\nnamespace\
     \ multiplicative_function {\ntemplate <typename T>\nT moebius(int, int, int c)\
     \ {\n  return c == 0 ? 1 : c == 1 ? -1 : 0;\n}\ntemplate <typename T>\nT sigma0(int,\
     \ int, int c) {\n  return c + 1;\n}\ntemplate <typename T>\nT sigma1(int n, int\
     \ p, int) {\n  return (n - 1) / (p - 1) + n;\n}\ntemplate <typename T>\nT totient(int\
     \ n, int p, int) {\n  return n - n / p;\n}\n}  // namespace multiplicative_function\n\
     \ntemplate <typename T>\nstatic constexpr vector<T> mobius_function(int n) {\n\
-    \  enamurate_multiplicative_function<T, multiplicative_function::moebius<T>> em(\n\
+    \  enumerate_multiplicative_function<T, multiplicative_function::moebius<T>> em(\n\
     \      n);\n  return em.run();\n}\n\ntemplate <typename T>\nstatic constexpr vector<T>\
-    \ sigma0(int n) {\n  enamurate_multiplicative_function<T, multiplicative_function::sigma0<T>>\
+    \ sigma0(int n) {\n  enumerate_multiplicative_function<T, multiplicative_function::sigma0<T>>\
     \ em(\n      n);\n  return em.run();\n}\n\ntemplate <typename T>\nstatic constexpr\
-    \ vector<T> sigma1(int n) {\n  enamurate_multiplicative_function<T, multiplicative_function::sigma1<T>>\
+    \ vector<T> sigma1(int n) {\n  enumerate_multiplicative_function<T, multiplicative_function::sigma1<T>>\
     \ em(\n      n);\n  return em.run();\n}\n\ntemplate <typename T>\nstatic constexpr\
-    \ vector<T> totient(int n) {\n  enamurate_multiplicative_function<T, multiplicative_function::totient<T>>\
+    \ vector<T> totient(int n) {\n  enumerate_multiplicative_function<T, multiplicative_function::totient<T>>\
     \ em(\n      n);\n  return em.run();\n}\n\n/**\n * @brief \u6709\u540D\u306A\u4E57\
     \u6CD5\u7684\u95A2\u6570\n */\n"
   dependsOn:
-  - multiplicative-function/enamurate-multiplicative-function.hpp
+  - multiplicative-function/enumerate-multiplicative-function.hpp
   - prime/prime-enumerate.hpp
   isVerificationFile: false
   path: multiplicative-function/mf-famous-series.hpp
   requiredBy:
   - multiplicative-function/count-square-free.hpp
-  timestamp: '2026-06-08 17:59:24+09:00'
+  timestamp: '2026-06-19 18:03:18+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-math/yosupo-count-squarefrees.test.cpp
@@ -115,8 +117,8 @@ $f(n)$が任意の$\gcd(a,b) = 1$である自然数$a,b$に対して$f(ab) = f(a
 
 - $f(n)$が乗法的であり、かつ$f(p^k)$が$\mathrm{O}(1)$で求まるとき、
   - $f(n)$の計算が$\mathrm{O}(n^{\frac{1}{4}})$　(Pollard's Rho法)
-  - $f(n)$の初め$n$項の列挙が$\mathrm{O}(n)$　([実装](https://nyaannyaan.github.io/library/multiplicative-function/enamurate-multiplicative-function.hpp))
-  - $f(n)$の初め$n$項のprefix sumが$\mathrm{O}(n^{\frac{2}{3}})$　([実装](https://nyaannyaan.github.io/library/multiplicative-function/enamurate-multiplicative-function.hpp))
+  - $f(n)$の初め$n$項の列挙が$\mathrm{O}(n)$　([実装](https://nyaannyaan.github.io/library/multiplicative-function/enumerate-multiplicative-function.hpp))
+  - $f(n)$の初め$n$項のprefix sumが$\mathrm{O}(n^{\frac{2}{3}})$　([実装](https://nyaannyaan.github.io/library/multiplicative-function/enumerate-multiplicative-function.hpp))
   - $g(n)=\sum_{d\mid n}\mu\left(\frac{n}{d}\right)f(d)$の初め$n$項の列挙が$\mathrm{O}(n \log \log n)$　([実装](https://nyaannyaan.github.io/library/multiplicative-function/divisor-multiple-transform.hpp))
 
 #### 有名な乗法的関数

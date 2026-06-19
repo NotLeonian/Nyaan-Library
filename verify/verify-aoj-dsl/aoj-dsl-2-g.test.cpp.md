@@ -286,8 +286,9 @@ data:
     }\ntemplate <typename T>\nT Update(T, T b) {\n  return b;\n}\ntemplate <typename\
     \ T>\nT Add(T a, T b) {\n  return a + b;\n}\ntemplate <typename T>\nPair<T> Psum(Pair<T>\
     \ a, Pair<T> b) {\n  return Pair<T>(a.first + b.first, a.second + b.second);\n\
-    }\ntemplate <typename T>\nPair<T> Padd(Pair<T> a, T b) {\n  return Pair<T>(a.first\
-    \ + a.second * b, a.second);\n}\ntemplate <typename T>\nPair<T> PUpdate(Pair<T>\
+    }\ntemplate <typename T>\nPair<T> PairAdd(Pair<T> a, T b) {\n  return Pair<T>(a.first\
+    \ + a.second * b, a.second);\n}\ntemplate <typename T>\nPair<T> Padd(Pair<T> a,\
+    \ T b) {\n  return PairAdd(a, b);\n}\ntemplate <typename T>\nPair<T> PUpdate(Pair<T>\
     \ a, T b) {\n  return Pair<T>(a.second * b, a.second);\n}\ntemplate <typename\
     \ T>\nPair<T> Pid() {\n  return Pair<T>(T{}, T{});\n}\ntemplate <typename T>\n\
     T Zero() {\n  return T{};\n}\ntemplate <typename T, T val>\nT Const() {\n  return\
@@ -300,9 +301,9 @@ data:
     \ {\n  using base =\n      LazySegmentTreeBase<T, T, Mn<T>, Add<T>, Add<T>, Const<T,\
     \ INF>, Zero<T>>;\n  AddMin_LazySegmentTree(const vector<T>& v) : base(v) {}\n\
     };\n\ntemplate <typename T>\nstruct AddSum_LazySegmentTree\n    : LazySegmentTreeBase<Pair<T>,\
-    \ T, Psum<T>, Padd<T>, Add<T>, Pid<T>,\n                          Zero<T>> {\n\
-    \  using base = LazySegmentTreeBase<Pair<T>, T, Psum<T>, Padd<T>, Add<T>, Pid<T>,\n\
-    \                                   Zero<T>>;\n  AddSum_LazySegmentTree(const\
+    \ T, Psum<T>, PairAdd<T>, Add<T>, Pid<T>,\n                          Zero<T>>\
+    \ {\n  using base =\n      LazySegmentTreeBase<Pair<T>, T, Psum<T>, PairAdd<T>,\
+    \ Add<T>, Pid<T>,\n                          Zero<T>>;\n  AddSum_LazySegmentTree(const\
     \ vector<T>& v) {\n    vector<Pair<T>> w(v.size());\n    for (int i = 0; i < (int)v.size();\
     \ i++) w[i] = Pair<T>(v[i], 1);\n    base::init(w);\n  }\n};\n\ntemplate <typename\
     \ T, T MINF>\nstruct UpdateMax_LazySegmentTree\n    : LazySegmentTreeBase<T, T,\
@@ -347,7 +348,7 @@ data:
   isVerificationFile: true
   path: verify/verify-aoj-dsl/aoj-dsl-2-g.test.cpp
   requiredBy: []
-  timestamp: '2026-06-08 17:59:24+09:00'
+  timestamp: '2026-06-19 18:03:18+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-aoj-dsl/aoj-dsl-2-g.test.cpp

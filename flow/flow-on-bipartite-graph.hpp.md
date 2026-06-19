@@ -89,11 +89,11 @@ data:
     \ flow();\n    auto es = mf_graph<long long>::edges();\n    vector<pair<int, int>>\
     \ ret;\n    for (auto &e : es) {\n      if (e.flow > 0 && e.from != s && e.to\
     \ != t) {\n        ret.emplace_back(e.from, e.to - L);\n      }\n    }\n    return\
-    \ ret;\n  }\n\n  // call after calclating flow !\n  pair<vector<int>, vector<int>>\
+    \ ret;\n  }\n\n  // call after calculating flow !\n  pair<vector<int>, vector<int>>\
     \ MinimumVertexCover() {\n    if (!is_flow) flow();\n    auto colored = PreCalc();\n\
     \    vector<int> nl, nr;\n    for (int i = 0; i < L; i++)\n      if (!colored[i])\
     \ nl.push_back(i);\n    for (int i = 0; i < R; i++)\n      if (colored[i + L])\
-    \ nr.push_back(i);\n    return make_pair(nl, nr);\n  }\n\n  // call after calclating\
+    \ nr.push_back(i);\n    return make_pair(nl, nr);\n  }\n\n  // call after calculating\
     \ flow !\n  pair<vector<int>, vector<int>> MaximumIndependentSet() {\n    if (!is_flow)\
     \ flow();\n    auto colored = PreCalc();\n    vector<int> nl, nr;\n    for (int\
     \ i = 0; i < L; i++)\n      if (colored[i]) nl.push_back(i);\n    for (int i =\
@@ -130,11 +130,11 @@ data:
     \ flow();\n    auto es = mf_graph<long long>::edges();\n    vector<pair<int, int>>\
     \ ret;\n    for (auto &e : es) {\n      if (e.flow > 0 && e.from != s && e.to\
     \ != t) {\n        ret.emplace_back(e.from, e.to - L);\n      }\n    }\n    return\
-    \ ret;\n  }\n\n  // call after calclating flow !\n  pair<vector<int>, vector<int>>\
+    \ ret;\n  }\n\n  // call after calculating flow !\n  pair<vector<int>, vector<int>>\
     \ MinimumVertexCover() {\n    if (!is_flow) flow();\n    auto colored = PreCalc();\n\
     \    vector<int> nl, nr;\n    for (int i = 0; i < L; i++)\n      if (!colored[i])\
     \ nl.push_back(i);\n    for (int i = 0; i < R; i++)\n      if (colored[i + L])\
-    \ nr.push_back(i);\n    return make_pair(nl, nr);\n  }\n\n  // call after calclating\
+    \ nr.push_back(i);\n    return make_pair(nl, nr);\n  }\n\n  // call after calculating\
     \ flow !\n  pair<vector<int>, vector<int>> MaximumIndependentSet() {\n    if (!is_flow)\
     \ flow();\n    auto colored = PreCalc();\n    vector<int> nl, nr;\n    for (int\
     \ i = 0; i < L; i++)\n      if (colored[i]) nl.push_back(i);\n    for (int i =\
@@ -161,7 +161,7 @@ data:
   isVerificationFile: false
   path: flow/flow-on-bipartite-graph.hpp
   requiredBy: []
-  timestamp: '2026-06-08 17:59:24+09:00'
+  timestamp: '2026-06-19 18:03:18+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-graph/yosupo-matching-on-bipartite-graph.test.cpp

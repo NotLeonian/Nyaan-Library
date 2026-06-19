@@ -287,22 +287,23 @@ data:
     \   return ret;\n  }\n\n  // a + b \u306E hash \u3092\u8FD4\u3059\n  // \u5F15\
     \u6570 : a, b, b \u306E\u9577\u3055\n  static Hash unite(Hash a, Hash b, long\
     \ long bsize) {\n    return pfma(a, basis.pow(bsize), b);\n  }\n\n  int find(Str\
-    \ &T, int lower = 0) const {\n    auto ths = get_hash(T);\n    for (int i = lower;\
-    \ i <= s - (int)T.size(); i++)\n      if (ths == get(i, i + (int)T.size())) return\
-    \ i;\n    return -1;\n  }\n\n  static int lcp(const RollingHash &a, const RollingHash\
-    \ &b, int al, int bl) {\n    int ok = 0, ng = min(a.size() - al, b.size() - bl)\
-    \ + 1;\n    while (ok + 1 < ng) {\n      int med = (ok + ng) / 2;\n      (a.get(al,\
-    \ med + al) == b.get(bl, med + bl) ? ok : ng) = med;\n    }\n    return ok;\n\
-    \  }\n\n  static int strcmp(const RollingHash &a, const RollingHash &b, int al,\
-    \ int bl,\n                    int ar = -1, int br = -1) {\n    if (ar == -1)\
-    \ ar = a.size();\n    if (br == -1) br = b.size();\n    int n = min<int>({lcp(a,\
-    \ b, al, bl), ar - al, br - bl});\n    return al + n == ar                   \
-    \   ? bl + n == br ? 0 : -1\n           : bl + n == br                    ? 1\n\
-    \           : a.data[al + n] < b.data[bl + n] ? -1\n                         \
-    \                    : 1;\n  }\n\n  int size() const { return s; }\n};\n\ntemplate\
-    \ <typename Str, int BASE_NUM>\ntypename RollingHash<Str, BASE_NUM>::Hash RollingHash<Str,\
-    \ BASE_NUM>::basis =\n    internal::Hash<BASE_NUM>::get_basis();\nusing roriha\
-    \ = RollingHash<string, 2>;\n\n/**\n * @brief Rolling Hash\n */\n#line 6 \"verify/verify-yosupo-string/yosupo-enumerate-palindromes-roriha.test.cpp\"\
+    \ &T, int lower = 0) const {\n    auto target_hash = get_hash(T);\n    for (int\
+    \ i = lower; i <= s - (int)T.size(); i++)\n      if (target_hash == get(i, i +\
+    \ (int)T.size())) return i;\n    return -1;\n  }\n\n  static int lcp(const RollingHash\
+    \ &a, const RollingHash &b, int al, int bl) {\n    int ok = 0, ng = min(a.size()\
+    \ - al, b.size() - bl) + 1;\n    while (ok + 1 < ng) {\n      int med = (ok +\
+    \ ng) / 2;\n      (a.get(al, med + al) == b.get(bl, med + bl) ? ok : ng) = med;\n\
+    \    }\n    return ok;\n  }\n\n  static int strcmp(const RollingHash &a, const\
+    \ RollingHash &b, int al, int bl,\n                    int ar = -1, int br = -1)\
+    \ {\n    if (ar == -1) ar = a.size();\n    if (br == -1) br = b.size();\n    int\
+    \ n = min<int>({lcp(a, b, al, bl), ar - al, br - bl});\n    return al + n == ar\
+    \                      ? bl + n == br ? 0 : -1\n           : bl + n == br    \
+    \                ? 1\n           : a.data[al + n] < b.data[bl + n] ? -1\n    \
+    \                                         : 1;\n  }\n\n  int size() const { return\
+    \ s; }\n};\n\ntemplate <typename Str, int BASE_NUM>\ntypename RollingHash<Str,\
+    \ BASE_NUM>::Hash RollingHash<Str, BASE_NUM>::basis =\n    internal::Hash<BASE_NUM>::get_basis();\n\
+    using roriha = RollingHash<string, 2>;\n\n/**\n * @brief Rolling Hash\n */\n#line\
+    \ 6 \"verify/verify-yosupo-string/yosupo-enumerate-palindromes-roriha.test.cpp\"\
     \n//\nusing namespace Nyaan;\nvoid Nyaan::solve() {\n  string s;\n  in(s);\n \
     \ {\n    string b;\n    b.push_back('$');\n    rep(i, sz(s)) {\n      b.push_back(s[i]);\n\
     \      b.push_back('$');\n    }\n    swap(s, b);\n  }\n  auto t = s;\n  reverse(all(t));\n\
@@ -335,7 +336,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-string/yosupo-enumerate-palindromes-roriha.test.cpp
   requiredBy: []
-  timestamp: '2026-06-08 17:59:24+09:00'
+  timestamp: '2026-06-19 18:03:18+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-string/yosupo-enumerate-palindromes-roriha.test.cpp

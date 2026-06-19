@@ -5,7 +5,7 @@ data:
     path: modint/montgomery-modint.hpp
     title: modint/montgomery-modint.hpp
   - icon: ':heavy_check_mark:'
-    path: multiplicative-function/enamurate-multiplicative-function.hpp
+    path: multiplicative-function/enumerate-multiplicative-function.hpp
     title: "\u4E57\u6CD5\u7684\u95A2\u6570\u306E\u5217\u6319"
   - icon: ':heavy_check_mark:'
     path: multiplicative-function/mf-famous-series.hpp
@@ -236,8 +236,8 @@ data:
     \ \\\n    return;                  \\\n  } while (0)\n#line 70 \"template/template.hpp\"\
     \n\nnamespace Nyaan {\nvoid solve();\n}\nint main() { Nyaan::solve(); }\n#line\
     \ 4 \"verify/verify-unit-test/sum-of-mf.test.cpp\"\n//\n#line 2 \"multiplicative-function/mf-famous-series.hpp\"\
-    \n\n#line 2 \"multiplicative-function/enamurate-multiplicative-function.hpp\"\n\
-    \n#line 4 \"multiplicative-function/enamurate-multiplicative-function.hpp\"\n\
+    \n\n#line 2 \"multiplicative-function/enumerate-multiplicative-function.hpp\"\n\
+    \n#line 4 \"multiplicative-function/enumerate-multiplicative-function.hpp\"\n\
     using namespace std;\n\n#line 2 \"prime/prime-enumerate.hpp\"\n\n#line 5 \"prime/prime-enumerate.hpp\"\
     \nusing namespace std;\n\n// Prime Sieve {2, 3, 5, 7, 11, 13, 17, ...}\nvector<int>\
     \ prime_enumerate(int N) {\n  vector<bool> sieve(N / 3 + 1, 1);\n  for (int p\
@@ -247,9 +247,9 @@ data:
     \      sieve[q] = 0;\n  }\n  vector<int> ret{2, 3};\n  for (int p = 5, d = 4,\
     \ i = 1; p <= N; p += d = 6 - d, i++)\n    if (sieve[i]) ret.push_back(p);\n \
     \ while (!ret.empty() && ret.back() > N) ret.pop_back();\n  return ret;\n}\n#line\
-    \ 7 \"multiplicative-function/enamurate-multiplicative-function.hpp\"\n\n// f(n,\
+    \ 7 \"multiplicative-function/enumerate-multiplicative-function.hpp\"\n\n// f(n,\
     \ p, c) : n = pow(p, c), f is multiplicative function\n\ntemplate <typename T,\
-    \ T (*f)(int, int, int)>\nstruct enamurate_multiplicative_function {\n  enamurate_multiplicative_function(int\
+    \ T (*f)(int, int, int)>\nstruct enumerate_multiplicative_function {\n  enumerate_multiplicative_function(int\
     \ _n)\n      : ps(prime_enumerate(_n)), a(_n + 1, T()), n(_n), p(ps.size()) {}\n\
     \n  vector<T> run() {\n    a[1] = 1;\n    dfs(-1, 1, 1);\n    return a;\n  }\n\
     \n private:\n  vector<int> ps;\n  vector<T> a;\n  int n, p;\n  void dfs(int i,\
@@ -257,27 +257,28 @@ data:
     \ j = i + 1; j < p; j++) {\n      long long nx = x * ps[j];\n      long long dx\
     \ = ps[j];\n      if (nx > n) break;\n      for (int c = 1; nx <= n; nx *= ps[j],\
     \ dx *= ps[j], ++c) {\n        dfs(j, nx, y * f(dx, ps[j], c));\n      }\n   \
-    \ }\n  }\n};\n\n/**\n * @brief \u4E57\u6CD5\u7684\u95A2\u6570\u306E\u5217\u6319\
-    \n */\n#line 4 \"multiplicative-function/mf-famous-series.hpp\"\n\nnamespace multiplicative_function\
-    \ {\ntemplate <typename T>\nT moebius(int, int, int c) {\n  return c == 0 ? 1\
-    \ : c == 1 ? -1 : 0;\n}\ntemplate <typename T>\nT sigma0(int, int, int c) {\n\
-    \  return c + 1;\n}\ntemplate <typename T>\nT sigma1(int n, int p, int) {\n  return\
-    \ (n - 1) / (p - 1) + n;\n}\ntemplate <typename T>\nT totient(int n, int p, int)\
-    \ {\n  return n - n / p;\n}\n}  // namespace multiplicative_function\n\ntemplate\
-    \ <typename T>\nstatic constexpr vector<T> mobius_function(int n) {\n  enamurate_multiplicative_function<T,\
-    \ multiplicative_function::moebius<T>> em(\n      n);\n  return em.run();\n}\n\
-    \ntemplate <typename T>\nstatic constexpr vector<T> sigma0(int n) {\n  enamurate_multiplicative_function<T,\
-    \ multiplicative_function::sigma0<T>> em(\n      n);\n  return em.run();\n}\n\n\
-    template <typename T>\nstatic constexpr vector<T> sigma1(int n) {\n  enamurate_multiplicative_function<T,\
-    \ multiplicative_function::sigma1<T>> em(\n      n);\n  return em.run();\n}\n\n\
-    template <typename T>\nstatic constexpr vector<T> totient(int n) {\n  enamurate_multiplicative_function<T,\
-    \ multiplicative_function::totient<T>> em(\n      n);\n  return em.run();\n}\n\
-    \n/**\n * @brief \u6709\u540D\u306A\u4E57\u6CD5\u7684\u95A2\u6570\n */\n#line\
-    \ 2 \"multiplicative-function/sum-of-multiplicative-function.hpp\"\n\n#line 4\
-    \ \"multiplicative-function/sum-of-multiplicative-function.hpp\"\n\n// f(p, c)\
-    \ : f(p^c) \u306E\u5024\u3092\u8FD4\u3059\ntemplate <typename T, T (*f)(long long,\
-    \ long long)>\nstruct mf_prefix_sum {\n  using i64 = long long;\n\n  i64 M, sq,\
-    \ s;\n  vector<int> p;\n  int ps;\n  vector<T> buf;\n  T ans;\n\n  mf_prefix_sum(i64\
+    \ }\n  }\n};\n\ntemplate <typename T, T (*f)(int, int, int)>\nusing enamurate_multiplicative_function\
+    \ =\n    enumerate_multiplicative_function<T, f>;\n\n/**\n * @brief \u4E57\u6CD5\
+    \u7684\u95A2\u6570\u306E\u5217\u6319\n */\n#line 4 \"multiplicative-function/mf-famous-series.hpp\"\
+    \n\nnamespace multiplicative_function {\ntemplate <typename T>\nT moebius(int,\
+    \ int, int c) {\n  return c == 0 ? 1 : c == 1 ? -1 : 0;\n}\ntemplate <typename\
+    \ T>\nT sigma0(int, int, int c) {\n  return c + 1;\n}\ntemplate <typename T>\n\
+    T sigma1(int n, int p, int) {\n  return (n - 1) / (p - 1) + n;\n}\ntemplate <typename\
+    \ T>\nT totient(int n, int p, int) {\n  return n - n / p;\n}\n}  // namespace\
+    \ multiplicative_function\n\ntemplate <typename T>\nstatic constexpr vector<T>\
+    \ mobius_function(int n) {\n  enumerate_multiplicative_function<T, multiplicative_function::moebius<T>>\
+    \ em(\n      n);\n  return em.run();\n}\n\ntemplate <typename T>\nstatic constexpr\
+    \ vector<T> sigma0(int n) {\n  enumerate_multiplicative_function<T, multiplicative_function::sigma0<T>>\
+    \ em(\n      n);\n  return em.run();\n}\n\ntemplate <typename T>\nstatic constexpr\
+    \ vector<T> sigma1(int n) {\n  enumerate_multiplicative_function<T, multiplicative_function::sigma1<T>>\
+    \ em(\n      n);\n  return em.run();\n}\n\ntemplate <typename T>\nstatic constexpr\
+    \ vector<T> totient(int n) {\n  enumerate_multiplicative_function<T, multiplicative_function::totient<T>>\
+    \ em(\n      n);\n  return em.run();\n}\n\n/**\n * @brief \u6709\u540D\u306A\u4E57\
+    \u6CD5\u7684\u95A2\u6570\n */\n#line 2 \"multiplicative-function/sum-of-multiplicative-function.hpp\"\
+    \n\n#line 4 \"multiplicative-function/sum-of-multiplicative-function.hpp\"\n\n\
+    // f(p, c) : f(p^c) \u306E\u5024\u3092\u8FD4\u3059\ntemplate <typename T, T (*f)(long\
+    \ long, long long)>\nstruct mf_prefix_sum {\n  using i64 = long long;\n\n  i64\
+    \ M, sq, s;\n  vector<int> p;\n  int ps;\n  vector<T> buf;\n  T ans;\n\n  mf_prefix_sum(i64\
     \ m) : M(m) {\n    assert(m <= 1e15);\n    sq = sqrt(M);\n    while (sq * sq >\
     \ M) sq--;\n    while ((sq + 1) * (sq + 1) <= M) sq++;\n\n    if (M != 0) {\n\
     \      i64 hls = quo(M, sq);\n      while (hls != 1 && quo(M, hls - 1) == sq)\
@@ -424,7 +425,7 @@ data:
   - template/debug.hpp
   - template/macro.hpp
   - multiplicative-function/mf-famous-series.hpp
-  - multiplicative-function/enamurate-multiplicative-function.hpp
+  - multiplicative-function/enumerate-multiplicative-function.hpp
   - prime/prime-enumerate.hpp
   - multiplicative-function/sum-of-multiplicative-function.hpp
   - multiplicative-function/sum-of-totient.hpp
@@ -432,7 +433,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/sum-of-mf.test.cpp
   requiredBy: []
-  timestamp: '2026-06-08 17:59:24+09:00'
+  timestamp: '2026-06-19 18:03:18+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/sum-of-mf.test.cpp

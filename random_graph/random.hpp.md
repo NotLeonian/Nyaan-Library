@@ -67,7 +67,7 @@ data:
     \n    // generate random permutation that length = n\n    template <class T>\n\
     \    std::vector<T> perm(std::size_t n) {\n        std::vector<T> idx(n);\n  \
     \      std::iota(idx.begin(), idx.end(), T(0));\n        shuffle(idx.begin(),\
-    \ idx.end());\n        return idx;\n    }\n\n    // random choise n elements from\
+    \ idx.end());\n        return idx;\n    }\n\n    // random choice n elements from\
     \ [lower, upper]\n    template <class T>\n    std::vector<T> choice(std::size_t\
     \ n, T lower, T upper) {\n        assert(T(n) <= upper - lower + 1);\n       \
     \ std::set<T> res;\n        while (res.size() < n) res.insert(uniform(lower, upper));\n\
@@ -123,7 +123,7 @@ data:
     \n    // generate random permutation that length = n\n    template <class T>\n\
     \    std::vector<T> perm(std::size_t n) {\n        std::vector<T> idx(n);\n  \
     \      std::iota(idx.begin(), idx.end(), T(0));\n        shuffle(idx.begin(),\
-    \ idx.end());\n        return idx;\n    }\n\n    // random choise n elements from\
+    \ idx.end());\n        return idx;\n    }\n\n    // random choice n elements from\
     \ [lower, upper]\n    template <class T>\n    std::vector<T> choice(std::size_t\
     \ n, T lower, T upper) {\n        assert(T(n) <= upper - lower + 1);\n       \
     \ std::set<T> res;\n        while (res.size() < n) res.insert(uniform(lower, upper));\n\
@@ -133,7 +133,7 @@ data:
   path: random_graph/random.hpp
   requiredBy:
   - random_graph/gen.hpp
-  timestamp: '2026-06-09 10:27:54+09:00'
+  timestamp: '2026-06-19 18:03:18+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: random_graph/random.hpp

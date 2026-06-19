@@ -526,7 +526,7 @@ data:
     \    rc(rc, i * 2 + 1, m, r, g % mod[i * 2 + 1],\n       h * mod[i * 2] % mod[i\
     \ * 2 + 1]);\n  };\n  dfs(dfs, 1, 0, B, f, fps{1});\n  return ans;\n}\n\n// \u53E4\
     \u3044\u65B9\ntemplate <typename mint>\nvector<pair<mint, vector<mint>>> PartialFractionDecomposition(\n\
-    \    FormalPowerSeries<mint> numer, vector<pair<mint, int>> denom) {\n  using\
+    \    FormalPowerSeries<mint> numerator, vector<pair<mint, int>> denom) {\n  using\
     \ fps = FormalPowerSeries<mint>;\n\n  if (denom.empty()) return {};\n\n  sort(begin(denom),\
     \ end(denom),\n       [](auto p1, auto p2) { return p1.second < p2.second; });\n\
     \  Binomial<mint> C(denom[0].second + 1);\n\n  int s = 1;\n  while (s < (int)denom.size())\
@@ -536,10 +536,10 @@ data:
     \ j = d; j >= 0; j--) {\n      f[j] = buf * C(d, j);\n      buf *= m;\n    }\n\
     \    fs[s + i] = f;\n  }\n  for (int i = s - 1; i; i--) {\n    fs[i] = fs[2 *\
     \ i + 0] * fs[2 * i + 1];\n  }\n\n  vector<fps> F(2 * s);\n  vector<fps> G(2 *\
-    \ s);\n  F[1] = numer % fs[1];\n  G[1] = fps{1};\n  for (int i = 1; i < s; i++)\
-    \ {\n    F[i * 2 + 0] = F[i] % fs[i * 2 + 0];\n    F[i * 2 + 1] = F[i] % fs[i\
-    \ * 2 + 1];\n    G[i * 2 + 0] = G[i] * fs[i * 2 + 1] % fs[i * 2 + 0];\n    G[i\
-    \ * 2 + 1] = G[i] * fs[i * 2 + 0] % fs[i * 2 + 1];\n  }\n\n  vector<pair<mint,\
+    \ s);\n  F[1] = numerator % fs[1];\n  G[1] = fps{1};\n  for (int i = 1; i < s;\
+    \ i++) {\n    F[i * 2 + 0] = F[i] % fs[i * 2 + 0];\n    F[i * 2 + 1] = F[i] %\
+    \ fs[i * 2 + 1];\n    G[i * 2 + 0] = G[i] * fs[i * 2 + 1] % fs[i * 2 + 0];\n \
+    \   G[i * 2 + 1] = G[i] * fs[i * 2 + 0] % fs[i * 2 + 1];\n  }\n\n  vector<pair<mint,\
     \ vector<mint>>> res;\n  for (int i = s; i - s < (int)denom.size(); i++) {\n \
     \   auto [m, d] = denom[i - s];\n    F[i] = TaylorShift<mint>(F[i], -m, C);\n\
     \    G[i] = TaylorShift<mint>(G[i], -m, C);\n    fps f = (F[i] * G[i].inv()).pre(d);\n\
@@ -630,11 +630,11 @@ data:
     \  } while (0);\n  }\n\n  for (int i = 0; i < size1; i++) {\n    mint m = xs[i];\n\
     \    int d = randint(1, size2);\n    denom.emplace_back(m, d);\n    fps f(d +\
     \ 1);\n    f[0] = m, f[1] = 1;\n    fs.emplace_back(f.pow(d));\n  }\n  auto pi\
-    \ = Pi(fs);\n\n  fps numer;\n  vector<pair<mint, vm>> part1;\n  rep(i, size1)\
+    \ = Pi(fs);\n\n  fps numerator;\n  vector<pair<mint, vm>> part1;\n  rep(i, size1)\
     \ {\n    auto [m, d] = denom[i];\n    vm coeff(d);\n    each(x, coeff) x = rng();\n\
     \    fps f, buf{1};\n    for (int j = d - 1; j >= 0; j--) {\n      f += buf *\
-    \ coeff[j];\n      buf *= fps{m, 1};\n    }\n    numer += f * (pi / buf);\n  \
-    \  part1.emplace_back(m, coeff);\n  }\n\n  auto part2 = PartialFractionDecomposition<mint>(numer,\
+    \ coeff[j];\n      buf *= fps{m, 1};\n    }\n    numerator += f * (pi / buf);\n\
+    \    part1.emplace_back(m, coeff);\n  }\n\n  auto part2 = PartialFractionDecomposition<mint>(numerator,\
     \ denom);\n\n  sort(all(part1),\n       [](auto a, auto b) { return a.first.get()\
     \ < b.first.get(); });\n  sort(all(part2),\n       [](auto a, auto b) { return\
     \ a.first.get() < b.first.get(); });\n\n  assert(part1 == part2);\n}\n\nvoid Nyaan::solve()\
@@ -656,11 +656,11 @@ data:
     \ while (0);\n  }\n\n  for (int i = 0; i < size1; i++) {\n    mint m = xs[i];\n\
     \    int d = randint(1, size2);\n    denom.emplace_back(m, d);\n    fps f(d +\
     \ 1);\n    f[0] = m, f[1] = 1;\n    fs.emplace_back(f.pow(d));\n  }\n  auto pi\
-    \ = Pi(fs);\n\n  fps numer;\n  vector<pair<mint, vm>> part1;\n  rep(i, size1)\
+    \ = Pi(fs);\n\n  fps numerator;\n  vector<pair<mint, vm>> part1;\n  rep(i, size1)\
     \ {\n    auto [m, d] = denom[i];\n    vm coeff(d);\n    each(x, coeff) x = rng();\n\
     \    fps f, buf{1};\n    for (int j = d - 1; j >= 0; j--) {\n      f += buf *\
-    \ coeff[j];\n      buf *= fps{m, 1};\n    }\n    numer += f * (pi / buf);\n  \
-    \  part1.emplace_back(m, coeff);\n  }\n\n  auto part2 = PartialFractionDecomposition<mint>(numer,\
+    \ coeff[j];\n      buf *= fps{m, 1};\n    }\n    numerator += f * (pi / buf);\n\
+    \    part1.emplace_back(m, coeff);\n  }\n\n  auto part2 = PartialFractionDecomposition<mint>(numerator,\
     \ denom);\n\n  sort(all(part1),\n       [](auto a, auto b) { return a.first.get()\
     \ < b.first.get(); });\n  sort(all(part2),\n       [](auto a, auto b) { return\
     \ a.first.get() < b.first.get(); });\n\n  assert(part1 == part2);\n}\n\nvoid Nyaan::solve()\
@@ -686,7 +686,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/partial-fraction-decomposition.test.cpp
   requiredBy: []
-  timestamp: '2026-06-14 14:52:11+09:00'
+  timestamp: '2026-06-19 18:03:18+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/partial-fraction-decomposition.test.cpp

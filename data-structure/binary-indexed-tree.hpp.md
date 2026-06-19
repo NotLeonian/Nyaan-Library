@@ -25,8 +25,8 @@ data:
     path: verify/verify-yosupo-ds/yosupo-point-add-range-sum.test.cpp
     title: verify/verify-yosupo-ds/yosupo-point-add-range-sum.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-abstruct-range-tree.test.cpp
-    title: verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-abstruct-range-tree.test.cpp
+    path: verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-abstract-range-tree.test.cpp
+    title: verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-abstract-range-tree.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-static-range-inversion-query-2.test.cpp
     title: verify/verify-yosupo-ds/yosupo-static-range-inversion-query-2.test.cpp
@@ -104,13 +104,13 @@ data:
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ds/yosupo-static-rectangle-add-rectangle-sum.test.cpp
+  - verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-abstract-range-tree.test.cpp
   - verify/verify-yosupo-ds/yosupo-static-range-inversions-query.test.cpp
   - verify/verify-yosupo-ds/yosupo-vertex-add-subtree-sum-dst-on-tree.test.cpp
   - verify/verify-yosupo-ds/yosupo-vertex-add-subtree-sum-euler-tree.test.cpp
   - verify/verify-yosupo-ds/yosupo-static-range-inversion-query-2.test.cpp
   - verify/verify-yosupo-ds/yosupo-point-add-range-sum.test.cpp
   - verify/verify-yosupo-ds/yosupo-vertex-add-path-sum-euler-tour.test.cpp
-  - verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-abstruct-range-tree.test.cpp
   - verify/verify-aoj-dsl/aoj-dsl-2-g-bit.test.cpp
   - verify/verify-aoj-dsl/aoj-dsl-2-b-bit.test.cpp
   - verify/verify-aoj-dsl/aoj-dsl-2-e-imos.test.cpp

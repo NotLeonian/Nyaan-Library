@@ -282,9 +282,9 @@ data:
     using my_rand::randshf;\nusing my_rand::rnd;\nusing my_rand::rng;\n#line 7 \"\
     verify/verify-unit-test/enumerate-quotient.test.cpp\"\nusing namespace Nyaan;\n\
     \nV<vl> naive(ll N) {\n  vl q, l, r;\n  ll upper = N;\n  while (upper) {\n   \
-    \ ll quo = N / upper;\n    ll thr = N / (quo + 1);\n    q.push_back(quo);\n  \
-    \  l.push_back(thr);\n    r.push_back(upper);\n    upper = thr;\n  }\n  return\
-    \ V<vl>{q, l, r};\n}\n\nvoid test(ll N) {\n  vl Q, L, R;\n  enumerate_quotient(N,\
+    \ ll quo = N / upper;\n    ll threshold = N / (quo + 1);\n    q.push_back(quo);\n\
+    \    l.push_back(threshold);\n    r.push_back(upper);\n    upper = threshold;\n\
+    \  }\n  return V<vl>{q, l, r};\n}\n\nvoid test(ll N) {\n  vl Q, L, R;\n  enumerate_quotient(N,\
     \ [&](ll q, ll l, ll r) {\n    Q.push_back(q);\n    L.push_back(l);\n    R.push_back(r);\n\
     \  });\n  V<vl> qlr{Q, L, R};\n  assert(qlr == naive(N));\n}\n\nvoid Nyaan::solve()\
     \ {\n  rep(i, 10000) test(i);\n  rep(_, 10000) test(randint(TEN(4), TEN(6)));\n\
@@ -294,14 +294,14 @@ data:
     \ \"../../template/template.hpp\"\n//\n#include \"../../math/enumerate-quotient.hpp\"\
     \n#include \"../../misc/rng.hpp\"\nusing namespace Nyaan;\n\nV<vl> naive(ll N)\
     \ {\n  vl q, l, r;\n  ll upper = N;\n  while (upper) {\n    ll quo = N / upper;\n\
-    \    ll thr = N / (quo + 1);\n    q.push_back(quo);\n    l.push_back(thr);\n \
-    \   r.push_back(upper);\n    upper = thr;\n  }\n  return V<vl>{q, l, r};\n}\n\n\
-    void test(ll N) {\n  vl Q, L, R;\n  enumerate_quotient(N, [&](ll q, ll l, ll r)\
-    \ {\n    Q.push_back(q);\n    L.push_back(l);\n    R.push_back(r);\n  });\n  V<vl>\
-    \ qlr{Q, L, R};\n  assert(qlr == naive(N));\n}\n\nvoid Nyaan::solve() {\n  rep(i,\
-    \ 10000) test(i);\n  rep(_, 10000) test(randint(TEN(4), TEN(6)));\n  rep(_, 20)\
-    \ test(randint(1, TEN(11)));\n\n  int a, b;\n  cin >> a >> b;\n  cout << a + b\
-    \ << endl;\n}\n"
+    \    ll threshold = N / (quo + 1);\n    q.push_back(quo);\n    l.push_back(threshold);\n\
+    \    r.push_back(upper);\n    upper = threshold;\n  }\n  return V<vl>{q, l, r};\n\
+    }\n\nvoid test(ll N) {\n  vl Q, L, R;\n  enumerate_quotient(N, [&](ll q, ll l,\
+    \ ll r) {\n    Q.push_back(q);\n    L.push_back(l);\n    R.push_back(r);\n  });\n\
+    \  V<vl> qlr{Q, L, R};\n  assert(qlr == naive(N));\n}\n\nvoid Nyaan::solve() {\n\
+    \  rep(i, 10000) test(i);\n  rep(_, 10000) test(randint(TEN(4), TEN(6)));\n  rep(_,\
+    \ 20) test(randint(1, TEN(11)));\n\n  int a, b;\n  cin >> a >> b;\n  cout << a\
+    \ + b << endl;\n}\n"
   dependsOn:
   - template/template.hpp
   - template/util.hpp
@@ -316,7 +316,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/enumerate-quotient.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-19 18:03:18+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/enumerate-quotient.test.cpp

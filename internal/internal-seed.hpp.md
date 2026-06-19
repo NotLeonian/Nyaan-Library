@@ -163,8 +163,8 @@ data:
     path: verify/verify-unit-test/lazyseg-setval.test.cpp
     title: verify/verify-unit-test/lazyseg-setval.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/verify-unit-test/li-chao-tree-abstruct.test.cpp
-    title: verify/verify-unit-test/li-chao-tree-abstruct.test.cpp
+    path: verify/verify-unit-test/li-chao-tree-abstract.test.cpp
+    title: verify/verify-unit-test/li-chao-tree-abstract.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/verify-unit-test/manacher.test.cpp
     title: verify/verify-unit-test/manacher.test.cpp
@@ -420,6 +420,7 @@ data:
   - verify/verify-unit-test/radix-sort.test.cpp
   - verify/verify-unit-test/semiring.test.cpp
   - verify/verify-unit-test/multieval.test.cpp
+  - verify/verify-unit-test/li-chao-tree-abstract.test.cpp
   - verify/verify-unit-test/interval-union.test.cpp
   - verify/verify-unit-test/lazyseg-setval-2.test.cpp
   - verify/verify-unit-test/fast-inv-o1.test.cpp
@@ -431,7 +432,6 @@ data:
   - verify/verify-unit-test/arbitrary-modint.test.cpp
   - verify/verify-unit-test/modint-2-61m1.test.cpp
   - verify/verify-unit-test/bigint3.test.cpp
-  - verify/verify-unit-test/li-chao-tree-abstruct.test.cpp
   - verify/verify-unit-test/segment-set.test.cpp
   - verify/verify-unit-test/primitive-root.test.cpp
   - verify/verify-unit-test/bigint2.test.cpp

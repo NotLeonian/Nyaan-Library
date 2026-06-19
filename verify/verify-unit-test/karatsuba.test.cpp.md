@@ -420,12 +420,12 @@ data:
     \ i++) c[i] = cl[i];\n    for (int i = 0; i < (int)cu.size(); i++) c[i + d] +=\
     \ cu[i];\n    return c;\n  }\n  vector<T> bl{begin(b), begin(b) + d}, bu{begin(b)\
     \ + d, end(b)};\n  vector<T> alu{al}, blu{bl};\n  add(alu, au), add(blu, bu);\n\
-    \  auto cll = karatsuba(al, bl);\n  auto cuu = karatsuba(au, bu);\n  auto clu\
-    \ = karatsuba(alu, blu);\n  sub(clu, cll), sub(clu, cuu);\n  vector<T> c(d);\n\
+    \  auto c_ll = karatsuba(al, bl);\n  auto cuu = karatsuba(au, bu);\n  auto clu\
+    \ = karatsuba(alu, blu);\n  sub(clu, c_ll), sub(clu, cuu);\n  vector<T> c(d);\n\
     \  copy(begin(clu), end(clu), back_inserter(c));\n  c.resize(a.size() + b.size()\
-    \ - 1);\n  add(c, cll);\n  for (int i = 0; i < (int)cuu.size(); i++) c[i + 2 *\
-    \ d] += cuu[i];\n  c.resize(a.size() + b.size() - 1);\n  return c;\n}\n\n}  //\
-    \ namespace KaratsubaImpl\nusing KaratsubaImpl::karatsuba;\n#line 9 \"verify/verify-unit-test/karatsuba.test.cpp\"\
+    \ - 1);\n  add(c, c_ll);\n  for (int i = 0; i < (int)cuu.size(); i++) c[i + 2\
+    \ * d] += cuu[i];\n  c.resize(a.size() + b.size() - 1);\n  return c;\n}\n\n} \
+    \ // namespace KaratsubaImpl\nusing KaratsubaImpl::karatsuba;\n#line 9 \"verify/verify-unit-test/karatsuba.test.cpp\"\
     \n\nusing namespace Nyaan;\n\ntemplate <typename T>\nvector<T> naive(vector<T>&\
     \ a, vector<T>& b) {\n  vector<T> c(a.size() + b.size() - 1);\n  rep(i, sz(a))\
     \ rep(j, sz(b)) c[i + j] += a[i] * b[j];\n  return c;\n}\n\ntemplate <typename\
@@ -466,7 +466,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/karatsuba.test.cpp
   requiredBy: []
-  timestamp: '2026-06-08 17:59:24+09:00'
+  timestamp: '2026-06-19 18:03:18+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/karatsuba.test.cpp

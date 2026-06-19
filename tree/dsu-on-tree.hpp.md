@@ -132,11 +132,11 @@ DSU on Treeとは、全ての部分木に対するクエリを高速に処理す
 
   };
   // below two function are called if all data must be deleted
-  // delete data of node i (if necesarry)
+  // delete data of node i (if necessary)
   auto clear = [&](int i) {
 
   };
-  // delete data related to all (if necesarry)
+  // delete data related to all (if necessary)
   auto reset = [&]() {
 
   };

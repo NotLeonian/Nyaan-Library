@@ -788,8 +788,11 @@ data:
     - icon: ':heavy_check_mark:'
       path: multiplicative-function/divisor-multiple-transform.hpp
       title: "\u500D\u6570\u5909\u63DB\u30FB\u7D04\u6570\u5909\u63DB"
-    - icon: ':heavy_check_mark:'
+    - icon: ':warning:'
       path: multiplicative-function/enamurate-multiplicative-function.hpp
+      title: multiplicative-function/enamurate-multiplicative-function.hpp
+    - icon: ':heavy_check_mark:'
+      path: multiplicative-function/enumerate-multiplicative-function.hpp
       title: "\u4E57\u6CD5\u7684\u95A2\u6570\u306E\u5217\u6319"
     - icon: ':heavy_check_mark:'
       path: multiplicative-function/enumerate-sum-of-multiplicative-function.hpp
@@ -946,6 +949,9 @@ data:
       path: segment-tree/lazy-segment-tree.hpp
       title: segment-tree/lazy-segment-tree.hpp
     - icon: ':heavy_check_mark:'
+      path: segment-tree/li-chao-tree-abstract.hpp
+      title: segment-tree/li-chao-tree-abstract.hpp
+    - icon: ':warning:'
       path: segment-tree/li-chao-tree-abstruct.hpp
       title: segment-tree/li-chao-tree-abstruct.hpp
     - icon: ':heavy_check_mark:'
@@ -1019,6 +1025,9 @@ data:
       path: shortest-path/bfs01.hpp
       title: shortest-path/bfs01.hpp
     - icon: ':heavy_check_mark:'
+      path: shortest-path/dijkstra-abstract.hpp
+      title: shortest-path/dijkstra-abstract.hpp
+    - icon: ':warning:'
       path: shortest-path/dijkstra-abstruct.hpp
       title: shortest-path/dijkstra-abstruct.hpp
     - icon: ':heavy_check_mark:'
@@ -1601,8 +1610,8 @@ data:
       path: verify/verify-unit-test/lazyseg-setval.test.cpp
       title: verify/verify-unit-test/lazyseg-setval.test.cpp
     - icon: ':heavy_check_mark:'
-      path: verify/verify-unit-test/li-chao-tree-abstruct.test.cpp
-      title: verify/verify-unit-test/li-chao-tree-abstruct.test.cpp
+      path: verify/verify-unit-test/li-chao-tree-abstract.test.cpp
+      title: verify/verify-unit-test/li-chao-tree-abstract.test.cpp
     - icon: ':heavy_check_mark:'
       path: verify/verify-unit-test/manacher.test.cpp
       title: verify/verify-unit-test/manacher.test.cpp
@@ -1813,8 +1822,8 @@ data:
       path: verify/verify-yosupo-ds/yosupo-point-add-range-sum.test.cpp
       title: verify/verify-yosupo-ds/yosupo-point-add-range-sum.test.cpp
     - icon: ':heavy_check_mark:'
-      path: verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-abstruct-range-tree.test.cpp
-      title: verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-abstruct-range-tree.test.cpp
+      path: verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-abstract-range-tree.test.cpp
+      title: verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-abstract-range-tree.test.cpp
     - icon: ':heavy_check_mark:'
       path: verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-bit2d.test.cpp
       title: verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-bit2d.test.cpp
@@ -1840,17 +1849,17 @@ data:
       path: verify/verify-yosupo-ds/yosupo-point-set-range-composite-rbstseg2.test.cpp
       title: verify/verify-yosupo-ds/yosupo-point-set-range-composite-rbstseg2.test.cpp
     - icon: ':heavy_check_mark:'
-      path: verify/verify-yosupo-ds/yosupo-precedessor-problem-segtree.test.cpp
-      title: verify/verify-yosupo-ds/yosupo-precedessor-problem-segtree.test.cpp
+      path: verify/verify-yosupo-ds/yosupo-predecessor-problem-rbstseg.test.cpp
+      title: verify/verify-yosupo-ds/yosupo-predecessor-problem-rbstseg.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: verify/verify-yosupo-ds/yosupo-predecessor-problem-segtree.test.cpp
+      title: verify/verify-yosupo-ds/yosupo-predecessor-problem-segtree.test.cpp
     - icon: ':heavy_check_mark:'
       path: verify/verify-yosupo-ds/yosupo-predecessor-problem-vEB-tree.test.cpp
       title: verify/verify-yosupo-ds/yosupo-predecessor-problem-vEB-tree.test.cpp
     - icon: ':heavy_check_mark:'
       path: verify/verify-yosupo-ds/yosupo-predecessor-problem.test.cpp
       title: verify/verify-yosupo-ds/yosupo-predecessor-problem.test.cpp
-    - icon: ':heavy_check_mark:'
-      path: verify/verify-yosupo-ds/yosupo-procedessor-problem-rbstseg.test.cpp
-      title: verify/verify-yosupo-ds/yosupo-procedessor-problem-rbstseg.test.cpp
     - icon: ':heavy_check_mark:'
       path: verify/verify-yosupo-ds/yosupo-range-add-range-sum-linkcuttree.test.cpp
       title: verify/verify-yosupo-ds/yosupo-range-add-range-sum-linkcuttree.test.cpp
@@ -2126,8 +2135,8 @@ data:
       path: verify/verify-yosupo-graph/yosupo-shortest-path-4.test.cpp
       title: verify/verify-yosupo-graph/yosupo-shortest-path-4.test.cpp
     - icon: ':heavy_check_mark:'
-      path: verify/verify-yosupo-graph/yosupo-shortest-path-dijkstra-abstruct.test.cpp
-      title: verify/verify-yosupo-graph/yosupo-shortest-path-dijkstra-abstruct.test.cpp
+      path: verify/verify-yosupo-graph/yosupo-shortest-path-dijkstra-abstract.test.cpp
+      title: verify/verify-yosupo-graph/yosupo-shortest-path-dijkstra-abstract.test.cpp
     - icon: ':heavy_check_mark:'
       path: verify/verify-yosupo-graph/yosupo-shortest-path.test.cpp
       title: verify/verify-yosupo-graph/yosupo-shortest-path.test.cpp

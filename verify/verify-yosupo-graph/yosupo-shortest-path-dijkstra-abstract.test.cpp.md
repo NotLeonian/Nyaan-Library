@@ -2,8 +2,14 @@
 data:
   _extendedDependsOn:
   - icon: ':heavy_check_mark:'
-    path: segment-tree/segment-tree.hpp
-    title: segment-tree/segment-tree.hpp
+    path: graph/graph-template.hpp
+    title: "\u30B0\u30E9\u30D5\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8"
+  - icon: ':heavy_check_mark:'
+    path: graph/graph-utility.hpp
+    title: "\u30B0\u30E9\u30D5\u30E6\u30FC\u30C6\u30A3\u30EA\u30C6\u30A3"
+  - icon: ':heavy_check_mark:'
+    path: shortest-path/dijkstra-abstract.hpp
+    title: shortest-path/dijkstra-abstract.hpp
   - icon: ':heavy_check_mark:'
     path: template/bitop.hpp
     title: template/bitop.hpp
@@ -29,12 +35,12 @@ data:
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
-    PROBLEM: https://judge.yosupo.jp/problem/predecessor_problem
+    PROBLEM: https://judge.yosupo.jp/problem/shortest_path
     links:
-    - https://judge.yosupo.jp/problem/predecessor_problem
-  bundledCode: "#line 1 \"verify/verify-yosupo-ds/yosupo-precedessor-problem-segtree.test.cpp\"\
-    \n#define PROBLEM \"https://judge.yosupo.jp/problem/predecessor_problem\"\n//\n\
-    #line 2 \"template/template.hpp\"\nusing namespace std;\n\n// intrinstic\n#include\
+    - https://judge.yosupo.jp/problem/shortest_path
+  bundledCode: "#line 1 \"verify/verify-yosupo-graph/yosupo-shortest-path-dijkstra-abstract.test.cpp\"\
+    \n#define PROBLEM \"https://judge.yosupo.jp/problem/shortest_path\"\n//\n#line\
+    \ 2 \"template/template.hpp\"\nusing namespace std;\n\n// intrinstic\n#include\
     \ <immintrin.h>\n\n#include <algorithm>\n#include <array>\n#include <bitset>\n\
     #include <cassert>\n#include <cctype>\n#include <cfenv>\n#include <cfloat>\n#include\
     \ <chrono>\n#include <cinttypes>\n#include <climits>\n#include <cmath>\n#include\
@@ -220,63 +226,140 @@ data:
     \n  }\n#define die(...)             \\\n  do {                       \\\n    Nyaan::out(__VA_ARGS__);\
     \ \\\n    return;                  \\\n  } while (0)\n#line 70 \"template/template.hpp\"\
     \n\nnamespace Nyaan {\nvoid solve();\n}\nint main() { Nyaan::solve(); }\n#line\
-    \ 4 \"verify/verify-yosupo-ds/yosupo-precedessor-problem-segtree.test.cpp\"\n\
-    //\n#line 2 \"segment-tree/segment-tree.hpp\"\n\ntemplate <typename T, typename\
-    \ F>\nstruct SegmentTree {\n  int N;\n  int size;\n  vector<T> seg;\n  const F\
-    \ f;\n  const T I;\n\n  SegmentTree(F _f, const T &I_) : N(0), size(0), f(_f),\
-    \ I(I_) {}\n\n  SegmentTree(int _N, F _f, const T &I_) : f(_f), I(I_) { init(_N);\
-    \ }\n\n  SegmentTree(const vector<T> &v, F _f, T I_) : f(_f), I(I_) {\n    init(v.size());\n\
-    \    for (int i = 0; i < (int)v.size(); i++) {\n      seg[i + size] = v[i];\n\
-    \    }\n    build();\n  }\n\n  void init(int _N) {\n    N = _N;\n    size = 1;\n\
-    \    while (size < N) size <<= 1;\n    seg.assign(2 * size, I);\n  }\n\n  void\
-    \ set(int k, T x) { seg[k + size] = x; }\n\n  void build() {\n    for (int k =\
-    \ size - 1; k > 0; k--) {\n      seg[k] = f(seg[2 * k], seg[2 * k + 1]);\n   \
-    \ }\n  }\n\n  void update(int k, T x) {\n    k += size;\n    seg[k] = x;\n   \
-    \ while (k >>= 1) {\n      seg[k] = f(seg[2 * k], seg[2 * k + 1]);\n    }\n  }\n\
-    \n  void add(int k, T x) {\n    k += size;\n    seg[k] += x;\n    while (k >>=\
-    \ 1) {\n      seg[k] = f(seg[2 * k], seg[2 * k + 1]);\n    }\n  }\n\n  // query\
-    \ to [a, b)\n  T query(int a, int b) {\n    T L = I, R = I;\n    for (a += size,\
-    \ b += size; a < b; a >>= 1, b >>= 1) {\n      if (a & 1) L = f(L, seg[a++]);\n\
-    \      if (b & 1) R = f(seg[--b], R);\n    }\n    return f(L, R);\n  }\n\n  T\
-    \ &operator[](const int &k) { return seg[k + size]; }\n\n  // check(a[l] * ...\
-    \  * a[r-1]) \u304C true \u3068\u306A\u308B\u6700\u5927\u306E r\n  // (\u53F3\u7AEF\
-    \u307E\u3067\u3059\u3079\u3066 true \u306A\u3089 N \u3092\u8FD4\u3059)\n  template\
-    \ <class C>\n  int max_right(int l, C check) {\n    assert(0 <= l && l <= N);\n\
-    \    assert(check(I) == true);\n    if (l == N) return N;\n    l += size;\n  \
-    \  T sm = I;\n    do {\n      while (l % 2 == 0) l >>= 1;\n      if (!check(f(sm,\
-    \ seg[l]))) {\n        while (l < size) {\n          l = (2 * l);\n          if\
-    \ (check(f(sm, seg[l]))) {\n            sm = f(sm, seg[l]);\n            l++;\n\
-    \          }\n        }\n        return l - size;\n      }\n      sm = f(sm, seg[l]);\n\
-    \      l++;\n    } while ((l & -l) != l);\n    return N;\n  }\n\n  // check(a[l]\
-    \ * ... * a[r-1]) \u304C true \u3068\u306A\u308B\u6700\u5C0F\u306E l\n  // (\u5DE6\
-    \u7AEF\u307E\u3067 true \u306A\u3089 0 \u3092\u8FD4\u3059)\n  template <typename\
-    \ C>\n  int min_left(int r, C check) {\n    assert(0 <= r && r <= N);\n    assert(check(I)\
-    \ == true);\n    if (r == 0) return 0;\n    r += size;\n    T sm = I;\n    do\
-    \ {\n      r--;\n      while (r > 1 && (r % 2)) r >>= 1;\n      if (!check(f(seg[r],\
-    \ sm))) {\n        while (r < size) {\n          r = (2 * r + 1);\n          if\
-    \ (check(f(seg[r], sm))) {\n            sm = f(seg[r], sm);\n            r--;\n\
-    \          }\n        }\n        return r + 1 - size;\n      }\n      sm = f(seg[r],\
-    \ sm);\n    } while ((r & -r) != r);\n    return 0;\n  }\n};\n#line 6 \"verify/verify-yosupo-ds/yosupo-precedessor-problem-segtree.test.cpp\"\
-    \nusing namespace Nyaan;\n\nvoid Nyaan::solve() {\n  inl(N, Q);\n  ins(S);\n \
-    \ using i8 = char;\n  SegmentTree seg(\n      V<i8>(N), [](i8 a, i8 b) { return\
-    \ a | b; }, i8{0});\n  rep(i, N) if (S[i] == '1') seg.set(i, 1);\n  seg.build();\n\
-    \  while (Q--) {\n    inl(c, k);\n    if (c == 0) {\n      seg.update(k, 1);\n\
-    \    } else if (c == 1) {\n      seg.update(k, 0);\n    } else if (c == 2) {\n\
-    \      out(int(seg[k]));\n    } else if (c == 3) {\n      int ans = seg.max_right(k,\
-    \ [](i8 b) { return !b; });\n      if (ans == N) ans = -1;\n      out(ans);\n\
-    \    } else if (c == 4) {\n      int ans = seg.min_left(k + 1, [](i8 b) { return\
-    \ !b; });\n      --ans;\n      out(ans);\n    }\n  }\n}\n"
-  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/predecessor_problem\"\n\
-    //\n#include \"../../template/template.hpp\"\n//\n#include \"../../segment-tree/segment-tree.hpp\"\
-    \nusing namespace Nyaan;\n\nvoid Nyaan::solve() {\n  inl(N, Q);\n  ins(S);\n \
-    \ using i8 = char;\n  SegmentTree seg(\n      V<i8>(N), [](i8 a, i8 b) { return\
-    \ a | b; }, i8{0});\n  rep(i, N) if (S[i] == '1') seg.set(i, 1);\n  seg.build();\n\
-    \  while (Q--) {\n    inl(c, k);\n    if (c == 0) {\n      seg.update(k, 1);\n\
-    \    } else if (c == 1) {\n      seg.update(k, 0);\n    } else if (c == 2) {\n\
-    \      out(int(seg[k]));\n    } else if (c == 3) {\n      int ans = seg.max_right(k,\
-    \ [](i8 b) { return !b; });\n      if (ans == N) ans = -1;\n      out(ans);\n\
-    \    } else if (c == 4) {\n      int ans = seg.min_left(k + 1, [](i8 b) { return\
-    \ !b; });\n      --ans;\n      out(ans);\n    }\n  }\n}"
+    \ 4 \"verify/verify-yosupo-graph/yosupo-shortest-path-dijkstra-abstract.test.cpp\"\
+    \n//\n#line 2 \"graph/graph-utility.hpp\"\n\n#line 2 \"graph/graph-template.hpp\"\
+    \n\ntemplate <typename T>\nstruct edge {\n  int src, to;\n  T cost;\n\n  edge(int\
+    \ _to, T _cost) : src(-1), to(_to), cost(_cost) {}\n  edge(int _src, int _to,\
+    \ T _cost) : src(_src), to(_to), cost(_cost) {}\n\n  edge &operator=(const int\
+    \ &x) {\n    to = x;\n    return *this;\n  }\n\n  operator int() const { return\
+    \ to; }\n};\ntemplate <typename T>\nusing Edges = vector<edge<T>>;\ntemplate <typename\
+    \ T>\nusing WeightedGraph = vector<Edges<T>>;\nusing UnweightedGraph = vector<vector<int>>;\n\
+    \n// Input of (Unweighted) Graph\nUnweightedGraph graph(int N, int M = -1, bool\
+    \ is_directed = false,\n                      bool is_1origin = true) {\n  UnweightedGraph\
+    \ g(N);\n  if (M == -1) M = N - 1;\n  for (int _ = 0; _ < M; _++) {\n    int x,\
+    \ y;\n    cin >> x >> y;\n    if (is_1origin) x--, y--;\n    g[x].push_back(y);\n\
+    \    if (!is_directed) g[y].push_back(x);\n  }\n  return g;\n}\n\n// Input of\
+    \ Weighted Graph\ntemplate <typename T>\nWeightedGraph<T> wgraph(int N, int M\
+    \ = -1, bool is_directed = false,\n                        bool is_1origin = true)\
+    \ {\n  WeightedGraph<T> g(N);\n  if (M == -1) M = N - 1;\n  for (int _ = 0; _\
+    \ < M; _++) {\n    int x, y;\n    cin >> x >> y;\n    T c;\n    cin >> c;\n  \
+    \  if (is_1origin) x--, y--;\n    g[x].emplace_back(x, y, c);\n    if (!is_directed)\
+    \ g[y].emplace_back(y, x, c);\n  }\n  return g;\n}\n\n// Input of Edges\ntemplate\
+    \ <typename T>\nEdges<T> esgraph([[maybe_unused]] int N, int M, int is_weighted\
+    \ = true,\n                 bool is_1origin = true) {\n  Edges<T> es;\n  for (int\
+    \ _ = 0; _ < M; _++) {\n    int x, y;\n    cin >> x >> y;\n    T c;\n    if (is_weighted)\n\
+    \      cin >> c;\n    else\n      c = 1;\n    if (is_1origin) x--, y--;\n    es.emplace_back(x,\
+    \ y, c);\n  }\n  return es;\n}\n\n// Input of Adjacency Matrix\ntemplate <typename\
+    \ T>\nvector<vector<T>> adjgraph(int N, int M, T INF, int is_weighted = true,\n\
+    \                           bool is_directed = false, bool is_1origin = true)\
+    \ {\n  vector<vector<T>> d(N, vector<T>(N, INF));\n  for (int _ = 0; _ < M; _++)\
+    \ {\n    int x, y;\n    cin >> x >> y;\n    T c;\n    if (is_weighted)\n     \
+    \ cin >> c;\n    else\n      c = 1;\n    if (is_1origin) x--, y--;\n    d[x][y]\
+    \ = c;\n    if (!is_directed) d[y][x] = c;\n  }\n  return d;\n}\n\n/**\n * @brief\
+    \ \u30B0\u30E9\u30D5\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\n */\n#line 4 \"graph/graph-utility.hpp\"\
+    \n\n// \u4E00\u822C\u306E\u30B0\u30E9\u30D5\u306Est\u304B\u3089\u306E\u8DDD\u96E2\
+    \uFF01\uFF01\uFF01\uFF01\n// unvisited nodes : d = -1\nvector<int> Depth(const\
+    \ UnweightedGraph &g, int start = 0) {\n  int n = g.size();\n  vector<int> ds(n,\
+    \ -1);\n  ds[start] = 0;\n  queue<int> q;\n  q.push(start);\n  while (!q.empty())\
+    \ {\n    int c = q.front();\n    q.pop();\n    int dc = ds[c];\n    for (auto\
+    \ &d : g[c]) {\n      if (ds[d] == -1) {\n        ds[d] = dc + 1;\n        q.push(d);\n\
+    \      }\n    }\n  }\n  return ds;\n}\n\n// Depth of Rooted Weighted Tree\n//\
+    \ unvisited nodes : d = -1\ntemplate <typename T>\nvector<T> Depth(const WeightedGraph<T>\
+    \ &g, int start = 0) {\n  vector<T> d(g.size(), -1);\n  auto dfs = [&](auto rec,\
+    \ int cur, T val, int par = -1) -> void {\n    d[cur] = val;\n    for (auto &dst\
+    \ : g[cur]) {\n      if (dst == par) continue;\n      rec(rec, dst, val + dst.cost,\
+    \ cur);\n    }\n  };\n  dfs(dfs, start, 0);\n  return d;\n}\n\n// Diameter of\
+    \ Tree\n// return value : { {u, v}, length }\npair<pair<int, int>, int> Diameter(const\
+    \ UnweightedGraph &g) {\n  auto d = Depth(g, 0);\n  int u = max_element(begin(d),\
+    \ end(d)) - begin(d);\n  d = Depth(g, u);\n  int v = max_element(begin(d), end(d))\
+    \ - begin(d);\n  return make_pair(make_pair(u, v), d[v]);\n}\n\n// Diameter of\
+    \ Weighted Tree\n// return value : { {u, v}, length }\ntemplate <typename T>\n\
+    pair<pair<int, int>, T> Diameter(const WeightedGraph<T> &g) {\n  auto d = Depth(g,\
+    \ 0);\n  int u = max_element(begin(d), end(d)) - begin(d);\n  d = Depth(g, u);\n\
+    \  int v = max_element(begin(d), end(d)) - begin(d);\n  return make_pair(make_pair(u,\
+    \ v), d[v]);\n}\n\n// nodes on the path u-v ( O(N) )\ntemplate <typename G>\n\
+    vector<int> Path(G &g, int u, int v) {\n  vector<int> ret;\n  int end = 0;\n \
+    \ auto dfs = [&](auto rec, int cur, int par = -1) -> void {\n    ret.push_back(cur);\n\
+    \    if (cur == v) {\n      end = 1;\n      return;\n    }\n    for (int dst :\
+    \ g[cur]) {\n      if (dst == par) continue;\n      rec(rec, dst, cur);\n    \
+    \  if (end) return;\n    }\n    if (end) return;\n    ret.pop_back();\n  };\n\
+    \  dfs(dfs, u);\n  return ret;\n}\n\n/**\n * @brief \u30B0\u30E9\u30D5\u30E6\u30FC\
+    \u30C6\u30A3\u30EA\u30C6\u30A3\n */\n#line 6 \"verify/verify-yosupo-graph/yosupo-shortest-path-dijkstra-abstract.test.cpp\"\
+    \n//\n#line 2 \"shortest-path/dijkstra-abstract.hpp\"\n\n#line 10 \"shortest-path/dijkstra-abstract.hpp\"\
+    \nusing namespace std;\n\n// start : \u59CB\u70B9\n// goal  : \u5230\u9054\u3057\
+    \u305F\u7D42\u70B9 (goal \u304C\u7121\u3044/\u7740\u304B\u306A\u3044\u5834\u5408\
+    \ Index{})\n// dist  : start - goal \u9593\u306E\u8DDD\u96E2\n// reachable : goal\
+    \ \u306B\u7740\u3044\u305F\u304B\uFF1F\u3092\u610F\u5473\u3059\u308B bool\n//\
+    \ path  : start \u304B\u3089 goal \u3078\u306E\u30D1\u30B9 (reachable = false\
+    \ \u306E\u5834\u5408\u306F\u7A7A)\n// mp    : mp[\u9802\u70B9] = (\u6700\u77ED\
+    \u8DDD\u96E2, 1 \u3064\u524D\u306E\u9802\u70B9) \u3092\u7BA1\u7406\u3059\u308B\
+    \ map\ntemplate <typename Index, typename Cost>\nstruct DijkstraResult {\n  Index\
+    \ start, goal;\n  Cost dist;\n  bool reachable;\n  map<Index, pair<Cost, Index>>\
+    \ mp;\n  vector<Index> path;\n\n  DijkstraResult(const Index& s, const Index&\
+    \ g, Cost d, bool r,\n                 const map<Index, pair<Cost, Index>>& m)\n\
+    \      : start(s), goal(g), dist(d), reachable(r), mp(m) {\n    if (reachable)\
+    \ {\n      for (Index c = g; c != s; c = mp[c].second) path.push_back(c);\n  \
+    \    path.push_back(s);\n      reverse(begin(path), end(path));\n    }\n  }\n\
+    };\n\n// \u5F15\u6570 f \u306F (\u9802\u70B9 v, s-v \u9593\u306E\u8DDD\u96E2,\
+    \ \u95A2\u6570 g) \u3092\u5F15\u6570\u306B\u53D6\u308B\n// f \u306E\u5185\u90E8\
+    \u3067 g(\u6B21\u306E\u9802\u70B9 w, s-w \u9593\u306E\u8DDD\u96E2) \u3092\u547C\
+    \u3073\u51FA\u3057\u3066\u4F7F\u3046\n//\n// \u8FD4\u308A\u5024\u306F DijkstraResult<Index,\
+    \ Cost> \u3092\u8FD4\u3059\n//\n// goal \u306F lambda \u5F0F or \u5024 \u3092\u6E21\
+    \u305B\u308B, goal \u304C\u8907\u6570\u3042\u308B\u5834\u5408\u306B\u5BFE\u5FDC\
+    \u3057\u3066\u3044\u308B\n// (\u59CB\u70B9\u304C\u8907\u6570\u3042\u308B\u5834\
+    \u5408\u306F\u8D85\u9802\u70B9\u3092\u4F7F\u3046\u3053\u3068\u306B\u3059\u308B\
+    )\ntemplate <typename Index, typename Cost, bool has_goal = true, typename F,\n\
+    \          typename IsGoal>\nauto dijkstra_abstract(F&& f, const Index& start,\
+    \ IsGoal&& is_goal)\n    -> enable_if_t<is_invocable_r_v<bool, IsGoal&, Index>,\n\
+    \                   DijkstraResult<Index, Cost>> {\n  using P = pair<Cost, Index>;\n\
+    \n  map<Index, P> d;\n  priority_queue<P, vector<P>, greater<P>> Q;\n  d[start]\
+    \ = P(0, Index{});\n  Q.emplace(0, start);\n\n  while (!Q.empty()) {\n    auto\
+    \ [u, t] = Q.top();\n    Q.pop();\n    if (d[t].first != u) continue;\n    if\
+    \ constexpr (has_goal) {\n      if (std::invoke(is_goal, t)) return {start, t,\
+    \ u, true, d};\n    }\n    auto add = [&](Index nt, Cost nu) {\n      if (d.count(nt)\
+    \ == 0 or nu < d[nt].first) {\n        d[nt] = P(nu, t);\n        Q.emplace(nu,\
+    \ nt);\n      }\n    };\n    static_assert(is_invocable_r_v<void, F&, Index, Cost,\
+    \ decltype(add)&>,\n                  \"dijkstra_abstract transition must be callable\
+    \ as \"\n                  \"void(Index, Cost, add_callback)\");\n    std::invoke(f,\
+    \ t, u, add);\n  }\n  return {start, Index{}, Cost{}, false, d};\n}\n\n// \u5F15\
+    \u6570 f \u306F (\u9802\u70B9 v, s-v \u9593\u306E\u8DDD\u96E2, \u95A2\u6570 g)\
+    \ \u3092\u5F15\u6570\u306B\u53D6\u308B\n// f \u306E\u5185\u90E8\u3067 g(\u6B21\
+    \u306E\u9802\u70B9 w, s-w \u9593\u306E\u8DDD\u96E2) \u3092\u547C\u3073\u51FA\u3057\
+    \u3066\u4F7F\u3046\n//\n// \u8FD4\u308A\u5024\u306F DijkstraResult<Index, Cost>\
+    \ \u3092\u8FD4\u3059\n//\n// goal \u306F lambda \u5F0F or \u5024 \u3092\u6E21\u305B\
+    \u308B, goal \u304C\u8907\u6570\u3042\u308B\u5834\u5408\u306B\u5BFE\u5FDC\u3057\
+    \u3066\u3044\u308B\n// (\u59CB\u70B9\u304C\u8907\u6570\u3042\u308B\u5834\u5408\
+    \u306F\u8D85\u9802\u70B9\u3092\u4F7F\u3046\u3053\u3068\u306B\u3059\u308B)\ntemplate\
+    \ <typename Index, typename Cost, bool has_goal = true, typename F>\nDijkstraResult<Index,\
+    \ Cost> dijkstra_abstract(F&& f, const Index& start,\n                       \
+    \                       const Index& goal = Index{}) {\n  auto is_goal = [&goal](Index\
+    \ i) -> bool { return i == goal; };\n  return dijkstra_abstract<Index, Cost, has_goal>(std::forward<F>(f),\
+    \ start,\n                                                  is_goal);\n}\n\ntemplate\
+    \ <typename Index, typename Cost, bool has_goal = true, typename F,\n        \
+    \  typename IsGoal>\nauto dijkstra_abstruct(F&& f, const Index& start, IsGoal&&\
+    \ is_goal)\n    -> enable_if_t<is_invocable_r_v<bool, IsGoal&, Index>,\n     \
+    \              DijkstraResult<Index, Cost>> {\n  return dijkstra_abstract<Index,\
+    \ Cost, has_goal>(\n      std::forward<F>(f), start, std::forward<IsGoal>(is_goal));\n\
+    }\n\ntemplate <typename Index, typename Cost, bool has_goal = true, typename F>\n\
+    DijkstraResult<Index, Cost> dijkstra_abstruct(F&& f, const Index& start,\n   \
+    \                                           const Index& goal = Index{}) {\n \
+    \ return dijkstra_abstract<Index, Cost, has_goal>(std::forward<F>(f), start,\n\
+    \                                                  goal);\n}\n#line 8 \"verify/verify-yosupo-graph/yosupo-shortest-path-dijkstra-abstract.test.cpp\"\
+    \nusing namespace Nyaan;\n\nvoid q() {\n  inl(N, M, S, T);\n  auto g = wgraph<ll>(N,\
+    \ M, true, false);\n\n  auto res = dijkstra_abstract<int, ll>(\n      [&](int\
+    \ c, ll cd, auto add) { each(e, g[c]) add(e.to, cd + e.cost); }, S,\n      T);\n\
+    \  if (!res.reachable) die(-1);\n  out(res.dist, sz(res.path) - 1);\n  rep(i,\
+    \ sz(res.path) - 1) out(res.path[i], res.path[i + 1]);\n}\n\nvoid Nyaan::solve()\
+    \ {\n  int t = 1;\n  // in(t);\n  while (t--) q();\n}\n"
+  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/shortest_path\"\n//\n#include\
+    \ \"../../template/template.hpp\"\n//\n#include \"../../graph/graph-utility.hpp\"\
+    \n//\n#include \"../../shortest-path/dijkstra-abstract.hpp\"\nusing namespace\
+    \ Nyaan;\n\nvoid q() {\n  inl(N, M, S, T);\n  auto g = wgraph<ll>(N, M, true,\
+    \ false);\n\n  auto res = dijkstra_abstract<int, ll>(\n      [&](int c, ll cd,\
+    \ auto add) { each(e, g[c]) add(e.to, cd + e.cost); }, S,\n      T);\n  if (!res.reachable)\
+    \ die(-1);\n  out(res.dist, sz(res.path) - 1);\n  rep(i, sz(res.path) - 1) out(res.path[i],\
+    \ res.path[i + 1]);\n}\n\nvoid Nyaan::solve() {\n  int t = 1;\n  // in(t);\n \
+    \ while (t--) q();\n}\n"
   dependsOn:
   - template/template.hpp
   - template/util.hpp
@@ -284,17 +367,19 @@ data:
   - template/inout.hpp
   - template/debug.hpp
   - template/macro.hpp
-  - segment-tree/segment-tree.hpp
+  - graph/graph-utility.hpp
+  - graph/graph-template.hpp
+  - shortest-path/dijkstra-abstract.hpp
   isVerificationFile: true
-  path: verify/verify-yosupo-ds/yosupo-precedessor-problem-segtree.test.cpp
+  path: verify/verify-yosupo-graph/yosupo-shortest-path-dijkstra-abstract.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-19 18:03:18+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
-documentation_of: verify/verify-yosupo-ds/yosupo-precedessor-problem-segtree.test.cpp
+documentation_of: verify/verify-yosupo-graph/yosupo-shortest-path-dijkstra-abstract.test.cpp
 layout: document
 redirect_from:
-- /verify/verify/verify-yosupo-ds/yosupo-precedessor-problem-segtree.test.cpp
-- /verify/verify/verify-yosupo-ds/yosupo-precedessor-problem-segtree.test.cpp.html
-title: verify/verify-yosupo-ds/yosupo-precedessor-problem-segtree.test.cpp
+- /verify/verify/verify-yosupo-graph/yosupo-shortest-path-dijkstra-abstract.test.cpp
+- /verify/verify/verify-yosupo-graph/yosupo-shortest-path-dijkstra-abstract.test.cpp.html
+title: verify/verify-yosupo-graph/yosupo-shortest-path-dijkstra-abstract.test.cpp
 ---

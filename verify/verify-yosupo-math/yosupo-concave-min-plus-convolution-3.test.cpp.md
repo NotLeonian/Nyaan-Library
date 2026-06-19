@@ -2,8 +2,8 @@
 data:
   _extendedDependsOn:
   - icon: ':heavy_check_mark:'
-    path: segment-tree/li-chao-tree-abstruct.hpp
-    title: segment-tree/li-chao-tree-abstruct.hpp
+    path: segment-tree/li-chao-tree-abstract.hpp
+    title: segment-tree/li-chao-tree-abstract.hpp
   - icon: ':heavy_check_mark:'
     path: template/bitop.hpp
     title: template/bitop.hpp
@@ -221,7 +221,7 @@ data:
     \ \\\n    return;                  \\\n  } while (0)\n#line 70 \"template/template.hpp\"\
     \n\nnamespace Nyaan {\nvoid solve();\n}\nint main() { Nyaan::solve(); }\n#line\
     \ 4 \"verify/verify-yosupo-math/yosupo-concave-min-plus-convolution-3.test.cpp\"\
-    \n//\n#line 2 \"segment-tree/li-chao-tree-abstruct.hpp\"\n\n#line 6 \"segment-tree/li-chao-tree-abstruct.hpp\"\
+    \n//\n#line 2 \"segment-tree/li-chao-tree-abstract.hpp\"\n\n#line 6 \"segment-tree/li-chao-tree-abstract.hpp\"\
     \nusing namespace std;\n\n// Line : T operator(ll) \u3092\u5B9A\u7FA9\u3059\u308B\
     \ntemplate <typename Line, bool MINIMIZE = true, bool RANGE_GET = false>\nstruct\
     \ LiChaoTree {\n  using T = decltype(Line{}(0));\n\n  vector<long long> xs;\n\
@@ -294,7 +294,7 @@ data:
     \  vl a(N), b(M);\n  in(a, b);\n  out(conv(a, b));\n}\n\nvoid Nyaan::solve() {\n\
     \  int t = 1;\n  // in(t);\n  while (t--) q();\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/min_plus_convolution_convex_arbitrary\"\
-    \n//\n#include \"../../template/template.hpp\"\n//\n#include \"../../segment-tree/li-chao-tree-abstruct.hpp\"\
+    \n//\n#include \"../../template/template.hpp\"\n//\n#include \"../../segment-tree/li-chao-tree-abstract.hpp\"\
     \nusing namespace Nyaan;\n\nvl c, d;\nstruct D {\n  ll i;\n  ll operator()(ll\
     \ x) {\n    if (i == -1) return infLL;\n    return d[i] + c[x - i];\n  };\n};\n\
     \nvl conv(vl a, vl b) {\n  if (a.empty() or b.empty()) return {};\n  c = a, d\
@@ -310,11 +310,11 @@ data:
   - template/inout.hpp
   - template/debug.hpp
   - template/macro.hpp
-  - segment-tree/li-chao-tree-abstruct.hpp
+  - segment-tree/li-chao-tree-abstract.hpp
   isVerificationFile: true
   path: verify/verify-yosupo-math/yosupo-concave-min-plus-convolution-3.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-19 18:03:18+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-math/yosupo-concave-min-plus-convolution-3.test.cpp

@@ -8,8 +8,8 @@ data:
     path: misc/rng.hpp
     title: misc/rng.hpp
   - icon: ':heavy_check_mark:'
-    path: segment-tree/li-chao-tree-abstruct.hpp
-    title: segment-tree/li-chao-tree-abstruct.hpp
+    path: segment-tree/li-chao-tree-abstract.hpp
+    title: segment-tree/li-chao-tree-abstract.hpp
   - icon: ':heavy_check_mark:'
     path: template/bitop.hpp
     title: template/bitop.hpp
@@ -38,7 +38,7 @@ data:
     PROBLEM: https://judge.yosupo.jp/problem/aplusb
     links:
     - https://judge.yosupo.jp/problem/aplusb
-  bundledCode: "#line 1 \"verify/verify-unit-test/li-chao-tree-abstruct.test.cpp\"\
+  bundledCode: "#line 1 \"verify/verify-unit-test/li-chao-tree-abstract.test.cpp\"\
     \n#define PROBLEM \"https://judge.yosupo.jp/problem/aplusb\"\n//\n#line 2 \"template/template.hpp\"\
     \nusing namespace std;\n\n// intrinstic\n#include <immintrin.h>\n\n#include <algorithm>\n\
     #include <array>\n#include <bitset>\n#include <cassert>\n#include <cctype>\n#include\
@@ -226,8 +226,8 @@ data:
     \n  }\n#define die(...)             \\\n  do {                       \\\n    Nyaan::out(__VA_ARGS__);\
     \ \\\n    return;                  \\\n  } while (0)\n#line 70 \"template/template.hpp\"\
     \n\nnamespace Nyaan {\nvoid solve();\n}\nint main() { Nyaan::solve(); }\n#line\
-    \ 4 \"verify/verify-unit-test/li-chao-tree-abstruct.test.cpp\"\n//\n#line 2 \"\
-    segment-tree/li-chao-tree-abstruct.hpp\"\n\n#line 6 \"segment-tree/li-chao-tree-abstruct.hpp\"\
+    \ 4 \"verify/verify-unit-test/li-chao-tree-abstract.test.cpp\"\n//\n#line 2 \"\
+    segment-tree/li-chao-tree-abstract.hpp\"\n\n#line 6 \"segment-tree/li-chao-tree-abstract.hpp\"\
     \nusing namespace std;\n\n// Line : T operator(ll) \u3092\u5B9A\u7FA9\u3059\u308B\
     \ntemplate <typename Line, bool MINIMIZE = true, bool RANGE_GET = false>\nstruct\
     \ LiChaoTree {\n  using T = decltype(Line{}(0));\n\n  vector<long long> xs;\n\
@@ -290,7 +290,7 @@ data:
     \ eval(xr - 1, dat[idx]));\n\n    int m = (l + r) / 2;\n    if (xl < m) {\n  \
     \    auto [x, y] = _get(idx * 2 + 0, l, m, xl, min(xr, m));\n      chmin(x, y);\n\
     \    }\n    if (m < xr) {\n      auto [x, y] = _get(idx * 2 + 1, m, r, max(xl,\
-    \ m), xr);\n      chmin(x, y);\n    }\n    return best;\n  }\n};\n#line 6 \"verify/verify-unit-test/li-chao-tree-abstruct.test.cpp\"\
+    \ m), xr);\n      chmin(x, y);\n    }\n    return best;\n  }\n};\n#line 6 \"verify/verify-unit-test/li-chao-tree-abstract.test.cpp\"\
     \n//\n#line 2 \"misc/rng.hpp\"\n\n#line 7 \"misc/rng.hpp\"\nusing namespace std;\n\
     \n#line 2 \"internal/internal-seed.hpp\"\n\n#line 4 \"internal/internal-seed.hpp\"\
     \nusing namespace std;\n\nnamespace internal {\nunsigned long long non_deterministic_seed()\
@@ -321,7 +321,7 @@ data:
     \  int n = v.size();\n  for (int i = 1; i < n; i++) swap(v[i], v[randint(0, i\
     \ + 1)]);\n}\n\n}  // namespace my_rand\n\nusing my_rand::randint;\nusing my_rand::randset;\n\
     using my_rand::randshf;\nusing my_rand::rnd;\nusing my_rand::rng;\n#line 8 \"\
-    verify/verify-unit-test/li-chao-tree-abstruct.test.cpp\"\nusing namespace Nyaan;\n\
+    verify/verify-unit-test/li-chao-tree-abstract.test.cpp\"\nusing namespace Nyaan;\n\
     \nstruct Line {\n  ll a, b;\n  ll operator()(ll x) { return a * x + b; };\n};\n\
     \ntemplate <bool MINIMIZE>\nvoid test() {\n  int N = rng(1, 100);\n  int M = TEN(9);\n\
     \  ll INF = MINIMIZE ? infLL : -infLL;\n  vl xs = randset(0, M, N);\n  sort(begin(xs),\
@@ -342,7 +342,7 @@ data:
     \ >> a >> b;\n  cout << a + b << endl;\n}\n\nvoid Nyaan::solve() {\n  int t =\
     \ 1;\n  // in(t);\n  while (t--) q();\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/aplusb\"\n//\n#include\
-    \ \"../../template/template.hpp\"\n//\n#include \"../../segment-tree/li-chao-tree-abstruct.hpp\"\
+    \ \"../../template/template.hpp\"\n//\n#include \"../../segment-tree/li-chao-tree-abstract.hpp\"\
     \n//\n#include \"../../misc/rng.hpp\"\nusing namespace Nyaan;\n\nstruct Line {\n\
     \  ll a, b;\n  ll operator()(ll x) { return a * x + b; };\n};\n\ntemplate <bool\
     \ MINIMIZE>\nvoid test() {\n  int N = rng(1, 100);\n  int M = TEN(9);\n  ll INF\
@@ -370,19 +370,19 @@ data:
   - template/inout.hpp
   - template/debug.hpp
   - template/macro.hpp
-  - segment-tree/li-chao-tree-abstruct.hpp
+  - segment-tree/li-chao-tree-abstract.hpp
   - misc/rng.hpp
   - internal/internal-seed.hpp
   isVerificationFile: true
-  path: verify/verify-unit-test/li-chao-tree-abstruct.test.cpp
+  path: verify/verify-unit-test/li-chao-tree-abstract.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-19 18:03:18+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
-documentation_of: verify/verify-unit-test/li-chao-tree-abstruct.test.cpp
+documentation_of: verify/verify-unit-test/li-chao-tree-abstract.test.cpp
 layout: document
 redirect_from:
-- /verify/verify/verify-unit-test/li-chao-tree-abstruct.test.cpp
-- /verify/verify/verify-unit-test/li-chao-tree-abstruct.test.cpp.html
-title: verify/verify-unit-test/li-chao-tree-abstruct.test.cpp
+- /verify/verify/verify-unit-test/li-chao-tree-abstract.test.cpp
+- /verify/verify/verify-unit-test/li-chao-tree-abstract.test.cpp.html
+title: verify/verify-unit-test/li-chao-tree-abstract.test.cpp
 ---

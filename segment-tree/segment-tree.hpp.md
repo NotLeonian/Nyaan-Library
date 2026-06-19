@@ -25,8 +25,8 @@ data:
     path: verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-dseg2d.test.cpp
     title: verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-dseg2d.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/verify-yosupo-ds/yosupo-precedessor-problem-segtree.test.cpp
-    title: verify/verify-yosupo-ds/yosupo-precedessor-problem-segtree.test.cpp
+    path: verify/verify-yosupo-ds/yosupo-predecessor-problem-segtree.test.cpp
+    title: verify/verify-yosupo-ds/yosupo-predecessor-problem-segtree.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-vertex-add-path-sum.test.cpp
     title: verify/verify-yosupo-ds/yosupo-vertex-add-path-sum.test.cpp
@@ -137,7 +137,7 @@ data:
   - verify/verify-yosupo-ds/yosupo-vertex-add-subtree-sum.test.cpp
   - verify/verify-yosupo-ds/yosupo-vertex-set-path-composite.test.cpp
   - verify/verify-yosupo-ds/yosupo-vertex-add-path-sum.test.cpp
-  - verify/verify-yosupo-ds/yosupo-precedessor-problem-segtree.test.cpp
+  - verify/verify-yosupo-ds/yosupo-predecessor-problem-segtree.test.cpp
   - verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-dseg2d.test.cpp
   - verify/verify-aoj-dsl/aoj-dsl-2-a-segtree.test.cpp
   - verify/verify-aoj-dsl/aoj-dsl-2-b-segtree.test.cpp

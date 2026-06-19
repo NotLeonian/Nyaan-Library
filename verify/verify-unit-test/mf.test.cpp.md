@@ -11,7 +11,7 @@ data:
     path: multiplicative-function/divisor-multiple-transform.hpp
     title: "\u500D\u6570\u5909\u63DB\u30FB\u7D04\u6570\u5909\u63DB"
   - icon: ':heavy_check_mark:'
-    path: multiplicative-function/enamurate-multiplicative-function.hpp
+    path: multiplicative-function/enumerate-multiplicative-function.hpp
     title: "\u4E57\u6CD5\u7684\u95A2\u6570\u306E\u5217\u6319"
   - icon: ':heavy_check_mark:'
     path: multiplicative-function/mf-famous-series.hpp
@@ -311,11 +311,11 @@ data:
     \ p2 = rbegin(a); p2 != p1; p2++)\n        if (p2->first % p1->first == 0) p1->second\
     \ -= p2->second;\n  }\n};\n\n/**\n * @brief \u500D\u6570\u5909\u63DB\u30FB\u7D04\
     \u6570\u5909\u63DB\n */\n#line 2 \"multiplicative-function/mf-famous-series.hpp\"\
-    \n\n#line 2 \"multiplicative-function/enamurate-multiplicative-function.hpp\"\n\
-    \n#line 4 \"multiplicative-function/enamurate-multiplicative-function.hpp\"\n\
-    using namespace std;\n\n#line 7 \"multiplicative-function/enamurate-multiplicative-function.hpp\"\
+    \n\n#line 2 \"multiplicative-function/enumerate-multiplicative-function.hpp\"\n\
+    \n#line 4 \"multiplicative-function/enumerate-multiplicative-function.hpp\"\n\
+    using namespace std;\n\n#line 7 \"multiplicative-function/enumerate-multiplicative-function.hpp\"\
     \n\n// f(n, p, c) : n = pow(p, c), f is multiplicative function\n\ntemplate <typename\
-    \ T, T (*f)(int, int, int)>\nstruct enamurate_multiplicative_function {\n  enamurate_multiplicative_function(int\
+    \ T, T (*f)(int, int, int)>\nstruct enumerate_multiplicative_function {\n  enumerate_multiplicative_function(int\
     \ _n)\n      : ps(prime_enumerate(_n)), a(_n + 1, T()), n(_n), p(ps.size()) {}\n\
     \n  vector<T> run() {\n    a[1] = 1;\n    dfs(-1, 1, 1);\n    return a;\n  }\n\
     \n private:\n  vector<int> ps;\n  vector<T> a;\n  int n, p;\n  void dfs(int i,\
@@ -323,27 +323,28 @@ data:
     \ j = i + 1; j < p; j++) {\n      long long nx = x * ps[j];\n      long long dx\
     \ = ps[j];\n      if (nx > n) break;\n      for (int c = 1; nx <= n; nx *= ps[j],\
     \ dx *= ps[j], ++c) {\n        dfs(j, nx, y * f(dx, ps[j], c));\n      }\n   \
-    \ }\n  }\n};\n\n/**\n * @brief \u4E57\u6CD5\u7684\u95A2\u6570\u306E\u5217\u6319\
-    \n */\n#line 4 \"multiplicative-function/mf-famous-series.hpp\"\n\nnamespace multiplicative_function\
-    \ {\ntemplate <typename T>\nT moebius(int, int, int c) {\n  return c == 0 ? 1\
-    \ : c == 1 ? -1 : 0;\n}\ntemplate <typename T>\nT sigma0(int, int, int c) {\n\
-    \  return c + 1;\n}\ntemplate <typename T>\nT sigma1(int n, int p, int) {\n  return\
-    \ (n - 1) / (p - 1) + n;\n}\ntemplate <typename T>\nT totient(int n, int p, int)\
-    \ {\n  return n - n / p;\n}\n}  // namespace multiplicative_function\n\ntemplate\
-    \ <typename T>\nstatic constexpr vector<T> mobius_function(int n) {\n  enamurate_multiplicative_function<T,\
-    \ multiplicative_function::moebius<T>> em(\n      n);\n  return em.run();\n}\n\
-    \ntemplate <typename T>\nstatic constexpr vector<T> sigma0(int n) {\n  enamurate_multiplicative_function<T,\
-    \ multiplicative_function::sigma0<T>> em(\n      n);\n  return em.run();\n}\n\n\
-    template <typename T>\nstatic constexpr vector<T> sigma1(int n) {\n  enamurate_multiplicative_function<T,\
-    \ multiplicative_function::sigma1<T>> em(\n      n);\n  return em.run();\n}\n\n\
-    template <typename T>\nstatic constexpr vector<T> totient(int n) {\n  enamurate_multiplicative_function<T,\
-    \ multiplicative_function::totient<T>> em(\n      n);\n  return em.run();\n}\n\
-    \n/**\n * @brief \u6709\u540D\u306A\u4E57\u6CD5\u7684\u95A2\u6570\n */\n#line\
-    \ 8 \"verify/verify-unit-test/mf.test.cpp\"\nusing mint = LazyMontgomeryModInt<998244353>;\n\
-    \n#line 2 \"misc/timer.hpp\"\n\n#line 4 \"misc/timer.hpp\"\nusing namespace std;\n\
-    \nstruct Timer {\n  chrono::high_resolution_clock::time_point st;\n\n  Timer()\
-    \ { reset(); }\n  void reset() { st = chrono::high_resolution_clock::now(); }\n\
-    \n  long long elapsed() {\n    auto ed = chrono::high_resolution_clock::now();\n\
+    \ }\n  }\n};\n\ntemplate <typename T, T (*f)(int, int, int)>\nusing enamurate_multiplicative_function\
+    \ =\n    enumerate_multiplicative_function<T, f>;\n\n/**\n * @brief \u4E57\u6CD5\
+    \u7684\u95A2\u6570\u306E\u5217\u6319\n */\n#line 4 \"multiplicative-function/mf-famous-series.hpp\"\
+    \n\nnamespace multiplicative_function {\ntemplate <typename T>\nT moebius(int,\
+    \ int, int c) {\n  return c == 0 ? 1 : c == 1 ? -1 : 0;\n}\ntemplate <typename\
+    \ T>\nT sigma0(int, int, int c) {\n  return c + 1;\n}\ntemplate <typename T>\n\
+    T sigma1(int n, int p, int) {\n  return (n - 1) / (p - 1) + n;\n}\ntemplate <typename\
+    \ T>\nT totient(int n, int p, int) {\n  return n - n / p;\n}\n}  // namespace\
+    \ multiplicative_function\n\ntemplate <typename T>\nstatic constexpr vector<T>\
+    \ mobius_function(int n) {\n  enumerate_multiplicative_function<T, multiplicative_function::moebius<T>>\
+    \ em(\n      n);\n  return em.run();\n}\n\ntemplate <typename T>\nstatic constexpr\
+    \ vector<T> sigma0(int n) {\n  enumerate_multiplicative_function<T, multiplicative_function::sigma0<T>>\
+    \ em(\n      n);\n  return em.run();\n}\n\ntemplate <typename T>\nstatic constexpr\
+    \ vector<T> sigma1(int n) {\n  enumerate_multiplicative_function<T, multiplicative_function::sigma1<T>>\
+    \ em(\n      n);\n  return em.run();\n}\n\ntemplate <typename T>\nstatic constexpr\
+    \ vector<T> totient(int n) {\n  enumerate_multiplicative_function<T, multiplicative_function::totient<T>>\
+    \ em(\n      n);\n  return em.run();\n}\n\n/**\n * @brief \u6709\u540D\u306A\u4E57\
+    \u6CD5\u7684\u95A2\u6570\n */\n#line 8 \"verify/verify-unit-test/mf.test.cpp\"\
+    \nusing mint = LazyMontgomeryModInt<998244353>;\n\n#line 2 \"misc/timer.hpp\"\n\
+    \n#line 4 \"misc/timer.hpp\"\nusing namespace std;\n\nstruct Timer {\n  chrono::high_resolution_clock::time_point\
+    \ st;\n\n  Timer() { reset(); }\n  void reset() { st = chrono::high_resolution_clock::now();\
+    \ }\n\n  long long elapsed() {\n    auto ed = chrono::high_resolution_clock::now();\n\
     \    return chrono::duration_cast<chrono::milliseconds>(ed - st).count();\n  }\n\
     \  long long operator()() { return elapsed(); }\n};\n#line 11 \"verify/verify-unit-test/mf.test.cpp\"\
     \n\nusing namespace Nyaan;\n\n#include <cxxabi.h>\nstring get_name(const type_info&\
@@ -428,12 +429,12 @@ data:
   - multiplicative-function/divisor-multiple-transform.hpp
   - prime/prime-enumerate.hpp
   - multiplicative-function/mf-famous-series.hpp
-  - multiplicative-function/enamurate-multiplicative-function.hpp
+  - multiplicative-function/enumerate-multiplicative-function.hpp
   - misc/timer.hpp
   isVerificationFile: true
   path: verify/verify-unit-test/mf.test.cpp
   requiredBy: []
-  timestamp: '2026-06-08 17:59:24+09:00'
+  timestamp: '2026-06-19 18:03:18+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/mf.test.cpp

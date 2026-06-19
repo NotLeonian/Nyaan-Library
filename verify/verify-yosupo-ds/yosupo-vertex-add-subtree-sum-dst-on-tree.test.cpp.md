@@ -414,8 +414,8 @@ data:
     \ x] : upd[i]) bit.add(j, x);\n  };\n  // answer queries of subtree i\n  auto\
     \ query = [&](int i) {\n    for (auto&& j : que[i]) ans[j] = bit.sum(j);\n  };\n\
     \  // below two function are called if all data must be deleted\n  // delete data\
-    \ of node i (if necesarry)\n  auto clear = [&](int i) {\n    for (auto&& [j, x]\
-    \ : upd[i]) bit.add(j, -x);\n  };\n  // delete data related to all (if necesarry)\n\
+    \ of node i (if necessary)\n  auto clear = [&](int i) {\n    for (auto&& [j, x]\
+    \ : upd[i]) bit.add(j, -x);\n  };\n  // delete data related to all (if necessary)\n\
     \  auto reset = [&]() {\n\n  };\n\n  DSUonTree<decltype(g)> dsu(g);\n  dsu.run(update,\
     \ query, clear, reset);\n  each(x, ans) if (x != infLL) wtn(x);\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/vertex_add_subtree_sum\"\
@@ -432,9 +432,9 @@ data:
     \ update = [&](int i) {\n    for (auto&& [j, x] : upd[i]) bit.add(j, x);\n  };\n\
     \  // answer queries of subtree i\n  auto query = [&](int i) {\n    for (auto&&\
     \ j : que[i]) ans[j] = bit.sum(j);\n  };\n  // below two function are called if\
-    \ all data must be deleted\n  // delete data of node i (if necesarry)\n  auto\
+    \ all data must be deleted\n  // delete data of node i (if necessary)\n  auto\
     \ clear = [&](int i) {\n    for (auto&& [j, x] : upd[i]) bit.add(j, -x);\n  };\n\
-    \  // delete data related to all (if necesarry)\n  auto reset = [&]() {\n\n  };\n\
+    \  // delete data related to all (if necessary)\n  auto reset = [&]() {\n\n  };\n\
     \n  DSUonTree<decltype(g)> dsu(g);\n  dsu.run(update, query, clear, reset);\n\
     \  each(x, ans) if (x != infLL) wtn(x);\n}\n"
   dependsOn:
@@ -453,7 +453,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-ds/yosupo-vertex-add-subtree-sum-dst-on-tree.test.cpp
   requiredBy: []
-  timestamp: '2026-06-08 17:59:24+09:00'
+  timestamp: '2026-06-19 18:03:18+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-ds/yosupo-vertex-add-subtree-sum-dst-on-tree.test.cpp

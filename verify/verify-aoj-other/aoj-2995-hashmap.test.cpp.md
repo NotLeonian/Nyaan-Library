@@ -536,8 +536,8 @@ data:
     \    if (uf.size(p) > val[p]) {\n      sm++;\n      val[p]++;\n    }\n  };\n \
     \ // answer queries of subtree i\n  auto query = [&](int i) { ans[i] = sm; };\n\
     \  // below two function are called if all data must be deleted\n  // delete data\
-    \ of node i (if necesarry)\n  auto clear = [&](int) {};\n  // delete data related\
-    \ to all (if necesarry)\n  auto reset = [&]() {\n    uf.clear();\n    sm = 0;\n\
+    \ of node i (if necessary)\n  auto clear = [&](int) {};\n  // delete data related\
+    \ to all (if necessary)\n  auto reset = [&]() {\n    uf.clear();\n    sm = 0;\n\
     \    val.clear();\n  };\n\n  DSUonTree<decltype(g)> dsu(g);\n  dsu.run(update,\
     \ query, clear, reset);\n\n  each(x, ans) wtn(x);\n}\n"
   code: "#define PROBLEM \"http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=2995\"\
@@ -553,8 +553,8 @@ data:
     \ p = uf.find(cl[i].first);\n    if (uf.size(p) > val[p]) {\n      sm++;\n   \
     \   val[p]++;\n    }\n  };\n  // answer queries of subtree i\n  auto query = [&](int\
     \ i) { ans[i] = sm; };\n  // below two function are called if all data must be\
-    \ deleted\n  // delete data of node i (if necesarry)\n  auto clear = [&](int)\
-    \ {};\n  // delete data related to all (if necesarry)\n  auto reset = [&]() {\n\
+    \ deleted\n  // delete data of node i (if necessary)\n  auto clear = [&](int)\
+    \ {};\n  // delete data related to all (if necessary)\n  auto reset = [&]() {\n\
     \    uf.clear();\n    sm = 0;\n    val.clear();\n  };\n\n  DSUonTree<decltype(g)>\
     \ dsu(g);\n  dsu.run(update, query, clear, reset);\n\n  each(x, ans) wtn(x);\n\
     }\n"
@@ -576,7 +576,7 @@ data:
   isVerificationFile: true
   path: verify/verify-aoj-other/aoj-2995-hashmap.test.cpp
   requiredBy: []
-  timestamp: '2026-06-08 17:59:24+09:00'
+  timestamp: '2026-06-19 18:03:18+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-aoj-other/aoj-2995-hashmap.test.cpp

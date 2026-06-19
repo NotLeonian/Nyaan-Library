@@ -106,18 +106,18 @@ data:
     \ deg, FPSBackendPriority<1>{});\n}\n\n/**\n * @brief \u591A\u9805\u5F0F/\u5F62\
     \u5F0F\u7684\u51AA\u7D1A\u6570\u30E9\u30A4\u30D6\u30E9\u30EA\n */\n#line 3 \"\
     fps/fps-circular.hpp\"\n\ntemplate <typename mint>\npair<FormalPowerSeries<mint>,\
-    \ FormalPowerSeries<mint>> circular(\n    const FormalPowerSeries<mint> &fre,\
-    \ const FormalPowerSeries<mint> &fim,\n    int deg = -1) {\n  using fps = FormalPowerSeries<mint>;\n\
-    \  assert(fre.size() == 0 || fre[0] == mint(0));\n  assert(fim.size() == 0 ||\
-    \ fim[0] == mint(0));\n  if (deg == -1) deg = (int)max(fre.size(), fim.size());\n\
+    \ FormalPowerSeries<mint>> circular(\n    const FormalPowerSeries<mint> &f_re,\
+    \ const FormalPowerSeries<mint> &f_im,\n    int deg = -1) {\n  using fps = FormalPowerSeries<mint>;\n\
+    \  assert(f_re.size() == 0 || f_re[0] == mint(0));\n  assert(f_im.size() == 0\
+    \ || f_im[0] == mint(0));\n  if (deg == -1) deg = (int)max(f_re.size(), f_im.size());\n\
     \  fps re({mint(1)}), im({mint(0)});\n\n  fps::set_fft();\n  if (fps::ntt_ptr\
     \ == nullptr) {\n    for (int i = 1; i < deg; i <<= 1) {\n      fps dre = re.diff();\n\
     \      fps dim = im.diff();\n      fps fhypot = (re * re + im * im).inv(i << 1);\n\
     \      fps ere = dre * re + dim * im;\n      fps eim = dim * re - dre * im;\n\
     \      fps logre = (ere * fhypot).pre((i << 1) - 1).integral();\n      fps logim\
     \ = (eim * fhypot).pre((i << 1) - 1).integral();\n      fps gre = (-logre) + mint(1)\
-    \ - fim.pre(i << 1);\n      fps gim = (-logim) + fre.pre(i << 1);\n      fps hre\
-    \ = (re * gre - im * gim).pre(i << 1);\n      fps him = (re * gim + im * gre).pre(i\
+    \ - f_im.pre(i << 1);\n      fps gim = (-logim) + f_re.pre(i << 1);\n      fps\
+    \ hre = (re * gre - im * gim).pre(i << 1);\n      fps him = (re * gim + im * gre).pre(i\
     \ << 1);\n      swap(re, hre);\n      swap(im, him);\n    }\n  } else {\n    for\
     \ (int i = 1; i < deg; i <<= 1) {\n      fps dre = re.diff();\n      fps dim =\
     \ im.diff();\n      re.resize(i << 1);\n      im.resize(i << 1);\n      dre.resize(i\
@@ -132,31 +132,31 @@ data:
     \ ere[j] * fhypot[j];\n        logim[j] = eim[j] * fhypot[j];\n      }\n     \
     \ logre.intt();\n      logim.intt();\n      logre = logre.pre((i << 1) - 1).integral();\n\
     \      logim = logim.pre((i << 1) - 1).integral();\n      fps gre = (-logre) +\
-    \ mint(1) - fim.pre(i << 1);\n      fps gim = (-logim) + fre.pre(i << 1);\n  \
-    \    gre.resize(i << 2);\n      gim.resize(i << 2);\n      gre.ntt();\n      gim.ntt();\n\
-    \      re.ntt_doubling();\n      im.ntt_doubling();\n      fps hre(i << 2), him(i\
-    \ << 2);\n      for (int j = 0; j < 4 * i; j++) {\n        hre[j] = re[j] * gre[j]\
-    \ - im[j] * gim[j];\n        him[j] = re[j] * gim[j] + im[j] * gre[j];\n     \
-    \ }\n      hre.intt();\n      him.intt();\n      hre = hre.pre(i << 1);\n    \
-    \  him = him.pre(i << 1);\n      swap(re, hre);\n      swap(im, him);\n    }\n\
-    \  }\n  return make_pair(re.pre(deg), im.pre(deg));\n}\n\n/**\n * @brief \u4E09\
-    \u89D2\u95A2\u6570\n */\n"
+    \ mint(1) - f_im.pre(i << 1);\n      fps gim = (-logim) + f_re.pre(i << 1);\n\
+    \      gre.resize(i << 2);\n      gim.resize(i << 2);\n      gre.ntt();\n    \
+    \  gim.ntt();\n      re.ntt_doubling();\n      im.ntt_doubling();\n      fps hre(i\
+    \ << 2), him(i << 2);\n      for (int j = 0; j < 4 * i; j++) {\n        hre[j]\
+    \ = re[j] * gre[j] - im[j] * gim[j];\n        him[j] = re[j] * gim[j] + im[j]\
+    \ * gre[j];\n      }\n      hre.intt();\n      him.intt();\n      hre = hre.pre(i\
+    \ << 1);\n      him = him.pre(i << 1);\n      swap(re, hre);\n      swap(im, him);\n\
+    \    }\n  }\n  return make_pair(re.pre(deg), im.pre(deg));\n}\n\n/**\n * @brief\
+    \ \u4E09\u89D2\u95A2\u6570\n */\n"
   code: "#pragma once\n#include \"../fps/formal-power-series.hpp\"\n\ntemplate <typename\
     \ mint>\npair<FormalPowerSeries<mint>, FormalPowerSeries<mint>> circular(\n  \
-    \  const FormalPowerSeries<mint> &fre, const FormalPowerSeries<mint> &fim,\n \
-    \   int deg = -1) {\n  using fps = FormalPowerSeries<mint>;\n  assert(fre.size()\
-    \ == 0 || fre[0] == mint(0));\n  assert(fim.size() == 0 || fim[0] == mint(0));\n\
-    \  if (deg == -1) deg = (int)max(fre.size(), fim.size());\n  fps re({mint(1)}),\
+    \  const FormalPowerSeries<mint> &f_re, const FormalPowerSeries<mint> &f_im,\n\
+    \    int deg = -1) {\n  using fps = FormalPowerSeries<mint>;\n  assert(f_re.size()\
+    \ == 0 || f_re[0] == mint(0));\n  assert(f_im.size() == 0 || f_im[0] == mint(0));\n\
+    \  if (deg == -1) deg = (int)max(f_re.size(), f_im.size());\n  fps re({mint(1)}),\
     \ im({mint(0)});\n\n  fps::set_fft();\n  if (fps::ntt_ptr == nullptr) {\n    for\
     \ (int i = 1; i < deg; i <<= 1) {\n      fps dre = re.diff();\n      fps dim =\
     \ im.diff();\n      fps fhypot = (re * re + im * im).inv(i << 1);\n      fps ere\
     \ = dre * re + dim * im;\n      fps eim = dim * re - dre * im;\n      fps logre\
     \ = (ere * fhypot).pre((i << 1) - 1).integral();\n      fps logim = (eim * fhypot).pre((i\
-    \ << 1) - 1).integral();\n      fps gre = (-logre) + mint(1) - fim.pre(i << 1);\n\
-    \      fps gim = (-logim) + fre.pre(i << 1);\n      fps hre = (re * gre - im *\
-    \ gim).pre(i << 1);\n      fps him = (re * gim + im * gre).pre(i << 1);\n    \
-    \  swap(re, hre);\n      swap(im, him);\n    }\n  } else {\n    for (int i = 1;\
-    \ i < deg; i <<= 1) {\n      fps dre = re.diff();\n      fps dim = im.diff();\n\
+    \ << 1) - 1).integral();\n      fps gre = (-logre) + mint(1) - f_im.pre(i << 1);\n\
+    \      fps gim = (-logim) + f_re.pre(i << 1);\n      fps hre = (re * gre - im\
+    \ * gim).pre(i << 1);\n      fps him = (re * gim + im * gre).pre(i << 1);\n  \
+    \    swap(re, hre);\n      swap(im, him);\n    }\n  } else {\n    for (int i =\
+    \ 1; i < deg; i <<= 1) {\n      fps dre = re.diff();\n      fps dim = im.diff();\n\
     \      re.resize(i << 1);\n      im.resize(i << 1);\n      dre.resize(i << 1);\n\
     \      dim.resize(i << 1);\n      re.ntt();\n      im.ntt();\n      dre.ntt();\n\
     \      dim.ntt();\n      fps fhypot(i << 1), ere(i << 1), eim(i << 1);\n     \
@@ -169,21 +169,21 @@ data:
     \ ere[j] * fhypot[j];\n        logim[j] = eim[j] * fhypot[j];\n      }\n     \
     \ logre.intt();\n      logim.intt();\n      logre = logre.pre((i << 1) - 1).integral();\n\
     \      logim = logim.pre((i << 1) - 1).integral();\n      fps gre = (-logre) +\
-    \ mint(1) - fim.pre(i << 1);\n      fps gim = (-logim) + fre.pre(i << 1);\n  \
-    \    gre.resize(i << 2);\n      gim.resize(i << 2);\n      gre.ntt();\n      gim.ntt();\n\
-    \      re.ntt_doubling();\n      im.ntt_doubling();\n      fps hre(i << 2), him(i\
-    \ << 2);\n      for (int j = 0; j < 4 * i; j++) {\n        hre[j] = re[j] * gre[j]\
-    \ - im[j] * gim[j];\n        him[j] = re[j] * gim[j] + im[j] * gre[j];\n     \
-    \ }\n      hre.intt();\n      him.intt();\n      hre = hre.pre(i << 1);\n    \
-    \  him = him.pre(i << 1);\n      swap(re, hre);\n      swap(im, him);\n    }\n\
-    \  }\n  return make_pair(re.pre(deg), im.pre(deg));\n}\n\n/**\n * @brief \u4E09\
-    \u89D2\u95A2\u6570\n */\n"
+    \ mint(1) - f_im.pre(i << 1);\n      fps gim = (-logim) + f_re.pre(i << 1);\n\
+    \      gre.resize(i << 2);\n      gim.resize(i << 2);\n      gre.ntt();\n    \
+    \  gim.ntt();\n      re.ntt_doubling();\n      im.ntt_doubling();\n      fps hre(i\
+    \ << 2), him(i << 2);\n      for (int j = 0; j < 4 * i; j++) {\n        hre[j]\
+    \ = re[j] * gre[j] - im[j] * gim[j];\n        him[j] = re[j] * gim[j] + im[j]\
+    \ * gre[j];\n      }\n      hre.intt();\n      him.intt();\n      hre = hre.pre(i\
+    \ << 1);\n      him = him.pre(i << 1);\n      swap(re, hre);\n      swap(im, him);\n\
+    \    }\n  }\n  return make_pair(re.pre(deg), im.pre(deg));\n}\n\n/**\n * @brief\
+    \ \u4E09\u89D2\u95A2\u6570\n */\n"
   dependsOn:
   - fps/formal-power-series.hpp
   isVerificationFile: false
   path: fps/fps-circular.hpp
   requiredBy: []
-  timestamp: '2026-06-08 17:59:24+09:00'
+  timestamp: '2026-06-19 18:03:18+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yuki/yuki-1080.test.cpp
@@ -204,4 +204,4 @@ $g \equiv \cos f, h \equiv \sin f \pmod{x^n}$ を求めたい。
 
 #### 使い方
 
-- `circular(fre, fim, deg)` : $Re[f]=fre,Im[f]=fim$ である FPS $f$ について $\cos f,\sin f$ を $\deg$ 次の項まで求める。
+- `circular(f_re, f_im, deg)` : $Re[f]=f_re,Im[f]=f_im$ である FPS $f$ について $\cos f,\sin f$ を $\deg$ 次の項まで求める。

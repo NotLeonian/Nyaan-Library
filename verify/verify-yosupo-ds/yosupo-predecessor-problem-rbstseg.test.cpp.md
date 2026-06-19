@@ -35,7 +35,7 @@ data:
     PROBLEM: https://judge.yosupo.jp/problem/predecessor_problem
     links:
     - https://judge.yosupo.jp/problem/predecessor_problem
-  bundledCode: "#line 1 \"verify/verify-yosupo-ds/yosupo-procedessor-problem-rbstseg.test.cpp\"\
+  bundledCode: "#line 1 \"verify/verify-yosupo-ds/yosupo-predecessor-problem-rbstseg.test.cpp\"\
     \n#define PROBLEM \"https://judge.yosupo.jp/problem/predecessor_problem\"\n//\n\
     #line 2 \"template/template.hpp\"\nusing namespace std;\n\n// intrinstic\n#include\
     \ <immintrin.h>\n\n#include <algorithm>\n#include <array>\n#include <bitset>\n\
@@ -223,7 +223,7 @@ data:
     \n  }\n#define die(...)             \\\n  do {                       \\\n    Nyaan::out(__VA_ARGS__);\
     \ \\\n    return;                  \\\n  } while (0)\n#line 70 \"template/template.hpp\"\
     \n\nnamespace Nyaan {\nvoid solve();\n}\nint main() { Nyaan::solve(); }\n#line\
-    \ 4 \"verify/verify-yosupo-ds/yosupo-procedessor-problem-rbstseg.test.cpp\"\n\
+    \ 4 \"verify/verify-yosupo-ds/yosupo-predecessor-problem-rbstseg.test.cpp\"\n\
     //\n#line 2 \"segment-tree/rbst-segment-tree.hpp\"\n\n#line 5 \"segment-tree/rbst-segment-tree.hpp\"\
     \n\n#line 2 \"internal/internal-type-traits.hpp\"\n\n#line 4 \"internal/internal-type-traits.hpp\"\
     \nusing namespace std;\n\nnamespace internal {\ntemplate <typename T>\nusing is_broadly_integral\
@@ -544,7 +544,7 @@ data:
     \                             nullptr, nullptr, ti, _ei>;\n\n}  // namespace RBSTSegmentTreeImpl\n\
     \nusing RBSTSegmentTreeImpl::RBSTLazySegmentTree;\nusing RBSTSegmentTreeImpl::RBSTSegmentTree;\n\
     using RBSTSegmentTreeImpl::RBSTShiftableLazySegmentTree;\n\n/**\n * @brief RBST-based\
-    \ Dynamic Lazy Segment Tree\n */\n#line 6 \"verify/verify-yosupo-ds/yosupo-procedessor-problem-rbstseg.test.cpp\"\
+    \ Dynamic Lazy Segment Tree\n */\n#line 6 \"verify/verify-yosupo-ds/yosupo-predecessor-problem-rbstseg.test.cpp\"\
     \n//\nusing namespace Nyaan;\n\nbool f(bool a, bool b) { return a | b; }\nbool\
     \ ti() { return false; }\nusing Seg = RBSTSegmentTree<ll, bool, f, ti>;\n\nvoid\
     \ Nyaan::solve() {\n  inl(N, Q);\n  string T;\n  in(T);\n\n  vector<bool> v(N);\n\
@@ -583,15 +583,15 @@ data:
   - segment-tree/rbst-segment-tree.hpp
   - internal/internal-type-traits.hpp
   isVerificationFile: true
-  path: verify/verify-yosupo-ds/yosupo-procedessor-problem-rbstseg.test.cpp
+  path: verify/verify-yosupo-ds/yosupo-predecessor-problem-rbstseg.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-19 18:03:18+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
-documentation_of: verify/verify-yosupo-ds/yosupo-procedessor-problem-rbstseg.test.cpp
+documentation_of: verify/verify-yosupo-ds/yosupo-predecessor-problem-rbstseg.test.cpp
 layout: document
 redirect_from:
-- /verify/verify/verify-yosupo-ds/yosupo-procedessor-problem-rbstseg.test.cpp
-- /verify/verify/verify-yosupo-ds/yosupo-procedessor-problem-rbstseg.test.cpp.html
-title: verify/verify-yosupo-ds/yosupo-procedessor-problem-rbstseg.test.cpp
+- /verify/verify/verify-yosupo-ds/yosupo-predecessor-problem-rbstseg.test.cpp
+- /verify/verify/verify-yosupo-ds/yosupo-predecessor-problem-rbstseg.test.cpp.html
+title: verify/verify-yosupo-ds/yosupo-predecessor-problem-rbstseg.test.cpp
 ---

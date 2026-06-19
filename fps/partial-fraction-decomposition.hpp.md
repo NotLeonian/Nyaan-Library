@@ -167,7 +167,7 @@ data:
     \    rc(rc, i * 2 + 1, m, r, g % mod[i * 2 + 1],\n       h * mod[i * 2] % mod[i\
     \ * 2 + 1]);\n  };\n  dfs(dfs, 1, 0, B, f, fps{1});\n  return ans;\n}\n\n// \u53E4\
     \u3044\u65B9\ntemplate <typename mint>\nvector<pair<mint, vector<mint>>> PartialFractionDecomposition(\n\
-    \    FormalPowerSeries<mint> numer, vector<pair<mint, int>> denom) {\n  using\
+    \    FormalPowerSeries<mint> numerator, vector<pair<mint, int>> denom) {\n  using\
     \ fps = FormalPowerSeries<mint>;\n\n  if (denom.empty()) return {};\n\n  sort(begin(denom),\
     \ end(denom),\n       [](auto p1, auto p2) { return p1.second < p2.second; });\n\
     \  Binomial<mint> C(denom[0].second + 1);\n\n  int s = 1;\n  while (s < (int)denom.size())\
@@ -177,10 +177,10 @@ data:
     \ j = d; j >= 0; j--) {\n      f[j] = buf * C(d, j);\n      buf *= m;\n    }\n\
     \    fs[s + i] = f;\n  }\n  for (int i = s - 1; i; i--) {\n    fs[i] = fs[2 *\
     \ i + 0] * fs[2 * i + 1];\n  }\n\n  vector<fps> F(2 * s);\n  vector<fps> G(2 *\
-    \ s);\n  F[1] = numer % fs[1];\n  G[1] = fps{1};\n  for (int i = 1; i < s; i++)\
-    \ {\n    F[i * 2 + 0] = F[i] % fs[i * 2 + 0];\n    F[i * 2 + 1] = F[i] % fs[i\
-    \ * 2 + 1];\n    G[i * 2 + 0] = G[i] * fs[i * 2 + 1] % fs[i * 2 + 0];\n    G[i\
-    \ * 2 + 1] = G[i] * fs[i * 2 + 0] % fs[i * 2 + 1];\n  }\n\n  vector<pair<mint,\
+    \ s);\n  F[1] = numerator % fs[1];\n  G[1] = fps{1};\n  for (int i = 1; i < s;\
+    \ i++) {\n    F[i * 2 + 0] = F[i] % fs[i * 2 + 0];\n    F[i * 2 + 1] = F[i] %\
+    \ fs[i * 2 + 1];\n    G[i * 2 + 0] = G[i] * fs[i * 2 + 1] % fs[i * 2 + 0];\n \
+    \   G[i * 2 + 1] = G[i] * fs[i * 2 + 0] % fs[i * 2 + 1];\n  }\n\n  vector<pair<mint,\
     \ vector<mint>>> res;\n  for (int i = s; i - s < (int)denom.size(); i++) {\n \
     \   auto [m, d] = denom[i - s];\n    F[i] = TaylorShift<mint>(F[i], -m, C);\n\
     \    G[i] = TaylorShift<mint>(G[i], -m, C);\n    fps f = (F[i] * G[i].inv()).pre(d);\n\
@@ -205,7 +205,7 @@ data:
     \ r, g % mod[i * 2 + 1],\n       h * mod[i * 2] % mod[i * 2 + 1]);\n  };\n  dfs(dfs,\
     \ 1, 0, B, f, fps{1});\n  return ans;\n}\n\n// \u53E4\u3044\u65B9\ntemplate <typename\
     \ mint>\nvector<pair<mint, vector<mint>>> PartialFractionDecomposition(\n    FormalPowerSeries<mint>\
-    \ numer, vector<pair<mint, int>> denom) {\n  using fps = FormalPowerSeries<mint>;\n\
+    \ numerator, vector<pair<mint, int>> denom) {\n  using fps = FormalPowerSeries<mint>;\n\
     \n  if (denom.empty()) return {};\n\n  sort(begin(denom), end(denom),\n      \
     \ [](auto p1, auto p2) { return p1.second < p2.second; });\n  Binomial<mint> C(denom[0].second\
     \ + 1);\n\n  int s = 1;\n  while (s < (int)denom.size()) s *= 2;\n  vector<fps>\
@@ -215,10 +215,10 @@ data:
     \ 0; j--) {\n      f[j] = buf * C(d, j);\n      buf *= m;\n    }\n    fs[s + i]\
     \ = f;\n  }\n  for (int i = s - 1; i; i--) {\n    fs[i] = fs[2 * i + 0] * fs[2\
     \ * i + 1];\n  }\n\n  vector<fps> F(2 * s);\n  vector<fps> G(2 * s);\n  F[1] =\
-    \ numer % fs[1];\n  G[1] = fps{1};\n  for (int i = 1; i < s; i++) {\n    F[i *\
-    \ 2 + 0] = F[i] % fs[i * 2 + 0];\n    F[i * 2 + 1] = F[i] % fs[i * 2 + 1];\n \
-    \   G[i * 2 + 0] = G[i] * fs[i * 2 + 1] % fs[i * 2 + 0];\n    G[i * 2 + 1] = G[i]\
-    \ * fs[i * 2 + 0] % fs[i * 2 + 1];\n  }\n\n  vector<pair<mint, vector<mint>>>\
+    \ numerator % fs[1];\n  G[1] = fps{1};\n  for (int i = 1; i < s; i++) {\n    F[i\
+    \ * 2 + 0] = F[i] % fs[i * 2 + 0];\n    F[i * 2 + 1] = F[i] % fs[i * 2 + 1];\n\
+    \    G[i * 2 + 0] = G[i] * fs[i * 2 + 1] % fs[i * 2 + 0];\n    G[i * 2 + 1] =\
+    \ G[i] * fs[i * 2 + 0] % fs[i * 2 + 1];\n  }\n\n  vector<pair<mint, vector<mint>>>\
     \ res;\n  for (int i = s; i - s < (int)denom.size(); i++) {\n    auto [m, d] =\
     \ denom[i - s];\n    F[i] = TaylorShift<mint>(F[i], -m, C);\n    G[i] = TaylorShift<mint>(G[i],\
     \ -m, C);\n    fps f = (F[i] * G[i].inv()).pre(d);\n    if ((int)f.size() < d)\
@@ -233,7 +233,7 @@ data:
   isVerificationFile: false
   path: fps/partial-fraction-decomposition.hpp
   requiredBy: []
-  timestamp: '2026-06-08 17:59:24+09:00'
+  timestamp: '2026-06-19 18:03:18+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yuki/yuki-1510.test.cpp

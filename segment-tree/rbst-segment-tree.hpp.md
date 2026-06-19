@@ -28,8 +28,8 @@ data:
     path: verify/verify-yosupo-ds/yosupo-point-set-range-composite-rbstseg2.test.cpp
     title: verify/verify-yosupo-ds/yosupo-point-set-range-composite-rbstseg2.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/verify-yosupo-ds/yosupo-procedessor-problem-rbstseg.test.cpp
-    title: verify/verify-yosupo-ds/yosupo-procedessor-problem-rbstseg.test.cpp
+    path: verify/verify-yosupo-ds/yosupo-predecessor-problem-rbstseg.test.cpp
+    title: verify/verify-yosupo-ds/yosupo-predecessor-problem-rbstseg.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/verify-yosupo-ds/yosupo-range-affine-range-sum-rbstseg.test.cpp
     title: verify/verify-yosupo-ds/yosupo-range-affine-range-sum-rbstseg.test.cpp
@@ -674,7 +674,7 @@ data:
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ds/yosupo-point-set-range-composite-rbstseg2.test.cpp
-  - verify/verify-yosupo-ds/yosupo-procedessor-problem-rbstseg.test.cpp
+  - verify/verify-yosupo-ds/yosupo-predecessor-problem-rbstseg.test.cpp
   - verify/verify-yosupo-ds/yosupo-range-affine-range-sum-rbstseg.test.cpp
   - verify/verify-yosupo-ds/yosupo-associative-array-rbstseg.test.cpp
   - verify/verify-yosupo-ds/yosupo-point-set-range-composite-rbstseg.test.cpp

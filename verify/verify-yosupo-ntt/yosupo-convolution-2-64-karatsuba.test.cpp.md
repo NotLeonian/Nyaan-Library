@@ -240,12 +240,12 @@ data:
     \ i++) c[i] = cl[i];\n    for (int i = 0; i < (int)cu.size(); i++) c[i + d] +=\
     \ cu[i];\n    return c;\n  }\n  vector<T> bl{begin(b), begin(b) + d}, bu{begin(b)\
     \ + d, end(b)};\n  vector<T> alu{al}, blu{bl};\n  add(alu, au), add(blu, bu);\n\
-    \  auto cll = karatsuba(al, bl);\n  auto cuu = karatsuba(au, bu);\n  auto clu\
-    \ = karatsuba(alu, blu);\n  sub(clu, cll), sub(clu, cuu);\n  vector<T> c(d);\n\
+    \  auto c_ll = karatsuba(al, bl);\n  auto cuu = karatsuba(au, bu);\n  auto clu\
+    \ = karatsuba(alu, blu);\n  sub(clu, c_ll), sub(clu, cuu);\n  vector<T> c(d);\n\
     \  copy(begin(clu), end(clu), back_inserter(c));\n  c.resize(a.size() + b.size()\
-    \ - 1);\n  add(c, cll);\n  for (int i = 0; i < (int)cuu.size(); i++) c[i + 2 *\
-    \ d] += cuu[i];\n  c.resize(a.size() + b.size() - 1);\n  return c;\n}\n\n}  //\
-    \ namespace KaratsubaImpl\nusing KaratsubaImpl::karatsuba;\n#line 6 \"verify/verify-yosupo-ntt/yosupo-convolution-2-64-karatsuba.test.cpp\"\
+    \ - 1);\n  add(c, c_ll);\n  for (int i = 0; i < (int)cuu.size(); i++) c[i + 2\
+    \ * d] += cuu[i];\n  c.resize(a.size() + b.size() - 1);\n  return c;\n}\n\n} \
+    \ // namespace KaratsubaImpl\nusing KaratsubaImpl::karatsuba;\n#line 6 \"verify/verify-yosupo-ntt/yosupo-convolution-2-64-karatsuba.test.cpp\"\
     \nusing namespace Nyaan;\n\nvoid Nyaan::solve() {\n  inl(N, M);\n  V<u64> a(N),\
     \ b(M);\n  in(a, b);\n  out(karatsuba(a, b));\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/convolution_mod_2_64\"\n\
@@ -263,7 +263,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-ntt/yosupo-convolution-2-64-karatsuba.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-19 18:03:18+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-ntt/yosupo-convolution-2-64-karatsuba.test.cpp

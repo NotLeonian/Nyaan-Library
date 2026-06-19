@@ -504,7 +504,7 @@ data:
     \ original iterator\n  {\n    cerr << \"original iterator\" << endl;\n    HashSet<int>\
     \ st;\n    st.insert(2);\n    st.insert(3);\n    HashMap<int, int> m;\n    m[0]\
     \ = 1, m[1] = 2;\n    trace(st, m);\n  }\n  // original structure\n  {\n    cerr\
-    \ << \"original strucure\" << endl;\n    LazyMontgomeryModInt<998244353> a(998244354);\n\
+    \ << \"original structure\" << endl;\n    LazyMontgomeryModInt<998244353> a(998244354);\n\
     \    trace(a);\n    Matrix<LazyMontgomeryModInt<998244353>> mat;\n    mat = mat.I(3);\n\
     \    trace(mat);\n  }\n}\n\nvoid Nyaan::solve() {\n  test();\n  int a, b;\n  cin\
     \ >> a >> b;\n  cout << a + b << endl;\n}\n"
@@ -543,7 +543,7 @@ data:
     \ original iterator\n  {\n    cerr << \"original iterator\" << endl;\n    HashSet<int>\
     \ st;\n    st.insert(2);\n    st.insert(3);\n    HashMap<int, int> m;\n    m[0]\
     \ = 1, m[1] = 2;\n    trace(st, m);\n  }\n  // original structure\n  {\n    cerr\
-    \ << \"original strucure\" << endl;\n    LazyMontgomeryModInt<998244353> a(998244354);\n\
+    \ << \"original structure\" << endl;\n    LazyMontgomeryModInt<998244353> a(998244354);\n\
     \    trace(a);\n    Matrix<LazyMontgomeryModInt<998244353>> mat;\n    mat = mat.I(3);\n\
     \    trace(mat);\n  }\n}\n\nvoid Nyaan::solve() {\n  test();\n  int a, b;\n  cin\
     \ >> a >> b;\n  cout << a + b << endl;\n}\n"
@@ -564,7 +564,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/debug.test.cpp
   requiredBy: []
-  timestamp: '2026-06-08 17:59:24+09:00'
+  timestamp: '2026-06-19 18:03:18+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/debug.test.cpp

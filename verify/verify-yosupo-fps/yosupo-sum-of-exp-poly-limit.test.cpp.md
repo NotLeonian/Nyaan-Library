@@ -410,19 +410,21 @@ data:
     \ c = 0, buf2 = 1;\n  for (int i = 0; i <= K; i++) c += C.C(K + 1, i) * buf2 *\
     \ g[K - i], buf2 *= -a;\n  c /= (-a + 1).pow(K + 1);\n  return c;\n}\n\n// given\
     \  : p, n\n// return : (0^p, 1^p, ... , n^p)\ntemplate <typename mint>\nvector<mint>\
-    \ exp_enamurate(int p, int n) {\n  vector<mint> f(n + 1, mint(0));\n  if (!p)\
+    \ exp_enumerate(int p, int n) {\n  vector<mint> f(n + 1, mint(0));\n  if (!p)\
     \ {\n    f[0] = 1;\n    return std::move(f);\n  }\n  f[1] = 1;\n  vector<bool>\
     \ sieve(n + 1, false);\n  vector<int> ps;\n  for (int i = 2; i <= n; i++) {\n\
     \    if (!sieve[i]) {\n      f[i] = mint(i).pow(p);\n      ps.push_back(i);\n\
     \    }\n    for (int j = 0; j < (int)ps.size() && i * ps[j] <= n; j++) {\n   \
     \   sieve[i * ps[j]] = 1;\n      f[i * ps[j]] = f[i] * f[ps[j]];\n      if (i\
-    \ % ps[j] == 0) break;\n    }\n  }\n  return std::move(f);\n}\n\n// given  : d,\
-    \ r, n\n// return : sum_{i=0...n-1} r^i i^d\ntemplate <typename mint>\nmint sum_of_exp2(int\
-    \ d, mint r, long long n, Binomial<mint>& C) {\n  vector<mint> f = exp_enamurate<mint>(d,\
-    \ d);\n  return sum_of_exp(f, r, n, C);\n}\n\n// given  : d, r\n// return : sum_{i=0...infty}\
-    \ r^i i^d\ntemplate <typename mint>\nmint sum_of_exp_limit2(int d, mint r, Binomial<mint>&\
-    \ C) {\n  vector<mint> f = exp_enamurate<mint>(d, d);\n  return sum_of_exp_limit(f,\
-    \ r, C);\n}\n\n/**\n * @brief $\\sum_{i}a^i f(i)$\n */\n#line 8 \"verify/verify-yosupo-fps/yosupo-sum-of-exp-poly-limit.test.cpp\"\
+    \ % ps[j] == 0) break;\n    }\n  }\n  return std::move(f);\n}\n\ntemplate <typename\
+    \ mint>\nvector<mint> exp_enamurate(int p, int n) {\n  return exp_enumerate<mint>(p,\
+    \ n);\n}\n\n// given  : d, r, n\n// return : sum_{i=0...n-1} r^i i^d\ntemplate\
+    \ <typename mint>\nmint sum_of_exp2(int d, mint r, long long n, Binomial<mint>&\
+    \ C) {\n  vector<mint> f = exp_enumerate<mint>(d, d);\n  return sum_of_exp(f,\
+    \ r, n, C);\n}\n\n// given  : d, r\n// return : sum_{i=0...infty} r^i i^d\ntemplate\
+    \ <typename mint>\nmint sum_of_exp_limit2(int d, mint r, Binomial<mint>& C) {\n\
+    \  vector<mint> f = exp_enumerate<mint>(d, d);\n  return sum_of_exp_limit(f, r,\
+    \ C);\n}\n\n/**\n * @brief $\\sum_{i}a^i f(i)$\n */\n#line 8 \"verify/verify-yosupo-fps/yosupo-sum-of-exp-poly-limit.test.cpp\"\
     \n\nusing namespace Nyaan; void Nyaan::solve() {\n  using mint = LazyMontgomeryModInt<998244353>;\n\
     \  Binomial<mint> C(10001000);\n  long long r, d;\n  rd(r, d);\n  wtn(sum_of_exp_limit2<mint>(d,\
     \ r, C).get());\n}\n"
@@ -449,7 +451,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-fps/yosupo-sum-of-exp-poly-limit.test.cpp
   requiredBy: []
-  timestamp: '2026-06-08 17:59:24+09:00'
+  timestamp: '2026-06-19 18:03:18+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-fps/yosupo-sum-of-exp-poly-limit.test.cpp

@@ -85,29 +85,29 @@ data:
     \   while (ok + 1 < ng) {\n        int cur = (ng + ok) / 2;\n        if (sparse.query(med,\
     \ cur) >= len)\n          ok = cur;\n        else\n          ng = cur;\n     \
     \ }\n      right = ok;\n    }\n    return make_pair(left, right);\n  }\n\n public:\n\
-    \  // Longest Common Prefix between S[i , N) and S[j , N)\n  int ArbitaryLCP(int\
+    \  // Longest Common Prefix between S[i , N) and S[j , N)\n  int ArbitraryLCP(int\
     \ i, int j) {\n    if (i == j) return (int)(s.size()) - i;\n    return sparse.query(min(lcp.rank[i],\
     \ lcp.rank[j]),\n                        max(lcp.rank[i], lcp.rank[j]));\n  }\n\
-    \n  // String Search  O(|T| + log |S|)\n  // return : [l, r], l and r are indices\
-    \ of Suffix Array\n  // if T doesn't exist, return (-1, -1)\n  pair<int, int>\
-    \ find(string &t) {\n    int left = 1, right = sa.size() - 1, med = left;\n  \
-    \  int leftlen = 0, rightlen = 0, tlen = t.size();\n    pair<int, int> ret;\n\
-    \    while (left + 1 < right) {\n      med = (left + right) / 2;\n      int corres_len\
-    \ = max(min(leftlen, sparse.query(left, med)),\n                           min(rightlen,\
-    \ sparse.query(med, right)));\n      if (corres_len < max(leftlen, rightlen))\
-    \ {\n        if (leftlen < rightlen)\n          left = med, leftlen = corres_len;\n\
-    \        else\n          right = med, rightlen = corres_len;\n        continue;\n\
-    \      }\n      ret = comp(t, corres_len, sa[med]);\n      if (ret.second == tlen)\
-    \ return find_range(left, med, right, tlen);\n      if (ret.first == 0)\n    \
-    \    right = med, rightlen = ret.second;\n      else\n        left = med, leftlen\
-    \ = ret.second;\n    }\n    if (sa.size() <= 3) {\n      if (comp(t, 0, sa[left]).second\
-    \ == tlen)\n        return find_range(left, left, right, tlen);\n      if (comp(t,\
-    \ 0, sa[right]).second == tlen)\n        return find_range(left, right, right,\
-    \ tlen);\n      return make_pair(-1, -1);\n    }\n    med = left + right - med;\n\
-    \    ret = comp(t, min(leftlen, rightlen), sa[med]);\n    if (ret.second == tlen)\
-    \ return find_range(left, med, right, tlen);\n    return make_pair(-1, -1);\n\
-    \  }\n};\n// Usage:\n//  SuffixArray sa(S);\n//  LCPArray lcp(sa);\n//  StringSearch\
-    \ search(lcp);\n"
+    \  int ArbitaryLCP(int i, int j) { return ArbitraryLCP(i, j); }\n\n  // String\
+    \ Search  O(|T| + log |S|)\n  // return : [l, r], l and r are indices of Suffix\
+    \ Array\n  // if T doesn't exist, return (-1, -1)\n  pair<int, int> find(string\
+    \ &t) {\n    int left = 1, right = sa.size() - 1, med = left;\n    int leftlen\
+    \ = 0, rightlen = 0, tlen = t.size();\n    pair<int, int> ret;\n    while (left\
+    \ + 1 < right) {\n      med = (left + right) / 2;\n      int corres_len = max(min(leftlen,\
+    \ sparse.query(left, med)),\n                           min(rightlen, sparse.query(med,\
+    \ right)));\n      if (corres_len < max(leftlen, rightlen)) {\n        if (leftlen\
+    \ < rightlen)\n          left = med, leftlen = corres_len;\n        else\n   \
+    \       right = med, rightlen = corres_len;\n        continue;\n      }\n    \
+    \  ret = comp(t, corres_len, sa[med]);\n      if (ret.second == tlen) return find_range(left,\
+    \ med, right, tlen);\n      if (ret.first == 0)\n        right = med, rightlen\
+    \ = ret.second;\n      else\n        left = med, leftlen = ret.second;\n    }\n\
+    \    if (sa.size() <= 3) {\n      if (comp(t, 0, sa[left]).second == tlen)\n \
+    \       return find_range(left, left, right, tlen);\n      if (comp(t, 0, sa[right]).second\
+    \ == tlen)\n        return find_range(left, right, right, tlen);\n      return\
+    \ make_pair(-1, -1);\n    }\n    med = left + right - med;\n    ret = comp(t,\
+    \ min(leftlen, rightlen), sa[med]);\n    if (ret.second == tlen) return find_range(left,\
+    \ med, right, tlen);\n    return make_pair(-1, -1);\n  }\n};\n// Usage:\n//  SuffixArray\
+    \ sa(S);\n//  LCPArray lcp(sa);\n//  StringSearch search(lcp);\n"
   code: "#pragma once\n\n\n\n#include \"../data-structure/sparse-table.hpp\"\n\n//\
     \ remind: SA including empty string\n// verify https://judge.yosupo.jp/submission/240\n\
     struct SuffixArray {\n  int _size;\n  vector<int> sa;\n  string &s;\n  SuffixArray(string\
@@ -156,35 +156,35 @@ data:
     \   while (ok + 1 < ng) {\n        int cur = (ng + ok) / 2;\n        if (sparse.query(med,\
     \ cur) >= len)\n          ok = cur;\n        else\n          ng = cur;\n     \
     \ }\n      right = ok;\n    }\n    return make_pair(left, right);\n  }\n\n public:\n\
-    \  // Longest Common Prefix between S[i , N) and S[j , N)\n  int ArbitaryLCP(int\
+    \  // Longest Common Prefix between S[i , N) and S[j , N)\n  int ArbitraryLCP(int\
     \ i, int j) {\n    if (i == j) return (int)(s.size()) - i;\n    return sparse.query(min(lcp.rank[i],\
     \ lcp.rank[j]),\n                        max(lcp.rank[i], lcp.rank[j]));\n  }\n\
-    \n  // String Search  O(|T| + log |S|)\n  // return : [l, r], l and r are indices\
-    \ of Suffix Array\n  // if T doesn't exist, return (-1, -1)\n  pair<int, int>\
-    \ find(string &t) {\n    int left = 1, right = sa.size() - 1, med = left;\n  \
-    \  int leftlen = 0, rightlen = 0, tlen = t.size();\n    pair<int, int> ret;\n\
-    \    while (left + 1 < right) {\n      med = (left + right) / 2;\n      int corres_len\
-    \ = max(min(leftlen, sparse.query(left, med)),\n                           min(rightlen,\
-    \ sparse.query(med, right)));\n      if (corres_len < max(leftlen, rightlen))\
-    \ {\n        if (leftlen < rightlen)\n          left = med, leftlen = corres_len;\n\
-    \        else\n          right = med, rightlen = corres_len;\n        continue;\n\
-    \      }\n      ret = comp(t, corres_len, sa[med]);\n      if (ret.second == tlen)\
-    \ return find_range(left, med, right, tlen);\n      if (ret.first == 0)\n    \
-    \    right = med, rightlen = ret.second;\n      else\n        left = med, leftlen\
-    \ = ret.second;\n    }\n    if (sa.size() <= 3) {\n      if (comp(t, 0, sa[left]).second\
-    \ == tlen)\n        return find_range(left, left, right, tlen);\n      if (comp(t,\
-    \ 0, sa[right]).second == tlen)\n        return find_range(left, right, right,\
-    \ tlen);\n      return make_pair(-1, -1);\n    }\n    med = left + right - med;\n\
-    \    ret = comp(t, min(leftlen, rightlen), sa[med]);\n    if (ret.second == tlen)\
-    \ return find_range(left, med, right, tlen);\n    return make_pair(-1, -1);\n\
-    \  }\n};\n// Usage:\n//  SuffixArray sa(S);\n//  LCPArray lcp(sa);\n//  StringSearch\
-    \ search(lcp);"
+    \  int ArbitaryLCP(int i, int j) { return ArbitraryLCP(i, j); }\n\n  // String\
+    \ Search  O(|T| + log |S|)\n  // return : [l, r], l and r are indices of Suffix\
+    \ Array\n  // if T doesn't exist, return (-1, -1)\n  pair<int, int> find(string\
+    \ &t) {\n    int left = 1, right = sa.size() - 1, med = left;\n    int leftlen\
+    \ = 0, rightlen = 0, tlen = t.size();\n    pair<int, int> ret;\n    while (left\
+    \ + 1 < right) {\n      med = (left + right) / 2;\n      int corres_len = max(min(leftlen,\
+    \ sparse.query(left, med)),\n                           min(rightlen, sparse.query(med,\
+    \ right)));\n      if (corres_len < max(leftlen, rightlen)) {\n        if (leftlen\
+    \ < rightlen)\n          left = med, leftlen = corres_len;\n        else\n   \
+    \       right = med, rightlen = corres_len;\n        continue;\n      }\n    \
+    \  ret = comp(t, corres_len, sa[med]);\n      if (ret.second == tlen) return find_range(left,\
+    \ med, right, tlen);\n      if (ret.first == 0)\n        right = med, rightlen\
+    \ = ret.second;\n      else\n        left = med, leftlen = ret.second;\n    }\n\
+    \    if (sa.size() <= 3) {\n      if (comp(t, 0, sa[left]).second == tlen)\n \
+    \       return find_range(left, left, right, tlen);\n      if (comp(t, 0, sa[right]).second\
+    \ == tlen)\n        return find_range(left, right, right, tlen);\n      return\
+    \ make_pair(-1, -1);\n    }\n    med = left + right - med;\n    ret = comp(t,\
+    \ min(leftlen, rightlen), sa[med]);\n    if (ret.second == tlen) return find_range(left,\
+    \ med, right, tlen);\n    return make_pair(-1, -1);\n  }\n};\n// Usage:\n//  SuffixArray\
+    \ sa(S);\n//  LCPArray lcp(sa);\n//  StringSearch search(lcp);"
   dependsOn:
   - data-structure/sparse-table.hpp
   isVerificationFile: false
   path: string/suffix-array.hpp
   requiredBy: []
-  timestamp: '2023-01-31 00:28:06+09:00'
+  timestamp: '2026-06-19 18:03:18+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-string/yosupo-number-of-substrings.test.cpp

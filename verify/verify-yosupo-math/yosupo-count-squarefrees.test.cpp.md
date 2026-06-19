@@ -11,7 +11,7 @@ data:
     path: multiplicative-function/count-square-free.hpp
     title: "\u7121\u5E73\u65B9\u6570\u306E\u6570\u3048\u4E0A\u3052"
   - icon: ':heavy_check_mark:'
-    path: multiplicative-function/enamurate-multiplicative-function.hpp
+    path: multiplicative-function/enumerate-multiplicative-function.hpp
     title: "\u4E57\u6CD5\u7684\u95A2\u6570\u306E\u5217\u6319"
   - icon: ':heavy_check_mark:'
     path: multiplicative-function/mf-famous-series.hpp
@@ -259,8 +259,8 @@ data:
     \n  if (N <= 1e12) {\n    FUNC(EnumerateQuotientImpl::fast_div);\n  } else {\n\
     \    FUNC(EnumerateQuotientImpl::slow_div);\n  }\n#undef FUNC\n}\n\n/**\n *  @brief\
     \ \u5546\u306E\u5217\u6319\n */\n#line 2 \"multiplicative-function/mf-famous-series.hpp\"\
-    \n\n#line 2 \"multiplicative-function/enamurate-multiplicative-function.hpp\"\n\
-    \n#line 4 \"multiplicative-function/enamurate-multiplicative-function.hpp\"\n\
+    \n\n#line 2 \"multiplicative-function/enumerate-multiplicative-function.hpp\"\n\
+    \n#line 4 \"multiplicative-function/enumerate-multiplicative-function.hpp\"\n\
     using namespace std;\n\n#line 2 \"prime/prime-enumerate.hpp\"\n\n#line 5 \"prime/prime-enumerate.hpp\"\
     \nusing namespace std;\n\n// Prime Sieve {2, 3, 5, 7, 11, 13, 17, ...}\nvector<int>\
     \ prime_enumerate(int N) {\n  vector<bool> sieve(N / 3 + 1, 1);\n  for (int p\
@@ -270,9 +270,9 @@ data:
     \      sieve[q] = 0;\n  }\n  vector<int> ret{2, 3};\n  for (int p = 5, d = 4,\
     \ i = 1; p <= N; p += d = 6 - d, i++)\n    if (sieve[i]) ret.push_back(p);\n \
     \ while (!ret.empty() && ret.back() > N) ret.pop_back();\n  return ret;\n}\n#line\
-    \ 7 \"multiplicative-function/enamurate-multiplicative-function.hpp\"\n\n// f(n,\
+    \ 7 \"multiplicative-function/enumerate-multiplicative-function.hpp\"\n\n// f(n,\
     \ p, c) : n = pow(p, c), f is multiplicative function\n\ntemplate <typename T,\
-    \ T (*f)(int, int, int)>\nstruct enamurate_multiplicative_function {\n  enamurate_multiplicative_function(int\
+    \ T (*f)(int, int, int)>\nstruct enumerate_multiplicative_function {\n  enumerate_multiplicative_function(int\
     \ _n)\n      : ps(prime_enumerate(_n)), a(_n + 1, T()), n(_n), p(ps.size()) {}\n\
     \n  vector<T> run() {\n    a[1] = 1;\n    dfs(-1, 1, 1);\n    return a;\n  }\n\
     \n private:\n  vector<int> ps;\n  vector<T> a;\n  int n, p;\n  void dfs(int i,\
@@ -280,35 +280,36 @@ data:
     \ j = i + 1; j < p; j++) {\n      long long nx = x * ps[j];\n      long long dx\
     \ = ps[j];\n      if (nx > n) break;\n      for (int c = 1; nx <= n; nx *= ps[j],\
     \ dx *= ps[j], ++c) {\n        dfs(j, nx, y * f(dx, ps[j], c));\n      }\n   \
-    \ }\n  }\n};\n\n/**\n * @brief \u4E57\u6CD5\u7684\u95A2\u6570\u306E\u5217\u6319\
-    \n */\n#line 4 \"multiplicative-function/mf-famous-series.hpp\"\n\nnamespace multiplicative_function\
-    \ {\ntemplate <typename T>\nT moebius(int, int, int c) {\n  return c == 0 ? 1\
-    \ : c == 1 ? -1 : 0;\n}\ntemplate <typename T>\nT sigma0(int, int, int c) {\n\
-    \  return c + 1;\n}\ntemplate <typename T>\nT sigma1(int n, int p, int) {\n  return\
-    \ (n - 1) / (p - 1) + n;\n}\ntemplate <typename T>\nT totient(int n, int p, int)\
-    \ {\n  return n - n / p;\n}\n}  // namespace multiplicative_function\n\ntemplate\
-    \ <typename T>\nstatic constexpr vector<T> mobius_function(int n) {\n  enamurate_multiplicative_function<T,\
-    \ multiplicative_function::moebius<T>> em(\n      n);\n  return em.run();\n}\n\
-    \ntemplate <typename T>\nstatic constexpr vector<T> sigma0(int n) {\n  enamurate_multiplicative_function<T,\
-    \ multiplicative_function::sigma0<T>> em(\n      n);\n  return em.run();\n}\n\n\
-    template <typename T>\nstatic constexpr vector<T> sigma1(int n) {\n  enamurate_multiplicative_function<T,\
-    \ multiplicative_function::sigma1<T>> em(\n      n);\n  return em.run();\n}\n\n\
-    template <typename T>\nstatic constexpr vector<T> totient(int n) {\n  enamurate_multiplicative_function<T,\
-    \ multiplicative_function::totient<T>> em(\n      n);\n  return em.run();\n}\n\
-    \n/**\n * @brief \u6709\u540D\u306A\u4E57\u6CD5\u7684\u95A2\u6570\n */\n#line\
-    \ 10 \"multiplicative-function/count-square-free.hpp\"\n\nlong long count_square_free(long\
-    \ long N) {\n  long long B = pow(N, 0.4);\n\n  auto pre = mobius_function<int>(B\
-    \ + 1);\n  for (int i = 1; i <= B; i++) pre[i] += pre[i - 1];\n  unordered_map<long\
-    \ long, long long> dp;\n  auto mu = [&](auto rc, long long n) -> long long {\n\
-    \    if (n <= B) return pre[n];\n    if (dp.count(n)) return dp[n];\n    long\
-    \ long cur = 1;\n    enumerate_quotient(n, [&](long long q, long long l, long\
-    \ long r) {\n      if (q != n) cur -= rc(rc, q) * (r - l);\n    });\n    return\
-    \ dp[n] = cur;\n  };\n\n  long long ans = 0;\n  long long upper = isqrt(N);\n\
-    \  for (long long i = 1; upper > B; i++) {\n    long long nxt = isqrt(N / (i +\
-    \ 1));\n    ans += i * (mu(mu, upper) - mu(mu, nxt));\n    upper = nxt;\n  }\n\
-    \  while (upper > 0) {\n    ans += (pre[upper] - pre[upper - 1]) * (N / (upper\
-    \ * upper));\n    upper--;\n  }\n  return ans;\n}\n\n/**\n * @brief \u7121\u5E73\
-    \u65B9\u6570\u306E\u6570\u3048\u4E0A\u3052\n */\n#line 6 \"verify/verify-yosupo-math/yosupo-count-squarefrees.test.cpp\"\
+    \ }\n  }\n};\n\ntemplate <typename T, T (*f)(int, int, int)>\nusing enamurate_multiplicative_function\
+    \ =\n    enumerate_multiplicative_function<T, f>;\n\n/**\n * @brief \u4E57\u6CD5\
+    \u7684\u95A2\u6570\u306E\u5217\u6319\n */\n#line 4 \"multiplicative-function/mf-famous-series.hpp\"\
+    \n\nnamespace multiplicative_function {\ntemplate <typename T>\nT moebius(int,\
+    \ int, int c) {\n  return c == 0 ? 1 : c == 1 ? -1 : 0;\n}\ntemplate <typename\
+    \ T>\nT sigma0(int, int, int c) {\n  return c + 1;\n}\ntemplate <typename T>\n\
+    T sigma1(int n, int p, int) {\n  return (n - 1) / (p - 1) + n;\n}\ntemplate <typename\
+    \ T>\nT totient(int n, int p, int) {\n  return n - n / p;\n}\n}  // namespace\
+    \ multiplicative_function\n\ntemplate <typename T>\nstatic constexpr vector<T>\
+    \ mobius_function(int n) {\n  enumerate_multiplicative_function<T, multiplicative_function::moebius<T>>\
+    \ em(\n      n);\n  return em.run();\n}\n\ntemplate <typename T>\nstatic constexpr\
+    \ vector<T> sigma0(int n) {\n  enumerate_multiplicative_function<T, multiplicative_function::sigma0<T>>\
+    \ em(\n      n);\n  return em.run();\n}\n\ntemplate <typename T>\nstatic constexpr\
+    \ vector<T> sigma1(int n) {\n  enumerate_multiplicative_function<T, multiplicative_function::sigma1<T>>\
+    \ em(\n      n);\n  return em.run();\n}\n\ntemplate <typename T>\nstatic constexpr\
+    \ vector<T> totient(int n) {\n  enumerate_multiplicative_function<T, multiplicative_function::totient<T>>\
+    \ em(\n      n);\n  return em.run();\n}\n\n/**\n * @brief \u6709\u540D\u306A\u4E57\
+    \u6CD5\u7684\u95A2\u6570\n */\n#line 10 \"multiplicative-function/count-square-free.hpp\"\
+    \n\nlong long count_square_free(long long N) {\n  long long B = pow(N, 0.4);\n\
+    \n  auto pre = mobius_function<int>(B + 1);\n  for (int i = 1; i <= B; i++) pre[i]\
+    \ += pre[i - 1];\n  unordered_map<long long, long long> dp;\n  auto mu = [&](auto\
+    \ rc, long long n) -> long long {\n    if (n <= B) return pre[n];\n    if (dp.count(n))\
+    \ return dp[n];\n    long long cur = 1;\n    enumerate_quotient(n, [&](long long\
+    \ q, long long l, long long r) {\n      if (q != n) cur -= rc(rc, q) * (r - l);\n\
+    \    });\n    return dp[n] = cur;\n  };\n\n  long long ans = 0;\n  long long upper\
+    \ = isqrt(N);\n  for (long long i = 1; upper > B; i++) {\n    long long nxt =\
+    \ isqrt(N / (i + 1));\n    ans += i * (mu(mu, upper) - mu(mu, nxt));\n    upper\
+    \ = nxt;\n  }\n  while (upper > 0) {\n    ans += (pre[upper] - pre[upper - 1])\
+    \ * (N / (upper * upper));\n    upper--;\n  }\n  return ans;\n}\n\n/**\n * @brief\
+    \ \u7121\u5E73\u65B9\u6570\u306E\u6570\u3048\u4E0A\u3052\n */\n#line 6 \"verify/verify-yosupo-math/yosupo-count-squarefrees.test.cpp\"\
     \nusing namespace Nyaan;\n\nvoid q() {\n  inl(N);\n  out(count_square_free(N));\n\
     }\n\nvoid Nyaan::solve() {\n  int t = 1;\n  // in(t);\n  while (t--) q();\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/counting_squarefrees\"\n\
@@ -326,12 +327,12 @@ data:
   - math/enumerate-quotient.hpp
   - math/isqrt.hpp
   - multiplicative-function/mf-famous-series.hpp
-  - multiplicative-function/enamurate-multiplicative-function.hpp
+  - multiplicative-function/enumerate-multiplicative-function.hpp
   - prime/prime-enumerate.hpp
   isVerificationFile: true
   path: verify/verify-yosupo-math/yosupo-count-squarefrees.test.cpp
   requiredBy: []
-  timestamp: '2026-06-08 17:59:24+09:00'
+  timestamp: '2026-06-19 18:03:18+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-math/yosupo-count-squarefrees.test.cpp
