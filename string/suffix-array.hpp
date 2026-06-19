@@ -144,6 +144,7 @@ struct StringSearch {
     return sparse.query(min(lcp.rank[i], lcp.rank[j]),
                         max(lcp.rank[i], lcp.rank[j]));
   }
+  int ArbitaryLCP(int i, int j) { return ArbitraryLCP(i, j); }
 
   // String Search  O(|T| + log |S|)
   // return : [l, r], l and r are indices of Suffix Array

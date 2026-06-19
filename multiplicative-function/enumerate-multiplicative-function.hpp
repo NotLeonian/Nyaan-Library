@@ -36,6 +36,10 @@ struct enumerate_multiplicative_function {
   }
 };
 
+template <typename T, T (*f)(int, int, int)>
+using enamurate_multiplicative_function =
+    enumerate_multiplicative_function<T, f>;
+
 /**
  * @brief 乗法的関数の列挙
  */

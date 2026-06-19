@@ -102,3 +102,5 @@ class NumberTheoremTransform:
       s[i] = s[i] * invk % self.mod
     del s[L:]
     return s
+
+NumberTheroemTransform = NumberTheoremTransform

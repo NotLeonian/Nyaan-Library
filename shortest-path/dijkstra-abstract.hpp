@@ -88,3 +88,19 @@ DijkstraResult<Index, Cost> dijkstra_abstract(F&& f, const Index& start,
   return dijkstra_abstract<Index, Cost, has_goal>(std::forward<F>(f), start,
                                                   is_goal);
 }
+
+template <typename Index, typename Cost, bool has_goal = true, typename F,
+          typename IsGoal>
+auto dijkstra_abstruct(F&& f, const Index& start, IsGoal&& is_goal)
+    -> enable_if_t<is_invocable_r_v<bool, IsGoal&, Index>,
+                   DijkstraResult<Index, Cost>> {
+  return dijkstra_abstract<Index, Cost, has_goal>(
+      std::forward<F>(f), start, std::forward<IsGoal>(is_goal));
+}
+
+template <typename Index, typename Cost, bool has_goal = true, typename F>
+DijkstraResult<Index, Cost> dijkstra_abstruct(F&& f, const Index& start,
+                                              const Index& goal = Index{}) {
+  return dijkstra_abstract<Index, Cost, has_goal>(std::forward<F>(f), start,
+                                                  goal);
+}

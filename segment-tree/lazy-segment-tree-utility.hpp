@@ -210,6 +210,10 @@ Pair<T> PairAdd(Pair<T> a, T b) {
   return Pair<T>(a.first + a.second * b, a.second);
 }
 template <typename T>
+Pair<T> Padd(Pair<T> a, T b) {
+  return PairAdd(a, b);
+}
+template <typename T>
 Pair<T> PUpdate(Pair<T> a, T b) {
   return Pair<T>(a.second * b, a.second);
 }

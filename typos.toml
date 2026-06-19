@@ -1,10 +1,19 @@
 [files]
 extend-exclude = [
   "atcoder/**",
+  "multiplicative-function/enamurate-multiplicative-function.hpp",
+  "segment-tree/li-chao-tree-abstruct.hpp",
+  "shortest-path/dijkstra-abstruct.hpp",
   "typos.toml",
 ]
 
 [default.extend-identifiers]
+ArbitaryLCP = "ArbitaryLCP"
+dijkstra_abstruct = "dijkstra_abstruct"
+enamurate_multiplicative_function = "enamurate_multiplicative_function"
+exp_enamurate = "exp_enamurate"
+NumberTheroemTransform = "NumberTheroemTransform"
+Padd = "Padd"
 Stirling2nd = "Stirling2nd"
 Stirling2ndRow = "Stirling2ndRow"
 
@@ -22,7 +31,6 @@ Millar = "Miller"
 Nimber = "Nimber"
 nimber = "nimber"
 numer = "numerator"
-Padd = "PairAdd"
 precedessor = "predecessor"
 procedessor = "predecessor"
 ths = "target_hash"

@@ -71,6 +71,11 @@ vector<mint> exp_enumerate(int p, int n) {
   return std::move(f);
 }
 
+template <typename mint>
+vector<mint> exp_enamurate(int p, int n) {
+  return exp_enumerate<mint>(p, n);
+}
+
 // given  : d, r, n
 // return : sum_{i=0...n-1} r^i i^d
 template <typename mint>
