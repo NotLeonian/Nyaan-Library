@@ -16,18 +16,19 @@ void q() {
     in(A[i]);
   }
   constexpr int MAX = 60;
-  using Ba = Basis<ll, MAX>;
-  V<Ba> ot(PW(N));
+  using BasisType = Basis<ll, MAX>;
+  V<BasisType> orthogonal(PW(N));
   u64 ans = 0;
   rep1(i, PW(N) - 1) {
     int t = msb(i);
     if (PW(t) == i) {
-      ot[i] = Ba{Ba{A[t]}.orthogonal_complement()};
+      orthogonal[i] = BasisType{BasisType{A[t]}.orthogonal_complement()};
     } else {
-      (ot[i] = ot[i - PW(t)]).merge(ot[PW(t)]);
+      (orthogonal[i] = orthogonal[i - PW(t)]).merge(orthogonal[PW(t)]);
     }
-    trc(i, ot[i], sz(ot[i]));
-    ans += (1LL << (MAX - sz(ot[i]))) * (popcnt(i) % 2 ? 1 : -1);
+    trc(i, orthogonal[i], sz(orthogonal[i]));
+    ans += (1LL << (MAX - sz(orthogonal[i]))) *
+           (popcnt(i) % 2 ? 1 : -1);
   }
   out(ans);
 }

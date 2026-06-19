@@ -49,7 +49,7 @@ void verify() {
   }
   auto pi = Pi(fs);
 
-  fps numer;
+  fps numerator;
   vector<pair<mint, vm>> part1;
   rep(i, size1) {
     auto [m, d] = denom[i];
@@ -60,11 +60,11 @@ void verify() {
       f += buf * coeff[j];
       buf *= fps{m, 1};
     }
-    numer += f * (pi / buf);
+    numerator += f * (pi / buf);
     part1.emplace_back(m, coeff);
   }
 
-  auto part2 = PartialFractionDecomposition<mint>(numer, denom);
+  auto part2 = PartialFractionDecomposition<mint>(numerator, denom);
 
   sort(all(part1),
        [](auto a, auto b) { return a.first.get() < b.first.get(); });

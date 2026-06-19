@@ -48,7 +48,7 @@ mint sum_of_exp_limit(const vector<mint>& f, mint a, Binomial<mint>& C) {
 // given  : p, n
 // return : (0^p, 1^p, ... , n^p)
 template <typename mint>
-vector<mint> exp_enamurate(int p, int n) {
+vector<mint> exp_enumerate(int p, int n) {
   vector<mint> f(n + 1, mint(0));
   if (!p) {
     f[0] = 1;
@@ -71,11 +71,16 @@ vector<mint> exp_enamurate(int p, int n) {
   return std::move(f);
 }
 
+template <typename mint>
+vector<mint> exp_enamurate(int p, int n) {
+  return exp_enumerate<mint>(p, n);
+}
+
 // given  : d, r, n
 // return : sum_{i=0...n-1} r^i i^d
 template <typename mint>
 mint sum_of_exp2(int d, mint r, long long n, Binomial<mint>& C) {
-  vector<mint> f = exp_enamurate<mint>(d, d);
+  vector<mint> f = exp_enumerate<mint>(d, d);
   return sum_of_exp(f, r, n, C);
 }
 
@@ -83,7 +88,7 @@ mint sum_of_exp2(int d, mint r, long long n, Binomial<mint>& C) {
 // return : sum_{i=0...infty} r^i i^d
 template <typename mint>
 mint sum_of_exp_limit2(int d, mint r, Binomial<mint>& C) {
-  vector<mint> f = exp_enamurate<mint>(d, d);
+  vector<mint> f = exp_enumerate<mint>(d, d);
   return sum_of_exp_limit(f, r, C);
 }
 

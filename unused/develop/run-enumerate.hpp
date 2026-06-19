@@ -10,21 +10,22 @@ struct RunEnumerate {
   RunEnumerate(const string& _s) : s(_s), sa(_s) {}
 
  private:
-  vector<int> enum_first_occurence() {
-    vector<int> fo(sa.size(), 1e9);
+  vector<int> enum_first_occurrence() {
+    vector<int> first_occurrence(sa.size(), 1e9);
     for (int i = sa.size() - 1; i >= 0; --i) {
       if (sa[i].origin == -1) {
-        fo[i] = sa[i].len;
+        first_occurrence[i] = sa[i].len;
       }
       int l = sa[i].link;
-      if (i > 0 && sa[l].origin != -1 && fo[i] < fo[sa[i].link])
-        fo[sa[i].link] = fo[i];
+      if (i > 0 && sa[l].origin != -1 &&
+          first_occurrence[i] < first_occurrence[sa[i].link])
+        first_occurrence[sa[i].link] = first_occurrence[i];
     }
-    return fo;
+    return first_occurrence;
   }
 
   vector<int> factorize() {
-    auto fo = enum_first_occurence();
+    auto first_occurrence = enum_first_occurrence();
     vector<int> f;
     f.push_back(0);
     int cur = 0;
@@ -44,4 +45,3 @@ struct RunEnumerate {
     }
   }
 };
-

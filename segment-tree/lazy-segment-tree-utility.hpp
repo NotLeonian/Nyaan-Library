@@ -206,8 +206,12 @@ Pair<T> Psum(Pair<T> a, Pair<T> b) {
   return Pair<T>(a.first + b.first, a.second + b.second);
 }
 template <typename T>
-Pair<T> Padd(Pair<T> a, T b) {
+Pair<T> PairAdd(Pair<T> a, T b) {
   return Pair<T>(a.first + a.second * b, a.second);
+}
+template <typename T>
+Pair<T> Padd(Pair<T> a, T b) {
+  return PairAdd(a, b);
 }
 template <typename T>
 Pair<T> PUpdate(Pair<T> a, T b) {
@@ -244,10 +248,11 @@ struct AddMin_LazySegmentTree
 
 template <typename T>
 struct AddSum_LazySegmentTree
-    : LazySegmentTreeBase<Pair<T>, T, Psum<T>, Padd<T>, Add<T>, Pid<T>,
+    : LazySegmentTreeBase<Pair<T>, T, Psum<T>, PairAdd<T>, Add<T>, Pid<T>,
                           Zero<T>> {
-  using base = LazySegmentTreeBase<Pair<T>, T, Psum<T>, Padd<T>, Add<T>, Pid<T>,
-                                   Zero<T>>;
+  using base =
+      LazySegmentTreeBase<Pair<T>, T, Psum<T>, PairAdd<T>, Add<T>, Pid<T>,
+                          Zero<T>>;
   AddSum_LazySegmentTree(const vector<T>& v) {
     vector<Pair<T>> w(v.size());
     for (int i = 0; i < (int)v.size(); i++) w[i] = Pair<T>(v[i], 1);

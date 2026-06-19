@@ -47,11 +47,11 @@ using namespace Nyaan; void Nyaan::solve() {
     for (auto&& j : que[i]) ans[j] = bit.sum(j);
   };
   // below two function are called if all data must be deleted
-  // delete data of node i (if necesarry)
+  // delete data of node i (if necessary)
   auto clear = [&](int i) {
     for (auto&& [j, x] : upd[i]) bit.add(j, -x);
   };
-  // delete data related to all (if necesarry)
+  // delete data related to all (if necessary)
   auto reset = [&]() {
 
   };

@@ -3,12 +3,12 @@
 
 template <typename mint>
 pair<FormalPowerSeries<mint>, FormalPowerSeries<mint>> circular(
-    const FormalPowerSeries<mint> &fre, const FormalPowerSeries<mint> &fim,
+    const FormalPowerSeries<mint> &f_re, const FormalPowerSeries<mint> &f_im,
     int deg = -1) {
   using fps = FormalPowerSeries<mint>;
-  assert(fre.size() == 0 || fre[0] == mint(0));
-  assert(fim.size() == 0 || fim[0] == mint(0));
-  if (deg == -1) deg = (int)max(fre.size(), fim.size());
+  assert(f_re.size() == 0 || f_re[0] == mint(0));
+  assert(f_im.size() == 0 || f_im[0] == mint(0));
+  if (deg == -1) deg = (int)max(f_re.size(), f_im.size());
   fps re({mint(1)}), im({mint(0)});
 
   fps::set_fft();
@@ -21,8 +21,8 @@ pair<FormalPowerSeries<mint>, FormalPowerSeries<mint>> circular(
       fps eim = dim * re - dre * im;
       fps logre = (ere * fhypot).pre((i << 1) - 1).integral();
       fps logim = (eim * fhypot).pre((i << 1) - 1).integral();
-      fps gre = (-logre) + mint(1) - fim.pre(i << 1);
-      fps gim = (-logim) + fre.pre(i << 1);
+      fps gre = (-logre) + mint(1) - f_im.pre(i << 1);
+      fps gim = (-logim) + f_re.pre(i << 1);
       fps hre = (re * gre - im * gim).pre(i << 1);
       fps him = (re * gim + im * gre).pre(i << 1);
       swap(re, hre);
@@ -61,8 +61,8 @@ pair<FormalPowerSeries<mint>, FormalPowerSeries<mint>> circular(
       logim.intt();
       logre = logre.pre((i << 1) - 1).integral();
       logim = logim.pre((i << 1) - 1).integral();
-      fps gre = (-logre) + mint(1) - fim.pre(i << 1);
-      fps gim = (-logim) + fre.pre(i << 1);
+      fps gre = (-logre) + mint(1) - f_im.pre(i << 1);
+      fps gim = (-logim) + f_re.pre(i << 1);
       gre.resize(i << 2);
       gim.resize(i << 2);
       gre.ntt();

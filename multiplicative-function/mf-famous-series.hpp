@@ -1,6 +1,6 @@
 #pragma once
 
-#include "enamurate-multiplicative-function.hpp"
+#include "enumerate-multiplicative-function.hpp"
 
 namespace multiplicative_function {
 template <typename T>
@@ -23,28 +23,28 @@ T totient(int n, int p, int) {
 
 template <typename T>
 static constexpr vector<T> mobius_function(int n) {
-  enamurate_multiplicative_function<T, multiplicative_function::moebius<T>> em(
+  enumerate_multiplicative_function<T, multiplicative_function::moebius<T>> em(
       n);
   return em.run();
 }
 
 template <typename T>
 static constexpr vector<T> sigma0(int n) {
-  enamurate_multiplicative_function<T, multiplicative_function::sigma0<T>> em(
+  enumerate_multiplicative_function<T, multiplicative_function::sigma0<T>> em(
       n);
   return em.run();
 }
 
 template <typename T>
 static constexpr vector<T> sigma1(int n) {
-  enamurate_multiplicative_function<T, multiplicative_function::sigma1<T>> em(
+  enumerate_multiplicative_function<T, multiplicative_function::sigma1<T>> em(
       n);
   return em.run();
 }
 
 template <typename T>
 static constexpr vector<T> totient(int n) {
-  enamurate_multiplicative_function<T, multiplicative_function::totient<T>> em(
+  enumerate_multiplicative_function<T, multiplicative_function::totient<T>> em(
       n);
   return em.run();
 }

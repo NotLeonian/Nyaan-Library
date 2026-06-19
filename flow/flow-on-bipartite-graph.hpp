@@ -42,7 +42,7 @@ struct BipartiteGraph : private mf_graph<long long> {
     return ret;
   }
 
-  // call after calclating flow !
+  // call after calculating flow !
   pair<vector<int>, vector<int>> MinimumVertexCover() {
     if (!is_flow) flow();
     auto colored = PreCalc();
@@ -54,7 +54,7 @@ struct BipartiteGraph : private mf_graph<long long> {
     return make_pair(nl, nr);
   }
 
-  // call after calclating flow !
+  // call after calculating flow !
   pair<vector<int>, vector<int>> MaximumIndependentSet() {
     if (!is_flow) flow();
     auto colored = PreCalc();
