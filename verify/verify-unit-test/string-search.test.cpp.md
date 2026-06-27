@@ -371,38 +371,38 @@ data:
     \ p.second, q.first, q.second);\n  }\n};\n#line 6 \"verify/verify-unit-test/string-search.test.cpp\"\
     \n//\n#line 2 \"string/rolling-hash.hpp\"\n\n#line 5 \"string/rolling-hash.hpp\"\
     \nusing namespace std;\n\n#line 2 \"internal/internal-hash.hpp\"\n\nnamespace\
-    \ internal {\nusing i64 = long long;\nusing u64 = unsigned long long;\nusing u128\
-    \ = __uint128_t;\n\ntemplate <int BASE_NUM = 2>\nstruct Hash : array<u64, BASE_NUM>\
-    \ {\n  using array<u64, BASE_NUM>::operator[];\n  static constexpr int n = BASE_NUM;\n\
-    \n  Hash() : array<u64, BASE_NUM>() {}\n\n  static constexpr u64 md = (1ull <<\
-    \ 61) - 1;\n\n  constexpr static Hash set(const i64 &a) {\n    Hash res;\n   \
-    \ fill(begin(res), end(res), cast(a));\n    return res;\n  }\n  Hash &operator+=(const\
-    \ Hash &r) {\n    for (int i = 0; i < n; i++)\n      if (((*this)[i] += r[i])\
-    \ >= md) (*this)[i] -= md;\n    return *this;\n  }\n  Hash &operator+=(const i64\
-    \ &r) {\n    u64 s = cast(r);\n    for (int i = 0; i < n; i++)\n      if (((*this)[i]\
-    \ += s) >= md) (*this)[i] -= md;\n    return *this;\n  }\n  Hash &operator-=(const\
-    \ Hash &r) {\n    for (int i = 0; i < n; i++)\n      if (((*this)[i] += md - r[i])\
-    \ >= md) (*this)[i] -= md;\n    return *this;\n  }\n  Hash &operator-=(const i64\
-    \ &r) {\n    u64 s = cast(r);\n    for (int i = 0; i < n; i++)\n      if (((*this)[i]\
-    \ += md - s) >= md) (*this)[i] -= md;\n    return *this;\n  }\n  Hash &operator*=(const\
-    \ Hash &r) {\n    for (int i = 0; i < n; i++) (*this)[i] = modmul((*this)[i],\
-    \ r[i]);\n    return *this;\n  }\n  Hash &operator*=(const i64 &r) {\n    u64\
-    \ s = cast(r);\n    for (int i = 0; i < n; i++) (*this)[i] = modmul((*this)[i],\
-    \ s);\n    return *this;\n  }\n\n  Hash operator+(const Hash &r) { return Hash(*this)\
-    \ += r; }\n  Hash operator+(const i64 &r) { return Hash(*this) += r; }\n  Hash\
-    \ operator-(const Hash &r) { return Hash(*this) -= r; }\n  Hash operator-(const\
-    \ i64 &r) { return Hash(*this) -= r; }\n  Hash operator*(const Hash &r) { return\
-    \ Hash(*this) *= r; }\n  Hash operator*(const i64 &r) { return Hash(*this) *=\
-    \ r; }\n  Hash operator-() const {\n    Hash res;\n    for (int i = 0; i < n;\
-    \ i++) res[i] = (*this)[i] == 0 ? 0 : md - (*this)[i];\n    return res;\n  }\n\
-    \  friend Hash pfma(const Hash &a, const Hash &b, const Hash &c) {\n    Hash res;\n\
-    \    for (int i = 0; i < n; i++) res[i] = modfma(a[i], b[i], c[i]);\n    return\
-    \ res;\n  }\n  friend Hash pfma(const Hash &a, const Hash &b, const i64 &c) {\n\
-    \    Hash res;\n    u64 s = cast(c);\n    for (int i = 0; i < n; i++) res[i] =\
-    \ modfma(a[i], b[i], s);\n    return res;\n  }\n\n  Hash pow(long long e) {\n\
-    \    Hash a{*this}, res{Hash::set(1)};\n    for (; e; a *= a, e >>= 1) {\n   \
-    \   if (e & 1) res *= a;\n    }\n    return res;\n  }\n\n  static Hash get_basis()\
-    \ {\n    static auto rand_time =\n        chrono::duration_cast<chrono::nanoseconds>(\n\
+    \ nyaan_internal {\nusing i64 = long long;\nusing u64 = unsigned long long;\n\
+    using u128 = __uint128_t;\n\ntemplate <int BASE_NUM = 2>\nstruct Hash : array<u64,\
+    \ BASE_NUM> {\n  using array<u64, BASE_NUM>::operator[];\n  static constexpr int\
+    \ n = BASE_NUM;\n\n  Hash() : array<u64, BASE_NUM>() {}\n\n  static constexpr\
+    \ u64 md = (1ull << 61) - 1;\n\n  constexpr static Hash set(const i64 &a) {\n\
+    \    Hash res;\n    fill(begin(res), end(res), cast(a));\n    return res;\n  }\n\
+    \  Hash &operator+=(const Hash &r) {\n    for (int i = 0; i < n; i++)\n      if\
+    \ (((*this)[i] += r[i]) >= md) (*this)[i] -= md;\n    return *this;\n  }\n  Hash\
+    \ &operator+=(const i64 &r) {\n    u64 s = cast(r);\n    for (int i = 0; i < n;\
+    \ i++)\n      if (((*this)[i] += s) >= md) (*this)[i] -= md;\n    return *this;\n\
+    \  }\n  Hash &operator-=(const Hash &r) {\n    for (int i = 0; i < n; i++)\n \
+    \     if (((*this)[i] += md - r[i]) >= md) (*this)[i] -= md;\n    return *this;\n\
+    \  }\n  Hash &operator-=(const i64 &r) {\n    u64 s = cast(r);\n    for (int i\
+    \ = 0; i < n; i++)\n      if (((*this)[i] += md - s) >= md) (*this)[i] -= md;\n\
+    \    return *this;\n  }\n  Hash &operator*=(const Hash &r) {\n    for (int i =\
+    \ 0; i < n; i++) (*this)[i] = modmul((*this)[i], r[i]);\n    return *this;\n \
+    \ }\n  Hash &operator*=(const i64 &r) {\n    u64 s = cast(r);\n    for (int i\
+    \ = 0; i < n; i++) (*this)[i] = modmul((*this)[i], s);\n    return *this;\n  }\n\
+    \n  Hash operator+(const Hash &r) { return Hash(*this) += r; }\n  Hash operator+(const\
+    \ i64 &r) { return Hash(*this) += r; }\n  Hash operator-(const Hash &r) { return\
+    \ Hash(*this) -= r; }\n  Hash operator-(const i64 &r) { return Hash(*this) -=\
+    \ r; }\n  Hash operator*(const Hash &r) { return Hash(*this) *= r; }\n  Hash operator*(const\
+    \ i64 &r) { return Hash(*this) *= r; }\n  Hash operator-() const {\n    Hash res;\n\
+    \    for (int i = 0; i < n; i++) res[i] = (*this)[i] == 0 ? 0 : md - (*this)[i];\n\
+    \    return res;\n  }\n  friend Hash pfma(const Hash &a, const Hash &b, const\
+    \ Hash &c) {\n    Hash res;\n    for (int i = 0; i < n; i++) res[i] = modfma(a[i],\
+    \ b[i], c[i]);\n    return res;\n  }\n  friend Hash pfma(const Hash &a, const\
+    \ Hash &b, const i64 &c) {\n    Hash res;\n    u64 s = cast(c);\n    for (int\
+    \ i = 0; i < n; i++) res[i] = modfma(a[i], b[i], s);\n    return res;\n  }\n\n\
+    \  Hash pow(long long e) {\n    Hash a{*this}, res{Hash::set(1)};\n    for (;\
+    \ e; a *= a, e >>= 1) {\n      if (e & 1) res *= a;\n    }\n    return res;\n\
+    \  }\n\n  static Hash get_basis() {\n    static auto rand_time =\n        chrono::duration_cast<chrono::nanoseconds>(\n\
     \            chrono::high_resolution_clock::now().time_since_epoch())\n      \
     \      .count();\n    static mt19937_64 rng(rand_time);\n    Hash h;\n    for\
     \ (int i = 0; i < n; i++) {\n      while (isPrimitive(h[i] = rng() % (md - 1)\
@@ -417,83 +417,84 @@ data:
     \ 61);\n    return ret >= md ? ret - md : ret;\n  }\n  static inline constexpr\
     \ u64 modfma(const u64 &a, const u64 &b, const u64 &c) {\n    u128 d = u128(a)\
     \ * b + c;\n    u64 ret = (d >> 61) + (u64(d) & md);\n    return ret >= md ? ret\
-    \ - md : ret;\n  }\n};\n\n}  // namespace internal\n\n/**\n * @brief \u30CF\u30C3\
-    \u30B7\u30E5\u69CB\u9020\u4F53\n */\n#line 8 \"string/rolling-hash.hpp\"\n\ntemplate\
-    \ <typename Str, int BASE_NUM = 2>\nstruct RollingHash {\n  using Hash = internal::Hash<BASE_NUM>;\n\
-    \  Str data;\n  vector<Hash> hs, pw;\n  int s;\n  static Hash basis;\n\n  RollingHash(const\
-    \ Str &S = Str()) { build(S); }\n\n  void build(const Str &S) {\n    data = S;\n\
-    \    s = S.size();\n    hs.resize(s + 1);\n    pw.resize(s + 1);\n    pw[0] =\
-    \ Hash::set(1);\n    hs[0] = Hash::set(0);\n    for (int i = 1; i <= s; i++) {\n\
-    \      pw[i] = pw[i - 1] * basis;\n      hs[i] = pfma(hs[i - 1], basis, S[i -\
-    \ 1]);\n    }\n  }\n\n  Hash get(int l, int r = -1) const {\n    if (r == -1)\
-    \ r = s;\n    return pfma(hs[l], -pw[r - l], hs[r]);\n  }\n\n  // T \u306E hash\
-    \ \u3092\u8FD4\u3059\n  static Hash get_hash(const Str &T) {\n    Hash ret = Hash::set(0);\n\
-    \    for (int i = 0; i < (int)T.size(); i++) ret = pfma(ret, basis, T[i]);\n \
-    \   return ret;\n  }\n\n  // a + b \u306E hash \u3092\u8FD4\u3059\n  // \u5F15\
-    \u6570 : a, b, b \u306E\u9577\u3055\n  static Hash unite(Hash a, Hash b, long\
-    \ long bsize) {\n    return pfma(a, basis.pow(bsize), b);\n  }\n\n  int find(Str\
-    \ &T, int lower = 0) const {\n    auto target_hash = get_hash(T);\n    for (int\
-    \ i = lower; i <= s - (int)T.size(); i++)\n      if (target_hash == get(i, i +\
-    \ (int)T.size())) return i;\n    return -1;\n  }\n\n  static int lcp(const RollingHash\
-    \ &a, const RollingHash &b, int al, int bl) {\n    int ok = 0, ng = min(a.size()\
-    \ - al, b.size() - bl) + 1;\n    while (ok + 1 < ng) {\n      int med = (ok +\
-    \ ng) / 2;\n      (a.get(al, med + al) == b.get(bl, med + bl) ? ok : ng) = med;\n\
-    \    }\n    return ok;\n  }\n\n  static int strcmp(const RollingHash &a, const\
-    \ RollingHash &b, int al, int bl,\n                    int ar = -1, int br = -1)\
-    \ {\n    if (ar == -1) ar = a.size();\n    if (br == -1) br = b.size();\n    int\
-    \ n = min<int>({lcp(a, b, al, bl), ar - al, br - bl});\n    return al + n == ar\
-    \                      ? bl + n == br ? 0 : -1\n           : bl + n == br    \
-    \                ? 1\n           : a.data[al + n] < b.data[bl + n] ? -1\n    \
-    \                                         : 1;\n  }\n\n  int size() const { return\
-    \ s; }\n};\n\ntemplate <typename Str, int BASE_NUM>\ntypename RollingHash<Str,\
-    \ BASE_NUM>::Hash RollingHash<Str, BASE_NUM>::basis =\n    internal::Hash<BASE_NUM>::get_basis();\n\
+    \ - md : ret;\n  }\n};\n\n}  // namespace nyaan_internal\n\n/**\n * @brief \u30CF\
+    \u30C3\u30B7\u30E5\u69CB\u9020\u4F53\n */\n#line 8 \"string/rolling-hash.hpp\"\
+    \n\ntemplate <typename Str, int BASE_NUM = 2>\nstruct RollingHash {\n  using Hash\
+    \ = nyaan_internal::Hash<BASE_NUM>;\n  Str data;\n  vector<Hash> hs, pw;\n  int\
+    \ s;\n  static Hash basis;\n\n  RollingHash(const Str &S = Str()) { build(S);\
+    \ }\n\n  void build(const Str &S) {\n    data = S;\n    s = S.size();\n    hs.resize(s\
+    \ + 1);\n    pw.resize(s + 1);\n    pw[0] = Hash::set(1);\n    hs[0] = Hash::set(0);\n\
+    \    for (int i = 1; i <= s; i++) {\n      pw[i] = pw[i - 1] * basis;\n      hs[i]\
+    \ = pfma(hs[i - 1], basis, S[i - 1]);\n    }\n  }\n\n  Hash get(int l, int r =\
+    \ -1) const {\n    if (r == -1) r = s;\n    return pfma(hs[l], -pw[r - l], hs[r]);\n\
+    \  }\n\n  // T \u306E hash \u3092\u8FD4\u3059\n  static Hash get_hash(const Str\
+    \ &T) {\n    Hash ret = Hash::set(0);\n    for (int i = 0; i < (int)T.size();\
+    \ i++) ret = pfma(ret, basis, T[i]);\n    return ret;\n  }\n\n  // a + b \u306E\
+    \ hash \u3092\u8FD4\u3059\n  // \u5F15\u6570 : a, b, b \u306E\u9577\u3055\n  static\
+    \ Hash unite(Hash a, Hash b, long long bsize) {\n    return pfma(a, basis.pow(bsize),\
+    \ b);\n  }\n\n  int find(Str &T, int lower = 0) const {\n    auto target_hash\
+    \ = get_hash(T);\n    for (int i = lower; i <= s - (int)T.size(); i++)\n     \
+    \ if (target_hash == get(i, i + (int)T.size())) return i;\n    return -1;\n  }\n\
+    \n  static int lcp(const RollingHash &a, const RollingHash &b, int al, int bl)\
+    \ {\n    int ok = 0, ng = min(a.size() - al, b.size() - bl) + 1;\n    while (ok\
+    \ + 1 < ng) {\n      int med = (ok + ng) / 2;\n      (a.get(al, med + al) == b.get(bl,\
+    \ med + bl) ? ok : ng) = med;\n    }\n    return ok;\n  }\n\n  static int strcmp(const\
+    \ RollingHash &a, const RollingHash &b, int al, int bl,\n                    int\
+    \ ar = -1, int br = -1) {\n    if (ar == -1) ar = a.size();\n    if (br == -1)\
+    \ br = b.size();\n    int n = min<int>({lcp(a, b, al, bl), ar - al, br - bl});\n\
+    \    return al + n == ar                      ? bl + n == br ? 0 : -1\n      \
+    \     : bl + n == br                    ? 1\n           : a.data[al + n] < b.data[bl\
+    \ + n] ? -1\n                                             : 1;\n  }\n\n  int size()\
+    \ const { return s; }\n};\n\ntemplate <typename Str, int BASE_NUM>\ntypename RollingHash<Str,\
+    \ BASE_NUM>::Hash RollingHash<Str, BASE_NUM>::basis =\n    nyaan_internal::Hash<BASE_NUM>::get_basis();\n\
     using roriha = RollingHash<string, 2>;\n\n/**\n * @brief Rolling Hash\n */\n#line\
     \ 8 \"verify/verify-unit-test/string-search.test.cpp\"\n//\n#line 2 \"misc/rng.hpp\"\
     \n\n#line 7 \"misc/rng.hpp\"\nusing namespace std;\n\n#line 2 \"internal/internal-seed.hpp\"\
     \n\n#line 4 \"internal/internal-seed.hpp\"\nusing namespace std;\n\nnamespace\
-    \ internal {\nunsigned long long non_deterministic_seed() {\n  unsigned long long\
-    \ m =\n      chrono::duration_cast<chrono::nanoseconds>(\n          chrono::high_resolution_clock::now().time_since_epoch())\n\
-    \          .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >>\
-    \ 31, m ^= m << 35;\n  return m;\n}\nunsigned long long deterministic_seed() {\
-    \ return 88172645463325252UL; }\n\n// 64 bit \u306E seed \u5024\u3092\u751F\u6210\
-    \ (\u624B\u5143\u3067\u306F seed \u56FA\u5B9A)\n// \u9023\u7D9A\u3067\u547C\u3073\
-    \u51FA\u3059\u3068\u540C\u3058\u5024\u304C\u4F55\u5EA6\u3082\u8FD4\u3063\u3066\
-    \u304F\u308B\u306E\u3067\u6CE8\u610F\n// #define RANDOMIZED_SEED \u3059\u308B\u3068\
-    \u30B7\u30FC\u30C9\u304C\u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long\
-    \ long seed() {\n#if defined(NyaanLocal) && !defined(RANDOMIZED_SEED)\n  return\
-    \ deterministic_seed();\n#else\n  return non_deterministic_seed();\n#endif\n}\n\
-    \n}  // namespace internal\n#line 10 \"misc/rng.hpp\"\n\nnamespace my_rand {\n\
-    using i64 = long long;\nusing u64 = unsigned long long;\n\n// [0, 2^64 - 1)\n\
-    u64 rng() {\n  static u64 _x = internal::seed();\n  return _x ^= _x << 7, _x ^=\
-    \ _x >> 9;\n}\n\n// [l, r]\ni64 rng(i64 l, i64 r) {\n  assert(l <= r);\n  return\
-    \ l + rng() % u64(r - l + 1);\n}\n\n// [l, r)\ni64 randint(i64 l, i64 r) {\n \
-    \ assert(l < r);\n  return l + rng() % u64(r - l);\n}\n\n// choose n numbers from\
-    \ [l, r) without overlapping\nvector<i64> randset(i64 l, i64 r, i64 n) {\n  assert(l\
-    \ <= r && n <= r - l);\n  unordered_set<i64> s;\n  for (i64 i = n; i; --i) {\n\
-    \    i64 m = randint(l, r + 1 - i);\n    if (s.find(m) != s.end()) m = r - i;\n\
-    \    s.insert(m);\n  }\n  vector<i64> ret;\n  for (auto& x : s) ret.push_back(x);\n\
-    \  sort(begin(ret), end(ret));\n  return ret;\n}\n\n// [0.0, 1.0)\ndouble rnd()\
-    \ { return rng() * 5.42101086242752217004e-20; }\n// [l, r)\ndouble rnd(double\
-    \ l, double r) {\n  assert(l < r);\n  return l + rnd() * (r - l);\n}\n\ntemplate\
-    \ <typename T>\nvoid randshf(vector<T>& v) {\n  int n = v.size();\n  for (int\
-    \ i = 1; i < n; i++) swap(v[i], v[randint(0, i + 1)]);\n}\n\n}  // namespace my_rand\n\
-    \nusing my_rand::randint;\nusing my_rand::randset;\nusing my_rand::randshf;\n\
-    using my_rand::rnd;\nusing my_rand::rng;\n#line 10 \"verify/verify-unit-test/string-search.test.cpp\"\
-    \n\nusing namespace Nyaan;\n\nvoid test() {\n  int N = rng(5, 20);\n  string S;\n\
-    \  int upper = rng(1, 10);\n  rep(i, N) S.push_back('a' + rng(0, upper - 1));\n\
-    \n  vp ps1;\n  rep(i, N) reg(j, i, N + 1) ps1.push_back({i, j});\n  vp ps2 = ps1;\n\
-    \n  // trc2(S);\n\n  StringSearch ss{S};\n  roriha rh{S};\n\n  each(p, ps1) each(q,\
-    \ ps1) {\n    string s1 = S.substr(p.fi, p.se - p.fi);\n    string s2 = S.substr(q.fi,\
-    \ q.se - q.fi);\n\n    // trc(p, q, s1, s2);\n\n    // lcp\n    {\n      int l\
-    \ = 0;\n      while (l < min(sz(s1), sz(s2)) and s1[l] == s2[l]) l++;\n      assert(ss.lcp(p.fi,\
-    \ p.se, q.fi, q.se) == l);\n      assert(ss.lcp(p, q) == l);\n      if (p.se ==\
-    \ N and q.se == N) assert(ss.lcp(p.fi, q.fi) == l);\n    }\n\n    // strcmp\n\
-    \    {\n      int c2 = s1 < s2 ? -1 : s1 == s2 ? 0 : 1;\n      int c3 = ss.strcmp(p.fi,\
-    \ p.se, q.fi, q.se);\n      int c4 = ss.strcmp(p, q);\n      int c5 = rh.strcmp(rh,\
-    \ rh, p.fi, q.fi, p.se, q.se);\n      assert(c2 == c3 and c3 == c4 and c4 == c5);\n\
-    \      if (p.se == N and q.se == N) assert(ss.strcmp(p.fi, q.fi) == c2);\n   \
-    \ }\n  }\n}\n\nvoid Nyaan::solve() {\n  rep(t, 1000) test();\n  cerr << \"OK\"\
-    \ << endl;\n\n  int a, b;\n  cin >> a >> b;\n  cout << a + b << endl;\n}\n"
+    \ nyaan_internal {\nunsigned long long non_deterministic_seed() {\n  unsigned\
+    \ long long m =\n      chrono::duration_cast<chrono::nanoseconds>(\n         \
+    \ chrono::high_resolution_clock::now().time_since_epoch())\n          .count();\n\
+    \  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >> 31, m ^= m << 35;\n\
+    \  return m;\n}\nunsigned long long deterministic_seed() { return 88172645463325252UL;\
+    \ }\n\n// 64 bit \u306E seed \u5024\u3092\u751F\u6210 (\u624B\u5143\u3067\u306F\
+    \ seed \u56FA\u5B9A)\n// \u9023\u7D9A\u3067\u547C\u3073\u51FA\u3059\u3068\u540C\
+    \u3058\u5024\u304C\u4F55\u5EA6\u3082\u8FD4\u3063\u3066\u304F\u308B\u306E\u3067\
+    \u6CE8\u610F\n// #define RANDOMIZED_SEED \u3059\u308B\u3068\u30B7\u30FC\u30C9\u304C\
+    \u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long long seed() {\n#if defined(NyaanLocal)\
+    \ && !defined(RANDOMIZED_SEED)\n  return deterministic_seed();\n#else\n  return\
+    \ non_deterministic_seed();\n#endif\n}\n\n}  // namespace nyaan_internal\n#line\
+    \ 10 \"misc/rng.hpp\"\n\nnamespace my_rand {\nusing i64 = long long;\nusing u64\
+    \ = unsigned long long;\n\n// [0, 2^64 - 1)\nu64 rng() {\n  static u64 _x = nyaan_internal::seed();\n\
+    \  return _x ^= _x << 7, _x ^= _x >> 9;\n}\n\n// [l, r]\ni64 rng(i64 l, i64 r)\
+    \ {\n  assert(l <= r);\n  return l + rng() % u64(r - l + 1);\n}\n\n// [l, r)\n\
+    i64 randint(i64 l, i64 r) {\n  assert(l < r);\n  return l + rng() % u64(r - l);\n\
+    }\n\n// choose n numbers from [l, r) without overlapping\nvector<i64> randset(i64\
+    \ l, i64 r, i64 n) {\n  assert(l <= r && n <= r - l);\n  unordered_set<i64> s;\n\
+    \  for (i64 i = n; i; --i) {\n    i64 m = randint(l, r + 1 - i);\n    if (s.find(m)\
+    \ != s.end()) m = r - i;\n    s.insert(m);\n  }\n  vector<i64> ret;\n  for (auto&\
+    \ x : s) ret.push_back(x);\n  sort(begin(ret), end(ret));\n  return ret;\n}\n\n\
+    // [0.0, 1.0)\ndouble rnd() { return rng() * 5.42101086242752217004e-20; }\n//\
+    \ [l, r)\ndouble rnd(double l, double r) {\n  assert(l < r);\n  return l + rnd()\
+    \ * (r - l);\n}\n\ntemplate <typename T>\nvoid randshf(vector<T>& v) {\n  int\
+    \ n = v.size();\n  for (int i = 1; i < n; i++) swap(v[i], v[randint(0, i + 1)]);\n\
+    }\n\n}  // namespace my_rand\n\nusing my_rand::randint;\nusing my_rand::randset;\n\
+    using my_rand::randshf;\nusing my_rand::rnd;\nusing my_rand::rng;\n#line 10 \"\
+    verify/verify-unit-test/string-search.test.cpp\"\n\nusing namespace Nyaan;\n\n\
+    void test() {\n  int N = rng(5, 20);\n  string S;\n  int upper = rng(1, 10);\n\
+    \  rep(i, N) S.push_back('a' + rng(0, upper - 1));\n\n  vp ps1;\n  rep(i, N) reg(j,\
+    \ i, N + 1) ps1.push_back({i, j});\n  vp ps2 = ps1;\n\n  // trc2(S);\n\n  StringSearch\
+    \ ss{S};\n  roriha rh{S};\n\n  each(p, ps1) each(q, ps1) {\n    string s1 = S.substr(p.fi,\
+    \ p.se - p.fi);\n    string s2 = S.substr(q.fi, q.se - q.fi);\n\n    // trc(p,\
+    \ q, s1, s2);\n\n    // lcp\n    {\n      int l = 0;\n      while (l < min(sz(s1),\
+    \ sz(s2)) and s1[l] == s2[l]) l++;\n      assert(ss.lcp(p.fi, p.se, q.fi, q.se)\
+    \ == l);\n      assert(ss.lcp(p, q) == l);\n      if (p.se == N and q.se == N)\
+    \ assert(ss.lcp(p.fi, q.fi) == l);\n    }\n\n    // strcmp\n    {\n      int c2\
+    \ = s1 < s2 ? -1 : s1 == s2 ? 0 : 1;\n      int c3 = ss.strcmp(p.fi, p.se, q.fi,\
+    \ q.se);\n      int c4 = ss.strcmp(p, q);\n      int c5 = rh.strcmp(rh, rh, p.fi,\
+    \ q.fi, p.se, q.se);\n      assert(c2 == c3 and c3 == c4 and c4 == c5);\n    \
+    \  if (p.se == N and q.se == N) assert(ss.strcmp(p.fi, q.fi) == c2);\n    }\n\
+    \  }\n}\n\nvoid Nyaan::solve() {\n  rep(t, 1000) test();\n  cerr << \"OK\" <<\
+    \ endl;\n\n  int a, b;\n  cin >> a >> b;\n  cout << a + b << endl;\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/aplusb\"\n//\n#include\
     \ \"../../template/template.hpp\"\n//\n#include \"../../string/string-search.hpp\"\
     \n//\n#include \"../../string/rolling-hash.hpp\"\n//\n#include \"../../misc/rng.hpp\"\
@@ -528,7 +529,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/string-search.test.cpp
   requiredBy: []
-  timestamp: '2026-06-19 18:03:18+09:00'
+  timestamp: '2026-06-27 14:52:13+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/string-search.test.cpp

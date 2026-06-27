@@ -34,7 +34,7 @@ data:
     \    if (val < size) size = val, ret.clear();\n    if (val == size) ret.emplace_back(i);\n\
     \  }\n\n  return ret;\n}\n#line 2 \"tree/rooted-tree-hash.hpp\"\n\n#include <array>\n\
     #include <chrono>\n#include <random>\n#line 7 \"tree/rooted-tree-hash.hpp\"\n\
-    using namespace std;\n\n#line 2 \"internal/internal-hash.hpp\"\n\nnamespace internal\
+    using namespace std;\n\n#line 2 \"internal/internal-hash.hpp\"\n\nnamespace nyaan_internal\
     \ {\nusing i64 = long long;\nusing u64 = unsigned long long;\nusing u128 = __uint128_t;\n\
     \ntemplate <int BASE_NUM = 2>\nstruct Hash : array<u64, BASE_NUM> {\n  using array<u64,\
     \ BASE_NUM>::operator[];\n  static constexpr int n = BASE_NUM;\n\n  Hash() : array<u64,\
@@ -81,9 +81,9 @@ data:
     \ 61);\n    return ret >= md ? ret - md : ret;\n  }\n  static inline constexpr\
     \ u64 modfma(const u64 &a, const u64 &b, const u64 &c) {\n    u128 d = u128(a)\
     \ * b + c;\n    u64 ret = (d >> 61) + (u64(d) & md);\n    return ret >= md ? ret\
-    \ - md : ret;\n  }\n};\n\n}  // namespace internal\n\n/**\n * @brief \u30CF\u30C3\
-    \u30B7\u30E5\u69CB\u9020\u4F53\n */\n#line 10 \"tree/rooted-tree-hash.hpp\"\n\n\
-    template <typename G>\nstruct RootedTreeHash {\n  using Hash = internal::Hash<1>;\n\
+    \ - md : ret;\n  }\n};\n\n}  // namespace nyaan_internal\n\n/**\n * @brief \u30CF\
+    \u30C3\u30B7\u30E5\u69CB\u9020\u4F53\n */\n#line 10 \"tree/rooted-tree-hash.hpp\"\
+    \n\ntemplate <typename G>\nstruct RootedTreeHash {\n  using Hash = nyaan_internal::Hash<1>;\n\
     \n  const G& g;\n  int n;\n  vector<Hash> hash;\n  vector<int> depth;\n\n  static\
     \ vector<Hash>& xs() {\n    static vector<Hash> _xs;\n    return _xs;\n  }\n\n\
     \  RootedTreeHash(const G& _g, int root = 0) : g(_g), n(g.size()) {\n    hash.resize(n);\n\
@@ -112,7 +112,7 @@ data:
   isVerificationFile: false
   path: tree/tree-hash.hpp
   requiredBy: []
-  timestamp: '2026-06-08 17:59:24+09:00'
+  timestamp: '2026-06-27 14:52:13+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-aoj-other/aoj-2821.test.cpp

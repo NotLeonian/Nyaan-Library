@@ -90,8 +90,8 @@ data:
   attributes:
     links: []
   bundledCode: "#line 2 \"internal/internal-math.hpp\"\n\n#line 2 \"internal/internal-type-traits.hpp\"\
-    \n\n#include <type_traits>\nusing namespace std;\n\nnamespace internal {\ntemplate\
-    \ <typename T>\nusing is_broadly_integral =\n    typename conditional_t<is_integral_v<T>\
+    \n\n#include <type_traits>\nusing namespace std;\n\nnamespace nyaan_internal {\n\
+    template <typename T>\nusing is_broadly_integral =\n    typename conditional_t<is_integral_v<T>\
     \ || is_same_v<T, __int128_t> ||\n                               is_same_v<T,\
     \ __uint128_t>,\n                           true_type, false_type>::type;\n\n\
     template <typename T>\nusing is_broadly_signed =\n    typename conditional_t<is_signed_v<T>\
@@ -112,12 +112,12 @@ data:
     \                  \\\n  template <class T>                                  \
     \          \\\n  struct has_##var<T, void_t<decltype(T::var)>> : true_type {};\
     \ \\\n  template <class T>                                            \\\n  constexpr\
-    \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace internal\n#line\
-    \ 4 \"internal/internal-math.hpp\"\n\nnamespace internal {\n\n#include <cassert>\n\
-    #include <vector>\nusing namespace std;\n\n// a mod p\ntemplate <typename T>\n\
-    T safe_mod(T a, T p) {\n  a %= p;\n  if constexpr (is_broadly_signed_v<T>) {\n\
-    \    if (a < 0) a += p;\n  }\n  return a;\n}\n\n// \u8FD4\u308A\u5024\uFF1Apair(g,\
-    \ x)\n// s.t. g = gcd(a, b), xa = g (mod b), 0 <= x < b/g\ntemplate <typename\
+    \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace nyaan_internal\n\
+    #line 4 \"internal/internal-math.hpp\"\n\nnamespace nyaan_internal {\n\n#include\
+    \ <cassert>\n#include <vector>\nusing namespace std;\n\n// a mod p\ntemplate <typename\
+    \ T>\nT safe_mod(T a, T p) {\n  a %= p;\n  if constexpr (is_broadly_signed_v<T>)\
+    \ {\n    if (a < 0) a += p;\n  }\n  return a;\n}\n\n// \u8FD4\u308A\u5024\uFF1A\
+    pair(g, x)\n// s.t. g = gcd(a, b), xa = g (mod b), 0 <= x < b/g\ntemplate <typename\
     \ T>\npair<T, T> inv_gcd(T a, T p) {\n  static_assert(is_broadly_signed_v<T>);\n\
     \  a = safe_mod(a, p);\n  if (a == 0) return {p, 0};\n  T b = p, x = 1, y = 0;\n\
     \  while (a != 0) {\n    T q = b / a;\n    swap(a, b %= a);\n    swap(x, y -=\
@@ -141,8 +141,8 @@ data:
     \ [g, im] = inv_gcd(m0, m1);\n    T u1 = m1 / g;\n    if ((r1 - r0) % g) return\
     \ {0, 0};\n    T x = (r1 - r0) / g % u1 * im % u1;\n    r0 += x * m0;\n    m0\
     \ *= u1;\n    if (r0 < 0) r0 += m0;\n  }\n  return {r0, m0};\n}\n\n}  // namespace\
-    \ internal\n"
-  code: "#pragma once\n\n#include \"internal-type-traits.hpp\"\n\nnamespace internal\
+    \ nyaan_internal\n"
+  code: "#pragma once\n\n#include \"internal-type-traits.hpp\"\n\nnamespace nyaan_internal\
     \ {\n\n#include <cassert>\n#include <vector>\nusing namespace std;\n\n// a mod\
     \ p\ntemplate <typename T>\nT safe_mod(T a, T p) {\n  a %= p;\n  if constexpr\
     \ (is_broadly_signed_v<T>) {\n    if (a < 0) a += p;\n  }\n  return a;\n}\n\n\
@@ -170,7 +170,7 @@ data:
     \ [g, im] = inv_gcd(m0, m1);\n    T u1 = m1 / g;\n    if ((r1 - r0) % g) return\
     \ {0, 0};\n    T x = (r1 - r0) / g % u1 * im % u1;\n    r0 += x * m0;\n    m0\
     \ *= u1;\n    if (r0 < 0) r0 += m0;\n  }\n  return {r0, m0};\n}\n\n}  // namespace\
-    \ internal\n"
+    \ nyaan_internal\n"
   dependsOn:
   - internal/internal-type-traits.hpp
   isVerificationFile: false
@@ -184,7 +184,7 @@ data:
   - math/two-square.hpp
   - prime/fast-factorize.hpp
   - prime/miller-rabin.hpp
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-27 14:52:13+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ntt/yosupo-multivariate-circular-convolution.test.cpp

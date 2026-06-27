@@ -238,21 +238,21 @@ data:
     \n\nnamespace Nyaan {\nvoid solve();\n}\nint main() { Nyaan::solve(); }\n#line\
     \ 4 \"verify/verify-yosupo-fps/yosupo-exp-ofps.test.cpp\"\n//\n#line 2 \"fps/online-fps.hpp\"\
     \n\n#line 8 \"fps/online-fps.hpp\"\nusing namespace std;\n\n#line 2 \"internal/internal-function.hpp\"\
-    \n\n#line 8 \"internal/internal-function.hpp\"\n\nnamespace internal {\n\ntemplate\
-    \ <class>\nclass function_ref;\n\ntemplate <class R, class... Args>\nclass function_ref<R(Args...)>\
-    \ {\n  void* obj_ = nullptr;\n  R (*call_obj_)(void*, Args...) = nullptr;\n  R\
-    \ (*func_)(Args...) = nullptr;\n\n public:\n  function_ref() noexcept = default;\n\
-    \  function_ref(std::nullptr_t) noexcept {}\n  function_ref(R (*f)(Args...)) noexcept\
-    \ : func_(f) {}\n\n  template <\n      class F, class Fn = std::remove_reference_t<F>,\n\
-    \      class = std::enable_if_t<\n          std::is_lvalue_reference_v<F&&> &&\n\
-    \          !std::is_same_v<std::decay_t<F>, function_ref> &&\n          !std::is_pointer_v<std::decay_t<F>>\
-    \ && !std::is_function_v<Fn> &&\n          std::is_invocable_r_v<R, Fn&, Args...>>>\n\
-    \  function_ref(F&& f) noexcept {\n    obj_ = const_cast<void*>(static_cast<const\
-    \ void*>(std::addressof(f)));\n    call_obj_ = [](void* p, Args... args) -> R\
-    \ {\n      return std::invoke(*static_cast<Fn*>(p), std::forward<Args>(args)...);\n\
-    \    };\n  }\n\n  R operator()(Args... args) const {\n    if (call_obj_) {\n \
-    \     return call_obj_(obj_, std::forward<Args>(args)...);\n    }\n    if (!func_)\
-    \ throw std::bad_function_call();\n    return func_(std::forward<Args>(args)...);\n\
+    \n\n#line 8 \"internal/internal-function.hpp\"\n\nnamespace nyaan_internal {\n\
+    \ntemplate <class>\nclass function_ref;\n\ntemplate <class R, class... Args>\n\
+    class function_ref<R(Args...)> {\n  void* obj_ = nullptr;\n  R (*call_obj_)(void*,\
+    \ Args...) = nullptr;\n  R (*func_)(Args...) = nullptr;\n\n public:\n  function_ref()\
+    \ noexcept = default;\n  function_ref(std::nullptr_t) noexcept {}\n  function_ref(R\
+    \ (*f)(Args...)) noexcept : func_(f) {}\n\n  template <\n      class F, class\
+    \ Fn = std::remove_reference_t<F>,\n      class = std::enable_if_t<\n        \
+    \  std::is_lvalue_reference_v<F&&> &&\n          !std::is_same_v<std::decay_t<F>,\
+    \ function_ref> &&\n          !std::is_pointer_v<std::decay_t<F>> && !std::is_function_v<Fn>\
+    \ &&\n          std::is_invocable_r_v<R, Fn&, Args...>>>\n  function_ref(F&& f)\
+    \ noexcept {\n    obj_ = const_cast<void*>(static_cast<const void*>(std::addressof(f)));\n\
+    \    call_obj_ = [](void* p, Args... args) -> R {\n      return std::invoke(*static_cast<Fn*>(p),\
+    \ std::forward<Args>(args)...);\n    };\n  }\n\n  R operator()(Args... args) const\
+    \ {\n    if (call_obj_) {\n      return call_obj_(obj_, std::forward<Args>(args)...);\n\
+    \    }\n    if (!func_) throw std::bad_function_call();\n    return func_(std::forward<Args>(args)...);\n\
     \  }\n\n  explicit operator bool() const noexcept {\n    return call_obj_ != nullptr\
     \ || func_ != nullptr;\n  }\n};\n\ntemplate <class, std::size_t Capacity = 32,\n\
     \          std::size_t Align = alignof(std::max_align_t)>\nclass inplace_function;\n\
@@ -311,7 +311,7 @@ data:
     \ != nullptr; }\n\n  R operator()(Args... args) const {\n    if (!invoke_) throw\
     \ std::bad_function_call();\n    return invoke_(\n        const_cast<void*>(static_cast<const\
     \ void*>(&storage_)),\n        std::forward<Args>(args)...);\n  }\n};\n\n}  //\
-    \ namespace internal\n\nusing internal::function_ref;\nusing internal::inplace_function;\n\
+    \ namespace nyaan_internal\n\nusing nyaan_internal::function_ref;\nusing nyaan_internal::inplace_function;\n\
     #line 2 \"modint/montgomery-modint.hpp\"\n\n#line 5 \"modint/montgomery-modint.hpp\"\
     \n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n\
     \  using i32 = int32_t;\n  using u32 = uint32_t;\n  using u64 = uint64_t;\n\n\
@@ -571,7 +571,7 @@ data:
     \  return fps{begin(b), begin(b) + deg};\n}\n\n/**\n * @brief NTT mod\u7528FPS\u30E9\
     \u30A4\u30D6\u30E9\u30EA\n */\n#line 13 \"fps/online-fps.hpp\"\n\nusing mint =\
     \ LazyMontgomeryModInt<998244353>;\nusing fps = FormalPowerSeries<mint>;\n\nstruct\
-    \ ofpsBase {\n  using ob = ofpsBase;\n  using Func = internal::inplace_function<mint(int),\
+    \ ofpsBase {\n  using ob = ofpsBase;\n  using Func = nyaan_internal::inplace_function<mint(int),\
     \ 64>;\n  Func func;\n  fps f;\n  ofpsBase() {\n    func = [](int) -> mint { return\
     \ 0; };\n  }\n  ofpsBase(const fps& _f) : f(_f) {\n    func = [this](int i) {\
     \ return i < (int)f.size() ? f[i] : 0; };\n  }\n  ofpsBase(const Func& _func)\
@@ -673,7 +673,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-fps/yosupo-exp-ofps.test.cpp
   requiredBy: []
-  timestamp: '2026-06-08 17:59:24+09:00'
+  timestamp: '2026-06-27 14:52:13+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-fps/yosupo-exp-ofps.test.cpp

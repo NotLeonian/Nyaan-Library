@@ -36,13 +36,13 @@ data:
     \ true;\n  }\n\n  int size(int k) { return -data[find(k)]; }\n\n  int same(int\
     \ x, int y) { return find(x) == find(y); }\n};\n\n/**\n * @brief Union Find(Disjoint\
     \ Set Union)\n */\n#line 2 \"internal/internal-type-traits.hpp\"\n\n#include <type_traits>\n\
-    using namespace std;\n\nnamespace internal {\ntemplate <typename T>\nusing is_broadly_integral\
-    \ =\n    typename conditional_t<is_integral_v<T> || is_same_v<T, __int128_t> ||\n\
-    \                               is_same_v<T, __uint128_t>,\n                 \
-    \          true_type, false_type>::type;\n\ntemplate <typename T>\nusing is_broadly_signed\
-    \ =\n    typename conditional_t<is_signed_v<T> || is_same_v<T, __int128_t>,\n\
+    using namespace std;\n\nnamespace nyaan_internal {\ntemplate <typename T>\nusing\
+    \ is_broadly_integral =\n    typename conditional_t<is_integral_v<T> || is_same_v<T,\
+    \ __int128_t> ||\n                               is_same_v<T, __uint128_t>,\n\
     \                           true_type, false_type>::type;\n\ntemplate <typename\
-    \ T>\nusing is_broadly_unsigned =\n    typename conditional_t<is_unsigned_v<T>\
+    \ T>\nusing is_broadly_signed =\n    typename conditional_t<is_signed_v<T> ||\
+    \ is_same_v<T, __int128_t>,\n                           true_type, false_type>::type;\n\
+    \ntemplate <typename T>\nusing is_broadly_unsigned =\n    typename conditional_t<is_unsigned_v<T>\
     \ || is_same_v<T, __uint128_t>,\n                           true_type, false_type>::type;\n\
     \n#define ENABLE_VALUE(x) \\\n  template <typename T> \\\n  constexpr bool x##_v\
     \ = x<T>::value;\n\nENABLE_VALUE(is_broadly_integral);\nENABLE_VALUE(is_broadly_signed);\n\
@@ -58,9 +58,9 @@ data:
     \                  \\\n  template <class T>                                  \
     \          \\\n  struct has_##var<T, void_t<decltype(T::var)>> : true_type {};\
     \ \\\n  template <class T>                                            \\\n  constexpr\
-    \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace internal\n#line\
-    \ 2 \"graph/graph-template.hpp\"\n\ntemplate <typename T>\nstruct edge {\n  int\
-    \ src, to;\n  T cost;\n\n  edge(int _to, T _cost) : src(-1), to(_to), cost(_cost)\
+    \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace nyaan_internal\n\
+    #line 2 \"graph/graph-template.hpp\"\n\ntemplate <typename T>\nstruct edge {\n\
+    \  int src, to;\n  T cost;\n\n  edge(int _to, T _cost) : src(-1), to(_to), cost(_cost)\
     \ {}\n  edge(int _src, int _to, T _cost) : src(_src), to(_to), cost(_cost) {}\n\
     \n  edge &operator=(const int &x) {\n    to = x;\n    return *this;\n  }\n\n \
     \ operator int() const { return to; }\n};\ntemplate <typename T>\nusing Edges\
@@ -179,7 +179,7 @@ data:
   isVerificationFile: false
   path: graph/functional-graph.hpp
   requiredBy: []
-  timestamp: '2026-06-08 17:59:24+09:00'
+  timestamp: '2026-06-27 14:52:13+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yuki/yuki-1254-2.test.cpp

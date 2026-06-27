@@ -26,7 +26,7 @@ data:
     \ <type_traits>\n#include <utility>\n#include <vector>\nusing namespace std;\n\
     \n#line 2 \"internal/internal-function.hpp\"\n\n#include <cstddef>\n#line 5 \"\
     internal/internal-function.hpp\"\n#include <memory>\n#line 8 \"internal/internal-function.hpp\"\
-    \n\nnamespace internal {\n\ntemplate <class>\nclass function_ref;\n\ntemplate\
+    \n\nnamespace nyaan_internal {\n\ntemplate <class>\nclass function_ref;\n\ntemplate\
     \ <class R, class... Args>\nclass function_ref<R(Args...)> {\n  void* obj_ = nullptr;\n\
     \  R (*call_obj_)(void*, Args...) = nullptr;\n  R (*func_)(Args...) = nullptr;\n\
     \n public:\n  function_ref() noexcept = default;\n  function_ref(std::nullptr_t)\
@@ -98,7 +98,7 @@ data:
     \ != nullptr; }\n\n  R operator()(Args... args) const {\n    if (!invoke_) throw\
     \ std::bad_function_call();\n    return invoke_(\n        const_cast<void*>(static_cast<const\
     \ void*>(&storage_)),\n        std::forward<Args>(args)...);\n  }\n};\n\n}  //\
-    \ namespace internal\n\nusing internal::function_ref;\nusing internal::inplace_function;\n\
+    \ namespace nyaan_internal\n\nusing nyaan_internal::function_ref;\nusing nyaan_internal::inplace_function;\n\
     #line 14 \"game/impartial-game.hpp\"\n\n/**\n * \u30B2\u30FC\u30E0\u306E\u9077\
     \u79FB\u304C DAG \u3067\u8868\u305B\u308B\u4E0D\u504F\u30B2\u30FC\u30E0\u306E\
     \ solver\n *\n * Board\uFF1A\u76E4\u9762\u306E\u578B\n * Move \u306F\u7740\u624B\
@@ -120,8 +120,8 @@ data:
     \ {\n  using Boards = vector<Board>;\n  using Game = conditional_t<splittable,\
     \ vector<Board>, Board>;\n  using State = conditional_t<is_void_v<Move>, Game,\
     \ pair<Game, Move>>;\n  using States = vector<State>;\n  using Nimber = long long;\n\
-    \  using F = internal::inplace_function<States(Board), 64>;\n\n  map<Board, Nimber>\
-    \ mp;\n  F f;\n\n  ImpartialGameSolver() = default;\n  ImpartialGameSolver(const\
+    \  using F = nyaan_internal::inplace_function<States(Board), 64>;\n\n  map<Board,\
+    \ Nimber> mp;\n  F f;\n\n  ImpartialGameSolver() = default;\n  ImpartialGameSolver(const\
     \ F& _f) : f(_f) {}\n\n  template <typename Func,\n            typename = enable_if_t<is_invocable_r_v<States,\
     \ Func&, Board>>>\n  ImpartialGameSolver(Func&& _f) : f(std::forward<Func>(_f))\
     \ {}\n\n  void set_func(const F& _f) { f = _f; }\n\n  template <typename Func>\n\
@@ -174,7 +174,7 @@ data:
     \ bool splittable = false>\nstruct ImpartialGameSolver {\n  using Boards = vector<Board>;\n\
     \  using Game = conditional_t<splittable, vector<Board>, Board>;\n  using State\
     \ = conditional_t<is_void_v<Move>, Game, pair<Game, Move>>;\n  using States =\
-    \ vector<State>;\n  using Nimber = long long;\n  using F = internal::inplace_function<States(Board),\
+    \ vector<State>;\n  using Nimber = long long;\n  using F = nyaan_internal::inplace_function<States(Board),\
     \ 64>;\n\n  map<Board, Nimber> mp;\n  F f;\n\n  ImpartialGameSolver() = default;\n\
     \  ImpartialGameSolver(const F& _f) : f(_f) {}\n\n  template <typename Func,\n\
     \            typename = enable_if_t<is_invocable_r_v<States, Func&, Board>>>\n\
@@ -210,7 +210,7 @@ data:
   isVerificationFile: false
   path: game/impartial-game.hpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-27 14:52:13+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yuki/yuki-0002.test.cpp

@@ -233,7 +233,7 @@ data:
     \ 2 \"prime/miller-rabin.hpp\"\n\n#line 4 \"prime/miller-rabin.hpp\"\nusing namespace\
     \ std;\n\n#line 2 \"internal/internal-math.hpp\"\n\n#line 2 \"internal/internal-type-traits.hpp\"\
     \n\n#line 4 \"internal/internal-type-traits.hpp\"\nusing namespace std;\n\nnamespace\
-    \ internal {\ntemplate <typename T>\nusing is_broadly_integral =\n    typename\
+    \ nyaan_internal {\ntemplate <typename T>\nusing is_broadly_integral =\n    typename\
     \ conditional_t<is_integral_v<T> || is_same_v<T, __int128_t> ||\n            \
     \                   is_same_v<T, __uint128_t>,\n                           true_type,\
     \ false_type>::type;\n\ntemplate <typename T>\nusing is_broadly_signed =\n   \
@@ -255,21 +255,21 @@ data:
     \                  \\\n  template <class T>                                  \
     \          \\\n  struct has_##var<T, void_t<decltype(T::var)>> : true_type {};\
     \ \\\n  template <class T>                                            \\\n  constexpr\
-    \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace internal\n#line\
-    \ 4 \"internal/internal-math.hpp\"\n\nnamespace internal {\n\n#line 9 \"internal/internal-math.hpp\"\
-    \nusing namespace std;\n\n// a mod p\ntemplate <typename T>\nT safe_mod(T a, T\
-    \ p) {\n  a %= p;\n  if constexpr (is_broadly_signed_v<T>) {\n    if (a < 0) a\
-    \ += p;\n  }\n  return a;\n}\n\n// \u8FD4\u308A\u5024\uFF1Apair(g, x)\n// s.t.\
-    \ g = gcd(a, b), xa = g (mod b), 0 <= x < b/g\ntemplate <typename T>\npair<T,\
-    \ T> inv_gcd(T a, T p) {\n  static_assert(is_broadly_signed_v<T>);\n  a = safe_mod(a,\
-    \ p);\n  if (a == 0) return {p, 0};\n  T b = p, x = 1, y = 0;\n  while (a != 0)\
-    \ {\n    T q = b / a;\n    swap(a, b %= a);\n    swap(x, y -= q * x);\n  }\n \
-    \ if (y < 0) y += p / b;\n  return {b, y};\n}\n\n// \u8FD4\u308A\u5024 : a^{-1}\
-    \ mod p\n// gcd(a, p) != 1 \u304C\u5FC5\u8981\ntemplate <typename T>\nT inv(T\
-    \ a, T p) {\n  static_assert(is_broadly_signed_v<T>);\n  a = safe_mod(a, p);\n\
-    \  T b = p, x = 1, y = 0;\n  while (a != 0) {\n    T q = b / a;\n    swap(a, b\
-    \ %= a);\n    swap(x, y -= q * x);\n  }\n  assert(b == 1);\n  return y < 0 ? y\
-    \ + p : y;\n}\n\n// T : \u5E95\u306E\u578B\n// U : T*T \u304C\u30AA\u30FC\u30D0\
+    \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace nyaan_internal\n\
+    #line 4 \"internal/internal-math.hpp\"\n\nnamespace nyaan_internal {\n\n#line\
+    \ 9 \"internal/internal-math.hpp\"\nusing namespace std;\n\n// a mod p\ntemplate\
+    \ <typename T>\nT safe_mod(T a, T p) {\n  a %= p;\n  if constexpr (is_broadly_signed_v<T>)\
+    \ {\n    if (a < 0) a += p;\n  }\n  return a;\n}\n\n// \u8FD4\u308A\u5024\uFF1A\
+    pair(g, x)\n// s.t. g = gcd(a, b), xa = g (mod b), 0 <= x < b/g\ntemplate <typename\
+    \ T>\npair<T, T> inv_gcd(T a, T p) {\n  static_assert(is_broadly_signed_v<T>);\n\
+    \  a = safe_mod(a, p);\n  if (a == 0) return {p, 0};\n  T b = p, x = 1, y = 0;\n\
+    \  while (a != 0) {\n    T q = b / a;\n    swap(a, b %= a);\n    swap(x, y -=\
+    \ q * x);\n  }\n  if (y < 0) y += p / b;\n  return {b, y};\n}\n\n// \u8FD4\u308A\
+    \u5024 : a^{-1} mod p\n// gcd(a, p) != 1 \u304C\u5FC5\u8981\ntemplate <typename\
+    \ T>\nT inv(T a, T p) {\n  static_assert(is_broadly_signed_v<T>);\n  a = safe_mod(a,\
+    \ p);\n  T b = p, x = 1, y = 0;\n  while (a != 0) {\n    T q = b / a;\n    swap(a,\
+    \ b %= a);\n    swap(x, y -= q * x);\n  }\n  assert(b == 1);\n  return y < 0 ?\
+    \ y + p : y;\n}\n\n// T : \u5E95\u306E\u578B\n// U : T*T \u304C\u30AA\u30FC\u30D0\
     \u30FC\u30D5\u30ED\u30FC\u3057\u306A\u3044 \u304B\u3064 \u6307\u6570\u306E\u578B\
     \ntemplate <typename T, typename U>\nT modpow(T a, U n, T p) {\n  a = safe_mod(a,\
     \ p);\n  T ret = 1 % p;\n  while (n != 0) {\n    if (n % 2 == 1) ret = U(ret)\
@@ -284,36 +284,36 @@ data:
     \ [g, im] = inv_gcd(m0, m1);\n    T u1 = m1 / g;\n    if ((r1 - r0) % g) return\
     \ {0, 0};\n    T x = (r1 - r0) / g % u1 * im % u1;\n    r0 += x * m0;\n    m0\
     \ *= u1;\n    if (r0 < 0) r0 += m0;\n  }\n  return {r0, m0};\n}\n\n}  // namespace\
-    \ internal\n#line 2 \"modint/arbitrary-montgomery-modint.hpp\"\n\n#line 4 \"modint/arbitrary-montgomery-modint.hpp\"\
-    \nusing namespace std;\n\ntemplate <typename Int, typename UInt, typename Long,\
-    \ typename ULong, int id>\nstruct ArbitraryLazyMontgomeryModIntBase {\n  using\
-    \ mint = ArbitraryLazyMontgomeryModIntBase;\n\n  inline static UInt mod;\n  inline\
-    \ static UInt r;\n  inline static UInt n2;\n  static constexpr int bit_length\
-    \ = sizeof(UInt) * 8;\n\n  static UInt get_r() {\n    UInt ret = mod;\n    while\
-    \ (mod * ret != 1) ret *= UInt(2) - mod * ret;\n    return ret;\n  }\n  static\
-    \ void set_mod(UInt m) {\n    assert(m < (UInt(1u) << (bit_length - 2)));\n  \
-    \  assert((m & 1) == 1);\n    mod = m, n2 = -ULong(m) % m, r = get_r();\n  }\n\
-    \  UInt a;\n\n  ArbitraryLazyMontgomeryModIntBase() : a(0) {}\n  ArbitraryLazyMontgomeryModIntBase(const\
-    \ Long &b)\n      : a(reduce(ULong(b % mod + mod) * n2)){};\n\n  static UInt reduce(const\
-    \ ULong &b) {\n    return (b + ULong(UInt(b) * UInt(-r)) * mod) >> bit_length;\n\
-    \  }\n\n  mint &operator+=(const mint &b) {\n    if (Int(a += b.a - 2 * mod) <\
-    \ 0) a += 2 * mod;\n    return *this;\n  }\n  mint &operator-=(const mint &b)\
-    \ {\n    if (Int(a -= b.a) < 0) a += 2 * mod;\n    return *this;\n  }\n  mint\
-    \ &operator*=(const mint &b) {\n    a = reduce(ULong(a) * b.a);\n    return *this;\n\
-    \  }\n  mint &operator/=(const mint &b) {\n    *this *= b.inverse();\n    return\
-    \ *this;\n  }\n\n  mint operator+(const mint &b) const { return mint(*this) +=\
-    \ b; }\n  mint operator-(const mint &b) const { return mint(*this) -= b; }\n \
-    \ mint operator*(const mint &b) const { return mint(*this) *= b; }\n  mint operator/(const\
-    \ mint &b) const { return mint(*this) /= b; }\n\n  bool operator==(const mint\
-    \ &b) const {\n    return (a >= mod ? a - mod : a) == (b.a >= mod ? b.a - mod\
-    \ : b.a);\n  }\n  bool operator!=(const mint &b) const {\n    return (a >= mod\
-    \ ? a - mod : a) != (b.a >= mod ? b.a - mod : b.a);\n  }\n  mint operator-() const\
-    \ { return mint(0) - mint(*this); }\n  mint operator+() const { return mint(*this);\
-    \ }\n\n  mint pow(ULong n) const {\n    mint ret(1), mul(*this);\n    while (n\
-    \ > 0) {\n      if (n & 1) ret *= mul;\n      mul *= mul, n >>= 1;\n    }\n  \
-    \  return ret;\n  }\n\n  friend ostream &operator<<(ostream &os, const mint &b)\
-    \ {\n    return os << b.get();\n  }\n\n  friend istream &operator>>(istream &is,\
-    \ mint &b) {\n    Long t;\n    is >> t;\n    b = ArbitraryLazyMontgomeryModIntBase(t);\n\
+    \ nyaan_internal\n#line 2 \"modint/arbitrary-montgomery-modint.hpp\"\n\n#line\
+    \ 4 \"modint/arbitrary-montgomery-modint.hpp\"\nusing namespace std;\n\ntemplate\
+    \ <typename Int, typename UInt, typename Long, typename ULong, int id>\nstruct\
+    \ ArbitraryLazyMontgomeryModIntBase {\n  using mint = ArbitraryLazyMontgomeryModIntBase;\n\
+    \n  inline static UInt mod;\n  inline static UInt r;\n  inline static UInt n2;\n\
+    \  static constexpr int bit_length = sizeof(UInt) * 8;\n\n  static UInt get_r()\
+    \ {\n    UInt ret = mod;\n    while (mod * ret != 1) ret *= UInt(2) - mod * ret;\n\
+    \    return ret;\n  }\n  static void set_mod(UInt m) {\n    assert(m < (UInt(1u)\
+    \ << (bit_length - 2)));\n    assert((m & 1) == 1);\n    mod = m, n2 = -ULong(m)\
+    \ % m, r = get_r();\n  }\n  UInt a;\n\n  ArbitraryLazyMontgomeryModIntBase() :\
+    \ a(0) {}\n  ArbitraryLazyMontgomeryModIntBase(const Long &b)\n      : a(reduce(ULong(b\
+    \ % mod + mod) * n2)){};\n\n  static UInt reduce(const ULong &b) {\n    return\
+    \ (b + ULong(UInt(b) * UInt(-r)) * mod) >> bit_length;\n  }\n\n  mint &operator+=(const\
+    \ mint &b) {\n    if (Int(a += b.a - 2 * mod) < 0) a += 2 * mod;\n    return *this;\n\
+    \  }\n  mint &operator-=(const mint &b) {\n    if (Int(a -= b.a) < 0) a += 2 *\
+    \ mod;\n    return *this;\n  }\n  mint &operator*=(const mint &b) {\n    a = reduce(ULong(a)\
+    \ * b.a);\n    return *this;\n  }\n  mint &operator/=(const mint &b) {\n    *this\
+    \ *= b.inverse();\n    return *this;\n  }\n\n  mint operator+(const mint &b) const\
+    \ { return mint(*this) += b; }\n  mint operator-(const mint &b) const { return\
+    \ mint(*this) -= b; }\n  mint operator*(const mint &b) const { return mint(*this)\
+    \ *= b; }\n  mint operator/(const mint &b) const { return mint(*this) /= b; }\n\
+    \n  bool operator==(const mint &b) const {\n    return (a >= mod ? a - mod : a)\
+    \ == (b.a >= mod ? b.a - mod : b.a);\n  }\n  bool operator!=(const mint &b) const\
+    \ {\n    return (a >= mod ? a - mod : a) != (b.a >= mod ? b.a - mod : b.a);\n\
+    \  }\n  mint operator-() const { return mint(0) - mint(*this); }\n  mint operator+()\
+    \ const { return mint(*this); }\n\n  mint pow(ULong n) const {\n    mint ret(1),\
+    \ mul(*this);\n    while (n > 0) {\n      if (n & 1) ret *= mul;\n      mul *=\
+    \ mul, n >>= 1;\n    }\n    return ret;\n  }\n\n  friend ostream &operator<<(ostream\
+    \ &os, const mint &b) {\n    return os << b.get();\n  }\n\n  friend istream &operator>>(istream\
+    \ &is, mint &b) {\n    Long t;\n    is >> t;\n    b = ArbitraryLazyMontgomeryModIntBase(t);\n\
     \    return (is);\n  }\n\n  mint inverse() const {\n    Int x = get(), y = get_mod(),\
     \ u = 1, v = 0;\n    while (y > 0) {\n      Int t = x / y;\n      swap(x -= t\
     \ * y, y);\n      swap(u -= t * v, v);\n    }\n    return mint{u};\n  }\n\n  UInt\
@@ -329,8 +329,8 @@ data:
     \ T& n, vector<T> ws) {\n  if (n <= 2) return n == 2;\n  if (n % 2 == 0) return\
     \ false;\n\n  T d = n - 1;\n  while (d % 2 == 0) d /= 2;\n  U e = 1, rev = n -\
     \ 1;\n  for (T w : ws) {\n    if (w % n == 0) continue;\n    T t = d;\n    U y\
-    \ = internal::modpow<T, U>(w, t, n);\n    while (t != n - 1 && y != e && y !=\
-    \ rev) y = y * y % n, t *= 2;\n    if (y != rev && t % 2 == 0) return false;\n\
+    \ = nyaan_internal::modpow<T, U>(w, t, n);\n    while (t != n - 1 && y != e &&\
+    \ y != rev) y = y * y % n, t *= 2;\n    if (y != rev && t % 2 == 0) return false;\n\
     \  }\n  return true;\n}\n\nbool miller_rabin_u64(unsigned long long n) {\n  return\
     \ miller_rabin<unsigned long long, __uint128_t>(\n      n, {2, 325, 9375, 28178,\
     \ 450775, 9780504, 1795265022});\n}\n\ntemplate <typename mint>\nbool miller_rabin(unsigned\
@@ -371,7 +371,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-math/yosupo-primality-test-u64.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-27 14:52:13+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-math/yosupo-primality-test-u64.test.cpp

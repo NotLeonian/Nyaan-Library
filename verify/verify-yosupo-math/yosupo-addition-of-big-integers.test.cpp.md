@@ -238,13 +238,13 @@ data:
     \ 4 \"verify/verify-yosupo-math/yosupo-addition-of-big-integers.test.cpp\"\n//\n\
     #line 2 \"math/bigint.hpp\"\n\n#line 9 \"math/bigint.hpp\"\nusing namespace std;\n\
     \n#line 2 \"internal/internal-type-traits.hpp\"\n\n#line 4 \"internal/internal-type-traits.hpp\"\
-    \nusing namespace std;\n\nnamespace internal {\ntemplate <typename T>\nusing is_broadly_integral\
-    \ =\n    typename conditional_t<is_integral_v<T> || is_same_v<T, __int128_t> ||\n\
-    \                               is_same_v<T, __uint128_t>,\n                 \
-    \          true_type, false_type>::type;\n\ntemplate <typename T>\nusing is_broadly_signed\
-    \ =\n    typename conditional_t<is_signed_v<T> || is_same_v<T, __int128_t>,\n\
+    \nusing namespace std;\n\nnamespace nyaan_internal {\ntemplate <typename T>\n\
+    using is_broadly_integral =\n    typename conditional_t<is_integral_v<T> || is_same_v<T,\
+    \ __int128_t> ||\n                               is_same_v<T, __uint128_t>,\n\
     \                           true_type, false_type>::type;\n\ntemplate <typename\
-    \ T>\nusing is_broadly_unsigned =\n    typename conditional_t<is_unsigned_v<T>\
+    \ T>\nusing is_broadly_signed =\n    typename conditional_t<is_signed_v<T> ||\
+    \ is_same_v<T, __int128_t>,\n                           true_type, false_type>::type;\n\
+    \ntemplate <typename T>\nusing is_broadly_unsigned =\n    typename conditional_t<is_unsigned_v<T>\
     \ || is_same_v<T, __uint128_t>,\n                           true_type, false_type>::type;\n\
     \n#define ENABLE_VALUE(x) \\\n  template <typename T> \\\n  constexpr bool x##_v\
     \ = x<T>::value;\n\nENABLE_VALUE(is_broadly_integral);\nENABLE_VALUE(is_broadly_signed);\n\
@@ -260,9 +260,9 @@ data:
     \                  \\\n  template <class T>                                  \
     \          \\\n  struct has_##var<T, void_t<decltype(T::var)>> : true_type {};\
     \ \\\n  template <class T>                                            \\\n  constexpr\
-    \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace internal\n#line\
-    \ 2 \"ntt/arbitrary-ntt.hpp\"\n\n#line 6 \"ntt/arbitrary-ntt.hpp\"\nusing namespace\
-    \ std;\n\n#line 2 \"modint/montgomery-modint.hpp\"\n\n#line 5 \"modint/montgomery-modint.hpp\"\
+    \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace nyaan_internal\n\
+    #line 2 \"ntt/arbitrary-ntt.hpp\"\n\n#line 6 \"ntt/arbitrary-ntt.hpp\"\nusing\
+    \ namespace std;\n\n#line 2 \"modint/montgomery-modint.hpp\"\n\n#line 5 \"modint/montgomery-modint.hpp\"\
     \n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n\
     \  using i32 = int32_t;\n  using u32 = uint32_t;\n  using u64 = uint64_t;\n\n\
     \  static constexpr u32 get_r() {\n    u32 ret = mod;\n    for (i32 i = 0; i <\
@@ -431,8 +431,8 @@ data:
     \ tens = {};\n\n  static constexpr int D = 1000000000;\n  static constexpr int\
     \ logD = 9;\n  bool neg;\n  vector<int> dat;\n\n  MultiPrecisionInteger() : neg(false),\
     \ dat() {}\n\n  MultiPrecisionInteger(bool n, const vector<int>& d) : neg(n),\
-    \ dat(d) {}\n\n  template <typename I,\n            enable_if_t<internal::is_broadly_integral_v<I>>*\
-    \ = nullptr>\n  MultiPrecisionInteger(I x) : neg(false) {\n    if constexpr (internal::is_broadly_signed_v<I>)\
+    \ dat(d) {}\n\n  template <typename I,\n            enable_if_t<nyaan_internal::is_broadly_integral_v<I>>*\
+    \ = nullptr>\n  MultiPrecisionInteger(I x) : neg(false) {\n    if constexpr (nyaan_internal::is_broadly_signed_v<I>)\
     \ {\n      if (x < 0) neg = true, x = -x;\n    }\n    while (x) dat.push_back(x\
     \ % D), x /= D;\n  }\n\n  MultiPrecisionInteger(const string& S) : neg(false)\
     \ {\n    assert(!S.empty());\n    if (S.size() == 1u && S[0] == '0') return;\n\
@@ -607,8 +607,8 @@ data:
     \    }\n    if (!zero_padding) {\n      while (res.size() && res.back() == '0')\
     \ res.pop_back();\n      assert(!res.empty());\n    }\n    reverse(begin(res),\
     \ end(res));\n    return res;\n  }\n\n  // convert ll to vec\n  template <typename\
-    \ I,\n            enable_if_t<internal::is_broadly_integral_v<I>>* = nullptr>\n\
-    \  static vector<int> _integer_to_vec(I x) {\n    if constexpr (internal::is_broadly_signed_v<I>)\
+    \ I,\n            enable_if_t<nyaan_internal::is_broadly_integral_v<I>>* = nullptr>\n\
+    \  static vector<int> _integer_to_vec(I x) {\n    if constexpr (nyaan_internal::is_broadly_signed_v<I>)\
     \ {\n      assert(x >= 0);\n    }\n    vector<int> res;\n    while (x) res.push_back(x\
     \ % D), x /= D;\n    return res;\n  }\n\n  static long long _to_ll(const vector<int>&\
     \ a) {\n    long long res = 0;\n    for (int i = (int)a.size() - 1; i >= 0; i--)\
@@ -637,32 +637,33 @@ data:
     \    int i = in_left;\n    for (; i != in_right; i++) {\n      if (inbuf[i] <=\
     \ ' ') break;\n    }\n    copy(inbuf + in_left, inbuf + i, back_inserter(S));\n\
     \    in_left = i;\n    if (i != in_right) break;\n  }\n}\ntemplate <typename T,\n\
-    \          enable_if_t<internal::is_broadly_integral_v<T>>* = nullptr>\nvoid single_read(T&\
-    \ x) {\n  if (in_left + offset > in_right) load();\n  skip_space();\n  char c\
-    \ = inbuf[in_left++];\n  [[maybe_unused]] bool minus = false;\n  if constexpr\
-    \ (internal::is_broadly_signed_v<T>) {\n    if (c == '-') minus = true, c = inbuf[in_left++];\n\
-    \  }\n  x = 0;\n  while (c >= '0') {\n    x = x * 10 + (c & 15);\n    c = inbuf[in_left++];\n\
-    \  }\n  if constexpr (internal::is_broadly_signed_v<T>) {\n    if (minus) x =\
-    \ -x;\n  }\n}\nvoid rd() {}\ntemplate <typename Head, typename... Tail>\nvoid\
-    \ rd(Head& head, Tail&... tail) {\n  single_read(head);\n  rd(tail...);\n}\n\n\
-    void single_write(const char& c) {\n  if (out_right > SZ - offset) flush();\n\
+    \          enable_if_t<nyaan_internal::is_broadly_integral_v<T>>* = nullptr>\n\
+    void single_read(T& x) {\n  if (in_left + offset > in_right) load();\n  skip_space();\n\
+    \  char c = inbuf[in_left++];\n  [[maybe_unused]] bool minus = false;\n  if constexpr\
+    \ (nyaan_internal::is_broadly_signed_v<T>) {\n    if (c == '-') minus = true,\
+    \ c = inbuf[in_left++];\n  }\n  x = 0;\n  while (c >= '0') {\n    x = x * 10 +\
+    \ (c & 15);\n    c = inbuf[in_left++];\n  }\n  if constexpr (nyaan_internal::is_broadly_signed_v<T>)\
+    \ {\n    if (minus) x = -x;\n  }\n}\nvoid rd() {}\ntemplate <typename Head, typename...\
+    \ Tail>\nvoid rd(Head& head, Tail&... tail) {\n  single_read(head);\n  rd(tail...);\n\
+    }\n\nvoid single_write(const char& c) {\n  if (out_right > SZ - offset) flush();\n\
     \  outbuf[out_right++] = c;\n}\nvoid single_write(const bool& b) {\n  if (out_right\
     \ > SZ - offset) flush();\n  outbuf[out_right++] = b ? '1' : '0';\n}\nvoid single_write(const\
     \ string& S) {\n  flush(), fwrite(S.data(), 1, S.size(), stdout);\n}\nvoid single_write(const\
     \ char* p) { flush(), fwrite(p, 1, strlen(p), stdout); }\ntemplate <typename T,\n\
-    \          enable_if_t<internal::is_broadly_integral_v<T>>* = nullptr>\nvoid single_write(const\
-    \ T& _x) {\n  if (out_right > SZ - offset) flush();\n  if (_x == 0) {\n    outbuf[out_right++]\
-    \ = '0';\n    return;\n  }\n  T x = _x;\n  if constexpr (internal::is_broadly_signed_v<T>)\
-    \ {\n    if (x < 0) outbuf[out_right++] = '-', x = -x;\n  }\n  constexpr int buffer_size\
-    \ = sizeof(T) * 10 / 4;\n  char buf[buffer_size];\n  int i = buffer_size;\n  while\
-    \ (x >= 10000) {\n    i -= 4;\n    memcpy(buf + i, pre.num + (x % 10000) * 4,\
-    \ 4);\n    x /= 10000;\n  }\n  if (x < 100) {\n    if (x < 10) {\n      outbuf[out_right]\
-    \ = '0' + x;\n      ++out_right;\n    } else {\n      uint32_t q = (uint32_t(x)\
-    \ * 205) >> 11;\n      uint32_t r = uint32_t(x) - q * 10;\n      outbuf[out_right]\
-    \ = '0' + q;\n      outbuf[out_right + 1] = '0' + r;\n      out_right += 2;\n\
-    \    }\n  } else {\n    if (x < 1000) {\n      memcpy(outbuf + out_right, pre.num\
-    \ + (x << 2) + 1, 3);\n      out_right += 3;\n    } else {\n      memcpy(outbuf\
-    \ + out_right, pre.num + (x << 2), 4);\n      out_right += 4;\n    }\n  }\n  memcpy(outbuf\
+    \          enable_if_t<nyaan_internal::is_broadly_integral_v<T>>* = nullptr>\n\
+    void single_write(const T& _x) {\n  if (out_right > SZ - offset) flush();\n  if\
+    \ (_x == 0) {\n    outbuf[out_right++] = '0';\n    return;\n  }\n  T x = _x;\n\
+    \  if constexpr (nyaan_internal::is_broadly_signed_v<T>) {\n    if (x < 0) outbuf[out_right++]\
+    \ = '-', x = -x;\n  }\n  constexpr int buffer_size = sizeof(T) * 10 / 4;\n  char\
+    \ buf[buffer_size];\n  int i = buffer_size;\n  while (x >= 10000) {\n    i -=\
+    \ 4;\n    memcpy(buf + i, pre.num + (x % 10000) * 4, 4);\n    x /= 10000;\n  }\n\
+    \  if (x < 100) {\n    if (x < 10) {\n      outbuf[out_right] = '0' + x;\n   \
+    \   ++out_right;\n    } else {\n      uint32_t q = (uint32_t(x) * 205) >> 11;\n\
+    \      uint32_t r = uint32_t(x) - q * 10;\n      outbuf[out_right] = '0' + q;\n\
+    \      outbuf[out_right + 1] = '0' + r;\n      out_right += 2;\n    }\n  } else\
+    \ {\n    if (x < 1000) {\n      memcpy(outbuf + out_right, pre.num + (x << 2)\
+    \ + 1, 3);\n      out_right += 3;\n    } else {\n      memcpy(outbuf + out_right,\
+    \ pre.num + (x << 2), 4);\n      out_right += 4;\n    }\n  }\n  memcpy(outbuf\
     \ + out_right, buf + i, buffer_size - i);\n  out_right += buffer_size - i;\n}\n\
     void wt() {}\ntemplate <typename Head, typename... Tail>\nvoid wt(const Head&\
     \ head, const Tail&... tail) {\n  single_write(head);\n  wt(std::forward<const\
@@ -696,7 +697,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-math/yosupo-addition-of-big-integers.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-27 14:52:13+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-math/yosupo-addition-of-big-integers.test.cpp

@@ -235,51 +235,52 @@ data:
     \ 4 \"verify/verify-unit-test/internal-math.test.cpp\"\n//\n#line 2 \"misc/rng.hpp\"\
     \n\n#line 7 \"misc/rng.hpp\"\nusing namespace std;\n\n#line 2 \"internal/internal-seed.hpp\"\
     \n\n#line 4 \"internal/internal-seed.hpp\"\nusing namespace std;\n\nnamespace\
-    \ internal {\nunsigned long long non_deterministic_seed() {\n  unsigned long long\
-    \ m =\n      chrono::duration_cast<chrono::nanoseconds>(\n          chrono::high_resolution_clock::now().time_since_epoch())\n\
-    \          .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >>\
-    \ 31, m ^= m << 35;\n  return m;\n}\nunsigned long long deterministic_seed() {\
-    \ return 88172645463325252UL; }\n\n// 64 bit \u306E seed \u5024\u3092\u751F\u6210\
-    \ (\u624B\u5143\u3067\u306F seed \u56FA\u5B9A)\n// \u9023\u7D9A\u3067\u547C\u3073\
-    \u51FA\u3059\u3068\u540C\u3058\u5024\u304C\u4F55\u5EA6\u3082\u8FD4\u3063\u3066\
-    \u304F\u308B\u306E\u3067\u6CE8\u610F\n// #define RANDOMIZED_SEED \u3059\u308B\u3068\
-    \u30B7\u30FC\u30C9\u304C\u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long\
-    \ long seed() {\n#if defined(NyaanLocal) && !defined(RANDOMIZED_SEED)\n  return\
-    \ deterministic_seed();\n#else\n  return non_deterministic_seed();\n#endif\n}\n\
-    \n}  // namespace internal\n#line 10 \"misc/rng.hpp\"\n\nnamespace my_rand {\n\
-    using i64 = long long;\nusing u64 = unsigned long long;\n\n// [0, 2^64 - 1)\n\
-    u64 rng() {\n  static u64 _x = internal::seed();\n  return _x ^= _x << 7, _x ^=\
-    \ _x >> 9;\n}\n\n// [l, r]\ni64 rng(i64 l, i64 r) {\n  assert(l <= r);\n  return\
-    \ l + rng() % u64(r - l + 1);\n}\n\n// [l, r)\ni64 randint(i64 l, i64 r) {\n \
-    \ assert(l < r);\n  return l + rng() % u64(r - l);\n}\n\n// choose n numbers from\
-    \ [l, r) without overlapping\nvector<i64> randset(i64 l, i64 r, i64 n) {\n  assert(l\
-    \ <= r && n <= r - l);\n  unordered_set<i64> s;\n  for (i64 i = n; i; --i) {\n\
-    \    i64 m = randint(l, r + 1 - i);\n    if (s.find(m) != s.end()) m = r - i;\n\
-    \    s.insert(m);\n  }\n  vector<i64> ret;\n  for (auto& x : s) ret.push_back(x);\n\
-    \  sort(begin(ret), end(ret));\n  return ret;\n}\n\n// [0.0, 1.0)\ndouble rnd()\
-    \ { return rng() * 5.42101086242752217004e-20; }\n// [l, r)\ndouble rnd(double\
-    \ l, double r) {\n  assert(l < r);\n  return l + rnd() * (r - l);\n}\n\ntemplate\
-    \ <typename T>\nvoid randshf(vector<T>& v) {\n  int n = v.size();\n  for (int\
-    \ i = 1; i < n; i++) swap(v[i], v[randint(0, i + 1)]);\n}\n\n}  // namespace my_rand\n\
-    \nusing my_rand::randint;\nusing my_rand::randset;\nusing my_rand::randshf;\n\
-    using my_rand::rnd;\nusing my_rand::rng;\n#line 6 \"verify/verify-unit-test/internal-math.test.cpp\"\
-    \n//\n#line 2 \"math-fast/gcd.hpp\"\n\n#line 4 \"math-fast/gcd.hpp\"\nusing namespace\
-    \ std;\n\nnamespace BinaryGCDImpl {\nusing u64 = unsigned long long;\nusing i8\
-    \ = char;\n\nu64 binary_gcd(u64 a, u64 b) {\n  if (a == 0 || b == 0) return a\
-    \ + b;\n  i8 n = __builtin_ctzll(a);\n  i8 m = __builtin_ctzll(b);\n  a >>= n;\n\
-    \  b >>= m;\n  n = min(n, m);\n  while (a != b) {\n    u64 d = a - b;\n    i8\
-    \ s = __builtin_ctzll(d);\n    bool f = a > b;\n    b = f ? b : a;\n    a = (f\
-    \ ? d : -d) >> s;\n  }\n  return a << n;\n}\n\nusing u128 = __uint128_t;\n// a\
-    \ > 0\nint ctz128(u128 a) {\n  u64 lo = a & u64(-1);\n  return lo ? __builtin_ctzll(lo)\
-    \ : 64 + __builtin_ctzll(a >> 64);\n}\nu128 binary_gcd128(u128 a, u128 b) {\n\
-    \  if (a == 0 || b == 0) return a + b;\n  i8 n = ctz128(a);\n  i8 m = ctz128(b);\n\
-    \  a >>= n;\n  b >>= m;\n  n = min(n, m);\n  while (a != b) {\n    u128 d = a\
-    \ - b;\n    i8 s = ctz128(d);\n    bool f = a > b;\n    b = f ? b : a;\n    a\
-    \ = (f ? d : -d) >> s;\n  }\n  return a << n;\n}\n\n}  // namespace BinaryGCDImpl\n\
-    \nlong long binary_gcd(long long a, long long b) {\n  return BinaryGCDImpl::binary_gcd(abs(a),\
-    \ abs(b));\n}\n__int128_t binary_gcd128(__int128_t a, __int128_t b) {\n  if (a\
-    \ < 0) a = -a;\n  if (b < 0) b = -b;\n  return BinaryGCDImpl::binary_gcd128(a,\
-    \ b);\n}\n\n/**\n * @brief binary GCD\n */\n#line 8 \"verify/verify-unit-test/internal-math.test.cpp\"\
+    \ nyaan_internal {\nunsigned long long non_deterministic_seed() {\n  unsigned\
+    \ long long m =\n      chrono::duration_cast<chrono::nanoseconds>(\n         \
+    \ chrono::high_resolution_clock::now().time_since_epoch())\n          .count();\n\
+    \  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >> 31, m ^= m << 35;\n\
+    \  return m;\n}\nunsigned long long deterministic_seed() { return 88172645463325252UL;\
+    \ }\n\n// 64 bit \u306E seed \u5024\u3092\u751F\u6210 (\u624B\u5143\u3067\u306F\
+    \ seed \u56FA\u5B9A)\n// \u9023\u7D9A\u3067\u547C\u3073\u51FA\u3059\u3068\u540C\
+    \u3058\u5024\u304C\u4F55\u5EA6\u3082\u8FD4\u3063\u3066\u304F\u308B\u306E\u3067\
+    \u6CE8\u610F\n// #define RANDOMIZED_SEED \u3059\u308B\u3068\u30B7\u30FC\u30C9\u304C\
+    \u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long long seed() {\n#if defined(NyaanLocal)\
+    \ && !defined(RANDOMIZED_SEED)\n  return deterministic_seed();\n#else\n  return\
+    \ non_deterministic_seed();\n#endif\n}\n\n}  // namespace nyaan_internal\n#line\
+    \ 10 \"misc/rng.hpp\"\n\nnamespace my_rand {\nusing i64 = long long;\nusing u64\
+    \ = unsigned long long;\n\n// [0, 2^64 - 1)\nu64 rng() {\n  static u64 _x = nyaan_internal::seed();\n\
+    \  return _x ^= _x << 7, _x ^= _x >> 9;\n}\n\n// [l, r]\ni64 rng(i64 l, i64 r)\
+    \ {\n  assert(l <= r);\n  return l + rng() % u64(r - l + 1);\n}\n\n// [l, r)\n\
+    i64 randint(i64 l, i64 r) {\n  assert(l < r);\n  return l + rng() % u64(r - l);\n\
+    }\n\n// choose n numbers from [l, r) without overlapping\nvector<i64> randset(i64\
+    \ l, i64 r, i64 n) {\n  assert(l <= r && n <= r - l);\n  unordered_set<i64> s;\n\
+    \  for (i64 i = n; i; --i) {\n    i64 m = randint(l, r + 1 - i);\n    if (s.find(m)\
+    \ != s.end()) m = r - i;\n    s.insert(m);\n  }\n  vector<i64> ret;\n  for (auto&\
+    \ x : s) ret.push_back(x);\n  sort(begin(ret), end(ret));\n  return ret;\n}\n\n\
+    // [0.0, 1.0)\ndouble rnd() { return rng() * 5.42101086242752217004e-20; }\n//\
+    \ [l, r)\ndouble rnd(double l, double r) {\n  assert(l < r);\n  return l + rnd()\
+    \ * (r - l);\n}\n\ntemplate <typename T>\nvoid randshf(vector<T>& v) {\n  int\
+    \ n = v.size();\n  for (int i = 1; i < n; i++) swap(v[i], v[randint(0, i + 1)]);\n\
+    }\n\n}  // namespace my_rand\n\nusing my_rand::randint;\nusing my_rand::randset;\n\
+    using my_rand::randshf;\nusing my_rand::rnd;\nusing my_rand::rng;\n#line 6 \"\
+    verify/verify-unit-test/internal-math.test.cpp\"\n//\n#line 2 \"math-fast/gcd.hpp\"\
+    \n\n#line 4 \"math-fast/gcd.hpp\"\nusing namespace std;\n\nnamespace BinaryGCDImpl\
+    \ {\nusing u64 = unsigned long long;\nusing i8 = char;\n\nu64 binary_gcd(u64 a,\
+    \ u64 b) {\n  if (a == 0 || b == 0) return a + b;\n  i8 n = __builtin_ctzll(a);\n\
+    \  i8 m = __builtin_ctzll(b);\n  a >>= n;\n  b >>= m;\n  n = min(n, m);\n  while\
+    \ (a != b) {\n    u64 d = a - b;\n    i8 s = __builtin_ctzll(d);\n    bool f =\
+    \ a > b;\n    b = f ? b : a;\n    a = (f ? d : -d) >> s;\n  }\n  return a << n;\n\
+    }\n\nusing u128 = __uint128_t;\n// a > 0\nint ctz128(u128 a) {\n  u64 lo = a &\
+    \ u64(-1);\n  return lo ? __builtin_ctzll(lo) : 64 + __builtin_ctzll(a >> 64);\n\
+    }\nu128 binary_gcd128(u128 a, u128 b) {\n  if (a == 0 || b == 0) return a + b;\n\
+    \  i8 n = ctz128(a);\n  i8 m = ctz128(b);\n  a >>= n;\n  b >>= m;\n  n = min(n,\
+    \ m);\n  while (a != b) {\n    u128 d = a - b;\n    i8 s = ctz128(d);\n    bool\
+    \ f = a > b;\n    b = f ? b : a;\n    a = (f ? d : -d) >> s;\n  }\n  return a\
+    \ << n;\n}\n\n}  // namespace BinaryGCDImpl\n\nlong long binary_gcd(long long\
+    \ a, long long b) {\n  return BinaryGCDImpl::binary_gcd(abs(a), abs(b));\n}\n\
+    __int128_t binary_gcd128(__int128_t a, __int128_t b) {\n  if (a < 0) a = -a;\n\
+    \  if (b < 0) b = -b;\n  return BinaryGCDImpl::binary_gcd128(a, b);\n}\n\n/**\n\
+    \ * @brief binary GCD\n */\n#line 8 \"verify/verify-unit-test/internal-math.test.cpp\"\
     \n//\n#line 1 \"atcoder/internal_math.hpp\"\n\n\n\n#line 5 \"atcoder/internal_math.hpp\"\
     \n\n#ifdef _MSC_VER\n#include <intrin.h>\n#endif\n\nnamespace atcoder {\n\nnamespace\
     \ internal {\n\n// @param m `1 <= m`\n// @return x mod m\nconstexpr long long\
@@ -393,7 +394,7 @@ data:
     \ atcoder\n\n\n#line 11 \"verify/verify-unit-test/internal-math.test.cpp\"\n//\n\
     #line 2 \"internal/internal-math.hpp\"\n\n#line 2 \"internal/internal-type-traits.hpp\"\
     \n\n#line 4 \"internal/internal-type-traits.hpp\"\nusing namespace std;\n\nnamespace\
-    \ internal {\ntemplate <typename T>\nusing is_broadly_integral =\n    typename\
+    \ nyaan_internal {\ntemplate <typename T>\nusing is_broadly_integral =\n    typename\
     \ conditional_t<is_integral_v<T> || is_same_v<T, __int128_t> ||\n            \
     \                   is_same_v<T, __uint128_t>,\n                           true_type,\
     \ false_type>::type;\n\ntemplate <typename T>\nusing is_broadly_signed =\n   \
@@ -415,21 +416,21 @@ data:
     \                  \\\n  template <class T>                                  \
     \          \\\n  struct has_##var<T, void_t<decltype(T::var)>> : true_type {};\
     \ \\\n  template <class T>                                            \\\n  constexpr\
-    \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace internal\n#line\
-    \ 4 \"internal/internal-math.hpp\"\n\nnamespace internal {\n\n#line 9 \"internal/internal-math.hpp\"\
-    \nusing namespace std;\n\n// a mod p\ntemplate <typename T>\nT safe_mod(T a, T\
-    \ p) {\n  a %= p;\n  if constexpr (is_broadly_signed_v<T>) {\n    if (a < 0) a\
-    \ += p;\n  }\n  return a;\n}\n\n// \u8FD4\u308A\u5024\uFF1Apair(g, x)\n// s.t.\
-    \ g = gcd(a, b), xa = g (mod b), 0 <= x < b/g\ntemplate <typename T>\npair<T,\
-    \ T> inv_gcd(T a, T p) {\n  static_assert(is_broadly_signed_v<T>);\n  a = safe_mod(a,\
-    \ p);\n  if (a == 0) return {p, 0};\n  T b = p, x = 1, y = 0;\n  while (a != 0)\
-    \ {\n    T q = b / a;\n    swap(a, b %= a);\n    swap(x, y -= q * x);\n  }\n \
-    \ if (y < 0) y += p / b;\n  return {b, y};\n}\n\n// \u8FD4\u308A\u5024 : a^{-1}\
-    \ mod p\n// gcd(a, p) != 1 \u304C\u5FC5\u8981\ntemplate <typename T>\nT inv(T\
-    \ a, T p) {\n  static_assert(is_broadly_signed_v<T>);\n  a = safe_mod(a, p);\n\
-    \  T b = p, x = 1, y = 0;\n  while (a != 0) {\n    T q = b / a;\n    swap(a, b\
-    \ %= a);\n    swap(x, y -= q * x);\n  }\n  assert(b == 1);\n  return y < 0 ? y\
-    \ + p : y;\n}\n\n// T : \u5E95\u306E\u578B\n// U : T*T \u304C\u30AA\u30FC\u30D0\
+    \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace nyaan_internal\n\
+    #line 4 \"internal/internal-math.hpp\"\n\nnamespace nyaan_internal {\n\n#line\
+    \ 9 \"internal/internal-math.hpp\"\nusing namespace std;\n\n// a mod p\ntemplate\
+    \ <typename T>\nT safe_mod(T a, T p) {\n  a %= p;\n  if constexpr (is_broadly_signed_v<T>)\
+    \ {\n    if (a < 0) a += p;\n  }\n  return a;\n}\n\n// \u8FD4\u308A\u5024\uFF1A\
+    pair(g, x)\n// s.t. g = gcd(a, b), xa = g (mod b), 0 <= x < b/g\ntemplate <typename\
+    \ T>\npair<T, T> inv_gcd(T a, T p) {\n  static_assert(is_broadly_signed_v<T>);\n\
+    \  a = safe_mod(a, p);\n  if (a == 0) return {p, 0};\n  T b = p, x = 1, y = 0;\n\
+    \  while (a != 0) {\n    T q = b / a;\n    swap(a, b %= a);\n    swap(x, y -=\
+    \ q * x);\n  }\n  if (y < 0) y += p / b;\n  return {b, y};\n}\n\n// \u8FD4\u308A\
+    \u5024 : a^{-1} mod p\n// gcd(a, p) != 1 \u304C\u5FC5\u8981\ntemplate <typename\
+    \ T>\nT inv(T a, T p) {\n  static_assert(is_broadly_signed_v<T>);\n  a = safe_mod(a,\
+    \ p);\n  T b = p, x = 1, y = 0;\n  while (a != 0) {\n    T q = b / a;\n    swap(a,\
+    \ b %= a);\n    swap(x, y -= q * x);\n  }\n  assert(b == 1);\n  return y < 0 ?\
+    \ y + p : y;\n}\n\n// T : \u5E95\u306E\u578B\n// U : T*T \u304C\u30AA\u30FC\u30D0\
     \u30FC\u30D5\u30ED\u30FC\u3057\u306A\u3044 \u304B\u3064 \u6307\u6570\u306E\u578B\
     \ntemplate <typename T, typename U>\nT modpow(T a, U n, T p) {\n  a = safe_mod(a,\
     \ p);\n  T ret = 1 % p;\n  while (n != 0) {\n    if (n % 2 == 1) ret = U(ret)\
@@ -444,93 +445,95 @@ data:
     \ [g, im] = inv_gcd(m0, m1);\n    T u1 = m1 / g;\n    if ((r1 - r0) % g) return\
     \ {0, 0};\n    T x = (r1 - r0) / g % u1 * im % u1;\n    r0 += x * m0;\n    m0\
     \ *= u1;\n    if (r0 < 0) r0 += m0;\n  }\n  return {r0, m0};\n}\n\n}  // namespace\
-    \ internal\n#line 13 \"verify/verify-unit-test/internal-math.test.cpp\"\n//\n\n\
-    using namespace Nyaan;\n\nvoid test_safe_mod() {\n  auto check = [&](ll a, ll\
-    \ p) {\n    ll m1 = internal::safe_mod(a, p);\n    ll m2 = atcoder::internal::safe_mod(a,\
+    \ nyaan_internal\n#line 13 \"verify/verify-unit-test/internal-math.test.cpp\"\n\
+    //\n\nusing namespace Nyaan;\n\nvoid test_safe_mod() {\n  auto check = [&](ll\
+    \ a, ll p) {\n    ll m1 = nyaan_internal::safe_mod(a, p);\n    ll m2 = atcoder::internal::safe_mod(a,\
     \ p);\n    assert(m1 == m2 && \"safe_mod\");\n  };\n\n  reg(a, -100, 100) reg(p,\
     \ 1, 100) check(a, p);\n  ll M = (1uLL << 62) - 1;\n  check(M, 1), check(-M, 1);\n\
     \  check(M, M), check(-M, M);\n  rep(t, TEN(5)) {\n    ll a = rng(-M, M);\n  \
     \  ll p = rng(+1, M);\n    check(a, p);\n  }\n}\n\nvoid test_inv_gcd() {\n  auto\
-    \ check = [&](ll a, ll b) {\n    auto p1 = internal::inv_gcd(a, b);\n    auto\
-    \ p2 = atcoder::internal::inv_gcd(a, b);\n    assert(p1 == p2 && \"inv_gcd\");\n\
-    \  };\n\n  reg(a, -100, 100) reg(b, 1, 100) check(a, b);\n  ll M = (1uLL << 62)\
-    \ - 1;\n  check(M, 1), check(-M, 1);\n  check(M, M), check(-M, M);\n  rep(t, TEN(5))\
-    \ {\n    ll a = rng(-M, M);\n    ll p = rng(+1, M);\n    check(a, p);\n  }\n}\n\
-    \nvoid test_inv() {\n  auto check = [&](ll a, ll p) -> void {\n    if (gcd(a,\
-    \ p) != 1) return;\n    ll b1 = internal::inv(a, p);\n    ll b2 = atcoder::inv_mod(a,\
-    \ p);\n    if (b1 != b2) trc2(a, p, b1, b2);\n    assert(b1 == b2 && \"inv\");\n\
-    \  };\n  reg(a, -100, 100) reg(b, 1, 100) check(a, b);\n  ll M = (1uLL << 62)\
-    \ - 1;\n  check(M, 1), check(-M, 1);\n  check(M, M), check(-M, M);\n  rep(t, TEN(5))\
-    \ {\n    ll p = rng(+1, M);\n    ll a = p;\n    while (gcd(a, p) != 1) a = rng(-M,\
-    \ M);\n    check(a, p);\n  }\n}\n\nvoid test_modpow() {\n  auto check = [&](ll\
-    \ x, ll e, ll p) -> void {\n    assert(p < (1LL << 30));\n    ll b1 = internal::modpow<int,\
-    \ ll>(x % p, e, p);\n    ll b2 = atcoder::pow_mod(x, e, p);\n    if (b1 != b2)\
-    \ trc2(x, e, p, b1, b2);\n    assert(b1 == b2 && \"modpow\");\n  };\n\n  rep(e,\
-    \ 30) rep1(p, 30) {\n    rep(x, 30) check(x, e, p);\n    rep(t, 10) check(rng(-TEN(18),\
-    \ TEN(18)), e, p);\n  }\n  ll M = (1uLL << 30) - 1;\n  rep(t, 100000) {\n    ll\
-    \ a = rng(-M, M);\n    ll e = rng(0, M);\n    ll p = rng(1, M);\n    check(a,\
-    \ e, p);\n  }\n}\n\nvoid test_crt() {\n  ll cnt0 = 0;\n  auto check = [&](vl a,\
-    \ vl p) -> void {\n    auto b1 = internal::crt(a, p);\n    auto b2 = atcoder::crt(a,\
-    \ p);\n    if (b1 != b2) trc2(a, p, b1, b2);\n    assert(b1 == b2 && \"crt\");\n\
-    \    rep(i, sz(a)) a[i] = internal::safe_mod(a[i], p[i]);\n    auto b3 = internal::crt(a,\
-    \ p);\n    auto b4 = atcoder::crt(a, p);\n    assert(b1 == b3 && \"crt\");\n \
-    \   assert(b2 == b4 && \"crt\");\n    cnt0 += b1 == pl{0, 0};\n  };\n\n  int tnum\
-    \ = 300000;\n  ll M = (1uLL << 62) - 1;\n\n  rep(t, tnum) {\n    double th = 30.0\
-    \ + rnd() * 28.0;\n    V<ll> rem, mod;\n    while (true) {\n      rem.clear();\n\
-    \      mod.clear();\n      i128 g = 1;\n      set<int> st;\n      while (true)\
-    \ {\n        ll m = pow(2.0, 0.0 + rnd() * th);\n        if (st.count(m)) continue;\n\
-    \        st.insert(m);\n        i128 nxt = g / binary_gcd128(g, m) * m;\n    \
-    \    if (nxt >= 1e18) break;\n        g = nxt;\n        ll r = rng(-M, M);\n \
-    \       rem.push_back(r);\n        mod.push_back(m);\n      }\n      if (rem.size()\
-    \ >= 2u) break;\n    }\n    check(rem, mod);\n  }\n  assert(cnt0 <= tnum * 0.8);\n\
-    }\n\nvoid Nyaan::solve() {\n  test_safe_mod();\n  test_inv_gcd();\n  test_inv();\n\
-    \  test_modpow();\n  test_crt();\n\n  cerr << \"OK\" << endl;\n  int a, b;\n \
-    \ cin >> a >> b;\n  cout << a + b << endl;\n}\n"
+    \ check = [&](ll a, ll b) {\n    auto p1 = nyaan_internal::inv_gcd(a, b);\n  \
+    \  auto p2 = atcoder::internal::inv_gcd(a, b);\n    assert(p1 == p2 && \"inv_gcd\"\
+    );\n  };\n\n  reg(a, -100, 100) reg(b, 1, 100) check(a, b);\n  ll M = (1uLL <<\
+    \ 62) - 1;\n  check(M, 1), check(-M, 1);\n  check(M, M), check(-M, M);\n  rep(t,\
+    \ TEN(5)) {\n    ll a = rng(-M, M);\n    ll p = rng(+1, M);\n    check(a, p);\n\
+    \  }\n}\n\nvoid test_inv() {\n  auto check = [&](ll a, ll p) -> void {\n    if\
+    \ (gcd(a, p) != 1) return;\n    ll b1 = nyaan_internal::inv(a, p);\n    ll b2\
+    \ = atcoder::inv_mod(a, p);\n    if (b1 != b2) trc2(a, p, b1, b2);\n    assert(b1\
+    \ == b2 && \"inv\");\n  };\n  reg(a, -100, 100) reg(b, 1, 100) check(a, b);\n\
+    \  ll M = (1uLL << 62) - 1;\n  check(M, 1), check(-M, 1);\n  check(M, M), check(-M,\
+    \ M);\n  rep(t, TEN(5)) {\n    ll p = rng(+1, M);\n    ll a = p;\n    while (gcd(a,\
+    \ p) != 1) a = rng(-M, M);\n    check(a, p);\n  }\n}\n\nvoid test_modpow() {\n\
+    \  auto check = [&](ll x, ll e, ll p) -> void {\n    assert(p < (1LL << 30));\n\
+    \    ll b1 = nyaan_internal::modpow<int, ll>(x % p, e, p);\n    ll b2 = atcoder::pow_mod(x,\
+    \ e, p);\n    if (b1 != b2) trc2(x, e, p, b1, b2);\n    assert(b1 == b2 && \"\
+    modpow\");\n  };\n\n  rep(e, 30) rep1(p, 30) {\n    rep(x, 30) check(x, e, p);\n\
+    \    rep(t, 10) check(rng(-TEN(18), TEN(18)), e, p);\n  }\n  ll M = (1uLL << 30)\
+    \ - 1;\n  rep(t, 100000) {\n    ll a = rng(-M, M);\n    ll e = rng(0, M);\n  \
+    \  ll p = rng(1, M);\n    check(a, e, p);\n  }\n}\n\nvoid test_crt() {\n  ll cnt0\
+    \ = 0;\n  auto check = [&](vl a, vl p) -> void {\n    auto b1 = nyaan_internal::crt(a,\
+    \ p);\n    auto b2 = atcoder::crt(a, p);\n    if (b1 != b2) trc2(a, p, b1, b2);\n\
+    \    assert(b1 == b2 && \"crt\");\n    rep(i, sz(a)) a[i] = nyaan_internal::safe_mod(a[i],\
+    \ p[i]);\n    auto b3 = nyaan_internal::crt(a, p);\n    auto b4 = atcoder::crt(a,\
+    \ p);\n    assert(b1 == b3 && \"crt\");\n    assert(b2 == b4 && \"crt\");\n  \
+    \  cnt0 += b1 == pl{0, 0};\n  };\n\n  int tnum = 300000;\n  ll M = (1uLL << 62)\
+    \ - 1;\n\n  rep(t, tnum) {\n    double th = 30.0 + rnd() * 28.0;\n    V<ll> rem,\
+    \ mod;\n    while (true) {\n      rem.clear();\n      mod.clear();\n      i128\
+    \ g = 1;\n      set<int> st;\n      while (true) {\n        ll m = pow(2.0, 0.0\
+    \ + rnd() * th);\n        if (st.count(m)) continue;\n        st.insert(m);\n\
+    \        i128 nxt = g / binary_gcd128(g, m) * m;\n        if (nxt >= 1e18) break;\n\
+    \        g = nxt;\n        ll r = rng(-M, M);\n        rem.push_back(r);\n   \
+    \     mod.push_back(m);\n      }\n      if (rem.size() >= 2u) break;\n    }\n\
+    \    check(rem, mod);\n  }\n  assert(cnt0 <= tnum * 0.8);\n}\n\nvoid Nyaan::solve()\
+    \ {\n  test_safe_mod();\n  test_inv_gcd();\n  test_inv();\n  test_modpow();\n\
+    \  test_crt();\n\n  cerr << \"OK\" << endl;\n  int a, b;\n  cin >> a >> b;\n \
+    \ cout << a + b << endl;\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/aplusb\"\n//\n#include\
     \ \"../../template/template.hpp\"\n//\n#include \"../../misc/rng.hpp\"\n//\n#include\
     \ \"../../math-fast/gcd.hpp\"\n//\n#include \"../../atcoder/internal_math.hpp\"\
     \n#include \"../../atcoder/math.hpp\"\n//\n#include \"../../internal/internal-math.hpp\"\
     \n//\n\nusing namespace Nyaan;\n\nvoid test_safe_mod() {\n  auto check = [&](ll\
-    \ a, ll p) {\n    ll m1 = internal::safe_mod(a, p);\n    ll m2 = atcoder::internal::safe_mod(a,\
+    \ a, ll p) {\n    ll m1 = nyaan_internal::safe_mod(a, p);\n    ll m2 = atcoder::internal::safe_mod(a,\
     \ p);\n    assert(m1 == m2 && \"safe_mod\");\n  };\n\n  reg(a, -100, 100) reg(p,\
     \ 1, 100) check(a, p);\n  ll M = (1uLL << 62) - 1;\n  check(M, 1), check(-M, 1);\n\
     \  check(M, M), check(-M, M);\n  rep(t, TEN(5)) {\n    ll a = rng(-M, M);\n  \
     \  ll p = rng(+1, M);\n    check(a, p);\n  }\n}\n\nvoid test_inv_gcd() {\n  auto\
-    \ check = [&](ll a, ll b) {\n    auto p1 = internal::inv_gcd(a, b);\n    auto\
-    \ p2 = atcoder::internal::inv_gcd(a, b);\n    assert(p1 == p2 && \"inv_gcd\");\n\
-    \  };\n\n  reg(a, -100, 100) reg(b, 1, 100) check(a, b);\n  ll M = (1uLL << 62)\
-    \ - 1;\n  check(M, 1), check(-M, 1);\n  check(M, M), check(-M, M);\n  rep(t, TEN(5))\
-    \ {\n    ll a = rng(-M, M);\n    ll p = rng(+1, M);\n    check(a, p);\n  }\n}\n\
-    \nvoid test_inv() {\n  auto check = [&](ll a, ll p) -> void {\n    if (gcd(a,\
-    \ p) != 1) return;\n    ll b1 = internal::inv(a, p);\n    ll b2 = atcoder::inv_mod(a,\
-    \ p);\n    if (b1 != b2) trc2(a, p, b1, b2);\n    assert(b1 == b2 && \"inv\");\n\
-    \  };\n  reg(a, -100, 100) reg(b, 1, 100) check(a, b);\n  ll M = (1uLL << 62)\
-    \ - 1;\n  check(M, 1), check(-M, 1);\n  check(M, M), check(-M, M);\n  rep(t, TEN(5))\
-    \ {\n    ll p = rng(+1, M);\n    ll a = p;\n    while (gcd(a, p) != 1) a = rng(-M,\
-    \ M);\n    check(a, p);\n  }\n}\n\nvoid test_modpow() {\n  auto check = [&](ll\
-    \ x, ll e, ll p) -> void {\n    assert(p < (1LL << 30));\n    ll b1 = internal::modpow<int,\
-    \ ll>(x % p, e, p);\n    ll b2 = atcoder::pow_mod(x, e, p);\n    if (b1 != b2)\
-    \ trc2(x, e, p, b1, b2);\n    assert(b1 == b2 && \"modpow\");\n  };\n\n  rep(e,\
-    \ 30) rep1(p, 30) {\n    rep(x, 30) check(x, e, p);\n    rep(t, 10) check(rng(-TEN(18),\
-    \ TEN(18)), e, p);\n  }\n  ll M = (1uLL << 30) - 1;\n  rep(t, 100000) {\n    ll\
-    \ a = rng(-M, M);\n    ll e = rng(0, M);\n    ll p = rng(1, M);\n    check(a,\
-    \ e, p);\n  }\n}\n\nvoid test_crt() {\n  ll cnt0 = 0;\n  auto check = [&](vl a,\
-    \ vl p) -> void {\n    auto b1 = internal::crt(a, p);\n    auto b2 = atcoder::crt(a,\
-    \ p);\n    if (b1 != b2) trc2(a, p, b1, b2);\n    assert(b1 == b2 && \"crt\");\n\
-    \    rep(i, sz(a)) a[i] = internal::safe_mod(a[i], p[i]);\n    auto b3 = internal::crt(a,\
-    \ p);\n    auto b4 = atcoder::crt(a, p);\n    assert(b1 == b3 && \"crt\");\n \
-    \   assert(b2 == b4 && \"crt\");\n    cnt0 += b1 == pl{0, 0};\n  };\n\n  int tnum\
-    \ = 300000;\n  ll M = (1uLL << 62) - 1;\n\n  rep(t, tnum) {\n    double th = 30.0\
-    \ + rnd() * 28.0;\n    V<ll> rem, mod;\n    while (true) {\n      rem.clear();\n\
-    \      mod.clear();\n      i128 g = 1;\n      set<int> st;\n      while (true)\
-    \ {\n        ll m = pow(2.0, 0.0 + rnd() * th);\n        if (st.count(m)) continue;\n\
-    \        st.insert(m);\n        i128 nxt = g / binary_gcd128(g, m) * m;\n    \
-    \    if (nxt >= 1e18) break;\n        g = nxt;\n        ll r = rng(-M, M);\n \
-    \       rem.push_back(r);\n        mod.push_back(m);\n      }\n      if (rem.size()\
-    \ >= 2u) break;\n    }\n    check(rem, mod);\n  }\n  assert(cnt0 <= tnum * 0.8);\n\
-    }\n\nvoid Nyaan::solve() {\n  test_safe_mod();\n  test_inv_gcd();\n  test_inv();\n\
-    \  test_modpow();\n  test_crt();\n\n  cerr << \"OK\" << endl;\n  int a, b;\n \
-    \ cin >> a >> b;\n  cout << a + b << endl;\n}\n"
+    \ check = [&](ll a, ll b) {\n    auto p1 = nyaan_internal::inv_gcd(a, b);\n  \
+    \  auto p2 = atcoder::internal::inv_gcd(a, b);\n    assert(p1 == p2 && \"inv_gcd\"\
+    );\n  };\n\n  reg(a, -100, 100) reg(b, 1, 100) check(a, b);\n  ll M = (1uLL <<\
+    \ 62) - 1;\n  check(M, 1), check(-M, 1);\n  check(M, M), check(-M, M);\n  rep(t,\
+    \ TEN(5)) {\n    ll a = rng(-M, M);\n    ll p = rng(+1, M);\n    check(a, p);\n\
+    \  }\n}\n\nvoid test_inv() {\n  auto check = [&](ll a, ll p) -> void {\n    if\
+    \ (gcd(a, p) != 1) return;\n    ll b1 = nyaan_internal::inv(a, p);\n    ll b2\
+    \ = atcoder::inv_mod(a, p);\n    if (b1 != b2) trc2(a, p, b1, b2);\n    assert(b1\
+    \ == b2 && \"inv\");\n  };\n  reg(a, -100, 100) reg(b, 1, 100) check(a, b);\n\
+    \  ll M = (1uLL << 62) - 1;\n  check(M, 1), check(-M, 1);\n  check(M, M), check(-M,\
+    \ M);\n  rep(t, TEN(5)) {\n    ll p = rng(+1, M);\n    ll a = p;\n    while (gcd(a,\
+    \ p) != 1) a = rng(-M, M);\n    check(a, p);\n  }\n}\n\nvoid test_modpow() {\n\
+    \  auto check = [&](ll x, ll e, ll p) -> void {\n    assert(p < (1LL << 30));\n\
+    \    ll b1 = nyaan_internal::modpow<int, ll>(x % p, e, p);\n    ll b2 = atcoder::pow_mod(x,\
+    \ e, p);\n    if (b1 != b2) trc2(x, e, p, b1, b2);\n    assert(b1 == b2 && \"\
+    modpow\");\n  };\n\n  rep(e, 30) rep1(p, 30) {\n    rep(x, 30) check(x, e, p);\n\
+    \    rep(t, 10) check(rng(-TEN(18), TEN(18)), e, p);\n  }\n  ll M = (1uLL << 30)\
+    \ - 1;\n  rep(t, 100000) {\n    ll a = rng(-M, M);\n    ll e = rng(0, M);\n  \
+    \  ll p = rng(1, M);\n    check(a, e, p);\n  }\n}\n\nvoid test_crt() {\n  ll cnt0\
+    \ = 0;\n  auto check = [&](vl a, vl p) -> void {\n    auto b1 = nyaan_internal::crt(a,\
+    \ p);\n    auto b2 = atcoder::crt(a, p);\n    if (b1 != b2) trc2(a, p, b1, b2);\n\
+    \    assert(b1 == b2 && \"crt\");\n    rep(i, sz(a)) a[i] = nyaan_internal::safe_mod(a[i],\
+    \ p[i]);\n    auto b3 = nyaan_internal::crt(a, p);\n    auto b4 = atcoder::crt(a,\
+    \ p);\n    assert(b1 == b3 && \"crt\");\n    assert(b2 == b4 && \"crt\");\n  \
+    \  cnt0 += b1 == pl{0, 0};\n  };\n\n  int tnum = 300000;\n  ll M = (1uLL << 62)\
+    \ - 1;\n\n  rep(t, tnum) {\n    double th = 30.0 + rnd() * 28.0;\n    V<ll> rem,\
+    \ mod;\n    while (true) {\n      rem.clear();\n      mod.clear();\n      i128\
+    \ g = 1;\n      set<int> st;\n      while (true) {\n        ll m = pow(2.0, 0.0\
+    \ + rnd() * th);\n        if (st.count(m)) continue;\n        st.insert(m);\n\
+    \        i128 nxt = g / binary_gcd128(g, m) * m;\n        if (nxt >= 1e18) break;\n\
+    \        g = nxt;\n        ll r = rng(-M, M);\n        rem.push_back(r);\n   \
+    \     mod.push_back(m);\n      }\n      if (rem.size() >= 2u) break;\n    }\n\
+    \    check(rem, mod);\n  }\n  assert(cnt0 <= tnum * 0.8);\n}\n\nvoid Nyaan::solve()\
+    \ {\n  test_safe_mod();\n  test_inv_gcd();\n  test_inv();\n  test_modpow();\n\
+    \  test_crt();\n\n  cerr << \"OK\" << endl;\n  int a, b;\n  cin >> a >> b;\n \
+    \ cout << a + b << endl;\n}\n"
   dependsOn:
   - template/template.hpp
   - template/util.hpp
@@ -546,7 +549,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/internal-math.test.cpp
   requiredBy: []
-  timestamp: '2026-06-08 02:23:45+09:00'
+  timestamp: '2026-06-27 14:52:13+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/internal-math.test.cpp

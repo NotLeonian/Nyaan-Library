@@ -35,13 +35,13 @@ data:
     links: []
   bundledCode: "#line 2 \"modulo/mod-kth-root.hpp\"\n\n#line 2 \"internal/internal-math.hpp\"\
     \n\n#line 2 \"internal/internal-type-traits.hpp\"\n\n#include <type_traits>\n\
-    using namespace std;\n\nnamespace internal {\ntemplate <typename T>\nusing is_broadly_integral\
-    \ =\n    typename conditional_t<is_integral_v<T> || is_same_v<T, __int128_t> ||\n\
-    \                               is_same_v<T, __uint128_t>,\n                 \
-    \          true_type, false_type>::type;\n\ntemplate <typename T>\nusing is_broadly_signed\
-    \ =\n    typename conditional_t<is_signed_v<T> || is_same_v<T, __int128_t>,\n\
+    using namespace std;\n\nnamespace nyaan_internal {\ntemplate <typename T>\nusing\
+    \ is_broadly_integral =\n    typename conditional_t<is_integral_v<T> || is_same_v<T,\
+    \ __int128_t> ||\n                               is_same_v<T, __uint128_t>,\n\
     \                           true_type, false_type>::type;\n\ntemplate <typename\
-    \ T>\nusing is_broadly_unsigned =\n    typename conditional_t<is_unsigned_v<T>\
+    \ T>\nusing is_broadly_signed =\n    typename conditional_t<is_signed_v<T> ||\
+    \ is_same_v<T, __int128_t>,\n                           true_type, false_type>::type;\n\
+    \ntemplate <typename T>\nusing is_broadly_unsigned =\n    typename conditional_t<is_unsigned_v<T>\
     \ || is_same_v<T, __uint128_t>,\n                           true_type, false_type>::type;\n\
     \n#define ENABLE_VALUE(x) \\\n  template <typename T> \\\n  constexpr bool x##_v\
     \ = x<T>::value;\n\nENABLE_VALUE(is_broadly_integral);\nENABLE_VALUE(is_broadly_signed);\n\
@@ -57,12 +57,12 @@ data:
     \                  \\\n  template <class T>                                  \
     \          \\\n  struct has_##var<T, void_t<decltype(T::var)>> : true_type {};\
     \ \\\n  template <class T>                                            \\\n  constexpr\
-    \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace internal\n#line\
-    \ 4 \"internal/internal-math.hpp\"\n\nnamespace internal {\n\n#include <cassert>\n\
-    #include <vector>\nusing namespace std;\n\n// a mod p\ntemplate <typename T>\n\
-    T safe_mod(T a, T p) {\n  a %= p;\n  if constexpr (is_broadly_signed_v<T>) {\n\
-    \    if (a < 0) a += p;\n  }\n  return a;\n}\n\n// \u8FD4\u308A\u5024\uFF1Apair(g,\
-    \ x)\n// s.t. g = gcd(a, b), xa = g (mod b), 0 <= x < b/g\ntemplate <typename\
+    \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace nyaan_internal\n\
+    #line 4 \"internal/internal-math.hpp\"\n\nnamespace nyaan_internal {\n\n#include\
+    \ <cassert>\n#include <vector>\nusing namespace std;\n\n// a mod p\ntemplate <typename\
+    \ T>\nT safe_mod(T a, T p) {\n  a %= p;\n  if constexpr (is_broadly_signed_v<T>)\
+    \ {\n    if (a < 0) a += p;\n  }\n  return a;\n}\n\n// \u8FD4\u308A\u5024\uFF1A\
+    pair(g, x)\n// s.t. g = gcd(a, b), xa = g (mod b), 0 <= x < b/g\ntemplate <typename\
     \ T>\npair<T, T> inv_gcd(T a, T p) {\n  static_assert(is_broadly_signed_v<T>);\n\
     \  a = safe_mod(a, p);\n  if (a == 0) return {p, 0};\n  T b = p, x = 1, y = 0;\n\
     \  while (a != 0) {\n    T q = b / a;\n    swap(a, b %= a);\n    swap(x, y -=\
@@ -86,11 +86,11 @@ data:
     \ [g, im] = inv_gcd(m0, m1);\n    T u1 = m1 / g;\n    if ((r1 - r0) % g) return\
     \ {0, 0};\n    T x = (r1 - r0) / g % u1 * im % u1;\n    r0 += x * m0;\n    m0\
     \ *= u1;\n    if (r0 < 0) r0 += m0;\n  }\n  return {r0, m0};\n}\n\n}  // namespace\
-    \ internal\n#line 2 \"modint/arbitrary-montgomery-modint.hpp\"\n\n#include <iostream>\n\
-    using namespace std;\n\ntemplate <typename Int, typename UInt, typename Long,\
-    \ typename ULong, int id>\nstruct ArbitraryLazyMontgomeryModIntBase {\n  using\
-    \ mint = ArbitraryLazyMontgomeryModIntBase;\n\n  inline static UInt mod;\n  inline\
-    \ static UInt r;\n  inline static UInt n2;\n  static constexpr int bit_length\
+    \ nyaan_internal\n#line 2 \"modint/arbitrary-montgomery-modint.hpp\"\n\n#include\
+    \ <iostream>\nusing namespace std;\n\ntemplate <typename Int, typename UInt, typename\
+    \ Long, typename ULong, int id>\nstruct ArbitraryLazyMontgomeryModIntBase {\n\
+    \  using mint = ArbitraryLazyMontgomeryModIntBase;\n\n  inline static UInt mod;\n\
+    \  inline static UInt r;\n  inline static UInt n2;\n  static constexpr int bit_length\
     \ = sizeof(UInt) * 8;\n\n  static UInt get_r() {\n    UInt ret = mod;\n    while\
     \ (mod * ret != 1) ret *= UInt(2) - mod * ret;\n    return ret;\n  }\n  static\
     \ void set_mod(UInt m) {\n    assert(m < (UInt(1u) << (bit_length - 2)));\n  \
@@ -131,7 +131,7 @@ data:
     \nusing namespace std;\n\n#line 2 \"misc/rng.hpp\"\n\n#include <algorithm>\n#line\
     \ 5 \"misc/rng.hpp\"\n#include <unordered_set>\n#line 7 \"misc/rng.hpp\"\nusing\
     \ namespace std;\n\n#line 2 \"internal/internal-seed.hpp\"\n\n#include <chrono>\n\
-    using namespace std;\n\nnamespace internal {\nunsigned long long non_deterministic_seed()\
+    using namespace std;\n\nnamespace nyaan_internal {\nunsigned long long non_deterministic_seed()\
     \ {\n  unsigned long long m =\n      chrono::duration_cast<chrono::nanoseconds>(\n\
     \          chrono::high_resolution_clock::now().time_since_epoch())\n        \
     \  .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >> 31, m\
@@ -142,29 +142,29 @@ data:
     \u308B\u306E\u3067\u6CE8\u610F\n// #define RANDOMIZED_SEED \u3059\u308B\u3068\u30B7\
     \u30FC\u30C9\u304C\u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long long\
     \ seed() {\n#if defined(NyaanLocal) && !defined(RANDOMIZED_SEED)\n  return deterministic_seed();\n\
-    #else\n  return non_deterministic_seed();\n#endif\n}\n\n}  // namespace internal\n\
+    #else\n  return non_deterministic_seed();\n#endif\n}\n\n}  // namespace nyaan_internal\n\
     #line 10 \"misc/rng.hpp\"\n\nnamespace my_rand {\nusing i64 = long long;\nusing\
     \ u64 = unsigned long long;\n\n// [0, 2^64 - 1)\nu64 rng() {\n  static u64 _x\
-    \ = internal::seed();\n  return _x ^= _x << 7, _x ^= _x >> 9;\n}\n\n// [l, r]\n\
-    i64 rng(i64 l, i64 r) {\n  assert(l <= r);\n  return l + rng() % u64(r - l + 1);\n\
-    }\n\n// [l, r)\ni64 randint(i64 l, i64 r) {\n  assert(l < r);\n  return l + rng()\
-    \ % u64(r - l);\n}\n\n// choose n numbers from [l, r) without overlapping\nvector<i64>\
-    \ randset(i64 l, i64 r, i64 n) {\n  assert(l <= r && n <= r - l);\n  unordered_set<i64>\
-    \ s;\n  for (i64 i = n; i; --i) {\n    i64 m = randint(l, r + 1 - i);\n    if\
-    \ (s.find(m) != s.end()) m = r - i;\n    s.insert(m);\n  }\n  vector<i64> ret;\n\
-    \  for (auto& x : s) ret.push_back(x);\n  sort(begin(ret), end(ret));\n  return\
-    \ ret;\n}\n\n// [0.0, 1.0)\ndouble rnd() { return rng() * 5.42101086242752217004e-20;\
-    \ }\n// [l, r)\ndouble rnd(double l, double r) {\n  assert(l < r);\n  return l\
-    \ + rnd() * (r - l);\n}\n\ntemplate <typename T>\nvoid randshf(vector<T>& v) {\n\
-    \  int n = v.size();\n  for (int i = 1; i < n; i++) swap(v[i], v[randint(0, i\
-    \ + 1)]);\n}\n\n}  // namespace my_rand\n\nusing my_rand::randint;\nusing my_rand::randset;\n\
-    using my_rand::randshf;\nusing my_rand::rnd;\nusing my_rand::rng;\n#line 2 \"\
-    prime/miller-rabin.hpp\"\n\n#line 4 \"prime/miller-rabin.hpp\"\nusing namespace\
-    \ std;\n\n#line 8 \"prime/miller-rabin.hpp\"\n\nnamespace fast_factorize {\n\n\
-    template <typename T, typename U>\nbool miller_rabin(const T& n, vector<T> ws)\
-    \ {\n  if (n <= 2) return n == 2;\n  if (n % 2 == 0) return false;\n\n  T d =\
-    \ n - 1;\n  while (d % 2 == 0) d /= 2;\n  U e = 1, rev = n - 1;\n  for (T w :\
-    \ ws) {\n    if (w % n == 0) continue;\n    T t = d;\n    U y = internal::modpow<T,\
+    \ = nyaan_internal::seed();\n  return _x ^= _x << 7, _x ^= _x >> 9;\n}\n\n// [l,\
+    \ r]\ni64 rng(i64 l, i64 r) {\n  assert(l <= r);\n  return l + rng() % u64(r -\
+    \ l + 1);\n}\n\n// [l, r)\ni64 randint(i64 l, i64 r) {\n  assert(l < r);\n  return\
+    \ l + rng() % u64(r - l);\n}\n\n// choose n numbers from [l, r) without overlapping\n\
+    vector<i64> randset(i64 l, i64 r, i64 n) {\n  assert(l <= r && n <= r - l);\n\
+    \  unordered_set<i64> s;\n  for (i64 i = n; i; --i) {\n    i64 m = randint(l,\
+    \ r + 1 - i);\n    if (s.find(m) != s.end()) m = r - i;\n    s.insert(m);\n  }\n\
+    \  vector<i64> ret;\n  for (auto& x : s) ret.push_back(x);\n  sort(begin(ret),\
+    \ end(ret));\n  return ret;\n}\n\n// [0.0, 1.0)\ndouble rnd() { return rng() *\
+    \ 5.42101086242752217004e-20; }\n// [l, r)\ndouble rnd(double l, double r) {\n\
+    \  assert(l < r);\n  return l + rnd() * (r - l);\n}\n\ntemplate <typename T>\n\
+    void randshf(vector<T>& v) {\n  int n = v.size();\n  for (int i = 1; i < n; i++)\
+    \ swap(v[i], v[randint(0, i + 1)]);\n}\n\n}  // namespace my_rand\n\nusing my_rand::randint;\n\
+    using my_rand::randset;\nusing my_rand::randshf;\nusing my_rand::rnd;\nusing my_rand::rng;\n\
+    #line 2 \"prime/miller-rabin.hpp\"\n\n#line 4 \"prime/miller-rabin.hpp\"\nusing\
+    \ namespace std;\n\n#line 8 \"prime/miller-rabin.hpp\"\n\nnamespace fast_factorize\
+    \ {\n\ntemplate <typename T, typename U>\nbool miller_rabin(const T& n, vector<T>\
+    \ ws) {\n  if (n <= 2) return n == 2;\n  if (n % 2 == 0) return false;\n\n  T\
+    \ d = n - 1;\n  while (d % 2 == 0) d /= 2;\n  U e = 1, rev = n - 1;\n  for (T\
+    \ w : ws) {\n    if (w % n == 0) continue;\n    T t = d;\n    U y = nyaan_internal::modpow<T,\
     \ U>(w, t, n);\n    while (t != n - 1 && y != e && y != rev) y = y * y % n, t\
     \ *= 2;\n    if (y != rev && t % 2 == 0) return false;\n  }\n  return true;\n\
     }\n\nbool miller_rabin_u64(unsigned long long n) {\n  return miller_rabin<unsigned\
@@ -230,11 +230,11 @@ data:
     \ <typename INT, typename LINT, typename mint>\nmint pe_root(INT c, INT pi, INT\
     \ ei, INT p) {\n  if (mint::get_mod() != decltype(mint::a)(p)) mint::set_mod(p);\n\
     \  INT s = p - 1, t = 0;\n  while (s % pi == 0) s /= pi, ++t;\n  INT pe = 1;\n\
-    \  for (INT _ = 0; _ < ei; ++_) pe *= pi;\n\n  INT u = internal::inv(pe - s %\
-    \ pe, pe);\n  mint mc = c, one = 1;\n  mint z = mc.pow((s * u + 1) / pe);\n  mint\
-    \ zpe = mc.pow(s * u);\n  if (zpe == one) return z;\n  assert(t > ei);\n\n  mint\
-    \ vs;\n  {\n    INT ptm1 = 1;\n    for (INT _ = 0; _ < t - 1; ++_) ptm1 *= pi;\n\
-    \    for (mint v = 2;; v += one) {\n      vs = v.pow(s);\n      if (vs.pow(ptm1)\
+    \  for (INT _ = 0; _ < ei; ++_) pe *= pi;\n\n  INT u = nyaan_internal::inv(pe\
+    \ - s % pe, pe);\n  mint mc = c, one = 1;\n  mint z = mc.pow((s * u + 1) / pe);\n\
+    \  mint zpe = mc.pow(s * u);\n  if (zpe == one) return z;\n  assert(t > ei);\n\
+    \n  mint vs;\n  {\n    INT ptm1 = 1;\n    for (INT _ = 0; _ < t - 1; ++_) ptm1\
+    \ *= pi;\n    for (mint v = 2;; v += one) {\n      vs = v.pow(s);\n      if (vs.pow(ptm1)\
     \ != one) break;\n    }\n  }\n\n  mint vspe = vs.pow(pe);\n  INT vs_e = ei;\n\
     \  mint base = vspe;\n  for (INT _ = 0; _ < t - ei - 1; _++) base = base.pow(pi);\n\
     \  Memo<mint> memo(base, (INT)(sqrt(t - ei) * sqrt(pi)) + 1, pi);\n\n  while (zpe\
@@ -247,8 +247,8 @@ data:
     \  }\n  return z;\n}\n\ntemplate <typename INT, typename LINT, typename mint>\n\
     INT inner_kth_root(INT a, INT k, INT p) {\n  a %= p;\n  if (k == 0) return a ==\
     \ 1 ? a : -1;\n  if (a <= 1 || k <= 1) return a;\n  assert(p > 2);\n  if (mint::get_mod()\
-    \ != decltype(mint::a)(p)) mint::set_mod(p);\n  INT g = gcd(p - 1, k);\n  if (internal::modpow<INT,\
-    \ LINT>(a, (p - 1) / g, p) != 1) return -1;\n  a = mint(a).pow(internal::inv(k\
+    \ != decltype(mint::a)(p)) mint::set_mod(p);\n  INT g = gcd(p - 1, k);\n  if (nyaan_internal::modpow<INT,\
+    \ LINT>(a, (p - 1) / g, p) != 1) return -1;\n  a = mint(a).pow(nyaan_internal::inv(k\
     \ / g, (p - 1) / g)).get();\n  unordered_map<INT, int> fac;\n  for (auto &f :\
     \ factorize(g)) fac[f]++;\n  if (mint::get_mod() != decltype(mint::a)(p)) mint::set_mod(p);\n\
     \  for (auto pp : fac)\n    a = pe_root<INT, LINT, mint>(a, pp.first, pp.second,\
@@ -276,7 +276,7 @@ data:
     \ os;\n};\n\ntemplate <typename INT, typename LINT, typename mint>\nmint pe_root(INT\
     \ c, INT pi, INT ei, INT p) {\n  if (mint::get_mod() != decltype(mint::a)(p))\
     \ mint::set_mod(p);\n  INT s = p - 1, t = 0;\n  while (s % pi == 0) s /= pi, ++t;\n\
-    \  INT pe = 1;\n  for (INT _ = 0; _ < ei; ++_) pe *= pi;\n\n  INT u = internal::inv(pe\
+    \  INT pe = 1;\n  for (INT _ = 0; _ < ei; ++_) pe *= pi;\n\n  INT u = nyaan_internal::inv(pe\
     \ - s % pe, pe);\n  mint mc = c, one = 1;\n  mint z = mc.pow((s * u + 1) / pe);\n\
     \  mint zpe = mc.pow(s * u);\n  if (zpe == one) return z;\n  assert(t > ei);\n\
     \n  mint vs;\n  {\n    INT ptm1 = 1;\n    for (INT _ = 0; _ < t - 1; ++_) ptm1\
@@ -293,8 +293,8 @@ data:
     \  }\n  return z;\n}\n\ntemplate <typename INT, typename LINT, typename mint>\n\
     INT inner_kth_root(INT a, INT k, INT p) {\n  a %= p;\n  if (k == 0) return a ==\
     \ 1 ? a : -1;\n  if (a <= 1 || k <= 1) return a;\n  assert(p > 2);\n  if (mint::get_mod()\
-    \ != decltype(mint::a)(p)) mint::set_mod(p);\n  INT g = gcd(p - 1, k);\n  if (internal::modpow<INT,\
-    \ LINT>(a, (p - 1) / g, p) != 1) return -1;\n  a = mint(a).pow(internal::inv(k\
+    \ != decltype(mint::a)(p)) mint::set_mod(p);\n  INT g = gcd(p - 1, k);\n  if (nyaan_internal::modpow<INT,\
+    \ LINT>(a, (p - 1) / g, p) != 1) return -1;\n  a = mint(a).pow(nyaan_internal::inv(k\
     \ / g, (p - 1) / g)).get();\n  unordered_map<INT, int> fac;\n  for (auto &f :\
     \ factorize(g)) fac[f]++;\n  if (mint::get_mod() != decltype(mint::a)(p)) mint::set_mod(p);\n\
     \  for (auto pp : fac)\n    a = pe_root<INT, LINT, mint>(a, pp.first, pp.second,\
@@ -317,7 +317,7 @@ data:
   isVerificationFile: false
   path: modulo/mod-kth-root.hpp
   requiredBy: []
-  timestamp: '2026-06-08 17:59:24+09:00'
+  timestamp: '2026-06-27 14:52:13+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-math/yosupo-kth-root-mod.test.cpp

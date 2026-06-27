@@ -267,7 +267,7 @@ data:
     \ 5 \"verify/verify-aoj-other/aoj-2171-bigrational.test.cpp\"\n//\n#line 2 \"\
     misc/rng.hpp\"\n\n#line 7 \"misc/rng.hpp\"\nusing namespace std;\n\n#line 2 \"\
     internal/internal-seed.hpp\"\n\n#line 4 \"internal/internal-seed.hpp\"\nusing\
-    \ namespace std;\n\nnamespace internal {\nunsigned long long non_deterministic_seed()\
+    \ namespace std;\n\nnamespace nyaan_internal {\nunsigned long long non_deterministic_seed()\
     \ {\n  unsigned long long m =\n      chrono::duration_cast<chrono::nanoseconds>(\n\
     \          chrono::high_resolution_clock::now().time_since_epoch())\n        \
     \  .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >> 31, m\
@@ -278,46 +278,46 @@ data:
     \u308B\u306E\u3067\u6CE8\u610F\n// #define RANDOMIZED_SEED \u3059\u308B\u3068\u30B7\
     \u30FC\u30C9\u304C\u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long long\
     \ seed() {\n#if defined(NyaanLocal) && !defined(RANDOMIZED_SEED)\n  return deterministic_seed();\n\
-    #else\n  return non_deterministic_seed();\n#endif\n}\n\n}  // namespace internal\n\
+    #else\n  return non_deterministic_seed();\n#endif\n}\n\n}  // namespace nyaan_internal\n\
     #line 10 \"misc/rng.hpp\"\n\nnamespace my_rand {\nusing i64 = long long;\nusing\
     \ u64 = unsigned long long;\n\n// [0, 2^64 - 1)\nu64 rng() {\n  static u64 _x\
-    \ = internal::seed();\n  return _x ^= _x << 7, _x ^= _x >> 9;\n}\n\n// [l, r]\n\
-    i64 rng(i64 l, i64 r) {\n  assert(l <= r);\n  return l + rng() % u64(r - l + 1);\n\
-    }\n\n// [l, r)\ni64 randint(i64 l, i64 r) {\n  assert(l < r);\n  return l + rng()\
-    \ % u64(r - l);\n}\n\n// choose n numbers from [l, r) without overlapping\nvector<i64>\
-    \ randset(i64 l, i64 r, i64 n) {\n  assert(l <= r && n <= r - l);\n  unordered_set<i64>\
-    \ s;\n  for (i64 i = n; i; --i) {\n    i64 m = randint(l, r + 1 - i);\n    if\
-    \ (s.find(m) != s.end()) m = r - i;\n    s.insert(m);\n  }\n  vector<i64> ret;\n\
-    \  for (auto& x : s) ret.push_back(x);\n  sort(begin(ret), end(ret));\n  return\
-    \ ret;\n}\n\n// [0.0, 1.0)\ndouble rnd() { return rng() * 5.42101086242752217004e-20;\
-    \ }\n// [l, r)\ndouble rnd(double l, double r) {\n  assert(l < r);\n  return l\
-    \ + rnd() * (r - l);\n}\n\ntemplate <typename T>\nvoid randshf(vector<T>& v) {\n\
-    \  int n = v.size();\n  for (int i = 1; i < n; i++) swap(v[i], v[randint(0, i\
-    \ + 1)]);\n}\n\n}  // namespace my_rand\n\nusing my_rand::randint;\nusing my_rand::randset;\n\
-    using my_rand::randshf;\nusing my_rand::rnd;\nusing my_rand::rng;\n#line 7 \"\
-    verify/verify-aoj-other/aoj-2171-bigrational.test.cpp\"\n//\n#line 2 \"shortest-path/dijkstra.hpp\"\
-    \n\n#line 2 \"graph/graph-template.hpp\"\n\ntemplate <typename T>\nstruct edge\
-    \ {\n  int src, to;\n  T cost;\n\n  edge(int _to, T _cost) : src(-1), to(_to),\
-    \ cost(_cost) {}\n  edge(int _src, int _to, T _cost) : src(_src), to(_to), cost(_cost)\
-    \ {}\n\n  edge &operator=(const int &x) {\n    to = x;\n    return *this;\n  }\n\
-    \n  operator int() const { return to; }\n};\ntemplate <typename T>\nusing Edges\
-    \ = vector<edge<T>>;\ntemplate <typename T>\nusing WeightedGraph = vector<Edges<T>>;\n\
-    using UnweightedGraph = vector<vector<int>>;\n\n// Input of (Unweighted) Graph\n\
-    UnweightedGraph graph(int N, int M = -1, bool is_directed = false,\n         \
-    \             bool is_1origin = true) {\n  UnweightedGraph g(N);\n  if (M == -1)\
-    \ M = N - 1;\n  for (int _ = 0; _ < M; _++) {\n    int x, y;\n    cin >> x >>\
-    \ y;\n    if (is_1origin) x--, y--;\n    g[x].push_back(y);\n    if (!is_directed)\
-    \ g[y].push_back(x);\n  }\n  return g;\n}\n\n// Input of Weighted Graph\ntemplate\
-    \ <typename T>\nWeightedGraph<T> wgraph(int N, int M = -1, bool is_directed =\
-    \ false,\n                        bool is_1origin = true) {\n  WeightedGraph<T>\
+    \ = nyaan_internal::seed();\n  return _x ^= _x << 7, _x ^= _x >> 9;\n}\n\n// [l,\
+    \ r]\ni64 rng(i64 l, i64 r) {\n  assert(l <= r);\n  return l + rng() % u64(r -\
+    \ l + 1);\n}\n\n// [l, r)\ni64 randint(i64 l, i64 r) {\n  assert(l < r);\n  return\
+    \ l + rng() % u64(r - l);\n}\n\n// choose n numbers from [l, r) without overlapping\n\
+    vector<i64> randset(i64 l, i64 r, i64 n) {\n  assert(l <= r && n <= r - l);\n\
+    \  unordered_set<i64> s;\n  for (i64 i = n; i; --i) {\n    i64 m = randint(l,\
+    \ r + 1 - i);\n    if (s.find(m) != s.end()) m = r - i;\n    s.insert(m);\n  }\n\
+    \  vector<i64> ret;\n  for (auto& x : s) ret.push_back(x);\n  sort(begin(ret),\
+    \ end(ret));\n  return ret;\n}\n\n// [0.0, 1.0)\ndouble rnd() { return rng() *\
+    \ 5.42101086242752217004e-20; }\n// [l, r)\ndouble rnd(double l, double r) {\n\
+    \  assert(l < r);\n  return l + rnd() * (r - l);\n}\n\ntemplate <typename T>\n\
+    void randshf(vector<T>& v) {\n  int n = v.size();\n  for (int i = 1; i < n; i++)\
+    \ swap(v[i], v[randint(0, i + 1)]);\n}\n\n}  // namespace my_rand\n\nusing my_rand::randint;\n\
+    using my_rand::randset;\nusing my_rand::randshf;\nusing my_rand::rnd;\nusing my_rand::rng;\n\
+    #line 7 \"verify/verify-aoj-other/aoj-2171-bigrational.test.cpp\"\n//\n#line 2\
+    \ \"shortest-path/dijkstra.hpp\"\n\n#line 2 \"graph/graph-template.hpp\"\n\ntemplate\
+    \ <typename T>\nstruct edge {\n  int src, to;\n  T cost;\n\n  edge(int _to, T\
+    \ _cost) : src(-1), to(_to), cost(_cost) {}\n  edge(int _src, int _to, T _cost)\
+    \ : src(_src), to(_to), cost(_cost) {}\n\n  edge &operator=(const int &x) {\n\
+    \    to = x;\n    return *this;\n  }\n\n  operator int() const { return to; }\n\
+    };\ntemplate <typename T>\nusing Edges = vector<edge<T>>;\ntemplate <typename\
+    \ T>\nusing WeightedGraph = vector<Edges<T>>;\nusing UnweightedGraph = vector<vector<int>>;\n\
+    \n// Input of (Unweighted) Graph\nUnweightedGraph graph(int N, int M = -1, bool\
+    \ is_directed = false,\n                      bool is_1origin = true) {\n  UnweightedGraph\
     \ g(N);\n  if (M == -1) M = N - 1;\n  for (int _ = 0; _ < M; _++) {\n    int x,\
-    \ y;\n    cin >> x >> y;\n    T c;\n    cin >> c;\n    if (is_1origin) x--, y--;\n\
-    \    g[x].emplace_back(x, y, c);\n    if (!is_directed) g[y].emplace_back(y, x,\
-    \ c);\n  }\n  return g;\n}\n\n// Input of Edges\ntemplate <typename T>\nEdges<T>\
-    \ esgraph([[maybe_unused]] int N, int M, int is_weighted = true,\n           \
-    \      bool is_1origin = true) {\n  Edges<T> es;\n  for (int _ = 0; _ < M; _++)\
-    \ {\n    int x, y;\n    cin >> x >> y;\n    T c;\n    if (is_weighted)\n     \
-    \ cin >> c;\n    else\n      c = 1;\n    if (is_1origin) x--, y--;\n    es.emplace_back(x,\
+    \ y;\n    cin >> x >> y;\n    if (is_1origin) x--, y--;\n    g[x].push_back(y);\n\
+    \    if (!is_directed) g[y].push_back(x);\n  }\n  return g;\n}\n\n// Input of\
+    \ Weighted Graph\ntemplate <typename T>\nWeightedGraph<T> wgraph(int N, int M\
+    \ = -1, bool is_directed = false,\n                        bool is_1origin = true)\
+    \ {\n  WeightedGraph<T> g(N);\n  if (M == -1) M = N - 1;\n  for (int _ = 0; _\
+    \ < M; _++) {\n    int x, y;\n    cin >> x >> y;\n    T c;\n    cin >> c;\n  \
+    \  if (is_1origin) x--, y--;\n    g[x].emplace_back(x, y, c);\n    if (!is_directed)\
+    \ g[y].emplace_back(y, x, c);\n  }\n  return g;\n}\n\n// Input of Edges\ntemplate\
+    \ <typename T>\nEdges<T> esgraph([[maybe_unused]] int N, int M, int is_weighted\
+    \ = true,\n                 bool is_1origin = true) {\n  Edges<T> es;\n  for (int\
+    \ _ = 0; _ < M; _++) {\n    int x, y;\n    cin >> x >> y;\n    T c;\n    if (is_weighted)\n\
+    \      cin >> c;\n    else\n      c = 1;\n    if (is_1origin) x--, y--;\n    es.emplace_back(x,\
     \ y, c);\n  }\n  return es;\n}\n\n// Input of Adjacency Matrix\ntemplate <typename\
     \ T>\nvector<vector<T>> adjgraph(int N, int M, T INF, int is_weighted = true,\n\
     \                           bool is_directed = false, bool is_1origin = true)\
@@ -355,7 +355,7 @@ data:
     \  if (b < 0) b = -b;\n  return BinaryGCDImpl::binary_gcd128(a, b);\n}\n\n/**\n\
     \ * @brief binary GCD\n */\n#line 2 \"math/bigint.hpp\"\n\n#line 9 \"math/bigint.hpp\"\
     \nusing namespace std;\n\n#line 2 \"internal/internal-type-traits.hpp\"\n\n#line\
-    \ 4 \"internal/internal-type-traits.hpp\"\nusing namespace std;\n\nnamespace internal\
+    \ 4 \"internal/internal-type-traits.hpp\"\nusing namespace std;\n\nnamespace nyaan_internal\
     \ {\ntemplate <typename T>\nusing is_broadly_integral =\n    typename conditional_t<is_integral_v<T>\
     \ || is_same_v<T, __int128_t> ||\n                               is_same_v<T,\
     \ __uint128_t>,\n                           true_type, false_type>::type;\n\n\
@@ -377,9 +377,9 @@ data:
     \                  \\\n  template <class T>                                  \
     \          \\\n  struct has_##var<T, void_t<decltype(T::var)>> : true_type {};\
     \ \\\n  template <class T>                                            \\\n  constexpr\
-    \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace internal\n#line\
-    \ 2 \"ntt/arbitrary-ntt.hpp\"\n\n#line 6 \"ntt/arbitrary-ntt.hpp\"\nusing namespace\
-    \ std;\n\n#line 2 \"modint/montgomery-modint.hpp\"\n\n#line 5 \"modint/montgomery-modint.hpp\"\
+    \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace nyaan_internal\n\
+    #line 2 \"ntt/arbitrary-ntt.hpp\"\n\n#line 6 \"ntt/arbitrary-ntt.hpp\"\nusing\
+    \ namespace std;\n\n#line 2 \"modint/montgomery-modint.hpp\"\n\n#line 5 \"modint/montgomery-modint.hpp\"\
     \n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n\
     \  using i32 = int32_t;\n  using u32 = uint32_t;\n  using u64 = uint64_t;\n\n\
     \  static constexpr u32 get_r() {\n    u32 ret = mod;\n    for (i32 i = 0; i <\
@@ -548,8 +548,8 @@ data:
     \ tens = {};\n\n  static constexpr int D = 1000000000;\n  static constexpr int\
     \ logD = 9;\n  bool neg;\n  vector<int> dat;\n\n  MultiPrecisionInteger() : neg(false),\
     \ dat() {}\n\n  MultiPrecisionInteger(bool n, const vector<int>& d) : neg(n),\
-    \ dat(d) {}\n\n  template <typename I,\n            enable_if_t<internal::is_broadly_integral_v<I>>*\
-    \ = nullptr>\n  MultiPrecisionInteger(I x) : neg(false) {\n    if constexpr (internal::is_broadly_signed_v<I>)\
+    \ dat(d) {}\n\n  template <typename I,\n            enable_if_t<nyaan_internal::is_broadly_integral_v<I>>*\
+    \ = nullptr>\n  MultiPrecisionInteger(I x) : neg(false) {\n    if constexpr (nyaan_internal::is_broadly_signed_v<I>)\
     \ {\n      if (x < 0) neg = true, x = -x;\n    }\n    while (x) dat.push_back(x\
     \ % D), x /= D;\n  }\n\n  MultiPrecisionInteger(const string& S) : neg(false)\
     \ {\n    assert(!S.empty());\n    if (S.size() == 1u && S[0] == '0') return;\n\
@@ -724,8 +724,8 @@ data:
     \    }\n    if (!zero_padding) {\n      while (res.size() && res.back() == '0')\
     \ res.pop_back();\n      assert(!res.empty());\n    }\n    reverse(begin(res),\
     \ end(res));\n    return res;\n  }\n\n  // convert ll to vec\n  template <typename\
-    \ I,\n            enable_if_t<internal::is_broadly_integral_v<I>>* = nullptr>\n\
-    \  static vector<int> _integer_to_vec(I x) {\n    if constexpr (internal::is_broadly_signed_v<I>)\
+    \ I,\n            enable_if_t<nyaan_internal::is_broadly_integral_v<I>>* = nullptr>\n\
+    \  static vector<int> _integer_to_vec(I x) {\n    if constexpr (nyaan_internal::is_broadly_signed_v<I>)\
     \ {\n      assert(x >= 0);\n    }\n    vector<int> res;\n    while (x) res.push_back(x\
     \ % D), x /= D;\n    return res;\n  }\n\n  static long long _to_ll(const vector<int>&\
     \ a) {\n    long long res = 0;\n    for (int i = (int)a.size() - 1; i >= 0; i--)\
@@ -781,40 +781,40 @@ data:
     \ pair<T1, T2>& _p)\n      : RationalBase<T, U>(_p.first, _p.second) {}\n  template\
     \ <typename T1, typename T2>\n  RationalBase(const T1& _x, const T2& _y) : x(_x),\
     \ y(_y) {\n    assert(y != 0);\n    if (y == -1) x = -x, y = -y;\n    if (y !=\
-    \ 1) {\n      T g;\n      if constexpr (internal::is_broadly_integral_v<T>) {\n\
-    \        if constexpr (sizeof(T) == 16) {\n          g = binary_gcd128(x, y);\n\
-    \        } else {\n          g = binary_gcd(x, y);\n        }\n      } else {\n\
-    \        g = gcd(x, y);\n      }\n      if (g != 0) x /= g, y /= g;\n      if\
-    \ (y < 0) x = -x, y = -y;\n    }\n  }\n  // y = 0 \u306E\u4EE3\u5165\u3082\u8A8D\
-    \u3081\u308B\n  static R raw(T _x, T _y) {\n    R r;\n    r.x = _x, r.y = _y;\n\
-    \    return r;\n  }\n  friend R operator+(const R& l, const R& r) {\n    if (l.y\
-    \ == r.y) return R{l.x + r.x, l.y};\n    return R{l.x * r.y + l.y * r.x, l.y *\
-    \ r.y};\n  }\n  friend R operator-(const R& l, const R& r) {\n    if (l.y == r.y)\
-    \ return R{l.x - r.x, l.y};\n    return R{l.x * r.y - l.y * r.x, l.y * r.y};\n\
-    \  }\n  friend R operator*(const R& l, const R& r) { return R{l.x * r.x, l.y *\
-    \ r.y}; }\n  friend R operator/(const R& l, const R& r) { return R{l.x * r.y,\
-    \ l.y * r.x}; }\n  R& operator+=(const R& r) { return (*this) = (*this) + r; }\n\
-    \  R& operator-=(const R& r) { return (*this) = (*this) - r; }\n  R& operator*=(const\
-    \ R& r) { return (*this) = (*this) * r; }\n  R& operator/=(const R& r) { return\
-    \ (*this) = (*this) / r; }\n  R operator-() const { return raw(-x, y); }\n  R\
-    \ inverse() const {\n    assert(x != 0);\n    R r = raw(y, x);\n    if (r.y <\
-    \ 0) r.x = -r.x, r.y = -r.y;\n    return r;\n  }\n  R pow(long long p) const {\n\
-    \    R res{1}, base{*this};\n    while (p) {\n      if (p & 1) res *= base;\n\
-    \      base *= base;\n      p >>= 1;\n    }\n    return res;\n  }\n  friend bool\
-    \ operator==(const R& l, const R& r) {\n    return l.x == r.x && l.y == r.y;\n\
-    \  };\n  friend bool operator!=(const R& l, const R& r) {\n    return l.x != r.x\
-    \ || l.y != r.y;\n  };\n  friend bool operator<(const R& l, const R& r) {\n  \
-    \  return U{l.x} * r.y < U{l.y} * r.x;\n  };\n  friend bool operator<=(const R&\
-    \ l, const R& r) { return l < r || l == r; }\n  friend bool operator>(const R&\
-    \ l, const R& r) {\n    return U{l.x} * r.y > U{l.y} * r.x;\n  };\n  friend bool\
-    \ operator>=(const R& l, const R& r) { return l > r || l == r; }\n  friend ostream&\
-    \ operator<<(ostream& os, const R& r) {\n    os << r.x;\n    if (r.x != 0 && r.y\
-    \ != 1) os << \"/\" << r.y;\n    return os;\n  }\n\n  // T \u306B\u30AD\u30E3\u30B9\
-    \u30C8\u3055\u308C\u308B\u306E\u3067 T \u304C bigint \u306E\u5834\u5408\u306F\
-    \ to_ll \u3082\u8981\u308B\n  T to_mint(T mod) const {\n    assert(mod != 0);\n\
-    \    T a = y, b = mod, u = 1, v = 0, t;\n    while (b > 0) {\n      t = a / b;\n\
-    \      swap(a -= t * b, b);\n      swap(u -= t * v, v);\n    }\n    return U((u\
-    \ % mod + mod) % mod) * x % mod;\n  }\n};\n\nusing Rational = RationalBase<long\
+    \ 1) {\n      T g;\n      if constexpr (nyaan_internal::is_broadly_integral_v<T>)\
+    \ {\n        if constexpr (sizeof(T) == 16) {\n          g = binary_gcd128(x,\
+    \ y);\n        } else {\n          g = binary_gcd(x, y);\n        }\n      } else\
+    \ {\n        g = gcd(x, y);\n      }\n      if (g != 0) x /= g, y /= g;\n    \
+    \  if (y < 0) x = -x, y = -y;\n    }\n  }\n  // y = 0 \u306E\u4EE3\u5165\u3082\
+    \u8A8D\u3081\u308B\n  static R raw(T _x, T _y) {\n    R r;\n    r.x = _x, r.y\
+    \ = _y;\n    return r;\n  }\n  friend R operator+(const R& l, const R& r) {\n\
+    \    if (l.y == r.y) return R{l.x + r.x, l.y};\n    return R{l.x * r.y + l.y *\
+    \ r.x, l.y * r.y};\n  }\n  friend R operator-(const R& l, const R& r) {\n    if\
+    \ (l.y == r.y) return R{l.x - r.x, l.y};\n    return R{l.x * r.y - l.y * r.x,\
+    \ l.y * r.y};\n  }\n  friend R operator*(const R& l, const R& r) { return R{l.x\
+    \ * r.x, l.y * r.y}; }\n  friend R operator/(const R& l, const R& r) { return\
+    \ R{l.x * r.y, l.y * r.x}; }\n  R& operator+=(const R& r) { return (*this) = (*this)\
+    \ + r; }\n  R& operator-=(const R& r) { return (*this) = (*this) - r; }\n  R&\
+    \ operator*=(const R& r) { return (*this) = (*this) * r; }\n  R& operator/=(const\
+    \ R& r) { return (*this) = (*this) / r; }\n  R operator-() const { return raw(-x,\
+    \ y); }\n  R inverse() const {\n    assert(x != 0);\n    R r = raw(y, x);\n  \
+    \  if (r.y < 0) r.x = -r.x, r.y = -r.y;\n    return r;\n  }\n  R pow(long long\
+    \ p) const {\n    R res{1}, base{*this};\n    while (p) {\n      if (p & 1) res\
+    \ *= base;\n      base *= base;\n      p >>= 1;\n    }\n    return res;\n  }\n\
+    \  friend bool operator==(const R& l, const R& r) {\n    return l.x == r.x &&\
+    \ l.y == r.y;\n  };\n  friend bool operator!=(const R& l, const R& r) {\n    return\
+    \ l.x != r.x || l.y != r.y;\n  };\n  friend bool operator<(const R& l, const R&\
+    \ r) {\n    return U{l.x} * r.y < U{l.y} * r.x;\n  };\n  friend bool operator<=(const\
+    \ R& l, const R& r) { return l < r || l == r; }\n  friend bool operator>(const\
+    \ R& l, const R& r) {\n    return U{l.x} * r.y > U{l.y} * r.x;\n  };\n  friend\
+    \ bool operator>=(const R& l, const R& r) { return l > r || l == r; }\n  friend\
+    \ ostream& operator<<(ostream& os, const R& r) {\n    os << r.x;\n    if (r.x\
+    \ != 0 && r.y != 1) os << \"/\" << r.y;\n    return os;\n  }\n\n  // T \u306B\u30AD\
+    \u30E3\u30B9\u30C8\u3055\u308C\u308B\u306E\u3067 T \u304C bigint \u306E\u5834\u5408\
+    \u306F to_ll \u3082\u8981\u308B\n  T to_mint(T mod) const {\n    assert(mod !=\
+    \ 0);\n    T a = y, b = mod, u = 1, v = 0, t;\n    while (b > 0) {\n      t =\
+    \ a / b;\n      swap(a -= t * b, b);\n      swap(u -= t * v, v);\n    }\n    return\
+    \ U((u % mod + mod) % mod) * x % mod;\n  }\n};\n\nusing Rational = RationalBase<long\
     \ long, __int128_t>;\nusing Fraction = Rational;\n#line 5 \"math/bigint-rational.hpp\"\
     \n\nusing BigRational = RationalBase<bigint, bigint>;\n\ndouble to_double(const\
     \ BigRational& r) {\n  pair<long double, int> a = r.x.dfp();\n  pair<long double,\
@@ -926,7 +926,7 @@ data:
   isVerificationFile: true
   path: verify/verify-aoj-other/aoj-2171-bigrational.test.cpp
   requiredBy: []
-  timestamp: '2026-06-08 17:59:24+09:00'
+  timestamp: '2026-06-27 14:52:13+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-aoj-other/aoj-2171-bigrational.test.cpp

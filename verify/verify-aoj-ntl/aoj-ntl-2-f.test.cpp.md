@@ -31,13 +31,13 @@ data:
     \n#line 2 \"math/bigint.hpp\"\n\n#include <algorithm>\n#include <cassert>\n#include\
     \ <cmath>\n#include <iostream>\n#include <utility>\n#include <vector>\nusing namespace\
     \ std;\n\n#line 2 \"internal/internal-type-traits.hpp\"\n\n#include <type_traits>\n\
-    using namespace std;\n\nnamespace internal {\ntemplate <typename T>\nusing is_broadly_integral\
-    \ =\n    typename conditional_t<is_integral_v<T> || is_same_v<T, __int128_t> ||\n\
-    \                               is_same_v<T, __uint128_t>,\n                 \
-    \          true_type, false_type>::type;\n\ntemplate <typename T>\nusing is_broadly_signed\
-    \ =\n    typename conditional_t<is_signed_v<T> || is_same_v<T, __int128_t>,\n\
+    using namespace std;\n\nnamespace nyaan_internal {\ntemplate <typename T>\nusing\
+    \ is_broadly_integral =\n    typename conditional_t<is_integral_v<T> || is_same_v<T,\
+    \ __int128_t> ||\n                               is_same_v<T, __uint128_t>,\n\
     \                           true_type, false_type>::type;\n\ntemplate <typename\
-    \ T>\nusing is_broadly_unsigned =\n    typename conditional_t<is_unsigned_v<T>\
+    \ T>\nusing is_broadly_signed =\n    typename conditional_t<is_signed_v<T> ||\
+    \ is_same_v<T, __int128_t>,\n                           true_type, false_type>::type;\n\
+    \ntemplate <typename T>\nusing is_broadly_unsigned =\n    typename conditional_t<is_unsigned_v<T>\
     \ || is_same_v<T, __uint128_t>,\n                           true_type, false_type>::type;\n\
     \n#define ENABLE_VALUE(x) \\\n  template <typename T> \\\n  constexpr bool x##_v\
     \ = x<T>::value;\n\nENABLE_VALUE(is_broadly_integral);\nENABLE_VALUE(is_broadly_signed);\n\
@@ -53,18 +53,18 @@ data:
     \                  \\\n  template <class T>                                  \
     \          \\\n  struct has_##var<T, void_t<decltype(T::var)>> : true_type {};\
     \ \\\n  template <class T>                                            \\\n  constexpr\
-    \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace internal\n#line\
-    \ 2 \"ntt/arbitrary-ntt.hpp\"\n\n#line 4 \"ntt/arbitrary-ntt.hpp\"\n#include <cstdint>\n\
-    #line 6 \"ntt/arbitrary-ntt.hpp\"\nusing namespace std;\n\n#line 2 \"modint/montgomery-modint.hpp\"\
-    \n\n#line 5 \"modint/montgomery-modint.hpp\"\n\ntemplate <uint32_t mod>\nstruct\
-    \ LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n  using i32 =\
-    \ int32_t;\n  using u32 = uint32_t;\n  using u64 = uint64_t;\n\n  static constexpr\
-    \ u32 get_r() {\n    u32 ret = mod;\n    for (i32 i = 0; i < 4; ++i) ret *= 2\
-    \ - mod * ret;\n    return ret;\n  }\n\n  static constexpr u32 r = get_r();\n\
-    \  static constexpr u32 n2 = -u64(mod) % mod;\n  static_assert(mod < (1 << 30),\
-    \ \"invalid, mod >= 2 ^ 30\");\n  static_assert((mod & 1) == 1, \"invalid, mod\
-    \ % 2 == 0\");\n  static_assert(r * mod == 1, \"this code has bugs.\");\n\n  u32\
-    \ a;\n\n  constexpr LazyMontgomeryModInt() : a(0) {}\n  constexpr LazyMontgomeryModInt(const\
+    \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace nyaan_internal\n\
+    #line 2 \"ntt/arbitrary-ntt.hpp\"\n\n#line 4 \"ntt/arbitrary-ntt.hpp\"\n#include\
+    \ <cstdint>\n#line 6 \"ntt/arbitrary-ntt.hpp\"\nusing namespace std;\n\n#line\
+    \ 2 \"modint/montgomery-modint.hpp\"\n\n#line 5 \"modint/montgomery-modint.hpp\"\
+    \n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n\
+    \  using i32 = int32_t;\n  using u32 = uint32_t;\n  using u64 = uint64_t;\n\n\
+    \  static constexpr u32 get_r() {\n    u32 ret = mod;\n    for (i32 i = 0; i <\
+    \ 4; ++i) ret *= 2 - mod * ret;\n    return ret;\n  }\n\n  static constexpr u32\
+    \ r = get_r();\n  static constexpr u32 n2 = -u64(mod) % mod;\n  static_assert(mod\
+    \ < (1 << 30), \"invalid, mod >= 2 ^ 30\");\n  static_assert((mod & 1) == 1, \"\
+    invalid, mod % 2 == 0\");\n  static_assert(r * mod == 1, \"this code has bugs.\"\
+    );\n\n  u32 a;\n\n  constexpr LazyMontgomeryModInt() : a(0) {}\n  constexpr LazyMontgomeryModInt(const\
     \ int64_t &b)\n      : a(reduce(u64(b % mod + mod) * n2)){};\n\n  static constexpr\
     \ u32 reduce(const u64 &b) {\n    return (b + u64(u32(b) * u32(-r)) * mod) >>\
     \ 32;\n  }\n\n  constexpr mint &operator+=(const mint &b) {\n    if (i32(a +=\
@@ -225,8 +225,8 @@ data:
     \ tens = {};\n\n  static constexpr int D = 1000000000;\n  static constexpr int\
     \ logD = 9;\n  bool neg;\n  vector<int> dat;\n\n  MultiPrecisionInteger() : neg(false),\
     \ dat() {}\n\n  MultiPrecisionInteger(bool n, const vector<int>& d) : neg(n),\
-    \ dat(d) {}\n\n  template <typename I,\n            enable_if_t<internal::is_broadly_integral_v<I>>*\
-    \ = nullptr>\n  MultiPrecisionInteger(I x) : neg(false) {\n    if constexpr (internal::is_broadly_signed_v<I>)\
+    \ dat(d) {}\n\n  template <typename I,\n            enable_if_t<nyaan_internal::is_broadly_integral_v<I>>*\
+    \ = nullptr>\n  MultiPrecisionInteger(I x) : neg(false) {\n    if constexpr (nyaan_internal::is_broadly_signed_v<I>)\
     \ {\n      if (x < 0) neg = true, x = -x;\n    }\n    while (x) dat.push_back(x\
     \ % D), x /= D;\n  }\n\n  MultiPrecisionInteger(const string& S) : neg(false)\
     \ {\n    assert(!S.empty());\n    if (S.size() == 1u && S[0] == '0') return;\n\
@@ -401,8 +401,8 @@ data:
     \    }\n    if (!zero_padding) {\n      while (res.size() && res.back() == '0')\
     \ res.pop_back();\n      assert(!res.empty());\n    }\n    reverse(begin(res),\
     \ end(res));\n    return res;\n  }\n\n  // convert ll to vec\n  template <typename\
-    \ I,\n            enable_if_t<internal::is_broadly_integral_v<I>>* = nullptr>\n\
-    \  static vector<int> _integer_to_vec(I x) {\n    if constexpr (internal::is_broadly_signed_v<I>)\
+    \ I,\n            enable_if_t<nyaan_internal::is_broadly_integral_v<I>>* = nullptr>\n\
+    \  static vector<int> _integer_to_vec(I x) {\n    if constexpr (nyaan_internal::is_broadly_signed_v<I>)\
     \ {\n      assert(x >= 0);\n    }\n    vector<int> res;\n    while (x) res.push_back(x\
     \ % D), x /= D;\n    return res;\n  }\n\n  static long long _to_ll(const vector<int>&\
     \ a) {\n    long long res = 0;\n    for (int i = (int)a.size() - 1; i >= 0; i--)\
@@ -427,7 +427,7 @@ data:
   isVerificationFile: true
   path: verify/verify-aoj-ntl/aoj-ntl-2-f.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-27 14:52:13+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-aoj-ntl/aoj-ntl-2-f.test.cpp

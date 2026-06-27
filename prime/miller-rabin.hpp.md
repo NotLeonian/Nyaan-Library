@@ -86,8 +86,8 @@ data:
     links: []
   bundledCode: "#line 2 \"prime/miller-rabin.hpp\"\n\n#include <vector>\nusing namespace\
     \ std;\n\n#line 2 \"internal/internal-math.hpp\"\n\n#line 2 \"internal/internal-type-traits.hpp\"\
-    \n\n#include <type_traits>\nusing namespace std;\n\nnamespace internal {\ntemplate\
-    \ <typename T>\nusing is_broadly_integral =\n    typename conditional_t<is_integral_v<T>\
+    \n\n#include <type_traits>\nusing namespace std;\n\nnamespace nyaan_internal {\n\
+    template <typename T>\nusing is_broadly_integral =\n    typename conditional_t<is_integral_v<T>\
     \ || is_same_v<T, __int128_t> ||\n                               is_same_v<T,\
     \ __uint128_t>,\n                           true_type, false_type>::type;\n\n\
     template <typename T>\nusing is_broadly_signed =\n    typename conditional_t<is_signed_v<T>\
@@ -108,13 +108,13 @@ data:
     \                  \\\n  template <class T>                                  \
     \          \\\n  struct has_##var<T, void_t<decltype(T::var)>> : true_type {};\
     \ \\\n  template <class T>                                            \\\n  constexpr\
-    \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace internal\n#line\
-    \ 4 \"internal/internal-math.hpp\"\n\nnamespace internal {\n\n#include <cassert>\n\
-    #line 9 \"internal/internal-math.hpp\"\nusing namespace std;\n\n// a mod p\ntemplate\
-    \ <typename T>\nT safe_mod(T a, T p) {\n  a %= p;\n  if constexpr (is_broadly_signed_v<T>)\
-    \ {\n    if (a < 0) a += p;\n  }\n  return a;\n}\n\n// \u8FD4\u308A\u5024\uFF1A\
-    pair(g, x)\n// s.t. g = gcd(a, b), xa = g (mod b), 0 <= x < b/g\ntemplate <typename\
-    \ T>\npair<T, T> inv_gcd(T a, T p) {\n  static_assert(is_broadly_signed_v<T>);\n\
+    \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace nyaan_internal\n\
+    #line 4 \"internal/internal-math.hpp\"\n\nnamespace nyaan_internal {\n\n#include\
+    \ <cassert>\n#line 9 \"internal/internal-math.hpp\"\nusing namespace std;\n\n\
+    // a mod p\ntemplate <typename T>\nT safe_mod(T a, T p) {\n  a %= p;\n  if constexpr\
+    \ (is_broadly_signed_v<T>) {\n    if (a < 0) a += p;\n  }\n  return a;\n}\n\n\
+    // \u8FD4\u308A\u5024\uFF1Apair(g, x)\n// s.t. g = gcd(a, b), xa = g (mod b),\
+    \ 0 <= x < b/g\ntemplate <typename T>\npair<T, T> inv_gcd(T a, T p) {\n  static_assert(is_broadly_signed_v<T>);\n\
     \  a = safe_mod(a, p);\n  if (a == 0) return {p, 0};\n  T b = p, x = 1, y = 0;\n\
     \  while (a != 0) {\n    T q = b / a;\n    swap(a, b %= a);\n    swap(x, y -=\
     \ q * x);\n  }\n  if (y < 0) y += p / b;\n  return {b, y};\n}\n\n// \u8FD4\u308A\
@@ -137,11 +137,11 @@ data:
     \ [g, im] = inv_gcd(m0, m1);\n    T u1 = m1 / g;\n    if ((r1 - r0) % g) return\
     \ {0, 0};\n    T x = (r1 - r0) / g % u1 * im % u1;\n    r0 += x * m0;\n    m0\
     \ *= u1;\n    if (r0 < 0) r0 += m0;\n  }\n  return {r0, m0};\n}\n\n}  // namespace\
-    \ internal\n#line 2 \"modint/arbitrary-montgomery-modint.hpp\"\n\n#include <iostream>\n\
-    using namespace std;\n\ntemplate <typename Int, typename UInt, typename Long,\
-    \ typename ULong, int id>\nstruct ArbitraryLazyMontgomeryModIntBase {\n  using\
-    \ mint = ArbitraryLazyMontgomeryModIntBase;\n\n  inline static UInt mod;\n  inline\
-    \ static UInt r;\n  inline static UInt n2;\n  static constexpr int bit_length\
+    \ nyaan_internal\n#line 2 \"modint/arbitrary-montgomery-modint.hpp\"\n\n#include\
+    \ <iostream>\nusing namespace std;\n\ntemplate <typename Int, typename UInt, typename\
+    \ Long, typename ULong, int id>\nstruct ArbitraryLazyMontgomeryModIntBase {\n\
+    \  using mint = ArbitraryLazyMontgomeryModIntBase;\n\n  inline static UInt mod;\n\
+    \  inline static UInt r;\n  inline static UInt n2;\n  static constexpr int bit_length\
     \ = sizeof(UInt) * 8;\n\n  static UInt get_r() {\n    UInt ret = mod;\n    while\
     \ (mod * ret != 1) ret *= UInt(2) - mod * ret;\n    return ret;\n  }\n  static\
     \ void set_mod(UInt m) {\n    assert(m < (UInt(1u) << (bit_length - 2)));\n  \
@@ -182,8 +182,8 @@ data:
     \ T& n, vector<T> ws) {\n  if (n <= 2) return n == 2;\n  if (n % 2 == 0) return\
     \ false;\n\n  T d = n - 1;\n  while (d % 2 == 0) d /= 2;\n  U e = 1, rev = n -\
     \ 1;\n  for (T w : ws) {\n    if (w % n == 0) continue;\n    T t = d;\n    U y\
-    \ = internal::modpow<T, U>(w, t, n);\n    while (t != n - 1 && y != e && y !=\
-    \ rev) y = y * y % n, t *= 2;\n    if (y != rev && t % 2 == 0) return false;\n\
+    \ = nyaan_internal::modpow<T, U>(w, t, n);\n    while (t != n - 1 && y != e &&\
+    \ y != rev) y = y * y % n, t *= 2;\n    if (y != rev && t % 2 == 0) return false;\n\
     \  }\n  return true;\n}\n\nbool miller_rabin_u64(unsigned long long n) {\n  return\
     \ miller_rabin<unsigned long long, __uint128_t>(\n      n, {2, 325, 9375, 28178,\
     \ 450775, 9780504, 1795265022});\n}\n\ntemplate <typename mint>\nbool miller_rabin(unsigned\
@@ -207,7 +207,7 @@ data:
     \ {\n\ntemplate <typename T, typename U>\nbool miller_rabin(const T& n, vector<T>\
     \ ws) {\n  if (n <= 2) return n == 2;\n  if (n % 2 == 0) return false;\n\n  T\
     \ d = n - 1;\n  while (d % 2 == 0) d /= 2;\n  U e = 1, rev = n - 1;\n  for (T\
-    \ w : ws) {\n    if (w % n == 0) continue;\n    T t = d;\n    U y = internal::modpow<T,\
+    \ w : ws) {\n    if (w % n == 0) continue;\n    T t = d;\n    U y = nyaan_internal::modpow<T,\
     \ U>(w, t, n);\n    while (t != n - 1 && y != e && y != rev) y = y * y % n, t\
     \ *= 2;\n    if (y != rev && t % 2 == 0) return false;\n  }\n  return true;\n\
     }\n\nbool miller_rabin_u64(unsigned long long n) {\n  return miller_rabin<unsigned\
@@ -240,7 +240,7 @@ data:
   - math/primitive-root-ll.hpp
   - math/two-square.hpp
   - prime/fast-factorize.hpp
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-27 14:52:13+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ntt/yosupo-multivariate-circular-convolution.test.cpp

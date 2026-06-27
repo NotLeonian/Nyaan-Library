@@ -226,13 +226,13 @@ data:
     \ 4 \"verify/verify-yosupo-ds/yosupo-associative-array-rbstseg.test.cpp\"\n//\n\
     #line 2 \"segment-tree/rbst-segment-tree.hpp\"\n\n#line 5 \"segment-tree/rbst-segment-tree.hpp\"\
     \n\n#line 2 \"internal/internal-type-traits.hpp\"\n\n#line 4 \"internal/internal-type-traits.hpp\"\
-    \nusing namespace std;\n\nnamespace internal {\ntemplate <typename T>\nusing is_broadly_integral\
-    \ =\n    typename conditional_t<is_integral_v<T> || is_same_v<T, __int128_t> ||\n\
-    \                               is_same_v<T, __uint128_t>,\n                 \
-    \          true_type, false_type>::type;\n\ntemplate <typename T>\nusing is_broadly_signed\
-    \ =\n    typename conditional_t<is_signed_v<T> || is_same_v<T, __int128_t>,\n\
+    \nusing namespace std;\n\nnamespace nyaan_internal {\ntemplate <typename T>\n\
+    using is_broadly_integral =\n    typename conditional_t<is_integral_v<T> || is_same_v<T,\
+    \ __int128_t> ||\n                               is_same_v<T, __uint128_t>,\n\
     \                           true_type, false_type>::type;\n\ntemplate <typename\
-    \ T>\nusing is_broadly_unsigned =\n    typename conditional_t<is_unsigned_v<T>\
+    \ T>\nusing is_broadly_signed =\n    typename conditional_t<is_signed_v<T> ||\
+    \ is_same_v<T, __int128_t>,\n                           true_type, false_type>::type;\n\
+    \ntemplate <typename T>\nusing is_broadly_unsigned =\n    typename conditional_t<is_unsigned_v<T>\
     \ || is_same_v<T, __uint128_t>,\n                           true_type, false_type>::type;\n\
     \n#define ENABLE_VALUE(x) \\\n  template <typename T> \\\n  constexpr bool x##_v\
     \ = x<T>::value;\n\nENABLE_VALUE(is_broadly_integral);\nENABLE_VALUE(is_broadly_signed);\n\
@@ -248,8 +248,8 @@ data:
     \                  \\\n  template <class T>                                  \
     \          \\\n  struct has_##var<T, void_t<decltype(T::var)>> : true_type {};\
     \ \\\n  template <class T>                                            \\\n  constexpr\
-    \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace internal\n#line\
-    \ 7 \"segment-tree/rbst-segment-tree.hpp\"\n\nENABLE_HAS_VAR(lazy);\nENABLE_HAS_VAR(shift);\n\
+    \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace nyaan_internal\n\
+    #line 7 \"segment-tree/rbst-segment-tree.hpp\"\n\nENABLE_HAS_VAR(lazy);\nENABLE_HAS_VAR(shift);\n\
     \ntemplate <typename Node, typename I, typename T, typename E, T (*f)(T, T),\n\
     \          T (*g)(T, E), E (*h)(E, E), T (*ti)(), E (*ei)()>\nstruct RBSTSegmentTreeBase\
     \ {\n protected:\n  using Ptr = Node *;\n  template <typename... Args>\n  static\
@@ -569,7 +569,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-ds/yosupo-associative-array-rbstseg.test.cpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-27 14:52:13+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-ds/yosupo-associative-array-rbstseg.test.cpp

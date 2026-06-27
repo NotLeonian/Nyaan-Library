@@ -25,7 +25,7 @@ data:
     #include <type_traits>\n#include <utility>\n#include <vector>\nusing namespace\
     \ std;\n\n#line 2 \"internal/internal-function.hpp\"\n\n#include <cstddef>\n#line\
     \ 5 \"internal/internal-function.hpp\"\n#include <memory>\n#line 8 \"internal/internal-function.hpp\"\
-    \n\nnamespace internal {\n\ntemplate <class>\nclass function_ref;\n\ntemplate\
+    \n\nnamespace nyaan_internal {\n\ntemplate <class>\nclass function_ref;\n\ntemplate\
     \ <class R, class... Args>\nclass function_ref<R(Args...)> {\n  void* obj_ = nullptr;\n\
     \  R (*call_obj_)(void*, Args...) = nullptr;\n  R (*func_)(Args...) = nullptr;\n\
     \n public:\n  function_ref() noexcept = default;\n  function_ref(std::nullptr_t)\
@@ -97,10 +97,10 @@ data:
     \ != nullptr; }\n\n  R operator()(Args... args) const {\n    if (!invoke_) throw\
     \ std::bad_function_call();\n    return invoke_(\n        const_cast<void*>(static_cast<const\
     \ void*>(&storage_)),\n        std::forward<Args>(args)...);\n  }\n};\n\n}  //\
-    \ namespace internal\n\nusing internal::function_ref;\nusing internal::inplace_function;\n\
+    \ namespace nyaan_internal\n\nusing nyaan_internal::function_ref;\nusing nyaan_internal::inplace_function;\n\
     #line 10 \"ntt/multidimensional-ntt.hpp\"\n\n// f(vector<mint>& a, bool rev) :\
     \ 1 \u6B21\u5143 DFT (rev \u306F\u9006\u5909\u63DB\u304B\u3069\u3046\u304B)\n\
-    template <typename T,\n          typename DFT = internal::inplace_function<void(vector<T>&,\
+    template <typename T,\n          typename DFT = nyaan_internal::inplace_function<void(vector<T>&,\
     \ bool), 64>>\nstruct MultidimensionalFourierTransform {\n  static_assert(is_invocable_r_v<void,\
     \ DFT&, vector<T>&, bool>,\n                \"DFT must be callable as void(vector<T>&,\
     \ bool)\");\n\n  vector<int> base;\n  DFT dft1d;\n\n  template <typename F>\n\
@@ -124,7 +124,7 @@ data:
     #include <vector>\nusing namespace std;\n\n#include \"../internal/internal-function.hpp\"\
     \n\n// f(vector<mint>& a, bool rev) : 1 \u6B21\u5143 DFT (rev \u306F\u9006\u5909\
     \u63DB\u304B\u3069\u3046\u304B)\ntemplate <typename T,\n          typename DFT\
-    \ = internal::inplace_function<void(vector<T>&, bool), 64>>\nstruct MultidimensionalFourierTransform\
+    \ = nyaan_internal::inplace_function<void(vector<T>&, bool), 64>>\nstruct MultidimensionalFourierTransform\
     \ {\n  static_assert(is_invocable_r_v<void, DFT&, vector<T>&, bool>,\n       \
     \         \"DFT must be callable as void(vector<T>&, bool)\");\n\n  vector<int>\
     \ base;\n  DFT dft1d;\n\n  template <typename F>\n  MultidimensionalFourierTransform(const\
@@ -150,7 +150,7 @@ data:
   path: ntt/multidimensional-ntt.hpp
   requiredBy:
   - ntt/multivariate-circular-convolution.hpp
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-27 14:52:13+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ntt/yosupo-multivariate-circular-convolution.test.cpp

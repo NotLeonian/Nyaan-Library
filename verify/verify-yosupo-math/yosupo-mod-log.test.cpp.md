@@ -238,13 +238,13 @@ data:
     \n\nnamespace Nyaan {\nvoid solve();\n}\nint main() { Nyaan::solve(); }\n#line\
     \ 2 \"misc/fastio.hpp\"\n\n#line 9 \"misc/fastio.hpp\"\n\nusing namespace std;\n\
     \n#line 2 \"internal/internal-type-traits.hpp\"\n\n#line 4 \"internal/internal-type-traits.hpp\"\
-    \nusing namespace std;\n\nnamespace internal {\ntemplate <typename T>\nusing is_broadly_integral\
-    \ =\n    typename conditional_t<is_integral_v<T> || is_same_v<T, __int128_t> ||\n\
-    \                               is_same_v<T, __uint128_t>,\n                 \
-    \          true_type, false_type>::type;\n\ntemplate <typename T>\nusing is_broadly_signed\
-    \ =\n    typename conditional_t<is_signed_v<T> || is_same_v<T, __int128_t>,\n\
+    \nusing namespace std;\n\nnamespace nyaan_internal {\ntemplate <typename T>\n\
+    using is_broadly_integral =\n    typename conditional_t<is_integral_v<T> || is_same_v<T,\
+    \ __int128_t> ||\n                               is_same_v<T, __uint128_t>,\n\
     \                           true_type, false_type>::type;\n\ntemplate <typename\
-    \ T>\nusing is_broadly_unsigned =\n    typename conditional_t<is_unsigned_v<T>\
+    \ T>\nusing is_broadly_signed =\n    typename conditional_t<is_signed_v<T> ||\
+    \ is_same_v<T, __int128_t>,\n                           true_type, false_type>::type;\n\
+    \ntemplate <typename T>\nusing is_broadly_unsigned =\n    typename conditional_t<is_unsigned_v<T>\
     \ || is_same_v<T, __uint128_t>,\n                           true_type, false_type>::type;\n\
     \n#define ENABLE_VALUE(x) \\\n  template <typename T> \\\n  constexpr bool x##_v\
     \ = x<T>::value;\n\nENABLE_VALUE(is_broadly_integral);\nENABLE_VALUE(is_broadly_signed);\n\
@@ -260,49 +260,50 @@ data:
     \                  \\\n  template <class T>                                  \
     \          \\\n  struct has_##var<T, void_t<decltype(T::var)>> : true_type {};\
     \ \\\n  template <class T>                                            \\\n  constexpr\
-    \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace internal\n#line\
-    \ 13 \"misc/fastio.hpp\"\n\nnamespace fastio {\nstatic constexpr int SZ = 1 <<\
-    \ 17;\nstatic constexpr int offset = 64;\nchar inbuf[SZ], outbuf[SZ];\nint in_left\
-    \ = 0, in_right = 0, out_right = 0;\n\nstruct Pre {\n  char num[40000];\n  constexpr\
-    \ Pre() : num() {\n    for (int i = 0; i < 10000; i++) {\n      int n = i;\n \
-    \     for (int j = 3; j >= 0; j--) {\n        num[i * 4 + j] = n % 10 + '0';\n\
-    \        n /= 10;\n      }\n    }\n  }\n} constexpr pre;\n\nvoid load() {\n  int\
-    \ len = in_right - in_left;\n  memmove(inbuf, inbuf + in_left, len);\n  in_right\
-    \ = len + fread(inbuf + len, 1, SZ - len, stdin);\n  in_left = 0;\n}\nvoid flush()\
-    \ {\n  fwrite(outbuf, 1, out_right, stdout);\n  out_right = 0;\n}\nvoid skip_space()\
-    \ {\n  if (in_left + offset > in_right) load();\n  while (inbuf[in_left] <= '\
-    \ ') in_left++;\n}\n\nvoid single_read(char& c) {\n  if (in_left + offset > in_right)\
-    \ load();\n  skip_space();\n  c = inbuf[in_left++];\n}\nvoid single_read(string&\
+    \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace nyaan_internal\n\
+    #line 13 \"misc/fastio.hpp\"\n\nnamespace fastio {\nstatic constexpr int SZ =\
+    \ 1 << 17;\nstatic constexpr int offset = 64;\nchar inbuf[SZ], outbuf[SZ];\nint\
+    \ in_left = 0, in_right = 0, out_right = 0;\n\nstruct Pre {\n  char num[40000];\n\
+    \  constexpr Pre() : num() {\n    for (int i = 0; i < 10000; i++) {\n      int\
+    \ n = i;\n      for (int j = 3; j >= 0; j--) {\n        num[i * 4 + j] = n % 10\
+    \ + '0';\n        n /= 10;\n      }\n    }\n  }\n} constexpr pre;\n\nvoid load()\
+    \ {\n  int len = in_right - in_left;\n  memmove(inbuf, inbuf + in_left, len);\n\
+    \  in_right = len + fread(inbuf + len, 1, SZ - len, stdin);\n  in_left = 0;\n\
+    }\nvoid flush() {\n  fwrite(outbuf, 1, out_right, stdout);\n  out_right = 0;\n\
+    }\nvoid skip_space() {\n  if (in_left + offset > in_right) load();\n  while (inbuf[in_left]\
+    \ <= ' ') in_left++;\n}\n\nvoid single_read(char& c) {\n  if (in_left + offset\
+    \ > in_right) load();\n  skip_space();\n  c = inbuf[in_left++];\n}\nvoid single_read(string&\
     \ S) {\n  skip_space();\n  while (true) {\n    if (in_left == in_right) load();\n\
     \    int i = in_left;\n    for (; i != in_right; i++) {\n      if (inbuf[i] <=\
     \ ' ') break;\n    }\n    copy(inbuf + in_left, inbuf + i, back_inserter(S));\n\
     \    in_left = i;\n    if (i != in_right) break;\n  }\n}\ntemplate <typename T,\n\
-    \          enable_if_t<internal::is_broadly_integral_v<T>>* = nullptr>\nvoid single_read(T&\
-    \ x) {\n  if (in_left + offset > in_right) load();\n  skip_space();\n  char c\
-    \ = inbuf[in_left++];\n  [[maybe_unused]] bool minus = false;\n  if constexpr\
-    \ (internal::is_broadly_signed_v<T>) {\n    if (c == '-') minus = true, c = inbuf[in_left++];\n\
-    \  }\n  x = 0;\n  while (c >= '0') {\n    x = x * 10 + (c & 15);\n    c = inbuf[in_left++];\n\
-    \  }\n  if constexpr (internal::is_broadly_signed_v<T>) {\n    if (minus) x =\
-    \ -x;\n  }\n}\nvoid rd() {}\ntemplate <typename Head, typename... Tail>\nvoid\
-    \ rd(Head& head, Tail&... tail) {\n  single_read(head);\n  rd(tail...);\n}\n\n\
-    void single_write(const char& c) {\n  if (out_right > SZ - offset) flush();\n\
+    \          enable_if_t<nyaan_internal::is_broadly_integral_v<T>>* = nullptr>\n\
+    void single_read(T& x) {\n  if (in_left + offset > in_right) load();\n  skip_space();\n\
+    \  char c = inbuf[in_left++];\n  [[maybe_unused]] bool minus = false;\n  if constexpr\
+    \ (nyaan_internal::is_broadly_signed_v<T>) {\n    if (c == '-') minus = true,\
+    \ c = inbuf[in_left++];\n  }\n  x = 0;\n  while (c >= '0') {\n    x = x * 10 +\
+    \ (c & 15);\n    c = inbuf[in_left++];\n  }\n  if constexpr (nyaan_internal::is_broadly_signed_v<T>)\
+    \ {\n    if (minus) x = -x;\n  }\n}\nvoid rd() {}\ntemplate <typename Head, typename...\
+    \ Tail>\nvoid rd(Head& head, Tail&... tail) {\n  single_read(head);\n  rd(tail...);\n\
+    }\n\nvoid single_write(const char& c) {\n  if (out_right > SZ - offset) flush();\n\
     \  outbuf[out_right++] = c;\n}\nvoid single_write(const bool& b) {\n  if (out_right\
     \ > SZ - offset) flush();\n  outbuf[out_right++] = b ? '1' : '0';\n}\nvoid single_write(const\
     \ string& S) {\n  flush(), fwrite(S.data(), 1, S.size(), stdout);\n}\nvoid single_write(const\
     \ char* p) { flush(), fwrite(p, 1, strlen(p), stdout); }\ntemplate <typename T,\n\
-    \          enable_if_t<internal::is_broadly_integral_v<T>>* = nullptr>\nvoid single_write(const\
-    \ T& _x) {\n  if (out_right > SZ - offset) flush();\n  if (_x == 0) {\n    outbuf[out_right++]\
-    \ = '0';\n    return;\n  }\n  T x = _x;\n  if constexpr (internal::is_broadly_signed_v<T>)\
-    \ {\n    if (x < 0) outbuf[out_right++] = '-', x = -x;\n  }\n  constexpr int buffer_size\
-    \ = sizeof(T) * 10 / 4;\n  char buf[buffer_size];\n  int i = buffer_size;\n  while\
-    \ (x >= 10000) {\n    i -= 4;\n    memcpy(buf + i, pre.num + (x % 10000) * 4,\
-    \ 4);\n    x /= 10000;\n  }\n  if (x < 100) {\n    if (x < 10) {\n      outbuf[out_right]\
-    \ = '0' + x;\n      ++out_right;\n    } else {\n      uint32_t q = (uint32_t(x)\
-    \ * 205) >> 11;\n      uint32_t r = uint32_t(x) - q * 10;\n      outbuf[out_right]\
-    \ = '0' + q;\n      outbuf[out_right + 1] = '0' + r;\n      out_right += 2;\n\
-    \    }\n  } else {\n    if (x < 1000) {\n      memcpy(outbuf + out_right, pre.num\
-    \ + (x << 2) + 1, 3);\n      out_right += 3;\n    } else {\n      memcpy(outbuf\
-    \ + out_right, pre.num + (x << 2), 4);\n      out_right += 4;\n    }\n  }\n  memcpy(outbuf\
+    \          enable_if_t<nyaan_internal::is_broadly_integral_v<T>>* = nullptr>\n\
+    void single_write(const T& _x) {\n  if (out_right > SZ - offset) flush();\n  if\
+    \ (_x == 0) {\n    outbuf[out_right++] = '0';\n    return;\n  }\n  T x = _x;\n\
+    \  if constexpr (nyaan_internal::is_broadly_signed_v<T>) {\n    if (x < 0) outbuf[out_right++]\
+    \ = '-', x = -x;\n  }\n  constexpr int buffer_size = sizeof(T) * 10 / 4;\n  char\
+    \ buf[buffer_size];\n  int i = buffer_size;\n  while (x >= 10000) {\n    i -=\
+    \ 4;\n    memcpy(buf + i, pre.num + (x % 10000) * 4, 4);\n    x /= 10000;\n  }\n\
+    \  if (x < 100) {\n    if (x < 10) {\n      outbuf[out_right] = '0' + x;\n   \
+    \   ++out_right;\n    } else {\n      uint32_t q = (uint32_t(x) * 205) >> 11;\n\
+    \      uint32_t r = uint32_t(x) - q * 10;\n      outbuf[out_right] = '0' + q;\n\
+    \      outbuf[out_right + 1] = '0' + r;\n      out_right += 2;\n    }\n  } else\
+    \ {\n    if (x < 1000) {\n      memcpy(outbuf + out_right, pre.num + (x << 2)\
+    \ + 1, 3);\n      out_right += 3;\n    } else {\n      memcpy(outbuf + out_right,\
+    \ pre.num + (x << 2), 4);\n      out_right += 4;\n    }\n  }\n  memcpy(outbuf\
     \ + out_right, buf + i, buffer_size - i);\n  out_right += buffer_size - i;\n}\n\
     void wt() {}\ntemplate <typename Head, typename... Tail>\nvoid wt(const Head&\
     \ head, const Tail&... tail) {\n  single_write(head);\n  wt(std::forward<const\
@@ -431,19 +432,19 @@ data:
     \ const Val& val) {\n    return base::insert(Data(key, val));\n  }\n};\n\n/*\n\
     \ * @brief \u30CF\u30C3\u30B7\u30E5\u30DE\u30C3\u30D7(\u9023\u60F3\u914D\u5217\
     )\n **/\n#line 2 \"internal/internal-math.hpp\"\n\n#line 4 \"internal/internal-math.hpp\"\
-    \n\nnamespace internal {\n\n#line 9 \"internal/internal-math.hpp\"\nusing namespace\
-    \ std;\n\n// a mod p\ntemplate <typename T>\nT safe_mod(T a, T p) {\n  a %= p;\n\
-    \  if constexpr (is_broadly_signed_v<T>) {\n    if (a < 0) a += p;\n  }\n  return\
-    \ a;\n}\n\n// \u8FD4\u308A\u5024\uFF1Apair(g, x)\n// s.t. g = gcd(a, b), xa =\
-    \ g (mod b), 0 <= x < b/g\ntemplate <typename T>\npair<T, T> inv_gcd(T a, T p)\
-    \ {\n  static_assert(is_broadly_signed_v<T>);\n  a = safe_mod(a, p);\n  if (a\
-    \ == 0) return {p, 0};\n  T b = p, x = 1, y = 0;\n  while (a != 0) {\n    T q\
-    \ = b / a;\n    swap(a, b %= a);\n    swap(x, y -= q * x);\n  }\n  if (y < 0)\
-    \ y += p / b;\n  return {b, y};\n}\n\n// \u8FD4\u308A\u5024 : a^{-1} mod p\n//\
-    \ gcd(a, p) != 1 \u304C\u5FC5\u8981\ntemplate <typename T>\nT inv(T a, T p) {\n\
-    \  static_assert(is_broadly_signed_v<T>);\n  a = safe_mod(a, p);\n  T b = p, x\
-    \ = 1, y = 0;\n  while (a != 0) {\n    T q = b / a;\n    swap(a, b %= a);\n  \
-    \  swap(x, y -= q * x);\n  }\n  assert(b == 1);\n  return y < 0 ? y + p : y;\n\
+    \n\nnamespace nyaan_internal {\n\n#line 9 \"internal/internal-math.hpp\"\nusing\
+    \ namespace std;\n\n// a mod p\ntemplate <typename T>\nT safe_mod(T a, T p) {\n\
+    \  a %= p;\n  if constexpr (is_broadly_signed_v<T>) {\n    if (a < 0) a += p;\n\
+    \  }\n  return a;\n}\n\n// \u8FD4\u308A\u5024\uFF1Apair(g, x)\n// s.t. g = gcd(a,\
+    \ b), xa = g (mod b), 0 <= x < b/g\ntemplate <typename T>\npair<T, T> inv_gcd(T\
+    \ a, T p) {\n  static_assert(is_broadly_signed_v<T>);\n  a = safe_mod(a, p);\n\
+    \  if (a == 0) return {p, 0};\n  T b = p, x = 1, y = 0;\n  while (a != 0) {\n\
+    \    T q = b / a;\n    swap(a, b %= a);\n    swap(x, y -= q * x);\n  }\n  if (y\
+    \ < 0) y += p / b;\n  return {b, y};\n}\n\n// \u8FD4\u308A\u5024 : a^{-1} mod\
+    \ p\n// gcd(a, p) != 1 \u304C\u5FC5\u8981\ntemplate <typename T>\nT inv(T a, T\
+    \ p) {\n  static_assert(is_broadly_signed_v<T>);\n  a = safe_mod(a, p);\n  T b\
+    \ = p, x = 1, y = 0;\n  while (a != 0) {\n    T q = b / a;\n    swap(a, b %= a);\n\
+    \    swap(x, y -= q * x);\n  }\n  assert(b == 1);\n  return y < 0 ? y + p : y;\n\
     }\n\n// T : \u5E95\u306E\u578B\n// U : T*T \u304C\u30AA\u30FC\u30D0\u30FC\u30D5\
     \u30ED\u30FC\u3057\u306A\u3044 \u304B\u3064 \u6307\u6570\u306E\u578B\ntemplate\
     \ <typename T, typename U>\nT modpow(T a, U n, T p) {\n  a = safe_mod(a, p);\n\
@@ -459,20 +460,20 @@ data:
     \ [g, im] = inv_gcd(m0, m1);\n    T u1 = m1 / g;\n    if ((r1 - r0) % g) return\
     \ {0, 0};\n    T x = (r1 - r0) / g % u1 * im % u1;\n    r0 += x * m0;\n    m0\
     \ *= u1;\n    if (r0 < 0) r0 += m0;\n  }\n  return {r0, m0};\n}\n\n}  // namespace\
-    \ internal\n#line 5 \"modulo/mod-log.hpp\"\n\n// a^x = b (mod p) \u3067\u3042\u308B\
-    \u6700\u5C0F\u306E\u975E\u8CA0\u6574\u6570 x \u3092\u8FD4\u3059\nint64_t mod_log(int64_t\
-    \ a, int64_t b, int64_t p) {\n  if ((a %= p) < 0) a += p;\n  if ((b %= p) < 0)\
-    \ b += p;\n  int64_t f, g, r = 1 % p;\n  for (f = 0; (g = gcd(a, p)) > 1; ++f)\
-    \ {\n    if (b % g) return (r == b) ? f : -1;\n    b /= g;\n    p /= g;\n    (r\
-    \ *= (a / g)) %= p;\n  }\n  if (p == 1) return f;\n  int64_t ir = internal::inv(r,\
-    \ p);\n  (b *= ir) %= p;\n  int64_t k = 0, ak = 1;\n  HashMap<int64_t, int64_t>\
-    \ baby;\n  for (; k * k < p; ++k) {\n    if(baby.find(ak) == baby.end()) baby[ak]\
-    \ = k;\n    (ak *= a) %= p;\n  }\n  int64_t iak = internal::inv(ak, p);\n  for\
-    \ (int64_t i = 0; i < k; ++i) {\n    if (baby.find(b) != baby.end()) return f\
-    \ + i * k + baby[b];\n    (b *= iak) %= p;\n  }\n  return -1;\n}\n#line 6 \"verify/verify-yosupo-math/yosupo-mod-log.test.cpp\"\
-    \n\nusing namespace Nyaan; void Nyaan::solve() {\n  int T;\n  rd(T);\n  rep(_,\
-    \ T) {\n    ll x, y, m;\n    rd(x, y, m);\n    wt(mod_log(x, y, m));\n    wt('\\\
-    n');\n  }\n}\n"
+    \ nyaan_internal\n#line 5 \"modulo/mod-log.hpp\"\n\n// a^x = b (mod p) \u3067\u3042\
+    \u308B\u6700\u5C0F\u306E\u975E\u8CA0\u6574\u6570 x \u3092\u8FD4\u3059\nint64_t\
+    \ mod_log(int64_t a, int64_t b, int64_t p) {\n  if ((a %= p) < 0) a += p;\n  if\
+    \ ((b %= p) < 0) b += p;\n  int64_t f, g, r = 1 % p;\n  for (f = 0; (g = gcd(a,\
+    \ p)) > 1; ++f) {\n    if (b % g) return (r == b) ? f : -1;\n    b /= g;\n   \
+    \ p /= g;\n    (r *= (a / g)) %= p;\n  }\n  if (p == 1) return f;\n  int64_t ir\
+    \ = nyaan_internal::inv(r, p);\n  (b *= ir) %= p;\n  int64_t k = 0, ak = 1;\n\
+    \  HashMap<int64_t, int64_t> baby;\n  for (; k * k < p; ++k) {\n    if(baby.find(ak)\
+    \ == baby.end()) baby[ak] = k;\n    (ak *= a) %= p;\n  }\n  int64_t iak = nyaan_internal::inv(ak,\
+    \ p);\n  for (int64_t i = 0; i < k; ++i) {\n    if (baby.find(b) != baby.end())\
+    \ return f + i * k + baby[b];\n    (b *= iak) %= p;\n  }\n  return -1;\n}\n#line\
+    \ 6 \"verify/verify-yosupo-math/yosupo-mod-log.test.cpp\"\n\nusing namespace Nyaan;\
+    \ void Nyaan::solve() {\n  int T;\n  rd(T);\n  rep(_, T) {\n    ll x, y, m;\n\
+    \    rd(x, y, m);\n    wt(mod_log(x, y, m));\n    wt('\\n');\n  }\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/discrete_logarithm_mod\"\
     \n\n#include \"../../template/template.hpp\"\n#include \"../../misc/fastio.hpp\"\
     \n#include \"../../modulo/mod-log.hpp\"\n\nusing namespace Nyaan; void Nyaan::solve()\
@@ -494,7 +495,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-math/yosupo-mod-log.test.cpp
   requiredBy: []
-  timestamp: '2026-06-08 17:59:24+09:00'
+  timestamp: '2026-06-27 14:52:13+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-math/yosupo-mod-log.test.cpp

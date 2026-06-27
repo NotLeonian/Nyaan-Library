@@ -245,69 +245,69 @@ data:
     \ 4 \"verify/verify-unit-test/dijkstra.test.cpp\"\n//\n#line 2 \"misc/rng.hpp\"\
     \n\n#line 7 \"misc/rng.hpp\"\nusing namespace std;\n\n#line 2 \"internal/internal-seed.hpp\"\
     \n\n#line 4 \"internal/internal-seed.hpp\"\nusing namespace std;\n\nnamespace\
-    \ internal {\nunsigned long long non_deterministic_seed() {\n  unsigned long long\
-    \ m =\n      chrono::duration_cast<chrono::nanoseconds>(\n          chrono::high_resolution_clock::now().time_since_epoch())\n\
-    \          .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >>\
-    \ 31, m ^= m << 35;\n  return m;\n}\nunsigned long long deterministic_seed() {\
-    \ return 88172645463325252UL; }\n\n// 64 bit \u306E seed \u5024\u3092\u751F\u6210\
-    \ (\u624B\u5143\u3067\u306F seed \u56FA\u5B9A)\n// \u9023\u7D9A\u3067\u547C\u3073\
-    \u51FA\u3059\u3068\u540C\u3058\u5024\u304C\u4F55\u5EA6\u3082\u8FD4\u3063\u3066\
-    \u304F\u308B\u306E\u3067\u6CE8\u610F\n// #define RANDOMIZED_SEED \u3059\u308B\u3068\
-    \u30B7\u30FC\u30C9\u304C\u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long\
-    \ long seed() {\n#if defined(NyaanLocal) && !defined(RANDOMIZED_SEED)\n  return\
-    \ deterministic_seed();\n#else\n  return non_deterministic_seed();\n#endif\n}\n\
-    \n}  // namespace internal\n#line 10 \"misc/rng.hpp\"\n\nnamespace my_rand {\n\
-    using i64 = long long;\nusing u64 = unsigned long long;\n\n// [0, 2^64 - 1)\n\
-    u64 rng() {\n  static u64 _x = internal::seed();\n  return _x ^= _x << 7, _x ^=\
-    \ _x >> 9;\n}\n\n// [l, r]\ni64 rng(i64 l, i64 r) {\n  assert(l <= r);\n  return\
-    \ l + rng() % u64(r - l + 1);\n}\n\n// [l, r)\ni64 randint(i64 l, i64 r) {\n \
-    \ assert(l < r);\n  return l + rng() % u64(r - l);\n}\n\n// choose n numbers from\
-    \ [l, r) without overlapping\nvector<i64> randset(i64 l, i64 r, i64 n) {\n  assert(l\
-    \ <= r && n <= r - l);\n  unordered_set<i64> s;\n  for (i64 i = n; i; --i) {\n\
-    \    i64 m = randint(l, r + 1 - i);\n    if (s.find(m) != s.end()) m = r - i;\n\
-    \    s.insert(m);\n  }\n  vector<i64> ret;\n  for (auto& x : s) ret.push_back(x);\n\
-    \  sort(begin(ret), end(ret));\n  return ret;\n}\n\n// [0.0, 1.0)\ndouble rnd()\
-    \ { return rng() * 5.42101086242752217004e-20; }\n// [l, r)\ndouble rnd(double\
-    \ l, double r) {\n  assert(l < r);\n  return l + rnd() * (r - l);\n}\n\ntemplate\
-    \ <typename T>\nvoid randshf(vector<T>& v) {\n  int n = v.size();\n  for (int\
-    \ i = 1; i < n; i++) swap(v[i], v[randint(0, i + 1)]);\n}\n\n}  // namespace my_rand\n\
-    \nusing my_rand::randint;\nusing my_rand::randset;\nusing my_rand::randshf;\n\
-    using my_rand::rnd;\nusing my_rand::rng;\n#line 2 \"shortest-path/dijkstra-fast.hpp\"\
-    \n\n#line 2 \"data-structure/radix-heap.hpp\"\n\ntemplate <typename Key, typename\
-    \ Val>\nstruct RadixHeap {\n  using uint = typename make_unsigned<Key>::type;\n\
-    \  static constexpr int bit = sizeof(Key) * 8;\n  array<vector<pair<uint, Val>\
-    \ >, bit + 1> vs;\n  array<uint, bit + 1> ms;\n\n  int s;\n  uint last;\n\n  RadixHeap()\
-    \ : s(0), last(0) { fill(begin(ms), end(ms), uint(-1)); }\n\n  bool empty() const\
-    \ { return s == 0; }\n\n  int size() const { return s; }\n\n  __attribute__((target(\"\
-    lzcnt\"))) inline uint64_t getbit(uint a) const {\n    return 64 - _lzcnt_u64(a);\n\
-    \  }\n\n  void push(const uint &key, const Val &val) {\n    s++;\n    uint64_t\
-    \ b = getbit(key ^ last);\n    vs[b].emplace_back(key, val);\n    ms[b] = min(key,\
-    \ ms[b]);\n  }\n\n  pair<uint, Val> pop() {\n    if (ms[0] == uint(-1)) {\n  \
-    \    int idx = 1;\n      while (ms[idx] == uint(-1)) idx++;\n      last = ms[idx];\n\
-    \      for (auto &p : vs[idx]) {\n        uint64_t b = getbit(p.first ^ last);\n\
-    \        vs[b].emplace_back(p);\n        ms[b] = min(p.first, ms[b]);\n      }\n\
-    \      vs[idx].clear();\n      ms[idx] = uint(-1);\n    }\n    --s;\n    auto\
-    \ res = vs[0].back();\n    vs[0].pop_back();\n    if (vs[0].empty()) ms[0] = uint(-1);\n\
-    \    return res;\n  }\n};\n\n/**\n * @brief Radix Heap\n */\n#line 2 \"graph/static-graph.hpp\"\
-    \n\nnamespace StaticGraphImpl {\n\ntemplate <typename T, bool Cond = is_void<T>::value>\n\
-    struct E;\ntemplate <typename T>\nstruct E<T, false> {\n  int to;\n  T cost;\n\
-    \  E() {}\n  E(const int& v, const T& c) : to(v), cost(c) {}\n  operator int()\
-    \ const { return to; }\n};\ntemplate <typename T>\nstruct E<T, true> {\n  int\
-    \ to;\n  E() {}\n  E(const int& v) : to(v) {}\n  operator int() const { return\
-    \ to; }\n};\n\ntemplate <typename T = void>\nstruct StaticGraph {\n private:\n\
-    \  template <typename It>\n  struct Es {\n    It b, e;\n    It begin() const {\
-    \ return b; }\n    It end() const { return e; }\n    int size() const { return\
-    \ int(e - b); }\n    auto&& operator[](int i) const { return b[i]; }\n  };\n \
-    \ \n  int N, M, ec;\n  vector<int> head;\n  vector<pair<int, E<T>>> buf;\n  vector<E<T>>\
-    \ es;\n\n  void build() {\n    partial_sum(begin(head), end(head), begin(head));\n\
-    \    es.resize(M);\n    for (auto&& [u, e] : buf) es[--head[u]] = e;\n  }\n\n\
-    \ public:\n  StaticGraph(int _n, int _m) : N(_n), M(_m), ec(0), head(N + 1, 0)\
-    \ {\n    buf.reserve(M);\n  }\n\n  template <typename... Args>\n  void add_edge(int\
-    \ u, Args&&... args) {\n#pragma GCC diagnostic ignored \"-Wnarrowing\"\n    buf.emplace_back(u,\
-    \ E<T>{std::forward<Args>(args)...});\n#pragma GCC diagnostic warning \"-Wnarrowing\"\
-    \n    ++head[u];\n    if ((int)buf.size() == M) build();\n  }\n\n  Es<typename\
-    \ vector<E<T>>::iterator> operator[](int u) {\n    return {begin(es) + head[u],\
-    \ begin(es) + head[u + 1]};\n  }\n  const Es<typename vector<E<T>>::const_iterator>\
+    \ nyaan_internal {\nunsigned long long non_deterministic_seed() {\n  unsigned\
+    \ long long m =\n      chrono::duration_cast<chrono::nanoseconds>(\n         \
+    \ chrono::high_resolution_clock::now().time_since_epoch())\n          .count();\n\
+    \  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >> 31, m ^= m << 35;\n\
+    \  return m;\n}\nunsigned long long deterministic_seed() { return 88172645463325252UL;\
+    \ }\n\n// 64 bit \u306E seed \u5024\u3092\u751F\u6210 (\u624B\u5143\u3067\u306F\
+    \ seed \u56FA\u5B9A)\n// \u9023\u7D9A\u3067\u547C\u3073\u51FA\u3059\u3068\u540C\
+    \u3058\u5024\u304C\u4F55\u5EA6\u3082\u8FD4\u3063\u3066\u304F\u308B\u306E\u3067\
+    \u6CE8\u610F\n// #define RANDOMIZED_SEED \u3059\u308B\u3068\u30B7\u30FC\u30C9\u304C\
+    \u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long long seed() {\n#if defined(NyaanLocal)\
+    \ && !defined(RANDOMIZED_SEED)\n  return deterministic_seed();\n#else\n  return\
+    \ non_deterministic_seed();\n#endif\n}\n\n}  // namespace nyaan_internal\n#line\
+    \ 10 \"misc/rng.hpp\"\n\nnamespace my_rand {\nusing i64 = long long;\nusing u64\
+    \ = unsigned long long;\n\n// [0, 2^64 - 1)\nu64 rng() {\n  static u64 _x = nyaan_internal::seed();\n\
+    \  return _x ^= _x << 7, _x ^= _x >> 9;\n}\n\n// [l, r]\ni64 rng(i64 l, i64 r)\
+    \ {\n  assert(l <= r);\n  return l + rng() % u64(r - l + 1);\n}\n\n// [l, r)\n\
+    i64 randint(i64 l, i64 r) {\n  assert(l < r);\n  return l + rng() % u64(r - l);\n\
+    }\n\n// choose n numbers from [l, r) without overlapping\nvector<i64> randset(i64\
+    \ l, i64 r, i64 n) {\n  assert(l <= r && n <= r - l);\n  unordered_set<i64> s;\n\
+    \  for (i64 i = n; i; --i) {\n    i64 m = randint(l, r + 1 - i);\n    if (s.find(m)\
+    \ != s.end()) m = r - i;\n    s.insert(m);\n  }\n  vector<i64> ret;\n  for (auto&\
+    \ x : s) ret.push_back(x);\n  sort(begin(ret), end(ret));\n  return ret;\n}\n\n\
+    // [0.0, 1.0)\ndouble rnd() { return rng() * 5.42101086242752217004e-20; }\n//\
+    \ [l, r)\ndouble rnd(double l, double r) {\n  assert(l < r);\n  return l + rnd()\
+    \ * (r - l);\n}\n\ntemplate <typename T>\nvoid randshf(vector<T>& v) {\n  int\
+    \ n = v.size();\n  for (int i = 1; i < n; i++) swap(v[i], v[randint(0, i + 1)]);\n\
+    }\n\n}  // namespace my_rand\n\nusing my_rand::randint;\nusing my_rand::randset;\n\
+    using my_rand::randshf;\nusing my_rand::rnd;\nusing my_rand::rng;\n#line 2 \"\
+    shortest-path/dijkstra-fast.hpp\"\n\n#line 2 \"data-structure/radix-heap.hpp\"\
+    \n\ntemplate <typename Key, typename Val>\nstruct RadixHeap {\n  using uint =\
+    \ typename make_unsigned<Key>::type;\n  static constexpr int bit = sizeof(Key)\
+    \ * 8;\n  array<vector<pair<uint, Val> >, bit + 1> vs;\n  array<uint, bit + 1>\
+    \ ms;\n\n  int s;\n  uint last;\n\n  RadixHeap() : s(0), last(0) { fill(begin(ms),\
+    \ end(ms), uint(-1)); }\n\n  bool empty() const { return s == 0; }\n\n  int size()\
+    \ const { return s; }\n\n  __attribute__((target(\"lzcnt\"))) inline uint64_t\
+    \ getbit(uint a) const {\n    return 64 - _lzcnt_u64(a);\n  }\n\n  void push(const\
+    \ uint &key, const Val &val) {\n    s++;\n    uint64_t b = getbit(key ^ last);\n\
+    \    vs[b].emplace_back(key, val);\n    ms[b] = min(key, ms[b]);\n  }\n\n  pair<uint,\
+    \ Val> pop() {\n    if (ms[0] == uint(-1)) {\n      int idx = 1;\n      while\
+    \ (ms[idx] == uint(-1)) idx++;\n      last = ms[idx];\n      for (auto &p : vs[idx])\
+    \ {\n        uint64_t b = getbit(p.first ^ last);\n        vs[b].emplace_back(p);\n\
+    \        ms[b] = min(p.first, ms[b]);\n      }\n      vs[idx].clear();\n     \
+    \ ms[idx] = uint(-1);\n    }\n    --s;\n    auto res = vs[0].back();\n    vs[0].pop_back();\n\
+    \    if (vs[0].empty()) ms[0] = uint(-1);\n    return res;\n  }\n};\n\n/**\n *\
+    \ @brief Radix Heap\n */\n#line 2 \"graph/static-graph.hpp\"\n\nnamespace StaticGraphImpl\
+    \ {\n\ntemplate <typename T, bool Cond = is_void<T>::value>\nstruct E;\ntemplate\
+    \ <typename T>\nstruct E<T, false> {\n  int to;\n  T cost;\n  E() {}\n  E(const\
+    \ int& v, const T& c) : to(v), cost(c) {}\n  operator int() const { return to;\
+    \ }\n};\ntemplate <typename T>\nstruct E<T, true> {\n  int to;\n  E() {}\n  E(const\
+    \ int& v) : to(v) {}\n  operator int() const { return to; }\n};\n\ntemplate <typename\
+    \ T = void>\nstruct StaticGraph {\n private:\n  template <typename It>\n  struct\
+    \ Es {\n    It b, e;\n    It begin() const { return b; }\n    It end() const {\
+    \ return e; }\n    int size() const { return int(e - b); }\n    auto&& operator[](int\
+    \ i) const { return b[i]; }\n  };\n  \n  int N, M, ec;\n  vector<int> head;\n\
+    \  vector<pair<int, E<T>>> buf;\n  vector<E<T>> es;\n\n  void build() {\n    partial_sum(begin(head),\
+    \ end(head), begin(head));\n    es.resize(M);\n    for (auto&& [u, e] : buf) es[--head[u]]\
+    \ = e;\n  }\n\n public:\n  StaticGraph(int _n, int _m) : N(_n), M(_m), ec(0),\
+    \ head(N + 1, 0) {\n    buf.reserve(M);\n  }\n\n  template <typename... Args>\n\
+    \  void add_edge(int u, Args&&... args) {\n#pragma GCC diagnostic ignored \"-Wnarrowing\"\
+    \n    buf.emplace_back(u, E<T>{std::forward<Args>(args)...});\n#pragma GCC diagnostic\
+    \ warning \"-Wnarrowing\"\n    ++head[u];\n    if ((int)buf.size() == M) build();\n\
+    \  }\n\n  Es<typename vector<E<T>>::iterator> operator[](int u) {\n    return\
+    \ {begin(es) + head[u], begin(es) + head[u + 1]};\n  }\n  const Es<typename vector<E<T>>::const_iterator>\
     \ operator[](int u) const {\n    return {begin(es) + head[u], begin(es) + head[u\
     \ + 1]};\n  }\n  int size() const { return N; }\n};\n\n}  // namespace StaticGraphImpl\n\
     \nusing StaticGraphImpl::StaticGraph;\n\n/**\n * @brief Static Graph\n */\n#line\
@@ -438,7 +438,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/dijkstra.test.cpp
   requiredBy: []
-  timestamp: '2026-06-08 17:59:24+09:00'
+  timestamp: '2026-06-27 14:52:13+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/dijkstra.test.cpp

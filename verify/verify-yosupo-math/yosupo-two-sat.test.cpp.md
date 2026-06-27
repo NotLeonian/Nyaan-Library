@@ -35,9 +35,9 @@ data:
   bundledCode: "#line 1 \"verify/verify-yosupo-math/yosupo-two-sat.test.cpp\"\n#define\
     \ PROBLEM \"https://judge.yosupo.jp/problem/two_sat\"\n\n#line 2 \"math/two-sat.hpp\"\
     \n\n#include <algorithm>\n#include <cassert>\n#include <utility>\n#include <vector>\n\
-    \nusing namespace std;\n\nnamespace TwoSatImpl {\nnamespace internal {\n\ntemplate\
-    \ <class E>\nstruct csr {\n  vector<int> start;\n  vector<E> elist;\n  csr(int\
-    \ n, const vector<pair<int, E>>& edges)\n      : start(n + 1), elist(edges.size())\
+    \nusing namespace std;\n\nnamespace TwoSatImpl {\nnamespace nyaan_internal {\n\
+    \ntemplate <class E>\nstruct csr {\n  vector<int> start;\n  vector<E> elist;\n\
+    \  csr(int n, const vector<pair<int, E>>& edges)\n      : start(n + 1), elist(edges.size())\
     \ {\n    for (auto e : edges) {\n      start[e.first + 1]++;\n    }\n    for (int\
     \ i = 1; i <= n; i++) {\n      start[i] += start[i - 1];\n    }\n    auto counter\
     \ = start;\n    for (auto e : edges) {\n      elist[counter[e.first]++] = e.second;\n\
@@ -63,9 +63,9 @@ data:
     \ i = 0; i < _n; i++) {\n      groups[ids.second[i]].push_back(i);\n    }\n  \
     \  return groups;\n  }\n\n  void add_node_size(int m) { _n += m; }\n  int size()\
     \ { return _n; }\n\n private:\n  int _n;\n  struct edge {\n    int to;\n  };\n\
-    \  vector<pair<int, edge>> edges;\n};\n\n}  // namespace internal\n\nstruct two_sat\
-    \ {\n public:\n  two_sat() : _n(0), built(false), scc(0) {}\n  two_sat(int n)\
-    \ : _n(n), built(false), scc(2 * n) {}\n\n  int add_var() {\n    scc.add_node_size(2);\n\
+    \  vector<pair<int, edge>> edges;\n};\n\n}  // namespace nyaan_internal\n\nstruct\
+    \ two_sat {\n public:\n  two_sat() : _n(0), built(false), scc(0) {}\n  two_sat(int\
+    \ n) : _n(n), built(false), scc(2 * n) {}\n\n  int add_var() {\n    scc.add_node_size(2);\n\
     \    return _n++;\n  }\n\n  // (not i) \u306F ~i \u3067\u6E21\u3059\n  void add_clause(int\
     \ i, int j) {\n    i = max(2 * i, -1 - 2 * i);\n    j = max(2 * j, -1 - 2 * j);\n\
     \    assert(0 <= i && i < 2 * _n);\n    assert(0 <= j && j < 2 * _n);\n    scc.add_edge(i,\
@@ -81,8 +81,8 @@ data:
     \        return false;\n      }\n      _answer[i] = id[2 * i] < id[2 * i + 1];\n\
     \    }\n    return true;\n  }\n  vector<bool> answer() {\n    if (!built) satisfiable();\n\
     \    return _answer;\n  }\n\n private:\n  int _n;\n  vector<bool> _answer;\n \
-    \ bool built;\n  internal::scc_graph scc;\n};\n\n}  // namespace TwoSatImpl\n\n\
-    using TwoSatImpl::two_sat;\n\n/**\n * @brief 2-SAT\n */\n#line 2 \"template/template.hpp\"\
+    \ bool built;\n  nyaan_internal::scc_graph scc;\n};\n\n}  // namespace TwoSatImpl\n\
+    \nusing TwoSatImpl::two_sat;\n\n/**\n * @brief 2-SAT\n */\n#line 2 \"template/template.hpp\"\
     \nusing namespace std;\n\n// intrinstic\n#include <immintrin.h>\n\n#line 8 \"\
     template/template.hpp\"\n#include <array>\n#include <bitset>\n#line 11 \"template/template.hpp\"\
     \n#include <cctype>\n#include <cfenv>\n#include <cfloat>\n#include <chrono>\n\
@@ -295,7 +295,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-math/yosupo-two-sat.test.cpp
   requiredBy: []
-  timestamp: '2026-06-08 17:59:24+09:00'
+  timestamp: '2026-06-27 14:52:13+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-math/yosupo-two-sat.test.cpp

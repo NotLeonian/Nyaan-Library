@@ -262,63 +262,63 @@ data:
     \ 4 \"verify/verify-unit-test/bigint-gcd.test.cpp\"\n//\n#line 2 \"misc/rng.hpp\"\
     \n\n#line 7 \"misc/rng.hpp\"\nusing namespace std;\n\n#line 2 \"internal/internal-seed.hpp\"\
     \n\n#line 4 \"internal/internal-seed.hpp\"\nusing namespace std;\n\nnamespace\
-    \ internal {\nunsigned long long non_deterministic_seed() {\n  unsigned long long\
-    \ m =\n      chrono::duration_cast<chrono::nanoseconds>(\n          chrono::high_resolution_clock::now().time_since_epoch())\n\
-    \          .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >>\
-    \ 31, m ^= m << 35;\n  return m;\n}\nunsigned long long deterministic_seed() {\
-    \ return 88172645463325252UL; }\n\n// 64 bit \u306E seed \u5024\u3092\u751F\u6210\
-    \ (\u624B\u5143\u3067\u306F seed \u56FA\u5B9A)\n// \u9023\u7D9A\u3067\u547C\u3073\
-    \u51FA\u3059\u3068\u540C\u3058\u5024\u304C\u4F55\u5EA6\u3082\u8FD4\u3063\u3066\
-    \u304F\u308B\u306E\u3067\u6CE8\u610F\n// #define RANDOMIZED_SEED \u3059\u308B\u3068\
-    \u30B7\u30FC\u30C9\u304C\u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long\
-    \ long seed() {\n#if defined(NyaanLocal) && !defined(RANDOMIZED_SEED)\n  return\
-    \ deterministic_seed();\n#else\n  return non_deterministic_seed();\n#endif\n}\n\
-    \n}  // namespace internal\n#line 10 \"misc/rng.hpp\"\n\nnamespace my_rand {\n\
-    using i64 = long long;\nusing u64 = unsigned long long;\n\n// [0, 2^64 - 1)\n\
-    u64 rng() {\n  static u64 _x = internal::seed();\n  return _x ^= _x << 7, _x ^=\
-    \ _x >> 9;\n}\n\n// [l, r]\ni64 rng(i64 l, i64 r) {\n  assert(l <= r);\n  return\
-    \ l + rng() % u64(r - l + 1);\n}\n\n// [l, r)\ni64 randint(i64 l, i64 r) {\n \
-    \ assert(l < r);\n  return l + rng() % u64(r - l);\n}\n\n// choose n numbers from\
-    \ [l, r) without overlapping\nvector<i64> randset(i64 l, i64 r, i64 n) {\n  assert(l\
-    \ <= r && n <= r - l);\n  unordered_set<i64> s;\n  for (i64 i = n; i; --i) {\n\
-    \    i64 m = randint(l, r + 1 - i);\n    if (s.find(m) != s.end()) m = r - i;\n\
-    \    s.insert(m);\n  }\n  vector<i64> ret;\n  for (auto& x : s) ret.push_back(x);\n\
-    \  sort(begin(ret), end(ret));\n  return ret;\n}\n\n// [0.0, 1.0)\ndouble rnd()\
-    \ { return rng() * 5.42101086242752217004e-20; }\n// [l, r)\ndouble rnd(double\
-    \ l, double r) {\n  assert(l < r);\n  return l + rnd() * (r - l);\n}\n\ntemplate\
-    \ <typename T>\nvoid randshf(vector<T>& v) {\n  int n = v.size();\n  for (int\
-    \ i = 1; i < n; i++) swap(v[i], v[randint(0, i + 1)]);\n}\n\n}  // namespace my_rand\n\
-    \nusing my_rand::randint;\nusing my_rand::randset;\nusing my_rand::randshf;\n\
-    using my_rand::rnd;\nusing my_rand::rng;\n#line 6 \"verify/verify-unit-test/bigint-gcd.test.cpp\"\
-    \n//\n#line 2 \"math/bigint-gcd.hpp\"\n\n#line 4 \"math/bigint-gcd.hpp\"\nusing\
-    \ namespace std;\n\n#line 2 \"math-fast/gcd.hpp\"\n\n#line 4 \"math-fast/gcd.hpp\"\
-    \nusing namespace std;\n\nnamespace BinaryGCDImpl {\nusing u64 = unsigned long\
-    \ long;\nusing i8 = char;\n\nu64 binary_gcd(u64 a, u64 b) {\n  if (a == 0 || b\
-    \ == 0) return a + b;\n  i8 n = __builtin_ctzll(a);\n  i8 m = __builtin_ctzll(b);\n\
-    \  a >>= n;\n  b >>= m;\n  n = min(n, m);\n  while (a != b) {\n    u64 d = a -\
-    \ b;\n    i8 s = __builtin_ctzll(d);\n    bool f = a > b;\n    b = f ? b : a;\n\
-    \    a = (f ? d : -d) >> s;\n  }\n  return a << n;\n}\n\nusing u128 = __uint128_t;\n\
-    // a > 0\nint ctz128(u128 a) {\n  u64 lo = a & u64(-1);\n  return lo ? __builtin_ctzll(lo)\
-    \ : 64 + __builtin_ctzll(a >> 64);\n}\nu128 binary_gcd128(u128 a, u128 b) {\n\
-    \  if (a == 0 || b == 0) return a + b;\n  i8 n = ctz128(a);\n  i8 m = ctz128(b);\n\
-    \  a >>= n;\n  b >>= m;\n  n = min(n, m);\n  while (a != b) {\n    u128 d = a\
-    \ - b;\n    i8 s = ctz128(d);\n    bool f = a > b;\n    b = f ? b : a;\n    a\
-    \ = (f ? d : -d) >> s;\n  }\n  return a << n;\n}\n\n}  // namespace BinaryGCDImpl\n\
-    \nlong long binary_gcd(long long a, long long b) {\n  return BinaryGCDImpl::binary_gcd(abs(a),\
-    \ abs(b));\n}\n__int128_t binary_gcd128(__int128_t a, __int128_t b) {\n  if (a\
-    \ < 0) a = -a;\n  if (b < 0) b = -b;\n  return BinaryGCDImpl::binary_gcd128(a,\
-    \ b);\n}\n\n/**\n * @brief binary GCD\n */\n#line 2 \"math/bigint.hpp\"\n\n#line\
-    \ 9 \"math/bigint.hpp\"\nusing namespace std;\n\n#line 2 \"internal/internal-type-traits.hpp\"\
-    \n\n#line 4 \"internal/internal-type-traits.hpp\"\nusing namespace std;\n\nnamespace\
-    \ internal {\ntemplate <typename T>\nusing is_broadly_integral =\n    typename\
-    \ conditional_t<is_integral_v<T> || is_same_v<T, __int128_t> ||\n            \
-    \                   is_same_v<T, __uint128_t>,\n                           true_type,\
-    \ false_type>::type;\n\ntemplate <typename T>\nusing is_broadly_signed =\n   \
-    \ typename conditional_t<is_signed_v<T> || is_same_v<T, __int128_t>,\n       \
-    \                    true_type, false_type>::type;\n\ntemplate <typename T>\n\
-    using is_broadly_unsigned =\n    typename conditional_t<is_unsigned_v<T> || is_same_v<T,\
+    \ nyaan_internal {\nunsigned long long non_deterministic_seed() {\n  unsigned\
+    \ long long m =\n      chrono::duration_cast<chrono::nanoseconds>(\n         \
+    \ chrono::high_resolution_clock::now().time_since_epoch())\n          .count();\n\
+    \  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >> 31, m ^= m << 35;\n\
+    \  return m;\n}\nunsigned long long deterministic_seed() { return 88172645463325252UL;\
+    \ }\n\n// 64 bit \u306E seed \u5024\u3092\u751F\u6210 (\u624B\u5143\u3067\u306F\
+    \ seed \u56FA\u5B9A)\n// \u9023\u7D9A\u3067\u547C\u3073\u51FA\u3059\u3068\u540C\
+    \u3058\u5024\u304C\u4F55\u5EA6\u3082\u8FD4\u3063\u3066\u304F\u308B\u306E\u3067\
+    \u6CE8\u610F\n// #define RANDOMIZED_SEED \u3059\u308B\u3068\u30B7\u30FC\u30C9\u304C\
+    \u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long long seed() {\n#if defined(NyaanLocal)\
+    \ && !defined(RANDOMIZED_SEED)\n  return deterministic_seed();\n#else\n  return\
+    \ non_deterministic_seed();\n#endif\n}\n\n}  // namespace nyaan_internal\n#line\
+    \ 10 \"misc/rng.hpp\"\n\nnamespace my_rand {\nusing i64 = long long;\nusing u64\
+    \ = unsigned long long;\n\n// [0, 2^64 - 1)\nu64 rng() {\n  static u64 _x = nyaan_internal::seed();\n\
+    \  return _x ^= _x << 7, _x ^= _x >> 9;\n}\n\n// [l, r]\ni64 rng(i64 l, i64 r)\
+    \ {\n  assert(l <= r);\n  return l + rng() % u64(r - l + 1);\n}\n\n// [l, r)\n\
+    i64 randint(i64 l, i64 r) {\n  assert(l < r);\n  return l + rng() % u64(r - l);\n\
+    }\n\n// choose n numbers from [l, r) without overlapping\nvector<i64> randset(i64\
+    \ l, i64 r, i64 n) {\n  assert(l <= r && n <= r - l);\n  unordered_set<i64> s;\n\
+    \  for (i64 i = n; i; --i) {\n    i64 m = randint(l, r + 1 - i);\n    if (s.find(m)\
+    \ != s.end()) m = r - i;\n    s.insert(m);\n  }\n  vector<i64> ret;\n  for (auto&\
+    \ x : s) ret.push_back(x);\n  sort(begin(ret), end(ret));\n  return ret;\n}\n\n\
+    // [0.0, 1.0)\ndouble rnd() { return rng() * 5.42101086242752217004e-20; }\n//\
+    \ [l, r)\ndouble rnd(double l, double r) {\n  assert(l < r);\n  return l + rnd()\
+    \ * (r - l);\n}\n\ntemplate <typename T>\nvoid randshf(vector<T>& v) {\n  int\
+    \ n = v.size();\n  for (int i = 1; i < n; i++) swap(v[i], v[randint(0, i + 1)]);\n\
+    }\n\n}  // namespace my_rand\n\nusing my_rand::randint;\nusing my_rand::randset;\n\
+    using my_rand::randshf;\nusing my_rand::rnd;\nusing my_rand::rng;\n#line 6 \"\
+    verify/verify-unit-test/bigint-gcd.test.cpp\"\n//\n#line 2 \"math/bigint-gcd.hpp\"\
+    \n\n#line 4 \"math/bigint-gcd.hpp\"\nusing namespace std;\n\n#line 2 \"math-fast/gcd.hpp\"\
+    \n\n#line 4 \"math-fast/gcd.hpp\"\nusing namespace std;\n\nnamespace BinaryGCDImpl\
+    \ {\nusing u64 = unsigned long long;\nusing i8 = char;\n\nu64 binary_gcd(u64 a,\
+    \ u64 b) {\n  if (a == 0 || b == 0) return a + b;\n  i8 n = __builtin_ctzll(a);\n\
+    \  i8 m = __builtin_ctzll(b);\n  a >>= n;\n  b >>= m;\n  n = min(n, m);\n  while\
+    \ (a != b) {\n    u64 d = a - b;\n    i8 s = __builtin_ctzll(d);\n    bool f =\
+    \ a > b;\n    b = f ? b : a;\n    a = (f ? d : -d) >> s;\n  }\n  return a << n;\n\
+    }\n\nusing u128 = __uint128_t;\n// a > 0\nint ctz128(u128 a) {\n  u64 lo = a &\
+    \ u64(-1);\n  return lo ? __builtin_ctzll(lo) : 64 + __builtin_ctzll(a >> 64);\n\
+    }\nu128 binary_gcd128(u128 a, u128 b) {\n  if (a == 0 || b == 0) return a + b;\n\
+    \  i8 n = ctz128(a);\n  i8 m = ctz128(b);\n  a >>= n;\n  b >>= m;\n  n = min(n,\
+    \ m);\n  while (a != b) {\n    u128 d = a - b;\n    i8 s = ctz128(d);\n    bool\
+    \ f = a > b;\n    b = f ? b : a;\n    a = (f ? d : -d) >> s;\n  }\n  return a\
+    \ << n;\n}\n\n}  // namespace BinaryGCDImpl\n\nlong long binary_gcd(long long\
+    \ a, long long b) {\n  return BinaryGCDImpl::binary_gcd(abs(a), abs(b));\n}\n\
+    __int128_t binary_gcd128(__int128_t a, __int128_t b) {\n  if (a < 0) a = -a;\n\
+    \  if (b < 0) b = -b;\n  return BinaryGCDImpl::binary_gcd128(a, b);\n}\n\n/**\n\
+    \ * @brief binary GCD\n */\n#line 2 \"math/bigint.hpp\"\n\n#line 9 \"math/bigint.hpp\"\
+    \nusing namespace std;\n\n#line 2 \"internal/internal-type-traits.hpp\"\n\n#line\
+    \ 4 \"internal/internal-type-traits.hpp\"\nusing namespace std;\n\nnamespace nyaan_internal\
+    \ {\ntemplate <typename T>\nusing is_broadly_integral =\n    typename conditional_t<is_integral_v<T>\
+    \ || is_same_v<T, __int128_t> ||\n                               is_same_v<T,\
     \ __uint128_t>,\n                           true_type, false_type>::type;\n\n\
-    #define ENABLE_VALUE(x) \\\n  template <typename T> \\\n  constexpr bool x##_v\
+    template <typename T>\nusing is_broadly_signed =\n    typename conditional_t<is_signed_v<T>\
+    \ || is_same_v<T, __int128_t>,\n                           true_type, false_type>::type;\n\
+    \ntemplate <typename T>\nusing is_broadly_unsigned =\n    typename conditional_t<is_unsigned_v<T>\
+    \ || is_same_v<T, __uint128_t>,\n                           true_type, false_type>::type;\n\
+    \n#define ENABLE_VALUE(x) \\\n  template <typename T> \\\n  constexpr bool x##_v\
     \ = x<T>::value;\n\nENABLE_VALUE(is_broadly_integral);\nENABLE_VALUE(is_broadly_signed);\n\
     ENABLE_VALUE(is_broadly_unsigned);\n#undef ENABLE_VALUE\n\n#define ENABLE_HAS_TYPE(var)\
     \                                   \\\n  template <class, class = void>     \
@@ -332,9 +332,9 @@ data:
     \                  \\\n  template <class T>                                  \
     \          \\\n  struct has_##var<T, void_t<decltype(T::var)>> : true_type {};\
     \ \\\n  template <class T>                                            \\\n  constexpr\
-    \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace internal\n#line\
-    \ 2 \"ntt/arbitrary-ntt.hpp\"\n\n#line 6 \"ntt/arbitrary-ntt.hpp\"\nusing namespace\
-    \ std;\n\n#line 2 \"modint/montgomery-modint.hpp\"\n\n#line 5 \"modint/montgomery-modint.hpp\"\
+    \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace nyaan_internal\n\
+    #line 2 \"ntt/arbitrary-ntt.hpp\"\n\n#line 6 \"ntt/arbitrary-ntt.hpp\"\nusing\
+    \ namespace std;\n\n#line 2 \"modint/montgomery-modint.hpp\"\n\n#line 5 \"modint/montgomery-modint.hpp\"\
     \n\ntemplate <uint32_t mod>\nstruct LazyMontgomeryModInt {\n  using mint = LazyMontgomeryModInt;\n\
     \  using i32 = int32_t;\n  using u32 = uint32_t;\n  using u64 = uint64_t;\n\n\
     \  static constexpr u32 get_r() {\n    u32 ret = mod;\n    for (i32 i = 0; i <\
@@ -503,8 +503,8 @@ data:
     \ tens = {};\n\n  static constexpr int D = 1000000000;\n  static constexpr int\
     \ logD = 9;\n  bool neg;\n  vector<int> dat;\n\n  MultiPrecisionInteger() : neg(false),\
     \ dat() {}\n\n  MultiPrecisionInteger(bool n, const vector<int>& d) : neg(n),\
-    \ dat(d) {}\n\n  template <typename I,\n            enable_if_t<internal::is_broadly_integral_v<I>>*\
-    \ = nullptr>\n  MultiPrecisionInteger(I x) : neg(false) {\n    if constexpr (internal::is_broadly_signed_v<I>)\
+    \ dat(d) {}\n\n  template <typename I,\n            enable_if_t<nyaan_internal::is_broadly_integral_v<I>>*\
+    \ = nullptr>\n  MultiPrecisionInteger(I x) : neg(false) {\n    if constexpr (nyaan_internal::is_broadly_signed_v<I>)\
     \ {\n      if (x < 0) neg = true, x = -x;\n    }\n    while (x) dat.push_back(x\
     \ % D), x /= D;\n  }\n\n  MultiPrecisionInteger(const string& S) : neg(false)\
     \ {\n    assert(!S.empty());\n    if (S.size() == 1u && S[0] == '0') return;\n\
@@ -679,8 +679,8 @@ data:
     \    }\n    if (!zero_padding) {\n      while (res.size() && res.back() == '0')\
     \ res.pop_back();\n      assert(!res.empty());\n    }\n    reverse(begin(res),\
     \ end(res));\n    return res;\n  }\n\n  // convert ll to vec\n  template <typename\
-    \ I,\n            enable_if_t<internal::is_broadly_integral_v<I>>* = nullptr>\n\
-    \  static vector<int> _integer_to_vec(I x) {\n    if constexpr (internal::is_broadly_signed_v<I>)\
+    \ I,\n            enable_if_t<nyaan_internal::is_broadly_integral_v<I>>* = nullptr>\n\
+    \  static vector<int> _integer_to_vec(I x) {\n    if constexpr (nyaan_internal::is_broadly_signed_v<I>)\
     \ {\n      assert(x >= 0);\n    }\n    vector<int> res;\n    while (x) res.push_back(x\
     \ % D), x /= D;\n    return res;\n  }\n\n  static long long _to_ll(const vector<int>&\
     \ a) {\n    long long res = 0;\n    for (int i = (int)a.size() - 1; i >= 0; i--)\
@@ -1122,7 +1122,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/bigint-gcd.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-27 14:52:13+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/bigint-gcd.test.cpp

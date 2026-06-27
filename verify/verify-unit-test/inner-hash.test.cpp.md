@@ -221,23 +221,23 @@ data:
     \ \\\n    return;                  \\\n  } while (0)\n#line 70 \"template/template.hpp\"\
     \n\nnamespace Nyaan {\nvoid solve();\n}\nint main() { Nyaan::solve(); }\n#line\
     \ 4 \"verify/verify-unit-test/inner-hash.test.cpp\"\n//\n#line 2 \"internal/internal-hash.hpp\"\
-    \n\nnamespace internal {\nusing i64 = long long;\nusing u64 = unsigned long long;\n\
-    using u128 = __uint128_t;\n\ntemplate <int BASE_NUM = 2>\nstruct Hash : array<u64,\
-    \ BASE_NUM> {\n  using array<u64, BASE_NUM>::operator[];\n  static constexpr int\
-    \ n = BASE_NUM;\n\n  Hash() : array<u64, BASE_NUM>() {}\n\n  static constexpr\
-    \ u64 md = (1ull << 61) - 1;\n\n  constexpr static Hash set(const i64 &a) {\n\
-    \    Hash res;\n    fill(begin(res), end(res), cast(a));\n    return res;\n  }\n\
-    \  Hash &operator+=(const Hash &r) {\n    for (int i = 0; i < n; i++)\n      if\
-    \ (((*this)[i] += r[i]) >= md) (*this)[i] -= md;\n    return *this;\n  }\n  Hash\
-    \ &operator+=(const i64 &r) {\n    u64 s = cast(r);\n    for (int i = 0; i < n;\
-    \ i++)\n      if (((*this)[i] += s) >= md) (*this)[i] -= md;\n    return *this;\n\
-    \  }\n  Hash &operator-=(const Hash &r) {\n    for (int i = 0; i < n; i++)\n \
-    \     if (((*this)[i] += md - r[i]) >= md) (*this)[i] -= md;\n    return *this;\n\
-    \  }\n  Hash &operator-=(const i64 &r) {\n    u64 s = cast(r);\n    for (int i\
-    \ = 0; i < n; i++)\n      if (((*this)[i] += md - s) >= md) (*this)[i] -= md;\n\
-    \    return *this;\n  }\n  Hash &operator*=(const Hash &r) {\n    for (int i =\
-    \ 0; i < n; i++) (*this)[i] = modmul((*this)[i], r[i]);\n    return *this;\n \
-    \ }\n  Hash &operator*=(const i64 &r) {\n    u64 s = cast(r);\n    for (int i\
+    \n\nnamespace nyaan_internal {\nusing i64 = long long;\nusing u64 = unsigned long\
+    \ long;\nusing u128 = __uint128_t;\n\ntemplate <int BASE_NUM = 2>\nstruct Hash\
+    \ : array<u64, BASE_NUM> {\n  using array<u64, BASE_NUM>::operator[];\n  static\
+    \ constexpr int n = BASE_NUM;\n\n  Hash() : array<u64, BASE_NUM>() {}\n\n  static\
+    \ constexpr u64 md = (1ull << 61) - 1;\n\n  constexpr static Hash set(const i64\
+    \ &a) {\n    Hash res;\n    fill(begin(res), end(res), cast(a));\n    return res;\n\
+    \  }\n  Hash &operator+=(const Hash &r) {\n    for (int i = 0; i < n; i++)\n \
+    \     if (((*this)[i] += r[i]) >= md) (*this)[i] -= md;\n    return *this;\n \
+    \ }\n  Hash &operator+=(const i64 &r) {\n    u64 s = cast(r);\n    for (int i\
+    \ = 0; i < n; i++)\n      if (((*this)[i] += s) >= md) (*this)[i] -= md;\n   \
+    \ return *this;\n  }\n  Hash &operator-=(const Hash &r) {\n    for (int i = 0;\
+    \ i < n; i++)\n      if (((*this)[i] += md - r[i]) >= md) (*this)[i] -= md;\n\
+    \    return *this;\n  }\n  Hash &operator-=(const i64 &r) {\n    u64 s = cast(r);\n\
+    \    for (int i = 0; i < n; i++)\n      if (((*this)[i] += md - s) >= md) (*this)[i]\
+    \ -= md;\n    return *this;\n  }\n  Hash &operator*=(const Hash &r) {\n    for\
+    \ (int i = 0; i < n; i++) (*this)[i] = modmul((*this)[i], r[i]);\n    return *this;\n\
+    \  }\n  Hash &operator*=(const i64 &r) {\n    u64 s = cast(r);\n    for (int i\
     \ = 0; i < n; i++) (*this)[i] = modmul((*this)[i], s);\n    return *this;\n  }\n\
     \n  Hash operator+(const Hash &r) { return Hash(*this) += r; }\n  Hash operator+(const\
     \ i64 &r) { return Hash(*this) += r; }\n  Hash operator-(const Hash &r) { return\
@@ -267,9 +267,9 @@ data:
     \ 61);\n    return ret >= md ? ret - md : ret;\n  }\n  static inline constexpr\
     \ u64 modfma(const u64 &a, const u64 &b, const u64 &c) {\n    u128 d = u128(a)\
     \ * b + c;\n    u64 ret = (d >> 61) + (u64(d) & md);\n    return ret >= md ? ret\
-    \ - md : ret;\n  }\n};\n\n}  // namespace internal\n\n/**\n * @brief \u30CF\u30C3\
-    \u30B7\u30E5\u69CB\u9020\u4F53\n */\n#line 6 \"verify/verify-unit-test/inner-hash.test.cpp\"\
-    \nusing namespace Nyaan;\n\nusing Hash = internal::Hash<3>;\n\nvoid Nyaan::solve()\
+    \ - md : ret;\n  }\n};\n\n}  // namespace nyaan_internal\n\n/**\n * @brief \u30CF\
+    \u30C3\u30B7\u30E5\u69CB\u9020\u4F53\n */\n#line 6 \"verify/verify-unit-test/inner-hash.test.cpp\"\
+    \nusing namespace Nyaan;\n\nusing Hash = nyaan_internal::Hash<3>;\n\nvoid Nyaan::solve()\
     \ {\n  u64 mod = (1uLL << 61) - 1;\n\n  Hash a;\n  a[0] = 3, a[1] = 4, a[2] =\
     \ 5;\n  trc(a);\n  Hash b = Hash::set(2);\n  trc(b);\n\n  auto c = a + b;\n  trc(c);\n\
     \  assert(c[0] == 5 and c[1] == 6 and c[2] == 7);\n  auto d = a + 2;\n  trc(d);\n\
@@ -284,7 +284,7 @@ data:
     \ << A + B << endl;\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/aplusb\"\n\n#include \"\
     ../../template/template.hpp\"\n//\n#include \"../../internal/internal-hash.hpp\"\
-    \nusing namespace Nyaan;\n\nusing Hash = internal::Hash<3>;\n\nvoid Nyaan::solve()\
+    \nusing namespace Nyaan;\n\nusing Hash = nyaan_internal::Hash<3>;\n\nvoid Nyaan::solve()\
     \ {\n  u64 mod = (1uLL << 61) - 1;\n\n  Hash a;\n  a[0] = 3, a[1] = 4, a[2] =\
     \ 5;\n  trc(a);\n  Hash b = Hash::set(2);\n  trc(b);\n\n  auto c = a + b;\n  trc(c);\n\
     \  assert(c[0] == 5 and c[1] == 6 and c[2] == 7);\n  auto d = a + 2;\n  trc(d);\n\
@@ -308,7 +308,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/inner-hash.test.cpp
   requiredBy: []
-  timestamp: '2026-06-08 17:59:24+09:00'
+  timestamp: '2026-06-27 14:52:13+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/inner-hash.test.cpp

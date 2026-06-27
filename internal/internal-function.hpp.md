@@ -49,8 +49,8 @@ data:
     links: []
   bundledCode: "#line 2 \"internal/internal-function.hpp\"\n\n#include <cstddef>\n\
     #include <functional>\n#include <memory>\n#include <type_traits>\n#include <utility>\n\
-    \nnamespace internal {\n\ntemplate <class>\nclass function_ref;\n\ntemplate <class\
-    \ R, class... Args>\nclass function_ref<R(Args...)> {\n  void* obj_ = nullptr;\n\
+    \nnamespace nyaan_internal {\n\ntemplate <class>\nclass function_ref;\n\ntemplate\
+    \ <class R, class... Args>\nclass function_ref<R(Args...)> {\n  void* obj_ = nullptr;\n\
     \  R (*call_obj_)(void*, Args...) = nullptr;\n  R (*func_)(Args...) = nullptr;\n\
     \n public:\n  function_ref() noexcept = default;\n  function_ref(std::nullptr_t)\
     \ noexcept {}\n  function_ref(R (*f)(Args...)) noexcept : func_(f) {}\n\n  template\
@@ -121,9 +121,9 @@ data:
     \ != nullptr; }\n\n  R operator()(Args... args) const {\n    if (!invoke_) throw\
     \ std::bad_function_call();\n    return invoke_(\n        const_cast<void*>(static_cast<const\
     \ void*>(&storage_)),\n        std::forward<Args>(args)...);\n  }\n};\n\n}  //\
-    \ namespace internal\n\nusing internal::function_ref;\nusing internal::inplace_function;\n"
+    \ namespace nyaan_internal\n\nusing nyaan_internal::function_ref;\nusing nyaan_internal::inplace_function;\n"
   code: "#pragma once\n\n#include <cstddef>\n#include <functional>\n#include <memory>\n\
-    #include <type_traits>\n#include <utility>\n\nnamespace internal {\n\ntemplate\
+    #include <type_traits>\n#include <utility>\n\nnamespace nyaan_internal {\n\ntemplate\
     \ <class>\nclass function_ref;\n\ntemplate <class R, class... Args>\nclass function_ref<R(Args...)>\
     \ {\n  void* obj_ = nullptr;\n  R (*call_obj_)(void*, Args...) = nullptr;\n  R\
     \ (*func_)(Args...) = nullptr;\n\n public:\n  function_ref() noexcept = default;\n\
@@ -196,7 +196,7 @@ data:
     \ != nullptr; }\n\n  R operator()(Args... args) const {\n    if (!invoke_) throw\
     \ std::bad_function_call();\n    return invoke_(\n        const_cast<void*>(static_cast<const\
     \ void*>(&storage_)),\n        std::forward<Args>(args)...);\n  }\n};\n\n}  //\
-    \ namespace internal\n\nusing internal::function_ref;\nusing internal::inplace_function;\n"
+    \ namespace nyaan_internal\n\nusing nyaan_internal::function_ref;\nusing nyaan_internal::inplace_function;\n"
   dependsOn: []
   isVerificationFile: false
   path: internal/internal-function.hpp
@@ -206,7 +206,7 @@ data:
   - data-structure-2d/abstract-range-tree.hpp
   - game/impartial-game.hpp
   - fps/online-fps.hpp
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-27 14:52:13+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-abstract-range-tree.test.cpp

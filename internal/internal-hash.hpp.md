@@ -60,8 +60,8 @@ data:
   attributes:
     document_title: "\u30CF\u30C3\u30B7\u30E5\u69CB\u9020\u4F53"
     links: []
-  bundledCode: "#line 2 \"internal/internal-hash.hpp\"\n\nnamespace internal {\nusing\
-    \ i64 = long long;\nusing u64 = unsigned long long;\nusing u128 = __uint128_t;\n\
+  bundledCode: "#line 2 \"internal/internal-hash.hpp\"\n\nnamespace nyaan_internal\
+    \ {\nusing i64 = long long;\nusing u64 = unsigned long long;\nusing u128 = __uint128_t;\n\
     \ntemplate <int BASE_NUM = 2>\nstruct Hash : array<u64, BASE_NUM> {\n  using array<u64,\
     \ BASE_NUM>::operator[];\n  static constexpr int n = BASE_NUM;\n\n  Hash() : array<u64,\
     \ BASE_NUM>() {}\n\n  static constexpr u64 md = (1ull << 61) - 1;\n\n  constexpr\
@@ -107,11 +107,11 @@ data:
     \ 61);\n    return ret >= md ? ret - md : ret;\n  }\n  static inline constexpr\
     \ u64 modfma(const u64 &a, const u64 &b, const u64 &c) {\n    u128 d = u128(a)\
     \ * b + c;\n    u64 ret = (d >> 61) + (u64(d) & md);\n    return ret >= md ? ret\
-    \ - md : ret;\n  }\n};\n\n}  // namespace internal\n\n/**\n * @brief \u30CF\u30C3\
-    \u30B7\u30E5\u69CB\u9020\u4F53\n */\n"
-  code: "#pragma once\n\nnamespace internal {\nusing i64 = long long;\nusing u64 =\
-    \ unsigned long long;\nusing u128 = __uint128_t;\n\ntemplate <int BASE_NUM = 2>\n\
-    struct Hash : array<u64, BASE_NUM> {\n  using array<u64, BASE_NUM>::operator[];\n\
+    \ - md : ret;\n  }\n};\n\n}  // namespace nyaan_internal\n\n/**\n * @brief \u30CF\
+    \u30C3\u30B7\u30E5\u69CB\u9020\u4F53\n */\n"
+  code: "#pragma once\n\nnamespace nyaan_internal {\nusing i64 = long long;\nusing\
+    \ u64 = unsigned long long;\nusing u128 = __uint128_t;\n\ntemplate <int BASE_NUM\
+    \ = 2>\nstruct Hash : array<u64, BASE_NUM> {\n  using array<u64, BASE_NUM>::operator[];\n\
     \  static constexpr int n = BASE_NUM;\n\n  Hash() : array<u64, BASE_NUM>() {}\n\
     \n  static constexpr u64 md = (1ull << 61) - 1;\n\n  constexpr static Hash set(const\
     \ i64 &a) {\n    Hash res;\n    fill(begin(res), end(res), cast(a));\n    return\
@@ -155,8 +155,8 @@ data:
     \ 61);\n    return ret >= md ? ret - md : ret;\n  }\n  static inline constexpr\
     \ u64 modfma(const u64 &a, const u64 &b, const u64 &c) {\n    u128 d = u128(a)\
     \ * b + c;\n    u64 ret = (d >> 61) + (u64(d) & md);\n    return ret >= md ? ret\
-    \ - md : ret;\n  }\n};\n\n}  // namespace internal\n\n/**\n * @brief \u30CF\u30C3\
-    \u30B7\u30E5\u69CB\u9020\u4F53\n */\n"
+    \ - md : ret;\n  }\n};\n\n}  // namespace nyaan_internal\n\n/**\n * @brief \u30CF\
+    \u30C3\u30B7\u30E5\u69CB\u9020\u4F53\n */\n"
   dependsOn: []
   isVerificationFile: false
   path: internal/internal-hash.hpp
@@ -167,7 +167,7 @@ data:
   - string/rolling-hash.hpp
   - string/rolling-hash-2d.hpp
   - data-structure/parallel-union-find.hpp
-  timestamp: '2026-06-08 17:59:24+09:00'
+  timestamp: '2026-06-27 14:52:13+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ds/yosupo-range-parallel-unionfind.test.cpp

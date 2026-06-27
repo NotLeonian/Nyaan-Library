@@ -498,47 +498,47 @@ data:
     using fps = FormalPowerSeries<mint>;\n\n#line 2 \"misc/rng.hpp\"\n\n#line 7 \"\
     misc/rng.hpp\"\nusing namespace std;\n\n#line 2 \"internal/internal-seed.hpp\"\
     \n\n#line 4 \"internal/internal-seed.hpp\"\nusing namespace std;\n\nnamespace\
-    \ internal {\nunsigned long long non_deterministic_seed() {\n  unsigned long long\
-    \ m =\n      chrono::duration_cast<chrono::nanoseconds>(\n          chrono::high_resolution_clock::now().time_since_epoch())\n\
-    \          .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >>\
-    \ 31, m ^= m << 35;\n  return m;\n}\nunsigned long long deterministic_seed() {\
-    \ return 88172645463325252UL; }\n\n// 64 bit \u306E seed \u5024\u3092\u751F\u6210\
-    \ (\u624B\u5143\u3067\u306F seed \u56FA\u5B9A)\n// \u9023\u7D9A\u3067\u547C\u3073\
-    \u51FA\u3059\u3068\u540C\u3058\u5024\u304C\u4F55\u5EA6\u3082\u8FD4\u3063\u3066\
-    \u304F\u308B\u306E\u3067\u6CE8\u610F\n// #define RANDOMIZED_SEED \u3059\u308B\u3068\
-    \u30B7\u30FC\u30C9\u304C\u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long\
-    \ long seed() {\n#if defined(NyaanLocal) && !defined(RANDOMIZED_SEED)\n  return\
-    \ deterministic_seed();\n#else\n  return non_deterministic_seed();\n#endif\n}\n\
-    \n}  // namespace internal\n#line 10 \"misc/rng.hpp\"\n\nnamespace my_rand {\n\
-    using i64 = long long;\nusing u64 = unsigned long long;\n\n// [0, 2^64 - 1)\n\
-    u64 rng() {\n  static u64 _x = internal::seed();\n  return _x ^= _x << 7, _x ^=\
-    \ _x >> 9;\n}\n\n// [l, r]\ni64 rng(i64 l, i64 r) {\n  assert(l <= r);\n  return\
-    \ l + rng() % u64(r - l + 1);\n}\n\n// [l, r)\ni64 randint(i64 l, i64 r) {\n \
-    \ assert(l < r);\n  return l + rng() % u64(r - l);\n}\n\n// choose n numbers from\
-    \ [l, r) without overlapping\nvector<i64> randset(i64 l, i64 r, i64 n) {\n  assert(l\
-    \ <= r && n <= r - l);\n  unordered_set<i64> s;\n  for (i64 i = n; i; --i) {\n\
-    \    i64 m = randint(l, r + 1 - i);\n    if (s.find(m) != s.end()) m = r - i;\n\
-    \    s.insert(m);\n  }\n  vector<i64> ret;\n  for (auto& x : s) ret.push_back(x);\n\
-    \  sort(begin(ret), end(ret));\n  return ret;\n}\n\n// [0.0, 1.0)\ndouble rnd()\
-    \ { return rng() * 5.42101086242752217004e-20; }\n// [l, r)\ndouble rnd(double\
-    \ l, double r) {\n  assert(l < r);\n  return l + rnd() * (r - l);\n}\n\ntemplate\
-    \ <typename T>\nvoid randshf(vector<T>& v) {\n  int n = v.size();\n  for (int\
-    \ i = 1; i < n; i++) swap(v[i], v[randint(0, i + 1)]);\n}\n\n}  // namespace my_rand\n\
-    \nusing my_rand::randint;\nusing my_rand::randset;\nusing my_rand::randshf;\n\
-    using my_rand::rnd;\nusing my_rand::rng;\n#line 12 \"verify/verify-unit-test/fps.test.cpp\"\
-    \n\nusing namespace Nyaan;\n\nvoid test_div(int n, int m) {\n  trc(\"test div\"\
-    );\n  assert(n > 0 and m > 0);\n  fps f(n), g(m);\n  each(x, f) x = rng();\n \
-    \ each(x, g) x = rng();\n  do {\n    f.back() = rng();\n    g.back() = rng();\n\
-    \  } while (f.back() == 0 or g.back() == 0);\n\n  auto q = f / g;\n  auto r =\
-    \ f % g;\n  assert(g * q + r == f);\n  assert(r.size() < g.size());\n}\n\nvoid\
-    \ test_pow(int n, int deg) {\n  trc(\"test pow\", n, deg);\n  assert(n > 0 &&\
-    \ deg > 0);\n  fps f(n);\n  each(x, f) x = rng();\n  int r = randint(0, 100);\n\
-    \  fps g = f.pow(r, deg);\n  fps h(deg), base(f);\n  h[0] = 1;\n  for (int e =\
-    \ r; e; e >>= 1) {\n    if (e & 1) h = (base * h).pre(deg);\n    base = (base\
-    \ * base).pre(deg);\n  }\n  if (g != h) {\n    trc(f, r, deg);\n    trc(g);\n\
-    \    trc(h);\n  }\n  assert(g == h);\n}\n\nvoid test_exp(int n, int deg) {\n \
-    \ trc(\"test exp\", n, deg);\n  assert(n > 0 and deg > 0);\n  fps f(n);\n  each(x,\
-    \ f) x = rng();\n  f[0] = 1;\n\n  fps g = f.log(deg);\n  fps h = g.exp(deg);\n\
+    \ nyaan_internal {\nunsigned long long non_deterministic_seed() {\n  unsigned\
+    \ long long m =\n      chrono::duration_cast<chrono::nanoseconds>(\n         \
+    \ chrono::high_resolution_clock::now().time_since_epoch())\n          .count();\n\
+    \  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >> 31, m ^= m << 35;\n\
+    \  return m;\n}\nunsigned long long deterministic_seed() { return 88172645463325252UL;\
+    \ }\n\n// 64 bit \u306E seed \u5024\u3092\u751F\u6210 (\u624B\u5143\u3067\u306F\
+    \ seed \u56FA\u5B9A)\n// \u9023\u7D9A\u3067\u547C\u3073\u51FA\u3059\u3068\u540C\
+    \u3058\u5024\u304C\u4F55\u5EA6\u3082\u8FD4\u3063\u3066\u304F\u308B\u306E\u3067\
+    \u6CE8\u610F\n// #define RANDOMIZED_SEED \u3059\u308B\u3068\u30B7\u30FC\u30C9\u304C\
+    \u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long long seed() {\n#if defined(NyaanLocal)\
+    \ && !defined(RANDOMIZED_SEED)\n  return deterministic_seed();\n#else\n  return\
+    \ non_deterministic_seed();\n#endif\n}\n\n}  // namespace nyaan_internal\n#line\
+    \ 10 \"misc/rng.hpp\"\n\nnamespace my_rand {\nusing i64 = long long;\nusing u64\
+    \ = unsigned long long;\n\n// [0, 2^64 - 1)\nu64 rng() {\n  static u64 _x = nyaan_internal::seed();\n\
+    \  return _x ^= _x << 7, _x ^= _x >> 9;\n}\n\n// [l, r]\ni64 rng(i64 l, i64 r)\
+    \ {\n  assert(l <= r);\n  return l + rng() % u64(r - l + 1);\n}\n\n// [l, r)\n\
+    i64 randint(i64 l, i64 r) {\n  assert(l < r);\n  return l + rng() % u64(r - l);\n\
+    }\n\n// choose n numbers from [l, r) without overlapping\nvector<i64> randset(i64\
+    \ l, i64 r, i64 n) {\n  assert(l <= r && n <= r - l);\n  unordered_set<i64> s;\n\
+    \  for (i64 i = n; i; --i) {\n    i64 m = randint(l, r + 1 - i);\n    if (s.find(m)\
+    \ != s.end()) m = r - i;\n    s.insert(m);\n  }\n  vector<i64> ret;\n  for (auto&\
+    \ x : s) ret.push_back(x);\n  sort(begin(ret), end(ret));\n  return ret;\n}\n\n\
+    // [0.0, 1.0)\ndouble rnd() { return rng() * 5.42101086242752217004e-20; }\n//\
+    \ [l, r)\ndouble rnd(double l, double r) {\n  assert(l < r);\n  return l + rnd()\
+    \ * (r - l);\n}\n\ntemplate <typename T>\nvoid randshf(vector<T>& v) {\n  int\
+    \ n = v.size();\n  for (int i = 1; i < n; i++) swap(v[i], v[randint(0, i + 1)]);\n\
+    }\n\n}  // namespace my_rand\n\nusing my_rand::randint;\nusing my_rand::randset;\n\
+    using my_rand::randshf;\nusing my_rand::rnd;\nusing my_rand::rng;\n#line 12 \"\
+    verify/verify-unit-test/fps.test.cpp\"\n\nusing namespace Nyaan;\n\nvoid test_div(int\
+    \ n, int m) {\n  trc(\"test div\");\n  assert(n > 0 and m > 0);\n  fps f(n), g(m);\n\
+    \  each(x, f) x = rng();\n  each(x, g) x = rng();\n  do {\n    f.back() = rng();\n\
+    \    g.back() = rng();\n  } while (f.back() == 0 or g.back() == 0);\n\n  auto\
+    \ q = f / g;\n  auto r = f % g;\n  assert(g * q + r == f);\n  assert(r.size()\
+    \ < g.size());\n}\n\nvoid test_pow(int n, int deg) {\n  trc(\"test pow\", n, deg);\n\
+    \  assert(n > 0 && deg > 0);\n  fps f(n);\n  each(x, f) x = rng();\n  int r =\
+    \ randint(0, 100);\n  fps g = f.pow(r, deg);\n  fps h(deg), base(f);\n  h[0] =\
+    \ 1;\n  for (int e = r; e; e >>= 1) {\n    if (e & 1) h = (base * h).pre(deg);\n\
+    \    base = (base * base).pre(deg);\n  }\n  if (g != h) {\n    trc(f, r, deg);\n\
+    \    trc(g);\n    trc(h);\n  }\n  assert(g == h);\n}\n\nvoid test_exp(int n, int\
+    \ deg) {\n  trc(\"test exp\", n, deg);\n  assert(n > 0 and deg > 0);\n  fps f(n);\n\
+    \  each(x, f) x = rng();\n  f[0] = 1;\n\n  fps g = f.log(deg);\n  fps h = g.exp(deg);\n\
     \  f.resize(deg);\n  assert(f == h);\n}\n\nvoid test_inv(int n, int deg) {\n \
     \ trc(\"test inv\");\n  assert(n > 0 and deg > 0);\n  fps f(n);\n  each(x, f)\
     \ x = rng();\n  while (f[0] == 0) f[0] = rng();\n\n  fps g = f.inv(deg);\n  fps\
@@ -585,7 +585,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/fps.test.cpp
   requiredBy: []
-  timestamp: '2026-06-08 17:59:24+09:00'
+  timestamp: '2026-06-27 14:52:13+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/fps.test.cpp

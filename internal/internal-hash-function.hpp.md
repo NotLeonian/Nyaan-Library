@@ -41,7 +41,7 @@ data:
     links: []
   bundledCode: "#line 2 \"internal/internal-hash-function.hpp\"\n\n#include <cassert>\n\
     using namespace std;\n\n#line 2 \"internal/internal-seed.hpp\"\n\n#include <chrono>\n\
-    using namespace std;\n\nnamespace internal {\nunsigned long long non_deterministic_seed()\
+    using namespace std;\n\nnamespace nyaan_internal {\nunsigned long long non_deterministic_seed()\
     \ {\n  unsigned long long m =\n      chrono::duration_cast<chrono::nanoseconds>(\n\
     \          chrono::high_resolution_clock::now().time_since_epoch())\n        \
     \  .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >> 31, m\
@@ -52,9 +52,9 @@ data:
     \u308B\u306E\u3067\u6CE8\u610F\n// #define RANDOMIZED_SEED \u3059\u308B\u3068\u30B7\
     \u30FC\u30C9\u304C\u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long long\
     \ seed() {\n#if defined(NyaanLocal) && !defined(RANDOMIZED_SEED)\n  return deterministic_seed();\n\
-    #else\n  return non_deterministic_seed();\n#endif\n}\n\n}  // namespace internal\n\
+    #else\n  return non_deterministic_seed();\n#endif\n}\n\n}  // namespace nyaan_internal\n\
     #line 2 \"internal/internal-type-traits.hpp\"\n\n#include <type_traits>\nusing\
-    \ namespace std;\n\nnamespace internal {\ntemplate <typename T>\nusing is_broadly_integral\
+    \ namespace std;\n\nnamespace nyaan_internal {\ntemplate <typename T>\nusing is_broadly_integral\
     \ =\n    typename conditional_t<is_integral_v<T> || is_same_v<T, __int128_t> ||\n\
     \                               is_same_v<T, __uint128_t>,\n                 \
     \          true_type, false_type>::type;\n\ntemplate <typename T>\nusing is_broadly_signed\
@@ -76,8 +76,28 @@ data:
     \                  \\\n  template <class T>                                  \
     \          \\\n  struct has_##var<T, void_t<decltype(T::var)>> : true_type {};\
     \ \\\n  template <class T>                                            \\\n  constexpr\
-    \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace internal\n#line\
-    \ 8 \"internal/internal-hash-function.hpp\"\n\nnamespace internal {\n// \u6574\
+    \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace nyaan_internal\n\
+    #line 8 \"internal/internal-hash-function.hpp\"\n\nnamespace nyaan_internal {\n\
+    // \u6574\u6570, \u6574\u6570\u5217\u3092 64 bit unsigned int \u3078\u79FB\u3059\
+    \n\nusing u64 = unsigned long long;\nusing u128 = __uint128_t;\n\nENABLE_HAS_TYPE(first_type);\n\
+    ENABLE_HAS_TYPE(second_type);\nENABLE_HAS_TYPE(iterator);\n\ntemplate <typename\
+    \ T>\nu64 hash_function(const T& x) {\n  static u64 r = seed();\n  constexpr u64\
+    \ z1 = 11995408973635179863ULL;\n  if constexpr (is_broadly_integral_v<T>) {\n\
+    \    // Integral\n    return (u64(x) ^ r) * z1;\n  } else if constexpr (has_first_type_v<T>\
+    \ && has_second_type_v<T>) {\n    // pair\n    constexpr u64 z2 = 10150724397891781847ULL;\n\
+    \    return hash_function(x.first) + hash_function(x.second) * z2;\n  } else if\
+    \ constexpr (has_iterator_v<T>) {\n    // Container\n    constexpr u64 mod = (1LL\
+    \ << 61) - 1;\n    constexpr u64 base = 950699498548472943ULL;\n    u64 m = 0;\n\
+    \    for (auto& z : x) {\n      u64 w;\n      if constexpr (is_broadly_integral_v<T>)\
+    \ {\n        w = u64(z) ^ r;\n      } else {\n        w = hash_function(z);\n\
+    \      }\n      u128 y = u128(m) * base + (w & mod);\n      m = (y & mod) + (y\
+    \ >> 61);\n      if (m >= mod) m -= mod;\n    }\n    m ^= m << 24, m ^= m >> 31,\
+    \ m ^= m << 35;\n    return m;\n  } else {\n    static_assert([]() { return false;\
+    \ }());\n  }\n}\n\ntemplate <typename Key>\nstruct HashObject {\n  size_t operator()(const\
+    \ Key& x) const { return hash_function(x); }\n};\n\n}  // namespace nyaan_internal\n\
+    \n/*\n@brief \u30CF\u30C3\u30B7\u30E5\u95A2\u6570\n*/\n"
+  code: "#pragma once\n\n#include <cassert>\nusing namespace std;\n\n#include \"internal-seed.hpp\"\
+    \n#include \"internal-type-traits.hpp\"\n\nnamespace nyaan_internal {\n// \u6574\
     \u6570, \u6574\u6570\u5217\u3092 64 bit unsigned int \u3078\u79FB\u3059\n\nusing\
     \ u64 = unsigned long long;\nusing u128 = __uint128_t;\n\nENABLE_HAS_TYPE(first_type);\n\
     ENABLE_HAS_TYPE(second_type);\nENABLE_HAS_TYPE(iterator);\n\ntemplate <typename\
@@ -94,27 +114,7 @@ data:
     \ >> 61);\n      if (m >= mod) m -= mod;\n    }\n    m ^= m << 24, m ^= m >> 31,\
     \ m ^= m << 35;\n    return m;\n  } else {\n    static_assert([]() { return false;\
     \ }());\n  }\n}\n\ntemplate <typename Key>\nstruct HashObject {\n  size_t operator()(const\
-    \ Key& x) const { return hash_function(x); }\n};\n\n}  // namespace internal\n\
-    \n/*\n@brief \u30CF\u30C3\u30B7\u30E5\u95A2\u6570\n*/\n"
-  code: "#pragma once\n\n#include <cassert>\nusing namespace std;\n\n#include \"internal-seed.hpp\"\
-    \n#include \"internal-type-traits.hpp\"\n\nnamespace internal {\n// \u6574\u6570\
-    , \u6574\u6570\u5217\u3092 64 bit unsigned int \u3078\u79FB\u3059\n\nusing u64\
-    \ = unsigned long long;\nusing u128 = __uint128_t;\n\nENABLE_HAS_TYPE(first_type);\n\
-    ENABLE_HAS_TYPE(second_type);\nENABLE_HAS_TYPE(iterator);\n\ntemplate <typename\
-    \ T>\nu64 hash_function(const T& x) {\n  static u64 r = seed();\n  constexpr u64\
-    \ z1 = 11995408973635179863ULL;\n  if constexpr (is_broadly_integral_v<T>) {\n\
-    \    // Integral\n    return (u64(x) ^ r) * z1;\n  } else if constexpr (has_first_type_v<T>\
-    \ && has_second_type_v<T>) {\n    // pair\n    constexpr u64 z2 = 10150724397891781847ULL;\n\
-    \    return hash_function(x.first) + hash_function(x.second) * z2;\n  } else if\
-    \ constexpr (has_iterator_v<T>) {\n    // Container\n    constexpr u64 mod = (1LL\
-    \ << 61) - 1;\n    constexpr u64 base = 950699498548472943ULL;\n    u64 m = 0;\n\
-    \    for (auto& z : x) {\n      u64 w;\n      if constexpr (is_broadly_integral_v<T>)\
-    \ {\n        w = u64(z) ^ r;\n      } else {\n        w = hash_function(z);\n\
-    \      }\n      u128 y = u128(m) * base + (w & mod);\n      m = (y & mod) + (y\
-    \ >> 61);\n      if (m >= mod) m -= mod;\n    }\n    m ^= m << 24, m ^= m >> 31,\
-    \ m ^= m << 35;\n    return m;\n  } else {\n    static_assert([]() { return false;\
-    \ }());\n  }\n}\n\ntemplate <typename Key>\nstruct HashObject {\n  size_t operator()(const\
-    \ Key& x) const { return hash_function(x); }\n};\n\n}  // namespace internal\n\
+    \ Key& x) const { return hash_function(x); }\n};\n\n}  // namespace nyaan_internal\n\
     \n/*\n@brief \u30CF\u30C3\u30B7\u30E5\u95A2\u6570\n*/"
   dependsOn:
   - internal/internal-seed.hpp
@@ -125,7 +125,7 @@ data:
   - hashmap/hashmap-unerasable.hpp
   - marathon/top-k.hpp
   - string/number-of-subsequences.hpp
-  timestamp: '2023-09-05 21:46:27+09:00'
+  timestamp: '2026-06-27 14:52:13+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ds/yosupo-associative-array-unerasable-hashmap.test.cpp

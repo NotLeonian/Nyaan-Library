@@ -245,7 +245,7 @@ data:
     \ 4 \"verify/verify-yosupo-ntt/yosupo-multipoint-evaluation-chirp-z.test.cpp\"\
     \n//\n#line 2 \"misc/rng.hpp\"\n\n#line 7 \"misc/rng.hpp\"\nusing namespace std;\n\
     \n#line 2 \"internal/internal-seed.hpp\"\n\n#line 4 \"internal/internal-seed.hpp\"\
-    \nusing namespace std;\n\nnamespace internal {\nunsigned long long non_deterministic_seed()\
+    \nusing namespace std;\n\nnamespace nyaan_internal {\nunsigned long long non_deterministic_seed()\
     \ {\n  unsigned long long m =\n      chrono::duration_cast<chrono::nanoseconds>(\n\
     \          chrono::high_resolution_clock::now().time_since_epoch())\n        \
     \  .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >> 31, m\
@@ -256,26 +256,26 @@ data:
     \u308B\u306E\u3067\u6CE8\u610F\n// #define RANDOMIZED_SEED \u3059\u308B\u3068\u30B7\
     \u30FC\u30C9\u304C\u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long long\
     \ seed() {\n#if defined(NyaanLocal) && !defined(RANDOMIZED_SEED)\n  return deterministic_seed();\n\
-    #else\n  return non_deterministic_seed();\n#endif\n}\n\n}  // namespace internal\n\
+    #else\n  return non_deterministic_seed();\n#endif\n}\n\n}  // namespace nyaan_internal\n\
     #line 10 \"misc/rng.hpp\"\n\nnamespace my_rand {\nusing i64 = long long;\nusing\
     \ u64 = unsigned long long;\n\n// [0, 2^64 - 1)\nu64 rng() {\n  static u64 _x\
-    \ = internal::seed();\n  return _x ^= _x << 7, _x ^= _x >> 9;\n}\n\n// [l, r]\n\
-    i64 rng(i64 l, i64 r) {\n  assert(l <= r);\n  return l + rng() % u64(r - l + 1);\n\
-    }\n\n// [l, r)\ni64 randint(i64 l, i64 r) {\n  assert(l < r);\n  return l + rng()\
-    \ % u64(r - l);\n}\n\n// choose n numbers from [l, r) without overlapping\nvector<i64>\
-    \ randset(i64 l, i64 r, i64 n) {\n  assert(l <= r && n <= r - l);\n  unordered_set<i64>\
-    \ s;\n  for (i64 i = n; i; --i) {\n    i64 m = randint(l, r + 1 - i);\n    if\
-    \ (s.find(m) != s.end()) m = r - i;\n    s.insert(m);\n  }\n  vector<i64> ret;\n\
-    \  for (auto& x : s) ret.push_back(x);\n  sort(begin(ret), end(ret));\n  return\
-    \ ret;\n}\n\n// [0.0, 1.0)\ndouble rnd() { return rng() * 5.42101086242752217004e-20;\
-    \ }\n// [l, r)\ndouble rnd(double l, double r) {\n  assert(l < r);\n  return l\
-    \ + rnd() * (r - l);\n}\n\ntemplate <typename T>\nvoid randshf(vector<T>& v) {\n\
-    \  int n = v.size();\n  for (int i = 1; i < n; i++) swap(v[i], v[randint(0, i\
-    \ + 1)]);\n}\n\n}  // namespace my_rand\n\nusing my_rand::randint;\nusing my_rand::randset;\n\
-    using my_rand::randshf;\nusing my_rand::rnd;\nusing my_rand::rng;\n#line 6 \"\
-    verify/verify-yosupo-ntt/yosupo-multipoint-evaluation-chirp-z.test.cpp\"\n//\n\
-    #line 2 \"ntt/chirp-z.hpp\"\n\n// f(A W^0), f(A W^1), ..., f(A W^{N-1}) \u3092\
-    \u8FD4\u3059\ntemplate <typename fps>\nfps ChirpZ(fps f, typename fps::value_type\
+    \ = nyaan_internal::seed();\n  return _x ^= _x << 7, _x ^= _x >> 9;\n}\n\n// [l,\
+    \ r]\ni64 rng(i64 l, i64 r) {\n  assert(l <= r);\n  return l + rng() % u64(r -\
+    \ l + 1);\n}\n\n// [l, r)\ni64 randint(i64 l, i64 r) {\n  assert(l < r);\n  return\
+    \ l + rng() % u64(r - l);\n}\n\n// choose n numbers from [l, r) without overlapping\n\
+    vector<i64> randset(i64 l, i64 r, i64 n) {\n  assert(l <= r && n <= r - l);\n\
+    \  unordered_set<i64> s;\n  for (i64 i = n; i; --i) {\n    i64 m = randint(l,\
+    \ r + 1 - i);\n    if (s.find(m) != s.end()) m = r - i;\n    s.insert(m);\n  }\n\
+    \  vector<i64> ret;\n  for (auto& x : s) ret.push_back(x);\n  sort(begin(ret),\
+    \ end(ret));\n  return ret;\n}\n\n// [0.0, 1.0)\ndouble rnd() { return rng() *\
+    \ 5.42101086242752217004e-20; }\n// [l, r)\ndouble rnd(double l, double r) {\n\
+    \  assert(l < r);\n  return l + rnd() * (r - l);\n}\n\ntemplate <typename T>\n\
+    void randshf(vector<T>& v) {\n  int n = v.size();\n  for (int i = 1; i < n; i++)\
+    \ swap(v[i], v[randint(0, i + 1)]);\n}\n\n}  // namespace my_rand\n\nusing my_rand::randint;\n\
+    using my_rand::randset;\nusing my_rand::randshf;\nusing my_rand::rnd;\nusing my_rand::rng;\n\
+    #line 6 \"verify/verify-yosupo-ntt/yosupo-multipoint-evaluation-chirp-z.test.cpp\"\
+    \n//\n#line 2 \"ntt/chirp-z.hpp\"\n\n// f(A W^0), f(A W^1), ..., f(A W^{N-1})\
+    \ \u3092\u8FD4\u3059\ntemplate <typename fps>\nfps ChirpZ(fps f, typename fps::value_type\
     \ W, int N = -1,\n           typename fps::value_type A = 1) {\n  using mint =\
     \ typename fps::value_type;\n  if (N == -1) N = f.size();\n  if (f.empty() or\
     \ N == 0) return fps(N, mint{});\n  int M = f.size();\n  if (A != 1) {\n    mint\
@@ -620,7 +620,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-ntt/yosupo-multipoint-evaluation-chirp-z.test.cpp
   requiredBy: []
-  timestamp: '2026-06-08 17:59:24+09:00'
+  timestamp: '2026-06-27 14:52:13+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-ntt/yosupo-multipoint-evaluation-chirp-z.test.cpp

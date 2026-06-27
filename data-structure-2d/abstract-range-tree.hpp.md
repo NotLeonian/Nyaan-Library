@@ -19,7 +19,7 @@ data:
     \ <algorithm>\n#include <cassert>\n#include <functional>\n#include <type_traits>\n\
     #include <utility>\n#include <vector>\nusing namespace std;\n\n#line 2 \"internal/internal-function.hpp\"\
     \n\n#include <cstddef>\n#line 5 \"internal/internal-function.hpp\"\n#include <memory>\n\
-    #line 8 \"internal/internal-function.hpp\"\n\nnamespace internal {\n\ntemplate\
+    #line 8 \"internal/internal-function.hpp\"\n\nnamespace nyaan_internal {\n\ntemplate\
     \ <class>\nclass function_ref;\n\ntemplate <class R, class... Args>\nclass function_ref<R(Args...)>\
     \ {\n  void* obj_ = nullptr;\n  R (*call_obj_)(void*, Args...) = nullptr;\n  R\
     \ (*func_)(Args...) = nullptr;\n\n public:\n  function_ref() noexcept = default;\n\
@@ -92,101 +92,103 @@ data:
     \ != nullptr; }\n\n  R operator()(Args... args) const {\n    if (!invoke_) throw\
     \ std::bad_function_call();\n    return invoke_(\n        const_cast<void*>(static_cast<const\
     \ void*>(&storage_)),\n        std::forward<Args>(args)...);\n  }\n};\n\n}  //\
-    \ namespace internal\n\nusing internal::function_ref;\nusing internal::inplace_function;\n\
+    \ namespace nyaan_internal\n\nusing nyaan_internal::function_ref;\nusing nyaan_internal::inplace_function;\n\
     #line 12 \"data-structure-2d/abstract-range-tree.hpp\"\n\n// DS ... data_structure_type\n\
     // S ... size_type\n// T ... value_type\ntemplate <typename DS, typename S, typename\
-    \ T,\n          typename NewFunc = internal::inplace_function<DS*(int), 64>,\n\
-    \          typename AddFunc = internal::inplace_function<void(DS&, int, T), 64>,\n\
-    \          typename SumFunc = internal::inplace_function<T(DS&, int, int), 64>,\n\
-    \          typename MergeFunc = internal::inplace_function<T(T, T), 64>>\nstruct\
-    \ RangeTree {\n  using NEW = NewFunc;\n  using ADD = AddFunc;\n  using SUM = SumFunc;\n\
-    \  using MRG = MergeFunc;\n  using P = pair<S, S>;\n\n  static_assert(is_invocable_r_v<DS*,\
-    \ NEW&, int>,\n                \"RangeTree NEW must be callable as DS*(int)\"\
-    );\n  static_assert(is_invocable_r_v<void, ADD&, DS&, int, T>,\n             \
-    \   \"RangeTree ADD must be callable as void(DS&, int, T)\");\n  static_assert(is_invocable_r_v<T,\
-    \ SUM&, DS&, int, int>,\n                \"RangeTree SUM must be callable as T(DS&,\
-    \ int, int)\");\n  static_assert(is_invocable_r_v<T, MRG&, T, T>,\n          \
-    \      \"RangeTree MRG must be callable as T(T, T)\");\n\n  S N, M;\n  NEW ds_new;\n\
-    \  ADD ds_add;\n  SUM ds_sum;\n  MRG t_merge;\n  const T ti;\n  vector<DS*> ds;\n\
-    \  vector<vector<S>> ys;\n  vector<P> ps;\n\n  template <typename FNew, typename\
-    \ FAdd, typename FSum, typename FMerge>\n  RangeTree(FNew&& nw, FAdd&& ad, FSum&&\
-    \ sm, FMerge&& mrg, const T& ti_)\n      : ds_new(std::forward<FNew>(nw)),\n \
-    \       ds_add(std::forward<FAdd>(ad)),\n        ds_sum(std::forward<FSum>(sm)),\n\
-    \        t_merge(std::forward<FMerge>(mrg)),\n        ti(ti_) {}\n\n  void add_point(S\
-    \ x, S y) { ps.push_back(make_pair(x, y)); }\n\n  void build() {\n    sort(begin(ps),\
-    \ end(ps));\n    ps.erase(unique(begin(ps), end(ps)), end(ps));\n    N = ps.size();\n\
-    \    ds.resize(2 * N, nullptr);\n    ys.resize(2 * N);\n    for (int i = 0; i\
-    \ < N; ++i) {\n      ys[i + N].push_back(ps[i].second);\n      ds[i + N] = std::invoke(ds_new,\
-    \ 1);\n    }\n    for (int i = N - 1; i > 0; --i) {\n      ys[i].resize(ys[i <<\
-    \ 1].size() + ys[(i << 1) | 1].size());\n      merge(begin(ys[(i << 1) | 0]),\
-    \ end(ys[(i << 1) | 0]),\n            begin(ys[(i << 1) | 1]), end(ys[(i << 1)\
-    \ | 1]), begin(ys[i]));\n      ys[i].erase(unique(begin(ys[i]), end(ys[i])), end(ys[i]));\n\
-    \      ds[i] = std::invoke(ds_new, ys[i].size());\n    }\n  }\n\n  int id(S x)\
-    \ const {\n    return lower_bound(\n               begin(ps), end(ps), make_pair(x,\
-    \ S()),\n               [](const P& a, const P& b) { return a.first < b.first;\
-    \ }) -\n           begin(ps);\n  }\n\n  int id(int i, S y) const {\n    return\
-    \ lower_bound(begin(ys[i]), end(ys[i]), y) - begin(ys[i]);\n  }\n\n  void add(S\
-    \ x, S y, T a) {\n    int i = lower_bound(begin(ps), end(ps), make_pair(x, y))\
-    \ - begin(ps);\n    assert(ps[i] == make_pair(x, y));\n    for (i += N; i; i >>=\
-    \ 1) std::invoke(ds_add, *ds[i], id(i, y), a);\n  }\n\n  T sum(S xl, S yl, S xr,\
-    \ S yr) {\n    T L = ti, R = ti;\n    int a = id(xl), b = id(xr);\n    for (a\
-    \ += N, b += N; a < b; a >>= 1, b >>= 1) {\n      if (a & 1)\n        L = std::invoke(t_merge,\
-    \ L,\n                        std::invoke(ds_sum, *ds[a], id(a, yl), id(a, yr))),\n\
-    \        ++a;\n      if (b & 1)\n        --b,\n            R = std::invoke(t_merge,\n\
-    \                            std::invoke(ds_sum, *ds[b], id(b, yl), id(b, yr)),\n\
-    \                            R);\n    }\n    return std::invoke(t_merge, L, R);\n\
-    \  }\n};\n\n/*\n * @brief \u62BD\u8C61\u5316\u9818\u57DF\u6728\n */\n"
+    \ T,\n          typename NewFunc = nyaan_internal::inplace_function<DS*(int),\
+    \ 64>,\n          typename AddFunc = nyaan_internal::inplace_function<void(DS&,\
+    \ int, T), 64>,\n          typename SumFunc = nyaan_internal::inplace_function<T(DS&,\
+    \ int, int), 64>,\n          typename MergeFunc = nyaan_internal::inplace_function<T(T,\
+    \ T), 64>>\nstruct RangeTree {\n  using NEW = NewFunc;\n  using ADD = AddFunc;\n\
+    \  using SUM = SumFunc;\n  using MRG = MergeFunc;\n  using P = pair<S, S>;\n\n\
+    \  static_assert(is_invocable_r_v<DS*, NEW&, int>,\n                \"RangeTree\
+    \ NEW must be callable as DS*(int)\");\n  static_assert(is_invocable_r_v<void,\
+    \ ADD&, DS&, int, T>,\n                \"RangeTree ADD must be callable as void(DS&,\
+    \ int, T)\");\n  static_assert(is_invocable_r_v<T, SUM&, DS&, int, int>,\n   \
+    \             \"RangeTree SUM must be callable as T(DS&, int, int)\");\n  static_assert(is_invocable_r_v<T,\
+    \ MRG&, T, T>,\n                \"RangeTree MRG must be callable as T(T, T)\"\
+    );\n\n  S N, M;\n  NEW ds_new;\n  ADD ds_add;\n  SUM ds_sum;\n  MRG t_merge;\n\
+    \  const T ti;\n  vector<DS*> ds;\n  vector<vector<S>> ys;\n  vector<P> ps;\n\n\
+    \  template <typename FNew, typename FAdd, typename FSum, typename FMerge>\n \
+    \ RangeTree(FNew&& nw, FAdd&& ad, FSum&& sm, FMerge&& mrg, const T& ti_)\n   \
+    \   : ds_new(std::forward<FNew>(nw)),\n        ds_add(std::forward<FAdd>(ad)),\n\
+    \        ds_sum(std::forward<FSum>(sm)),\n        t_merge(std::forward<FMerge>(mrg)),\n\
+    \        ti(ti_) {}\n\n  void add_point(S x, S y) { ps.push_back(make_pair(x,\
+    \ y)); }\n\n  void build() {\n    sort(begin(ps), end(ps));\n    ps.erase(unique(begin(ps),\
+    \ end(ps)), end(ps));\n    N = ps.size();\n    ds.resize(2 * N, nullptr);\n  \
+    \  ys.resize(2 * N);\n    for (int i = 0; i < N; ++i) {\n      ys[i + N].push_back(ps[i].second);\n\
+    \      ds[i + N] = std::invoke(ds_new, 1);\n    }\n    for (int i = N - 1; i >\
+    \ 0; --i) {\n      ys[i].resize(ys[i << 1].size() + ys[(i << 1) | 1].size());\n\
+    \      merge(begin(ys[(i << 1) | 0]), end(ys[(i << 1) | 0]),\n            begin(ys[(i\
+    \ << 1) | 1]), end(ys[(i << 1) | 1]), begin(ys[i]));\n      ys[i].erase(unique(begin(ys[i]),\
+    \ end(ys[i])), end(ys[i]));\n      ds[i] = std::invoke(ds_new, ys[i].size());\n\
+    \    }\n  }\n\n  int id(S x) const {\n    return lower_bound(\n              \
+    \ begin(ps), end(ps), make_pair(x, S()),\n               [](const P& a, const\
+    \ P& b) { return a.first < b.first; }) -\n           begin(ps);\n  }\n\n  int\
+    \ id(int i, S y) const {\n    return lower_bound(begin(ys[i]), end(ys[i]), y)\
+    \ - begin(ys[i]);\n  }\n\n  void add(S x, S y, T a) {\n    int i = lower_bound(begin(ps),\
+    \ end(ps), make_pair(x, y)) - begin(ps);\n    assert(ps[i] == make_pair(x, y));\n\
+    \    for (i += N; i; i >>= 1) std::invoke(ds_add, *ds[i], id(i, y), a);\n  }\n\
+    \n  T sum(S xl, S yl, S xr, S yr) {\n    T L = ti, R = ti;\n    int a = id(xl),\
+    \ b = id(xr);\n    for (a += N, b += N; a < b; a >>= 1, b >>= 1) {\n      if (a\
+    \ & 1)\n        L = std::invoke(t_merge, L,\n                        std::invoke(ds_sum,\
+    \ *ds[a], id(a, yl), id(a, yr))),\n        ++a;\n      if (b & 1)\n        --b,\n\
+    \            R = std::invoke(t_merge,\n                            std::invoke(ds_sum,\
+    \ *ds[b], id(b, yl), id(b, yr)),\n                            R);\n    }\n   \
+    \ return std::invoke(t_merge, L, R);\n  }\n};\n\n/*\n * @brief \u62BD\u8C61\u5316\
+    \u9818\u57DF\u6728\n */\n"
   code: "#pragma once\n\n#include <algorithm>\n#include <cassert>\n#include <functional>\n\
     #include <type_traits>\n#include <utility>\n#include <vector>\nusing namespace\
     \ std;\n\n#include \"../internal/internal-function.hpp\"\n\n// DS ... data_structure_type\n\
     // S ... size_type\n// T ... value_type\ntemplate <typename DS, typename S, typename\
-    \ T,\n          typename NewFunc = internal::inplace_function<DS*(int), 64>,\n\
-    \          typename AddFunc = internal::inplace_function<void(DS&, int, T), 64>,\n\
-    \          typename SumFunc = internal::inplace_function<T(DS&, int, int), 64>,\n\
-    \          typename MergeFunc = internal::inplace_function<T(T, T), 64>>\nstruct\
-    \ RangeTree {\n  using NEW = NewFunc;\n  using ADD = AddFunc;\n  using SUM = SumFunc;\n\
-    \  using MRG = MergeFunc;\n  using P = pair<S, S>;\n\n  static_assert(is_invocable_r_v<DS*,\
-    \ NEW&, int>,\n                \"RangeTree NEW must be callable as DS*(int)\"\
-    );\n  static_assert(is_invocable_r_v<void, ADD&, DS&, int, T>,\n             \
-    \   \"RangeTree ADD must be callable as void(DS&, int, T)\");\n  static_assert(is_invocable_r_v<T,\
-    \ SUM&, DS&, int, int>,\n                \"RangeTree SUM must be callable as T(DS&,\
-    \ int, int)\");\n  static_assert(is_invocable_r_v<T, MRG&, T, T>,\n          \
-    \      \"RangeTree MRG must be callable as T(T, T)\");\n\n  S N, M;\n  NEW ds_new;\n\
-    \  ADD ds_add;\n  SUM ds_sum;\n  MRG t_merge;\n  const T ti;\n  vector<DS*> ds;\n\
-    \  vector<vector<S>> ys;\n  vector<P> ps;\n\n  template <typename FNew, typename\
-    \ FAdd, typename FSum, typename FMerge>\n  RangeTree(FNew&& nw, FAdd&& ad, FSum&&\
-    \ sm, FMerge&& mrg, const T& ti_)\n      : ds_new(std::forward<FNew>(nw)),\n \
-    \       ds_add(std::forward<FAdd>(ad)),\n        ds_sum(std::forward<FSum>(sm)),\n\
-    \        t_merge(std::forward<FMerge>(mrg)),\n        ti(ti_) {}\n\n  void add_point(S\
-    \ x, S y) { ps.push_back(make_pair(x, y)); }\n\n  void build() {\n    sort(begin(ps),\
-    \ end(ps));\n    ps.erase(unique(begin(ps), end(ps)), end(ps));\n    N = ps.size();\n\
-    \    ds.resize(2 * N, nullptr);\n    ys.resize(2 * N);\n    for (int i = 0; i\
-    \ < N; ++i) {\n      ys[i + N].push_back(ps[i].second);\n      ds[i + N] = std::invoke(ds_new,\
-    \ 1);\n    }\n    for (int i = N - 1; i > 0; --i) {\n      ys[i].resize(ys[i <<\
-    \ 1].size() + ys[(i << 1) | 1].size());\n      merge(begin(ys[(i << 1) | 0]),\
-    \ end(ys[(i << 1) | 0]),\n            begin(ys[(i << 1) | 1]), end(ys[(i << 1)\
-    \ | 1]), begin(ys[i]));\n      ys[i].erase(unique(begin(ys[i]), end(ys[i])), end(ys[i]));\n\
-    \      ds[i] = std::invoke(ds_new, ys[i].size());\n    }\n  }\n\n  int id(S x)\
-    \ const {\n    return lower_bound(\n               begin(ps), end(ps), make_pair(x,\
-    \ S()),\n               [](const P& a, const P& b) { return a.first < b.first;\
-    \ }) -\n           begin(ps);\n  }\n\n  int id(int i, S y) const {\n    return\
-    \ lower_bound(begin(ys[i]), end(ys[i]), y) - begin(ys[i]);\n  }\n\n  void add(S\
-    \ x, S y, T a) {\n    int i = lower_bound(begin(ps), end(ps), make_pair(x, y))\
-    \ - begin(ps);\n    assert(ps[i] == make_pair(x, y));\n    for (i += N; i; i >>=\
-    \ 1) std::invoke(ds_add, *ds[i], id(i, y), a);\n  }\n\n  T sum(S xl, S yl, S xr,\
-    \ S yr) {\n    T L = ti, R = ti;\n    int a = id(xl), b = id(xr);\n    for (a\
-    \ += N, b += N; a < b; a >>= 1, b >>= 1) {\n      if (a & 1)\n        L = std::invoke(t_merge,\
-    \ L,\n                        std::invoke(ds_sum, *ds[a], id(a, yl), id(a, yr))),\n\
-    \        ++a;\n      if (b & 1)\n        --b,\n            R = std::invoke(t_merge,\n\
-    \                            std::invoke(ds_sum, *ds[b], id(b, yl), id(b, yr)),\n\
-    \                            R);\n    }\n    return std::invoke(t_merge, L, R);\n\
-    \  }\n};\n\n/*\n * @brief \u62BD\u8C61\u5316\u9818\u57DF\u6728\n */\n"
+    \ T,\n          typename NewFunc = nyaan_internal::inplace_function<DS*(int),\
+    \ 64>,\n          typename AddFunc = nyaan_internal::inplace_function<void(DS&,\
+    \ int, T), 64>,\n          typename SumFunc = nyaan_internal::inplace_function<T(DS&,\
+    \ int, int), 64>,\n          typename MergeFunc = nyaan_internal::inplace_function<T(T,\
+    \ T), 64>>\nstruct RangeTree {\n  using NEW = NewFunc;\n  using ADD = AddFunc;\n\
+    \  using SUM = SumFunc;\n  using MRG = MergeFunc;\n  using P = pair<S, S>;\n\n\
+    \  static_assert(is_invocable_r_v<DS*, NEW&, int>,\n                \"RangeTree\
+    \ NEW must be callable as DS*(int)\");\n  static_assert(is_invocable_r_v<void,\
+    \ ADD&, DS&, int, T>,\n                \"RangeTree ADD must be callable as void(DS&,\
+    \ int, T)\");\n  static_assert(is_invocable_r_v<T, SUM&, DS&, int, int>,\n   \
+    \             \"RangeTree SUM must be callable as T(DS&, int, int)\");\n  static_assert(is_invocable_r_v<T,\
+    \ MRG&, T, T>,\n                \"RangeTree MRG must be callable as T(T, T)\"\
+    );\n\n  S N, M;\n  NEW ds_new;\n  ADD ds_add;\n  SUM ds_sum;\n  MRG t_merge;\n\
+    \  const T ti;\n  vector<DS*> ds;\n  vector<vector<S>> ys;\n  vector<P> ps;\n\n\
+    \  template <typename FNew, typename FAdd, typename FSum, typename FMerge>\n \
+    \ RangeTree(FNew&& nw, FAdd&& ad, FSum&& sm, FMerge&& mrg, const T& ti_)\n   \
+    \   : ds_new(std::forward<FNew>(nw)),\n        ds_add(std::forward<FAdd>(ad)),\n\
+    \        ds_sum(std::forward<FSum>(sm)),\n        t_merge(std::forward<FMerge>(mrg)),\n\
+    \        ti(ti_) {}\n\n  void add_point(S x, S y) { ps.push_back(make_pair(x,\
+    \ y)); }\n\n  void build() {\n    sort(begin(ps), end(ps));\n    ps.erase(unique(begin(ps),\
+    \ end(ps)), end(ps));\n    N = ps.size();\n    ds.resize(2 * N, nullptr);\n  \
+    \  ys.resize(2 * N);\n    for (int i = 0; i < N; ++i) {\n      ys[i + N].push_back(ps[i].second);\n\
+    \      ds[i + N] = std::invoke(ds_new, 1);\n    }\n    for (int i = N - 1; i >\
+    \ 0; --i) {\n      ys[i].resize(ys[i << 1].size() + ys[(i << 1) | 1].size());\n\
+    \      merge(begin(ys[(i << 1) | 0]), end(ys[(i << 1) | 0]),\n            begin(ys[(i\
+    \ << 1) | 1]), end(ys[(i << 1) | 1]), begin(ys[i]));\n      ys[i].erase(unique(begin(ys[i]),\
+    \ end(ys[i])), end(ys[i]));\n      ds[i] = std::invoke(ds_new, ys[i].size());\n\
+    \    }\n  }\n\n  int id(S x) const {\n    return lower_bound(\n              \
+    \ begin(ps), end(ps), make_pair(x, S()),\n               [](const P& a, const\
+    \ P& b) { return a.first < b.first; }) -\n           begin(ps);\n  }\n\n  int\
+    \ id(int i, S y) const {\n    return lower_bound(begin(ys[i]), end(ys[i]), y)\
+    \ - begin(ys[i]);\n  }\n\n  void add(S x, S y, T a) {\n    int i = lower_bound(begin(ps),\
+    \ end(ps), make_pair(x, y)) - begin(ps);\n    assert(ps[i] == make_pair(x, y));\n\
+    \    for (i += N; i; i >>= 1) std::invoke(ds_add, *ds[i], id(i, y), a);\n  }\n\
+    \n  T sum(S xl, S yl, S xr, S yr) {\n    T L = ti, R = ti;\n    int a = id(xl),\
+    \ b = id(xr);\n    for (a += N, b += N; a < b; a >>= 1, b >>= 1) {\n      if (a\
+    \ & 1)\n        L = std::invoke(t_merge, L,\n                        std::invoke(ds_sum,\
+    \ *ds[a], id(a, yl), id(a, yr))),\n        ++a;\n      if (b & 1)\n        --b,\n\
+    \            R = std::invoke(t_merge,\n                            std::invoke(ds_sum,\
+    \ *ds[b], id(b, yl), id(b, yr)),\n                            R);\n    }\n   \
+    \ return std::invoke(t_merge, L, R);\n  }\n};\n\n/*\n * @brief \u62BD\u8C61\u5316\
+    \u9818\u57DF\u6728\n */\n"
   dependsOn:
   - internal/internal-function.hpp
   isVerificationFile: false
   path: data-structure-2d/abstract-range-tree.hpp
   requiredBy: []
-  timestamp: '2026-06-05 19:46:06+09:00'
+  timestamp: '2026-06-27 14:52:13+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-abstract-range-tree.test.cpp

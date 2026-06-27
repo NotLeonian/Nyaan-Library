@@ -247,13 +247,13 @@ data:
     \ 4 \"verify/verify-unit-test/rational-number.test.cpp\"\n//\n#line 2 \"math/rational-binomial.hpp\"\
     \n\n#line 2 \"math/rational.hpp\"\n\n#line 6 \"math/rational.hpp\"\nusing namespace\
     \ std;\n\n#line 2 \"internal/internal-type-traits.hpp\"\n\n#line 4 \"internal/internal-type-traits.hpp\"\
-    \nusing namespace std;\n\nnamespace internal {\ntemplate <typename T>\nusing is_broadly_integral\
-    \ =\n    typename conditional_t<is_integral_v<T> || is_same_v<T, __int128_t> ||\n\
-    \                               is_same_v<T, __uint128_t>,\n                 \
-    \          true_type, false_type>::type;\n\ntemplate <typename T>\nusing is_broadly_signed\
-    \ =\n    typename conditional_t<is_signed_v<T> || is_same_v<T, __int128_t>,\n\
+    \nusing namespace std;\n\nnamespace nyaan_internal {\ntemplate <typename T>\n\
+    using is_broadly_integral =\n    typename conditional_t<is_integral_v<T> || is_same_v<T,\
+    \ __int128_t> ||\n                               is_same_v<T, __uint128_t>,\n\
     \                           true_type, false_type>::type;\n\ntemplate <typename\
-    \ T>\nusing is_broadly_unsigned =\n    typename conditional_t<is_unsigned_v<T>\
+    \ T>\nusing is_broadly_signed =\n    typename conditional_t<is_signed_v<T> ||\
+    \ is_same_v<T, __int128_t>,\n                           true_type, false_type>::type;\n\
+    \ntemplate <typename T>\nusing is_broadly_unsigned =\n    typename conditional_t<is_unsigned_v<T>\
     \ || is_same_v<T, __uint128_t>,\n                           true_type, false_type>::type;\n\
     \n#define ENABLE_VALUE(x) \\\n  template <typename T> \\\n  constexpr bool x##_v\
     \ = x<T>::value;\n\nENABLE_VALUE(is_broadly_integral);\nENABLE_VALUE(is_broadly_signed);\n\
@@ -269,65 +269,65 @@ data:
     \                  \\\n  template <class T>                                  \
     \          \\\n  struct has_##var<T, void_t<decltype(T::var)>> : true_type {};\
     \ \\\n  template <class T>                                            \\\n  constexpr\
-    \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace internal\n#line\
-    \ 2 \"math-fast/gcd.hpp\"\n\n#line 4 \"math-fast/gcd.hpp\"\nusing namespace std;\n\
-    \nnamespace BinaryGCDImpl {\nusing u64 = unsigned long long;\nusing i8 = char;\n\
-    \nu64 binary_gcd(u64 a, u64 b) {\n  if (a == 0 || b == 0) return a + b;\n  i8\
-    \ n = __builtin_ctzll(a);\n  i8 m = __builtin_ctzll(b);\n  a >>= n;\n  b >>= m;\n\
-    \  n = min(n, m);\n  while (a != b) {\n    u64 d = a - b;\n    i8 s = __builtin_ctzll(d);\n\
-    \    bool f = a > b;\n    b = f ? b : a;\n    a = (f ? d : -d) >> s;\n  }\n  return\
-    \ a << n;\n}\n\nusing u128 = __uint128_t;\n// a > 0\nint ctz128(u128 a) {\n  u64\
-    \ lo = a & u64(-1);\n  return lo ? __builtin_ctzll(lo) : 64 + __builtin_ctzll(a\
-    \ >> 64);\n}\nu128 binary_gcd128(u128 a, u128 b) {\n  if (a == 0 || b == 0) return\
-    \ a + b;\n  i8 n = ctz128(a);\n  i8 m = ctz128(b);\n  a >>= n;\n  b >>= m;\n \
-    \ n = min(n, m);\n  while (a != b) {\n    u128 d = a - b;\n    i8 s = ctz128(d);\n\
-    \    bool f = a > b;\n    b = f ? b : a;\n    a = (f ? d : -d) >> s;\n  }\n  return\
-    \ a << n;\n}\n\n}  // namespace BinaryGCDImpl\n\nlong long binary_gcd(long long\
-    \ a, long long b) {\n  return BinaryGCDImpl::binary_gcd(abs(a), abs(b));\n}\n\
-    __int128_t binary_gcd128(__int128_t a, __int128_t b) {\n  if (a < 0) a = -a;\n\
-    \  if (b < 0) b = -b;\n  return BinaryGCDImpl::binary_gcd128(a, b);\n}\n\n/**\n\
-    \ * @brief binary GCD\n */\n#line 10 \"math/rational.hpp\"\n\n// T : \u5024, U\
-    \ : \u6BD4\u8F03\u7528\ntemplate <typename T, typename U>\nstruct RationalBase\
-    \ {\n  using R = RationalBase;\n  using Key = T;\n  T x, y;\n  RationalBase()\
+    \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace nyaan_internal\n\
+    #line 2 \"math-fast/gcd.hpp\"\n\n#line 4 \"math-fast/gcd.hpp\"\nusing namespace\
+    \ std;\n\nnamespace BinaryGCDImpl {\nusing u64 = unsigned long long;\nusing i8\
+    \ = char;\n\nu64 binary_gcd(u64 a, u64 b) {\n  if (a == 0 || b == 0) return a\
+    \ + b;\n  i8 n = __builtin_ctzll(a);\n  i8 m = __builtin_ctzll(b);\n  a >>= n;\n\
+    \  b >>= m;\n  n = min(n, m);\n  while (a != b) {\n    u64 d = a - b;\n    i8\
+    \ s = __builtin_ctzll(d);\n    bool f = a > b;\n    b = f ? b : a;\n    a = (f\
+    \ ? d : -d) >> s;\n  }\n  return a << n;\n}\n\nusing u128 = __uint128_t;\n// a\
+    \ > 0\nint ctz128(u128 a) {\n  u64 lo = a & u64(-1);\n  return lo ? __builtin_ctzll(lo)\
+    \ : 64 + __builtin_ctzll(a >> 64);\n}\nu128 binary_gcd128(u128 a, u128 b) {\n\
+    \  if (a == 0 || b == 0) return a + b;\n  i8 n = ctz128(a);\n  i8 m = ctz128(b);\n\
+    \  a >>= n;\n  b >>= m;\n  n = min(n, m);\n  while (a != b) {\n    u128 d = a\
+    \ - b;\n    i8 s = ctz128(d);\n    bool f = a > b;\n    b = f ? b : a;\n    a\
+    \ = (f ? d : -d) >> s;\n  }\n  return a << n;\n}\n\n}  // namespace BinaryGCDImpl\n\
+    \nlong long binary_gcd(long long a, long long b) {\n  return BinaryGCDImpl::binary_gcd(abs(a),\
+    \ abs(b));\n}\n__int128_t binary_gcd128(__int128_t a, __int128_t b) {\n  if (a\
+    \ < 0) a = -a;\n  if (b < 0) b = -b;\n  return BinaryGCDImpl::binary_gcd128(a,\
+    \ b);\n}\n\n/**\n * @brief binary GCD\n */\n#line 10 \"math/rational.hpp\"\n\n\
+    // T : \u5024, U : \u6BD4\u8F03\u7528\ntemplate <typename T, typename U>\nstruct\
+    \ RationalBase {\n  using R = RationalBase;\n  using Key = T;\n  T x, y;\n  RationalBase()\
     \ : x(0), y(1) {}\n  template <typename T1>\n  RationalBase(const T1& _x) : RationalBase<T,\
     \ U>(_x, T1{1}) {}\n  template <typename T1, typename T2>\n  RationalBase(const\
     \ pair<T1, T2>& _p)\n      : RationalBase<T, U>(_p.first, _p.second) {}\n  template\
     \ <typename T1, typename T2>\n  RationalBase(const T1& _x, const T2& _y) : x(_x),\
     \ y(_y) {\n    assert(y != 0);\n    if (y == -1) x = -x, y = -y;\n    if (y !=\
-    \ 1) {\n      T g;\n      if constexpr (internal::is_broadly_integral_v<T>) {\n\
-    \        if constexpr (sizeof(T) == 16) {\n          g = binary_gcd128(x, y);\n\
-    \        } else {\n          g = binary_gcd(x, y);\n        }\n      } else {\n\
-    \        g = gcd(x, y);\n      }\n      if (g != 0) x /= g, y /= g;\n      if\
-    \ (y < 0) x = -x, y = -y;\n    }\n  }\n  // y = 0 \u306E\u4EE3\u5165\u3082\u8A8D\
-    \u3081\u308B\n  static R raw(T _x, T _y) {\n    R r;\n    r.x = _x, r.y = _y;\n\
-    \    return r;\n  }\n  friend R operator+(const R& l, const R& r) {\n    if (l.y\
-    \ == r.y) return R{l.x + r.x, l.y};\n    return R{l.x * r.y + l.y * r.x, l.y *\
-    \ r.y};\n  }\n  friend R operator-(const R& l, const R& r) {\n    if (l.y == r.y)\
-    \ return R{l.x - r.x, l.y};\n    return R{l.x * r.y - l.y * r.x, l.y * r.y};\n\
-    \  }\n  friend R operator*(const R& l, const R& r) { return R{l.x * r.x, l.y *\
-    \ r.y}; }\n  friend R operator/(const R& l, const R& r) { return R{l.x * r.y,\
-    \ l.y * r.x}; }\n  R& operator+=(const R& r) { return (*this) = (*this) + r; }\n\
-    \  R& operator-=(const R& r) { return (*this) = (*this) - r; }\n  R& operator*=(const\
-    \ R& r) { return (*this) = (*this) * r; }\n  R& operator/=(const R& r) { return\
-    \ (*this) = (*this) / r; }\n  R operator-() const { return raw(-x, y); }\n  R\
-    \ inverse() const {\n    assert(x != 0);\n    R r = raw(y, x);\n    if (r.y <\
-    \ 0) r.x = -r.x, r.y = -r.y;\n    return r;\n  }\n  R pow(long long p) const {\n\
-    \    R res{1}, base{*this};\n    while (p) {\n      if (p & 1) res *= base;\n\
-    \      base *= base;\n      p >>= 1;\n    }\n    return res;\n  }\n  friend bool\
-    \ operator==(const R& l, const R& r) {\n    return l.x == r.x && l.y == r.y;\n\
-    \  };\n  friend bool operator!=(const R& l, const R& r) {\n    return l.x != r.x\
-    \ || l.y != r.y;\n  };\n  friend bool operator<(const R& l, const R& r) {\n  \
-    \  return U{l.x} * r.y < U{l.y} * r.x;\n  };\n  friend bool operator<=(const R&\
-    \ l, const R& r) { return l < r || l == r; }\n  friend bool operator>(const R&\
-    \ l, const R& r) {\n    return U{l.x} * r.y > U{l.y} * r.x;\n  };\n  friend bool\
-    \ operator>=(const R& l, const R& r) { return l > r || l == r; }\n  friend ostream&\
-    \ operator<<(ostream& os, const R& r) {\n    os << r.x;\n    if (r.x != 0 && r.y\
-    \ != 1) os << \"/\" << r.y;\n    return os;\n  }\n\n  // T \u306B\u30AD\u30E3\u30B9\
-    \u30C8\u3055\u308C\u308B\u306E\u3067 T \u304C bigint \u306E\u5834\u5408\u306F\
-    \ to_ll \u3082\u8981\u308B\n  T to_mint(T mod) const {\n    assert(mod != 0);\n\
-    \    T a = y, b = mod, u = 1, v = 0, t;\n    while (b > 0) {\n      t = a / b;\n\
-    \      swap(a -= t * b, b);\n      swap(u -= t * v, v);\n    }\n    return U((u\
-    \ % mod + mod) % mod) * x % mod;\n  }\n};\n\nusing Rational = RationalBase<long\
+    \ 1) {\n      T g;\n      if constexpr (nyaan_internal::is_broadly_integral_v<T>)\
+    \ {\n        if constexpr (sizeof(T) == 16) {\n          g = binary_gcd128(x,\
+    \ y);\n        } else {\n          g = binary_gcd(x, y);\n        }\n      } else\
+    \ {\n        g = gcd(x, y);\n      }\n      if (g != 0) x /= g, y /= g;\n    \
+    \  if (y < 0) x = -x, y = -y;\n    }\n  }\n  // y = 0 \u306E\u4EE3\u5165\u3082\
+    \u8A8D\u3081\u308B\n  static R raw(T _x, T _y) {\n    R r;\n    r.x = _x, r.y\
+    \ = _y;\n    return r;\n  }\n  friend R operator+(const R& l, const R& r) {\n\
+    \    if (l.y == r.y) return R{l.x + r.x, l.y};\n    return R{l.x * r.y + l.y *\
+    \ r.x, l.y * r.y};\n  }\n  friend R operator-(const R& l, const R& r) {\n    if\
+    \ (l.y == r.y) return R{l.x - r.x, l.y};\n    return R{l.x * r.y - l.y * r.x,\
+    \ l.y * r.y};\n  }\n  friend R operator*(const R& l, const R& r) { return R{l.x\
+    \ * r.x, l.y * r.y}; }\n  friend R operator/(const R& l, const R& r) { return\
+    \ R{l.x * r.y, l.y * r.x}; }\n  R& operator+=(const R& r) { return (*this) = (*this)\
+    \ + r; }\n  R& operator-=(const R& r) { return (*this) = (*this) - r; }\n  R&\
+    \ operator*=(const R& r) { return (*this) = (*this) * r; }\n  R& operator/=(const\
+    \ R& r) { return (*this) = (*this) / r; }\n  R operator-() const { return raw(-x,\
+    \ y); }\n  R inverse() const {\n    assert(x != 0);\n    R r = raw(y, x);\n  \
+    \  if (r.y < 0) r.x = -r.x, r.y = -r.y;\n    return r;\n  }\n  R pow(long long\
+    \ p) const {\n    R res{1}, base{*this};\n    while (p) {\n      if (p & 1) res\
+    \ *= base;\n      base *= base;\n      p >>= 1;\n    }\n    return res;\n  }\n\
+    \  friend bool operator==(const R& l, const R& r) {\n    return l.x == r.x &&\
+    \ l.y == r.y;\n  };\n  friend bool operator!=(const R& l, const R& r) {\n    return\
+    \ l.x != r.x || l.y != r.y;\n  };\n  friend bool operator<(const R& l, const R&\
+    \ r) {\n    return U{l.x} * r.y < U{l.y} * r.x;\n  };\n  friend bool operator<=(const\
+    \ R& l, const R& r) { return l < r || l == r; }\n  friend bool operator>(const\
+    \ R& l, const R& r) {\n    return U{l.x} * r.y > U{l.y} * r.x;\n  };\n  friend\
+    \ bool operator>=(const R& l, const R& r) { return l > r || l == r; }\n  friend\
+    \ ostream& operator<<(ostream& os, const R& r) {\n    os << r.x;\n    if (r.x\
+    \ != 0 && r.y != 1) os << \"/\" << r.y;\n    return os;\n  }\n\n  // T \u306B\u30AD\
+    \u30E3\u30B9\u30C8\u3055\u308C\u308B\u306E\u3067 T \u304C bigint \u306E\u5834\u5408\
+    \u306F to_ll \u3082\u8981\u308B\n  T to_mint(T mod) const {\n    assert(mod !=\
+    \ 0);\n    T a = y, b = mod, u = 1, v = 0, t;\n    while (b > 0) {\n      t =\
+    \ a / b;\n      swap(a -= t * b, b);\n      swap(u -= t * v, v);\n    }\n    return\
+    \ U((u % mod + mod) % mod) * x % mod;\n  }\n};\n\nusing Rational = RationalBase<long\
     \ long, __int128_t>;\nusing Fraction = Rational;\n#line 4 \"math/rational-binomial.hpp\"\
     \n\ntemplate <typename R = Rational>\nstruct Binomial_rational {\n  vector<R>\
     \ fc;\n  Binomial_rational(int = 0) { fc.emplace_back(1); }\n  void extend() {\n\
@@ -489,42 +489,43 @@ data:
     \nusing mint = LazyMontgomeryModInt<998244353>;\n//\n#line 2 \"misc/rng.hpp\"\n\
     \n#line 7 \"misc/rng.hpp\"\nusing namespace std;\n\n#line 2 \"internal/internal-seed.hpp\"\
     \n\n#line 4 \"internal/internal-seed.hpp\"\nusing namespace std;\n\nnamespace\
-    \ internal {\nunsigned long long non_deterministic_seed() {\n  unsigned long long\
-    \ m =\n      chrono::duration_cast<chrono::nanoseconds>(\n          chrono::high_resolution_clock::now().time_since_epoch())\n\
-    \          .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >>\
-    \ 31, m ^= m << 35;\n  return m;\n}\nunsigned long long deterministic_seed() {\
-    \ return 88172645463325252UL; }\n\n// 64 bit \u306E seed \u5024\u3092\u751F\u6210\
-    \ (\u624B\u5143\u3067\u306F seed \u56FA\u5B9A)\n// \u9023\u7D9A\u3067\u547C\u3073\
-    \u51FA\u3059\u3068\u540C\u3058\u5024\u304C\u4F55\u5EA6\u3082\u8FD4\u3063\u3066\
-    \u304F\u308B\u306E\u3067\u6CE8\u610F\n// #define RANDOMIZED_SEED \u3059\u308B\u3068\
-    \u30B7\u30FC\u30C9\u304C\u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long\
-    \ long seed() {\n#if defined(NyaanLocal) && !defined(RANDOMIZED_SEED)\n  return\
-    \ deterministic_seed();\n#else\n  return non_deterministic_seed();\n#endif\n}\n\
-    \n}  // namespace internal\n#line 10 \"misc/rng.hpp\"\n\nnamespace my_rand {\n\
-    using i64 = long long;\nusing u64 = unsigned long long;\n\n// [0, 2^64 - 1)\n\
-    u64 rng() {\n  static u64 _x = internal::seed();\n  return _x ^= _x << 7, _x ^=\
-    \ _x >> 9;\n}\n\n// [l, r]\ni64 rng(i64 l, i64 r) {\n  assert(l <= r);\n  return\
-    \ l + rng() % u64(r - l + 1);\n}\n\n// [l, r)\ni64 randint(i64 l, i64 r) {\n \
-    \ assert(l < r);\n  return l + rng() % u64(r - l);\n}\n\n// choose n numbers from\
-    \ [l, r) without overlapping\nvector<i64> randset(i64 l, i64 r, i64 n) {\n  assert(l\
-    \ <= r && n <= r - l);\n  unordered_set<i64> s;\n  for (i64 i = n; i; --i) {\n\
-    \    i64 m = randint(l, r + 1 - i);\n    if (s.find(m) != s.end()) m = r - i;\n\
-    \    s.insert(m);\n  }\n  vector<i64> ret;\n  for (auto& x : s) ret.push_back(x);\n\
-    \  sort(begin(ret), end(ret));\n  return ret;\n}\n\n// [0.0, 1.0)\ndouble rnd()\
-    \ { return rng() * 5.42101086242752217004e-20; }\n// [l, r)\ndouble rnd(double\
-    \ l, double r) {\n  assert(l < r);\n  return l + rnd() * (r - l);\n}\n\ntemplate\
-    \ <typename T>\nvoid randshf(vector<T>& v) {\n  int n = v.size();\n  for (int\
-    \ i = 1; i < n; i++) swap(v[i], v[randint(0, i + 1)]);\n}\n\n}  // namespace my_rand\n\
-    \nusing my_rand::randint;\nusing my_rand::randset;\nusing my_rand::randshf;\n\
-    using my_rand::rnd;\nusing my_rand::rng;\n#line 14 \"verify/verify-unit-test/rational-number.test.cpp\"\
-    \n\nusing namespace Nyaan;\n\nvoid Nyaan::solve() {\n  {\n    Rational a{4, 3},\
-    \ b{2, 3};\n    assert(a + b == 2);\n    assert(a - b == Rational(2, 3));\n  \
-    \  assert(a * b == Rational(8, 9));\n    assert(a / b == 2);\n    assert(a.inverse()\
-    \ == Rational(3, 4));\n    assert(a.pow(3) == Rational(64, 27));\n\n    assert((a\
-    \ > b) == true);\n    assert((a >= b) == true);\n    assert((a < b) == false);\n\
-    \    assert((a <= b) == false);\n  }\n\n  {\n    Binomial_rational<Rational> C;\n\
-    \    assert(C.fac(3) == 6);\n    assert(C.finv(3) == Rational(1, 6));\n    assert(C(4,\
-    \ 2) == 6);\n    assert(C(vi{3, 2}) == 10);\n  }\n\n  {\n    using fps = FormalPowerSeries_rational<Rational>;\n\
+    \ nyaan_internal {\nunsigned long long non_deterministic_seed() {\n  unsigned\
+    \ long long m =\n      chrono::duration_cast<chrono::nanoseconds>(\n         \
+    \ chrono::high_resolution_clock::now().time_since_epoch())\n          .count();\n\
+    \  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >> 31, m ^= m << 35;\n\
+    \  return m;\n}\nunsigned long long deterministic_seed() { return 88172645463325252UL;\
+    \ }\n\n// 64 bit \u306E seed \u5024\u3092\u751F\u6210 (\u624B\u5143\u3067\u306F\
+    \ seed \u56FA\u5B9A)\n// \u9023\u7D9A\u3067\u547C\u3073\u51FA\u3059\u3068\u540C\
+    \u3058\u5024\u304C\u4F55\u5EA6\u3082\u8FD4\u3063\u3066\u304F\u308B\u306E\u3067\
+    \u6CE8\u610F\n// #define RANDOMIZED_SEED \u3059\u308B\u3068\u30B7\u30FC\u30C9\u304C\
+    \u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long long seed() {\n#if defined(NyaanLocal)\
+    \ && !defined(RANDOMIZED_SEED)\n  return deterministic_seed();\n#else\n  return\
+    \ non_deterministic_seed();\n#endif\n}\n\n}  // namespace nyaan_internal\n#line\
+    \ 10 \"misc/rng.hpp\"\n\nnamespace my_rand {\nusing i64 = long long;\nusing u64\
+    \ = unsigned long long;\n\n// [0, 2^64 - 1)\nu64 rng() {\n  static u64 _x = nyaan_internal::seed();\n\
+    \  return _x ^= _x << 7, _x ^= _x >> 9;\n}\n\n// [l, r]\ni64 rng(i64 l, i64 r)\
+    \ {\n  assert(l <= r);\n  return l + rng() % u64(r - l + 1);\n}\n\n// [l, r)\n\
+    i64 randint(i64 l, i64 r) {\n  assert(l < r);\n  return l + rng() % u64(r - l);\n\
+    }\n\n// choose n numbers from [l, r) without overlapping\nvector<i64> randset(i64\
+    \ l, i64 r, i64 n) {\n  assert(l <= r && n <= r - l);\n  unordered_set<i64> s;\n\
+    \  for (i64 i = n; i; --i) {\n    i64 m = randint(l, r + 1 - i);\n    if (s.find(m)\
+    \ != s.end()) m = r - i;\n    s.insert(m);\n  }\n  vector<i64> ret;\n  for (auto&\
+    \ x : s) ret.push_back(x);\n  sort(begin(ret), end(ret));\n  return ret;\n}\n\n\
+    // [0.0, 1.0)\ndouble rnd() { return rng() * 5.42101086242752217004e-20; }\n//\
+    \ [l, r)\ndouble rnd(double l, double r) {\n  assert(l < r);\n  return l + rnd()\
+    \ * (r - l);\n}\n\ntemplate <typename T>\nvoid randshf(vector<T>& v) {\n  int\
+    \ n = v.size();\n  for (int i = 1; i < n; i++) swap(v[i], v[randint(0, i + 1)]);\n\
+    }\n\n}  // namespace my_rand\n\nusing my_rand::randint;\nusing my_rand::randset;\n\
+    using my_rand::randshf;\nusing my_rand::rnd;\nusing my_rand::rng;\n#line 14 \"\
+    verify/verify-unit-test/rational-number.test.cpp\"\n\nusing namespace Nyaan;\n\
+    \nvoid Nyaan::solve() {\n  {\n    Rational a{4, 3}, b{2, 3};\n    assert(a + b\
+    \ == 2);\n    assert(a - b == Rational(2, 3));\n    assert(a * b == Rational(8,\
+    \ 9));\n    assert(a / b == 2);\n    assert(a.inverse() == Rational(3, 4));\n\
+    \    assert(a.pow(3) == Rational(64, 27));\n\n    assert((a > b) == true);\n \
+    \   assert((a >= b) == true);\n    assert((a < b) == false);\n    assert((a <=\
+    \ b) == false);\n  }\n\n  {\n    Binomial_rational<Rational> C;\n    assert(C.fac(3)\
+    \ == 6);\n    assert(C.finv(3) == Rational(1, 6));\n    assert(C(4, 2) == 6);\n\
+    \    assert(C(vi{3, 2}) == 10);\n  }\n\n  {\n    using fps = FormalPowerSeries_rational<Rational>;\n\
     \n    {\n      fps f{1, 2, {3, 2}}, g{{1, 4}, 5};\n      fps h{{5, 4}, 7, {3,\
     \ 2}};\n      assert(f + g == h);\n      h = fps{{3, 4}, -3, {3, 2}};\n      assert(f\
     \ - g == h);\n      assert(f * g % g == fps{});\n      assert(f * g % f == fps{});\n\
@@ -609,7 +610,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/rational-number.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-27 14:52:13+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/rational-number.test.cpp

@@ -239,28 +239,29 @@ data:
     \n\n#line 5 \"hashmap/hashmap-unerasable.hpp\"\nusing namespace std;\n\n#line\
     \ 2 \"internal/internal-hash-function.hpp\"\n\n#line 4 \"internal/internal-hash-function.hpp\"\
     \nusing namespace std;\n\n#line 2 \"internal/internal-seed.hpp\"\n\n#line 4 \"\
-    internal/internal-seed.hpp\"\nusing namespace std;\n\nnamespace internal {\nunsigned\
-    \ long long non_deterministic_seed() {\n  unsigned long long m =\n      chrono::duration_cast<chrono::nanoseconds>(\n\
-    \          chrono::high_resolution_clock::now().time_since_epoch())\n        \
-    \  .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >> 31, m\
-    \ ^= m << 35;\n  return m;\n}\nunsigned long long deterministic_seed() { return\
-    \ 88172645463325252UL; }\n\n// 64 bit \u306E seed \u5024\u3092\u751F\u6210 (\u624B\
-    \u5143\u3067\u306F seed \u56FA\u5B9A)\n// \u9023\u7D9A\u3067\u547C\u3073\u51FA\
-    \u3059\u3068\u540C\u3058\u5024\u304C\u4F55\u5EA6\u3082\u8FD4\u3063\u3066\u304F\
-    \u308B\u306E\u3067\u6CE8\u610F\n// #define RANDOMIZED_SEED \u3059\u308B\u3068\u30B7\
-    \u30FC\u30C9\u304C\u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long long\
-    \ seed() {\n#if defined(NyaanLocal) && !defined(RANDOMIZED_SEED)\n  return deterministic_seed();\n\
-    #else\n  return non_deterministic_seed();\n#endif\n}\n\n}  // namespace internal\n\
-    #line 2 \"internal/internal-type-traits.hpp\"\n\n#line 4 \"internal/internal-type-traits.hpp\"\
-    \nusing namespace std;\n\nnamespace internal {\ntemplate <typename T>\nusing is_broadly_integral\
-    \ =\n    typename conditional_t<is_integral_v<T> || is_same_v<T, __int128_t> ||\n\
-    \                               is_same_v<T, __uint128_t>,\n                 \
-    \          true_type, false_type>::type;\n\ntemplate <typename T>\nusing is_broadly_signed\
-    \ =\n    typename conditional_t<is_signed_v<T> || is_same_v<T, __int128_t>,\n\
-    \                           true_type, false_type>::type;\n\ntemplate <typename\
-    \ T>\nusing is_broadly_unsigned =\n    typename conditional_t<is_unsigned_v<T>\
-    \ || is_same_v<T, __uint128_t>,\n                           true_type, false_type>::type;\n\
-    \n#define ENABLE_VALUE(x) \\\n  template <typename T> \\\n  constexpr bool x##_v\
+    internal/internal-seed.hpp\"\nusing namespace std;\n\nnamespace nyaan_internal\
+    \ {\nunsigned long long non_deterministic_seed() {\n  unsigned long long m =\n\
+    \      chrono::duration_cast<chrono::nanoseconds>(\n          chrono::high_resolution_clock::now().time_since_epoch())\n\
+    \          .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >>\
+    \ 31, m ^= m << 35;\n  return m;\n}\nunsigned long long deterministic_seed() {\
+    \ return 88172645463325252UL; }\n\n// 64 bit \u306E seed \u5024\u3092\u751F\u6210\
+    \ (\u624B\u5143\u3067\u306F seed \u56FA\u5B9A)\n// \u9023\u7D9A\u3067\u547C\u3073\
+    \u51FA\u3059\u3068\u540C\u3058\u5024\u304C\u4F55\u5EA6\u3082\u8FD4\u3063\u3066\
+    \u304F\u308B\u306E\u3067\u6CE8\u610F\n// #define RANDOMIZED_SEED \u3059\u308B\u3068\
+    \u30B7\u30FC\u30C9\u304C\u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long\
+    \ long seed() {\n#if defined(NyaanLocal) && !defined(RANDOMIZED_SEED)\n  return\
+    \ deterministic_seed();\n#else\n  return non_deterministic_seed();\n#endif\n}\n\
+    \n}  // namespace nyaan_internal\n#line 2 \"internal/internal-type-traits.hpp\"\
+    \n\n#line 4 \"internal/internal-type-traits.hpp\"\nusing namespace std;\n\nnamespace\
+    \ nyaan_internal {\ntemplate <typename T>\nusing is_broadly_integral =\n    typename\
+    \ conditional_t<is_integral_v<T> || is_same_v<T, __int128_t> ||\n            \
+    \                   is_same_v<T, __uint128_t>,\n                           true_type,\
+    \ false_type>::type;\n\ntemplate <typename T>\nusing is_broadly_signed =\n   \
+    \ typename conditional_t<is_signed_v<T> || is_same_v<T, __int128_t>,\n       \
+    \                    true_type, false_type>::type;\n\ntemplate <typename T>\n\
+    using is_broadly_unsigned =\n    typename conditional_t<is_unsigned_v<T> || is_same_v<T,\
+    \ __uint128_t>,\n                           true_type, false_type>::type;\n\n\
+    #define ENABLE_VALUE(x) \\\n  template <typename T> \\\n  constexpr bool x##_v\
     \ = x<T>::value;\n\nENABLE_VALUE(is_broadly_integral);\nENABLE_VALUE(is_broadly_signed);\n\
     ENABLE_VALUE(is_broadly_unsigned);\n#undef ENABLE_VALUE\n\n#define ENABLE_HAS_TYPE(var)\
     \                                   \\\n  template <class, class = void>     \
@@ -274,10 +275,10 @@ data:
     \                  \\\n  template <class T>                                  \
     \          \\\n  struct has_##var<T, void_t<decltype(T::var)>> : true_type {};\
     \ \\\n  template <class T>                                            \\\n  constexpr\
-    \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace internal\n#line\
-    \ 8 \"internal/internal-hash-function.hpp\"\n\nnamespace internal {\n// \u6574\
-    \u6570, \u6574\u6570\u5217\u3092 64 bit unsigned int \u3078\u79FB\u3059\n\nusing\
-    \ u64 = unsigned long long;\nusing u128 = __uint128_t;\n\nENABLE_HAS_TYPE(first_type);\n\
+    \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace nyaan_internal\n\
+    #line 8 \"internal/internal-hash-function.hpp\"\n\nnamespace nyaan_internal {\n\
+    // \u6574\u6570, \u6574\u6570\u5217\u3092 64 bit unsigned int \u3078\u79FB\u3059\
+    \n\nusing u64 = unsigned long long;\nusing u128 = __uint128_t;\n\nENABLE_HAS_TYPE(first_type);\n\
     ENABLE_HAS_TYPE(second_type);\nENABLE_HAS_TYPE(iterator);\n\ntemplate <typename\
     \ T>\nu64 hash_function(const T& x) {\n  static u64 r = seed();\n  constexpr u64\
     \ z1 = 11995408973635179863ULL;\n  if constexpr (is_broadly_integral_v<T>) {\n\
@@ -292,7 +293,7 @@ data:
     \ >> 61);\n      if (m >= mod) m -= mod;\n    }\n    m ^= m << 24, m ^= m >> 31,\
     \ m ^= m << 35;\n    return m;\n  } else {\n    static_assert([]() { return false;\
     \ }());\n  }\n}\n\ntemplate <typename Key>\nstruct HashObject {\n  size_t operator()(const\
-    \ Key& x) const { return hash_function(x); }\n};\n\n}  // namespace internal\n\
+    \ Key& x) const { return hash_function(x); }\n};\n\n}  // namespace nyaan_internal\n\
     \n/*\n@brief \u30CF\u30C3\u30B7\u30E5\u95A2\u6570\n*/\n#line 8 \"hashmap/hashmap-unerasable.hpp\"\
     \n\n// \u524A\u9664\u4E0D\u53EF\u80FD\u306A hashmap\n//\n// \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\u5F15\u6570\n// fixed_size : \u3053\u308C\u3092 true \u306B\
@@ -305,22 +306,22 @@ data:
     \ true \u306E\u6642\u306B\u3057\u304B\u30B5\u30A4\u30BA\u3092\u5909\u66F4\u3067\
     \u304D\u306A\u3044\n\ntemplate <typename Key, typename Val, bool fixed_size =\
     \ false,\n          unsigned long long (*get_hash)(const Key&) =\n           \
-    \   internal::hash_function<Key>>\nstruct UnerasableHashMap {\n  int N, occupied_num,\
-    \ shift;\n  vector<Key> keys;\n  vector<Val> vals;\n  vector<char> flag;\n\n \
-    \ Val default_value;\n  int default_size;\n\n  // \u30B5\u30A4\u30BA\u3092 n \u306B\
-    \u5909\u66F4\u3059\u308B\n  void init(int n, bool reset = false) {\n    assert(n\
-    \ >= 4 && (n & (n - 1)) == 0);\n    if constexpr (fixed_size) {\n      assert(reset\
-    \ == true);\n      n = N;\n    }\n    if (reset == true) {\n      N = n, occupied_num\
-    \ = 0, shift = 64 - __builtin_ctz(n);\n      keys.resize(n);\n      vals.resize(n);\n\
-    \      flag.resize(n);\n      fill(begin(vals), end(vals), default_value);\n \
-    \     fill(begin(flag), end(flag), 0);\n    } else {\n      N = n, shift = 64\
-    \ - __builtin_ctz(n);\n      vector<Key> keys2(n);\n      vector<Val> vals2(n,\
-    \ default_value);\n      vector<char> flag2(n);\n      swap(keys, keys2), swap(vals,\
-    \ vals2), swap(flag, flag2);\n      for (int i = 0; i < (int)flag2.size(); i++)\
-    \ {\n        if (flag2[i]) {\n          int j = hint(keys2[i]);\n          keys[j]\
-    \ = keys2[i], vals[j] = vals2[i], flag[j] = 1;\n        }\n      }\n    }\n  }\n\
-    \n  UnerasableHashMap(const Val& _default_value = Val{}, int _default_size = 4)\n\
-    \      : occupied_num(0), default_value(_default_value) {\n    if (fixed_size\
+    \   nyaan_internal::hash_function<Key>>\nstruct UnerasableHashMap {\n  int N,\
+    \ occupied_num, shift;\n  vector<Key> keys;\n  vector<Val> vals;\n  vector<char>\
+    \ flag;\n\n  Val default_value;\n  int default_size;\n\n  // \u30B5\u30A4\u30BA\
+    \u3092 n \u306B\u5909\u66F4\u3059\u308B\n  void init(int n, bool reset = false)\
+    \ {\n    assert(n >= 4 && (n & (n - 1)) == 0);\n    if constexpr (fixed_size)\
+    \ {\n      assert(reset == true);\n      n = N;\n    }\n    if (reset == true)\
+    \ {\n      N = n, occupied_num = 0, shift = 64 - __builtin_ctz(n);\n      keys.resize(n);\n\
+    \      vals.resize(n);\n      flag.resize(n);\n      fill(begin(vals), end(vals),\
+    \ default_value);\n      fill(begin(flag), end(flag), 0);\n    } else {\n    \
+    \  N = n, shift = 64 - __builtin_ctz(n);\n      vector<Key> keys2(n);\n      vector<Val>\
+    \ vals2(n, default_value);\n      vector<char> flag2(n);\n      swap(keys, keys2),\
+    \ swap(vals, vals2), swap(flag, flag2);\n      for (int i = 0; i < (int)flag2.size();\
+    \ i++) {\n        if (flag2[i]) {\n          int j = hint(keys2[i]);\n       \
+    \   keys[j] = keys2[i], vals[j] = vals2[i], flag[j] = 1;\n        }\n      }\n\
+    \    }\n  }\n\n  UnerasableHashMap(const Val& _default_value = Val{}, int _default_size\
+    \ = 4)\n      : occupied_num(0), default_value(_default_value) {\n    if (fixed_size\
     \ == false) _default_size = 4;\n    N = 4;\n    while (N < _default_size) N *=\
     \ 2;\n    default_size = N;\n    init(N, true);\n  }\n\n  int hint(const Key&\
     \ k) {\n    int hash = get_hash(k) >> shift;\n    while (flag[hash] && keys[hash]\
@@ -340,38 +341,38 @@ data:
     \ true); }\n};\n#line 6 \"verify/verify-yosupo-graph/yosupo-tree-hash.test.cpp\"\
     \n//\n#line 2 \"tree/rooted-tree-hash.hpp\"\n\n#line 7 \"tree/rooted-tree-hash.hpp\"\
     \nusing namespace std;\n\n#line 2 \"internal/internal-hash.hpp\"\n\nnamespace\
-    \ internal {\nusing i64 = long long;\nusing u64 = unsigned long long;\nusing u128\
-    \ = __uint128_t;\n\ntemplate <int BASE_NUM = 2>\nstruct Hash : array<u64, BASE_NUM>\
-    \ {\n  using array<u64, BASE_NUM>::operator[];\n  static constexpr int n = BASE_NUM;\n\
-    \n  Hash() : array<u64, BASE_NUM>() {}\n\n  static constexpr u64 md = (1ull <<\
-    \ 61) - 1;\n\n  constexpr static Hash set(const i64 &a) {\n    Hash res;\n   \
-    \ fill(begin(res), end(res), cast(a));\n    return res;\n  }\n  Hash &operator+=(const\
-    \ Hash &r) {\n    for (int i = 0; i < n; i++)\n      if (((*this)[i] += r[i])\
-    \ >= md) (*this)[i] -= md;\n    return *this;\n  }\n  Hash &operator+=(const i64\
-    \ &r) {\n    u64 s = cast(r);\n    for (int i = 0; i < n; i++)\n      if (((*this)[i]\
-    \ += s) >= md) (*this)[i] -= md;\n    return *this;\n  }\n  Hash &operator-=(const\
-    \ Hash &r) {\n    for (int i = 0; i < n; i++)\n      if (((*this)[i] += md - r[i])\
-    \ >= md) (*this)[i] -= md;\n    return *this;\n  }\n  Hash &operator-=(const i64\
-    \ &r) {\n    u64 s = cast(r);\n    for (int i = 0; i < n; i++)\n      if (((*this)[i]\
-    \ += md - s) >= md) (*this)[i] -= md;\n    return *this;\n  }\n  Hash &operator*=(const\
-    \ Hash &r) {\n    for (int i = 0; i < n; i++) (*this)[i] = modmul((*this)[i],\
-    \ r[i]);\n    return *this;\n  }\n  Hash &operator*=(const i64 &r) {\n    u64\
-    \ s = cast(r);\n    for (int i = 0; i < n; i++) (*this)[i] = modmul((*this)[i],\
-    \ s);\n    return *this;\n  }\n\n  Hash operator+(const Hash &r) { return Hash(*this)\
-    \ += r; }\n  Hash operator+(const i64 &r) { return Hash(*this) += r; }\n  Hash\
-    \ operator-(const Hash &r) { return Hash(*this) -= r; }\n  Hash operator-(const\
-    \ i64 &r) { return Hash(*this) -= r; }\n  Hash operator*(const Hash &r) { return\
-    \ Hash(*this) *= r; }\n  Hash operator*(const i64 &r) { return Hash(*this) *=\
-    \ r; }\n  Hash operator-() const {\n    Hash res;\n    for (int i = 0; i < n;\
-    \ i++) res[i] = (*this)[i] == 0 ? 0 : md - (*this)[i];\n    return res;\n  }\n\
-    \  friend Hash pfma(const Hash &a, const Hash &b, const Hash &c) {\n    Hash res;\n\
-    \    for (int i = 0; i < n; i++) res[i] = modfma(a[i], b[i], c[i]);\n    return\
-    \ res;\n  }\n  friend Hash pfma(const Hash &a, const Hash &b, const i64 &c) {\n\
-    \    Hash res;\n    u64 s = cast(c);\n    for (int i = 0; i < n; i++) res[i] =\
-    \ modfma(a[i], b[i], s);\n    return res;\n  }\n\n  Hash pow(long long e) {\n\
-    \    Hash a{*this}, res{Hash::set(1)};\n    for (; e; a *= a, e >>= 1) {\n   \
-    \   if (e & 1) res *= a;\n    }\n    return res;\n  }\n\n  static Hash get_basis()\
-    \ {\n    static auto rand_time =\n        chrono::duration_cast<chrono::nanoseconds>(\n\
+    \ nyaan_internal {\nusing i64 = long long;\nusing u64 = unsigned long long;\n\
+    using u128 = __uint128_t;\n\ntemplate <int BASE_NUM = 2>\nstruct Hash : array<u64,\
+    \ BASE_NUM> {\n  using array<u64, BASE_NUM>::operator[];\n  static constexpr int\
+    \ n = BASE_NUM;\n\n  Hash() : array<u64, BASE_NUM>() {}\n\n  static constexpr\
+    \ u64 md = (1ull << 61) - 1;\n\n  constexpr static Hash set(const i64 &a) {\n\
+    \    Hash res;\n    fill(begin(res), end(res), cast(a));\n    return res;\n  }\n\
+    \  Hash &operator+=(const Hash &r) {\n    for (int i = 0; i < n; i++)\n      if\
+    \ (((*this)[i] += r[i]) >= md) (*this)[i] -= md;\n    return *this;\n  }\n  Hash\
+    \ &operator+=(const i64 &r) {\n    u64 s = cast(r);\n    for (int i = 0; i < n;\
+    \ i++)\n      if (((*this)[i] += s) >= md) (*this)[i] -= md;\n    return *this;\n\
+    \  }\n  Hash &operator-=(const Hash &r) {\n    for (int i = 0; i < n; i++)\n \
+    \     if (((*this)[i] += md - r[i]) >= md) (*this)[i] -= md;\n    return *this;\n\
+    \  }\n  Hash &operator-=(const i64 &r) {\n    u64 s = cast(r);\n    for (int i\
+    \ = 0; i < n; i++)\n      if (((*this)[i] += md - s) >= md) (*this)[i] -= md;\n\
+    \    return *this;\n  }\n  Hash &operator*=(const Hash &r) {\n    for (int i =\
+    \ 0; i < n; i++) (*this)[i] = modmul((*this)[i], r[i]);\n    return *this;\n \
+    \ }\n  Hash &operator*=(const i64 &r) {\n    u64 s = cast(r);\n    for (int i\
+    \ = 0; i < n; i++) (*this)[i] = modmul((*this)[i], s);\n    return *this;\n  }\n\
+    \n  Hash operator+(const Hash &r) { return Hash(*this) += r; }\n  Hash operator+(const\
+    \ i64 &r) { return Hash(*this) += r; }\n  Hash operator-(const Hash &r) { return\
+    \ Hash(*this) -= r; }\n  Hash operator-(const i64 &r) { return Hash(*this) -=\
+    \ r; }\n  Hash operator*(const Hash &r) { return Hash(*this) *= r; }\n  Hash operator*(const\
+    \ i64 &r) { return Hash(*this) *= r; }\n  Hash operator-() const {\n    Hash res;\n\
+    \    for (int i = 0; i < n; i++) res[i] = (*this)[i] == 0 ? 0 : md - (*this)[i];\n\
+    \    return res;\n  }\n  friend Hash pfma(const Hash &a, const Hash &b, const\
+    \ Hash &c) {\n    Hash res;\n    for (int i = 0; i < n; i++) res[i] = modfma(a[i],\
+    \ b[i], c[i]);\n    return res;\n  }\n  friend Hash pfma(const Hash &a, const\
+    \ Hash &b, const i64 &c) {\n    Hash res;\n    u64 s = cast(c);\n    for (int\
+    \ i = 0; i < n; i++) res[i] = modfma(a[i], b[i], s);\n    return res;\n  }\n\n\
+    \  Hash pow(long long e) {\n    Hash a{*this}, res{Hash::set(1)};\n    for (;\
+    \ e; a *= a, e >>= 1) {\n      if (e & 1) res *= a;\n    }\n    return res;\n\
+    \  }\n\n  static Hash get_basis() {\n    static auto rand_time =\n        chrono::duration_cast<chrono::nanoseconds>(\n\
     \            chrono::high_resolution_clock::now().time_since_epoch())\n      \
     \      .count();\n    static mt19937_64 rng(rand_time);\n    Hash h;\n    for\
     \ (int i = 0; i < n; i++) {\n      while (isPrimitive(h[i] = rng() % (md - 1)\
@@ -386,9 +387,9 @@ data:
     \ 61);\n    return ret >= md ? ret - md : ret;\n  }\n  static inline constexpr\
     \ u64 modfma(const u64 &a, const u64 &b, const u64 &c) {\n    u128 d = u128(a)\
     \ * b + c;\n    u64 ret = (d >> 61) + (u64(d) & md);\n    return ret >= md ? ret\
-    \ - md : ret;\n  }\n};\n\n}  // namespace internal\n\n/**\n * @brief \u30CF\u30C3\
-    \u30B7\u30E5\u69CB\u9020\u4F53\n */\n#line 10 \"tree/rooted-tree-hash.hpp\"\n\n\
-    template <typename G>\nstruct RootedTreeHash {\n  using Hash = internal::Hash<1>;\n\
+    \ - md : ret;\n  }\n};\n\n}  // namespace nyaan_internal\n\n/**\n * @brief \u30CF\
+    \u30C3\u30B7\u30E5\u69CB\u9020\u4F53\n */\n#line 10 \"tree/rooted-tree-hash.hpp\"\
+    \n\ntemplate <typename G>\nstruct RootedTreeHash {\n  using Hash = nyaan_internal::Hash<1>;\n\
     \n  const G& g;\n  int n;\n  vector<Hash> hash;\n  vector<int> depth;\n\n  static\
     \ vector<Hash>& xs() {\n    static vector<Hash> _xs;\n    return _xs;\n  }\n\n\
     \  RootedTreeHash(const G& _g, int root = 0) : g(_g), n(g.size()) {\n    hash.resize(n);\n\
@@ -433,7 +434,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-graph/yosupo-tree-hash.test.cpp
   requiredBy: []
-  timestamp: '2026-06-08 17:59:24+09:00'
+  timestamp: '2026-06-27 14:52:13+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-graph/yosupo-tree-hash.test.cpp

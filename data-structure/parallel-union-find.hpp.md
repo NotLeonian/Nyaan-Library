@@ -82,23 +82,23 @@ data:
     \ & -r) != r);\n        return 0;\n    }\n\n  private:\n    int _n, size, log;\n\
     \    std::vector<S> d;\n\n    void update(int k) { d[k] = op(d[2 * k], d[2 * k\
     \ + 1]); }\n};\n\n}  // namespace atcoder\n\n\n#line 2 \"internal/internal-hash.hpp\"\
-    \n\nnamespace internal {\nusing i64 = long long;\nusing u64 = unsigned long long;\n\
-    using u128 = __uint128_t;\n\ntemplate <int BASE_NUM = 2>\nstruct Hash : array<u64,\
-    \ BASE_NUM> {\n  using array<u64, BASE_NUM>::operator[];\n  static constexpr int\
-    \ n = BASE_NUM;\n\n  Hash() : array<u64, BASE_NUM>() {}\n\n  static constexpr\
-    \ u64 md = (1ull << 61) - 1;\n\n  constexpr static Hash set(const i64 &a) {\n\
-    \    Hash res;\n    fill(begin(res), end(res), cast(a));\n    return res;\n  }\n\
-    \  Hash &operator+=(const Hash &r) {\n    for (int i = 0; i < n; i++)\n      if\
-    \ (((*this)[i] += r[i]) >= md) (*this)[i] -= md;\n    return *this;\n  }\n  Hash\
-    \ &operator+=(const i64 &r) {\n    u64 s = cast(r);\n    for (int i = 0; i < n;\
-    \ i++)\n      if (((*this)[i] += s) >= md) (*this)[i] -= md;\n    return *this;\n\
-    \  }\n  Hash &operator-=(const Hash &r) {\n    for (int i = 0; i < n; i++)\n \
-    \     if (((*this)[i] += md - r[i]) >= md) (*this)[i] -= md;\n    return *this;\n\
-    \  }\n  Hash &operator-=(const i64 &r) {\n    u64 s = cast(r);\n    for (int i\
-    \ = 0; i < n; i++)\n      if (((*this)[i] += md - s) >= md) (*this)[i] -= md;\n\
-    \    return *this;\n  }\n  Hash &operator*=(const Hash &r) {\n    for (int i =\
-    \ 0; i < n; i++) (*this)[i] = modmul((*this)[i], r[i]);\n    return *this;\n \
-    \ }\n  Hash &operator*=(const i64 &r) {\n    u64 s = cast(r);\n    for (int i\
+    \n\nnamespace nyaan_internal {\nusing i64 = long long;\nusing u64 = unsigned long\
+    \ long;\nusing u128 = __uint128_t;\n\ntemplate <int BASE_NUM = 2>\nstruct Hash\
+    \ : array<u64, BASE_NUM> {\n  using array<u64, BASE_NUM>::operator[];\n  static\
+    \ constexpr int n = BASE_NUM;\n\n  Hash() : array<u64, BASE_NUM>() {}\n\n  static\
+    \ constexpr u64 md = (1ull << 61) - 1;\n\n  constexpr static Hash set(const i64\
+    \ &a) {\n    Hash res;\n    fill(begin(res), end(res), cast(a));\n    return res;\n\
+    \  }\n  Hash &operator+=(const Hash &r) {\n    for (int i = 0; i < n; i++)\n \
+    \     if (((*this)[i] += r[i]) >= md) (*this)[i] -= md;\n    return *this;\n \
+    \ }\n  Hash &operator+=(const i64 &r) {\n    u64 s = cast(r);\n    for (int i\
+    \ = 0; i < n; i++)\n      if (((*this)[i] += s) >= md) (*this)[i] -= md;\n   \
+    \ return *this;\n  }\n  Hash &operator-=(const Hash &r) {\n    for (int i = 0;\
+    \ i < n; i++)\n      if (((*this)[i] += md - r[i]) >= md) (*this)[i] -= md;\n\
+    \    return *this;\n  }\n  Hash &operator-=(const i64 &r) {\n    u64 s = cast(r);\n\
+    \    for (int i = 0; i < n; i++)\n      if (((*this)[i] += md - s) >= md) (*this)[i]\
+    \ -= md;\n    return *this;\n  }\n  Hash &operator*=(const Hash &r) {\n    for\
+    \ (int i = 0; i < n; i++) (*this)[i] = modmul((*this)[i], r[i]);\n    return *this;\n\
+    \  }\n  Hash &operator*=(const i64 &r) {\n    u64 s = cast(r);\n    for (int i\
     \ = 0; i < n; i++) (*this)[i] = modmul((*this)[i], s);\n    return *this;\n  }\n\
     \n  Hash operator+(const Hash &r) { return Hash(*this) += r; }\n  Hash operator+(const\
     \ i64 &r) { return Hash(*this) += r; }\n  Hash operator-(const Hash &r) { return\
@@ -128,10 +128,10 @@ data:
     \ 61);\n    return ret >= md ? ret - md : ret;\n  }\n  static inline constexpr\
     \ u64 modfma(const u64 &a, const u64 &b, const u64 &c) {\n    u128 d = u128(a)\
     \ * b + c;\n    u64 ret = (d >> 61) + (u64(d) & md);\n    return ret >= md ? ret\
-    \ - md : ret;\n  }\n};\n\n}  // namespace internal\n\n/**\n * @brief \u30CF\u30C3\
-    \u30B7\u30E5\u69CB\u9020\u4F53\n */\n#line 8 \"string/rolling-hash-on-segment-tree.hpp\"\
+    \ - md : ret;\n  }\n};\n\n}  // namespace nyaan_internal\n\n/**\n * @brief \u30CF\
+    \u30C3\u30B7\u30E5\u69CB\u9020\u4F53\n */\n#line 8 \"string/rolling-hash-on-segment-tree.hpp\"\
     \n\nnamespace RollingHashonSegmentTreeImpl {\n\nconstexpr int BASE_NUM = 1;\n\
-    using Hash = internal::Hash<BASE_NUM>;\nusing T = pair<Hash, int>;\n\nvector<Hash>\
+    using Hash = nyaan_internal::Hash<BASE_NUM>;\nusing T = pair<Hash, int>;\n\nvector<Hash>\
     \ Pow{Hash::set(1)};\nconst Hash Basis = Hash::get_basis();\nconst Hash Zero =\
     \ Hash::set(0);\n\nT op(T a, T b) {\n  while (b.second >= (int)Pow.size()) {\n\
     \    Hash h = Pow.back();\n    Pow.push_back(h * Basis);\n  }\n  Hash h = pfma(a.first,\
@@ -217,7 +217,7 @@ data:
   isVerificationFile: false
   path: data-structure/parallel-union-find.hpp
   requiredBy: []
-  timestamp: '2026-06-08 17:59:24+09:00'
+  timestamp: '2026-06-27 14:52:13+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ds/yosupo-range-parallel-unionfind.test.cpp

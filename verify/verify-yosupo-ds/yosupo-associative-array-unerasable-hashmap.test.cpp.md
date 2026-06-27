@@ -234,7 +234,7 @@ data:
     \nusing namespace std;\n\n#line 2 \"internal/internal-hash-function.hpp\"\n\n\
     #line 4 \"internal/internal-hash-function.hpp\"\nusing namespace std;\n\n#line\
     \ 2 \"internal/internal-seed.hpp\"\n\n#line 4 \"internal/internal-seed.hpp\"\n\
-    using namespace std;\n\nnamespace internal {\nunsigned long long non_deterministic_seed()\
+    using namespace std;\n\nnamespace nyaan_internal {\nunsigned long long non_deterministic_seed()\
     \ {\n  unsigned long long m =\n      chrono::duration_cast<chrono::nanoseconds>(\n\
     \          chrono::high_resolution_clock::now().time_since_epoch())\n        \
     \  .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >> 31, m\
@@ -245,15 +245,15 @@ data:
     \u308B\u306E\u3067\u6CE8\u610F\n// #define RANDOMIZED_SEED \u3059\u308B\u3068\u30B7\
     \u30FC\u30C9\u304C\u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long long\
     \ seed() {\n#if defined(NyaanLocal) && !defined(RANDOMIZED_SEED)\n  return deterministic_seed();\n\
-    #else\n  return non_deterministic_seed();\n#endif\n}\n\n}  // namespace internal\n\
+    #else\n  return non_deterministic_seed();\n#endif\n}\n\n}  // namespace nyaan_internal\n\
     #line 2 \"internal/internal-type-traits.hpp\"\n\n#line 4 \"internal/internal-type-traits.hpp\"\
-    \nusing namespace std;\n\nnamespace internal {\ntemplate <typename T>\nusing is_broadly_integral\
-    \ =\n    typename conditional_t<is_integral_v<T> || is_same_v<T, __int128_t> ||\n\
-    \                               is_same_v<T, __uint128_t>,\n                 \
-    \          true_type, false_type>::type;\n\ntemplate <typename T>\nusing is_broadly_signed\
-    \ =\n    typename conditional_t<is_signed_v<T> || is_same_v<T, __int128_t>,\n\
+    \nusing namespace std;\n\nnamespace nyaan_internal {\ntemplate <typename T>\n\
+    using is_broadly_integral =\n    typename conditional_t<is_integral_v<T> || is_same_v<T,\
+    \ __int128_t> ||\n                               is_same_v<T, __uint128_t>,\n\
     \                           true_type, false_type>::type;\n\ntemplate <typename\
-    \ T>\nusing is_broadly_unsigned =\n    typename conditional_t<is_unsigned_v<T>\
+    \ T>\nusing is_broadly_signed =\n    typename conditional_t<is_signed_v<T> ||\
+    \ is_same_v<T, __int128_t>,\n                           true_type, false_type>::type;\n\
+    \ntemplate <typename T>\nusing is_broadly_unsigned =\n    typename conditional_t<is_unsigned_v<T>\
     \ || is_same_v<T, __uint128_t>,\n                           true_type, false_type>::type;\n\
     \n#define ENABLE_VALUE(x) \\\n  template <typename T> \\\n  constexpr bool x##_v\
     \ = x<T>::value;\n\nENABLE_VALUE(is_broadly_integral);\nENABLE_VALUE(is_broadly_signed);\n\
@@ -269,10 +269,10 @@ data:
     \                  \\\n  template <class T>                                  \
     \          \\\n  struct has_##var<T, void_t<decltype(T::var)>> : true_type {};\
     \ \\\n  template <class T>                                            \\\n  constexpr\
-    \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace internal\n#line\
-    \ 8 \"internal/internal-hash-function.hpp\"\n\nnamespace internal {\n// \u6574\
-    \u6570, \u6574\u6570\u5217\u3092 64 bit unsigned int \u3078\u79FB\u3059\n\nusing\
-    \ u64 = unsigned long long;\nusing u128 = __uint128_t;\n\nENABLE_HAS_TYPE(first_type);\n\
+    \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace nyaan_internal\n\
+    #line 8 \"internal/internal-hash-function.hpp\"\n\nnamespace nyaan_internal {\n\
+    // \u6574\u6570, \u6574\u6570\u5217\u3092 64 bit unsigned int \u3078\u79FB\u3059\
+    \n\nusing u64 = unsigned long long;\nusing u128 = __uint128_t;\n\nENABLE_HAS_TYPE(first_type);\n\
     ENABLE_HAS_TYPE(second_type);\nENABLE_HAS_TYPE(iterator);\n\ntemplate <typename\
     \ T>\nu64 hash_function(const T& x) {\n  static u64 r = seed();\n  constexpr u64\
     \ z1 = 11995408973635179863ULL;\n  if constexpr (is_broadly_integral_v<T>) {\n\
@@ -287,7 +287,7 @@ data:
     \ >> 61);\n      if (m >= mod) m -= mod;\n    }\n    m ^= m << 24, m ^= m >> 31,\
     \ m ^= m << 35;\n    return m;\n  } else {\n    static_assert([]() { return false;\
     \ }());\n  }\n}\n\ntemplate <typename Key>\nstruct HashObject {\n  size_t operator()(const\
-    \ Key& x) const { return hash_function(x); }\n};\n\n}  // namespace internal\n\
+    \ Key& x) const { return hash_function(x); }\n};\n\n}  // namespace nyaan_internal\n\
     \n/*\n@brief \u30CF\u30C3\u30B7\u30E5\u95A2\u6570\n*/\n#line 8 \"hashmap/hashmap-unerasable.hpp\"\
     \n\n// \u524A\u9664\u4E0D\u53EF\u80FD\u306A hashmap\n//\n// \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\u5F15\u6570\n// fixed_size : \u3053\u308C\u3092 true \u306B\
@@ -300,22 +300,22 @@ data:
     \ true \u306E\u6642\u306B\u3057\u304B\u30B5\u30A4\u30BA\u3092\u5909\u66F4\u3067\
     \u304D\u306A\u3044\n\ntemplate <typename Key, typename Val, bool fixed_size =\
     \ false,\n          unsigned long long (*get_hash)(const Key&) =\n           \
-    \   internal::hash_function<Key>>\nstruct UnerasableHashMap {\n  int N, occupied_num,\
-    \ shift;\n  vector<Key> keys;\n  vector<Val> vals;\n  vector<char> flag;\n\n \
-    \ Val default_value;\n  int default_size;\n\n  // \u30B5\u30A4\u30BA\u3092 n \u306B\
-    \u5909\u66F4\u3059\u308B\n  void init(int n, bool reset = false) {\n    assert(n\
-    \ >= 4 && (n & (n - 1)) == 0);\n    if constexpr (fixed_size) {\n      assert(reset\
-    \ == true);\n      n = N;\n    }\n    if (reset == true) {\n      N = n, occupied_num\
-    \ = 0, shift = 64 - __builtin_ctz(n);\n      keys.resize(n);\n      vals.resize(n);\n\
-    \      flag.resize(n);\n      fill(begin(vals), end(vals), default_value);\n \
-    \     fill(begin(flag), end(flag), 0);\n    } else {\n      N = n, shift = 64\
-    \ - __builtin_ctz(n);\n      vector<Key> keys2(n);\n      vector<Val> vals2(n,\
-    \ default_value);\n      vector<char> flag2(n);\n      swap(keys, keys2), swap(vals,\
-    \ vals2), swap(flag, flag2);\n      for (int i = 0; i < (int)flag2.size(); i++)\
-    \ {\n        if (flag2[i]) {\n          int j = hint(keys2[i]);\n          keys[j]\
-    \ = keys2[i], vals[j] = vals2[i], flag[j] = 1;\n        }\n      }\n    }\n  }\n\
-    \n  UnerasableHashMap(const Val& _default_value = Val{}, int _default_size = 4)\n\
-    \      : occupied_num(0), default_value(_default_value) {\n    if (fixed_size\
+    \   nyaan_internal::hash_function<Key>>\nstruct UnerasableHashMap {\n  int N,\
+    \ occupied_num, shift;\n  vector<Key> keys;\n  vector<Val> vals;\n  vector<char>\
+    \ flag;\n\n  Val default_value;\n  int default_size;\n\n  // \u30B5\u30A4\u30BA\
+    \u3092 n \u306B\u5909\u66F4\u3059\u308B\n  void init(int n, bool reset = false)\
+    \ {\n    assert(n >= 4 && (n & (n - 1)) == 0);\n    if constexpr (fixed_size)\
+    \ {\n      assert(reset == true);\n      n = N;\n    }\n    if (reset == true)\
+    \ {\n      N = n, occupied_num = 0, shift = 64 - __builtin_ctz(n);\n      keys.resize(n);\n\
+    \      vals.resize(n);\n      flag.resize(n);\n      fill(begin(vals), end(vals),\
+    \ default_value);\n      fill(begin(flag), end(flag), 0);\n    } else {\n    \
+    \  N = n, shift = 64 - __builtin_ctz(n);\n      vector<Key> keys2(n);\n      vector<Val>\
+    \ vals2(n, default_value);\n      vector<char> flag2(n);\n      swap(keys, keys2),\
+    \ swap(vals, vals2), swap(flag, flag2);\n      for (int i = 0; i < (int)flag2.size();\
+    \ i++) {\n        if (flag2[i]) {\n          int j = hint(keys2[i]);\n       \
+    \   keys[j] = keys2[i], vals[j] = vals2[i], flag[j] = 1;\n        }\n      }\n\
+    \    }\n  }\n\n  UnerasableHashMap(const Val& _default_value = Val{}, int _default_size\
+    \ = 4)\n      : occupied_num(0), default_value(_default_value) {\n    if (fixed_size\
     \ == false) _default_size = 4;\n    N = 4;\n    while (N < _default_size) N *=\
     \ 2;\n    default_size = N;\n    init(N, true);\n  }\n\n  int hint(const Key&\
     \ k) {\n    int hash = get_hash(k) >> shift;\n    while (flag[hash] && keys[hash]\
@@ -365,7 +365,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-ds/yosupo-associative-array-unerasable-hashmap.test.cpp
   requiredBy: []
-  timestamp: '2026-06-06 19:38:56+09:00'
+  timestamp: '2026-06-27 14:52:13+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-ds/yosupo-associative-array-unerasable-hashmap.test.cpp

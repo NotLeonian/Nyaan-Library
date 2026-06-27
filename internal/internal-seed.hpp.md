@@ -339,7 +339,7 @@ data:
   attributes:
     links: []
   bundledCode: "#line 2 \"internal/internal-seed.hpp\"\n\n#include <chrono>\nusing\
-    \ namespace std;\n\nnamespace internal {\nunsigned long long non_deterministic_seed()\
+    \ namespace std;\n\nnamespace nyaan_internal {\nunsigned long long non_deterministic_seed()\
     \ {\n  unsigned long long m =\n      chrono::duration_cast<chrono::nanoseconds>(\n\
     \          chrono::high_resolution_clock::now().time_since_epoch())\n        \
     \  .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >> 31, m\
@@ -350,8 +350,8 @@ data:
     \u308B\u306E\u3067\u6CE8\u610F\n// #define RANDOMIZED_SEED \u3059\u308B\u3068\u30B7\
     \u30FC\u30C9\u304C\u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long long\
     \ seed() {\n#if defined(NyaanLocal) && !defined(RANDOMIZED_SEED)\n  return deterministic_seed();\n\
-    #else\n  return non_deterministic_seed();\n#endif\n}\n\n}  // namespace internal\n"
-  code: "#pragma once\n\n#include <chrono>\nusing namespace std;\n\nnamespace internal\
+    #else\n  return non_deterministic_seed();\n#endif\n}\n\n}  // namespace nyaan_internal\n"
+  code: "#pragma once\n\n#include <chrono>\nusing namespace std;\n\nnamespace nyaan_internal\
     \ {\nunsigned long long non_deterministic_seed() {\n  unsigned long long m =\n\
     \      chrono::duration_cast<chrono::nanoseconds>(\n          chrono::high_resolution_clock::now().time_since_epoch())\n\
     \          .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >>\
@@ -363,7 +363,7 @@ data:
     \u30B7\u30FC\u30C9\u304C\u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long\
     \ long seed() {\n#if defined(NyaanLocal) && !defined(RANDOMIZED_SEED)\n  return\
     \ deterministic_seed();\n#else\n  return non_deterministic_seed();\n#endif\n}\n\
-    \n}  // namespace internal\n"
+    \n}  // namespace nyaan_internal\n"
   dependsOn: []
   isVerificationFile: false
   path: internal/internal-seed.hpp
@@ -385,7 +385,7 @@ data:
   - prime/fast-factorize.hpp
   - misc/all.hpp
   - misc/rng.hpp
-  timestamp: '2023-08-10 13:25:59+09:00'
+  timestamp: '2026-06-27 14:52:13+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ds/yosupo-associative-array-unerasable-hashmap.test.cpp

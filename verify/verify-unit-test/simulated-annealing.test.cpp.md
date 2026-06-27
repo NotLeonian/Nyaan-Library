@@ -268,7 +268,7 @@ data:
     \    }\n    return scores;\n  }\n};\n\n/**\n * @brief Simulated Annealing\n */\n\
     #line 2 \"misc/rng.hpp\"\n\n#line 7 \"misc/rng.hpp\"\nusing namespace std;\n\n\
     #line 2 \"internal/internal-seed.hpp\"\n\n#line 4 \"internal/internal-seed.hpp\"\
-    \nusing namespace std;\n\nnamespace internal {\nunsigned long long non_deterministic_seed()\
+    \nusing namespace std;\n\nnamespace nyaan_internal {\nunsigned long long non_deterministic_seed()\
     \ {\n  unsigned long long m =\n      chrono::duration_cast<chrono::nanoseconds>(\n\
     \          chrono::high_resolution_clock::now().time_since_epoch())\n        \
     \  .count();\n  m ^= 9845834732710364265uLL;\n  m ^= m << 24, m ^= m >> 31, m\
@@ -279,44 +279,44 @@ data:
     \u308B\u306E\u3067\u6CE8\u610F\n// #define RANDOMIZED_SEED \u3059\u308B\u3068\u30B7\
     \u30FC\u30C9\u304C\u30E9\u30F3\u30C0\u30E0\u306B\u306A\u308B\nunsigned long long\
     \ seed() {\n#if defined(NyaanLocal) && !defined(RANDOMIZED_SEED)\n  return deterministic_seed();\n\
-    #else\n  return non_deterministic_seed();\n#endif\n}\n\n}  // namespace internal\n\
+    #else\n  return non_deterministic_seed();\n#endif\n}\n\n}  // namespace nyaan_internal\n\
     #line 10 \"misc/rng.hpp\"\n\nnamespace my_rand {\nusing i64 = long long;\nusing\
     \ u64 = unsigned long long;\n\n// [0, 2^64 - 1)\nu64 rng() {\n  static u64 _x\
-    \ = internal::seed();\n  return _x ^= _x << 7, _x ^= _x >> 9;\n}\n\n// [l, r]\n\
-    i64 rng(i64 l, i64 r) {\n  assert(l <= r);\n  return l + rng() % u64(r - l + 1);\n\
-    }\n\n// [l, r)\ni64 randint(i64 l, i64 r) {\n  assert(l < r);\n  return l + rng()\
-    \ % u64(r - l);\n}\n\n// choose n numbers from [l, r) without overlapping\nvector<i64>\
-    \ randset(i64 l, i64 r, i64 n) {\n  assert(l <= r && n <= r - l);\n  unordered_set<i64>\
-    \ s;\n  for (i64 i = n; i; --i) {\n    i64 m = randint(l, r + 1 - i);\n    if\
-    \ (s.find(m) != s.end()) m = r - i;\n    s.insert(m);\n  }\n  vector<i64> ret;\n\
-    \  for (auto& x : s) ret.push_back(x);\n  sort(begin(ret), end(ret));\n  return\
-    \ ret;\n}\n\n// [0.0, 1.0)\ndouble rnd() { return rng() * 5.42101086242752217004e-20;\
-    \ }\n// [l, r)\ndouble rnd(double l, double r) {\n  assert(l < r);\n  return l\
-    \ + rnd() * (r - l);\n}\n\ntemplate <typename T>\nvoid randshf(vector<T>& v) {\n\
-    \  int n = v.size();\n  for (int i = 1; i < n; i++) swap(v[i], v[randint(0, i\
-    \ + 1)]);\n}\n\n}  // namespace my_rand\n\nusing my_rand::randint;\nusing my_rand::randset;\n\
-    using my_rand::randshf;\nusing my_rand::rnd;\nusing my_rand::rng;\n#line 7 \"\
-    verify/verify-unit-test/simulated-annealing.test.cpp\"\n\nusing namespace Nyaan;\n\
-    \nusing score_t = double;\nstruct Input {\n  int N;\n  V<P<double, double>> ps;\n\
-    \  Input() = default;\n  void scan() {\n    in(N);\n    ps.resize(N);\n    in(ps);\n\
-    \  }\n};\n\nstruct State {\n  int N;\n  V<P<double, double>> ps;\n  vi used;\n\
-    \  P<double, double> res;\n\n  struct Diff {\n    const State *st;\n    int n;\n\
-    \    P<double, double> res;\n    double d;\n    Diff() = default;\n    Diff(const\
-    \ State &state) : st(&state), res(state.res) {\n      n = rng() % state.N;\n \
-    \     if (state.used[n]) {\n        res -= state.ps[n];\n      } else {\n    \
-    \    res += state.ps[n];\n      }\n      d = res.first * res.first + res.second\
-    \ * res.second - state.score();\n    }\n    double diff() const { return d; }\n\
-    \  };\n\n  State() = default;\n  State(const Input &input) : N(input.N), ps(input.ps)\
-    \ {\n    used.resize(N);\n    rep(i, N) used[i] = rng() & 1;\n    res = P<double,\
-    \ double>(0, 0);\n    rep(i, N) {\n      if (used[i]) res += ps[i];\n    }\n \
-    \ }\n  void update(const Diff &b) {\n    res = b.res;\n    used[b.n] ^= 1;\n \
-    \ }\n  void undo(const Diff &) {}\n  score_t score() const {\n    return res.first\
-    \ * res.first + res.second * res.second;\n  }\n\n  bool operator>(const State\
-    \ &s) { return score() > s.score(); };\n  void dump() {}\n};\nusing SA = Simulated_Annealing<Input,\
-    \ State, typename State::Diff>;\n\nusing pd = Nyaan::P<double, double>;\n\ndouble\
-    \ yakinamashi(int n, V<pd> ps) {\n  Input ip;\n  ip.N = n;\n  ip.ps = ps;\n  SA\
-    \ sa(10, 1000, 1);\n  State ans{};\n  rep(i, 10) {\n    sa.reset();\n    auto\
-    \ s = sa.run(ip);\n    if (s > ans) swap(ans, s);\n  }\n  return sqrt(ans.score());\n\
+    \ = nyaan_internal::seed();\n  return _x ^= _x << 7, _x ^= _x >> 9;\n}\n\n// [l,\
+    \ r]\ni64 rng(i64 l, i64 r) {\n  assert(l <= r);\n  return l + rng() % u64(r -\
+    \ l + 1);\n}\n\n// [l, r)\ni64 randint(i64 l, i64 r) {\n  assert(l < r);\n  return\
+    \ l + rng() % u64(r - l);\n}\n\n// choose n numbers from [l, r) without overlapping\n\
+    vector<i64> randset(i64 l, i64 r, i64 n) {\n  assert(l <= r && n <= r - l);\n\
+    \  unordered_set<i64> s;\n  for (i64 i = n; i; --i) {\n    i64 m = randint(l,\
+    \ r + 1 - i);\n    if (s.find(m) != s.end()) m = r - i;\n    s.insert(m);\n  }\n\
+    \  vector<i64> ret;\n  for (auto& x : s) ret.push_back(x);\n  sort(begin(ret),\
+    \ end(ret));\n  return ret;\n}\n\n// [0.0, 1.0)\ndouble rnd() { return rng() *\
+    \ 5.42101086242752217004e-20; }\n// [l, r)\ndouble rnd(double l, double r) {\n\
+    \  assert(l < r);\n  return l + rnd() * (r - l);\n}\n\ntemplate <typename T>\n\
+    void randshf(vector<T>& v) {\n  int n = v.size();\n  for (int i = 1; i < n; i++)\
+    \ swap(v[i], v[randint(0, i + 1)]);\n}\n\n}  // namespace my_rand\n\nusing my_rand::randint;\n\
+    using my_rand::randset;\nusing my_rand::randshf;\nusing my_rand::rnd;\nusing my_rand::rng;\n\
+    #line 7 \"verify/verify-unit-test/simulated-annealing.test.cpp\"\n\nusing namespace\
+    \ Nyaan;\n\nusing score_t = double;\nstruct Input {\n  int N;\n  V<P<double, double>>\
+    \ ps;\n  Input() = default;\n  void scan() {\n    in(N);\n    ps.resize(N);\n\
+    \    in(ps);\n  }\n};\n\nstruct State {\n  int N;\n  V<P<double, double>> ps;\n\
+    \  vi used;\n  P<double, double> res;\n\n  struct Diff {\n    const State *st;\n\
+    \    int n;\n    P<double, double> res;\n    double d;\n    Diff() = default;\n\
+    \    Diff(const State &state) : st(&state), res(state.res) {\n      n = rng()\
+    \ % state.N;\n      if (state.used[n]) {\n        res -= state.ps[n];\n      }\
+    \ else {\n        res += state.ps[n];\n      }\n      d = res.first * res.first\
+    \ + res.second * res.second - state.score();\n    }\n    double diff() const {\
+    \ return d; }\n  };\n\n  State() = default;\n  State(const Input &input) : N(input.N),\
+    \ ps(input.ps) {\n    used.resize(N);\n    rep(i, N) used[i] = rng() & 1;\n  \
+    \  res = P<double, double>(0, 0);\n    rep(i, N) {\n      if (used[i]) res +=\
+    \ ps[i];\n    }\n  }\n  void update(const Diff &b) {\n    res = b.res;\n    used[b.n]\
+    \ ^= 1;\n  }\n  void undo(const Diff &) {}\n  score_t score() const {\n    return\
+    \ res.first * res.first + res.second * res.second;\n  }\n\n  bool operator>(const\
+    \ State &s) { return score() > s.score(); };\n  void dump() {}\n};\nusing SA =\
+    \ Simulated_Annealing<Input, State, typename State::Diff>;\n\nusing pd = Nyaan::P<double,\
+    \ double>;\n\ndouble yakinamashi(int n, V<pd> ps) {\n  Input ip;\n  ip.N = n;\n\
+    \  ip.ps = ps;\n  SA sa(10, 1000, 1);\n  State ans{};\n  rep(i, 10) {\n    sa.reset();\n\
+    \    auto s = sa.run(ip);\n    if (s > ans) swap(ans, s);\n  }\n  return sqrt(ans.score());\n\
     }\n\ndouble argsort(int N, V<pd> v) {\n  repr(i, N) {\n    if (v[i] == pd(0, 0))\
     \ v.erase(v.begin() + i);\n  }\n  N = sz(v);\n  sort(all(v), [](pd a, pd b) {\n\
     \    return atan2(double(a.second), double(a.first)) <\n           atan2(double(b.second),\
@@ -379,7 +379,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/simulated-annealing.test.cpp
   requiredBy: []
-  timestamp: '2026-06-08 17:59:24+09:00'
+  timestamp: '2026-06-27 14:52:13+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/simulated-annealing.test.cpp

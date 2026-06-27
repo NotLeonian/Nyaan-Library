@@ -237,8 +237,8 @@ data:
     \n\nnamespace Nyaan {\nvoid solve();\n}\nint main() { Nyaan::solve(); }\n#line\
     \ 2 \"data-structure-2d/abstract-range-tree.hpp\"\n\n#line 9 \"data-structure-2d/abstract-range-tree.hpp\"\
     \nusing namespace std;\n\n#line 2 \"internal/internal-function.hpp\"\n\n#line\
-    \ 8 \"internal/internal-function.hpp\"\n\nnamespace internal {\n\ntemplate <class>\n\
-    class function_ref;\n\ntemplate <class R, class... Args>\nclass function_ref<R(Args...)>\
+    \ 8 \"internal/internal-function.hpp\"\n\nnamespace nyaan_internal {\n\ntemplate\
+    \ <class>\nclass function_ref;\n\ntemplate <class R, class... Args>\nclass function_ref<R(Args...)>\
     \ {\n  void* obj_ = nullptr;\n  R (*call_obj_)(void*, Args...) = nullptr;\n  R\
     \ (*func_)(Args...) = nullptr;\n\n public:\n  function_ref() noexcept = default;\n\
     \  function_ref(std::nullptr_t) noexcept {}\n  function_ref(R (*f)(Args...)) noexcept\
@@ -310,87 +310,87 @@ data:
     \ != nullptr; }\n\n  R operator()(Args... args) const {\n    if (!invoke_) throw\
     \ std::bad_function_call();\n    return invoke_(\n        const_cast<void*>(static_cast<const\
     \ void*>(&storage_)),\n        std::forward<Args>(args)...);\n  }\n};\n\n}  //\
-    \ namespace internal\n\nusing internal::function_ref;\nusing internal::inplace_function;\n\
+    \ namespace nyaan_internal\n\nusing nyaan_internal::function_ref;\nusing nyaan_internal::inplace_function;\n\
     #line 12 \"data-structure-2d/abstract-range-tree.hpp\"\n\n// DS ... data_structure_type\n\
     // S ... size_type\n// T ... value_type\ntemplate <typename DS, typename S, typename\
-    \ T,\n          typename NewFunc = internal::inplace_function<DS*(int), 64>,\n\
-    \          typename AddFunc = internal::inplace_function<void(DS&, int, T), 64>,\n\
-    \          typename SumFunc = internal::inplace_function<T(DS&, int, int), 64>,\n\
-    \          typename MergeFunc = internal::inplace_function<T(T, T), 64>>\nstruct\
-    \ RangeTree {\n  using NEW = NewFunc;\n  using ADD = AddFunc;\n  using SUM = SumFunc;\n\
-    \  using MRG = MergeFunc;\n  using P = pair<S, S>;\n\n  static_assert(is_invocable_r_v<DS*,\
-    \ NEW&, int>,\n                \"RangeTree NEW must be callable as DS*(int)\"\
-    );\n  static_assert(is_invocable_r_v<void, ADD&, DS&, int, T>,\n             \
-    \   \"RangeTree ADD must be callable as void(DS&, int, T)\");\n  static_assert(is_invocable_r_v<T,\
-    \ SUM&, DS&, int, int>,\n                \"RangeTree SUM must be callable as T(DS&,\
-    \ int, int)\");\n  static_assert(is_invocable_r_v<T, MRG&, T, T>,\n          \
-    \      \"RangeTree MRG must be callable as T(T, T)\");\n\n  S N, M;\n  NEW ds_new;\n\
-    \  ADD ds_add;\n  SUM ds_sum;\n  MRG t_merge;\n  const T ti;\n  vector<DS*> ds;\n\
-    \  vector<vector<S>> ys;\n  vector<P> ps;\n\n  template <typename FNew, typename\
-    \ FAdd, typename FSum, typename FMerge>\n  RangeTree(FNew&& nw, FAdd&& ad, FSum&&\
-    \ sm, FMerge&& mrg, const T& ti_)\n      : ds_new(std::forward<FNew>(nw)),\n \
-    \       ds_add(std::forward<FAdd>(ad)),\n        ds_sum(std::forward<FSum>(sm)),\n\
-    \        t_merge(std::forward<FMerge>(mrg)),\n        ti(ti_) {}\n\n  void add_point(S\
-    \ x, S y) { ps.push_back(make_pair(x, y)); }\n\n  void build() {\n    sort(begin(ps),\
-    \ end(ps));\n    ps.erase(unique(begin(ps), end(ps)), end(ps));\n    N = ps.size();\n\
-    \    ds.resize(2 * N, nullptr);\n    ys.resize(2 * N);\n    for (int i = 0; i\
-    \ < N; ++i) {\n      ys[i + N].push_back(ps[i].second);\n      ds[i + N] = std::invoke(ds_new,\
-    \ 1);\n    }\n    for (int i = N - 1; i > 0; --i) {\n      ys[i].resize(ys[i <<\
-    \ 1].size() + ys[(i << 1) | 1].size());\n      merge(begin(ys[(i << 1) | 0]),\
-    \ end(ys[(i << 1) | 0]),\n            begin(ys[(i << 1) | 1]), end(ys[(i << 1)\
-    \ | 1]), begin(ys[i]));\n      ys[i].erase(unique(begin(ys[i]), end(ys[i])), end(ys[i]));\n\
-    \      ds[i] = std::invoke(ds_new, ys[i].size());\n    }\n  }\n\n  int id(S x)\
-    \ const {\n    return lower_bound(\n               begin(ps), end(ps), make_pair(x,\
-    \ S()),\n               [](const P& a, const P& b) { return a.first < b.first;\
-    \ }) -\n           begin(ps);\n  }\n\n  int id(int i, S y) const {\n    return\
-    \ lower_bound(begin(ys[i]), end(ys[i]), y) - begin(ys[i]);\n  }\n\n  void add(S\
-    \ x, S y, T a) {\n    int i = lower_bound(begin(ps), end(ps), make_pair(x, y))\
-    \ - begin(ps);\n    assert(ps[i] == make_pair(x, y));\n    for (i += N; i; i >>=\
-    \ 1) std::invoke(ds_add, *ds[i], id(i, y), a);\n  }\n\n  T sum(S xl, S yl, S xr,\
-    \ S yr) {\n    T L = ti, R = ti;\n    int a = id(xl), b = id(xr);\n    for (a\
-    \ += N, b += N; a < b; a >>= 1, b >>= 1) {\n      if (a & 1)\n        L = std::invoke(t_merge,\
-    \ L,\n                        std::invoke(ds_sum, *ds[a], id(a, yl), id(a, yr))),\n\
-    \        ++a;\n      if (b & 1)\n        --b,\n            R = std::invoke(t_merge,\n\
-    \                            std::invoke(ds_sum, *ds[b], id(b, yl), id(b, yr)),\n\
-    \                            R);\n    }\n    return std::invoke(t_merge, L, R);\n\
-    \  }\n};\n\n/*\n * @brief \u62BD\u8C61\u5316\u9818\u57DF\u6728\n */\n#line 2 \"\
-    data-structure/binary-indexed-tree.hpp\"\n\ntemplate <typename T>\nstruct BinaryIndexedTree\
-    \ {\n  int N;\n  vector<T> data;\n\n  BinaryIndexedTree() = default;\n\n  BinaryIndexedTree(int\
-    \ size) { init(size); }\n\n  void init(int size) {\n    N = size + 2;\n    data.assign(N\
-    \ + 1, {});\n  }\n\n  // get sum of [0,k]\n  T sum(int k) const {\n    if (k <\
-    \ 0) return T{};  // return 0 if k < 0\n    T ret{};\n    for (++k; k > 0; k -=\
-    \ k & -k) ret += data[k];\n    return ret;\n  }\n\n  // getsum of [l,r]\n  inline\
-    \ T sum(int l, int r) const { return sum(r) - sum(l - 1); }\n\n  // get value\
-    \ of k\n  inline T operator[](int k) const { return sum(k) - sum(k - 1); }\n\n\
-    \  // data[k] += x\n  void add(int k, T x) {\n    for (++k; k < N; k += k & -k)\
-    \ data[k] += x;\n  }\n\n  // range add x to [l,r]\n  void imos(int l, int r, T\
-    \ x) {\n    add(l, x);\n    add(r + 1, -x);\n  }\n\n  // minimize i s.t. sum(i)\
-    \ >= w\n  int lower_bound(T w) {\n    if (w <= 0) return 0;\n    int x = 0;\n\
-    \    for (int k = 1 << __lg(N); k; k >>= 1) {\n      if (x + k <= N - 1 && data[x\
-    \ + k] < w) {\n        w -= data[x + k];\n        x += k;\n      }\n    }\n  \
-    \  return x;\n  }\n\n  // minimize i s.t. sum(i) > w\n  int upper_bound(T w) {\n\
-    \    if (w < 0) return 0;\n    int x = 0;\n    for (int k = 1 << __lg(N); k; k\
-    \ >>= 1) {\n      if (x + k <= N - 1 && data[x + k] <= w) {\n        w -= data[x\
-    \ + k];\n        x += k;\n      }\n    }\n    return x;\n  }\n};\n\n/**\n * @brief\
-    \ Binary Indexed Tree(Fenwick Tree)\n */\n#line 2 \"misc/compress.hpp\"\n\ntemplate\
-    \ <class T>\nstruct compress {\n  vector<T> xs;\n  compress(const vector<T>& v)\
-    \ {\n    xs.reserve(v.size());\n    for (T x : v) xs.push_back(x);\n    sort(xs.begin(),\
-    \ xs.end());\n    xs.erase(unique(xs.begin(), xs.end()), xs.end());\n  }\n  int\
-    \ get(const T& x) const {\n    return lower_bound(xs.begin(), xs.end(), x) - xs.begin();\n\
-    \  }\n  inline int operator()(const T& x) const { return get(x); }\n  T operator[](int\
-    \ i) { return xs[i]; }\n  int size() const { return xs.size(); }\n};\n\n/**\n\
-    \ * \u5EA7\u6A19\u5727\u7E2E\n */\n#line 2 \"misc/fastio.hpp\"\n\n#line 9 \"misc/fastio.hpp\"\
-    \n\nusing namespace std;\n\n#line 2 \"internal/internal-type-traits.hpp\"\n\n\
-    #line 4 \"internal/internal-type-traits.hpp\"\nusing namespace std;\n\nnamespace\
-    \ internal {\ntemplate <typename T>\nusing is_broadly_integral =\n    typename\
-    \ conditional_t<is_integral_v<T> || is_same_v<T, __int128_t> ||\n            \
-    \                   is_same_v<T, __uint128_t>,\n                           true_type,\
-    \ false_type>::type;\n\ntemplate <typename T>\nusing is_broadly_signed =\n   \
-    \ typename conditional_t<is_signed_v<T> || is_same_v<T, __int128_t>,\n       \
-    \                    true_type, false_type>::type;\n\ntemplate <typename T>\n\
-    using is_broadly_unsigned =\n    typename conditional_t<is_unsigned_v<T> || is_same_v<T,\
-    \ __uint128_t>,\n                           true_type, false_type>::type;\n\n\
-    #define ENABLE_VALUE(x) \\\n  template <typename T> \\\n  constexpr bool x##_v\
+    \ T,\n          typename NewFunc = nyaan_internal::inplace_function<DS*(int),\
+    \ 64>,\n          typename AddFunc = nyaan_internal::inplace_function<void(DS&,\
+    \ int, T), 64>,\n          typename SumFunc = nyaan_internal::inplace_function<T(DS&,\
+    \ int, int), 64>,\n          typename MergeFunc = nyaan_internal::inplace_function<T(T,\
+    \ T), 64>>\nstruct RangeTree {\n  using NEW = NewFunc;\n  using ADD = AddFunc;\n\
+    \  using SUM = SumFunc;\n  using MRG = MergeFunc;\n  using P = pair<S, S>;\n\n\
+    \  static_assert(is_invocable_r_v<DS*, NEW&, int>,\n                \"RangeTree\
+    \ NEW must be callable as DS*(int)\");\n  static_assert(is_invocable_r_v<void,\
+    \ ADD&, DS&, int, T>,\n                \"RangeTree ADD must be callable as void(DS&,\
+    \ int, T)\");\n  static_assert(is_invocable_r_v<T, SUM&, DS&, int, int>,\n   \
+    \             \"RangeTree SUM must be callable as T(DS&, int, int)\");\n  static_assert(is_invocable_r_v<T,\
+    \ MRG&, T, T>,\n                \"RangeTree MRG must be callable as T(T, T)\"\
+    );\n\n  S N, M;\n  NEW ds_new;\n  ADD ds_add;\n  SUM ds_sum;\n  MRG t_merge;\n\
+    \  const T ti;\n  vector<DS*> ds;\n  vector<vector<S>> ys;\n  vector<P> ps;\n\n\
+    \  template <typename FNew, typename FAdd, typename FSum, typename FMerge>\n \
+    \ RangeTree(FNew&& nw, FAdd&& ad, FSum&& sm, FMerge&& mrg, const T& ti_)\n   \
+    \   : ds_new(std::forward<FNew>(nw)),\n        ds_add(std::forward<FAdd>(ad)),\n\
+    \        ds_sum(std::forward<FSum>(sm)),\n        t_merge(std::forward<FMerge>(mrg)),\n\
+    \        ti(ti_) {}\n\n  void add_point(S x, S y) { ps.push_back(make_pair(x,\
+    \ y)); }\n\n  void build() {\n    sort(begin(ps), end(ps));\n    ps.erase(unique(begin(ps),\
+    \ end(ps)), end(ps));\n    N = ps.size();\n    ds.resize(2 * N, nullptr);\n  \
+    \  ys.resize(2 * N);\n    for (int i = 0; i < N; ++i) {\n      ys[i + N].push_back(ps[i].second);\n\
+    \      ds[i + N] = std::invoke(ds_new, 1);\n    }\n    for (int i = N - 1; i >\
+    \ 0; --i) {\n      ys[i].resize(ys[i << 1].size() + ys[(i << 1) | 1].size());\n\
+    \      merge(begin(ys[(i << 1) | 0]), end(ys[(i << 1) | 0]),\n            begin(ys[(i\
+    \ << 1) | 1]), end(ys[(i << 1) | 1]), begin(ys[i]));\n      ys[i].erase(unique(begin(ys[i]),\
+    \ end(ys[i])), end(ys[i]));\n      ds[i] = std::invoke(ds_new, ys[i].size());\n\
+    \    }\n  }\n\n  int id(S x) const {\n    return lower_bound(\n              \
+    \ begin(ps), end(ps), make_pair(x, S()),\n               [](const P& a, const\
+    \ P& b) { return a.first < b.first; }) -\n           begin(ps);\n  }\n\n  int\
+    \ id(int i, S y) const {\n    return lower_bound(begin(ys[i]), end(ys[i]), y)\
+    \ - begin(ys[i]);\n  }\n\n  void add(S x, S y, T a) {\n    int i = lower_bound(begin(ps),\
+    \ end(ps), make_pair(x, y)) - begin(ps);\n    assert(ps[i] == make_pair(x, y));\n\
+    \    for (i += N; i; i >>= 1) std::invoke(ds_add, *ds[i], id(i, y), a);\n  }\n\
+    \n  T sum(S xl, S yl, S xr, S yr) {\n    T L = ti, R = ti;\n    int a = id(xl),\
+    \ b = id(xr);\n    for (a += N, b += N; a < b; a >>= 1, b >>= 1) {\n      if (a\
+    \ & 1)\n        L = std::invoke(t_merge, L,\n                        std::invoke(ds_sum,\
+    \ *ds[a], id(a, yl), id(a, yr))),\n        ++a;\n      if (b & 1)\n        --b,\n\
+    \            R = std::invoke(t_merge,\n                            std::invoke(ds_sum,\
+    \ *ds[b], id(b, yl), id(b, yr)),\n                            R);\n    }\n   \
+    \ return std::invoke(t_merge, L, R);\n  }\n};\n\n/*\n * @brief \u62BD\u8C61\u5316\
+    \u9818\u57DF\u6728\n */\n#line 2 \"data-structure/binary-indexed-tree.hpp\"\n\n\
+    template <typename T>\nstruct BinaryIndexedTree {\n  int N;\n  vector<T> data;\n\
+    \n  BinaryIndexedTree() = default;\n\n  BinaryIndexedTree(int size) { init(size);\
+    \ }\n\n  void init(int size) {\n    N = size + 2;\n    data.assign(N + 1, {});\n\
+    \  }\n\n  // get sum of [0,k]\n  T sum(int k) const {\n    if (k < 0) return T{};\
+    \  // return 0 if k < 0\n    T ret{};\n    for (++k; k > 0; k -= k & -k) ret +=\
+    \ data[k];\n    return ret;\n  }\n\n  // getsum of [l,r]\n  inline T sum(int l,\
+    \ int r) const { return sum(r) - sum(l - 1); }\n\n  // get value of k\n  inline\
+    \ T operator[](int k) const { return sum(k) - sum(k - 1); }\n\n  // data[k] +=\
+    \ x\n  void add(int k, T x) {\n    for (++k; k < N; k += k & -k) data[k] += x;\n\
+    \  }\n\n  // range add x to [l,r]\n  void imos(int l, int r, T x) {\n    add(l,\
+    \ x);\n    add(r + 1, -x);\n  }\n\n  // minimize i s.t. sum(i) >= w\n  int lower_bound(T\
+    \ w) {\n    if (w <= 0) return 0;\n    int x = 0;\n    for (int k = 1 << __lg(N);\
+    \ k; k >>= 1) {\n      if (x + k <= N - 1 && data[x + k] < w) {\n        w -=\
+    \ data[x + k];\n        x += k;\n      }\n    }\n    return x;\n  }\n\n  // minimize\
+    \ i s.t. sum(i) > w\n  int upper_bound(T w) {\n    if (w < 0) return 0;\n    int\
+    \ x = 0;\n    for (int k = 1 << __lg(N); k; k >>= 1) {\n      if (x + k <= N -\
+    \ 1 && data[x + k] <= w) {\n        w -= data[x + k];\n        x += k;\n     \
+    \ }\n    }\n    return x;\n  }\n};\n\n/**\n * @brief Binary Indexed Tree(Fenwick\
+    \ Tree)\n */\n#line 2 \"misc/compress.hpp\"\n\ntemplate <class T>\nstruct compress\
+    \ {\n  vector<T> xs;\n  compress(const vector<T>& v) {\n    xs.reserve(v.size());\n\
+    \    for (T x : v) xs.push_back(x);\n    sort(xs.begin(), xs.end());\n    xs.erase(unique(xs.begin(),\
+    \ xs.end()), xs.end());\n  }\n  int get(const T& x) const {\n    return lower_bound(xs.begin(),\
+    \ xs.end(), x) - xs.begin();\n  }\n  inline int operator()(const T& x) const {\
+    \ return get(x); }\n  T operator[](int i) { return xs[i]; }\n  int size() const\
+    \ { return xs.size(); }\n};\n\n/**\n * \u5EA7\u6A19\u5727\u7E2E\n */\n#line 2\
+    \ \"misc/fastio.hpp\"\n\n#line 9 \"misc/fastio.hpp\"\n\nusing namespace std;\n\
+    \n#line 2 \"internal/internal-type-traits.hpp\"\n\n#line 4 \"internal/internal-type-traits.hpp\"\
+    \nusing namespace std;\n\nnamespace nyaan_internal {\ntemplate <typename T>\n\
+    using is_broadly_integral =\n    typename conditional_t<is_integral_v<T> || is_same_v<T,\
+    \ __int128_t> ||\n                               is_same_v<T, __uint128_t>,\n\
+    \                           true_type, false_type>::type;\n\ntemplate <typename\
+    \ T>\nusing is_broadly_signed =\n    typename conditional_t<is_signed_v<T> ||\
+    \ is_same_v<T, __int128_t>,\n                           true_type, false_type>::type;\n\
+    \ntemplate <typename T>\nusing is_broadly_unsigned =\n    typename conditional_t<is_unsigned_v<T>\
+    \ || is_same_v<T, __uint128_t>,\n                           true_type, false_type>::type;\n\
+    \n#define ENABLE_VALUE(x) \\\n  template <typename T> \\\n  constexpr bool x##_v\
     \ = x<T>::value;\n\nENABLE_VALUE(is_broadly_integral);\nENABLE_VALUE(is_broadly_signed);\n\
     ENABLE_VALUE(is_broadly_unsigned);\n#undef ENABLE_VALUE\n\n#define ENABLE_HAS_TYPE(var)\
     \                                   \\\n  template <class, class = void>     \
@@ -404,49 +404,50 @@ data:
     \                  \\\n  template <class T>                                  \
     \          \\\n  struct has_##var<T, void_t<decltype(T::var)>> : true_type {};\
     \ \\\n  template <class T>                                            \\\n  constexpr\
-    \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace internal\n#line\
-    \ 13 \"misc/fastio.hpp\"\n\nnamespace fastio {\nstatic constexpr int SZ = 1 <<\
-    \ 17;\nstatic constexpr int offset = 64;\nchar inbuf[SZ], outbuf[SZ];\nint in_left\
-    \ = 0, in_right = 0, out_right = 0;\n\nstruct Pre {\n  char num[40000];\n  constexpr\
-    \ Pre() : num() {\n    for (int i = 0; i < 10000; i++) {\n      int n = i;\n \
-    \     for (int j = 3; j >= 0; j--) {\n        num[i * 4 + j] = n % 10 + '0';\n\
-    \        n /= 10;\n      }\n    }\n  }\n} constexpr pre;\n\nvoid load() {\n  int\
-    \ len = in_right - in_left;\n  memmove(inbuf, inbuf + in_left, len);\n  in_right\
-    \ = len + fread(inbuf + len, 1, SZ - len, stdin);\n  in_left = 0;\n}\nvoid flush()\
-    \ {\n  fwrite(outbuf, 1, out_right, stdout);\n  out_right = 0;\n}\nvoid skip_space()\
-    \ {\n  if (in_left + offset > in_right) load();\n  while (inbuf[in_left] <= '\
-    \ ') in_left++;\n}\n\nvoid single_read(char& c) {\n  if (in_left + offset > in_right)\
-    \ load();\n  skip_space();\n  c = inbuf[in_left++];\n}\nvoid single_read(string&\
+    \ auto has_##var##_v = has_##var<T>::value;\n\n}  // namespace nyaan_internal\n\
+    #line 13 \"misc/fastio.hpp\"\n\nnamespace fastio {\nstatic constexpr int SZ =\
+    \ 1 << 17;\nstatic constexpr int offset = 64;\nchar inbuf[SZ], outbuf[SZ];\nint\
+    \ in_left = 0, in_right = 0, out_right = 0;\n\nstruct Pre {\n  char num[40000];\n\
+    \  constexpr Pre() : num() {\n    for (int i = 0; i < 10000; i++) {\n      int\
+    \ n = i;\n      for (int j = 3; j >= 0; j--) {\n        num[i * 4 + j] = n % 10\
+    \ + '0';\n        n /= 10;\n      }\n    }\n  }\n} constexpr pre;\n\nvoid load()\
+    \ {\n  int len = in_right - in_left;\n  memmove(inbuf, inbuf + in_left, len);\n\
+    \  in_right = len + fread(inbuf + len, 1, SZ - len, stdin);\n  in_left = 0;\n\
+    }\nvoid flush() {\n  fwrite(outbuf, 1, out_right, stdout);\n  out_right = 0;\n\
+    }\nvoid skip_space() {\n  if (in_left + offset > in_right) load();\n  while (inbuf[in_left]\
+    \ <= ' ') in_left++;\n}\n\nvoid single_read(char& c) {\n  if (in_left + offset\
+    \ > in_right) load();\n  skip_space();\n  c = inbuf[in_left++];\n}\nvoid single_read(string&\
     \ S) {\n  skip_space();\n  while (true) {\n    if (in_left == in_right) load();\n\
     \    int i = in_left;\n    for (; i != in_right; i++) {\n      if (inbuf[i] <=\
     \ ' ') break;\n    }\n    copy(inbuf + in_left, inbuf + i, back_inserter(S));\n\
     \    in_left = i;\n    if (i != in_right) break;\n  }\n}\ntemplate <typename T,\n\
-    \          enable_if_t<internal::is_broadly_integral_v<T>>* = nullptr>\nvoid single_read(T&\
-    \ x) {\n  if (in_left + offset > in_right) load();\n  skip_space();\n  char c\
-    \ = inbuf[in_left++];\n  [[maybe_unused]] bool minus = false;\n  if constexpr\
-    \ (internal::is_broadly_signed_v<T>) {\n    if (c == '-') minus = true, c = inbuf[in_left++];\n\
-    \  }\n  x = 0;\n  while (c >= '0') {\n    x = x * 10 + (c & 15);\n    c = inbuf[in_left++];\n\
-    \  }\n  if constexpr (internal::is_broadly_signed_v<T>) {\n    if (minus) x =\
-    \ -x;\n  }\n}\nvoid rd() {}\ntemplate <typename Head, typename... Tail>\nvoid\
-    \ rd(Head& head, Tail&... tail) {\n  single_read(head);\n  rd(tail...);\n}\n\n\
-    void single_write(const char& c) {\n  if (out_right > SZ - offset) flush();\n\
+    \          enable_if_t<nyaan_internal::is_broadly_integral_v<T>>* = nullptr>\n\
+    void single_read(T& x) {\n  if (in_left + offset > in_right) load();\n  skip_space();\n\
+    \  char c = inbuf[in_left++];\n  [[maybe_unused]] bool minus = false;\n  if constexpr\
+    \ (nyaan_internal::is_broadly_signed_v<T>) {\n    if (c == '-') minus = true,\
+    \ c = inbuf[in_left++];\n  }\n  x = 0;\n  while (c >= '0') {\n    x = x * 10 +\
+    \ (c & 15);\n    c = inbuf[in_left++];\n  }\n  if constexpr (nyaan_internal::is_broadly_signed_v<T>)\
+    \ {\n    if (minus) x = -x;\n  }\n}\nvoid rd() {}\ntemplate <typename Head, typename...\
+    \ Tail>\nvoid rd(Head& head, Tail&... tail) {\n  single_read(head);\n  rd(tail...);\n\
+    }\n\nvoid single_write(const char& c) {\n  if (out_right > SZ - offset) flush();\n\
     \  outbuf[out_right++] = c;\n}\nvoid single_write(const bool& b) {\n  if (out_right\
     \ > SZ - offset) flush();\n  outbuf[out_right++] = b ? '1' : '0';\n}\nvoid single_write(const\
     \ string& S) {\n  flush(), fwrite(S.data(), 1, S.size(), stdout);\n}\nvoid single_write(const\
     \ char* p) { flush(), fwrite(p, 1, strlen(p), stdout); }\ntemplate <typename T,\n\
-    \          enable_if_t<internal::is_broadly_integral_v<T>>* = nullptr>\nvoid single_write(const\
-    \ T& _x) {\n  if (out_right > SZ - offset) flush();\n  if (_x == 0) {\n    outbuf[out_right++]\
-    \ = '0';\n    return;\n  }\n  T x = _x;\n  if constexpr (internal::is_broadly_signed_v<T>)\
-    \ {\n    if (x < 0) outbuf[out_right++] = '-', x = -x;\n  }\n  constexpr int buffer_size\
-    \ = sizeof(T) * 10 / 4;\n  char buf[buffer_size];\n  int i = buffer_size;\n  while\
-    \ (x >= 10000) {\n    i -= 4;\n    memcpy(buf + i, pre.num + (x % 10000) * 4,\
-    \ 4);\n    x /= 10000;\n  }\n  if (x < 100) {\n    if (x < 10) {\n      outbuf[out_right]\
-    \ = '0' + x;\n      ++out_right;\n    } else {\n      uint32_t q = (uint32_t(x)\
-    \ * 205) >> 11;\n      uint32_t r = uint32_t(x) - q * 10;\n      outbuf[out_right]\
-    \ = '0' + q;\n      outbuf[out_right + 1] = '0' + r;\n      out_right += 2;\n\
-    \    }\n  } else {\n    if (x < 1000) {\n      memcpy(outbuf + out_right, pre.num\
-    \ + (x << 2) + 1, 3);\n      out_right += 3;\n    } else {\n      memcpy(outbuf\
-    \ + out_right, pre.num + (x << 2), 4);\n      out_right += 4;\n    }\n  }\n  memcpy(outbuf\
+    \          enable_if_t<nyaan_internal::is_broadly_integral_v<T>>* = nullptr>\n\
+    void single_write(const T& _x) {\n  if (out_right > SZ - offset) flush();\n  if\
+    \ (_x == 0) {\n    outbuf[out_right++] = '0';\n    return;\n  }\n  T x = _x;\n\
+    \  if constexpr (nyaan_internal::is_broadly_signed_v<T>) {\n    if (x < 0) outbuf[out_right++]\
+    \ = '-', x = -x;\n  }\n  constexpr int buffer_size = sizeof(T) * 10 / 4;\n  char\
+    \ buf[buffer_size];\n  int i = buffer_size;\n  while (x >= 10000) {\n    i -=\
+    \ 4;\n    memcpy(buf + i, pre.num + (x % 10000) * 4, 4);\n    x /= 10000;\n  }\n\
+    \  if (x < 100) {\n    if (x < 10) {\n      outbuf[out_right] = '0' + x;\n   \
+    \   ++out_right;\n    } else {\n      uint32_t q = (uint32_t(x) * 205) >> 11;\n\
+    \      uint32_t r = uint32_t(x) - q * 10;\n      outbuf[out_right] = '0' + q;\n\
+    \      outbuf[out_right + 1] = '0' + r;\n      out_right += 2;\n    }\n  } else\
+    \ {\n    if (x < 1000) {\n      memcpy(outbuf + out_right, pre.num + (x << 2)\
+    \ + 1, 3);\n      out_right += 3;\n    } else {\n      memcpy(outbuf + out_right,\
+    \ pre.num + (x << 2), 4);\n      out_right += 4;\n    }\n  }\n  memcpy(outbuf\
     \ + out_right, buf + i, buffer_size - i);\n  out_right += buffer_size - i;\n}\n\
     void wt() {}\ntemplate <typename Head, typename... Tail>\nvoid wt(const Head&\
     \ head, const Tail&... tail) {\n  single_write(head);\n  wt(std::forward<const\
@@ -497,7 +498,7 @@ data:
   isVerificationFile: true
   path: verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-abstract-range-tree.test.cpp
   requiredBy: []
-  timestamp: '2026-06-19 18:03:18+09:00'
+  timestamp: '2026-06-27 14:52:13+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-abstract-range-tree.test.cpp
