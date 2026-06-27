@@ -15,7 +15,7 @@ int64_t mod_log(int64_t a, int64_t b, int64_t p) {
     (r *= (a / g)) %= p;
   }
   if (p == 1) return f;
-  int64_t ir = internal::inv(r, p);
+  int64_t ir = nyaan_internal::inv(r, p);
   (b *= ir) %= p;
   int64_t k = 0, ak = 1;
   HashMap<int64_t, int64_t> baby;
@@ -23,7 +23,7 @@ int64_t mod_log(int64_t a, int64_t b, int64_t p) {
     if(baby.find(ak) == baby.end()) baby[ak] = k;
     (ak *= a) %= p;
   }
-  int64_t iak = internal::inv(ak, p);
+  int64_t iak = nyaan_internal::inv(ak, p);
   for (int64_t i = 0; i < k; ++i) {
     if (baby.find(b) != baby.end()) return f + i * k + baby[b];
     (b *= iak) %= p;

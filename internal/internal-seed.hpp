@@ -3,7 +3,7 @@
 #include <chrono>
 using namespace std;
 
-namespace internal {
+namespace nyaan_internal {
 unsigned long long non_deterministic_seed() {
   unsigned long long m =
       chrono::duration_cast<chrono::nanoseconds>(
@@ -26,4 +26,4 @@ unsigned long long seed() {
 #endif
 }
 
-}  // namespace internal
+}  // namespace nyaan_internal

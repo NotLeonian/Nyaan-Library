@@ -9,7 +9,7 @@ using namespace std;
 namespace RollingHashonSegmentTreeImpl {
 
 constexpr int BASE_NUM = 1;
-using Hash = internal::Hash<BASE_NUM>;
+using Hash = nyaan_internal::Hash<BASE_NUM>;
 using T = pair<Hash, int>;
 
 vector<Hash> Pow{Hash::set(1)};

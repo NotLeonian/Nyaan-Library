@@ -16,7 +16,7 @@ using namespace Nyaan;
 
 void test_safe_mod() {
   auto check = [&](ll a, ll p) {
-    ll m1 = internal::safe_mod(a, p);
+    ll m1 = nyaan_internal::safe_mod(a, p);
     ll m2 = atcoder::internal::safe_mod(a, p);
     assert(m1 == m2 && "safe_mod");
   };
@@ -34,7 +34,7 @@ void test_safe_mod() {
 
 void test_inv_gcd() {
   auto check = [&](ll a, ll b) {
-    auto p1 = internal::inv_gcd(a, b);
+    auto p1 = nyaan_internal::inv_gcd(a, b);
     auto p2 = atcoder::internal::inv_gcd(a, b);
     assert(p1 == p2 && "inv_gcd");
   };
@@ -53,7 +53,7 @@ void test_inv_gcd() {
 void test_inv() {
   auto check = [&](ll a, ll p) -> void {
     if (gcd(a, p) != 1) return;
-    ll b1 = internal::inv(a, p);
+    ll b1 = nyaan_internal::inv(a, p);
     ll b2 = atcoder::inv_mod(a, p);
     if (b1 != b2) trc2(a, p, b1, b2);
     assert(b1 == b2 && "inv");
@@ -73,7 +73,7 @@ void test_inv() {
 void test_modpow() {
   auto check = [&](ll x, ll e, ll p) -> void {
     assert(p < (1LL << 30));
-    ll b1 = internal::modpow<int, ll>(x % p, e, p);
+    ll b1 = nyaan_internal::modpow<int, ll>(x % p, e, p);
     ll b2 = atcoder::pow_mod(x, e, p);
     if (b1 != b2) trc2(x, e, p, b1, b2);
     assert(b1 == b2 && "modpow");
@@ -95,12 +95,12 @@ void test_modpow() {
 void test_crt() {
   ll cnt0 = 0;
   auto check = [&](vl a, vl p) -> void {
-    auto b1 = internal::crt(a, p);
+    auto b1 = nyaan_internal::crt(a, p);
     auto b2 = atcoder::crt(a, p);
     if (b1 != b2) trc2(a, p, b1, b2);
     assert(b1 == b2 && "crt");
-    rep(i, sz(a)) a[i] = internal::safe_mod(a[i], p[i]);
-    auto b3 = internal::crt(a, p);
+    rep(i, sz(a)) a[i] = nyaan_internal::safe_mod(a[i], p[i]);
+    auto b3 = nyaan_internal::crt(a, p);
     auto b4 = atcoder::crt(a, p);
     assert(b1 == b3 && "crt");
     assert(b2 == b4 && "crt");

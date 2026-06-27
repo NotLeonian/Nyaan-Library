@@ -6,7 +6,7 @@
 #include <type_traits>
 #include <utility>
 
-namespace internal {
+namespace nyaan_internal {
 
 template <class>
 class function_ref;
@@ -211,7 +211,7 @@ class inplace_function<R(Args...), Capacity, Align> {
   }
 };
 
-}  // namespace internal
+}  // namespace nyaan_internal
 
-using internal::function_ref;
-using internal::inplace_function;
+using nyaan_internal::function_ref;
+using nyaan_internal::inplace_function;

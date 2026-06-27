@@ -10,7 +10,7 @@ using namespace std;
 
 template <typename G>
 struct RootedTreeHash {
-  using Hash = internal::Hash<1>;
+  using Hash = nyaan_internal::Hash<1>;
 
   const G& g;
   int n;

@@ -5,7 +5,7 @@
 #include "../../internal/internal-hash.hpp"
 using namespace Nyaan;
 
-using Hash = internal::Hash<3>;
+using Hash = nyaan_internal::Hash<3>;
 
 void Nyaan::solve() {
   u64 mod = (1uLL << 61) - 1;

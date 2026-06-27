@@ -6,7 +6,7 @@ using namespace std;
 #include "internal-seed.hpp"
 #include "internal-type-traits.hpp"
 
-namespace internal {
+namespace nyaan_internal {
 // 整数, 整数列を 64 bit unsigned int へ移す
 
 using u64 = unsigned long long;
@@ -55,7 +55,7 @@ struct HashObject {
   size_t operator()(const Key& x) const { return hash_function(x); }
 };
 
-}  // namespace internal
+}  // namespace nyaan_internal
 
 /*
 @brief ハッシュ関数

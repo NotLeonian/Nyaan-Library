@@ -46,7 +46,7 @@ struct ImpartialGameSolver {
   using State = conditional_t<is_void_v<Move>, Game, pair<Game, Move>>;
   using States = vector<State>;
   using Nimber = long long;
-  using F = internal::inplace_function<States(Board), 64>;
+  using F = nyaan_internal::inplace_function<States(Board), 64>;
 
   map<Board, Nimber> mp;
   F f;

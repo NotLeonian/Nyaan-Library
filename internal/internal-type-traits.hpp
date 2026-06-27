@@ -3,7 +3,7 @@
 #include <type_traits>
 using namespace std;
 
-namespace internal {
+namespace nyaan_internal {
 template <typename T>
 using is_broadly_integral =
     typename conditional_t<is_integral_v<T> || is_same_v<T, __int128_t> ||
@@ -45,4 +45,4 @@ ENABLE_VALUE(is_broadly_unsigned);
   template <class T>                                            \
   constexpr auto has_##var##_v = has_##var<T>::value;
 
-}  // namespace internal
+}  // namespace nyaan_internal

@@ -1,6 +1,6 @@
 #pragma once
 
-namespace internal {
+namespace nyaan_internal {
 using i64 = long long;
 using u64 = unsigned long long;
 using u128 = __uint128_t;
@@ -122,7 +122,7 @@ struct Hash : array<u64, BASE_NUM> {
   }
 };
 
-}  // namespace internal
+}  // namespace nyaan_internal
 
 /**
  * @brief ハッシュ構造体

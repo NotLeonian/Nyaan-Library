@@ -14,7 +14,7 @@ using u64 = unsigned long long;
 
 // [0, 2^64 - 1)
 u64 rng() {
-  static u64 _x = internal::seed();
+  static u64 _x = nyaan_internal::seed();
   return _x ^= _x << 7, _x ^= _x >> 9;
 }
 

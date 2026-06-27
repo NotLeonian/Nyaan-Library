@@ -64,13 +64,13 @@ void single_read(string& S) {
   }
 }
 template <typename T,
-          enable_if_t<internal::is_broadly_integral_v<T>>* = nullptr>
+          enable_if_t<nyaan_internal::is_broadly_integral_v<T>>* = nullptr>
 void single_read(T& x) {
   if (in_left + offset > in_right) load();
   skip_space();
   char c = inbuf[in_left++];
   [[maybe_unused]] bool minus = false;
-  if constexpr (internal::is_broadly_signed_v<T>) {
+  if constexpr (nyaan_internal::is_broadly_signed_v<T>) {
     if (c == '-') minus = true, c = inbuf[in_left++];
   }
   x = 0;
@@ -78,7 +78,7 @@ void single_read(T& x) {
     x = x * 10 + (c & 15);
     c = inbuf[in_left++];
   }
-  if constexpr (internal::is_broadly_signed_v<T>) {
+  if constexpr (nyaan_internal::is_broadly_signed_v<T>) {
     if (minus) x = -x;
   }
 }
@@ -102,7 +102,7 @@ void single_write(const string& S) {
 }
 void single_write(const char* p) { flush(), fwrite(p, 1, strlen(p), stdout); }
 template <typename T,
-          enable_if_t<internal::is_broadly_integral_v<T>>* = nullptr>
+          enable_if_t<nyaan_internal::is_broadly_integral_v<T>>* = nullptr>
 void single_write(const T& _x) {
   if (out_right > SZ - offset) flush();
   if (_x == 0) {
@@ -110,7 +110,7 @@ void single_write(const T& _x) {
     return;
   }
   T x = _x;
-  if constexpr (internal::is_broadly_signed_v<T>) {
+  if constexpr (nyaan_internal::is_broadly_signed_v<T>) {
     if (x < 0) outbuf[out_right++] = '-', x = -x;
   }
   constexpr int buffer_size = sizeof(T) * 10 / 4;

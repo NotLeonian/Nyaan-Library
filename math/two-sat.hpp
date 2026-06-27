@@ -8,7 +8,7 @@
 using namespace std;
 
 namespace TwoSatImpl {
-namespace internal {
+namespace nyaan_internal {
 
 template <class E>
 struct csr {
@@ -100,7 +100,7 @@ struct scc_graph {
   vector<pair<int, edge>> edges;
 };
 
-}  // namespace internal
+}  // namespace nyaan_internal
 
 struct two_sat {
  public:
@@ -160,7 +160,7 @@ struct two_sat {
   int _n;
   vector<bool> _answer;
   bool built;
-  internal::scc_graph scc;
+  nyaan_internal::scc_graph scc;
 };
 
 }  // namespace TwoSatImpl

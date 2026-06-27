@@ -19,7 +19,7 @@ bool miller_rabin(const T& n, vector<T> ws) {
   for (T w : ws) {
     if (w % n == 0) continue;
     T t = d;
-    U y = internal::modpow<T, U>(w, t, n);
+    U y = nyaan_internal::modpow<T, U>(w, t, n);
     while (t != n - 1 && y != e && y != rev) y = y * y % n, t *= 2;
     if (y != rev && t % 2 == 0) return false;
   }
