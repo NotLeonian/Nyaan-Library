@@ -61,7 +61,7 @@ FormalPowerSeries<mint> multivariate_circular_convolution(
   for (int j = 0; j < 3; j++) mod[j] = primes[j];
   for (int i = 0; i < prod; i++) {
     for (int j = 0; j < 3; j++) rem[j] = buf[j][i];
-    h.push_back(internal::crt(rem, mod).first % m);
+    h.push_back(nyaan_internal::crt(rem, mod).first % m);
   }
   return h;
 }

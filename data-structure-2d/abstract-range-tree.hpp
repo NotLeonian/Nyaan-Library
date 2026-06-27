@@ -14,10 +14,10 @@ using namespace std;
 // S ... size_type
 // T ... value_type
 template <typename DS, typename S, typename T,
-          typename NewFunc = internal::inplace_function<DS*(int), 64>,
-          typename AddFunc = internal::inplace_function<void(DS&, int, T), 64>,
-          typename SumFunc = internal::inplace_function<T(DS&, int, int), 64>,
-          typename MergeFunc = internal::inplace_function<T(T, T), 64>>
+          typename NewFunc = nyaan_internal::inplace_function<DS*(int), 64>,
+          typename AddFunc = nyaan_internal::inplace_function<void(DS&, int, T), 64>,
+          typename SumFunc = nyaan_internal::inplace_function<T(DS&, int, int), 64>,
+          typename MergeFunc = nyaan_internal::inplace_function<T(T, T), 64>>
 struct RangeTree {
   using NEW = NewFunc;
   using ADD = AddFunc;

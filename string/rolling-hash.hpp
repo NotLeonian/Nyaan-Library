@@ -8,7 +8,7 @@ using namespace std;
 
 template <typename Str, int BASE_NUM = 2>
 struct RollingHash {
-  using Hash = internal::Hash<BASE_NUM>;
+  using Hash = nyaan_internal::Hash<BASE_NUM>;
   Str data;
   vector<Hash> hs, pw;
   int s;
@@ -79,7 +79,7 @@ struct RollingHash {
 
 template <typename Str, int BASE_NUM>
 typename RollingHash<Str, BASE_NUM>::Hash RollingHash<Str, BASE_NUM>::basis =
-    internal::Hash<BASE_NUM>::get_basis();
+    nyaan_internal::Hash<BASE_NUM>::get_basis();
 using roriha = RollingHash<string, 2>;
 
 /**

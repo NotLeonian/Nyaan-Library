@@ -15,7 +15,7 @@ long long primitive_root_ll(long long p) {
   for (int g = 2;; g++) {
     int ok = 1;
     for (auto& f : fs) {
-      if (internal::modpow<long long, __int128_t>(g, (p - 1) / f, p) == 1) {
+      if (nyaan_internal::modpow<long long, __int128_t>(g, (p - 1) / f, p) == 1) {
         ok = false;
         break;
       }

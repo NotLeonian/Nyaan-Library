@@ -10,7 +10,7 @@ using namespace std;
 
 // f(vector<mint>& a, bool rev) : 1 次元 DFT (rev は逆変換かどうか)
 template <typename T,
-          typename DFT = internal::inplace_function<void(vector<T>&, bool), 64>>
+          typename DFT = nyaan_internal::inplace_function<void(vector<T>&, bool), 64>>
 struct MultidimensionalFourierTransform {
   static_assert(is_invocable_r_v<void, DFT&, vector<T>&, bool>,
                 "DFT must be callable as void(vector<T>&, bool)");

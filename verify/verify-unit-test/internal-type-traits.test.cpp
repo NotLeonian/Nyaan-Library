@@ -11,18 +11,18 @@ using namespace Nyaan;
 
 template <typename T, bool low>
 T gen() {
-  if constexpr (internal::is_broadly_integral_v<T>) {
+  if constexpr (nyaan_internal::is_broadly_integral_v<T>) {
     if (low) return rng(0, 5);
     if constexpr (sizeof(T) == 16) {
       return T(rng(0, TEN(18))) * TEN(18) + rng(0, TEN(18));
     } else {
       return rng(0, numeric_limits<T>::max() / 2);
     }
-  } else if constexpr (internal::has_first_type_v<T> &&
-                       internal::has_second_type_v<T>) {
+  } else if constexpr (nyaan_internal::has_first_type_v<T> &&
+                       nyaan_internal::has_second_type_v<T>) {
     return T{gen<decltype(T::first), low>(), gen<decltype(T::second), low>()};
   } else {
-    static_assert(internal::has_iterator_v<T>);
+    static_assert(nyaan_internal::has_iterator_v<T>);
     T t;
     int n = rng(0, 10);
     rep(_, n) t.push_back(gen<typename T::value_type, low>());

@@ -26,7 +26,7 @@ struct RationalBase {
     if (y == -1) x = -x, y = -y;
     if (y != 1) {
       T g;
-      if constexpr (internal::is_broadly_integral_v<T>) {
+      if constexpr (nyaan_internal::is_broadly_integral_v<T>) {
         if constexpr (sizeof(T) == 16) {
           g = binary_gcd128(x, y);
         } else {

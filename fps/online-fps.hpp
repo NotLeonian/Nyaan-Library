@@ -16,7 +16,7 @@ using fps = FormalPowerSeries<mint>;
 
 struct ofpsBase {
   using ob = ofpsBase;
-  using Func = internal::inplace_function<mint(int), 64>;
+  using Func = nyaan_internal::inplace_function<mint(int), 64>;
   Func func;
   fps f;
   ofpsBase() {

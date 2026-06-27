@@ -46,9 +46,9 @@ struct MultiPrecisionInteger {
   MultiPrecisionInteger(bool n, const vector<int>& d) : neg(n), dat(d) {}
 
   template <typename I,
-            enable_if_t<internal::is_broadly_integral_v<I>>* = nullptr>
+            enable_if_t<nyaan_internal::is_broadly_integral_v<I>>* = nullptr>
   MultiPrecisionInteger(I x) : neg(false) {
-    if constexpr (internal::is_broadly_signed_v<I>) {
+    if constexpr (nyaan_internal::is_broadly_signed_v<I>) {
       if (x < 0) neg = true, x = -x;
     }
     while (x) dat.push_back(x % D), x /= D;
@@ -458,9 +458,9 @@ struct MultiPrecisionInteger {
 
   // convert ll to vec
   template <typename I,
-            enable_if_t<internal::is_broadly_integral_v<I>>* = nullptr>
+            enable_if_t<nyaan_internal::is_broadly_integral_v<I>>* = nullptr>
   static vector<int> _integer_to_vec(I x) {
-    if constexpr (internal::is_broadly_signed_v<I>) {
+    if constexpr (nyaan_internal::is_broadly_signed_v<I>) {
       assert(x >= 0);
     }
     vector<int> res;

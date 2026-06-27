@@ -19,7 +19,7 @@ using namespace std;
 
 template <typename Key, typename Val, bool fixed_size = false,
           unsigned long long (*get_hash)(const Key&) =
-              internal::hash_function<Key>>
+              nyaan_internal::hash_function<Key>>
 struct UnerasableHashMap {
   int N, occupied_num, shift;
   vector<Key> keys;

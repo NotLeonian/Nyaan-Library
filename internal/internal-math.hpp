@@ -2,7 +2,7 @@
 
 #include "internal-type-traits.hpp"
 
-namespace internal {
+namespace nyaan_internal {
 
 #include <cassert>
 #include <vector>
@@ -92,4 +92,4 @@ pair<T, T> crt(const vector<T>& r, const vector<T>& m) {
   return {r0, m0};
 }
 
-}  // namespace internal
+}  // namespace nyaan_internal

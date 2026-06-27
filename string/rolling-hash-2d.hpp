@@ -8,7 +8,7 @@ using namespace std;
 
 template <typename Str, int BASE_NUM = 2>
 struct RollingHash2D {
-  using Hash = internal::Hash<BASE_NUM>;
+  using Hash = nyaan_internal::Hash<BASE_NUM>;
   using u64 = unsigned long long;
   vector<Str> data;
   vector<vector<Hash>> hs;
@@ -60,8 +60,8 @@ struct RollingHash2D {
 template <typename Str, int BASE_NUM>
 typename RollingHash2D<Str, BASE_NUM>::Hash
     RollingHash2D<Str, BASE_NUM>::basis[2] = {
-        internal::Hash<BASE_NUM>::get_basis(),
-        internal::Hash<BASE_NUM>::get_basis()};
+        nyaan_internal::Hash<BASE_NUM>::get_basis(),
+        nyaan_internal::Hash<BASE_NUM>::get_basis()};
 using roriha2d = RollingHash2D<string, 1>;
 
 /**

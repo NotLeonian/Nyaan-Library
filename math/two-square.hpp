@@ -11,7 +11,7 @@ Gaussian_Integer<__int128_t> solve_norm_equation_prime(long long p) {
   long long x = 1;
   while (true) {
     x++;
-    long long z = internal::modpow<long long, __int128_t>(x, (p - 1) / 4, p);
+    long long z = nyaan_internal::modpow<long long, __int128_t>(x, (p - 1) / 4, p);
     if (__int128_t(z) * z % p == p - 1) {
       x = z;
       break;
