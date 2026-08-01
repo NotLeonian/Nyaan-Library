@@ -160,10 +160,10 @@ title: Suffix Automaton
 
 - 性質1:部分文字列$u,w(0\lt \mathrm{len}(u) \leq \mathrm{len}(w))$は$u \in \mathrm{Suf}(w)$である場合に限ってendpos-equivalentである。
 - 性質2:部分文字列$u,w(0\lt \mathrm{len}(u) \leq \mathrm{len}(w))$は以下の関係が成り立つ。
-$$\begin{cases}
+$\displaystyle \begin{cases}
 \mathrm{endpos}(w) \subseteq \mathrm{endpos}(u) & \mathrm{if}\ u\ \in \mathrm{Suf}(w) \\
 \mathrm{endpos}(w) \cap \mathrm{endpos}(u) = \phi & \mathrm{otherwise}
-\end{cases}$$
+\end{cases}$
 - 性質3:endpos-equivalentな部分文字列の集合について考える。この集合に含まれる全ての部分文字列をnon-increasingな順番に並び替えると$\mathrm{"nyaan","yaan","aan","an"}$のように長さが1ずつ減少する。
 - ここで、**Suffix Link**を次のように貼る。
   - オートマトンのある状態$v\neq t_0$に含まれる部分文字列のうち最も長いものを$w$とする。この時、$v$に含まれない部分文字列のうち最も長い文字列を$t$とおき、$t$が含まれる状態を$u$として$v$から$u$にSuffix Linkを貼る。
@@ -176,7 +176,7 @@ $$\begin{cases}
   - $\mathrm{endpos}(T_1) \in \mathrm{endpos}(T_2),T_1 \in u,T_2 \in v$であるとき、かつその時に限り$u$は$v$の子孫である。(ただし$\mathrm{endpos}(\phi)=\lbrace{-1,0,\ldots,\mathrm{len}(S)-1\rbrace}$とおく。)
 
 #### Suffix Automatonの概要
- 
+
 ##### 今までのまとめ
 
 - 文字列$S$の部分文字列$T$は$\mathrm{endpos}(T)$の値によっていくつかの集合に分類できる。
@@ -188,7 +188,7 @@ $$\begin{cases}
 - 状態$v \neq t_0$に対して、長さ$\mathrm{minlen}(v)-1$の$\mathrm{longest}(v)$のSuffixに対応する状態に繋がるリンクをSuffix Linkと定義する。Suffix Linkは$t_0$を根とする木を形成し、同時にこの木は集合$\mathrm{endpos}$の間の包含関係を表している。
 
 - 状態$v \neq t_0$について、$\mathrm{minlen}(v)$はSuffix Linkの接続先$\mathrm{link}(v)$を用いて次のように表される。
-$$\mathrm{minlen}(v) = \mathrm{len}(\mathrm{link}(v)) + 1$$
+$\displaystyle \mathrm{minlen}(v) = \mathrm{len}(\mathrm{link}(v)) + 1$
 
 - 任意の状態$v_0$からスタートしてSuffix Linkをたどると$t_0$に到達する。経由した頂点ごとの区間を連結すると連続区間$[0, \mathrm{len}(v_0)]$を得る。
 
@@ -205,5 +205,3 @@ $$\mathrm{minlen}(v) = \mathrm{len}(\mathrm{link}(v)) + 1$$
 - ノード数/辺数は$\mathrm{O}(\lvert S\lvert)$
 
 - 任意のcloneされたノードnについて、clone元のsuffix link先はnである
-
-##### 
