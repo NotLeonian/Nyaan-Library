@@ -67,8 +67,7 @@ $\displaystyle \begin{cases}
 
 - 状態$v \neq t_0$に対して、長さ$\mathrm{minlen}(v)-1$の$\mathrm{longest}(v)$のSuffixに対応する状態に繋がるリンクをSuffix Linkと定義する。Suffix Linkは$t_0$を根とする木を形成し、同時にこの木は集合$\mathrm{endpos}$の間の包含関係を表している。
 
-- 状態$v \neq t_0$について、$\mathrm{minlen}(v)$はSuffix Linkの接続先$\mathrm{link}(v)$を用いて次のように表される。
-$\displaystyle \mathrm{minlen}(v) = \mathrm{len}(\mathrm{link}(v)) + 1$
+- 状態$v \neq t_0$について、$\mathrm{minlen}(v)$はSuffix Linkの接続先$\mathrm{link}(v)$を用いて$\mathrm{minlen}(v) = \mathrm{len}(\mathrm{link}(v)) + 1$のように表される。
 
 - 任意の状態$v_0$からスタートしてSuffix Linkをたどると$t_0$に到達する。経由した頂点ごとの区間を連結すると連続区間$[0, \mathrm{len}(v_0)]$を得る。
 
