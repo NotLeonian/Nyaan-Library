@@ -34,4 +34,4 @@ $$a_N = [x^N]\frac{P(x)}{Q(x)}$$
 #### 使い方
 
 - `LinearRecurrence(k, Q, P)` : $\lbrack x^k \rbrack \frac{P(x)}{Q(x)}$ を求める。
-- `LinearRecurrence(N, Q, a)` : $$\forall n \leq k, Q_0 a_{n} + Q_1 a_{n-1} + \dots + Q_{k} a_{n-k} = 0, Q_0 = 1$$ である $a, Q$ に対して $a_N$ を求める。
+- `kitamasa(N, Q, a)` : $\displaystyle\forall n \geq k, Q_0 a_{n} + Q_1 a_{n-1} + \dots + Q_{k} a_{n-k} = 0, Q_0 = 1$ である $a, Q$ に対して $a_N$ を求める。
