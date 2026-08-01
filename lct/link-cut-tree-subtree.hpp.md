@@ -172,8 +172,8 @@ data:
   timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-yosupo-ds/yosupo-offline-dynamic-connectivity.test.cpp
   - verify/verify-yosupo-ds/yosupo-dynamic-tree-vertex-add-subtree-sum.test.cpp
+  - verify/verify-yosupo-ds/yosupo-offline-dynamic-connectivity.test.cpp
 documentation_of: lct/link-cut-tree-subtree.hpp
 layout: document
 redirect_from:

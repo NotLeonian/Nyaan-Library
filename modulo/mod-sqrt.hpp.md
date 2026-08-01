@@ -91,13 +91,13 @@ data:
   isVerificationFile: false
   path: modulo/mod-sqrt.hpp
   requiredBy:
-  - modulo/quadratic-equation.hpp
   - fps/fps-sqrt.hpp
+  - modulo/quadratic-equation.hpp
   timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-yosupo-fps/yosupo-sqrt.test.cpp
   - verify/verify-yosupo-math/yosupo-mod-sqrt.test.cpp
+  - verify/verify-yosupo-fps/yosupo-sqrt.test.cpp
 documentation_of: modulo/mod-sqrt.hpp
 layout: document
 title: mod sqrt(Tonelli-Shanks algorithm)

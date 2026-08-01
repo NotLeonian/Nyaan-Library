@@ -182,20 +182,20 @@ data:
   isVerificationFile: false
   path: math/rational.hpp
   requiredBy:
-  - math/rational-fps.hpp
   - math/rational-binomial.hpp
   - math/bigint-all.hpp
+  - math/rational-fps.hpp
   - math/bigint-rational.hpp
   timestamp: '2026-06-27 14:52:13+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-yosupo-math/yosupo-stern-brocot-tree-2.test.cpp
+  - verify/verify-yuki/yuki-8024.test.cpp
   - verify/verify-yuki/yuki-2266.test.cpp
   - verify/verify-yuki/yuki-2262.test.cpp
-  - verify/verify-yuki/yuki-8024.test.cpp
-  - verify/verify-unit-test/bigrational.test.cpp
-  - verify/verify-unit-test/rational-number.test.cpp
   - verify/verify-aoj-other/aoj-2171-bigrational.test.cpp
+  - verify/verify-unit-test/rational-number.test.cpp
+  - verify/verify-unit-test/bigrational.test.cpp
+  - verify/verify-yosupo-math/yosupo-stern-brocot-tree-2.test.cpp
 documentation_of: math/rational.hpp
 layout: document
 redirect_from:

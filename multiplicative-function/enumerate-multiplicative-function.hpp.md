@@ -72,14 +72,14 @@ data:
   path: multiplicative-function/enumerate-multiplicative-function.hpp
   requiredBy:
   - multiplicative-function/mf-famous-series.hpp
-  - multiplicative-function/count-square-free.hpp
   - multiplicative-function/enamurate-multiplicative-function.hpp
+  - multiplicative-function/count-square-free.hpp
   timestamp: '2026-06-19 18:03:18+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-yosupo-math/yosupo-count-squarefrees.test.cpp
   - verify/verify-unit-test/mf.test.cpp
   - verify/verify-unit-test/sum-of-mf.test.cpp
+  - verify/verify-yosupo-math/yosupo-count-squarefrees.test.cpp
 documentation_of: multiplicative-function/enumerate-multiplicative-function.hpp
 layout: document
 redirect_from:

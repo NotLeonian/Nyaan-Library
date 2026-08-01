@@ -598,9 +598,9 @@ data:
   timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-yosupo-fps/yosupo-factorial-p-recursive.test.cpp
   - verify/verify-yuki/yuki-1533.test.cpp
   - verify/verify-unit-test/p-recursive.test.cpp
+  - verify/verify-yosupo-fps/yosupo-factorial-p-recursive.test.cpp
 documentation_of: fps/find-p-recursive.hpp
 layout: document
 title: "P-recursive\u306E\u9AD8\u901F\u8A08\u7B97"

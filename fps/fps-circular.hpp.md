@@ -186,8 +186,8 @@ data:
   timestamp: '2026-06-19 18:03:18+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-yuki/yuki-1080.test.cpp
   - verify/verify-yuki/yuki-0963-circular.test.cpp
+  - verify/verify-yuki/yuki-1080.test.cpp
 documentation_of: fps/fps-circular.hpp
 layout: document
 title: "\u4E09\u89D2\u95A2\u6570"

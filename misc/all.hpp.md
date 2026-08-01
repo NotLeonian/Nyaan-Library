@@ -179,13 +179,13 @@ data:
   timestamp: '2026-06-27 14:52:13+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-unit-test/radix-sort.test.cpp
-  - verify/verify-unit-test/fast-inv-o1.test.cpp
   - verify/verify-unit-test/bigint3.test.cpp
-  - verify/verify-unit-test/bigint2.test.cpp
-  - verify/verify-unit-test/garner-bigint.test.cpp
   - verify/verify-unit-test/rbst-segment-tree.test.cpp
+  - verify/verify-unit-test/radix-sort.test.cpp
   - verify/verify-unit-test/arbitrary-ntt-mod18446744069414584321.test.cpp
+  - verify/verify-unit-test/fast-inv-o1.test.cpp
+  - verify/verify-unit-test/garner-bigint.test.cpp
+  - verify/verify-unit-test/bigint2.test.cpp
 documentation_of: misc/all.hpp
 layout: document
 redirect_from:

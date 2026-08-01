@@ -126,9 +126,9 @@ data:
   timestamp: '2026-06-14 14:52:11+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-yosupo-fps/yosupo-product-of-polynomial-sequence.test.cpp
   - verify/verify-yuki/yuki-1145.test.cpp
   - verify/verify-unit-test/partial-fraction-decomposition.test.cpp
+  - verify/verify-yosupo-fps/yosupo-product-of-polynomial-sequence.test.cpp
 documentation_of: fps/polynomial-product.hpp
 layout: document
 redirect_from:

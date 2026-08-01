@@ -57,8 +57,8 @@ data:
   timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-yosupo-ds/yosupo-rollback-union-find.test.cpp
   - verify/verify-yosupo-ds/yosupo-offline-dynamic-connectivity.test.cpp
+  - verify/verify-yosupo-ds/yosupo-rollback-union-find.test.cpp
 documentation_of: data-structure/rollback-union-find.hpp
 layout: document
 title: "Rollback\u3064\u304DUnion Find"

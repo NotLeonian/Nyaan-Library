@@ -66,8 +66,8 @@ data:
   timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-unit-test/semiring.test.cpp
   - verify/verify-aoj-grl/aoj-grl-1-c.test.cpp
+  - verify/verify-unit-test/semiring.test.cpp
 documentation_of: shortest-path/warshall-floyd.hpp
 layout: document
 redirect_from:

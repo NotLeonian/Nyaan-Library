@@ -154,10 +154,10 @@ data:
   timestamp: '2026-06-05 19:46:06+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-yosupo-math/yosupo-rational-approximation.test.cpp
-  - verify/verify-yosupo-math/yosupo-stern-brocot-tree-2.test.cpp
   - verify/verify-yuki/yuki-2266.test.cpp
   - verify/verify-yuki/yuki-2262.test.cpp
+  - verify/verify-yosupo-math/yosupo-rational-approximation.test.cpp
+  - verify/verify-yosupo-math/yosupo-stern-brocot-tree-2.test.cpp
 documentation_of: math/stern-brocot-tree-binary-search.hpp
 layout: document
 redirect_from:

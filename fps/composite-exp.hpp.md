@@ -190,8 +190,8 @@ data:
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yuki/yuki-1875.test.cpp
-  - verify/verify-unit-test/stirling-matrix.test.cpp
   - verify/verify-unit-test/composite-exp.test.cpp
+  - verify/verify-unit-test/stirling-matrix.test.cpp
 documentation_of: fps/composite-exp.hpp
 layout: document
 redirect_from:

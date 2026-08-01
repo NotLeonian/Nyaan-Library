@@ -268,19 +268,19 @@ data:
   timestamp: '2026-06-19 18:03:18+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-yosupo-ds/yosupo-lazysegtree-2.test.cpp
   - verify/verify-yosupo-ds/yosupo-range-affine-point-get-2.test.cpp
-  - verify/verify-aoj-dsl/aoj-dsl-2-f-max.test.cpp
-  - verify/verify-aoj-dsl/aoj-dsl-2-e.test.cpp
-  - verify/verify-aoj-dsl/aoj-dsl-2-h.test.cpp
+  - verify/verify-yosupo-ds/yosupo-lazysegtree-2.test.cpp
   - verify/verify-aoj-dsl/aoj-dsl-2-f.test.cpp
   - verify/verify-aoj-dsl/aoj-dsl-2-d.test.cpp
-  - verify/verify-aoj-dsl/aoj-dsl-2-g.test.cpp
   - verify/verify-aoj-dsl/aoj-dsl-2-h-max.test.cpp
+  - verify/verify-aoj-dsl/aoj-dsl-2-f-max.test.cpp
   - verify/verify-aoj-dsl/aoj-dsl-2-i.test.cpp
-  - verify/verify-unit-test/lazyseg-bsearch.test.cpp
-  - verify/verify-unit-test/lazyseg-setval.test.cpp
+  - verify/verify-aoj-dsl/aoj-dsl-2-g.test.cpp
+  - verify/verify-aoj-dsl/aoj-dsl-2-e.test.cpp
+  - verify/verify-aoj-dsl/aoj-dsl-2-h.test.cpp
   - verify/verify-aoj-grl/aoj-grl-5-e.test.cpp
+  - verify/verify-unit-test/lazyseg-setval.test.cpp
+  - verify/verify-unit-test/lazyseg-bsearch.test.cpp
 documentation_of: segment-tree/lazy-segment-tree-utility.hpp
 layout: document
 title: "\u4F7F\u7528\u983B\u5EA6\u306E\u9AD8\u3044\u9045\u5EF6\u30BB\u30B0\u30E1\u30F3\

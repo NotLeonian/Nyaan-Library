@@ -63,8 +63,8 @@ data:
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yuki/yuki-0430-2.test.cpp
-  - verify/verify-yuki/yuki-0430.test.cpp
   - verify/verify-yuki/yuki-1269.test.cpp
+  - verify/verify-yuki/yuki-0430.test.cpp
 documentation_of: string/trie.hpp
 layout: document
 redirect_from:

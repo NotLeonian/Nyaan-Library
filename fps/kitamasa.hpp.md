@@ -391,9 +391,9 @@ data:
   timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-yuki/yuki-0215-nth-term.test.cpp
-  - verify/verify-yuki/yuki-0215.test.cpp
   - verify/verify-yuki/yuki-0214.test.cpp
+  - verify/verify-yuki/yuki-0215.test.cpp
+  - verify/verify-yuki/yuki-0215-nth-term.test.cpp
 documentation_of: fps/kitamasa.hpp
 layout: document
 title: "\u7DDA\u5F62\u6F38\u5316\u5F0F\u306E\u9AD8\u901F\u8A08\u7B97"
@@ -430,4 +430,4 @@ $$a_N = [x^N]\frac{P(x)}{Q(x)}$$
 #### 使い方
 
 - `LinearRecurrence(k, Q, P)` : $\lbrack x^k \rbrack \frac{P(x)}{Q(x)}$ を求める。
-- `LinearRecurrence(N, Q, a)` : $$\forall n \leq k, Q_0 a_{n} + Q_1 a_{n-1} + \dots + Q_{k} a_{n-k} = 0, Q_0 = 1$$ である $a, Q$ に対して $a_N$ を求める。
+- `kitamasa(N, Q, a)` : $\displaystyle\forall n \geq k, Q_0 a_{n} + Q_1 a_{n-1} + \dots + Q_{k} a_{n-k} = 0, Q_0 = 1$ である $a, Q$ に対して $a_N$ を求める。

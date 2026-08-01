@@ -127,8 +127,8 @@ data:
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-aoj-grl/aoj-grl-5-a.test.cpp
-  - verify/verify-yosupo-graph/yosupo-shortest-path.test.cpp
   - verify/verify-yosupo-graph/yosupo-shortest-path-dijkstra-abstract.test.cpp
+  - verify/verify-yosupo-graph/yosupo-shortest-path.test.cpp
   - verify/verify-yosupo-graph/yosupo-diameter.test.cpp
   - verify/verify-yosupo-graph/yosupo-strongly-connected-components.test.cpp
 documentation_of: graph/graph-utility.hpp
