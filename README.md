@@ -13,6 +13,13 @@ Nyaan さん: [![Nyaan](https://img.shields.io/endpoint?url=https%3A%2F%2Fatcode
 Not_Leonian: [![Not_Leonian](https://img.shields.io/endpoint?url=https%3A%2F%2Fatcoder-badges.now.sh%2Fapi%2Fatcoder%2Fjson%2FNot_Leonian)](https://atcoder.jp/users/Not_Leonian)
 [![Not_Leonian](https://img.shields.io/endpoint?url=https%3A%2F%2Fatcoder-badges.now.sh%2Fapi%2Fcodeforces%2Fjson%2FNot_Leonian)](https://codeforces.com/profile/Not_Leonian)
 
+> [!CAUTION]
+> このフォークの一部のソースコードの作成・編集には生成 AI を用いています。  
+> AtCoder Beginner Contest, AtCoder Regular Contest, AtCoder Grand Contest においてこのフォークのライブラリを使用する場合、[AtCoder生成AI対策ルール - 20261014版](https://info.atcoder.jp/entry/llm-rules-ja)にしたがって提出コードに参照 URL を添付してください。
+>
+> Generative AI was used to create and edit some of the source code in this fork.  
+> If you use libraries from this fork during an AtCoder Beginner Contest, AtCoder Regular Contest, or AtCoder Grand Contest, please include a reference URL in your submitted code in accordance with [AtCoder Rules against Generative AI - Version 20261014](https://info.atcoder.jp/entry/llm-rules-en).
+
 ## License
 
 Except as otherwise noted, this repository is licensed under CC0-1.0.  
