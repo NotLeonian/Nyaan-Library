@@ -39,8 +39,8 @@ data:
   timestamp: '2024-09-14 20:40:02+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-unit-test/math.test.cpp
   - verify/verify-yosupo-math/yosupo-sum-of-floor.test.cpp
+  - verify/verify-unit-test/math.test.cpp
 documentation_of: math/floor-sum.hpp
 layout: document
 redirect_from:

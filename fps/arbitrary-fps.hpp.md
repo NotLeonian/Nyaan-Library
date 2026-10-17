@@ -418,42 +418,42 @@ data:
   isVerificationFile: false
   path: fps/arbitrary-fps.hpp
   requiredBy:
-  - fps/nth-term.hpp
+  - modulo/factorial.hpp
+  - fps/sample-point-shift.hpp
   - fps/mod-pow.hpp
   - fps/kitamasa.hpp
-  - fps/root-finding.hpp
   - fps/find-p-recursive.hpp
-  - fps/sample-point-shift.hpp
-  - ntt/multivariate-circular-convolution.hpp
-  - matrix/black-box-linear-algebra.hpp
+  - fps/nth-term.hpp
+  - fps/root-finding.hpp
   - matrix/polynomial-matrix-prefix-prod.hpp
-  - modulo/factorial.hpp
+  - matrix/black-box-linear-algebra.hpp
+  - ntt/multivariate-circular-convolution.hpp
   timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-yosupo-ntt/yosupo-multivariate-circular-convolution.test.cpp
   - verify/verify-yosupo-ntt/yosupo-convolution-chirp-z.test.cpp
-  - verify/verify-yuki/yuki-0502.test.cpp
-  - verify/verify-yuki/yuki-1112.test.cpp
-  - verify/verify-yuki/yuki-0214.test.cpp
-  - verify/verify-yuki/yuki-0215.test.cpp
-  - verify/verify-yuki/yuki-1533.test.cpp
-  - verify/verify-yuki/yuki-0720.test.cpp
-  - verify/verify-yuki/yuki-0215-nth-term.test.cpp
-  - verify/verify-yuki/yuki-1112-sparse.test.cpp
-  - verify/verify-yuki/yuki-1080.test.cpp
+  - verify/verify-yosupo-ntt/yosupo-multivariate-circular-convolution.test.cpp
+  - verify/verify-yosupo-math/yosupo-determinant-of-sparse-matrix-bbla.test.cpp
+  - verify/verify-yosupo-math/yosupo-determinant-of-matrix-bbla.test.cpp
   - verify/verify-unit-test/p-recursive.test.cpp
   - verify/verify-unit-test/polynomial-matrix-prod.test.cpp
-  - verify/verify-yosupo-math/yosupo-determinant-of-matrix-bbla.test.cpp
-  - verify/verify-yosupo-math/yosupo-determinant-of-sparse-matrix-bbla.test.cpp
-  - verify/verify-yosupo-fps/yosupo-polynomial-root-finding.test.cpp
-  - verify/verify-yosupo-fps/yosupo-factorial.test.cpp
-  - verify/verify-yosupo-fps/yosupo-inv-arb.test.cpp
-  - verify/verify-yosupo-fps/yosupo-sample-point-shift.test.cpp
   - verify/verify-yosupo-fps/yosupo-pow-arb.test.cpp
-  - verify/verify-yosupo-fps/yosupo-exp-arb.test.cpp
-  - verify/verify-yosupo-fps/yosupo-log-arb.test.cpp
+  - verify/verify-yosupo-fps/yosupo-factorial.test.cpp
   - verify/verify-yosupo-fps/yosupo-factorial-p-recursive.test.cpp
+  - verify/verify-yosupo-fps/yosupo-log-arb.test.cpp
+  - verify/verify-yosupo-fps/yosupo-polynomial-root-finding.test.cpp
+  - verify/verify-yosupo-fps/yosupo-exp-arb.test.cpp
+  - verify/verify-yosupo-fps/yosupo-sample-point-shift.test.cpp
+  - verify/verify-yosupo-fps/yosupo-inv-arb.test.cpp
+  - verify/verify-yuki/yuki-0214.test.cpp
+  - verify/verify-yuki/yuki-1533.test.cpp
+  - verify/verify-yuki/yuki-0502.test.cpp
+  - verify/verify-yuki/yuki-0720.test.cpp
+  - verify/verify-yuki/yuki-1112.test.cpp
+  - verify/verify-yuki/yuki-1080.test.cpp
+  - verify/verify-yuki/yuki-0215.test.cpp
+  - verify/verify-yuki/yuki-1112-sparse.test.cpp
+  - verify/verify-yuki/yuki-0215-nth-term.test.cpp
 documentation_of: fps/arbitrary-fps.hpp
 layout: document
 redirect_from:

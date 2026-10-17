@@ -155,8 +155,8 @@ data:
   timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-yosupo-ds/yosupo-segtree-beats.test.cpp
   - verify/verify-unit-test/segment-tree-beats.test.cpp
+  - verify/verify-yosupo-ds/yosupo-segtree-beats.test.cpp
 documentation_of: segment-tree/segment-tree-beats.hpp
 layout: document
 title: Range Chmin Chmax Add Update Range Min Max Sum Segment Tree Beats!

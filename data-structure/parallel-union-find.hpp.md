@@ -220,8 +220,8 @@ data:
   timestamp: '2026-06-27 14:52:13+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-yosupo-ds/yosupo-range-parallel-unionfind.test.cpp
   - verify/verify-unit-test/parallel-union-find.test.cpp
+  - verify/verify-yosupo-ds/yosupo-range-parallel-unionfind.test.cpp
 documentation_of: data-structure/parallel-union-find.hpp
 layout: document
 redirect_from:

@@ -176,35 +176,35 @@ data:
   isVerificationFile: false
   path: internal/internal-math.hpp
   requiredBy:
-  - math/primitive-root-ll.hpp
-  - math/two-square.hpp
-  - ntt/multivariate-circular-convolution.hpp
-  - ntt/ntt-64bit.hpp
-  - prime/miller-rabin.hpp
-  - prime/fast-factorize.hpp
   - modulo/mod-log.hpp
   - modulo/mod-kth-root.hpp
+  - prime/fast-factorize.hpp
+  - prime/miller-rabin.hpp
+  - math/primitive-root-ll.hpp
+  - math/two-square.hpp
+  - ntt/ntt-64bit.hpp
+  - ntt/multivariate-circular-convolution.hpp
   timestamp: '2026-06-27 14:52:13+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ntt/yosupo-multivariate-circular-convolution.test.cpp
-  - verify/verify-yuki/yuki-0103.test.cpp
-  - verify/verify-yuki/yuki-0002.test.cpp
-  - verify/verify-unit-test/osak.test.cpp
-  - verify/verify-unit-test/ntt-64bit.test.cpp
+  - verify/verify-yosupo-math/yosupo-primality-test-u64.test.cpp
+  - verify/verify-yosupo-math/yosupo-primitive-root.test.cpp
+  - verify/verify-yosupo-math/yosupo-two-square-sum.test.cpp
+  - verify/verify-yosupo-math/yosupo-mod-log.test.cpp
+  - verify/verify-yosupo-math/yosupo-factorization.test.cpp
+  - verify/verify-yosupo-math/yosupo-kth-root-mod.test.cpp
+  - verify/verify-yosupo-math/yosupo-primality-test.test.cpp
+  - verify/verify-unit-test/primitive-root.test.cpp
   - verify/verify-unit-test/enumerate-convex.test.cpp
   - verify/verify-unit-test/internal-math.test.cpp
-  - verify/verify-unit-test/garner-bigint.test.cpp
+  - verify/verify-unit-test/osak.test.cpp
   - verify/verify-unit-test/primality-test.test.cpp
-  - verify/verify-unit-test/primitive-root.test.cpp
+  - verify/verify-unit-test/ntt-64bit.test.cpp
+  - verify/verify-unit-test/garner-bigint.test.cpp
   - verify/verify-unit-test/factorize.test.cpp
-  - verify/verify-yosupo-math/yosupo-mod-log.test.cpp
-  - verify/verify-yosupo-math/yosupo-kth-root-mod.test.cpp
-  - verify/verify-yosupo-math/yosupo-primality-test-u64.test.cpp
-  - verify/verify-yosupo-math/yosupo-factorization.test.cpp
-  - verify/verify-yosupo-math/yosupo-two-square-sum.test.cpp
-  - verify/verify-yosupo-math/yosupo-primality-test.test.cpp
-  - verify/verify-yosupo-math/yosupo-primitive-root.test.cpp
+  - verify/verify-yuki/yuki-0103.test.cpp
+  - verify/verify-yuki/yuki-0002.test.cpp
 documentation_of: internal/internal-math.hpp
 layout: document
 redirect_from:

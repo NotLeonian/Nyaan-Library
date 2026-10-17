@@ -139,9 +139,9 @@ data:
   timestamp: '2026-06-27 14:52:13+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-yosupo-string/yosupo-enumerate-palindromes-roriha.test.cpp
-  - verify/verify-yosupo-string/yosupo-zalgo-rollinghash.test.cpp
   - verify/verify-unit-test/string-search.test.cpp
+  - verify/verify-yosupo-string/yosupo-zalgo-rollinghash.test.cpp
+  - verify/verify-yosupo-string/yosupo-enumerate-palindromes-roriha.test.cpp
 documentation_of: string/rolling-hash.hpp
 layout: document
 title: Rolling Hash

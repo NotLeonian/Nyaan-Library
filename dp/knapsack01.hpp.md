@@ -80,8 +80,8 @@ data:
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-aoj-dpl/aoj-dpl-1-h.test.cpp
-  - verify/verify-aoj-dpl/aoj-dpl-1-f.test.cpp
   - verify/verify-aoj-dpl/aoj-dpl-1-b.test.cpp
+  - verify/verify-aoj-dpl/aoj-dpl-1-f.test.cpp
 documentation_of: dp/knapsack01.hpp
 layout: document
 title: "0-1\u30CA\u30C3\u30D7\u30B5\u30C3\u30AF\u554F\u984C"

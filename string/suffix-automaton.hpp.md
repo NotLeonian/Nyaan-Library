@@ -116,8 +116,8 @@ data:
   timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-yosupo-string/yosupo-number-of-substrings-suffixautomaton.test.cpp
   - verify/verify-unit-test/suffix-automaton.test.cpp
+  - verify/verify-yosupo-string/yosupo-number-of-substrings-suffixautomaton.test.cpp
 documentation_of: string/suffix-automaton.hpp
 layout: document
 title: Suffix Automaton
