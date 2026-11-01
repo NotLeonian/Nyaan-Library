@@ -84,7 +84,7 @@ vector<pair<mint, vector<mint>>> PartialFractionDecomposition(
     auto [m, d] = denom[i - s];
     F[i] = TaylorShift<mint>(F[i], -m, C);
     G[i] = TaylorShift<mint>(G[i], -m, C);
-    fps f = (F[i] * G[i].inv()).pre(d);
+    fps f = (F[i] * G[i].inv(d)).pre(d);
     if ((int)f.size() < d) f.resize(d);
     f = f.rev();
     res.emplace_back(m, vector<mint>{begin(f), end(f)});
