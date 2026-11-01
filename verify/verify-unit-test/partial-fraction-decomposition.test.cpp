@@ -19,6 +19,44 @@ using vm = vector<mint>;
 using vvm = vector<vm>;
 using fps = FormalPowerSeries<mint>;
 
+void verify_reconstruction(const fps& numerator,
+                           const vector<pair<mint, int>>& denom) {
+  fps denominator{1};
+  for (auto [m, d] : denom) {
+    for (int i = 0; i < d; i++) denominator *= fps{m, 1};
+  }
+
+  auto part = PartialFractionDecomposition<mint>(numerator, denom);
+  fps reconstructed;
+  for (auto [m, coeff] : part) {
+    fps quotient = denominator;
+    for (auto c : coeff) {
+      quotient /= fps{m, 1};
+      reconstructed += quotient * c;
+    }
+  }
+  fps expected = numerator;
+  reconstructed.shrink();
+  expected.shrink();
+  assert(reconstructed == expected);
+}
+
+void verify_regressions() {
+  // The inverse of the other factor needs four terms, although it is linear.
+  verify_reconstruction(fps{1}, {{1, 4}, {2, 1}});
+  verify_reconstruction(fps{1},
+                        {{mint(899987) * 899987, 4},
+                         {mint(89607) * 89607, 1}});
+
+  // Reduction modulo x^3 cancels the leading terms of the other factors.
+  verify_reconstruction(fps{1}, {{0, 3}, {1, 1}, {2, 1}, {-3, 1}});
+  for (const fps& numerator : {fps{}, fps{1}, fps{2, 3, 4}}) {
+    verify_reconstruction(numerator, {{1, 4}});
+    verify_reconstruction(numerator, {{1, 4}, {2, 1}});
+  }
+  verify_reconstruction(fps{1}, {{1, 65}, {2, 1}});
+}
+
 void verify() {
   vector<pair<mint, int>> denom;
   vector<fps> fs;
@@ -75,6 +113,7 @@ void verify() {
 }
 
 void Nyaan::solve() {
+  verify_regressions();
   rep(loop, 100) verify();
 
   int a, b;
