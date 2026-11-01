@@ -21,7 +21,7 @@ struct Node {
 
   void update(Node& l, Node& r) {
     mx = max(l.mx, r.mx);
-    lcm = min(TEN(9), LCM(l.lcm, r.lcm));
+    lcm = min(TEN(9) + 1, LCM(l.lcm, r.lcm));
     sz = l.sz + r.sz;
     sm = l.sm + r.sm;
     same = l.same and r.same and l.mx == r.mx;
@@ -39,7 +39,7 @@ struct Node {
     } else {
       if (same) {
         change(__gcd(x, mx));
-      } else if (lcm >= TEN(9) or x % lcm != 0) {
+      } else if (lcm > TEN(9) or x % lcm != 0) {
         return false;
       }
     }
