@@ -79,8 +79,8 @@ data:
   timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-aoj-dsl/aoj-dsl-5-b-2dseg.test.cpp
   - verify/verify-aoj-other/aoj-1068.test.cpp
+  - verify/verify-aoj-dsl/aoj-dsl-5-b-2dseg.test.cpp
 documentation_of: data-structure-2d/2d-segment-tree.hpp
 layout: document
 title: "\u4E8C\u6B21\u5143\u30BB\u30B0\u30E1\u30F3\u30C8\u6728"

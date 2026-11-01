@@ -261,8 +261,8 @@ data:
   timestamp: '2026-06-27 14:52:13+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-unit-test/bigrational.test.cpp
   - verify/verify-unit-test/rational-number.test.cpp
+  - verify/verify-unit-test/bigrational.test.cpp
 documentation_of: math/rational-fps.hpp
 layout: document
 redirect_from:

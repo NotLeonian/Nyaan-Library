@@ -92,8 +92,8 @@ data:
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-unit-test/semiring.test.cpp
-  - verify/verify-yuki/yuki-1460.test.cpp
   - verify/verify-yuki/yuki-1340-semiring.test.cpp
+  - verify/verify-yuki/yuki-1460.test.cpp
 documentation_of: math/semiring.hpp
 layout: document
 title: "\u534A\u74B0\u30E9\u30A4\u30D6\u30E9\u30EA"

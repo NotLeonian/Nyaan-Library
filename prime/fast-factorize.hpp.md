@@ -305,24 +305,24 @@ data:
   isVerificationFile: false
   path: prime/fast-factorize.hpp
   requiredBy:
-  - modulo/mod-kth-root.hpp
+  - ntt/multivariate-circular-convolution.hpp
+  - ntt/ntt-64bit.hpp
   - math/primitive-root-ll.hpp
   - math/two-square.hpp
-  - ntt/ntt-64bit.hpp
-  - ntt/multivariate-circular-convolution.hpp
+  - modulo/mod-kth-root.hpp
   timestamp: '2026-06-27 14:52:13+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ntt/yosupo-multivariate-circular-convolution.test.cpp
-  - verify/verify-yosupo-math/yosupo-primitive-root.test.cpp
-  - verify/verify-yosupo-math/yosupo-two-square-sum.test.cpp
-  - verify/verify-yosupo-math/yosupo-factorization.test.cpp
-  - verify/verify-yosupo-math/yosupo-kth-root-mod.test.cpp
+  - verify/verify-unit-test/ntt-64bit.test.cpp
+  - verify/verify-unit-test/factorize.test.cpp
   - verify/verify-unit-test/primitive-root.test.cpp
   - verify/verify-unit-test/enumerate-convex.test.cpp
   - verify/verify-unit-test/osak.test.cpp
-  - verify/verify-unit-test/ntt-64bit.test.cpp
-  - verify/verify-unit-test/factorize.test.cpp
+  - verify/verify-yosupo-math/yosupo-two-square-sum.test.cpp
+  - verify/verify-yosupo-math/yosupo-primitive-root.test.cpp
+  - verify/verify-yosupo-math/yosupo-factorization.test.cpp
+  - verify/verify-yosupo-math/yosupo-kth-root-mod.test.cpp
   - verify/verify-yuki/yuki-0103.test.cpp
   - verify/verify-yuki/yuki-0002.test.cpp
 documentation_of: prime/fast-factorize.hpp

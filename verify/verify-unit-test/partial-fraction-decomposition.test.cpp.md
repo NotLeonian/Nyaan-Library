@@ -542,7 +542,7 @@ data:
     \   G[i * 2 + 1] = G[i] * fs[i * 2 + 0] % fs[i * 2 + 1];\n  }\n\n  vector<pair<mint,\
     \ vector<mint>>> res;\n  for (int i = s; i - s < (int)denom.size(); i++) {\n \
     \   auto [m, d] = denom[i - s];\n    F[i] = TaylorShift<mint>(F[i], -m, C);\n\
-    \    G[i] = TaylorShift<mint>(G[i], -m, C);\n    fps f = (F[i] * G[i].inv()).pre(d);\n\
+    \    G[i] = TaylorShift<mint>(G[i], -m, C);\n    fps f = (F[i] * G[i].inv(d)).pre(d);\n\
     \    if ((int)f.size() < d) f.resize(d);\n    f = f.rev();\n    res.emplace_back(m,\
     \ vector<mint>{begin(f), end(f)});\n  }\n  return res;\n}\n\n/**\n * @brief \u90E8\
     \u5206\u5206\u6570\u5206\u89E3(\u5206\u6BCD\u304C1\u6B21\u5F0F\u306E\u7A4D\u3067\
@@ -622,10 +622,26 @@ data:
     \ namespace Nyaan;\n\nusing mint = LazyMontgomeryModInt<998244353>;\n// #include\
     \ \"fps/arbitrary-fps.hpp\"\n// using mint = LazyMontgomeryModInt<1000000007>;\n\
     Binomial<mint> C;\nusing vm = vector<mint>;\nusing vvm = vector<vm>;\nusing fps\
-    \ = FormalPowerSeries<mint>;\n\nvoid verify() {\n  vector<pair<mint, int>> denom;\n\
-    \  vector<fps> fs;\n\n  int size1 = 100;\n  int size2 = 10;\n\n  vector<int> xs(size1);\n\
-    \  for (int i = 0; i < size1; i++) {\n    do {\n      xs[i] = rng() % 998244353;\n\
-    \      int c = true;\n      for (int j = 0; j < i; j++) {\n        if (!c) break;\n\
+    \ = FormalPowerSeries<mint>;\n\nvoid verify_reconstruction(const fps& numerator,\n\
+    \                           const vector<pair<mint, int>>& denom) {\n  fps denominator{1};\n\
+    \  for (auto [m, d] : denom) {\n    for (int i = 0; i < d; i++) denominator *=\
+    \ fps{m, 1};\n  }\n\n  auto part = PartialFractionDecomposition<mint>(numerator,\
+    \ denom);\n  fps reconstructed;\n  for (auto [m, coeff] : part) {\n    fps quotient\
+    \ = denominator;\n    for (auto c : coeff) {\n      quotient /= fps{m, 1};\n \
+    \     reconstructed += quotient * c;\n    }\n  }\n  fps expected = numerator;\n\
+    \  reconstructed.shrink();\n  expected.shrink();\n  assert(reconstructed == expected);\n\
+    }\n\nvoid verify_regressions() {\n  // The inverse of the other factor needs four\
+    \ terms, although it is linear.\n  verify_reconstruction(fps{1}, {{1, 4}, {2,\
+    \ 1}});\n  verify_reconstruction(fps{1},\n                        {{mint(899987)\
+    \ * 899987, 4},\n                         {mint(89607) * 89607, 1}});\n\n  //\
+    \ Reduction modulo x^3 cancels the leading terms of the other factors.\n  verify_reconstruction(fps{1},\
+    \ {{0, 3}, {1, 1}, {2, 1}, {-3, 1}});\n  for (const fps& numerator : {fps{}, fps{1},\
+    \ fps{2, 3, 4}}) {\n    verify_reconstruction(numerator, {{1, 4}});\n    verify_reconstruction(numerator,\
+    \ {{1, 4}, {2, 1}});\n  }\n  verify_reconstruction(fps{1}, {{1, 65}, {2, 1}});\n\
+    }\n\nvoid verify() {\n  vector<pair<mint, int>> denom;\n  vector<fps> fs;\n\n\
+    \  int size1 = 100;\n  int size2 = 10;\n\n  vector<int> xs(size1);\n  for (int\
+    \ i = 0; i < size1; i++) {\n    do {\n      xs[i] = rng() % 998244353;\n     \
+    \ int c = true;\n      for (int j = 0; j < i; j++) {\n        if (!c) break;\n\
     \        if (xs[j] == xs[i]) c = false;\n      }\n      if (!c) continue;\n  \
     \  } while (0);\n  }\n\n  for (int i = 0; i < size1; i++) {\n    mint m = xs[i];\n\
     \    int d = randint(1, size2);\n    denom.emplace_back(m, d);\n    fps f(d +\
@@ -638,8 +654,8 @@ data:
     \ denom);\n\n  sort(all(part1),\n       [](auto a, auto b) { return a.first.get()\
     \ < b.first.get(); });\n  sort(all(part2),\n       [](auto a, auto b) { return\
     \ a.first.get() < b.first.get(); });\n\n  assert(part1 == part2);\n}\n\nvoid Nyaan::solve()\
-    \ {\n  rep(loop, 100) verify();\n\n  int a, b;\n  cin >> a >> b;\n  cout << a\
-    \ + b << endl;\n}\n"
+    \ {\n  verify_regressions();\n  rep(loop, 100) verify();\n\n  int a, b;\n  cin\
+    \ >> a >> b;\n  cout << a + b << endl;\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/aplusb\"\n//\n#include\
     \ \"../../template/template.hpp\"\n//\n#include \"../../fps/ntt-friendly-fps.hpp\"\
     \n#include \"../../fps/partial-fraction-decomposition.hpp\"\n#include \"../../fps/polynomial-product.hpp\"\
@@ -648,12 +664,28 @@ data:
     \ = LazyMontgomeryModInt<998244353>;\n// #include \"fps/arbitrary-fps.hpp\"\n\
     // using mint = LazyMontgomeryModInt<1000000007>;\nBinomial<mint> C;\nusing vm\
     \ = vector<mint>;\nusing vvm = vector<vm>;\nusing fps = FormalPowerSeries<mint>;\n\
-    \nvoid verify() {\n  vector<pair<mint, int>> denom;\n  vector<fps> fs;\n\n  int\
-    \ size1 = 100;\n  int size2 = 10;\n\n  vector<int> xs(size1);\n  for (int i =\
-    \ 0; i < size1; i++) {\n    do {\n      xs[i] = rng() % 998244353;\n      int\
-    \ c = true;\n      for (int j = 0; j < i; j++) {\n        if (!c) break;\n   \
-    \     if (xs[j] == xs[i]) c = false;\n      }\n      if (!c) continue;\n    }\
-    \ while (0);\n  }\n\n  for (int i = 0; i < size1; i++) {\n    mint m = xs[i];\n\
+    \nvoid verify_reconstruction(const fps& numerator,\n                         \
+    \  const vector<pair<mint, int>>& denom) {\n  fps denominator{1};\n  for (auto\
+    \ [m, d] : denom) {\n    for (int i = 0; i < d; i++) denominator *= fps{m, 1};\n\
+    \  }\n\n  auto part = PartialFractionDecomposition<mint>(numerator, denom);\n\
+    \  fps reconstructed;\n  for (auto [m, coeff] : part) {\n    fps quotient = denominator;\n\
+    \    for (auto c : coeff) {\n      quotient /= fps{m, 1};\n      reconstructed\
+    \ += quotient * c;\n    }\n  }\n  fps expected = numerator;\n  reconstructed.shrink();\n\
+    \  expected.shrink();\n  assert(reconstructed == expected);\n}\n\nvoid verify_regressions()\
+    \ {\n  // The inverse of the other factor needs four terms, although it is linear.\n\
+    \  verify_reconstruction(fps{1}, {{1, 4}, {2, 1}});\n  verify_reconstruction(fps{1},\n\
+    \                        {{mint(899987) * 899987, 4},\n                      \
+    \   {mint(89607) * 89607, 1}});\n\n  // Reduction modulo x^3 cancels the leading\
+    \ terms of the other factors.\n  verify_reconstruction(fps{1}, {{0, 3}, {1, 1},\
+    \ {2, 1}, {-3, 1}});\n  for (const fps& numerator : {fps{}, fps{1}, fps{2, 3,\
+    \ 4}}) {\n    verify_reconstruction(numerator, {{1, 4}});\n    verify_reconstruction(numerator,\
+    \ {{1, 4}, {2, 1}});\n  }\n  verify_reconstruction(fps{1}, {{1, 65}, {2, 1}});\n\
+    }\n\nvoid verify() {\n  vector<pair<mint, int>> denom;\n  vector<fps> fs;\n\n\
+    \  int size1 = 100;\n  int size2 = 10;\n\n  vector<int> xs(size1);\n  for (int\
+    \ i = 0; i < size1; i++) {\n    do {\n      xs[i] = rng() % 998244353;\n     \
+    \ int c = true;\n      for (int j = 0; j < i; j++) {\n        if (!c) break;\n\
+    \        if (xs[j] == xs[i]) c = false;\n      }\n      if (!c) continue;\n  \
+    \  } while (0);\n  }\n\n  for (int i = 0; i < size1; i++) {\n    mint m = xs[i];\n\
     \    int d = randint(1, size2);\n    denom.emplace_back(m, d);\n    fps f(d +\
     \ 1);\n    f[0] = m, f[1] = 1;\n    fs.emplace_back(f.pow(d));\n  }\n  auto pi\
     \ = Pi(fs);\n\n  fps numerator;\n  vector<pair<mint, vm>> part1;\n  rep(i, size1)\
@@ -664,8 +696,8 @@ data:
     \ denom);\n\n  sort(all(part1),\n       [](auto a, auto b) { return a.first.get()\
     \ < b.first.get(); });\n  sort(all(part2),\n       [](auto a, auto b) { return\
     \ a.first.get() < b.first.get(); });\n\n  assert(part1 == part2);\n}\n\nvoid Nyaan::solve()\
-    \ {\n  rep(loop, 100) verify();\n\n  int a, b;\n  cin >> a >> b;\n  cout << a\
-    \ + b << endl;\n}\n"
+    \ {\n  verify_regressions();\n  rep(loop, 100) verify();\n\n  int a, b;\n  cin\
+    \ >> a >> b;\n  cout << a + b << endl;\n}\n"
   dependsOn:
   - template/template.hpp
   - template/util.hpp
@@ -686,7 +718,7 @@ data:
   isVerificationFile: true
   path: verify/verify-unit-test/partial-fraction-decomposition.test.cpp
   requiredBy: []
-  timestamp: '2026-06-27 14:52:13+09:00'
+  timestamp: '2026-11-01 21:20:51+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/verify-unit-test/partial-fraction-decomposition.test.cpp

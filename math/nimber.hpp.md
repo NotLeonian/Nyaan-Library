@@ -219,10 +219,10 @@ data:
   timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-yosupo-math/yosupo-nim-product.test.cpp
   - verify/verify-unit-test/nimber-to-field.test.cpp
   - verify/verify-unit-test/nimber.test.cpp
   - verify/verify-unit-test/karatsuba.test.cpp
+  - verify/verify-yosupo-math/yosupo-nim-product.test.cpp
   - verify/verify-yuki/yuki-1775.test.cpp
 documentation_of: math/nimber.hpp
 layout: document

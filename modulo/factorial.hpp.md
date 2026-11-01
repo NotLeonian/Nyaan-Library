@@ -396,8 +396,8 @@ data:
   timestamp: '2026-06-08 17:59:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-yosupo-fps/yosupo-factorial.test.cpp
   - verify/verify-yuki/yuki-0502.test.cpp
+  - verify/verify-yosupo-fps/yosupo-factorial.test.cpp
 documentation_of: modulo/factorial.hpp
 layout: document
 title: "\u968E\u4E57 $\\mod p$"

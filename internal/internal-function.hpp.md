@@ -201,22 +201,22 @@ data:
   isVerificationFile: false
   path: internal/internal-function.hpp
   requiredBy:
-  - fps/online-fps.hpp
   - data-structure-2d/abstract-range-tree.hpp
-  - ntt/multidimensional-ntt.hpp
   - ntt/multivariate-circular-convolution.hpp
+  - ntt/multidimensional-ntt.hpp
+  - fps/online-fps.hpp
   - game/impartial-game.hpp
   timestamp: '2026-06-27 14:52:13+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-yosupo-ntt/yosupo-multivariate-circular-convolution.test.cpp
   - verify/verify-yosupo-ds/yosupo-point-add-rectangle-sum-abstract-range-tree.test.cpp
-  - verify/verify-yosupo-fps/yosupo-exp-ofps.test.cpp
-  - verify/verify-yosupo-fps/yosupo-inv-ofps.test.cpp
+  - verify/verify-yuki/yuki-0002.test.cpp
   - verify/verify-yuki/yuki-0102.test.cpp
   - verify/verify-yuki/yuki-0361.test.cpp
-  - verify/verify-yuki/yuki-0002.test.cpp
   - verify/verify-yuki/yuki-1783.test.cpp
+  - verify/verify-yosupo-fps/yosupo-exp-ofps.test.cpp
+  - verify/verify-yosupo-fps/yosupo-inv-ofps.test.cpp
 documentation_of: internal/internal-function.hpp
 layout: document
 redirect_from:

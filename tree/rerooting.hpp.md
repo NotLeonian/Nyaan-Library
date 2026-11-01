@@ -123,8 +123,8 @@ data:
   verifiedWith:
   - verify/verify-yosupo-graph/yosupo-tree-path-composite-sum.test.cpp
   - verify/verify-unit-test/rerooting.test.cpp
-  - verify/verify-aoj-grl/aoj-grl-5-a-rerooting.test.cpp
   - verify/verify-aoj-grl/aoj-grl-5-b.test.cpp
+  - verify/verify-aoj-grl/aoj-grl-5-a-rerooting.test.cpp
 documentation_of: tree/rerooting.hpp
 layout: document
 title: "Rerooting(\u5168\u65B9\u4F4D\u6728DP)"

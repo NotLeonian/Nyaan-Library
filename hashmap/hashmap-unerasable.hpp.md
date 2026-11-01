@@ -200,8 +200,8 @@ data:
   verifiedWith:
   - verify/verify-yosupo-graph/yosupo-tree-hash.test.cpp
   - verify/verify-aoj-other/aoj-1377.test.cpp
-  - verify/verify-unit-test/internal-type-traits.test.cpp
   - verify/verify-yosupo-ds/yosupo-associative-array-unerasable-hashmap.test.cpp
+  - verify/verify-unit-test/internal-type-traits.test.cpp
   - verify/verify-yosupo-string/yosupo-number-of-subsequences.test.cpp
 documentation_of: hashmap/hashmap-unerasable.hpp
 layout: document

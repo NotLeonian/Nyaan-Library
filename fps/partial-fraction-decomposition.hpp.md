@@ -183,7 +183,7 @@ data:
     \   G[i * 2 + 1] = G[i] * fs[i * 2 + 0] % fs[i * 2 + 1];\n  }\n\n  vector<pair<mint,\
     \ vector<mint>>> res;\n  for (int i = s; i - s < (int)denom.size(); i++) {\n \
     \   auto [m, d] = denom[i - s];\n    F[i] = TaylorShift<mint>(F[i], -m, C);\n\
-    \    G[i] = TaylorShift<mint>(G[i], -m, C);\n    fps f = (F[i] * G[i].inv()).pre(d);\n\
+    \    G[i] = TaylorShift<mint>(G[i], -m, C);\n    fps f = (F[i] * G[i].inv(d)).pre(d);\n\
     \    if ((int)f.size() < d) f.resize(d);\n    f = f.rev();\n    res.emplace_back(m,\
     \ vector<mint>{begin(f), end(f)});\n  }\n  return res;\n}\n\n/**\n * @brief \u90E8\
     \u5206\u5206\u6570\u5206\u89E3(\u5206\u6BCD\u304C1\u6B21\u5F0F\u306E\u7A4D\u3067\
@@ -221,7 +221,7 @@ data:
     \ G[i] * fs[i * 2 + 0] % fs[i * 2 + 1];\n  }\n\n  vector<pair<mint, vector<mint>>>\
     \ res;\n  for (int i = s; i - s < (int)denom.size(); i++) {\n    auto [m, d] =\
     \ denom[i - s];\n    F[i] = TaylorShift<mint>(F[i], -m, C);\n    G[i] = TaylorShift<mint>(G[i],\
-    \ -m, C);\n    fps f = (F[i] * G[i].inv()).pre(d);\n    if ((int)f.size() < d)\
+    \ -m, C);\n    fps f = (F[i] * G[i].inv(d)).pre(d);\n    if ((int)f.size() < d)\
     \ f.resize(d);\n    f = f.rev();\n    res.emplace_back(m, vector<mint>{begin(f),\
     \ end(f)});\n  }\n  return res;\n}\n\n/**\n * @brief \u90E8\u5206\u5206\u6570\u5206\
     \u89E3(\u5206\u6BCD\u304C1\u6B21\u5F0F\u306E\u7A4D\u3067\u8868\u305B\u308B\u5834\
@@ -233,7 +233,7 @@ data:
   isVerificationFile: false
   path: fps/partial-fraction-decomposition.hpp
   requiredBy: []
-  timestamp: '2026-06-19 18:03:18+09:00'
+  timestamp: '2026-11-01 21:20:51+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/verify-unit-test/partial-fraction-decomposition.test.cpp

@@ -204,8 +204,8 @@ data:
   timestamp: '2026-06-06 19:38:56+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/verify-yosupo-string/yosupo-wildcard-pattern-matching.test.cpp
   - verify/verify-yuki/yuki-2231.test.cpp
+  - verify/verify-yosupo-string/yosupo-wildcard-pattern-matching.test.cpp
 documentation_of: string/wildcard-pattern-matching.hpp
 layout: document
 redirect_from:
